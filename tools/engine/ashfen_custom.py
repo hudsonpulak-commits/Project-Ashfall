@@ -3,7 +3,7 @@
 #   python misc/scripts/install_swappy_android.py):
 #   scons platform=android target=template_release arch=arm64 profile=<this file>
 # Ashfen is a 2D, offline, English-only GDScript game: no 3D, no physics, no
-# navigation, no networking, no XR, no video, no complex-script text shaping.
+# navigation, no networking, no XR, no complex-script text shaping.
 # NOTE: SCons exec()s this file with separate locals, so every option must be
 # a plain top-level assignment (no loops writing to globals()).
 optimize = "size_extra"
@@ -58,7 +58,7 @@ module_objectdb_profiler_enabled = False
 module_openxr_enabled = False
 module_raycast_enabled = False
 module_tga_enabled = False
-module_theora_enabled = False
+module_theora_enabled = True   # 0.3.9.6 title video (res://assets/ui/title_loop.ogv)
 module_tinyexr_enabled = False
 module_upnp_enabled = False
 module_vhacd_enabled = False
@@ -69,4 +69,4 @@ module_webxr_enabled = False
 module_xatlas_unwrap_enabled = False
 
 # Kept: freetype, gdscript, noise (FastNoiseLite world gen), regex, svg (default
-# theme icons), zip, ogg/vorbis (future music), webp, bcdec, mbedtls, text_server_fb.
+# theme icons), zip, ogg/vorbis (future music), theora (0.3.9.6 title video), webp, bcdec, mbedtls, text_server_fb.
