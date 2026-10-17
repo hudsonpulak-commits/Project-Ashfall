@@ -17,4 +17,11 @@
 - QA bot C19 templates composite per facing with the same order.
 - Tests: patch0394_tests (opaque-inside-outline flood fill per frame, no enclosed
   body/shield gap, layer plan rules); patch0391 side test updated.
-- Not used: art_handoff/shields_side (not marked Hudson-approved).
+- Side shield art: replaced the flat 0.3.9.3/0.3.9.4 stopgap with the designer's
+  redrawn side sheets (art_handoff/shields_side, 20 files; approval relayed via the
+  parent agent). Opaque inside every outline (alpha 0/255 only). The only adjustment:
+  shield_kite_1..4 frame 2 had 4 pixels enclosed between the body and the shield
+  ((10,11),(10,19),(11,20),(11,21)), filled with the face colour by
+  fix_side_shields_0394.py. The other 16 sheets are byte-identical to the handoff.
+  No per-facing offset needed: anchored on the near hand, the shield draws over the
+  body facing left and peeks out in front of the chest from behind facing right.
