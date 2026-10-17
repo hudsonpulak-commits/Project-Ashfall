@@ -1,5 +1,4 @@
 {
- "note": "0.3.9.2 hand-drawn art (designer batches 1+2, app icons, Hudson title). Generators must never overwrite these (tools/art/art_guard.py).",
  "files": {
   "assets/app_icon_bg_432.png": "ac20c64f31dabaee68f20a817d1ad30f49e08f89126a3167ba02a86d36e419e2",
   "assets/app_icon_fg_432.png": "ddba23223738b609799199c5c3588e6dee39bc176acd7c2146ff1109adf2ec10",
@@ -28,18 +27,18 @@
   "assets/sprites/actors/gear/body_4.png": "03a7aab83ac6dc9307333d51da23760879e3a5e428aa4c1ad865c7f1b0179e21",
   "assets/sprites/actors/gear/body_4_back.png": "729d4e255ec5f5ae12bd273b8907c19c106d10f6a73c453de079300b453ac5ed",
   "assets/sprites/actors/gear/body_4_front.png": "465148d05e107feb27e561854c6499fa1a68b323186f3764befdec3d3e9a76e8",
-  "assets/sprites/actors/gear/head_1.png": "aaed7b1f31f91963293e1004a91422e4138a116ea6fa6ab3a18bb940727498e0",
-  "assets/sprites/actors/gear/head_1_back.png": "ac8b2177f5b89530f0d0b33d70de73431a510972094f1fa1d4948fc674ab6290",
-  "assets/sprites/actors/gear/head_1_front.png": "85c47ddfc55fca0db80cbd2af3034c0f43f5fc34a6d86873091fd95a7c114afd",
-  "assets/sprites/actors/gear/head_2.png": "359b640aadab61c078abfc35c8a5d1a2e2effdee9e3b7c62873e30c05c39dfc6",
-  "assets/sprites/actors/gear/head_2_back.png": "e8e3b43df94f47eb9e32ac140c8cd2f7973e7feba33e02bd122436dc9416ba89",
-  "assets/sprites/actors/gear/head_2_front.png": "be55a868eb477f7b3c5d9236fc708a3ad109ebdadf5916040f1b7a7e2c8c9f6a",
-  "assets/sprites/actors/gear/head_3.png": "590a10e0a50ed41d24573990044207fbeab4092fa5eb1fc4df00b7022ce9b893",
-  "assets/sprites/actors/gear/head_3_back.png": "987a32c25a5177eb27ecb95e4248fd8db0abbd061b30a889699f56239392d248",
-  "assets/sprites/actors/gear/head_3_front.png": "5d79783f3df2246cadb1e895e17355078bfbb5fcb5f42d37b5a6ad758efa2494",
-  "assets/sprites/actors/gear/head_4.png": "a53713754f96d156e953adaa867eea860a97ec6c54b9a3913f0d19c9c81f1e85",
-  "assets/sprites/actors/gear/head_4_back.png": "a1250492ae890c576ffaa6f55b7c3bbf8e8379a7409463c298a39b9fc543a60d",
-  "assets/sprites/actors/gear/head_4_front.png": "cf17a24d4b21e31696f69843d8177b614919183d5f97bf49930c64d2c1f1da69",
+  "assets/sprites/actors/gear/head_1.png": "522f5398158d03db2b33cfc082e8e6748bfd86761424174677979f6637bc2d7e",
+  "assets/sprites/actors/gear/head_1_back.png": "f86ccdb6cb31f1f5867403d1571d153ccce91a825b59d075a9e62412f4a9233b",
+  "assets/sprites/actors/gear/head_1_front.png": "8f2a6ba04977c2b1161d0d45461f4b47d17910f6372672044d0296838e76342a",
+  "assets/sprites/actors/gear/head_2.png": "10beea0337fa8e5fa3cef6ff3f9a1055404263d64c17bcc6c26230ffcaa9d716",
+  "assets/sprites/actors/gear/head_2_back.png": "f6d8b75ba2ddca771a23b2bf73cb3bf8e5811a7218936db42fe8c973b2ae9999",
+  "assets/sprites/actors/gear/head_2_front.png": "9cec9c2e5df45b58686fbeeb4ed35ad740857a3c1868249adb7f8c44382f892b",
+  "assets/sprites/actors/gear/head_3.png": "4036694438028f2e6438347e90fd65a86018ea0787438ef134b0eb8fef4c3f0c",
+  "assets/sprites/actors/gear/head_3_back.png": "793c22bf0ad5b4b0b8b0c94b0d28568a5d38e3ffed116b5a4ea2b38ded05d46c",
+  "assets/sprites/actors/gear/head_3_front.png": "6ef8833e0cd6520180c5cf1009ecfc1bf18930c3530dc64517aedb2d079d459c",
+  "assets/sprites/actors/gear/head_4.png": "6d22388358e0983f455d95461fa299ad86e9fe13c33e1c339f4b75b05e4ba97c",
+  "assets/sprites/actors/gear/head_4_back.png": "b0e264ff7c70080dd9e864f85f90773ff65855c4a540de30c03d99b46f53bb32",
+  "assets/sprites/actors/gear/head_4_front.png": "2502259e0e387b967d8d894d4bfa35f76a2baaf41b8cfeede476458d51152d88",
   "assets/sprites/actors/gear/legs_1.png": "7c239093eb7de011c7687aa65e847b15e9d99bfe0f5fcfc1845666300fafa93e",
   "assets/sprites/actors/gear/legs_1_back.png": "8ec6a5ea4d9ee2fbd042410f2bc275e465842a6c38d662166477646e776cd30a",
   "assets/sprites/actors/gear/legs_1_front.png": "8ec6a5ea4d9ee2fbd042410f2bc275e465842a6c38d662166477646e776cd30a",
@@ -497,5 +496,6 @@
   "assets/sprites/ui/tap_marker.png": "063b69a694019d774ec8f01b346ce0958b3043b6339fbed47adb4d0453ffdaaa",
   "assets/ui/title_bg.png": "9a9654af922ccb39e90ba327a0cfee873aa366b77506b0a0834cf365ee4fbd5e",
   "icon.png": "f65f6e81b1845c3ab6c07696d71a5c942104136d9b08bc3489edec44c53a89e2"
- }
+ },
+ "note": "0.3.9.2 hand-drawn art (designer batches 1+2, app icons, Hudson title). Generators must never overwrite these (tools/art/art_guard.py)."
 }
