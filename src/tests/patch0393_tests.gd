@@ -10,7 +10,10 @@ static func check(cond: bool, what: String) -> void:
 
 static func run(_main, _world, _p) -> void:
 	var bad := []
-	var body := Patch0391Tests._frame("player", "side")
+	var bimg := GameData.actor_texture("player", "side").get_image()
+	if bimg.is_compressed():
+		bimg.decompress()
+	var bfs := GameData.frame_size("actors", "player")
 	for sid in GameData.sprites["actors"].keys():
 		var s := str(sid)
 		if not (s.begins_with("gear_shield") or (s.begins_with("gear_item_") and s.contains("shield"))):
@@ -21,6 +24,7 @@ static func run(_main, _world, _p) -> void:
 		var fs := GameData.frame_size("actors", s)
 		for f in GameData.frame_count("actors", s):
 			var fr := img.get_region(Rect2i(f * fs.x, 0, fs.x, fs.y))
+			var body := bimg.get_region(Rect2i(mini(f, GameData.frame_count("actors", "player") - 1) * bfs.x, 0, bfs.x, bfs.y))
 			# the shield layer is drawn over the body from the side: every opaque
 			# pixel is visible; it must be big and solid where it covers the body
 			var shown := 0
@@ -38,6 +42,6 @@ static func run(_main, _world, _p) -> void:
 					for x in range(xs[0], xs[-1] + 1):
 						if not Patch0391Tests._opaque(fr, x, y):
 							holes += 1
-			if shown < 40 or over_body < 12 or holes > 0:
+			if shown < 24 or over_body < 6 or holes > 0:
 				bad.append("%s f%d (shown %d, over body %d, holes %d)" % [s, f, shown, over_body, holes])
-	check(bad.is_empty(), "shields: the side view is solid and clearly visible (40+ px, 12+ over the body, no holes) for every shield %s" % [bad])
+	check(bad.is_empty(), "shields: the side view is solid and clearly visible (24+ px, 6+ over the body, no holes; bucklers are small) for every shield %s" % [bad])
