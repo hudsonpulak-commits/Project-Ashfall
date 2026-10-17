@@ -1,5 +1,5 @@
 {
- "note": "0.3.7 data-driven quests. Stage types: kill (enemy, count; only the quest holder's own kills count) and talk (back to the giver). Rewards: influence always, plus optional marks and items.",
+ "note": "0.3.7 data-driven quests. Stage types: kill (enemy, count; only the quest holder's own kills count) and talk (back to the giver). Rewards: influence always, plus optional marks and items. 0.3.7.1: \"dialog\" nodes per quest (offer, in_progress, stage_<i> for talk stages, completed): text ({progress} is replaced) + choices [{label, action: accept|decline|advance|close, reply?}]. Talking never auto-starts a quest.",
  "givers": {
   "kell": {
    "name": "Kell",
@@ -45,6 +45,60 @@
     "marks": 150,
     "items": {
      "iron_sword": 1
+    }
+   },
+   "dialog": {
+    "offer": {
+     "text": "You there! Goblins have been raiding the roads out of Fenhollow. The watch is stretched thin. Will you kill 5 of them for me?",
+     "choices": [
+      {
+       "label": "Accept",
+       "action": "accept",
+       "reply": "Good. Five goblins, then come back to me. Their camps lie out in the wilds."
+      },
+      {
+       "label": "Decline",
+       "action": "decline",
+       "reply": "Hmph. Come back if you change your mind."
+      }
+     ]
+    },
+    "in_progress": {
+     "text": "How goes the hunt? {progress}.",
+     "choices": [
+      {
+       "label": "I'm on it",
+       "action": "close"
+      }
+     ]
+    },
+    "stage_1": {
+     "text": "Five goblins! Good work. But their leader, a Goblin Warlord, is terrorising Millbrook to the north-east. Slay him and Fenhollow will owe you.",
+     "choices": [
+      {
+       "label": "I'll hunt him down",
+       "action": "advance",
+       "reply": "He camps just south of Millbrook. Watch yourself."
+      }
+     ]
+    },
+    "stage_3": {
+     "text": "The Warlord is dead? You've done Fenhollow a great service. Take this, with my thanks.",
+     "choices": [
+      {
+       "label": "Thank you",
+       "action": "advance"
+      }
+     ]
+    },
+    "completed": {
+     "text": "The roads are quieter thanks to you, friend.",
+     "choices": [
+      {
+       "label": "Goodbye",
+       "action": "close"
+      }
+     ]
     }
    }
   }

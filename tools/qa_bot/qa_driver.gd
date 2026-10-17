@@ -2217,12 +2217,25 @@ func _quest037() -> void:
 	res["minimap_mark_start"] = QuestSystem.giver_marker(p, "kell")
 	label = "quest_q"
 	await _snap("quest_npc_question")
-	for attempt in 3:
-		await tap_tile(gt, "Kell")
-		if await until(func(): return QuestSystem.state(p, id) != QuestSystem.NOT_STARTED, 15.0):
-			break
+	# 0.3.7.1 dialog: Decline keeps '?', Accept starts
+	res["dialog_offer"] = await _dialog_pick(gt, "Kell", "Decline")
+	label = "dialog"
+	res["state_after_decline"] = QuestSystem.state(p, id)
+	await frames(10)
+	res["mark_after_decline"] = hud.quest_ui.giver_label("kell").text if hud.quest_ui.giver_label("kell") else ""
+	await _dialog_pick(gt, "Kell", "Accept", "quest_dialog_offer")
+	await until(func(): return QuestSystem.state(p, id) != QuestSystem.NOT_STARTED, 10.0)
 	await frames(10)
 	res["state_after_talk"] = QuestSystem.state(p, id)
+	# the phone bug: right after accepting in Fenhollow (goblins far away)
+	await frames(20)
+	res["arrow_from_town"] = hud.quest_ui.arrow_visible
+	res["objective_from_town"] = str(hud.quest_ui.objective)
+	await RenderingServer.frame_post_draw
+	res["arrow_px_town"] = _gold_px()
+	label = "arrow"
+	await _snap("quest_arrow_from_town")
+	await _map_frames(res)
 	res["mark_hunting"] = hud.quest_ui.giver_label("kell").text if hud.quest_ui.giver_label("kell") else "?none"
 	# goblins
 	for i in range(1, 6):
@@ -2233,6 +2246,8 @@ func _quest037() -> void:
 			w.set_focus(p.tile, true)
 			await frames(20)
 			res["arrow_goblin"] = hud.quest_ui.arrow_visible
+			await RenderingServer.frame_post_draw
+			res["arrow_px_goblin"] = _gold_px()
 			label = "arrow"
 			await _snap("quest_arrow_goblin")
 		var ok: bool = await _kill(p, w, g, "goblin %d" % i)
@@ -2258,13 +2273,13 @@ func _quest037() -> void:
 	await _snap("quest_npc_exclaim")
 	p.stop()
 	_clear_foes(p, w)
-	for attempt in 3:
-		await tap_tile(gt, "Kell (report)")
-		if await until(func(): return QuestSystem.progress_text(p, id).contains("Warlord"), 15.0):
-			break
+	await _dialog_pick(gt, "Kell (report)", "I'll hunt him down", "quest_dialog_report")
+	await until(func(): return QuestSystem.progress_text(p, id).contains("Warlord"), 10.0)
 	res["progress_warlord"] = QuestSystem.progress_text(p, id)
 	await frames(10)
 	res["arrow_warlord"] = hud.quest_ui.arrow_visible
+	await RenderingServer.frame_post_draw
+	res["arrow_px_warlord"] = _gold_px()
 	await _snap("quest_arrow_warlord")
 	# the Warlord
 	var wl: Enemy = w.enemies.nearest(p.tile, ["goblin_warlord"], 4000)
@@ -2287,10 +2302,8 @@ func _quest037() -> void:
 	await frames(20)
 	p.stop()
 	_clear_foes(p, w)
-	for attempt in 3:
-		await tap_tile(gt, "Kell (turn in)")
-		if await until(func(): return QuestSystem.state(p, id) == QuestSystem.COMPLETED, 15.0):
-			break
+	await _dialog_pick(gt, "Kell (turn in)", "Thank you", "quest_dialog_turnin")
+	await until(func(): return QuestSystem.state(p, id) == QuestSystem.COMPLETED, 10.0)
 	res["turn_in_msgs"] = p.action.duplicate()
 	await frames(20)
 	res["state_final"] = QuestSystem.state(p, id)
@@ -2305,6 +2318,69 @@ func _quest037() -> void:
 	hud.show_panel("")
 	p.skills.xp = keep_xp
 	_notes["quest"] = res
+
+
+## 0.3.7.1 tap the giver until the dialog opens, then press a choice.
+func _dialog_pick(gt: Vector2i, what: String, choice: String, snap := "") -> Dictionary:
+	var hud = main.hud
+	var shown := {}
+	for attempt in 3:
+		await tap_tile(gt, what)
+		if await until(func(): return hud.current_panel == "dialog", 10.0):
+			break
+	await frames(6)
+	shown = hud.dialog_state.duplicate(true)
+	if snap != "":
+		await _snap(snap)
+	var b: Control = hud.panels["dialog"].find_child("Choice_" + choice, true, false)
+	for attempt in 3:
+		if not await tap_control(b, choice) or await until(func(): return hud.current_panel != "dialog", 4.0):
+			break
+	await frames(6)
+	return shown
+
+
+## Gold (#ffd23a-ish) arrow / marker pixels on screen right now.
+func _gold_px() -> int:
+	var img := get_viewport().get_texture().get_image()
+	var n := 0
+	for y in range(0, img.get_height(), 2):
+		for x in range(0, img.get_width(), 2):
+			var c := img.get_pixel(x, y)
+			if c.r > 0.9 and c.g > 0.72 and c.g < 0.9 and c.b < 0.35:
+				n += 1
+	return n
+
+
+## 0.3.7.1 world map: markers shown / hidden, pinch-zoomed.
+func _map_frames(res: Dictionary) -> void:
+	var hud = main.hud
+	hud.show_panel("map")
+	var mp = hud.map_panel
+	MapPrefs.set_markers_shown(true)
+	await frames(10)
+	label = "map"
+	await _snap("map_markers_shown")
+	await tap_control(mp._markers_btn, "Markers toggle")
+	await frames(10)
+	res["map_markers_off"] = not MapPrefs.markers_shown()
+	await _snap("map_markers_hidden")
+	MapPrefs.reload()
+	res["map_markers_persist"] = not MapPrefs.markers_shown()
+	await tap_control(mp._markers_btn, "Markers toggle")
+	await frames(4)
+	res["map_markers_on"] = MapPrefs.markers_shown()
+	var z0: float = mp.zoom
+	var plus: Control = mp.find_child("ZoomIn", true, false)
+	for i in 3:
+		await tap_control(plus, "zoom +")
+		await frames(4)
+	res["map_zoom"] = [z0, mp.zoom]
+	await _snap("map_zoomed")
+	mp.zoom = 1.0
+	mp._center = Vector2(-1, -1)
+	hud.show_panel("")
+	await frames(6)
 
 
 ## 0.3.7 XP feedback: melee hit, chop, mine, cook each log an XP line and move

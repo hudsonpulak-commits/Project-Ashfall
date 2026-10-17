@@ -39,6 +39,7 @@ static func run(main, world: World, p: Player) -> void:
 	_walled_integration_tests(world, p)
 	Patch036Tests.run(world, p)   # 0.3.6 (last: it advances ~250 ticks)
 	Patch037Tests.run(world, p)   # 0.3.7
+	Patch0371Tests.run(main, world, p)   # 0.3.7.1
 	p.place_at(world.gen.town_spawn("fenhollow"))
 	world.set_focus(p.tile, true)
 

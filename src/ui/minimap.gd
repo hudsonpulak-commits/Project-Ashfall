@@ -10,6 +10,7 @@ const SCALE := 2
 var world: World
 var player: Actor
 var others: Array = []
+var markers_btn: Button
 var _last_tile := Vector2i(1 << 20, 0)
 
 
@@ -17,6 +18,19 @@ func _init() -> void:
 	custom_minimum_size = Vector2(84, 84)
 	clip_contents = true
 	mouse_filter = Control.MOUSE_FILTER_STOP
+	# 0.3.7.1 tiny toggle: show / hide map markers (player pins + quest markers)
+	markers_btn = Button.new()
+	markers_btn.name = "MarkersToggle"
+	markers_btn.focus_mode = Control.FOCUS_NONE
+	markers_btn.text = "M"
+	markers_btn.add_theme_font_size_override("font_size", 7)
+	markers_btn.position = Vector2(1, 1)
+	markers_btn.size = Vector2(14, 12)
+	markers_btn.custom_minimum_size = Vector2(14, 12)
+	markers_btn.pressed.connect(func():
+		MapPrefs.set_markers_shown(not MapPrefs.markers_shown())
+		Events.say("Map markers: " + ("shown" if MapPrefs.markers_shown() else "hidden")))
+	add_child(markers_btn)
 
 
 func _process(_dt: float) -> void:
@@ -43,7 +57,7 @@ func _draw() -> void:
 	# 0.3.1 custom markers (when the player has them and the toggle is on)
 	if player is Player:
 		var mm: MapMarkers = (player as Player).map_markers
-		if mm.show_on_minimap:
+		if mm.show_on_minimap and MapPrefs.markers_shown():
 			for m in mm.markers:
 				var mx := int(m["x"]) - pt.x
 				var my := int(m["y"]) - pt.y
@@ -53,8 +67,14 @@ func _draw() -> void:
 				var ic: Texture2D = GameData.texture("ui", "marker_%s" % str(m["icon"]))
 				var dest := Rect2((p - Vector2(4, 4)).floor(), Vector2(8, 8))
 				draw_texture_rect(ic, dest, false, Color(str(m["colour"])))
-	# 0.3.7 quest giver "?" / "!"
-	if player is Player:
+	# 0.3.7 quest giver "?" / "!" + 0.3.7.1 objective area (Markers toggle)
+	if player is Player and MapPrefs.markers_shown():
+		var area = QuestSystem.objective_area(player, world)
+		if area != null:
+			var ap := Vector2((area.x - pt.x) * SCALE, (area.y - pt.y) * SCALE) + center
+			ap = ap.clamp(Vector2(5, 5), size - Vector2(5, 5))   # off the minimap: pinned to its edge
+			draw_circle(ap, 4.5, Color(0, 0, 0, 0.7))
+			draw_circle(ap, 3.2, Color("#e04040"))
 		for gid in QuestSystem.cfg().get("givers", {}).keys():
 			var mk := QuestSystem.giver_marker(player, gid)
 			var gt := QuestSystem.giver_tile(world, gid)
@@ -69,6 +89,8 @@ func _draw() -> void:
 			var p2 := Vector2((a.tile.x - pt.x) * SCALE, (a.tile.y - pt.y) * SCALE) + center
 			draw_rect(Rect2(p2.floor(), Vector2(SCALE, SCALE)), Color("#f0e060"))
 	draw_rect(Rect2(center.floor(), Vector2(SCALE, SCALE)), Color.WHITE)
+	if markers_btn:
+		markers_btn.modulate = Color.WHITE if MapPrefs.markers_shown() else Color(1, 1, 1, 0.45)
 	draw_rect(Rect2(Vector2.ZERO, size), UIStyle.BORDER_HI, false, 1.0)
 
 

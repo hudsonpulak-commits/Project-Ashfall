@@ -42,6 +42,7 @@ static func run(world: World, p: Player) -> void:
 	world.set_focus(p.tile, true)
 	p.interact(world, kell)
 	WorldTests.ticks(15)
+	QuestSystem.choose(p, id, "accept")   # 0.3.7.1 via the dialog
 	check(QuestSystem.state(p, id) == QuestSystem.IN_PROGRESS and QuestSystem.giver_marker(p, "kell") == "", "talking to Kell starts the quest; no marker while hunting")
 	check(QuestSystem.progress_text(p, id).ends_with("Goblins 0/5"), "progress text: %s" % QuestSystem.progress_text(p, id))
 	# AI kills don't count
@@ -59,6 +60,7 @@ static func run(world: World, p: Player) -> void:
 	check(QuestSystem.objective_tile(p, world) == gt, "guidance points at Kell when it's time to talk")
 	p.interact(world, kell)
 	WorldTests.ticks(15)
+	QuestSystem.choose(p, id, "advance")   # 0.3.7.1 via the dialog
 	check(QuestSystem.progress_text(p, id).contains("Goblin Warlord 0/1"), "Kell sends you after the Warlord (%s)" % QuestSystem.progress_text(p, id))
 	# the Warlord
 	var wd: Dictionary = GameData.enemies["goblin_warlord"]
@@ -76,6 +78,7 @@ static func run(world: World, p: Player) -> void:
 	check(not wl.dead, "the Warlord respawns (%d ticks)" % (t - Tick.tick_count))
 	p.interact(world, kell)
 	WorldTests.ticks(15)
+	QuestSystem.choose(p, id, "advance")   # 0.3.7.1 via the dialog
 	check(QuestSystem.state(p, id) == QuestSystem.COMPLETED and QuestSystem.giver_marker(p, "kell") == "", "turned in: completed, all markers gone")
 	check(p.influence == 10 and p.inventory.count(GameData.currency) - marks0 == 150 and p.inventory.count("iron_sword") >= 1, "rewards: +10 Influence, 150 marks, iron sword")
 	var sv2 := p.to_save()

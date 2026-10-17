@@ -277,6 +277,7 @@ func _build() -> void:
 	panels["map"] = map_panel
 	panels["menu"] = _build_menu_panel()
 	panels["quests"] = _build_quest_panel()
+	panels["dialog"] = _build_dialog_panel()
 	panels["prayer"] = _build_prayer_panel()
 	for k in panels.keys():
 		panels[k].visible = false
@@ -683,6 +684,14 @@ func _bank_in_reach() -> bool:
 
 
 func _process(_dt: float) -> void:
+	if log_box and log_box.get_child_count() > 0:   # 0.3.7.1 no overhead labels over the chat log
+		var lr := log_box.get_global_rect()
+		var top := lr.end.y
+		for c in log_box.get_children():
+			top = minf(top, (c as Control).get_global_rect().position.y)
+		Overhead.block_rects = [Rect2(Vector2(0, top - 2), Vector2(get_viewport_rect().size.x, lr.end.y - top + 4))]
+	else:
+		Overhead.block_rects = []
 	if player:
 		var ph: String = DayNight.phase()
 		var nightish := ph in ["night", "dusk"]
@@ -809,6 +818,47 @@ func _build_quest_panel() -> Control:
 	v.add_child(quest_box)
 	Events.quests_changed.connect(refresh_quests)
 	return v
+
+
+var dialog_name: Label
+var dialog_text: Label
+var dialog_choices: HBoxContainer
+var dialog_state: Dictionary = {}   # what's on screen (tests / QA)
+
+
+func _build_dialog_panel() -> Control:
+	var v := VBoxContainer.new()
+	dialog_name = _header("")
+	v.add_child(dialog_name)
+	dialog_text = UIKit.label("", 10, UIStyle.TEXT)
+	dialog_text.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	dialog_text.custom_minimum_size = Vector2(320, 0)
+	v.add_child(dialog_text)
+	dialog_choices = HBoxContainer.new()
+	dialog_choices.alignment = BoxContainer.ALIGNMENT_CENTER
+	dialog_choices.add_theme_constant_override("separation", 8)
+	v.add_child(dialog_choices)
+	Events.quest_dialog.connect(open_dialog)
+	return v
+
+
+## 0.3.7.1 the NPC dialog (quests.json "dialog" nodes).
+func open_dialog(gid: String) -> void:
+	var d := QuestSystem.dialog(player, gid)
+	dialog_state = d
+	dialog_name.text = str(d["name"])
+	dialog_text.text = str(d["text"])
+	UIKit.clear(dialog_choices)
+	for c in d["choices"]:
+		var act := str(c.get("action", "close"))
+		var b := UIKit.button(str(c.get("label", "OK")), func():
+			if str(d["quest"]) != "":
+				QuestSystem.choose(player, str(d["quest"]), act)
+			dialog_state = {}
+			show_panel(""), 110, 34)
+		b.name = "Choice_" + str(c.get("label", "OK"))
+		dialog_choices.add_child(b)
+	show_panel("dialog")
 
 
 func refresh_quests() -> void:

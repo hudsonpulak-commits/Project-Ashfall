@@ -94,29 +94,11 @@ static func giver_tile(world, gid: String) -> Vector2i:
 	return o.pos
 
 
-## Talking to a quest giver (Interactions "quest").
+## Talking to a quest giver (Interactions "quest"): opens the dialog panel.
 static func talk(p, obj) -> void:
 	var gid := str(obj.def().get("giver", ""))
-	for q in quests():
-		if str(q.get("giver", "")) != gid:
-			continue
-		var id: String = q["id"]
-		match state(p, id):
-			NOT_STARTED:
-				p.quests[id] = {"stage": 0, "count": 0, "done": false}
-				p.say("%s: %s" % [giver_name(gid), str(q.get("start_text", ""))])
-				Events.say("Quest started: %s" % q["name"], "level")
-				_changed()
-				return
-			READY:
-				var st := current_stage(p, id)
-				p.say("%s: %s" % [giver_name(gid), str(st.get("say", ""))])
-				_advance(p, id)
-				return
-			IN_PROGRESS:
-				p.say("%s: %s" % [giver_name(gid), progress_text(p, id)])
-				return
-	p.say("%s: Thank you for your help, friend." % giver_name(gid))
+	if Events.has_signal("quest_dialog"):
+		Events.quest_dialog.emit(gid)
 
 
 static func _advance(p, id: String) -> void:
@@ -163,31 +145,124 @@ static func on_kill(p, kind: String) -> void:
 			_changed()
 
 
-## Where the guidance arrow points (or null): the nearest live quest monster
-## (warlord: any distance; others within 40 tiles) or the giver to talk to.
-static func objective_tile(p, world) -> Variant:
+## 0.3.7.1 the current objective, ALWAYS during an active quest:
+## {"tile", "kind": "enemy" | "area" | "npc"}. Kill stage: the nearest live
+## target (any distance); none alive -> its nearest spawn area. {} = none.
+static func objective(p, world) -> Dictionary:
 	for q in quests():
 		var id: String = q["id"]
 		var s := state(p, id)
 		if s == READY:
-			return giver_tile(world, str(q.get("giver", "")))
+			return {"tile": giver_tile(world, str(q.get("giver", ""))), "kind": "npc"}
 		if s != IN_PROGRESS:
 			continue
-		var st := current_stage(p, id)
-		var kind := str(st.get("enemy", ""))
-		var radius := 2000 if int(st.get("count", 1)) == 1 else 40
+		var kind := str(current_stage(p, id).get("enemy", ""))
 		var best = null
 		var bd := 1 << 30
 		for e in world.enemies.enemies:
 			if e.dead or e.kind != kind:
 				continue
 			var d: int = maxi(absi(e.tile.x - p.tile.x), absi(e.tile.y - p.tile.y))
-			if d <= radius and d < bd:
+			if d < bd:
 				bd = d
 				best = e.tile
 		if best != null:
-			return best
+			return {"tile": best, "kind": "enemy"}
+		var a = spawn_area(kind, p.tile)
+		if a != null:
+			return {"tile": a, "kind": "area"}
+	return {}
+
+
+static func objective_tile(p, world) -> Variant:
+	var o := objective(p, world)
+	return o.get("tile") if not o.is_empty() else null
+
+
+## Nearest camp ("at" in data/enemies.json camps) of an enemy kind.
+static func spawn_area(kind: String, from: Vector2i) -> Variant:
+	var best = null
+	var bd := 1 << 30
+	for c in _camps():
+		if str(c.get("enemy", "")) != kind:
+			continue
+		var t := Vector2i(int(c["at"][0]), int(c["at"][1]))
+		var d: int = maxi(absi(t.x - from.x), absi(t.y - from.y))
+		if d < bd:
+			bd = d
+			best = t
+	return best
+
+
+static var _camp_cache: Array = []
+
+
+static func _camps() -> Array:
+	if _camp_cache.is_empty():
+		var f := FileAccess.open("res://data/enemies.json", FileAccess.READ)
+		var d = JSON.parse_string(f.get_as_text()) if f else {}
+		_camp_cache = d.get("camps", []) if d is Dictionary else []
+	return _camp_cache
+
+
+## Map / minimap objective area during a kill stage: the target's camp.
+static func objective_area(p, world) -> Variant:
+	for q in quests():
+		var id: String = q["id"]
+		if state(p, id) != IN_PROGRESS:
+			continue
+		return spawn_area(str(current_stage(p, id).get("enemy", "")), p.tile)
 	return null
+
+
+# ---------------------------------------------------------------- dialog --
+## 0.3.7.1 data-driven dialog (quests.json "dialog"): node by state —
+## "offer" (not started), "in_progress", "stage_<i>" (a talk stage),
+## "completed". Each node: text (+ {progress}), choices [{label, action}].
+## Actions: accept, decline, advance, close.
+static func dialog(p, gid: String) -> Dictionary:
+	for q in quests():
+		if str(q.get("giver", "")) != gid:
+			continue
+		var id: String = q["id"]
+		var dl: Dictionary = q.get("dialog", {})
+		var key := ""
+		match state(p, id):
+			NOT_STARTED: key = "offer"
+			IN_PROGRESS: key = "in_progress"
+			READY: key = "stage_%d" % int(p.quests[id].get("stage", 0))
+			COMPLETED: key = "completed"
+		if state(p, id) == COMPLETED and q != quests()[-1]:
+			continue     # a later quest from the same giver may be on offer
+		var node: Dictionary = dl.get(key, {})
+		return {"quest": id, "name": giver_name(gid), "node": key,
+			"text": str(node.get("text", "")).replace("{progress}", progress_text(p, id)),
+			"choices": node.get("choices", [{"label": "Goodbye", "action": "close"}])}
+	return {"quest": "", "name": giver_name(gid), "node": "", "text": "Good day.", "choices": [{"label": "Goodbye", "action": "close"}]}
+
+
+## A dialog choice. Returns the reply line ("" = none). Never auto-starts.
+static func choose(p, quest_id: String, action: String) -> String:
+	var q := quest(quest_id)
+	var reply := ""
+	for node in q.get("dialog", {}).values():
+		for c in node.get("choices", []):
+			if str(c.get("action", "")) == action and c.has("reply"):
+				reply = str(c["reply"])
+	match action:
+		"accept":
+			if state(p, quest_id) == NOT_STARTED:
+				p.quests[quest_id] = {"stage": 0, "count": 0, "done": false}
+				Events.say("Quest started: %s" % q["name"], "level")
+				_changed()
+		"advance":
+			if state(p, quest_id) == READY:
+				_advance(p, quest_id)
+		_:
+			pass
+	if reply != "":
+		p.say("%s: %s" % [giver_name(str(q.get("giver", ""))), reply])
+	return reply
 
 
 static func _changed() -> void:

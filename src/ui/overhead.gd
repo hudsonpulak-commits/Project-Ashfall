@@ -20,6 +20,7 @@ const LAYER := 5                  # world < labels < HUD (10)
 
 static var _overlay: CanvasLayer = null
 static var _entries: Array = []   # [label, owner]
+static var block_rects: Array = []   # 0.3.7.1 screen rects labels must not draw over (chat log), set by the HUD
 
 
 class _Overlay extends CanvasLayer:
@@ -86,6 +87,14 @@ static func update_all() -> void:
 		var cx := clampf(xf.origin.x, tw / 2.0 + 2.0, vr.x - tw / 2.0 - 2.0)
 		l.position = Vector2(roundf(cx - l.size.x / 2.0), roundf(base_y - l.size.y))
 		var a := 1.0
+		var lr := Rect2(Vector2(cx - tw / 2.0, l.position.y), Vector2(tw, l.size.y))
+		var hidden := false
+		for br in block_rects:
+			if (br as Rect2).intersects(lr):
+				hidden = true
+		if hidden:     # 0.3.7.1 never draw over the chat log
+			l.modulate.a = 0.0
+			continue
 		if viewer != null and is_instance_valid(viewer) and viewer != o and viewer.is_inside_tree():
 			var vx: Transform2D = viewer.get_global_transform_with_canvas()
 			var hr := Rect2(vx.origin + Vector2(-9, -44) * sc, Vector2(18, 22) * sc)

@@ -11,6 +11,7 @@ signal exchange_opened()
 signal action_changed(text: String)                 # "Chopping ash tree..." or ""
 signal projectile(from: Object, to: Object, sprite: String)   # 0.3.3 arrow in flight (data/combat.json ranged)
 signal quests_changed()   # 0.3.7
+signal quest_dialog(giver_id: String)   # 0.3.7.1 open the NPC dialog
 signal hitsplat(target: Object, world_tile: Vector2i, amount: int)   # target: Actor / Enemy / WorldObject
 signal shop_opened(shop: String)
 signal player_shop_opened(town: String, slot: int)   # 0.3.0 (slot -1 = counter: buy / manage)

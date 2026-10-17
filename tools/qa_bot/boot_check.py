@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """0.3.2 cold-boot QA on the EXPORTED build (release gate).
 
-Runs the Android export preset's pack (same filters, compatibility renderer)
+Runs the Android export preset's pack (same filters, compatibility renderer; B7 mobile renderer at 1080x2400)
 on the size-optimised engine template built with the Android feature profile
 (tools/engine/ashfen_custom.py -> templates-custom/linux_release_ashfen_*),
 rendered under Xvfb, driven by real X clicks (xdotool), filmed with ffmpeg.
@@ -32,7 +32,9 @@ def sh(cmd, **kw):
 
 
 class Run:
-    def __init__(self, name, out, binary, display, home):
+    def __init__(self, name, out, binary, display, home, size=None, extra=()):
+        global W, H
+        self.size = size or (W, H)
         self.name, self.out, self.bin, self.display, self.home = name, out, binary, display, home
         self.frames = os.path.join(out, "frames_" + name)
         shutil.rmtree(self.frames, ignore_errors=True)
@@ -41,10 +43,10 @@ class Run:
         env = dict(os.environ, HOME=home, XDG_DATA_HOME=home, DISPLAY=display)
         self.t0 = time.time()
         self.rec = subprocess.Popen(["ffmpeg", "-loglevel", "error", "-y", "-f", "x11grab", "-framerate", str(FPS),
-                                     "-video_size", "%dx%d" % (W, H), "-i", display + "+0,0",
+                                     "-video_size", "%dx%d" % self.size, "-i", display + "+0,0",
                                      os.path.join(self.frames, "f%05d.png")], stdin=subprocess.DEVNULL)
         self.log = open(self.log_path, "w")
-        self.proc = subprocess.Popen([binary, "--resolution", "%dx%d" % (W, H), "--position", "0,0", "--", "--qa-boot"],
+        self.proc = subprocess.Popen([binary, "--resolution", "%dx%d" % self.size, "--position", "0,0"] + list(extra) + ["--", "--qa-boot"],
                                      stdout=self.log, stderr=subprocess.STDOUT, env=env, cwd=os.path.dirname(binary))
 
     def text(self):
@@ -95,7 +97,7 @@ class Run:
 
     def grab(self, name):
         p = os.path.join(self.out, name)
-        sh("DISPLAY=%s ffmpeg -loglevel error -y -f x11grab -video_size %dx%d -i %s+0,0 -frames:v 1 %s" % (self.display, W, H, self.display, p))
+        sh("DISPLAY=%s ffmpeg -loglevel error -y -f x11grab -video_size %dx%d -i %s+0,0 -frames:v 1 %s" % (self.display, self.size[0], self.size[1], self.display, p))
         return p
 
     def stop(self):
@@ -146,6 +148,16 @@ def label_pixels(png):
                 continue
             if any(sum(px[x + dx, y + dy]) < 90 for dx in (-2, -1, 1, 2) for dy in (-1, 0, 1)):
                 n += 1
+    return n
+
+
+def gold_pixels(png):
+    """Quest arrow / marker gold (#ffd23a-ish) pixels."""
+    im = Image.open(png).convert("RGB")
+    n = 0
+    for r, g, b in im.getdata():
+        if r > 225 and 180 < g < 230 and b < 90:
+            n += 1
     return n
 
 
@@ -290,6 +302,45 @@ def main():
         r.stop()
     blanks["bad"] = r.longest_blank()
 
+    # ---- B7 (0.3.7.1): 0.3.7 saves with Goblin Slayer in progress, phone size
+    # 1080x2400, mobile renderer: the quest arrow must be drawn (gold px).
+    pd = ":%d" % (int(a.display[1:]) + 2)
+    pxv = None
+    if sh("DISPLAY=%s xdpyinfo >/dev/null 2>&1" % pd).returncode != 0:
+        pxv = subprocess.Popen(["Xvfb", pd, "-screen", "0", "1080x2400x24"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        time.sleep(1.0)
+    mobile_bin = os.environ.get("GODOT", os.path.join(os.environ.get("TOOLS_DIR", "/workspace/tools"), "godot", "Godot_v4.7.2-stable_linux.x86_64"))
+    for st, tag, what in ((0, "gs0", "goblin step"), (2, "gs2", "Warlord step")):
+        h = home("v037_" + tag)
+        fx = json.load(open(os.path.join(ROOT, "tools", "qa_bot", "fixtures", "save_v8_037_%s.json" % tag)))
+        fx["saved_unix"] = int(time.time()) - 120
+        json.dump(fx, open(os.path.join(h, "godot", "app_userdata", "Ashfen", "ashfen_save.json"), "w"))
+        # the size-stripped release template has no runtime shader compiler for
+        # the RD (Vulkan) renderers, so the same exported .pck runs on the
+        # stock 4.7.2 runtime with --main-pack (Android ships precompiled shaders)
+        r = Run("v037_" + tag, out, mobile_bin, pd, h, size=(1080, 2400),
+                extra=["--main-pack", os.path.join(bindir, "ashfen.pck"), "--rendering-method", "mobile"])
+        try:
+            r.wait_for(r"BOOT menu shown", 40)
+            time.sleep(1.0)
+            ok = r.click("LoadGame") and r.click("Slot1")
+            game = r.wait_for(r"BOOT gameplay \(slot (\d+)\) after (\d+) ms", 120)
+            time.sleep(4.0)
+            png = r.grab("boot_phone_arrow_%s.png" % tag)
+            evidence.append(png)
+            txt = r.text()
+            errs = [l for l in txt.splitlines() if "SCRIPT ERROR" in l]
+            rend = re.findall(r"(Vulkan[^\n]*|OpenGL[^\n]*)", txt)
+            gold = gold_pixels(png)
+            res("B7", "1080x2400 mobile renderer, 0.3.7 save (Goblin Slayer %s): loads, quest arrow drawn" % what,
+                ok and game and not errs and gold >= 150 and any("Mobile" in x for x in rend),
+                "gameplay %s; gold arrow px %d; script errors %d; renderer %s" % (bool(game), gold, len(errs), rend[0][:70] if rend else None))
+        finally:
+            r.stop()
+        shutil.rmtree(r.frames, ignore_errors=True)
+    if pxv:
+        pxv.terminate()
+
     lab = {k: label_pixels(os.path.join(out, k)) for k in ("boot_ingame_new.png", "boot_ingame_v032.png") if os.path.exists(os.path.join(out, k))}
     res("B6", "overhead name/level labels render in the exported build (label-colour pixels in the world area)", bool(lab) and max(lab.values()) >= 25,
         "; ".join("%s: %d px" % kv for kv in lab.items()))
@@ -303,7 +354,7 @@ def main():
         shutil.rmtree(os.path.join(out, "frames_" + k), ignore_errors=True)
     passed = sum(1 for x in results if x[2])
     with open(os.path.join(out, "boot_report.md"), "w") as f:
-        f.write("# Boot QA (exported build, compatibility renderer)\n\n| id | check | result | detail |\n|---|---|---|---|\n")
+        f.write("# Boot QA (exported build, compatibility renderer; B7 mobile renderer at 1080x2400)\n\n| id | check | result | detail |\n|---|---|---|---|\n")
         for cid, what, ok, det in results:
             f.write("| %s | %s | %s | %s |\n" % (cid, what, "PASS" if ok else "FAIL", det.replace("|", "/")))
         f.write("\nEvidence: %s\n" % ", ".join(os.path.basename(e) for e in evidence))

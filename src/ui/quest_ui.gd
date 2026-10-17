@@ -32,8 +32,10 @@ func _process(_d: float) -> void:
 		var o: WorldObject = world.object_at(t) if t.x > -99999 else null
 		var e: Array = _labels.get(gid, [])
 		if o != null and o.view != null and is_instance_valid(o.view) and (e.is_empty() or not is_instance_valid(e[0]) or e[1] != o.view):
-			var l := Overhead.make(Color("#f0e040"))
-			l.add_theme_font_size_override("font_size", 14)
+			var l := Overhead.make(Color("#ffe030"))
+			l.add_theme_font_size_override("font_size", 20)   # 0.3.7.1 bigger ? / !
+			l.add_theme_constant_override("outline_size", 5)
+			l.size = Vector2(40, 26)
 			Overhead.place(l, 24.0)
 			Overhead.attach(l, o.view)
 			e = [l, o.view]
@@ -44,17 +46,29 @@ func _process(_d: float) -> void:
 	queue_redraw()
 
 
+var objective: Dictionary = {}
+var marker_visible := false      # on-screen marker above the target
+var marker_pos := Vector2.ZERO
+var _t := 0.0
+
+
 func _update_arrow() -> void:
 	arrow_visible = false
-	var tgt = QuestSystem.objective_tile(player, world)
-	if tgt == null:
+	marker_visible = false
+	objective = QuestSystem.objective(player, world)
+	if objective.is_empty():
 		return
+	var tgt: Vector2i = objective["tile"]
 	arrow_target = tgt
-	var sp: Vector2 = world.get_global_transform_with_canvas() * world.tile_foot(tgt)
+	var sp := _screen_of(tgt)
 	var vs := get_viewport_rect().size
 	var r := Rect2(Vector2(EDGE, TOP), vs - Vector2(EDGE * 2, TOP + BOTTOM))
 	if r.has_point(sp):
-		return    # on screen: no arrow
+		# on screen: a bouncing marker over the goblin / Warlord / camp (NPCs have their "!")
+		if str(objective["kind"]) != "npc":
+			marker_visible = true
+			marker_pos = sp + Vector2(0, -34)
+		return
 	var c := r.get_center()
 	var d := sp - c
 	var k := minf(absf((r.size.x * 0.5) / d.x) if d.x != 0 else INF, absf((r.size.y * 0.5) / d.y) if d.y != 0 else INF)
@@ -62,14 +76,30 @@ func _update_arrow() -> void:
 	arrow_visible = true
 
 
+func _screen_of(t: Vector2i) -> Vector2:
+	return world.get_global_transform_with_canvas() * world.tile_foot(t)
+
+
 func _draw() -> void:
+	_t = Time.get_ticks_msec() / 1000.0
+	var pulse := 1.0 + 0.18 * sin(_t * 6.0)
+	var gold := Color("#ffd23a")
+	if marker_visible:
+		var bob := 3.0 * sin(_t * 5.0)
+		var m := marker_pos + Vector2(0, bob)
+		var tri := PackedVector2Array([m + Vector2(0, 9), m + Vector2(-8, -5), m + Vector2(8, -5)])
+		draw_colored_polygon(tri, gold)
+		tri.append(tri[0])
+		draw_polyline(tri, Color.BLACK, 1.5)
 	if not arrow_visible:
 		return
-	var sp: Vector2 = world.get_global_transform_with_canvas() * world.tile_foot(arrow_target)
+	var sp := _screen_of(arrow_target)
 	var dir := (sp - arrow_pos).normalized()
 	var n := Vector2(-dir.y, dir.x)
-	var tip := arrow_pos + dir * 12.0
-	var pts := PackedVector2Array([tip, arrow_pos - dir * 8.0 + n * 9.0, arrow_pos - dir * 3.0, arrow_pos - dir * 8.0 - n * 9.0])
-	draw_colored_polygon(pts, Color("#f0d040"))
+	var L := 18.0 * pulse        # logical px (x3 on a 1080-wide phone = ~54 px)
+	var tip := arrow_pos + dir * L * 0.6
+	var pts := PackedVector2Array([tip, arrow_pos - dir * L * 0.5 + n * L * 0.55, arrow_pos - dir * L * 0.2, arrow_pos - dir * L * 0.5 - n * L * 0.55])
+	draw_circle(arrow_pos, L * 0.75, Color(0, 0, 0, 0.35))
+	draw_colored_polygon(pts, gold)
 	pts.append(tip)
 	draw_polyline(pts, Color.BLACK, 2.0)
