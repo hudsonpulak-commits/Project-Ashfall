@@ -725,6 +725,15 @@
     16,
     16
    ]
+  },
+  "cooking_fire": {
+   "path": "res://assets/sprites/objects/cooking_fire.png",
+   "frame_size": [
+    16,
+    24
+   ],
+   "frames": 1,
+   "anchor": "bottom"
   }
  },
  "actors": {
@@ -2201,6 +2210,13 @@
     16
    ],
    "frames": 1
+  },
+  "flint": {
+   "path": "res://assets/sprites/items/flint.png",
+   "frame_size": [
+    16,
+    16
+   ]
   }
  },
  "ui": {

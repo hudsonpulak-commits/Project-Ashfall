@@ -430,6 +430,15 @@
    "type": "station",
    "station": "hearth",
    "verb": "Cook on"
+  },
+  "cooking_fire": {
+   "name": "Cooking fire",
+   "sprite": "cooking_fire",
+   "blocks": true,
+   "type": "station",
+   "station": "hearth",
+   "verb": "Cook on",
+   "note": "0.3.6 lit with flint on a log (data/fire.json); burns out by itself"
   }
  }
 }

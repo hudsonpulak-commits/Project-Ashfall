@@ -19,7 +19,8 @@ func _init() -> void:
 
 
 # ------------------------------------------------------------- equipment --
-const SLOTS := ["head", "body", "legs", "shield", "weapon"]
+const SLOTS := ["head", "body", "legs", "shield", "weapon", "ammo"]
+var ammo_qty := 0                    # 0.3.6 arrows in the ammo slot
 const DEATH_COIN_FEE := 0.10       # share of carried coin the town healer keeps (sink)
 var equipment: Dictionary = {}      # slot -> item id
 var deaths := 0
@@ -38,6 +39,8 @@ func gear_worn() -> Dictionary:
 func _gear_sum(stat: String) -> int:
 	var n := 0
 	for slot in equipment.keys():
+		if slot == "ammo":
+			continue    # arrow power is added per shot (Combat.arrow_power)
 		n += int(GameData.item(equipment[slot]).get("gear", {}).get(stat, 0))
 	return n
 
@@ -97,6 +100,18 @@ func equip_slot(i: int) -> String:
 	if why != "":
 		return why
 	var slot: String = gd["slot"]
+	if slot == "ammo":     # 0.3.6 the whole stack goes in the quiver
+		var qty := int(s["qty"])
+		inventory.remove_at(i)
+		if equipment.get("ammo", "") == id:
+			ammo_qty += qty
+		else:
+			if equipment.has("ammo") and ammo_qty > 0:
+				inventory.add(equipment["ammo"], ammo_qty)
+			equipment["ammo"] = id
+			ammo_qty = qty
+		Events.inventory_changed.emit()
+		return ""
 	if slot == "weapon":
 		combat_style = Combat.default_style(id)   # style follows the new weapon (switchable)
 	inventory.remove_at(i)
@@ -112,7 +127,11 @@ func unequip(slot: String) -> String:
 		return ""
 	if inventory.room_for(equipment[slot]) <= 0:
 		return "Your pack is full."
-	inventory.add(equipment[slot])
+	if slot == "ammo":
+		inventory.add(equipment[slot], maxi(1, ammo_qty))
+		ammo_qty = 0
+	else:
+		inventory.add(equipment[slot])
 	equipment.erase(slot)
 	Events.inventory_changed.emit()
 	return ""
@@ -203,7 +222,11 @@ func _pk_die(t: int) -> void:
 		for k in int(sl["qty"]):
 			units.append({"id": sl["id"], "slot": "", "dur": int(sl.get("dur", -1))})
 	for slot in SLOTS:
-		if equipment.has(slot):
+		if slot == "ammo":
+			for k in (ammo_qty if equipment.has("ammo") else 0):
+				units.append({"id": equipment["ammo"], "slot": "", "dur": -1})
+			ammo_qty = 0
+		elif equipment.has(slot):
 			units.append({"id": equipment[slot], "slot": slot, "dur": -1})
 	var ids := []
 	for u in units:
@@ -471,6 +494,7 @@ func to_save() -> Dictionary:
 	d["vaults"] = vs
 	d["town"] = current_town
 	d["equipment"] = equipment.duplicate()
+	d["ammo_qty"] = ammo_qty
 	d["deaths"] = deaths
 	d["combat_style"] = combat_style
 	d["energy"] = energy
@@ -494,6 +518,9 @@ func from_save(d: Dictionary) -> void:
 	if d.has("town"):
 		set_town(str(d["town"]))
 	equipment = d.get("equipment", {}).duplicate()
+	ammo_qty = int(d.get("ammo_qty", 0))
+	if not d.has("ammo_qty"):
+		auto_equip_ammo()    # 0.3.6 old saves: arrows from the pack go in the quiver
 	deaths = int(d.get("deaths", 0))
 	combat_style = str(d.get("combat_style", ""))
 	energy = clampf(float(d.get("energy", max_energy())), 0.0, max_energy())   # old saves start full
@@ -503,6 +530,39 @@ func from_save(d: Dictionary) -> void:
 	skull_until = int(d.get("skull_until", -1))
 	pk_warned = bool(d.get("pk_warned", false))
 	_was_pk = PkRules.is_pk(tile)
+
+
+## 0.3.6 the arrows fired are only those in the ammo slot.
+func ammo_arrow() -> String:
+	var id: String = equipment.get("ammo", "")
+	if id == "" or ammo_qty <= 0:
+		return ""
+	if skills.level("archery") < int(GameData.item(id).get("gear", {}).get("level", 1)):
+		return ""
+	return id
+
+
+func use_ammo(_arrow: String) -> void:
+	ammo_qty -= 1
+	if ammo_qty <= 0:
+		ammo_qty = 0
+		equipment.erase("ammo")
+	Events.inventory_changed.emit()
+
+
+## Equip the best usable arrow stack from the pack if the quiver is empty.
+func auto_equip_ammo() -> bool:
+	if equipment.has("ammo") and ammo_qty > 0:
+		return false
+	equipment.erase("ammo")
+	var best := Combat.best_arrow(inventory, skills)
+	if best == "":
+		return false
+	for i in inventory.size():
+		var sl = inventory.slots[i]
+		if sl != null and sl["id"] == best:
+			return equip_slot(i) == ""
+	return false
 
 
 func give_starter_kit() -> void:

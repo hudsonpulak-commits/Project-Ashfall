@@ -263,20 +263,63 @@ func weapon_id() -> String:
 		if s == null:
 			continue
 		var it := GameData.item(s["id"])
-		if it.get("tool", {}).get("skill", "") != "melee" or it.get("gear", {}).get("style", "melee") != "melee":
+		if it.get("tool", {}).get("skill", "") != "melee":
+			continue
+		var bow := Combat.is_ranged(s["id"])
+		if not bow and it.get("gear", {}).get("style", "melee") != "melee":
 			continue
 		if Combat.equip_error(skills, s["id"]) != "":
 			continue
-		var p := float(it["tool"].get("power", 0))
+		# 0.3.3: a bow counts only with arrows to shoot; it wins ties over melee
+		if bow and ammo_arrow() == "":
+			continue
+		var p := float(it["tool"].get("power", 0)) + (0.5 if bow else 0.0)
 		if p > best_p:
 			best_p = p
 			best = s["id"]
 	return best
 
 
+## 0.3.6 the arrows this actor fires. AI archers: best usable stack in the pack;
+## the Player overrides this with its equipped ammo slot only.
+func ammo_arrow() -> String:
+	return Combat.best_arrow(inventory, skills)
+
+
+func use_ammo(arrow: String) -> void:
+	inventory.remove(arrow, 1)
+
+
 func weapon_power() -> float:
 	var w := weapon_id()
 	return float(GameData.item(w).get("tool", {}).get("power", 0)) if w != "" else 0.0
+
+
+## 0.3.3: one bow shot at e (in range, line of sight checked by the caller).
+## Uses one arrow; false = out of arrows (the attack stops).
+func _shoot(e, t: int, world) -> bool:
+	var arrow := ammo_arrow()
+	if arrow == "":
+		return false
+	use_ammo(arrow)
+	if self is Player:
+		Events.inventory_changed.emit()
+	var w := weapon_id()
+	var acc := 0.0
+	if e is Actor:
+		PkRules.on_pvp_swing(self, e, t)
+		acc = PkRules.accuracy(PkRules.actor_stats(self), PkRules.actor_stats(e))
+	else:
+		acc = minf(0.95, Combat.actor_accuracy(skills.level("archery"), combat_atk(), int(e.def.get("defence", 0)), Combat.armour_break(w)) * Prayer.mult(prayer, "acc"))
+	var mh := Combat.actor_max_hit(skills.level("archery"), weapon_power(), combat_str()) + Combat.arrow_power(arrow)
+	var dmg := Combat.swing(acc, mh, rng)
+	dmg = Prayer.scale_damage(dmg, Prayer.mult(prayer, "dmg"), rng)
+	Events.projectile.emit(self, e, str(Combat.rcfg().get("projectile_sprite", "arrow")))
+	Combat.award_hit_xp(skills, "ranged", dmg)
+	if world != null and world.get("ground") != null and rng.randf() < float(Combat.rcfg().get("arrow_drop_chance", 0.5)):
+		world.ground.add(e.tile, arrow, 1, t, -1, actor_id)
+	e.take_hit(dmg, self, t)
+	return true
 
 
 ## Style in use: the chosen one, else the weapon class default.
@@ -370,10 +413,14 @@ func eat_slot(i: int, t: int) -> int:
 	var s = inventory.slots[i]
 	if s == null:
 		return -1
-	var heals := int(GameData.item(s["id"]).get("heals", 0))
+	var it := GameData.item(s["id"])
+	var heals := int(it.get("heals", 0))
 	if heals <= 0:
 		return -1
-	inventory.remove_at(i)
+	if int(s.get("qty", 1)) > 1:
+		inventory.remove(s["id"], 1)
+	else:
+		inventory.remove_at(i)
 	var before := hp
 	hp = mini(max_hp(), hp + heals)
 	next_attack = maxi(next_attack, t + Combat.EAT_DELAY)
@@ -408,7 +455,19 @@ func _fight_tick(t: int, world) -> void:
 		combat_blocked(why)
 		return
 	var d := _cheb(e.tile, tile)
-	if d == 1:
+	var wpn := weapon_id()
+	if Combat.is_ranged(wpn) and d >= 1 and d <= Combat.ranged_range() and Combat.line_of_sight(world, tile, e.tile):
+		path.clear()     # archers stand and shoot
+		if t >= next_attack:
+			next_attack = t + Combat.weapon_ticks(wpn)
+			last_combat_tick = t
+			combat_foe = e
+			if not _shoot(e, t, world):
+				action = {}
+				set_status("")
+				combat_blocked("Out of arrows!")
+		return
+	if d == 1 and not Combat.is_ranged(wpn):
 		path.clear()
 		if t >= next_attack:
 			var w := weapon_id()

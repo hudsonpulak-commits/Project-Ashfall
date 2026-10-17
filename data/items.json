@@ -106,14 +106,14 @@
    "value": 9,
    "stackable": false,
    "category": "food",
-   "heals": 4
+   "heals": 5
   },
   "cooked_eel": {
    "name": "Cooked fen eel",
    "value": 24,
    "stackable": false,
    "category": "food",
-   "heals": 9
+   "heals": 14
   },
   "charred_fish": {
    "name": "Charred fish",
@@ -695,7 +695,7 @@
    "value": 4,
    "stackable": false,
    "category": "food",
-   "heals": 3
+   "heals": 4
   },
   "burnt_meat": {
    "name": "Burnt meat",
@@ -1042,7 +1042,7 @@
    "value": 5,
    "stackable": false,
    "category": "food",
-   "heals": 3
+   "heals": 4
   },
   "wolf_pelt": {
    "name": "Wolf pelt",
@@ -1070,7 +1070,7 @@
    "value": 9,
    "stackable": false,
    "category": "food",
-   "heals": 4,
+   "heals": 6,
    "note": "0.3.1 hearth: flour -> bread (Cooking 3)"
   },
   "burnt_bread": {
@@ -1091,7 +1091,7 @@
    "value": 8,
    "stackable": false,
    "category": "food",
-   "heals": 5,
+   "heals": 8,
    "note": "0.3.1 hearth: Cooking 5"
   },
   "cowhide": {
@@ -1100,6 +1100,13 @@
    "stackable": false,
    "category": "resource",
    "note": "0.3.1 cow drop (always); sells now, leather Crafting later"
+  },
+  "flint": {
+   "name": "Flint",
+   "value": 6,
+   "stackable": true,
+   "category": "tool",
+   "note": "0.3.6 use on a log to light a cooking fire (consumes 1 flint + 1 log)"
   }
  }
 }

@@ -12,7 +12,8 @@
    "bronze_bar",
    "tin_ore",
    "bronze_arrows",
-   "bread"
+   "bread",
+   "flint"
   ],
   "no_buy": [
    "marks"
@@ -114,7 +115,7 @@
   "cook": "Cooked food"
  },
  "cookhouse": {
-  "note": "0.3.1 Cook House: finite stock of cooked food at ~80% of general-store price (sell_factor 1.28 \u2248 0.8 \u00d7 1.6). Restocks slowly so it is not an infinite cheap-food tap.",
+  "note": "0.3.1 Cook House: finite stock of cooked food at ~80% of general-store price (sell_factor 1.28 ≈ 0.8 × 1.6). Restocks slowly so it is not an infinite cheap-food tap.",
   "sell_factor": 1.28,
   "restock_ticks": 300,
   "max_stock": 40,

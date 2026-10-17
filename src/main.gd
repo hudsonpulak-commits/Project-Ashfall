@@ -428,7 +428,7 @@ func _on_tick(t: int) -> void:
 	player.on_tick(t, world)
 	# 0.3.4 music: combat cuts in at once; area = the town you're in, else ambient
 	Music.set_combat(not player.dead and (player.in_combat(t) or player.action.get("kind", "") == "fight"))
-	Music.set_area(world.gen.town_at(player.tile, 8))
+	Music.set_area(world.gen.town_at(player.tile, 8), DayNight.is_night())
 	AIDirector.on_tick(t, world, player.tile)
 	world.enemies.on_tick(t, [player] + AIDirector.agents, player.tile)
 	world.ground.on_tick(t)

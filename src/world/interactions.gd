@@ -49,6 +49,19 @@ static func perform(actor: Actor, world, t: int) -> void:
 			actor.stop()
 
 
+## 0.3.6 trees need a hatchet, ores a pickaxe: in the pack or wielded.
+const TOOL_NEEDED := {"forestry": "You need a hatchet.", "mining": "You need a pickaxe."}
+
+
+static func has_gather_tool(actor: Actor, skill: String) -> bool:
+	if not TOOL_NEEDED.has(skill):
+		return true
+	if actor.inventory.best_tool_index(skill) >= 0:
+		return true
+	var w := actor.weapon_id()
+	return w != "" and str(GameData.item(w).get("tool", {}).get("skill", "")) == skill
+
+
 static func gather_chance(actor: Actor, d: Dictionary) -> float:
 	var skill: String = d["skill"]
 	var lvl := actor.skills.level(skill)
@@ -69,6 +82,10 @@ static func _gather(actor: Actor, world, obj: WorldObject, d: Dictionary, t: int
 		return
 	if actor.skills.level(skill) < int(d.get("level", 1)):
 		actor.say("You need %s level %d for that." % [sname, int(d.get("level", 1))])
+		actor.stop()
+		return
+	if not has_gather_tool(actor, skill):
+		actor.say(str(TOOL_NEEDED.get(skill, "You need a tool for that.")))
 		actor.stop()
 		return
 	var item_id: String = d["yield"]

@@ -4,11 +4,11 @@
   "giant_rat": {
    "name": "Giant rat",
    "sprite": "giant_rat",
-   "level": 1,
-   "hp": 4,
-   "max_hit": 1,
+   "level": 5,
+   "hp": 9,
+   "max_hit": 2,
    "accuracy": 0.4,
-   "defence": 0,
+   "defence": 2,
    "attack_ticks": 4,
    "aggro": 3,
    "leash": 7,
@@ -20,11 +20,11 @@
   "goblin": {
    "name": "Goblin",
    "sprite": "goblin",
-   "level": 5,
-   "hp": 9,
-   "max_hit": 2,
+   "level": 8,
+   "hp": 18,
+   "max_hit": 4,
    "accuracy": 0.5,
-   "defence": 2,
+   "defence": 4,
    "attack_ticks": 4,
    "aggro": 4,
    "leash": 8,
@@ -37,7 +37,7 @@
    "name": "Chicken",
    "sprite": "chicken",
    "level": 1,
-   "hp": 2,
+   "hp": 3,
    "max_hit": 0,
    "accuracy": 0.0,
    "defence": 0,
@@ -49,16 +49,17 @@
    "xp": 3,
    "retaliate": false,
    "drops": "chicken",
-   "note": "0.3.1: passive, never fights back; lives right by the towns"
+   "note": "0.3.1: passive, never fights back; lives right by the towns",
+   "show_level": false
   },
   "wolf": {
    "name": "Wolf",
    "sprite": "wolf",
-   "level": 4,
-   "hp": 8,
-   "max_hit": 2,
+   "level": 6,
+   "hp": 12,
+   "max_hit": 3,
    "accuracy": 0.5,
-   "defence": 1,
+   "defence": 3,
    "attack_ticks": 3,
    "aggro": 5,
    "leash": 9,
@@ -72,11 +73,11 @@
   "town_guard": {
    "name": "Town guard",
    "sprite": "town_guard",
-   "level": 8,
-   "hp": 14,
-   "max_hit": 2,
-   "accuracy": 0.6,
-   "defence": 4,
+   "level": 30,
+   "hp": 60,
+   "max_hit": 7,
+   "accuracy": 0.75,
+   "defence": 20,
    "attack_ticks": 4,
    "aggro": 0,
    "leash": 16,
@@ -91,10 +92,10 @@
    "name": "Citizen",
    "sprite": "citizen",
    "level": 1,
-   "hp": 4,
+   "hp": 6,
    "hp_range": [
-    3,
-    5
+    5,
+    8
    ],
    "max_hit": 1,
    "accuracy": 0.2,
@@ -115,13 +116,14 @@
     "#c0b0e0"
    ],
    "drops": "citizen",
-   "note": "0.3.1: wanders the town plaza; never starts a fight, swings back weakly"
+   "note": "0.3.1: wanders the town plaza; never starts a fight, swings back weakly",
+   "show_level": false
   },
   "cinder_brute": {
    "name": "Cinder brute",
    "sprite": "cinder_brute",
    "level": 14,
-   "hp": 24,
+   "hp": 36,
    "max_hit": 4,
    "accuracy": 0.65,
    "defence": 7,
@@ -138,7 +140,7 @@
    "name": "Cow",
    "sprite": "cow",
    "level": 2,
-   "hp": 8,
+   "hp": 12,
    "max_hit": 1,
    "accuracy": 0.3,
    "defence": 0,
@@ -406,5 +408,7 @@
    "count": 3,
    "spread": 3
   }
- ]
+ ],
+ "note_show_level": "0.3.3: combat enemies (aggro, or retaliate with max_hit > 0) show 'Name (level)' overhead; show_level overrides (false for citizens and chickens).",
+ "note_036": "0.3.6: every hp (and hp_range) x1.5 rounded up; rat level 5, goblin 8, town guard 30 with stats raised to match"
 }

@@ -28,8 +28,9 @@ static func run(world: World, p: Player) -> void:
 	p.equipment.erase("weapon")
 	p.inventory.add("ash_shortbow")
 	p.inventory.add("bronze_arrows", 3)
+	p.auto_equip_ammo()   # 0.3.6 only the ammo slot is fired
 	check(p.equip_slot(0) == "" and p.weapon_id() == "ash_shortbow" and p.weapon_power() > 0.0, "the shortbow equips and has weapon power (no longer zeroed)")
-	check(Combat.best_arrow(p.inventory, p.skills) == "bronze_arrows", "bronze arrows are picked as ammo")
+	check(p.ammo_arrow() == "bronze_arrows" and p.ammo_qty == 3 and p.inventory.count("bronze_arrows") == 0, "bronze arrows go into the ammo slot")
 	rat.target = null
 	rat.reset_far()
 	rat.hp = 9999
@@ -77,7 +78,7 @@ static func run(world: World, p: Player) -> void:
 	Events.projectile.disconnect(cb)
 	Events.message.disconnect(mcb)
 	check(not moved, "an archer %d tiles away stands still and shoots" % p._cheb(start, rat.tile))
-	check(shots[0] == 3 and p.inventory.count("bronze_arrows") == 0, "each shot uses one arrow (3 arrows -> %d shots, %d left)" % [shots[0], p.inventory.count("bronze_arrows")])
+	check(shots[0] == 3 and p.ammo_qty == 0, "each shot uses one arrow (3 arrows -> %d shots, %d left)" % [shots[0], p.ammo_qty])
 	check(blocked_msg[0] == "Out of arrows!" and p.action.is_empty(), "out of arrows: 'Out of arrows!' and the attack stops (%s)" % blocked_msg[0])
 	var dropped := 0
 	for it in world.ground.at(rat.tile, p.actor_id):
@@ -106,7 +107,7 @@ static func run(world: World, p: Player) -> void:
 	# overhead labels
 	check(Overhead.enemy_shows(GameData.enemies["giant_rat"]) and not Overhead.enemy_shows(GameData.enemies["chicken"]) and not Overhead.enemy_shows(GameData.enemies["citizen"]), "overhead level on rats, none on chickens / citizens")
 	check(rat._lvl_label != null and rat._lvl_label.get_parent() is CanvasLayer and rat._lvl_label.get_theme_font_size("font_size") >= 8, "0.3.4: overhead labels are 8 px+ in the screen-space overlay above actors")
-	check(rat._lvl_label != null and rat._lvl_label.text == "Giant rat (1)", "a rat shows 'Giant rat (1)' (%s)" % (rat._lvl_label.text if rat._lvl_label else "none"))
+	check(rat._lvl_label != null and rat._lvl_label.text == "Giant rat (5)", "a rat shows 'Giant rat (5)' (%s)" % (rat._lvl_label.text if rat._lvl_label else "none"))
 	# restore
 	rat.max_hp = int(rat.def.get("hp", 5))
 	rat.hp = rat.max_hp

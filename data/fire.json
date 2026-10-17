@@ -1,0 +1,19 @@
+{
+ "note": "0.3.6 cooking fires: flint + log. Burns base_ticks for the lowest tier log, +per_tier_ticks per higher tier (100 ticks = 1 min at 0.6 s). XP = Forestry XP for lighting it.",
+ "base_ticks": 200,
+ "per_tier_ticks": 100,
+ "logs": {
+  "ash_log": {
+   "tier": 1,
+   "xp": 2
+  },
+  "alder_log": {
+   "tier": 2,
+   "xp": 3
+  },
+  "blackthorn_log": {
+   "tier": 3,
+   "xp": 4
+  }
+ }
+}

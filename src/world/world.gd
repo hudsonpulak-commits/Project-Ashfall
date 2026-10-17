@@ -225,8 +225,46 @@ func deplete(o: WorldObject, ticks: int) -> void:
 	object_changed.emit(o)
 
 
+var fires: Dictionary = {}   # 0.3.6 Vector2i -> tick the cooking fire burns out
+
+
+## 0.3.6 a temporary cooking fire (a hearth station) that burns out by itself.
+func add_fire(p: Vector2i, ticks: int) -> WorldObject:
+	var o := WorldObject.new("cooking_fire", p)
+	get_chunk(chunk_of(p)).objects[p] = o
+	fires[p] = tick + maxi(1, ticks)
+	var c := chunk_of(p)
+	if chunk_views.has(c):
+		_make_object_view(o)
+		var objs: Array = chunk_views[c].get_meta("objects", [])
+		objs.append(o)
+	object_changed.emit(o)
+	return o
+
+
+func _expire_fires(t: int) -> void:
+	for p in fires.keys():
+		if int(fires[p]) > t:
+			continue
+		fires.erase(p)
+		var ch := get_chunk(chunk_of(p))
+		var o: WorldObject = ch.objects.get(p)
+		if o and o.def_id == "cooking_fire":
+			ch.objects.erase(p)
+			if o.view and is_instance_valid(o.view):
+				o.view.queue_free()
+			o.view = null
+			var c := chunk_of(p)
+			if chunk_views.has(c):
+				var objs: Array = chunk_views[c].get_meta("objects", [])
+				objs.erase(o)
+			object_changed.emit(o)
+
+
 func on_tick(t: int) -> void:
 	tick = t
+	if not fires.is_empty():
+		_expire_fires(t)
 	if depleted.is_empty():
 		return
 	var done := []

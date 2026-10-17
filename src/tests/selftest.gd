@@ -516,7 +516,7 @@ static func _combat_tests(world: World, p: Player) -> void:
 	p.hp = 2
 	p.inventory.add("cooked_rat_meat")
 	var healed := p.eat_slot(p.inventory.find("cooked_rat_meat"), tt)
-	check(healed == 3 and p.hp == 5, "eating food heals")
+	check(healed == 4 and p.hp == 6, "eating food heals (rat meat 4)")
 	p.inventory.add("bronze_cap")
 	var def0 := p.combat_def()
 	check(p.equip_slot(p.inventory.find("bronze_cap")) == "" and p.combat_def() > def0, "equipping a helmet raises defence")

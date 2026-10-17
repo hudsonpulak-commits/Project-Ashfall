@@ -830,7 +830,7 @@ def check_aggro(ctx):
             Result("C14 aggro", "a fresh Combat 2 player is still aggroed", lo.get("combat") == 2 and lo.get("attackers", 0) >= 1,
                    "combat %s: attackers %s (%s)" % (lo.get("combat"), lo.get("attackers"), lo.get("kinds")), ev[1:]),
             Result("C14 aggro", "HUD shows 'Total N  Combat N'", hud_ok, "%r / %r" % (hi.get("hud"), lo.get("hud"))),
-            Result("C14 aggro", "enemy names carry their level", a.get("fight_status") == "Giant rat (level 1)", repr(a.get("fight_status")))]
+            Result("C14 aggro", "enemy names carry their level", a.get("fight_status") == "Giant rat (level 5)", repr(a.get("fight_status")))]
 
 
 def check_farm(ctx):
@@ -852,7 +852,7 @@ def check_farm(ctx):
                   "wheat %s, stubble %s, foraging xp %s" % (f.get("wheat"), f.get("stubble"), f.get("foraging_xp")), [ev_h]),
            Result("C15 farm", "grind flour at the quern (craft panel)", f.get("flour", 0) >= 1 and f.get("wheat", 0) >= 2, "flour %s (panel %s)" % (f.get("flour"), f.get("quern_panel"))),
            Result("C15 farm", "bake bread on the hearth", f.get("bread", 0) + f.get("burnt_bread", 0) >= 1, "bread %s, burnt %s" % (f.get("bread"), f.get("burnt_bread"))),
-           Result("C15 farm", "cow fight: it kicks back and dies", bool(cow.get("dead")) and bool(cow.get("fought_back")) and cow.get("max_hp") == 8,
+           Result("C15 farm", "cow fight: it kicks back and dies", bool(cow.get("dead")) and bool(cow.get("fought_back")) and cow.get("max_hp") == 12,
                   "dead %s, fought back %s, hp lost %s, %s" % (cow.get("dead"), cow.get("fought_back"), cow.get("hp_lost"), cow.get("name")), [ev_c]),
            Result("C15 farm", "cow drops bones + raw beef + cowhide", all(k in cow.get("drops", {}) for k in ("bones", "raw_beef", "cowhide")), str(cow.get("drops"))),
            Result("C15 farm", "the village lights up at night", f.get("night", {}).get("phase") == "night" and f.get("night", {}).get("lights", 0) > 0.5, str(f.get("night"))),
@@ -982,7 +982,7 @@ def check_archery(ctx):
     """0.3.3 Archery (glitch rule: arrow use + 'Out of arrows!' stop). Bow + 3
     arrows vs a rat 4 tiles away: stands still, 3 shots with a projectile,
     0 arrows left, 'Out of arrows!' and the fight stops. Overhead labels on an
-    AI player ('Name (cb)') and the rat ('Giant rat (1)'), none on a chicken or
+    AI player ('Name (cb)') and the rat ('Giant rat (5)'), none on a chicken or
     shopkeeper; the Skills panel lists Archery."""
     if "archery" not in ctx.expected:
         return []
@@ -997,7 +997,7 @@ def check_archery(ctx):
                "shots %s, arrows %s -> %s, moved %s" % (a.get("shots"), a.get("arrows_before"), a.get("arrows_after"), a.get("moved")), snaps[:1]),
         Result("C20 archery", "'Out of arrows!' and the attack stops", bool(a.get("out_msg")) and bool(a.get("stopped")), "msg %s stopped %s" % (a.get("out_msg"), a.get("stopped")), snaps[1:2]),
         Result("C20 archery", "Archery XP from shots", a.get("archery_xp", 0) >= 0, "xp %s" % a.get("archery_xp")),
-        Result("C20 archery", "overhead 'Name (cb)' on an AI, 'Giant rat (1)' on the rat", a.get("ai_label", "").startswith("%s (%s)" % (a.get("ai_name"), a.get("ai_cb"))) and a.get("rat_label") == "Giant rat (1)" and a.get("labels_shown", 0) >= 2,
+        Result("C20 archery", "overhead 'Name (cb)' on an AI, 'Giant rat (5)' on the rat", a.get("ai_label", "").startswith("%s (%s)" % (a.get("ai_name"), a.get("ai_cb"))) and a.get("rat_label") == "Giant rat (5)" and a.get("labels_shown", 0) >= 2,
                "%r / %r, %s labels on screen" % (a.get("ai_label"), a.get("rat_label"), a.get("labels_shown")), snaps[2:3]),
         Result("C20 archery", "no overhead level on a chicken or shopkeeper", a.get("chicken_label") is False and a.get("keeper_enemy") is False, "chicken %s keeper %s" % (a.get("chicken_label"), a.get("keeper_enemy")), snaps[3:5]),
         Result("C20 archery", "Skills panel lists Archery", bool(a.get("skills_panel_archery")), str(a.get("skills_panel_archery")), snaps[5:6]),
@@ -1028,7 +1028,33 @@ def check_bank(ctx):
     ]
 
 
-CHECKS = [check_runtime, check_diagonal, check_facing, check_ghost, check_jitter, check_taps, check_bubbles, check_roof, check_shop, check_smithy, check_markers, check_daynight, check_world, check_church, check_aggro, check_farm, check_city, check_cookhouse, check_pk, check_gear, check_archery, check_bank]
+def check_v036(ctx):
+    """0.3.6 ammo slot, tools, fire, food heals, night music."""
+    if "v036" not in ctx.expected:
+        return []
+    run = ctx.runs.get("v036")
+    if not run:
+        return [Result("C24 v036", "v036 run present", False, "no capture")]
+    a = run.res.get("v036", {})
+    snaps = {e.get("name"): e.get("path") for e in run.events if e.get("type") == "snap"}
+    sp = lambda *n: [snaps[k] for k in n if k in snaps]
+    h = a.get("heals", {})
+    hv = [h.get(k, 0) for k in ["cooked_rat_meat", "cooked_carp", "cooked_beef", "cooked_eel"]]
+    nm = a.get("night_music", ["", False, ""])
+    return [
+        Result("C24 ammo", "bow fires only from the ammo slot (pack arrows: 0 shots)", a.get("pack_only_shots") == 0 and a.get("pack_only_left") == 5 and a.get("ammo_equipped") == 5 and a.get("ammo_shots", 0) >= 2 and a.get("ammo_left", 9) <= 3,
+               "pack-only shots %s left %s; equipped %s -> shots %s left %s" % (a.get("pack_only_shots"), a.get("pack_only_left"), a.get("ammo_equipped"), a.get("ammo_shots"), a.get("ammo_left")), sp("equipment_ammo_slot")),
+        Result("C25 tools", "no hatchet: 'You need a hatchet.' and no logs", bool(a.get("no_tool_msg")) and a.get("no_tool_logs") == 0, "msg %s logs %s" % (a.get("no_tool_msg"), a.get("no_tool_logs"))),
+        Result("C26 fire", "flint 'Light' on a log: fire on the ground, flint + log used, Forestry XP", bool(a.get("light_button")) and bool(a.get("fire_lit")) and bool(a.get("fire_used")) and a.get("fire_xp", 0) > 0,
+               "button %s lit %s used %s xp %s" % (a.get("light_button"), a.get("fire_lit"), a.get("fire_used"), a.get("fire_xp")), sp("cooking_fire")),
+        Result("C26 fire", "cook on the fire; it burns ~2 min (ash) then goes out", bool(a.get("fire_cooked")) and 150 <= a.get("fire_ticks", 0) <= 200 and bool(a.get("fire_out")),
+               "cooked %s ticks left %s out %s" % (a.get("fire_cooked"), a.get("fire_ticks"), a.get("fire_out")), sp("cooking_fire_out")),
+        Result("C27 food", "cooked food heals rise with tier (rat < carp < beef < eel)", hv[0] < hv[1] < hv[2] < hv[3], str(h)),
+        Result("C28 music", "night in the wilds: day ambient fades to the night ambient", nm[0] == "ambient" and nm[1] and nm[2] == "ambient_night", str(nm)),
+    ]
+
+
+CHECKS = [check_runtime, check_diagonal, check_facing, check_ghost, check_jitter, check_taps, check_bubbles, check_roof, check_shop, check_smithy, check_markers, check_daynight, check_world, check_church, check_aggro, check_farm, check_city, check_cookhouse, check_pk, check_gear, check_archery, check_bank, check_v036]
 SCENARIOS = ["walk", "combat", "shop", "pshop", "smithy", "markers", "daynight", "world", "church", "aggro", "farm", "city", "cookhouse", "pk", "gear", "archery"]
 
 

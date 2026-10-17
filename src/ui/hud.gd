@@ -353,7 +353,10 @@ func _refresh_worn() -> void:
 	worn_row.add_child(UIKit.label("Worn:", 8, UIStyle.TEXT_DIM))
 	for slot in Player.SLOTS:
 		var id: String = player.equipment.get(slot, "")
-		var b := UIKit.button(slot.capitalize() if id == "" else GameData.item_name(id).left(9), func():
+		var txt: String = slot.capitalize() if id == "" else GameData.item_name(id).left(9)
+		if slot == "ammo" and id != "":
+			txt = "%s x%d" % [GameData.item_name(id).get_slice(" ", 0).left(6), player.ammo_qty]
+		var b := UIKit.button(txt, func():
 			if id != "":
 				var why := player.unequip(slot)
 				Events.say(why if why != "" else "You take off the %s." % GameData.item_name(id).to_lower())
@@ -410,6 +413,14 @@ func _refresh_pack_actions() -> void:
 			_sel_slot = -1
 			_refresh_pack_actions()
 			_refresh_worn(), 44))
+	if id == "flint" or (FireRules.is_log(id) and player.inventory.count("flint") > 0):
+		pack_actions.add_child(UIKit.button("Light", func():   # 0.3.6 flint on a log
+			var lg := id if FireRules.is_log(id) else FireRules.best_log(player.inventory)
+			var why := FireRules.light(player, world, lg)
+			Events.say(why if why != "" else "You strike the flint and the %s catches. A cooking fire burns." % GameData.item_name(lg).to_lower())
+			Events.inventory_changed.emit()
+			_sel_slot = -1
+			_refresh_pack_actions(), 40))
 	pack_actions.add_child(UIKit.button("Drop", func():
 		player.drop_slot(i, Tick.tick_count)
 		_sel_slot = -1

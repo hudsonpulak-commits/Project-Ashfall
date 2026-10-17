@@ -15,7 +15,7 @@ static func run() -> void:
 	for id in Music.IDS:
 		var s = Music._tracks.get(id)
 		ok = ok and s is AudioStreamOggVorbis and (s as AudioStreamOggVorbis).loop
-	check(ok, "6 music tracks load from assets/music and loop")
+	check(ok, "%d music tracks load from assets/music and loop" % Music.IDS.size())
 	var full := Music._db()
 	Music.set_title()
 	check(Music.current == "title", "main menu: title theme")

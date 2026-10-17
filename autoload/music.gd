@@ -10,7 +10,7 @@ extends Node
 
 const FADE_SEC := 1.5
 const DIR := "res://assets/music/"
-const IDS := ["title", "ambient", "combat", "fenhollow", "cinderholt", "saltmere"]
+const IDS := ["title", "ambient", "ambient_night", "combat", "fenhollow", "cinderholt", "saltmere"]
 const SETTINGS := "user://settings.cfg"
 
 var player: AudioStreamPlayer
@@ -65,8 +65,10 @@ func set_title() -> void:
 
 ## Town id ("" = the wilds). 0.3.5: the old area track fades out over
 ## FADE_SEC, then the new one starts (from silence/title: at once).
-func set_area(town_id: String) -> void:
-	var k := town_id.to_lower() if town_id != "" and _tracks.get(town_id.to_lower()) != null else "ambient"
+## 0.3.6 night = true: the wilds play ambient_night (faded like any change).
+func set_area(town_id: String, night := false) -> void:
+	var wild := "ambient_night" if night and _tracks.get("ambient_night") != null else "ambient"
+	var k := town_id.to_lower() if town_id != "" and _tracks.get(town_id.to_lower()) != null else wild
 	if k == area and current == k:
 		return
 	area = k

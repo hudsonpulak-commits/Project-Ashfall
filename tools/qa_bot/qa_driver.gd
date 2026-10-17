@@ -313,6 +313,8 @@ func _run() -> void:
 			await _archery()
 		"bank":
 			await _bank035()
+		"v036":
+			await _v036()
 		_:
 			push_error("unknown QA scenario " + scenario)
 			await _finish(false)
@@ -1028,7 +1030,7 @@ func _aggro() -> void:
 	var keep: Dictionary = p.skills.xp.duplicate()
 	var rat := _foe("giant_rat", "", w.gen.town_spawn("fenhollow"))
 	var res := {"rat": [rat.tile.x, rat.tile.y], "rat_level": rat.level()}
-	for pass_ in [["high", 14], ["low", 1]]:   # 0.3.3: 14s + Archery 1 = Combat 11
+	for pass_ in [["high", 22], ["low", 1]]:   # 0.3.6 rats level 5: Combat 15+ ignored
 		var nm: String = pass_[0]
 		var lvl: int = pass_[1]
 		p.skills.xp = Skills.new().xp
@@ -1769,6 +1771,7 @@ func _archery() -> void:
 	p.equipment.erase("weapon")
 	p.inventory.add("ash_shortbow")
 	p.inventory.add("bronze_arrows", 3)
+	p.auto_equip_ammo()
 	p.equip_slot(0)
 	res["weapon"] = p.weapon_id()
 	var rat := _foe("giant_rat", "", w.gen.town_spawn("fenhollow"))
@@ -1782,7 +1785,7 @@ func _archery() -> void:
 	rat.home = rat.tile
 	var keep_xp: Dictionary = p.skills.xp.duplicate()
 	for id in ["attack", "strength", "defence", "vitality"]:
-		p.skills.set_level(id, 14)     # Combat 11: no other rat joins in
+		p.skills.set_level(id, 22)     # 0.3.6 rats are level 5: Combat 15+ is ignored
 	_clear_foes(p, w)
 	rat.reset_far()
 	var spot := rat.tile
@@ -1798,7 +1801,7 @@ func _archery() -> void:
 	await frames(20)
 	label = "archery_fight"
 	var start := p.tile
-	var arrows0 := p.inventory.count("bronze_arrows")
+	var arrows0 := p.ammo_qty
 	await tap(tile_screen(rat.tile), "rat (archery)")
 	var t_end := Time.get_ticks_msec() + 15000
 	var max_d := 0
@@ -1815,7 +1818,7 @@ func _archery() -> void:
 	await _snap("archery_out_of_arrows")
 	res["shots"] = shots[0]
 	res["arrows_before"] = arrows0
-	res["arrows_after"] = p.inventory.count("bronze_arrows")
+	res["arrows_after"] = p.ammo_qty
 	res["out_msg"] = "Out of arrows!" in msgs
 	res["msgs"] = msgs.slice(-4)
 	res["stopped"] = p.action.is_empty()
@@ -1976,6 +1979,7 @@ func _bank035() -> void:
 	p.equipment.erase("weapon")
 	p.inventory.add("ash_shortbow")
 	p.inventory.add("bronze_arrows", 2)
+	p.auto_equip_ammo()
 	p.equip_slot(0)
 	p.place_at(spot)
 	p.stop()
@@ -2020,3 +2024,143 @@ func _bank035() -> void:
 	res["dummy_hp_lost"] = hp0 - p.hp
 	p.stop()
 	_notes["bank"] = res
+
+
+## 0.3.6: ammo-slot-only firing, no-tool gathering blocked, flint fire (light,
+## cook, burn out), tiered food heals, night ambient switch. Frames: the fire
+## and the Pack panel's Worn row with the ammo slot.
+func _v036() -> void:
+	var p: Player = main.player
+	var w: World = main.world
+	var res := {}
+	var msgs: Array = []
+	Events.message.connect(func(t, _k = ""): msgs.append(str(t)))
+	var shots := [0]
+	Events.projectile.connect(func(_a, _b, _s): shots[0] += 1)
+	# ammo: arrows only in the pack -> no shot; equipped -> shots
+	p.inventory.clear()
+	p.equipment.erase("weapon")
+	p.equipment.erase("ammo")
+	p.ammo_qty = 0
+	p.inventory.add("ash_shortbow")
+	p.inventory.add("bronze_arrows", 5)
+	p.equip_slot(0)
+	var keep_xp: Dictionary = p.skills.xp.duplicate()
+	for id in ["attack", "strength", "defence", "vitality"]:
+		p.skills.set_level(id, 22)
+	var rat := _foe("giant_rat", "", w.gen.town_spawn("fenhollow"))
+	rat.max_hp = 999
+	rat.hp = 999
+	var keep_def: Dictionary = rat.def
+	rat.def = rat.def.duplicate()
+	rat.def["retaliate"] = false
+	rat.def["wander"] = 0
+	rat.home = rat.tile
+	_clear_foes(p, w)
+	rat.reset_far()
+	var spot := rat.tile
+	for d in [Vector2i(4, 0), Vector2i(-4, 0), Vector2i(0, 4), Vector2i(0, -4)]:
+		if not w.is_blocked(rat.tile + d) and Combat.line_of_sight(w, rat.tile + d, rat.tile):
+			spot = rat.tile + d
+			break
+	p.place_at(spot)
+	p.stop()
+	w.set_focus(p.tile, true)
+	await frames(20)
+	label = "ammo_pack_only"
+	await tap(tile_screen(rat.tile), "rat (pack arrows only)")
+	await frames(90)
+	res["pack_only_shots"] = shots[0]
+	res["pack_only_left"] = p.inventory.count("bronze_arrows")
+	p.stop()
+	for k in p.inventory.size():
+		if p.inventory.slots[k] != null and p.inventory.slots[k]["id"] == "bronze_arrows":
+			p.equip_slot(k)
+	res["ammo_equipped"] = p.ammo_qty
+	main.hud.show_panel("pack")
+	await frames(15)
+	label = "equipment_ammo"
+	await _snap("equipment_ammo_slot")
+	main.hud.show_panel("")
+	await frames(5)
+	label = "ammo_fire"
+	await tap(tile_screen(rat.tile), "rat (ammo slot)")
+	await until(func(): return shots[0] >= 2, 12.0)
+	p.stop()
+	res["ammo_shots"] = shots[0]
+	res["ammo_left"] = p.ammo_qty
+	rat.def = keep_def
+	rat.max_hp = int(rat.def.get("hp", 5))
+	rat.hp = rat.max_hp
+	rat.target = null
+	_clear_foes(p, w)
+	p.skills.xp = keep_xp
+	# no tool: gathering blocked
+	p.inventory.clear()
+	p.equipment.erase("weapon")
+	var tree: WorldObject = w.find_nearest_object(w.gen.town_spawn("fenhollow") + Vector2i(0, 40), ["ash_tree", "alder_tree"], 60)
+	p.place_at(w.find_free_tile_near(tree.pos + Vector2i(0, 2), 2))
+	w.set_focus(p.tile, true)
+	await frames(15)
+	msgs.clear()
+	label = "no_hatchet"
+	await tap_tile(tree.pos, "tree without a hatchet")
+	await frames(60)
+	res["no_tool_msg"] = "You need a hatchet." in msgs
+	res["no_tool_logs"] = p.inventory.count("ash_log") + p.inventory.count("alder_log")
+	# fire: light with flint via the pack action, cook, burn out
+	p.inventory.add("flint", 1)
+	p.inventory.add("ash_log", 1)
+	p.inventory.add("raw_carp", 1)
+	var fx0 := int(p.skills.xp.get("forestry", 0))
+	main.hud.show_panel("pack")
+	await frames(5)
+	main.hud._sel_slot = p.inventory.find("flint")
+	main.hud._refresh_pack_actions()
+	await frames(5)
+	var light_btn: Control = null
+	for c in main.hud.pack_actions.get_children():
+		if c is Button and (c as Button).text == "Light":
+			light_btn = c
+	res["light_button"] = light_btn != null
+	if light_btn:
+		await tap_control(light_btn, "Light (flint)")
+	main.hud.show_panel("")
+	await frames(20)
+	var fire: WorldObject = w.find_nearest_object(p.tile, ["cooking_fire"], 2)
+	res["fire_lit"] = fire != null
+	res["fire_xp"] = int(p.skills.xp.get("forestry", 0)) - fx0
+	res["fire_used"] = p.inventory.count("flint") == 0 and p.inventory.count("ash_log") == 0
+	label = "fire"
+	await _snap("cooking_fire")
+	if fire:
+		await tap_tile(fire.pos, "cooking fire")
+		await until(func(): return p.inventory.count("raw_carp") == 0, 12.0)
+		await frames(10)
+		res["fire_cooked"] = p.inventory.count("cooked_carp") + p.inventory.count("charred_fish") == 1
+		res["fire_ticks"] = int(w.fires.get(fire.pos, 0)) - Tick.tick_count
+		w.fires[fire.pos] = Tick.tick_count + 2    # fast-forward the burn
+		await until(func(): return w.find_nearest_object(p.tile, ["cooking_fire"], 3) == null, 5.0)
+		res["fire_out"] = w.find_nearest_object(p.tile, ["cooking_fire"], 3) == null
+		await _snap("cooking_fire_out")
+	# tiered heals (eat via the real Eat path)
+	var hs := {}
+	for f in ["cooked_rat_meat", "cooked_carp", "cooked_beef", "cooked_eel"]:
+		p.hp = 1
+		p.inventory.add(f)
+		hs[f] = p.eat_slot(p.inventory.find(f), Tick.tick_count + 100)
+	res["heals"] = hs
+	# night ambient
+	Music.set_area("", false)
+	Music.step(3.0)
+	var day_track := Music.current
+	DayNight.debug_set_phase("night")
+	var faded := false
+	var t_end := Time.get_ticks_msec() + 6000
+	while Time.get_ticks_msec() < t_end and Music.current != "ambient_night":
+		faded = faded or Music.fading
+		await frames(1)
+	res["night_music"] = [day_track, faded, Music.current]
+	await _snap("night_wilds")
+	DayNight.debug_set_phase("day")
+	_notes["v036"] = res
