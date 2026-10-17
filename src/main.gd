@@ -59,6 +59,9 @@ func _ready() -> void:
 	elif args.has("screenshot"):
 		_screenshot_mode()
 	elif args.has("qa"):
+		# 0.3.3: the pixel-exact sprite checks judge the player alone; chat bubbles
+		# drawn over it would read as ghosting. --qa-chatter turns them back on.
+		AIChatter.enabled = args.has("qa-chatter")
 		var scr: GDScript = load("res://tools/qa_bot/qa_driver.gd")   # tools/ is not exported
 		if scr == null or not scr.can_instantiate():
 			printerr("QA driver failed to load")
@@ -598,6 +601,33 @@ func _screenshot_mode() -> void:
 		player.walk_to(world, world.find_free_tile_near(player.tile + Vector2i(int(args.get("sprint_dx", 14)), 6), 3))
 		for i in int(args.get("sprint_ticks", 10)):
 			Tick.step()
+	if args.has("chatter"):
+		# 0.3.3 chat-bubble shot: run the town, then line up a greeting and a kill reaction
+		AIDirector._update_tiers(player.tile)
+		for i in int(args.get("chatter_ticks", 200)):
+			Tick.step()
+		var near: Array = []
+		for v in AIDirector.agents:
+			if is_instance_valid(v) and not v.dead:
+				near.append(v)
+		near.sort_custom(func(x, y): return (x.tile - player.tile).length_squared() < (y.tile - player.tile).length_squared())
+		var mode := str(args["chatter"])
+		if mode == "greet" and near.size() > 0:
+			near[0].place_at(world.find_free_tile_near(player.tile + Vector2i(2, 0), 2))
+			near[0].agent.chat.clear()
+			near[0].path.clear()
+			AIChatter.tick(10 * (Market.tick / 10 + 1), player.tile)
+		elif mode == "react" and near.size() > 0:
+			near[0].place_at(world.find_free_tile_near(player.tile + Vector2i(-3, 0), 2))
+			near[0].agent.chat.clear()
+			near[0].path.clear()
+			AIChatter.on_player_kill(player.tile + Vector2i(1, 0), "Giant rat", Market.tick)
+		elif mode == "ambient":
+			for v in near.slice(0, 3):
+				AIChatter.say(v.agent, AIChatter.activity_cat(v), Market.tick)
+		for v in near:
+			if v.bubble_text() != "":
+				print("BUBBLE %s (%s): %s" % [v.agent.name, v.agent.persona_id(), v.bubble_text()])
 	if args.has("panel"):
 		var c: Vector2i = world.gen.town_spawn(player.current_town) - Vector2i(0, 0)
 		match str(args["panel"]):

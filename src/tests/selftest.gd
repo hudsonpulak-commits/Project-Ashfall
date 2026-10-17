@@ -387,6 +387,9 @@ static func run(main) -> int:
 	for r in preload("res://src/tests/selftest_pk.gd").run(main, world, p):   # 0.3.1 adventurers + PK
 		check(r[0], r[1])
 
+	for r in preload("res://src/tests/selftest_chatter.gd").run(main, world, p):   # 0.3.3 AI chatter + idle
+		check(r[0], r[1])
+
 	# --- perf smoke: chunk generation cost
 	var t0 := Time.get_ticks_usec()
 	for i in 10:
@@ -560,10 +563,10 @@ static func _combat_tests(world: World, p: Player) -> void:
 	check(picked != "" and fighter.stash_count("bones") < 3, "AI fighters bury bones to refill, then pick a buff before engaging (%s)" % picked)
 	# --- prayer buffs (points pool)
 	var tpl := int(GameData.prayers.get("ticks_per_level", 0))
-	var dur_ok := tpl == 10
+	var dur_ok := tpl == 50
 	for lvl in [1, 5, 10, 37, 60]:
 		dur_ok = dur_ok and Prayer.duration_ticks(lvl) == lvl * tpl
-	check(dur_ok and is_equal_approx(Prayer.duration_ticks(1) * 0.6, 6.0) and is_equal_approx(Prayer.duration_ticks(10) * 0.6, 60.0), "prayer duration = level x %d ticks (L1 = 6 s, L10 = 1 min)" % tpl)
+	check(dur_ok and is_equal_approx(Prayer.duration_ticks(1) * 0.6, 30.0) and is_equal_approx(Prayer.duration_ticks(10) * 0.6, 300.0), "prayer duration = level x %d ticks (L1 = 30 s, L10 = 5 min)" % tpl)
 	var bl: Array = Prayer.buffs()
 	var ids := {}
 	var asc := true
@@ -573,7 +576,7 @@ static func _combat_tests(world: World, p: Player) -> void:
 			asc = asc and int(bl[i]["level"]) > int(bl[i - 1]["level"])
 	check(bl.size() >= 8 and bl.size() <= 10 and ids.size() == bl.size() and asc, "%d prayer buffs with rising level requirements" % bl.size())
 	var ps := {}
-	check(Prayer.max_points(1) == 10.0 and Prayer.max_points(7) == 70.0, "prayer points pool = level x %d" % tpl)
+	check(Prayer.max_points(1) == float(tpl) and Prayer.max_points(7) == 7.0 * tpl, "prayer points pool = level x %d" % tpl)
 	check(Prayer.activate(ps, "ember_grip", 1) != "", "stronger buffs are locked behind Prayer level")
 	check(Prayer.activate(ps, "stillwater_ward", 1) == "" and Prayer.mult(ps, "def") == 0.95, "a buff applies while active (ward: foes' accuracy x0.95)")
 	check(Prayer.activate(ps, "keen_sight", 10) != "", "only one buff at a time")
@@ -592,7 +595,7 @@ static func _combat_tests(world: World, p: Player) -> void:
 	check(Prayer.points(ps, 1) == 0.0 and Prayer.activate(ps, "stillwater_ward", 1) != "", "at 0 points the buff ends and none can start")
 	check(Prayer.duration_ticks(30, "stormbrand") < Prayer.duration_ticks(30, "stillwater_ward"), "stronger buffs drain faster (data drain rate)")
 	Prayer.restore(ps, 1, float(GameData.item("bones").get("prayer_restore", 0)))
-	check(is_equal_approx(Prayer.points(ps, 1), 2.0), "burying bones restores 20% of max points")
+	check(is_equal_approx(Prayer.points(ps, 1), 0.2 * tpl), "burying bones restores 20% of max points")
 	for i in 30:
 		Prayer.tick(ps, 1)
 	check(Prayer.points(ps, 1) > 2.0, "points regenerate slowly with no buff active")

@@ -9,6 +9,9 @@ var think_cooldown: int = 0
 var _label: Label
 var _trip_base := -1                 # road index where the current path slice starts
 var _trip_len := 0
+var _bubble: Label = null             # 0.3.3 overhead chat bubble (AIChatter)
+var bubble_until := -1
+var _bubble_x := 0.0
 
 
 func bind(a: AIAgent, world) -> void:
@@ -26,10 +29,14 @@ func bind(a: AIAgent, world) -> void:
 	_world_ref = world
 	prayer = a.prayer                # same Dictionary: buffs carry across tiers
 	place_at(world.find_free_tile_near(a.pos, 12))
+	if not skills.leveled.is_connected(_on_level):
+		skills.leveled.connect(_on_level)
 
 
 ## Pack -> record (tools to agent.tools, everything else to the stash).
 func unbind() -> void:
+	if skills.leveled.is_connected(_on_level):
+		skills.leveled.disconnect(_on_level)
 	sync_to_agent()
 	agent.hp = float(hp)
 	for i in inventory.size():
@@ -98,7 +105,55 @@ func _ready() -> void:
 		_label.size = Vector2(110, 10)
 		_label.position = Vector2(-55, -34)
 	add_child(_label)
+	_bubble = Label.new()
+	_bubble.add_theme_font_size_override("font_size", 8)
+	_bubble.add_theme_color_override("font_color", Color("#1a1410"))
+	_bubble.add_theme_stylebox_override("normal", UIStyle.box(Color("#f4ecd0"), Color("#1a1410"), 1, 2))
+	_bubble.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	_bubble.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_bubble.visible = false
+	_bubble.z_index = 5
+	add_child(_bubble)
 	_refresh_gear_visual()
+
+
+# ------------------------------------------------------------ chatter --
+## 0.3.3: show a speech bubble until tick `until` (AIChatter decides what/when).
+func show_bubble(text: String, until: int) -> void:
+	if _bubble == null:
+		return
+	_bubble.text = text
+	_bubble.autowrap_mode = TextServer.AUTOWRAP_OFF
+	_bubble.size = Vector2.ZERO
+	_bubble.reset_size()
+	var w := _bubble.get_minimum_size().x
+	if w > 90.0:            # long lines wrap into a narrower, taller bubble
+		_bubble.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+		_bubble.custom_minimum_size = Vector2(90, 0)
+		_bubble.size = Vector2(90, 0)
+		_bubble.reset_size()
+		w = 90.0
+	else:
+		_bubble.custom_minimum_size = Vector2.ZERO
+	var h := _bubble.get_combined_minimum_size().y
+	var x := -w / 2.0
+	_bubble_x = x
+	_bubble.position = Vector2(x, -36 - h)
+	_bubble.visible = true
+	bubble_until = until
+
+
+func bubble_text() -> String:
+	return _bubble.text if _bubble != null and _bubble.visible else ""
+
+
+func face_toward(p: Vector2i) -> void:
+	if last_steps == 0 and action.get("kind", "") != "fight":
+		facing.observe(p.x - tile.x)
+
+
+func _on_level(skill_id: String, lvl: int) -> void:
+	AIChatter.on_level(agent, skill_id, lvl, Market.tick)
 
 
 # ------------------------------------------------------------------ combat --
@@ -192,6 +247,8 @@ func on_damaged(t: int) -> void:
 					return
 		else:
 			_pvp_react(foe_now, t)
+	if hp > 0 and hp < max_hp() * float(AIChatter.c("low_hp_share", 0.4)):
+		AIChatter.say(agent, "low_hp", t)
 	if hp < max_hp() * AIBrain.EAT_AT:
 		AIBrain.heal(agent)
 		hp = int(ceil(agent.hp))
@@ -207,6 +264,7 @@ func on_damaged(t: int) -> void:
 
 
 func die(t: int) -> void:
+	AIChatter.say(agent, "death", t, true)
 	if PkRules.is_pk(tile):
 		_pk_die(t)
 		return
@@ -304,6 +362,8 @@ func on_crafted(_r: Dictionary) -> void:
 
 ## The bank chest: deposit loot to the stash, withdraw inputs for crafting.
 func on_bank(_world, _obj) -> void:
+	if agent.rng.randf() < 0.3:
+		AIChatter.say(agent, "bank", Market.tick)
 	for i in inventory.size():
 		var s = inventory.slots[i]
 		if s != null and not GameData.item(s["id"]).has("tool"):
@@ -330,6 +390,9 @@ func on_tick(t: int, world) -> void:
 	agent.hp = float(hp)
 	if t % 10 == 3:
 		_refresh_gear_visual()
+	if bubble_until >= 0 and t >= bubble_until:
+		bubble_until = -1
+		_bubble.visible = false
 	if agent.skull_until >= 0 and t == agent.skull_until:
 		queue_redraw()
 	if not in_combat(t):
@@ -476,6 +539,9 @@ func _think(t: int, world) -> void:
 			if AdvBrain.is_adv(agent) and a.has("camp"):
 				if _walk_toward(world, Vector2i(int(a["camp"][0]), int(a["camp"][1]))):
 					return
+		"idle":
+			if _idle_think(t, world, a):
+				return
 		"raid":
 			if _raid_think(t, world):
 				return
@@ -665,3 +731,64 @@ func _leave_building(world, b: Dictionary) -> void:
 	walk_to(world, out_t)
 	action = {"kind": "leave"}
 	set_status("")
+
+
+## 0.3.3 idle variety (AIBrain.choose "idle"): walk to the town well, sit a
+## while, or stand near another AI and watch it work. True while handled.
+func _idle_think(t: int, world, a: Dictionary) -> bool:
+	match str(a.get("mode", "")):
+		"well":
+			var well: WorldObject = world.find_nearest_object(tile, ["well"], 40)
+			if well == null:
+				return false
+			if _cheb(well.pos, tile) > 1:
+				if walk_to(world, world.find_free_tile_near(well.pos, 2, true)):
+					set_status("Fetching water")
+					return true
+				return false
+			face_toward(well.pos)
+			think_cooldown = rng.randi_range(15, 30)
+			return true
+		"sit":
+			set_status("Sitting")
+			think_cooldown = rng.randi_range(20, 40)
+			return true
+		"watch":
+			var best = null
+			for v in AIDirector.agents:
+				if is_instance_valid(v) and v != self and not v.action.is_empty() and _cheb(v.tile, tile) <= 15:
+					best = v
+					break
+			if best == null:
+				return false
+			a["watching"] = best.agent.name
+			if _cheb(best.tile, tile) > 3:
+				return walk_to(world, world.find_free_tile_near(best.tile + Vector2i(rng.randi_range(-2, 2), 2), 2, true))
+			face_toward(best.tile)
+			if rng.randf() < 0.4:
+				AIChatter.say(agent, "watch", t, false, {"name": best.agent.name})
+			think_cooldown = rng.randi_range(10, 20)
+			return true
+	return false
+
+
+## Keep a showing bubble on screen when its speaker stands near an edge.
+## Runs only while a bubble is visible (on-screen agents only).
+func _process(delta: float) -> void:
+	super._process(delta)
+	if _bubble == null or not _bubble.visible:
+		return
+	var xf := get_global_transform_with_canvas()
+	var vw := get_viewport_rect().size.x
+	var sc := maxf(0.01, xf.get_scale().x)
+	var w := _bubble.size.x
+	var x := _bubble_x
+	var vr := get_viewport_rect().size
+	var off := xf.origin.x < 0.0 or xf.origin.x > vr.x or xf.origin.y < 0.0 or xf.origin.y > vr.y
+	_bubble.modulate.a = 0.0 if off else 1.0   # speaker off screen: no floating orphan bubble
+	var left := xf.origin.x + x * sc
+	if left < 2.0:
+		x += (2.0 - left) / sc
+	elif left + w * sc > vw - 2.0:
+		x -= (left + w * sc - vw + 2.0) / sc
+	_bubble.position.x = x

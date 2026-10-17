@@ -1,0 +1,87 @@
+{
+ "note": "0.3.3 AI chatter (AIChatter). Overhead speech bubbles for on-screen AI players. lines[category] = {\"any\": [...], \"<persona id>\": [...]}: a persona line is picked persona_share of the time when the persona has one. {item} {skill} {level} {enemy} {name} are filled in. Edit freely; this is all data.",
+ "cfg": {
+  "cooldown_min_ticks": 34, "cooldown_max_ticks": 66,
+  "max_on_screen": 3, "bubble_ticks": 7, "check_every_ticks": 5,
+  "ambient_chance": 0.06, "persona_share": 0.6,
+  "greet_radius": 4, "greet_cooldown_ticks": 500, "greet_chance": 0.7,
+  "reply_radius": 6, "reply_chance": 0.35, "reply_delay_ticks": 3,
+  "react_radius": 8, "low_hp_share": 0.4,
+  "market_move": 0.2, "market_chance": 0.3,
+  "idle_chance": 0.55, "idle_modes": ["well", "sit", "watch"]
+ },
+ "chattiness": {"trader": 1.6, "opportunist": 1.3, "hero": 1.2, "acolyte": 0.8, "woodsman": 0.7, "prospector": 0.8, "raider": 0.9},
+ "lines": {
+  "gather": {
+   "any": ["Steady work.", "One more load.", "Nearly full.", "Good spot, this.", "Arms are tired.", "Pack's getting heavy.", "Slow going today.", "Ha, a nice one!"],
+   "woodsman": ["Timber!", "Ash splits clean.", "Smell that sap.", "Axe needs an edge.", "Blackthorn fights back."],
+   "prospector": ["Copper's thin here.", "Hear that ring? Ore.", "Coal dust everywhere.", "Rock's stubborn today.", "Iron vein, I swear."],
+   "angler": ["They're biting.", "Shh, scaring the fish.", "Eel! No... weed.", "Water's cold today."],
+   "forager": ["Herbs everywhere.", "Mind the nettles.", "Good picking."],
+   "farmer": ["Rain would help.", "Rows won't weed themselves.", "Fine harvest."]
+  },
+  "craft": {
+   "any": ["Careful now...", "Almost got it.", "Steady hands.", "That'll sell.", "Burnt one. Again.", "Practice makes coin."],
+   "smith": ["Hammer and heat.", "Bronze is easy money.", "Bellows! More air!", "Another blade done."],
+   "cook": ["Smells good, eh?", "Don't burn it...", "Salt, pinch more salt.", "Fresh off the fire."],
+   "woodsman": ["Planks for the town.", "Sanding, always sanding."]
+  },
+  "fight": {
+   "any": ["Come on then!", "Take that!", "Ow!", "Stay down!", "Easy kill.", "Watch my back!", "Back off!"],
+   "hero": ["For the fens!", "Stand behind me!", "None shall pass!"],
+   "raider": ["Your loot's mine.", "Run while you can.", "Skull's on. Bring it."],
+   "adventurer": ["Paid per head.", "Another for the tally."]
+  },
+  "bank": {
+   "any": ["Deposit all.", "Safe and sound.", "Bank's busy today.", "Where'd my pick go?", "Need more slots..."],
+   "trader": ["Counting coin. Shh.", "Ledger balances."]
+  },
+  "trading": {
+   "any": ["Selling cheap!", "Buying ore, fair price!", "Board's busy today.", "Who's dumping logs?", "Price check?", "Fair trades only."],
+   "trader": ["Fresh from Saltmere!", "Road's long, prices longer.", "Bargains, friend!", "Buy low, haul far."],
+   "opportunist": ["I'll flip that.", "Undercut? Never... mostly."]
+  },
+  "idle": {
+   "any": ["Nice day.", "Hm.", "What next...", "Anyone seen the bell ring?", "Quiet today.", "I could eat.", "Need a better hatchet.", "Taking five."],
+   "acolyte": ["Bless this town.", "Bones for the altar?", "Pray a while, friend."],
+   "hero": ["Any trouble about?", "Looking for a party."],
+   "farmer": ["Cows got out again."]
+  },
+  "well": {"any": ["Cool water.", "Long walk for a drink.", "Water's clear today.", "Ah, that's better."]},
+  "sit": {"any": ["Resting my feet.", "Just a minute...", "Ahh. Sitting.", "Legs are done."]},
+  "watch": {"any": ["Nice technique, {name}.", "You'll get it, {name}.", "Watching and learning.", "Go on, {name}!"]},
+  "low_hp": {
+   "any": ["Need food!", "Not looking good...", "Bandage, anyone?", "Ugh, fall back!", "That stings."],
+   "hero": ["Just a scratch!"],
+   "raider": ["Tch. Lucky hit."]
+  },
+  "levelup": {
+   "any": ["Level {level} {skill}!", "Yes! {skill} {level}!", "Finally, {level}!", "{skill} up!"],
+   "hero": ["{level} {skill}. Onward!"],
+   "acolyte": ["Blessed! {skill} {level}."]
+  },
+  "death": {
+   "any": ["Not again...", "Back to town, then.", "That was my best pack.", "I'll be back.", "Ouch. Respawned."],
+   "raider": ["Next time, coward."]
+  },
+  "greet": {
+   "any": ["Hey there.", "Hello!", "Morning.", "Oh, hi.", "Evening, friend.", "Afternoon.", "Watch your step."],
+   "trader": ["Need anything? I've got it!", "Friend! Looking to buy?"],
+   "hero": ["Well met, traveller.", "Safe roads."],
+   "raider": ["...", "Lost, are we?", "Nice gear. Shame."],
+   "acolyte": ["Peace be with you.", "Blessings."],
+   "opportunist": ["Psst. Wanna sell?"]
+  },
+  "greet_strong": {"any": ["Whoa, nice gear!", "Teach me sometime?", "You must be famous.", "Big hitter, huh?"]},
+  "player_kill": {"any": ["Nice hit!", "Clean kill.", "Show-off.", "Leave some for me!", "Good one!", "Got a spare {enemy} drop?"]},
+  "market_up": {
+   "any": ["{item} is pricey today!", "Who's buying all the {item}?", "{item} up again?!", "Good time to sell {item}."],
+   "opportunist": ["{item} spiking. Selling!"]
+  },
+  "market_down": {
+   "any": ["{item} crashed...", "Can't give {item} away.", "Somebody flooded {item}.", "{item} dirt cheap now."],
+   "trader": ["{item} cheap here. Hauling!"]
+  },
+  "reply": {"any": ["Ha, true.", "Tell me about it.", "Same here.", "Mhm.", "If you say so.", "Right?", "Don't I know it.", "Heh."]}
+ }
+}

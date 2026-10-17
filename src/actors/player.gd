@@ -15,6 +15,7 @@ func _init() -> void:
 	set_town("fenhollow")
 	status_changed.connect(func(t): Events.action_changed.emit(t))
 	energy = max_energy()
+	AIChatter.player_ref = self   # 0.3.3 AI greetings check our level
 
 
 # ------------------------------------------------------------- equipment --
@@ -293,6 +294,7 @@ func take_hit(dmg: int, attacker, t: int) -> void:
 func on_kill(enemy, t: int) -> void:
 	super.on_kill(enemy, t)
 	say("You defeat the %s." % CombatRules.label(enemy).to_lower())
+	AIChatter.on_player_kill(tile, CombatRules.label(enemy), t)
 
 
 ## Each town's bank chest opens that town's own vault (goods don't teleport).

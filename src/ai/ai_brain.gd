@@ -362,6 +362,14 @@ static func choose(agent: AIAgent, now: int) -> Dictionary:
 				best = {"type": "fight", "skill": "attack", "quarry": kind}
 	if best_u < RESERVATION:
 		best = {"type": "rest"}
+		# 0.3.3: on-screen agents with nothing worth doing pick an idle behaviour
+		# (well / sit / watch, data/ai_chatter.json). Only the detailed tier rolls,
+		# so the abstract economy (and the soak) is unchanged.
+		if agent.view != null:
+			var ic: Dictionary = GameData.ai_chatter.get("cfg", {})
+			var modes: Array = ic.get("idle_modes", [])
+			if not modes.is_empty() and agent.rng.randf() < float(ic.get("idle_chance", 0.55)):
+				best = {"type": "idle", "mode": str(modes[agent.rng.randi() % modes.size()])}
 	best["until"] = now + agent.rng.randi_range(ACTIVITY_MIN, ACTIVITY_MAX)
 	return best
 

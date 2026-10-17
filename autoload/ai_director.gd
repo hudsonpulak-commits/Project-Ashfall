@@ -188,6 +188,7 @@ func on_tick(t: int, world, player_tile: Vector2i) -> void:
 			_trade(a, t)
 	if t % 10 == 5 and world != null and world.ground != null and not world.ground.piles.is_empty():
 		_abstract_loot(world, t)
+	AIChatter.tick(t, player_tile)       # 0.3.3 chat bubbles (on-screen agents only)
 	if t % 50 == 25:
 		AdvBrain.raid_tick(t, records)    # 0.3.1 off-screen Scorch PK
 	if t % 100 == 50:
@@ -463,5 +464,6 @@ func clear() -> void:
 		a.view = null
 	agents.clear()
 	records.clear()
+	AIChatter.clear()
 	AdvBrain.reset()
 	GearEconomy.reset()

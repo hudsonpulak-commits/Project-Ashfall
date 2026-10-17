@@ -32,6 +32,7 @@ var skull_until: int = -1         # 0.3.1 PK: skulled until this tick (see PkRul
 var adv: Dictionary = {}          # 0.3.1 adventurer-class state (AdvBrain): bis, target, history
 var tint: String = ""             # 0.3.1 own look ("" = the persona's tint); new players get their own
 var gen: int = 1                  # 0.3.1 how many characters have held this population slot
+var chat: Dictionary = {}         # 0.3.3 AIChatter runtime state (cooldowns; not saved)
 
 
 func _init() -> void:

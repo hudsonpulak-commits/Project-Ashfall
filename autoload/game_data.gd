@@ -20,6 +20,7 @@ var enemies: Dictionary = {}      # data/enemies.json "enemies"
 var camps: Array = []             # data/enemies.json "camps"
 var drop_tables: Dictionary = {}  # data/drops.json "tables"
 var prayers: Dictionary = {}      # data/prayers.json
+var ai_chatter: Dictionary = {}   # 0.3.3 data/ai_chatter.json (AIChatter)
 var ground_rules: Dictionary = {} # data/drops.json "ground" (private window, TTLs, AI looting)
 var combat_zones: Dictionary = {} # data/combat_zones.json (single-way default, multi zones)
 var fx: Dictionary = {}           # data/fx.json (hitsplat lifetime etc.)
@@ -89,6 +90,7 @@ func reload() -> void:
 	daynight_cfg = _load_json("daynight.json")
 	villages_cfg = _load_json("villages.json")
 	prayers = _load_json("prayers.json")
+	ai_chatter = _load_json("ai_chatter.json")
 	towns.clear()
 	world = _load_json("world.json")
 	for tid in world.get("towns", ["fenhollow"]):
