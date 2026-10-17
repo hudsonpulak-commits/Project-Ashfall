@@ -734,6 +734,15 @@
    ],
    "frames": 1,
    "anchor": "bottom"
+  },
+  "quest_giver": {
+   "path": "res://assets/sprites/actors/town_guard.png",
+   "frame_size": [
+    16,
+    24
+   ],
+   "frames": 2,
+   "anchor": "bottom"
   }
  },
  "actors": {
@@ -1615,6 +1624,17 @@
     32
    ],
    "frames": 1,
+   "flip": true
+  },
+  "goblin_warlord": {
+   "path": "res://assets/sprites/actors/goblin_warlord.png",
+   "frames": 2,
+   "frame_size": [
+    16,
+    24
+   ],
+   "fps": 4,
+   "anchor": "bottom",
    "flip": true
   }
  },

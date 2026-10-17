@@ -76,6 +76,11 @@ func setup(p: Player, w: World) -> void:
 	_build()
 	minimap.world = w
 	minimap.player = p
+	quest_ui = QuestUI.new()   # 0.3.7 giver markers + guidance arrow
+	quest_ui.player = p
+	quest_ui.world = w
+	add_child(quest_ui)
+	move_child(quest_ui, 0)
 	zone_banner.player = p
 	zone_banner.world = w
 	exchange_panel.setup(p)
@@ -271,6 +276,7 @@ func _build() -> void:
 	map_panel.set_meta("hud", self)
 	panels["map"] = map_panel
 	panels["menu"] = _build_menu_panel()
+	panels["quests"] = _build_quest_panel()
 	panels["prayer"] = _build_prayer_panel()
 	for k in panels.keys():
 		panels[k].visible = false
@@ -293,7 +299,7 @@ func _build() -> void:
 	tabs.add_theme_constant_override("separation", 2)
 	col.add_child(tabs)
 	# no Bank tab: the bank opens only by walking to a bank chest
-	for t in [["pack", "Pack"], ["skills", "Skills"], ["map", "Map"], ["menu", "Menu"]]:
+	for t in [["pack", "Pack"], ["skills", "Skills"], ["quests", "Quests"], ["map", "Map"], ["menu", "Menu"]]:
 		var b := Button.new()
 		b.text = t[1]
 		b.toggle_mode = true
@@ -467,8 +473,10 @@ func _build_skills_panel() -> Control:
 		bar.size = Vector2(0, 3)
 		bar_bg.add_child(bar)
 		row.add_child(bar_bg)
+		var tr := UIKit.label("", 7, UIStyle.TEXT_DIM)   # 0.3.7 session XP tracker
+		row.add_child(tr)
 		g.add_child(row)
-		skill_rows[s["id"]] = [l, bar]
+		skill_rows[s["id"]] = [l, bar, tr]
 	var pb := UIKit.button("Prayers  >", func(): show_panel("prayer"), 160, 34)
 	pb.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
 	v.add_child(pb)
@@ -616,6 +624,8 @@ func show_panel(key: String) -> void:
 		Events.say("Walk to a bank chest and tap it to bank.")
 		key = ""
 	current_panel = key
+	if key == "quests":
+		refresh_quests()
 	for k in panels.keys():
 		panels[k].visible = k == key
 	panel_host.visible = key != ""
@@ -775,6 +785,51 @@ func _refresh_bank() -> void:
 		bank_slots[i].set_item(player.bank.slots[map[i]] if i < map.size() else null)
 
 
+## 0.3.7 "+120 xp this session · 85 to Lv 6"
+func skill_tracker_text(id: String) -> String:
+	var lvl := player.skills.level(id)
+	var gained := int(player.session_xp.get(id, 0))
+	var to_next := "max" if lvl >= GameData.max_level else "%d to Lv %d" % [maxi(0, GameData.xp_for_level(lvl + 1) - int(player.skills.xp[id])), lvl + 1]
+	return "+%d xp this session · %s" % [gained, to_next]
+
+
+var quest_ui: QuestUI
+var quest_box: VBoxContainer
+var influence_label: Label
+var quest_rows: Dictionary = {}    # quest id -> Label (tests / QA read colours)
+const QUEST_COLORS := {"not_started": Color("#e05050"), "in_progress": Color("#f0d040"), "ready": Color("#f0d040"), "completed": Color("#60c060")}
+
+
+func _build_quest_panel() -> Control:
+	var v := VBoxContainer.new()
+	v.add_child(_header("Quest Journal"))
+	influence_label = UIKit.label("", 9, UIStyle.ACCENT)
+	v.add_child(influence_label)
+	quest_box = VBoxContainer.new()
+	v.add_child(quest_box)
+	Events.quests_changed.connect(refresh_quests)
+	return v
+
+
+func refresh_quests() -> void:
+	if quest_box == null or player == null:
+		return
+	UIKit.clear(quest_box)
+	quest_rows.clear()
+	influence_label.text = "Influence: %d" % player.influence
+	for q in QuestSystem.quests():
+		var id: String = q["id"]
+		var st := QuestSystem.state(player, id)
+		var t := UIKit.label(str(q["name"]), 11, QUEST_COLORS.get(st, Color.WHITE))
+		quest_box.add_child(t)
+		quest_rows[id] = t
+		var d := UIKit.label(str(q.get("desc", "")), 8, UIStyle.TEXT_DIM)
+		d.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+		d.custom_minimum_size = Vector2(300, 0)
+		quest_box.add_child(d)
+		quest_box.add_child(UIKit.label(QuestSystem.progress_text(player, id), 9, QUEST_COLORS.get(st, Color.WHITE)))
+
+
 func _refresh_skills() -> void:
 	total_label.text = "Skills  —  Total %d  ·  Combat %d" % [player.skills.total_level(), Combat.combat_level(player.skills)]
 	for id in skill_rows.keys():
@@ -784,6 +839,7 @@ func _refresh_skills() -> void:
 		l.text = "%s  %d" % [GameData.skill_by_id[id]["name"], lvl]
 		l.tooltip_text = "%d xp" % int(player.skills.xp[id])
 		bar.size.x = floorf(150.0 * player.skills.progress(id))
+		(skill_rows[id][2] as Label).text = skill_tracker_text(id)
 	var cur := player.current_style()
 	for st in style_buttons.keys():
 		var b: Button = style_buttons[st]
@@ -852,6 +908,8 @@ func _on_message(text: String, kind: String) -> void:
 	l.add_theme_font_size_override("font_size", 10)
 	if kind == "level":
 		l.add_theme_color_override("font_color", UIStyle.ACCENT)
+	elif kind == "xp":
+		l.add_theme_color_override("font_color", Color("#9ad0f0"))   # 0.3.7 XP lines
 	elif kind == "warn":
 		l.add_theme_color_override("font_color", Color("#f08a6a"))   # 0.3.1 PK warnings
 	l.mouse_filter = Control.MOUSE_FILTER_IGNORE

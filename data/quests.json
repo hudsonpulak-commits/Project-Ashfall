@@ -1,0 +1,52 @@
+{
+ "note": "0.3.7 data-driven quests. Stage types: kill (enemy, count; only the quest holder's own kills count) and talk (back to the giver). Rewards: influence always, plus optional marks and items.",
+ "givers": {
+  "kell": {
+   "name": "Kell",
+   "town": "fenhollow",
+   "object": "quest_giver"
+  }
+ },
+ "quests": [
+  {
+   "id": "goblin_slayer",
+   "name": "Goblin Slayer",
+   "giver": "kell",
+   "desc": "Kell, captain of the Fenhollow watch, wants the goblin menace dealt with.",
+   "start_text": "Goblins raid our roads. Kill 5 of them and come back to me.",
+   "stages": [
+    {
+     "type": "kill",
+     "enemy": "goblin",
+     "count": 5,
+     "label": "Goblins",
+     "text": "Kill 5 goblins"
+    },
+    {
+     "type": "talk",
+     "text": "Return to Kell in Fenhollow",
+     "say": "Good work. But their Goblin Warlord is terrorising Millbrook. Slay him!"
+    },
+    {
+     "type": "kill",
+     "enemy": "goblin_warlord",
+     "count": 1,
+     "label": "Goblin Warlord",
+     "text": "Slay the Goblin Warlord near Millbrook"
+    },
+    {
+     "type": "talk",
+     "text": "Return to Kell in Fenhollow",
+     "say": "The Warlord is dead? Fenhollow owes you. Take this."
+    }
+   ],
+   "rewards": {
+    "influence": 10,
+    "marks": 150,
+    "items": {
+     "iron_sword": 1
+    }
+   }
+  }
+ ]
+}

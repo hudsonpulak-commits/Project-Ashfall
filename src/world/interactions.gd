@@ -32,6 +32,10 @@ static func perform(actor: Actor, world, t: int) -> void:
 		"bank":
 			actor.action = {}
 			actor.on_bank(world, obj)
+		"quest":    # 0.3.7
+			actor.action = {}
+			if actor is Player:
+				QuestSystem.talk(actor, obj)
 		"exchange":
 			actor.action = {}
 			actor.on_exchange(world, obj)

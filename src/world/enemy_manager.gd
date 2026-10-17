@@ -153,6 +153,8 @@ func nearest(from: Vector2i, kinds: Array, radius: int, ok: Callable = Callable(
 
 func on_killed(e: Enemy, killer: Actor, t: int) -> void:
 	kills[e.kind] = int(kills.get(e.kind, 0)) + 1
+	if killer is Player:    # 0.3.7 only the quest holder's own kills count
+		QuestSystem.on_kill(killer, e.kind)
 	var drops := DropTable.roll(str(e.def.get("drops", e.kind)), e.rng)
 	for d in drops:
 		var id: String = d[0]

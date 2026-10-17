@@ -439,6 +439,16 @@
    "station": "hearth",
    "verb": "Cook on",
    "note": "0.3.6 lit with flint on a log (data/fire.json); burns out by itself"
+  },
+  "quest_giver": {
+   "name": "Kell",
+   "sprite": "quest_giver",
+   "actor_sprite": "town_guard",
+   "blocks": true,
+   "type": "quest",
+   "giver": "kell",
+   "verb": "Talk-to",
+   "note": "0.3.7 quest giver (data/quests.json givers)"
   }
  }
 }

@@ -366,7 +366,9 @@ func _make_object_view(o: WorldObject) -> void:
 	spr.centered = false
 	spr.position = tile_foot(o.pos)
 	o.view = spr
-	if o.def().get("keeper", false):
+	if o.def().has("actor_sprite"):   # 0.3.7 quest givers use an actor sheet
+		apply_keeper_sprite(spr, str(o.def()["actor_sprite"]))
+	elif o.def().get("keeper", false):
 		var b: Dictionary = gen.buildings.get(str(o.meta.get("building", "")), {})
 		apply_keeper_sprite(spr, buildings_view.keeper_sprite(b) if not b.is_empty() else "keeper_general")
 	else:

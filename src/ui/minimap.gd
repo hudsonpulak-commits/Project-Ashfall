@@ -53,6 +53,17 @@ func _draw() -> void:
 				var ic: Texture2D = GameData.texture("ui", "marker_%s" % str(m["icon"]))
 				var dest := Rect2((p - Vector2(4, 4)).floor(), Vector2(8, 8))
 				draw_texture_rect(ic, dest, false, Color(str(m["colour"])))
+	# 0.3.7 quest giver "?" / "!"
+	if player is Player:
+		for gid in QuestSystem.cfg().get("givers", {}).keys():
+			var mk := QuestSystem.giver_marker(player, gid)
+			var gt := QuestSystem.giver_tile(world, gid)
+			if mk == "" or abs(gt.x - pt.x) > half_tiles or abs(gt.y - pt.y) > half_tiles:
+				continue
+			var gp := Vector2((gt.x - pt.x) * SCALE, (gt.y - pt.y) * SCALE) + center
+			var f := get_theme_default_font()
+			draw_rect(Rect2(gp + Vector2(-4, -10), Vector2(9, 11)), Color(0, 0, 0, 0.7))
+			draw_string(f, gp + Vector2(-3, 0), mk, HORIZONTAL_ALIGNMENT_LEFT, -1, 11, Color("#f0e040"))
 	for a in others:
 		if is_instance_valid(a):
 			var p2 := Vector2((a.tile.x - pt.x) * SCALE, (a.tile.y - pt.y) * SCALE) + center

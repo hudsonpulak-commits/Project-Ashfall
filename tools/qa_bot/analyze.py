@@ -1054,7 +1054,50 @@ def check_v036(ctx):
     ]
 
 
-CHECKS = [check_runtime, check_diagonal, check_facing, check_ghost, check_jitter, check_taps, check_bubbles, check_roof, check_shop, check_smithy, check_markers, check_daynight, check_world, check_church, check_aggro, check_farm, check_city, check_cookhouse, check_pk, check_gear, check_archery, check_bank, check_v036]
+def check_quest(ctx):
+    """0.3.7 Goblin Slayer played start to finish."""
+    if "quest" not in ctx.expected:
+        return []
+    run = ctx.runs.get("quest")
+    if not run:
+        return [Result("C29 quest", "quest run present", False, "no capture")]
+    a = run.res.get("quest", {})
+    snaps = {e.get("name"): e.get("path") for e in run.events if e.get("type") == "snap"}
+    sp = lambda *n: [snaps[k] for k in n if k in snaps]
+    red, yel, grn = "e05050", "f0d040", "60c060"
+    return [
+        Result("C29 quest", "Kell shows '?' (overhead + map) before the quest", a.get("mark_start") == "?" and a.get("minimap_mark_start") == "?", "%s / %s" % (a.get("mark_start"), a.get("minimap_mark_start")), sp("quest_npc_question")),
+        Result("C29 quest", "tapping Kell starts it; no marker while hunting", a.get("state_after_talk") == "in_progress" and a.get("mark_hunting") == "", "%s mark %r" % (a.get("state_after_talk"), a.get("mark_hunting"))),
+        Result("C29 quest", "journal colours: red, yellow with 'Goblins 3/5', green", a.get("color_not_started") == red and a.get("color_in_progress") == yel and str(a.get("progress_3", "")).endswith("Goblins 3/5") and a.get("color_completed") == grn,
+               "%s / %s %r / %s" % (a.get("color_not_started"), a.get("color_in_progress"), a.get("progress_3"), a.get("color_completed")), sp("journal_not_started", "journal_in_progress", "journal_completed")),
+        Result("C29 quest", "5 goblins killed in real fights -> Kell shows '!'", all(a.get("goblin_%d" % i) for i in range(1, 6)) and a.get("state_after_goblins") == "ready" and a.get("mark_ready") == "!", "ready %s mark %r" % (a.get("state_after_goblins"), a.get("mark_ready")), sp("quest_npc_exclaim")),
+        Result("C29 quest", "guidance arrow: goblin, Kell, Warlord off screen; hidden on screen", bool(a.get("arrow_goblin")) and bool(a.get("arrow_to_kell")) and bool(a.get("arrow_warlord")) and bool(a.get("arrow_hidden_on_screen")),
+               "goblin %s kell %s warlord %s hidden %s" % (a.get("arrow_goblin"), a.get("arrow_to_kell"), a.get("arrow_warlord"), a.get("arrow_hidden_on_screen")), sp("quest_arrow_goblin", "quest_arrow_warlord")),
+        Result("C29 quest", "Goblin Warlord (12) killed, then it respawns", a.get("warlord_label") == "Goblin Warlord (12)" and bool(a.get("warlord_killed")) and a.get("state_after_warlord") == "ready" and bool(a.get("warlord_respawned")),
+               "%r killed %s respawn %s" % (a.get("warlord_label"), a.get("warlord_killed"), a.get("warlord_respawned")), sp("goblin_warlord")),
+        Result("C29 quest", "turn in: +10 Influence (journal), 150 marks, iron sword; markers gone", a.get("state_final") == "completed" and a.get("influence") == 10 and a.get("marks") == 150 and a.get("sword", 0) >= 1 and a.get("mark_final") == "" and a.get("minimap_mark_final") == "" and "10" in str(a.get("influence_text")),
+               "inf %s marks %s sword %s mark %r %r" % (a.get("influence"), a.get("marks"), a.get("sword"), a.get("mark_final"), a.get("influence_text"))),
+    ]
+
+
+def check_xp(ctx):
+    """0.3.7 XP feedback lines + Skills panel session tracker."""
+    if "xp" not in ctx.expected:
+        return []
+    run = ctx.runs.get("xp")
+    if not run:
+        return [Result("C30 xp", "xp run present", False, "no capture")]
+    a = run.res.get("xp", {})
+    snaps = {e.get("name"): e.get("path") for e in run.events if e.get("type") == "snap"}
+    out = []
+    for k in ["melee", "forestry", "mining", "cooking"]:
+        r = a.get(k, {})
+        out.append(Result("C30 xp", "%s writes an XP log line and updates the tracker" % k, bool(r.get("line")) and r.get("tracker", 0) > 0, "%s +%s" % (r.get("line"), r.get("tracker")), [snaps[x] for x in ("xp_log_lines",) if x in snaps]))
+    out.append(Result("C30 xp", "Skills panel tracker shows session XP and XP to next level", "xp this session" in str(a.get("tracker_text")) and "to Lv" in str(a.get("tracker_text")), str(a.get("tracker_text")), [snaps[x] for x in ("skills_xp_tracker",) if x in snaps]))
+    return out
+
+
+CHECKS = [check_runtime, check_diagonal, check_facing, check_ghost, check_jitter, check_taps, check_bubbles, check_roof, check_shop, check_smithy, check_markers, check_daynight, check_world, check_church, check_aggro, check_farm, check_city, check_cookhouse, check_pk, check_gear, check_archery, check_bank, check_v036, check_quest, check_xp]
 SCENARIOS = ["walk", "combat", "shop", "pshop", "smithy", "markers", "daynight", "world", "church", "aggro", "farm", "city", "cookhouse", "pk", "gear", "archery"]
 
 

@@ -10,6 +10,7 @@ func _init() -> void:
 	display_name = "You"
 	sprite_id = "player"
 	skills.xp_gained.connect(func(s, a): Events.xp_gained.emit(s, a))
+	skills.xp_gained.connect(_on_xp_feed)   # 0.3.7 XP feedback
 	skills.leveled.connect(_on_level)
 	inventory.changed.connect(func(): Events.inventory_changed.emit())
 	set_town("fenhollow")
@@ -20,7 +21,9 @@ func _init() -> void:
 
 # ------------------------------------------------------------- equipment --
 const SLOTS := ["head", "body", "legs", "shield", "weapon", "ammo"]
-var ammo_qty := 0                    # 0.3.6 arrows in the ammo slot
+var ammo_qty := 0
+var quests: Dictionary = {}          # 0.3.7 quest id -> {stage, count, done}
+var influence := 0                   # 0.3.7 quest reward points                    # 0.3.6 arrows in the ammo slot
 const DEATH_COIN_FEE := 0.10       # share of carried coin the town healer keeps (sink)
 var equipment: Dictionary = {}      # slot -> item id
 var deaths := 0
@@ -495,6 +498,8 @@ func to_save() -> Dictionary:
 	d["town"] = current_town
 	d["equipment"] = equipment.duplicate()
 	d["ammo_qty"] = ammo_qty
+	d["quests"] = quests.duplicate(true)
+	d["influence"] = influence
 	d["deaths"] = deaths
 	d["combat_style"] = combat_style
 	d["energy"] = energy
@@ -519,6 +524,8 @@ func from_save(d: Dictionary) -> void:
 		set_town(str(d["town"]))
 	equipment = d.get("equipment", {}).duplicate()
 	ammo_qty = int(d.get("ammo_qty", 0))
+	quests = (d.get("quests", {}) as Dictionary).duplicate(true)   # old saves: nothing started
+	influence = int(d.get("influence", 0))
 	if not d.has("ammo_qty"):
 		auto_equip_ammo()    # 0.3.6 old saves: arrows from the pack go in the quiver
 	deaths = int(d.get("deaths", 0))
@@ -563,6 +570,34 @@ func auto_equip_ammo() -> bool:
 		if sl != null and sl["id"] == best:
 			return equip_slot(i) == ""
 	return false
+
+
+## 0.3.7 XP feedback: every gain (Skills.add_xp) is tallied per session and
+## queued; flush_xp() (end of each tick) writes ONE log line for the tick,
+## e.g. "+12 Attack XP, +4 Vitality XP".
+var session_xp: Dictionary = {}     # skill id -> XP this session (not saved)
+var _xp_pending: Dictionary = {}    # skill id -> XP since the last flush (insertion order kept)
+
+
+func _on_xp_feed(skill_id: String, amount: int) -> void:
+	session_xp[skill_id] = int(session_xp.get(skill_id, 0)) + amount
+	_xp_pending[skill_id] = int(_xp_pending.get(skill_id, 0)) + amount
+
+
+static func xp_line(gains: Dictionary) -> String:
+	var bits := []
+	for id in gains.keys():
+		bits.append("+%d %s XP" % [int(gains[id]), str(GameData.skill_by_id.get(id, {}).get("name", id))])
+	return ", ".join(bits)
+
+
+func flush_xp() -> String:
+	if _xp_pending.is_empty():
+		return ""
+	var line := xp_line(_xp_pending)
+	_xp_pending.clear()
+	Events.say(line, "xp")
+	return line
 
 
 func give_starter_kit() -> void:

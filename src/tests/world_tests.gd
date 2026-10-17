@@ -38,6 +38,7 @@ static func run(main, world: World, p: Player) -> void:
 	_cookhouse_tests(world, p)
 	_walled_integration_tests(world, p)
 	Patch036Tests.run(world, p)   # 0.3.6 (last: it advances ~250 ticks)
+	Patch037Tests.run(world, p)   # 0.3.7
 	p.place_at(world.gen.town_spawn("fenhollow"))
 	world.set_focus(p.tile, true)
 
@@ -433,6 +434,16 @@ static func _town_folk_tests(world: World, p: Player) -> void:
 	var last := g.tile
 	# 0.3.6 generate the chunks round the patrol first (pathing is otherwise
 	# sensitive to which chunks happen to be generated already)
+	var parked := []   # 0.3.7 wandering citizens (RNG) can stall the loop: park them
+	for e3 in em.enemies:
+		if e3 != g and not e3.dead and e3.kind != "town_guard" and e3.cheb(e3.tile, g.home) < 30:
+			e3.dead = true
+			e3.respawn_at = 1 << 30
+			parked.append(e3)
+	for a in AIDirector.agents:    # 0.3.7 idle AI players on the route would block the loop
+		if a and is_instance_valid(a) and a._cheb(a.tile, g.home) < 30:
+			a.place_at(world.find_free_tile_near(g.home + Vector2i(0, 60), 6, true))
+			a.stop()
 	for wp in g.patrol:
 		for cy in range(-1, 2):
 			for cx in range(-1, 2):
@@ -451,6 +462,9 @@ static func _town_folk_tests(world: World, p: Player) -> void:
 		last = g.tile
 	if visited.size() != g.patrol.size():
 		print("    guard patrol debug: patrol %s tile %s home %s target %s returning %s dead %s" % [str(g.patrol), g.tile, g.home, g.target, g.returning, g.dead])
+	for e3 in parked:
+		e3.dead = false
+		e3.respawn_at = 0
 	check(visited.size() == g.patrol.size(), "a guard walks its whole patrol loop (%d/%d waypoints)" % [visited.size(), g.patrol.size()])
 	# non-aggressive, but fights back
 	check(_calm(world, p, g), "guards never start a fight (you stand next to one)")

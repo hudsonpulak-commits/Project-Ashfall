@@ -420,6 +420,13 @@ func _draw_map() -> void:
 		var vp := (vc + Vector2(-vw / 2.0, -6)).floor()
 		_view.draw_rect(Rect2(vp + Vector2(-2, -8), Vector2(vw + 4, 10)), Color(0, 0, 0, 0.45))
 		_view.draw_string(font, vp, vname, HORIZONTAL_ALIGNMENT_LEFT, -1, 8, Color("#e8dcb8"))
+	# 0.3.7 quest giver "?" / "!"
+	for gid in QuestSystem.cfg().get("givers", {}).keys():
+		var mk := QuestSystem.giver_marker(player, gid)
+		if mk != "":
+			var gq: Vector2 = world.map_pixel(QuestSystem.giver_tile(world, gid)) * SCALE + off
+			_view.draw_rect(Rect2(gq + Vector2(-5, -12), Vector2(11, 13)), Color(0, 0, 0, 0.75))
+			_view.draw_string(font, gq + Vector2(-3, -1), mk, HORIZONTAL_ALIGNMENT_LEFT, -1, 12, Color("#f0e040"))
 	# custom markers
 	for m in player.map_markers.markers:
 		_draw_marker_at(m, off, font, int(m["id"]) == _edit_id)

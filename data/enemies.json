@@ -153,6 +153,23 @@
    "retaliate": true,
    "drops": "cow",
    "note": "0.3.1 village pastures (towns/<village>.json pastures): passive, kicks back weakly when hit, respawns"
+  },
+  "goblin_warlord": {
+   "name": "Goblin Warlord",
+   "sprite": "goblin_warlord",
+   "level": 12,
+   "hp": 42,
+   "max_hit": 6,
+   "accuracy": 0.65,
+   "defence": 7,
+   "attack_ticks": 4,
+   "aggro": 4,
+   "leash": 8,
+   "wander": 2,
+   "respawn_ticks": 200,
+   "xp": 60,
+   "drops": "goblin",
+   "note": "0.3.7 Goblin Slayer boss near Millbrook; reusable, respawns. hp 28 base x1.5 (0.3.6 rule). Art swappable in sprites.json actors.goblin_warlord"
   }
  },
  "camps": [
@@ -407,6 +424,15 @@
    ],
    "count": 3,
    "spread": 3
+  },
+  {
+   "enemy": "goblin_warlord",
+   "at": [
+    144,
+    -66
+   ],
+   "count": 1,
+   "spread": 1
   }
  ],
  "note_show_level": "0.3.3: combat enemies (aggro, or retaliate with max_hit > 0) show 'Name (level)' overhead; show_level overrides (false for citizens and chickens).",

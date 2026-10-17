@@ -315,6 +315,10 @@ func _run() -> void:
 			await _bank035()
 		"v036":
 			await _v036()
+		"quest":
+			await _quest037()
+		"xp":
+			await _xp037()
 		_:
 			push_error("unknown QA scenario " + scenario)
 			await _finish(false)
@@ -2164,3 +2168,199 @@ func _v036() -> void:
 	await _snap("night_wilds")
 	DayNight.debug_set_phase("day")
 	_notes["v036"] = res
+
+
+func _qcolor(id: String) -> String:
+	main.hud.show_panel("quests")
+	var l: Label = main.hud.quest_rows.get(id)
+	return l.get_theme_color("font_color").to_html(false) if l else ""
+
+
+## Fight `e` with real taps until it dies (strong test character).
+func _kill(p: Player, w: World, e: Enemy, what: String) -> bool:
+	p.place_at(w.find_free_tile_near(e.tile + Vector2i(1, 0), 2))
+	w.set_focus(p.tile, true)
+	await frames(10)
+	var t_end := Time.get_ticks_msec() + 60000
+	while not e.dead and Time.get_ticks_msec() < t_end:
+		if p.action.is_empty():
+			p.hp = p.max_hp()
+			if p._cheb(p.tile, e.tile) > 3:
+				p.place_at(w.find_free_tile_near(e.tile + Vector2i(1, 0), 2))
+				w.set_focus(p.tile, true)
+				await frames(5)
+			await tap(tile_screen(e.tile), what)
+		await frames(10)
+	return e.dead
+
+
+## 0.3.7 Goblin Slayer start to finish with real taps.
+func _quest037() -> void:
+	var p: Player = main.player
+	var w: World = main.world
+	var hud = main.hud
+	var res := {}
+	var id := "goblin_slayer"
+	var keep_xp: Dictionary = p.skills.xp.duplicate()
+	for sk in ["attack", "strength", "defence", "vitality"]:
+		p.skills.set_level(sk, 45)
+	p.inventory.add("iron_sword")
+	var gt := QuestSystem.giver_tile(w, "kell")
+	p.place_at(w.find_free_tile_near(gt + Vector2i(0, 3), 2))
+	w.set_focus(p.tile, true)
+	await frames(30)
+	res["color_not_started"] = _qcolor(id)
+	await _snap("journal_not_started")
+	hud.show_panel("")
+	await frames(10)
+	res["mark_start"] = hud.quest_ui.giver_label("kell").text if hud.quest_ui.giver_label("kell") else ""
+	res["minimap_mark_start"] = QuestSystem.giver_marker(p, "kell")
+	label = "quest_q"
+	await _snap("quest_npc_question")
+	for attempt in 3:
+		await tap_tile(gt, "Kell")
+		if await until(func(): return QuestSystem.state(p, id) != QuestSystem.NOT_STARTED, 15.0):
+			break
+	await frames(10)
+	res["state_after_talk"] = QuestSystem.state(p, id)
+	res["mark_hunting"] = hud.quest_ui.giver_label("kell").text if hud.quest_ui.giver_label("kell") else "?none"
+	# goblins
+	for i in range(1, 6):
+		var g: Enemy = w.enemies.nearest(p.tile, ["goblin"], 4000)
+		g.reset_far()
+		if i == 2:
+			p.place_at(w.find_free_tile_near(g.tile + Vector2i(18, 0), 3))
+			w.set_focus(p.tile, true)
+			await frames(20)
+			res["arrow_goblin"] = hud.quest_ui.arrow_visible
+			label = "arrow"
+			await _snap("quest_arrow_goblin")
+		var ok: bool = await _kill(p, w, g, "goblin %d" % i)
+		res["goblin_%d" % i] = ok
+		if i == 3:
+			res["progress_3"] = QuestSystem.progress_text(p, id)
+			res["color_in_progress"] = _qcolor(id)
+			label = "journal"
+			await _snap("journal_in_progress")
+			hud.show_panel("")
+	res["state_after_goblins"] = QuestSystem.state(p, id)
+	# back to Kell: arrow points at him, he shows "!"
+	p.place_at(w.find_free_tile_near(gt + Vector2i(0, 30), 3))
+	w.set_focus(p.tile, true)
+	await frames(20)
+	res["arrow_to_kell"] = hud.quest_ui.arrow_visible and hud.quest_ui.arrow_target == gt
+	p.place_at(w.find_free_tile_near(gt + Vector2i(0, 3), 2))
+	w.set_focus(p.tile, true)
+	await frames(20)
+	res["arrow_hidden_on_screen"] = not hud.quest_ui.arrow_visible
+	res["mark_ready"] = hud.quest_ui.giver_label("kell").text if hud.quest_ui.giver_label("kell") else ""
+	label = "quest_excl"
+	await _snap("quest_npc_exclaim")
+	p.stop()
+	_clear_foes(p, w)
+	for attempt in 3:
+		await tap_tile(gt, "Kell (report)")
+		if await until(func(): return QuestSystem.progress_text(p, id).contains("Warlord"), 15.0):
+			break
+	res["progress_warlord"] = QuestSystem.progress_text(p, id)
+	await frames(10)
+	res["arrow_warlord"] = hud.quest_ui.arrow_visible
+	await _snap("quest_arrow_warlord")
+	# the Warlord
+	var wl: Enemy = w.enemies.nearest(p.tile, ["goblin_warlord"], 4000)
+	p.place_at(w.find_free_tile_near(wl.tile + Vector2i(3, 2), 2))
+	w.set_focus(p.tile, true)
+	await frames(30)
+	res["warlord_label"] = wl._lvl_label.text if wl._lvl_label else ""
+	label = "warlord"
+	await _snap("goblin_warlord")
+	res["warlord_killed"] = await _kill(p, w, wl, "Goblin Warlord")
+	res["state_after_warlord"] = QuestSystem.state(p, id)
+	wl.respawn_at = Tick.tick_count + 3
+	await until(func(): return not wl.dead, 10.0)
+	res["warlord_respawned"] = not wl.dead
+	# turn in
+	var marks0 := p.inventory.count(GameData.currency)
+	var inf0 := p.influence
+	p.place_at(w.find_free_tile_near(gt + Vector2i(0, 3), 2))
+	w.set_focus(p.tile, true)
+	await frames(20)
+	p.stop()
+	_clear_foes(p, w)
+	for attempt in 3:
+		await tap_tile(gt, "Kell (turn in)")
+		if await until(func(): return QuestSystem.state(p, id) == QuestSystem.COMPLETED, 15.0):
+			break
+	res["turn_in_msgs"] = p.action.duplicate()
+	await frames(20)
+	res["state_final"] = QuestSystem.state(p, id)
+	res["influence"] = p.influence - inf0
+	res["marks"] = p.inventory.count(GameData.currency) - marks0
+	res["sword"] = p.inventory.count("iron_sword")
+	res["mark_final"] = hud.quest_ui.giver_label("kell").text if hud.quest_ui.giver_label("kell") else ""
+	res["minimap_mark_final"] = QuestSystem.giver_marker(p, "kell")
+	res["color_completed"] = _qcolor(id)
+	res["influence_text"] = hud.influence_label.text
+	await _snap("journal_completed")
+	hud.show_panel("")
+	p.skills.xp = keep_xp
+	_notes["quest"] = res
+
+
+## 0.3.7 XP feedback: melee hit, chop, mine, cook each log an XP line and move
+## the Skills panel tracker.
+func _xp037() -> void:
+	var p: Player = main.player
+	var w: World = main.world
+	var res := {}
+	var lines: Array = []
+	Events.message.connect(func(t, k = ""): if k == "xp": lines.append(str(t)))
+	var c := w.gen.town_spawn("fenhollow")
+	var cases := [["forestry", ["bronze_hatchet"], ["ash_tree"]], ["mining", ["bronze_pick"], ["copper_rock", "tin_rock"]], ["cooking", ["raw_carp", "raw_carp"], ["oven", "hearth"]]]
+	for cs in cases:
+		var sk: String = cs[0]
+		p.inventory.clear()
+		for it in cs[1]:
+			p.inventory.add(it)
+		var o: WorldObject = w.find_nearest_object(c, cs[2], 80)
+		p.place_at(w.find_free_tile_near(o.pos + Vector2i(0, 2), 2))
+		w.set_focus(p.tile, true)
+		await frames(10)
+		lines.clear()
+		var s0 := int(p.session_xp.get(sk, 0))
+		var nm: String = GameData.skill_by_id[sk]["name"]
+		await tap_tile(o.pos, sk)
+		await until(func(): return lines.any(func(l): return l.contains(nm + " XP")), 25.0)
+		p.stop()
+		res[sk] = {"line": lines.filter(func(l): return l.contains(nm + " XP")).slice(0, 1), "tracker": int(p.session_xp.get(sk, 0)) - s0}
+	# melee
+	p.inventory.clear()
+	p.inventory.add("bronze_sword")
+	p.equip_slot(0)
+	var rat := _foe("giant_rat", "", c)
+	rat.reset_far()
+	rat.max_hp = 999
+	rat.hp = 999
+	p.place_at(w.find_free_tile_near(rat.tile + Vector2i(1, 0), 2))
+	w.set_focus(p.tile, true)
+	p.hp = p.max_hp()
+	await frames(10)
+	lines.clear()
+	var a0 := int(p.session_xp.get("attack", 0)) + int(p.session_xp.get("strength", 0))
+	await tap(tile_screen(rat.tile), "rat (melee)")
+	await until(func(): return lines.any(func(l): return l.contains("Attack XP") or l.contains("Strength XP")), 20.0)
+	label = "xp_log"
+	await _snap("xp_log_lines")
+	p.stop()
+	res["melee"] = {"line": lines.filter(func(l): return l.contains("Attack XP") or l.contains("Strength XP")).slice(0, 1), "tracker": int(p.session_xp.get("attack", 0)) + int(p.session_xp.get("strength", 0)) - a0}
+	rat.max_hp = int(rat.def.get("hp", 5))
+	rat.hp = rat.max_hp
+	rat.target = null
+	_clear_foes(p, w)
+	main.hud.show_panel("skills")
+	await frames(10)
+	res["tracker_text"] = main.hud.skill_tracker_text("forestry")
+	label = "skills_tracker"
+	await _snap("skills_xp_tracker")
+	main.hud.show_panel("")
+	_notes["xp"] = res
