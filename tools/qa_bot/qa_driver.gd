@@ -309,6 +309,8 @@ func _run() -> void:
 			await _pk()
 		"gear":
 			await _gear()
+		"archery":
+			await _archery()
 		_:
 			push_error("unknown QA scenario " + scenario)
 			await _finish(false)
@@ -1024,7 +1026,7 @@ func _aggro() -> void:
 	var keep: Dictionary = p.skills.xp.duplicate()
 	var rat := _foe("giant_rat", "", w.gen.town_spawn("fenhollow"))
 	var res := {"rat": [rat.tile.x, rat.tile.y], "rat_level": rat.level()}
-	for pass_ in [["high", 12], ["low", 1]]:
+	for pass_ in [["high", 14], ["low", 1]]:   # 0.3.3: 14s + Archery 1 = Combat 11
 		var nm: String = pass_[0]
 		var lvl: int = pass_[1]
 		p.skills.xp = Skills.new().xp
@@ -1708,10 +1710,10 @@ func _quiet_tile(c: Vector2i) -> Vector2i:
 			var t := c + Vector2i(roundi(cos(a) * r), roundi(sin(a) * r))
 			var clear := true
 			for dx in range(-5, 6):
-				clear = clear and not w.is_blocked(t + Vector2i(dx, 0)) and not _bv.hides(t + Vector2i(dx, 0))
+				clear = clear and not w.is_blocked(t + Vector2i(dx, 0)) and not _bv.hides(t + Vector2i(dx, 0)) and w.object_at(t + Vector2i(dx, 0)) == null
 				# 0.3.1 cities: facades, hanging shop signs and wall tops sit 1-2 rows up: keep them out of the still
 				for dy in [-2, -1, 1]:
-					clear = clear and not w.is_blocked(t + Vector2i(dx, dy)) and not _bv.hides(t + Vector2i(dx, dy))
+					clear = clear and not w.is_blocked(t + Vector2i(dx, dy)) and not _bv.hides(t + Vector2i(dx, dy)) and w.object_at(t + Vector2i(dx, dy)) == null   # 0.3.3: no reeds over the sprite
 			if not clear:
 				continue
 			var busy := false
@@ -1730,3 +1732,151 @@ func _nobody_near() -> bool:
 		if a != p and a is Node2D and a.is_visible_in_tree() and (a.position - p.position).length() < 64.0:
 			return false
 	return true
+
+
+# ------------------------------------------------------------ 0.3.3 archery --
+func _snap(name: String) -> void:
+	await RenderingServer.frame_post_draw
+	DirAccess.make_dir_recursive_absolute(out_dir + "/snaps")
+	var path := "%s/snaps/%s.png" % [out_dir, name]
+	get_viewport().get_texture().get_image().save_png(path)
+	_ev("snap", {"name": name, "path": path})
+
+
+func _clear_foes(p: Player, w: World) -> void:
+	for e in w.enemies.enemies:
+		if e.target == p:
+			e.target = null
+			e.reset_far()
+
+
+## Shortbow + 3 bronze arrows, tap a rat 4 tiles away: the archer stands and
+## shoots 3 arrows (projectile frames), then 'Out of arrows!' stops the fight.
+## Then overhead labels on an AI player and an enemy, none on a chicken /
+## shopkeeper, and the Skills panel with Archery.
+func _archery() -> void:
+	var p: Player = main.player
+	var w: World = main.world
+	var res := {}
+	var msgs: Array = []
+	Events.message.connect(func(t, _k = ""): msgs.append(str(t)))
+	var shots := [0]
+	var shot_snapped := [false]
+	Events.projectile.connect(func(_a, _b, _s): shots[0] += 1)
+	p.inventory.clear()
+	p.equipment.erase("weapon")
+	p.inventory.add("ash_shortbow")
+	p.inventory.add("bronze_arrows", 3)
+	p.equip_slot(0)
+	res["weapon"] = p.weapon_id()
+	var rat := _foe("giant_rat", "", w.gen.town_spawn("fenhollow"))
+	rat.max_hp = 999
+	rat.hp = 999
+	var keep_def: Dictionary = rat.def
+	rat.def = rat.def.duplicate()
+	rat.def["retaliate"] = false     # hold still for the capture (no rush to melee)
+	rat.def["wander"] = 0
+	rat.wander_goal = rat.tile
+	rat.home = rat.tile
+	var keep_xp: Dictionary = p.skills.xp.duplicate()
+	for id in ["attack", "strength", "defence", "vitality"]:
+		p.skills.set_level(id, 14)     # Combat 11: no other rat joins in
+	_clear_foes(p, w)
+	rat.reset_far()
+	var spot := rat.tile
+	for d in [Vector2i(4, 0), Vector2i(-4, 0), Vector2i(0, 4), Vector2i(0, -4), Vector2i(3, 3)]:
+		var c: Vector2i = rat.tile + d
+		if not w.is_blocked(c) and Combat.line_of_sight(w, c, rat.tile):
+			spot = c
+			break
+	p.place_at(spot)
+	p.stop()
+	p.hp = p.max_hp()
+	w.set_focus(p.tile, true)
+	await frames(20)
+	label = "archery_fight"
+	var start := p.tile
+	var arrows0 := p.inventory.count("bronze_arrows")
+	await tap(tile_screen(rat.tile), "rat (archery)")
+	var t_end := Time.get_ticks_msec() + 15000
+	var max_d := 0
+	while Time.get_ticks_msec() < t_end:
+		if shots[0] >= 1 and not shot_snapped[0]:
+			await frames(1)       # arrow mid-flight
+			await _snap("archery_projectile")
+			shot_snapped[0] = true
+		max_d = maxi(max_d, p._cheb(p.tile, start))
+		if shots[0] >= 3 and p.action.is_empty():
+			break
+		await frames(1)
+	await frames(20)
+	await _snap("archery_out_of_arrows")
+	res["shots"] = shots[0]
+	res["arrows_before"] = arrows0
+	res["arrows_after"] = p.inventory.count("bronze_arrows")
+	res["out_msg"] = "Out of arrows!" in msgs
+	res["msgs"] = msgs.slice(-4)
+	res["stopped"] = p.action.is_empty()
+	res["moved"] = max_d
+	res["archery_xp"] = int(p.skills.xp.get("archery", 0))
+	res["rat_label"] = rat._lvl_label.text if rat._lvl_label else ""
+	rat.def = keep_def
+	p.skills.xp = keep_xp
+	rat.max_hp = int(rat.def.get("hp", 5))
+	rat.hp = rat.max_hp
+	rat.target = null
+	_clear_foes(p, w)
+	# overhead: an AI player next to an enemy
+	label = "overhead"
+	var ai = await _pick_ai("fenhollow")
+	if ai != null:
+		p.place_at(w.find_free_tile_near(rat.tile + Vector2i(-3, 0), 3, true))
+		var at: Vector2i = rat.tile
+		for d in [Vector2i(0, 3), Vector2i(0, -3), Vector2i(-1, 3), Vector2i(1, -3), Vector2i(0, 4)]:
+			var c: Vector2i = rat.tile + d
+			if not w.is_blocked(c) and not w.is_blocked(c + Vector2i(0, 1)) and w.object_at(c + Vector2i(0, 1)) == null:
+				at = c
+				break
+		ai.place_at(at)
+		ai.stop()
+		w.set_focus(p.tile, true)
+		await frames(30)
+		res["ai_label"] = ai._label.text if ai._label else ""
+		res["labels_shown"] = Overhead.shown_count()
+		res["ai_cb"] = Combat.combat_level(ai.skills)
+		res["ai_name"] = ai.display_name
+		await _snap("overhead_ai_and_enemy")
+	# no label on a chicken
+	var ch := _foe("chicken", "", w.gen.town_spawn("fenhollow"))
+	if ch != null:
+		p.place_at(w.find_free_tile_near(ch.tile + Vector2i(2, 0), 3, true))
+		w.set_focus(p.tile, true)
+		await frames(30)
+		res["chicken_label"] = ch._lvl_label != null
+		await _snap("chicken_no_label")
+	# no label on a shopkeeper (a world object, never an Enemy)
+	var shop: String = Market.town("fenhollow").specialists[0]
+	var b: Dictionary = w.gen.building_for_shop("fenhollow", shop)
+	p.place_at(w.find_free_tile_near(b["keeper_at"] + Vector2i(0, 2), 3))
+	w.set_focus(p.tile, true)
+	await frames(40)
+	res["keeper_enemy"] = w.enemies.enemy_at(b["keeper_at"]) != null
+	await _snap("shopkeeper_no_label")
+	# skills panel
+	label = "skills"
+	main.hud.show_panel("skills")
+	await frames(20)
+	res["skills_panel_archery"] = _has_text(main.hud.panels["skills"], "Archery") or _has_text(main.hud.panels["skills"], "ARC")
+	await _snap("skills_panel_archery")
+	main.hud.toggle_panel("skills")
+	label = ""
+	_notes["archery"] = res
+
+
+func _has_text(n: Node, t: String) -> bool:
+	if (n is Label or n is Button) and str(n.text).contains(t):
+		return true
+	for c in n.get_children():
+		if _has_text(c, t):
+			return true
+	return false

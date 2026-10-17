@@ -130,6 +130,25 @@ def is_menu(png):
     return max(st.stddev) > 12
 
 
+def label_pixels(png):
+    """0.3.4: overhead name labels = label-coloured pixels (AI cream #ffffbf,
+    trader blue #b2e5ff, enemy green / yellow / red) touching their black
+    outline, in the world area between the HUD top and the chat log."""
+    im = Image.open(png).convert("RGB")
+    w, h = im.size
+    cols = [(255, 255, 191), (178, 229, 255), (106, 224, 106), (255, 224, 74), (255, 90, 74)]
+    px = im.load()
+    n = 0
+    for y in range(int(h * 0.13), int(h * 0.82)):
+        for x in range(2, w - 2):
+            r, g, b = px[x, y]
+            if not any(abs(r - c[0]) + abs(g - c[1]) + abs(b - c[2]) < 60 for c in cols):
+                continue
+            if any(sum(px[x + dx, y + dy]) < 90 for dx in (-2, -1, 1, 2) for dy in (-1, 0, 1)):
+                n += 1
+    return n
+
+
 def hud_visible(png):
     """The HUD's bottom tab bar (Pack/Skills/Map/Menu) is a dark strip of
     panels with light text; the frame must not be one flat colour either."""
@@ -227,12 +246,35 @@ def main():
         r.stop()
     blanks["v030"] = r.longest_blank()
 
+    # ---- B3b (0.3.3): a real 0.3.2 (v8) save, no Archery key: loads, Archery 1
+    h = home("v032")
+    fx = json.load(open(os.path.join(ROOT, "tools", "qa_bot", "fixtures", "save_v8_032.json")))
+    fx["saved_unix"] = int(time.time()) - 600
+    json.dump(fx, open(os.path.join(h, "godot", "app_userdata", "Ashfen", "ashfen_save.json"), "w"))
+    r = Run("v032", out, binary, a.display, h)
+    try:
+        r.wait_for(r"BOOT menu shown", 30)
+        time.sleep(0.8)
+        ok = r.click("LoadGame") and r.click("Slot1")
+        game = r.wait_for(r"BOOT gameplay \(slot (\d+)\) after (\d+) ms", 90)
+        time.sleep(2.0)
+        g_png = r.grab("boot_ingame_v032.png")
+        evidence.append(g_png)
+        txt = r.text()
+        errs = [l for l in txt.splitlines() if "SCRIPT ERROR" in l]
+        res("B3b", "Load Game -> slot 1 (0.3.2 v8 save) reaches gameplay with no script errors", ok and game and hud_visible(g_png) and not errs,
+            "gameplay at %s ms; script errors %d" % (game[0][1] if game else None, len(errs)))
+    finally:
+        r.stop()
+    blanks["v032"] = r.longest_blank()
+
     # ---- B4: a damaged save
     h = home("bad")
     open(os.path.join(h, "godot", "app_userdata", "Ashfen", "ashfen_save.json"), "w").write('{"version": 3, "player": "oops", "world": 7}')
     r = Run("bad", out, binary, a.display, h)
     try:
         r.wait_for(r"BOOT menu shown", 30)
+        time.sleep(0.8)      # 0.3.3: let the menu fade in before the click (flaky under load)
         ok = r.click("LoadGame")
         slot_disabled = True
         r.click("Slot1")
@@ -247,6 +289,10 @@ def main():
     finally:
         r.stop()
     blanks["bad"] = r.longest_blank()
+
+    lab = {k: label_pixels(os.path.join(out, k)) for k in ("boot_ingame_new.png", "boot_ingame_v032.png") if os.path.exists(os.path.join(out, k))}
+    res("B6", "overhead name/level labels render in the exported build (label-colour pixels in the world area)", bool(lab) and max(lab.values()) >= 25,
+        "; ".join("%s: %d px" % kv for kv in lab.items()))
 
     worst = max(v[0] for v in blanks.values())
     res("B5", "no blank (flat colour) frame run longer than %.0f s after start" % MAX_BLANK_S, worst <= MAX_BLANK_S,

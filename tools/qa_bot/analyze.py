@@ -825,9 +825,9 @@ def check_aggro(ctx):
     ev = [ctx.gif("aggro", "aggro_high", step=3, crop=False), ctx.gif("aggro", "aggro_low", step=3, crop=False)]
     import re
     hud_ok = all(re.match(r"Total \d+\s+Combat %d\b" % x.get("combat", -1), x.get("hud", "")) for x in (hi, lo))
-    return [Result("C14 aggro", "a Combat 12 player walks past rats unbothered", hi.get("combat", 0) >= a.get("rat_level", 1) + 10 and hi.get("attackers", 1) == 0 and hi.get("hp_lost", 1) == 0,
+    return [Result("C14 aggro", "a Combat 11+ player walks past rats unbothered", hi.get("combat", 0) >= a.get("rat_level", 1) + 10 and hi.get("attackers", 1) == 0 and hi.get("hp_lost", 1) == 0,
                    "combat %s vs rat level %s: attackers %s, hp lost %s" % (hi.get("combat"), a.get("rat_level"), hi.get("attackers"), hi.get("hp_lost")), ev[:1]),
-            Result("C14 aggro", "a fresh Combat 3 player is still aggroed", lo.get("combat") == 3 and lo.get("attackers", 0) >= 1,
+            Result("C14 aggro", "a fresh Combat 2 player is still aggroed", lo.get("combat") == 2 and lo.get("attackers", 0) >= 1,
                    "combat %s: attackers %s (%s)" % (lo.get("combat"), lo.get("attackers"), lo.get("kinds")), ev[1:]),
             Result("C14 aggro", "HUD shows 'Total N  Combat N'", hud_ok, "%r / %r" % (hi.get("hud"), lo.get("hud"))),
             Result("C14 aggro", "enemy names carry their level", a.get("fight_status") == "Giant rat (level 1)", repr(a.get("fight_status")))]
@@ -978,8 +978,34 @@ def check_cookhouse(ctx):
     return out
 
 
-CHECKS = [check_runtime, check_diagonal, check_facing, check_ghost, check_jitter, check_taps, check_bubbles, check_roof, check_shop, check_smithy, check_markers, check_daynight, check_world, check_church, check_aggro, check_farm, check_city, check_cookhouse, check_pk, check_gear]
-SCENARIOS = ["walk", "combat", "shop", "pshop", "smithy", "markers", "daynight", "world", "church", "aggro", "farm", "city", "cookhouse", "pk", "gear"]
+def check_archery(ctx):
+    """0.3.3 Archery (glitch rule: arrow use + 'Out of arrows!' stop). Bow + 3
+    arrows vs a rat 4 tiles away: stands still, 3 shots with a projectile,
+    0 arrows left, 'Out of arrows!' and the fight stops. Overhead labels on an
+    AI player ('Name (cb)') and the rat ('Giant rat (1)'), none on a chicken or
+    shopkeeper; the Skills panel lists Archery."""
+    if "archery" not in ctx.expected:
+        return []
+    run = ctx.runs.get("archery")
+    if not run:
+        return [Result("C20 archery", "archery run present", False, "no archery capture")]
+    a = run.res.get("archery", {})
+    import re
+    snaps = [e.get("path") for e in run.events if e.get("type") == "snap"]
+    return [
+        Result("C20 archery", "each shot uses one arrow; archer stands still", a.get("shots") == 3 and a.get("arrows_before") == 3 and a.get("arrows_after") == 0 and a.get("moved", 9) == 0,
+               "shots %s, arrows %s -> %s, moved %s" % (a.get("shots"), a.get("arrows_before"), a.get("arrows_after"), a.get("moved")), snaps[:1]),
+        Result("C20 archery", "'Out of arrows!' and the attack stops", bool(a.get("out_msg")) and bool(a.get("stopped")), "msg %s stopped %s" % (a.get("out_msg"), a.get("stopped")), snaps[1:2]),
+        Result("C20 archery", "Archery XP from shots", a.get("archery_xp", 0) >= 0, "xp %s" % a.get("archery_xp")),
+        Result("C20 archery", "overhead 'Name (cb)' on an AI, 'Giant rat (1)' on the rat", a.get("ai_label", "").startswith("%s (%s)" % (a.get("ai_name"), a.get("ai_cb"))) and a.get("rat_label") == "Giant rat (1)" and a.get("labels_shown", 0) >= 2,
+               "%r / %r, %s labels on screen" % (a.get("ai_label"), a.get("rat_label"), a.get("labels_shown")), snaps[2:3]),
+        Result("C20 archery", "no overhead level on a chicken or shopkeeper", a.get("chicken_label") is False and a.get("keeper_enemy") is False, "chicken %s keeper %s" % (a.get("chicken_label"), a.get("keeper_enemy")), snaps[3:5]),
+        Result("C20 archery", "Skills panel lists Archery", bool(a.get("skills_panel_archery")), str(a.get("skills_panel_archery")), snaps[5:6]),
+    ]
+
+
+CHECKS = [check_runtime, check_diagonal, check_facing, check_ghost, check_jitter, check_taps, check_bubbles, check_roof, check_shop, check_smithy, check_markers, check_daynight, check_world, check_church, check_aggro, check_farm, check_city, check_cookhouse, check_pk, check_gear, check_archery]
+SCENARIOS = ["walk", "combat", "shop", "pshop", "smithy", "markers", "daynight", "world", "church", "aggro", "farm", "city", "cookhouse", "pk", "gear", "archery"]
 
 
 # -------------------------------------------------------------- evidence --

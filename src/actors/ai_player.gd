@@ -90,21 +90,11 @@ func _stash_slot(i: int) -> void:
 
 func _ready() -> void:
 	super._ready()
-	_label = Label.new()
-	_label.text = display_name
-	_label.add_theme_font_size_override("font_size", 8)
 	var trader: bool = agent != null and str(agent.persona.get("id", "")) == "trader"
-	_label.add_theme_color_override("font_color", Color(0.7, 0.9, 1.0) if trader else Color(1, 1, 0.75))
-	_label.add_theme_color_override("font_outline_color", Color.BLACK)
-	_label.add_theme_constant_override("outline_size", 2)
-	_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	_label.size = Vector2(80, 10)
-	_label.position = Vector2(-40, -34)
-	if trader:
-		_label.text = display_name + " (trader)"
-		_label.size = Vector2(110, 10)
-		_label.position = Vector2(-55, -34)
-	add_child(_label)
+	_label = Overhead.make(Color(0.7, 0.9, 1.0) if trader else Color(1, 1, 0.75))
+	_label.text = Overhead.ai_text(display_name, skills) + (" (trader)" if trader else "")
+	Overhead.place(_label, 24.0)
+	Overhead.attach(_label, self)
 	_bubble = Label.new()
 	_bubble.add_theme_font_size_override("font_size", 8)
 	_bubble.add_theme_color_override("font_color", Color("#1a1410"))
@@ -334,7 +324,7 @@ func refresh_identity() -> void:
 	if _sprite:
 		_sprite.modulate = tint
 	if _label:
-		_label.text = display_name
+		_label.text = Overhead.ai_text(display_name, skills)
 	inventory.clear()
 	sync_from_agent()
 	pvp_aggr.clear()
@@ -390,6 +380,8 @@ func on_tick(t: int, world) -> void:
 	agent.hp = float(hp)
 	if t % 10 == 3:
 		_refresh_gear_visual()
+		if _label and not _label.text.ends_with("(trader)"):
+			_label.text = Overhead.ai_text(display_name, skills)
 	if bubble_until >= 0 and t >= bubble_until:
 		bubble_until = -1
 		_bubble.visible = false
@@ -776,6 +768,7 @@ func _idle_think(t: int, world, a: Dictionary) -> bool:
 ## Runs only while a bubble is visible (on-screen agents only).
 func _process(delta: float) -> void:
 	super._process(delta)
+	Overhead.clamp_on_screen(_label, self)
 	if _bubble == null or not _bubble.visible:
 		return
 	var xf := get_global_transform_with_canvas()

@@ -1,0 +1,122 @@
+extends Node
+## 0.3.4 music (autoload "Music"). Based on Grok's MusicManager, reworked:
+##  - combat cuts in INSTANTLY at full volume (no fade-in);
+##  - leaving combat fades the combat track out over FADE_SEC, then the area
+##    track (town theme inside a town, ambient elsewhere) starts;
+##  - title on the main menu; every track loops; music volume setting
+##    (user://settings.cfg); pauses while the Android app is in the background.
+## Tracks: res://assets/music/<id>.ogg. Ogg Vorbis, not MP3: the size-optimised
+## export template (tools/engine/ashfen_custom.py) has no MP3 module.
+
+const FADE_SEC := 1.5
+const DIR := "res://assets/music/"
+const IDS := ["title", "ambient", "combat", "fenhollow", "cinderholt", "saltmere"]
+const SETTINGS := "user://settings.cfg"
+
+var player: AudioStreamPlayer
+var current := ""            # track playing ("" = none)
+var area := "ambient"        # where we'd be without combat
+var in_combat := false
+var fading := false
+var fade_left := 0.0
+var volume := 0.8            # 0..1, the music volume setting
+var _tracks: Dictionary = {}
+
+
+func _ready() -> void:
+	process_mode = Node.PROCESS_MODE_ALWAYS
+	player = AudioStreamPlayer.new()
+	add_child(player)
+	for id in IDS:
+		var path: String = DIR + id + ".ogg"
+		var s = load(path) if ResourceLoader.exists(path) else null
+		if s is AudioStreamOggVorbis:
+			(s as AudioStreamOggVorbis).loop = true
+		_tracks[id] = s
+	var cf := ConfigFile.new()
+	if cf.load(SETTINGS) == OK:
+		volume = clampf(float(cf.get_value("audio", "music", volume)), 0.0, 1.0)
+
+
+func _db() -> float:
+	return linear_to_db(maxf(0.0001, volume))
+
+
+func _play(id: String) -> void:
+	fading = false
+	if _tracks.get(id) == null:
+		player.stop()
+		current = ""
+		return
+	if id != current or not player.playing:
+		player.stop()
+		player.stream = _tracks[id]
+		player.play()
+	current = id
+	player.volume_db = _db()
+
+
+## Main menu / back to the menu: the title theme, combat forgotten.
+func set_title() -> void:
+	in_combat = false
+	area = "ambient"
+	_play("title")
+
+
+## Town id ("" = the wilds). Plays at once unless combat (or its fade) is on.
+func set_area(town_id: String) -> void:
+	var k := town_id.to_lower() if town_id != "" and _tracks.get(town_id.to_lower()) != null else "ambient"
+	if k == area and current == k:
+		return
+	area = k
+	if not in_combat and not fading:
+		_play(area)
+
+
+## From the player's combat state every tick. true -> combat now, full volume.
+func set_combat(active: bool) -> void:
+	if active == in_combat:
+		return
+	in_combat = active
+	if active:
+		_play("combat")
+	elif current == "combat":
+		fading = true
+		fade_left = FADE_SEC
+	else:
+		_play(area)
+
+
+func set_volume(v: float) -> void:
+	volume = clampf(v, 0.0, 1.0)
+	if not fading:
+		player.volume_db = _db()
+	var cf := ConfigFile.new()
+	cf.load(SETTINGS)
+	cf.set_value("audio", "music", volume)
+	cf.save(SETTINGS)
+
+
+func _process(delta: float) -> void:
+	step(delta)
+
+
+## Fade driver (separate so tests can step it).
+func step(delta: float) -> void:
+	if not fading:
+		return
+	if in_combat:      # back into a fight mid-fade: snap to full
+		fading = false
+		player.volume_db = _db()
+		return
+	fade_left -= delta
+	player.volume_db = linear_to_db(maxf(0.0001, volume * clampf(fade_left / FADE_SEC, 0.0, 1.0)))
+	if fade_left <= 0.0:
+		_play(area)
+
+
+func _notification(what: int) -> void:
+	if what == NOTIFICATION_APPLICATION_PAUSED:
+		player.stream_paused = true
+	elif what == NOTIFICATION_APPLICATION_RESUMED:
+		player.stream_paused = false

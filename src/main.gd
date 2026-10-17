@@ -187,7 +187,7 @@ func _start(data: Dictionary) -> void:
 
 
 func _welcome_new() -> void:
-	Events.say("Welcome to Ashfen. Tap the ground to walk.")
+	Events.say("Welcome to AshFall. Tap the ground to walk.")
 	Events.say("Tap a tree, rock or pool to gather; bank at the chest.")
 
 
@@ -284,6 +284,7 @@ func _start_view() -> void:
 	hud.minimap_tapped.connect(func(t): player.handle_tap(world, t))
 
 	Events.hitsplat.connect(_spawn_hitsplat)
+	Events.projectile.connect(_spawn_projectile)
 	if not Tick.ticked.is_connected(_on_tick):
 		Tick.ticked.connect(_on_tick)
 
@@ -422,6 +423,9 @@ func _on_tick(t: int) -> void:
 	play_seconds += Tick.TICK_SECONDS
 	world.on_tick(t)
 	player.on_tick(t, world)
+	# 0.3.4 music: combat cuts in at once; area = the town you're in, else ambient
+	Music.set_combat(not player.dead and (player.in_combat(t) or player.action.get("kind", "") == "fight"))
+	Music.set_area(world.gen.town_at(player.tile, 8))
 	AIDirector.on_tick(t, world, player.tile)
 	world.enemies.on_tick(t, [player] + AIDirector.agents, player.tile)
 	world.ground.on_tick(t)
@@ -478,6 +482,23 @@ func _show_marker(t: Vector2i) -> void:
 	tap_marker.modulate.a = 1.0
 	var tw := create_tween()
 	tw.tween_property(tap_marker, "modulate:a", 0.0, 0.6).set_delay(0.3)
+
+
+## 0.3.3: an arrow sprite (data/sprites.json fx) flies from the archer to the target.
+func _spawn_projectile(from, to, sprite: String) -> void:
+	if not (is_instance_valid(from) and is_instance_valid(to)) or not (from is Node2D and to is Node2D):
+		return
+	var spr := Sprite2D.new()
+	spr.texture = GameData.texture("fx", sprite)
+	var a: Vector2 = (from as Node2D).position + Vector2(0, -10)
+	var b: Vector2 = (to as Node2D).position + Vector2(0, -8)
+	spr.position = a
+	spr.rotation = (b - a).angle()
+	spr.z_index = 50
+	(from as Node2D).get_parent().add_child(spr)
+	var tw := spr.create_tween()
+	tw.tween_property(spr, "position", b, maxf(0.08, a.distance_to(b) / float(Combat.rcfg().get("projectile_speed_px_s", 240))))
+	tw.tween_callback(spr.queue_free)
 
 
 func _spawn_hitsplat(target, t: Vector2i, amount: int) -> void:

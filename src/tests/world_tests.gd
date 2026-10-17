@@ -30,6 +30,8 @@ static func run(main, world: World, p: Player) -> void:
 	_migration_tests(main, world, p)
 	_church_tests(world, p)
 	_combat_level_tests(world, p)
+	ArcheryTests.run(world, p)   # 0.3.3
+	MusicTests.run()   # 0.3.4
 	_village_tests(world, p)
 	_walled_city_tests(world, p)
 	_cookhouse_tests(world, p)
@@ -681,12 +683,12 @@ static func _church_tests(world: World, p: Player) -> void:
 # ----------------------------------------------------------- combat level --
 static func _combat_level_tests(world: World, p: Player) -> void:
 	var fresh := Skills.new()
-	check(Combat.combat_level(fresh) == 3, "a new character is Combat %d (want 3: (1+1+1+10)/4 + 1/8)" % Combat.combat_level(fresh))
+	check(Combat.combat_level(fresh) == 2, "a new character is Combat %d (want 2: (1+1+1+10+1)/5 + 1/8)" % Combat.combat_level(fresh))
 	var sk := Skills.new()
 	for id in ["attack", "strength", "defence", "vitality"]:
 		sk.set_level(id, 20)
 	sk.set_level("prayer", 16)
-	check(Combat.combat_level(sk) == 22, "Combat = floor((Atk+Str+Def+Vit)/4 + Prayer/8): 20s + Prayer 16 = %d (want 22)" % Combat.combat_level(sk))
+	check(Combat.combat_level(sk) == 18, "Combat = floor((Atk+Str+Def+Vit+Arc)/5 + Prayer/8): 20s + Arc 1 + Prayer 16 = %d (want 18)" % Combat.combat_level(sk))
 	check(int(GameData.combat.get("aggro_level_gap", 0)) == 10, "combat.json aggro_level_gap = 10")
 	var keep: Dictionary = p.skills.xp.duplicate()
 	var rat := _near(world, "giant_rat", world.gen.town_spawn("fenhollow"))
@@ -710,8 +712,8 @@ static func _combat_level_tests(world: World, p: Player) -> void:
 				return true
 		return false
 	var low: bool = aggro_test.call(1)
-	var high: bool = aggro_test.call(12)
-	check(low and not high, "rats (level 1) aggro a Combat %d player but ignore Combat 12 (low %s, high %s)" % [Combat.combat_level(fresh), low, high])
+	var high: bool = aggro_test.call(14)   # 0.3.3: 14s + Archery 1 = Combat 11
+	check(low and not high, "rats (level 1) aggro a Combat %d player but ignore Combat 11 (low %s, high %s)" % [Combat.combat_level(fresh), low, high])
 	rat.take_hit(1, p, Tick.tick_count)
 	check(rat.target == p, "...yet a rat you attack still fights back")
 	rat.target = null
@@ -719,7 +721,7 @@ static func _combat_level_tests(world: World, p: Player) -> void:
 	# the Scorch too: a cinder brute (level 14) ignores Combat 24+
 	var br := _near(world, "cinder_brute", Vector2i(300, -300))
 	var ok_b := br != null and Combat.too_strong_for_aggro(br.level(), sk) == (Combat.combat_level(sk) >= 24) and not Combat.too_strong_for_aggro(br.level(), fresh)
-	check(ok_b, "the rule holds in the Scorch (cinder brute level 14 vs Combat 22: still aggressive)")
+	check(ok_b, "the rule holds in the Scorch (cinder brute level 14 vs Combat 18: still aggressive)")
 	p.skills.xp = keep
 	p.hp = p.max_hp()
 	var e := Enemy.new()
@@ -1236,12 +1238,29 @@ static func _walled_integration_tests(world: World, p: Player) -> void:
 		Tick.step()
 		bit = bit or rat.target == p
 	p.place_at(go + (go - gate_t))
+	if rat.dead:     # an AI hunter may kill it meanwhile: bring it back on its spot
+		rat._respawn()
+		rat.tile = rat.home
+		rat.prev_tile = rat.home
+		rat.target = null
 	var bit_out := false
+	for ai in AIDirector.agents:   # passing AI hunters would draw the rat off
+		if is_instance_valid(ai) and not ai.dead and rat.cheb(ai.tile, go) <= 16:
+			ai.stop()
+			ai.place_at(world.find_free_tile_near(ai.tile + Vector2i(0, 40), 6, true))
+	var keep_mhp := rat.max_hp
+	rat.max_hp = 999     # AI hunters nearby must not kill it mid-check
+	rat.hp = 999
 	for i in 20:
+		if rat.target != null and rat.target != p:
+			rat.target = null    # a passing AI hunter picked a fight with it: not what we test
 		Tick.step()
-		bit_out = bit_out or rat.target == p
-	check(not bit and bit_out and Combat.combat_level(p.skills) == 3,
-		"a Combat 3 player in a city gateway is safe from a rat just outside (and aggroed a step out: %s)" % bit_out)
+		# any creature may be the one that starts on you (single combat: one at a time)
+		bit_out = bit_out or world.enemies.enemies.any(func(e): return is_instance_valid(e) and e.target == p)
+	rat.max_hp = keep_mhp
+	rat.hp = mini(rat.hp, keep_mhp)
+	check(not bit and bit_out and Combat.combat_level(p.skills) == 2,
+		"a Combat 2 player in a city gateway is safe from a rat just outside (and aggroed a step out: %s)" % bit_out)
 	rat.target = null
 	p.hp = p.max_hp()
 	rat.home = old_home

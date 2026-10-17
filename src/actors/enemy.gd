@@ -35,6 +35,9 @@ var facing := Facing.new()            # 0.2.5: hysteresis facing (see src/actors
 var _tick_now := 0
 var _last_move_t := -100000
 
+var _lvl_label: Label = null    # 0.3.3 overhead "Name (lvl)"
+var _lvl_t := 0.0
+
 
 func setup(k: String, at: Vector2i, seed_v: int) -> void:
 	kind = k
@@ -91,6 +94,11 @@ func _ready() -> void:
 	_sprite.offset = Vector2(-fs.x / 2.0, -fs.y)
 	_sprite.modulate = tint
 	add_child(_sprite)
+	if Overhead.enemy_shows(def):
+		_lvl_label = Overhead.make(Overhead.level_color(level()))
+		_lvl_label.text = "%s (%d)" % [display_name(), level()]
+		Overhead.place(_lvl_label, fs.y)
+		Overhead.attach(_lvl_label, self)
 	_update_pos()
 
 
@@ -324,6 +332,12 @@ func reset_far() -> void:
 # ---------------------------------------------------------------- visuals --
 func _process(delta: float) -> void:
 	_update_pos()
+	if _lvl_label:
+		Overhead.clamp_on_screen(_lvl_label, self)
+		_lvl_t -= delta
+		if _lvl_t <= 0.0:
+			_lvl_t = 1.0
+			_lvl_label.add_theme_color_override("font_color", Overhead.level_color(level()))
 	if _sprite:
 		_anim_t += delta
 		var sd := GameData.sprite_def("actors", def.get("sprite", kind))

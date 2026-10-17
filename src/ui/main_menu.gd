@@ -25,6 +25,7 @@ var buttons: Dictionary = {}  # name -> Button (QA)
 
 
 func _ready() -> void:
+	Music.set_title()     # 0.3.4: title theme on the menu (also after "exit to menu")
 	for a in OS.get_cmdline_user_args():
 		var s: String = a.trim_prefix("--")
 		var i := s.find("=")
@@ -97,7 +98,7 @@ func _build() -> void:
 	var top := Control.new()
 	top.custom_minimum_size = Vector2(0, 70)
 	col.add_child(top)
-	col.add_child(title_label("Ashfen", 40))
+	col.add_child(title_label("AshFall", 40))
 	var ver := Label.new()
 	ver.text = "v%s" % ProjectSettings.get_setting("application/config/version", "")
 	ver.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
@@ -169,9 +170,18 @@ func _build() -> void:
 	stack.add_child(st)
 	pages["settings"] = st
 	var sl := Label.new()
-	sl.text = "Settings\n\nSound, controls and display options\nare coming in a later version."
+	sl.text = "Settings\n\nMusic volume"
 	sl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	st.add_child(sl)
+	var vol := HSlider.new()       # 0.3.4 music volume (saved in user://settings.cfg)
+	vol.name = "MusicVolume"
+	vol.min_value = 0.0
+	vol.max_value = 1.0
+	vol.step = 0.05
+	vol.value = Music.volume
+	vol.custom_minimum_size = Vector2(200, 28)
+	vol.value_changed.connect(func(v): Music.set_volume(v))
+	st.add_child(vol)
 	st.add_child(_btn("Back", func(): _show("main"), "SettingsBack"))
 
 
