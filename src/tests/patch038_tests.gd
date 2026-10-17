@@ -27,6 +27,10 @@ static func run(main, world: World, p: Player) -> void:
 	print("  -- 0.3.8 Highfen / roads / house / shop / slime")
 	var gen: WorldGen = world.gen
 	var cap := gen.capital
+	# 0.3.8.1 new characters start in Fenhollow's plaza next to Kell, not Highfen
+	var ns := gen.town_spawn("fenhollow")
+	var kell = world.find_nearest_object(ns, ["quest_giver"], 8)
+	check(gen.place_at(ns, 8) == "fenhollow" and kell != null and not world.is_blocked(ns), "0.3.8.1 new character spawns in Fenhollow near Kell (%s, kell %s)" % [ns, kell.pos if kell else null])
 	var hc: Vector2i = gen.town_center(cap) if cap != "" else Vector2i.ZERO
 	check(cap == "highfen" and (hc - gen.continent_center).length() <= 2, "Highfen is the capital at the continent centre (%s)" % hc)
 	# circle + moat + gates

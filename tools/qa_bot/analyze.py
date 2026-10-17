@@ -1111,7 +1111,9 @@ def check_capital(ctx):
     c = run.res.get("capital", {})
     snaps = {e.get("name"): e.get("path") for e in run.events if e.get("type") == "snap"}
     sp = lambda *n: [snaps[k] for k in n if k in snaps]
+    st = c.get("start", {})
     return [
+        Result("C30 capital", "0.3.8.1 a new character starts in Fenhollow near Kell", st.get("town") == "fenhollow" and bool(st.get("kell")), str(st), sp("new_game_kell")),
         Result("C30 capital", "0.3.8 Highfen is reachable from every town by road", bool(c.get("reach")) and all(c.get("reach", {}).values()) and len(c.get("reach", {})) == 3, str(c.get("reach")), sp("highfen_overview", "highfen_moat_gate", "world_map_038")),
         Result("C30 capital", "0.3.8 the moat rings Highfen; gates cross it on bridges", bool(c.get("moat_px")), "moat beside the north gate %s" % c.get("moat_px"), sp("highfen_moat_gate")),
         Result("C30 capital", "0.3.8 the player shop exists only in Highfen", c.get("player_shops") == ["highfen_player@highfen"], str(c.get("player_shops"))),

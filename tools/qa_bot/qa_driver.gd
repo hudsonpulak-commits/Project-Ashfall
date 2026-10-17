@@ -2332,6 +2332,10 @@ func _capital038() -> void:
 	var res := {}
 	var cap := g.capital
 	var hc := g.town_center(cap)
+	# 0.3.8.1 a new character starts in Fenhollow's plaza by Kell
+	var k0 = w.find_nearest_object(p.tile, ["quest_giver"], 10)
+	res["start"] = {"tile": [p.tile.x, p.tile.y], "town": g.place_at(p.tile, 8), "kell": k0 != null}
+	await _snap("new_game_kell")
 	# roads: every town reaches Highfen (walkable road + a real path from the road end through the gate)
 	var reach := {}
 	for tid in g.town_order:

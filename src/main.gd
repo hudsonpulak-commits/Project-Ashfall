@@ -213,7 +213,7 @@ func _start_player(data: Dictionary) -> void:
 	if data.has("player"):
 		player.from_save(data["player"])
 	else:
-		player.place_at(world.gen.town_spawn())
+		player.place_at(world.gen.town_spawn("fenhollow"))   # 0.3.8.1 new characters start in Fenhollow by Kell, never the capital
 		player.give_starter_kit()
 		player.hp = player.max_hp()   # a new character starts at full HP (was the old 11 default)
 	world.entity_layer.add_child(player)
