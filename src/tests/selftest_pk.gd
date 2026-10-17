@@ -298,9 +298,10 @@ static func run(_main, world: World, p: Player) -> Array:
 	# outside the Scorch: no reset
 	var calm := _agent("hero", "t_calm", 15, 16)
 	var calm_id := calm.id
+	var calm_cb := AdvBrain.cb_level(calm)   # 0.3.3: Archery is in the formula
 	calm.pos = Vector2i(5, 5)
 	AIBrain.on_death(calm, T)
-	ok(calm.id == calm_id and AdvBrain.cb_level(calm) == 15, "an AI dying outside the Scorch is the same character afterwards")
+	ok(calm.id == calm_id and AdvBrain.cb_level(calm) == calm_cb, "an AI dying outside the Scorch is the same character afterwards")
 	# clean up the estate orders
 	for e in AdvBrain.estates:
 		var mm: TownMarket = Market.town(str(e["town"]))

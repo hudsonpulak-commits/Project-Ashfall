@@ -103,6 +103,14 @@
    "desc": "Your health pool. Trains alongside every combat skill."
   },
   {
+   "id": "archery",
+   "name": "Archery",
+   "category": "combat",
+   "short": "ARC",
+   "color": "#7ab04a",
+   "desc": "Bows: accuracy and max hit with a bow. Needed to wield bows. Range 5 tiles with line of sight; each shot uses one arrow. Trains in the Ranged style."
+  },
+  {
    "id": "prayer",
    "name": "Prayer",
    "category": "combat",

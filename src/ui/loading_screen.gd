@@ -22,7 +22,7 @@ func _init() -> void:
 	v.position -= Vector2(120, 10)
 	v.add_theme_constant_override("separation", 8)
 	_root.add_child(v)
-	var t := MainMenu.title_label("Ashfen", 28)
+	var t := MainMenu.title_label("AshFall", 28)
 	v.add_child(t)
 	label = Label.new()
 	label.text = "Loading..."

@@ -130,7 +130,7 @@ func quarantine(reason: String) -> String:
 			DirAccess.remove_absolute(ProjectSettings.globalize_path(p))
 	var f := FileAccess.open(dest + ".txt", FileAccess.WRITE)
 	if f:
-		f.store_string("Ashfen %s could not load this save: %s\n" % [ProjectSettings.get_setting("application/config/version", ""), reason])
+		f.store_string("AshFall %s could not load this save: %s\n" % [ProjectSettings.get_setting("application/config/version", ""), reason])
 		f.close()
 	push_warning("SaveSystem: bad save moved to %s (%s)" % [dest, reason])
 	return dest
