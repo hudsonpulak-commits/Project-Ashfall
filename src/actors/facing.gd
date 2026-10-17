@@ -13,18 +13,39 @@ extends RefCounted
 
 var left := false
 var flips := 0               # total turns (tests / QA bot)
+## 0.3.9 four-way facing: "side" (mirrored by `left`), "down" (front), "up" (back).
+var dir := "side"
 
 
-## dx < 0 faces left, dx > 0 right, 0 keeps. Returns true if it turned.
-func observe(dx: float, _t: int = 0) -> bool:
+## 0.3.9 the dominant axis of the movement picks the sheet: mostly vertical ->
+## back (up) / front (down); otherwise the side sheet, dx < 0 left, dx > 0 right.
+## No movement keeps everything. Returns true if it turned.
+func observe(dx: float, _t: int = 0, dy: float = 0.0) -> bool:
+	if absf(dy) > absf(dx) + 0.001:
+		var want_dir := "up" if dy < 0.0 else "down"
+		if want_dir == dir:
+			return false
+		dir = want_dir
+		flips += 1
+		return true
 	if absf(dx) < 0.001:
 		return false
+	if dir != "side":
+		dir = "side"
+		left = dx < 0.0
+		flips += 1
+		return true
 	var want := dx < 0.0
 	if want == left:
 		return false
 	left = want
 	flips += 1
 	return true
+
+
+## Sheet row name for a facing (tests / QA).
+static func sheet_for(f) -> String:
+	return "back" if f.dir == "up" else ("front" if f.dir == "down" else "side")
 
 
 static func cfg() -> Dictionary:

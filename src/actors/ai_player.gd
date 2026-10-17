@@ -139,7 +139,7 @@ func bubble_text() -> String:
 
 func face_toward(p: Vector2i) -> void:
 	if last_steps == 0 and action.get("kind", "") != "fight":
-		facing.observe(p.x - tile.x)
+		facing.observe(p.x - tile.x, 0, p.y - tile.y)
 
 
 func _on_level(skill_id: String, lvl: int) -> void:

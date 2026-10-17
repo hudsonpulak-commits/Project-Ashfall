@@ -60,22 +60,32 @@ class Sprites:
     each template is the body frame with the same frame of every layer
     composited on top, exactly as the game draws it (0.3.1 visible gear)."""
     def __init__(self, zoom, layers=()):
-        sheet = Image.open(os.path.join(ROOT, "assets/sprites/actors/player.png")).convert("RGBA")
         fw, fh = 16, 24
-        n = sheet.width // fw
         z = int(round(zoom))
         self.w, self.h = fw * z, fh * z
         self.t = []          # (facing, frame, rgb float array, mask)
-        lsheets = [Image.open(sprite_path(l)).convert("RGBA") for l in layers]
-        for i in range(n):
-            fr = sheet.crop((i * fw, 0, (i + 1) * fw, fh))
-            for ls in lsheets:
-                k = min(i, ls.width // fw - 1)
-                fr = Image.alpha_composite(fr, ls.crop((k * fw, 0, (k + 1) * fw, fh)))
-            fr = fr.resize((self.w, self.h), Image.NEAREST)
-            for facing, im in (("R", fr), ("L", fr.transpose(Image.FLIP_LEFT_RIGHT))):
-                a = np.asarray(im).astype(np.float32)
-                self.t.append((facing, i, a[..., :3], a[..., 3] > 128))
+        # 0.3.9 side sheet (R / L mirrored) + front (D) and back (U) sheets
+        for suf, tags in (("", ("R", "L")), ("_front", ("D",)), ("_back", ("U",))):
+            sp = os.path.join(ROOT, "assets/sprites/actors/player%s.png" % suf)
+            if not os.path.exists(sp):
+                continue
+            sheet = Image.open(sp).convert("RGBA")
+            n = sheet.width // fw
+            lsheets = []
+            for l in layers:
+                lp = sprite_path(l)
+                dp = lp[:-4] + suf + ".png"
+                lsheets.append(Image.open(dp if suf and os.path.exists(dp) else lp).convert("RGBA"))
+            for i in range(n):
+                fr = sheet.crop((i * fw, 0, (i + 1) * fw, fh))
+                for ls in lsheets:
+                    k = min(i, ls.width // fw - 1)
+                    fr = Image.alpha_composite(fr, ls.crop((k * fw, 0, (k + 1) * fw, fh)))
+                fr = fr.resize((self.w, self.h), Image.NEAREST)
+                for facing in tags:
+                    im = fr.transpose(Image.FLIP_LEFT_RIGHT) if facing == "L" else fr
+                    a = np.asarray(im).astype(np.float32)
+                    self.t.append((facing, i, a[..., :3], a[..., 3] > 128))
 
     def crop(self, img, cx, cy, dx=0, dy=0):
         x0, y0 = int(round(cx)) - self.w // 2 + dx, int(round(cy)) - self.h + dy
@@ -199,7 +209,7 @@ def facing_results(ctx, name):
         if t is None or t["skip"] or t["res"] > MATCH_OK or t["margin"] < 2.0:
             unknown += 1
             continue
-        if d == 0:
+        if d == 0 or t["facing"] in ("D", "U"):   # 0.3.9 front/back sheets: judged by C31
             continue
         want = "R" if d > 0 else "L"
         if t["facing"] != want:
@@ -208,7 +218,7 @@ def facing_results(ctx, name):
             flips_bad.append(r["f"])
     # flip-flop: facing changes while horizontal direction is unchanged
     seq = [(r["f"], tr[r["f"]]["facing"], dx[i]) for i, r in enumerate(run.log)
-           if r["f"] in tr and not tr[r["f"]]["skip"] and tr[r["f"]]["res"] <= MATCH_OK and tr[r["f"]]["margin"] >= 2.0]
+           if r["f"] in tr and not tr[r["f"]]["skip"] and tr[r["f"]]["res"] <= MATCH_OK and tr[r["f"]]["margin"] >= 2.0 and tr[r["f"]]["facing"] in ("L", "R")]
     flipflop = []
     run_dir = None
     run_face = None
@@ -1101,6 +1111,30 @@ def check_xp(ctx):
     return out
 
 
+def check_autotile(ctx):
+    """0.3.9 autotiled fences / walls / moat, floor transitions, 4-way facing."""
+    if "autotile" not in ctx.expected:
+        return []
+    run = ctx.runs.get("autotile")
+    if not run:
+        return [Result("C31 autotile", "autotile run present", False, "no capture")]
+    c = run.res.get("autotile", {})
+    snaps = {e.get("name"): e.get("path") for e in run.events if e.get("type") == "snap"}
+    sp = lambda *n: [snaps[k] for k in n if k in snaps]
+    k = c.get("fence_kinds", {})
+    wu = c.get("walk_up", {})
+    return [
+        Result("C31 autotile", "0.3.9 fences autotile: straights, corners, T-joints and end caps, ~15% broken", all(k.get(x, 0) > 0 for x in ("straight_h", "straight_v", "corner", "t", "end")) and 0.05 <= c.get("broken_share", 0) <= 0.3,
+               "%s broken %.0f%%" % (k, 100 * c.get("broken_share", 0)), sp("fence_corner_t")),
+        Result("C31 autotile", "0.3.9 road fences run parallel to vertical and horizontal roads, block walking, arrows fly over",
+               "road_fence_vertical" in snaps and "road_fence_horizontal" in snaps and c.get("vfence_blocks") and c.get("vfence_los"),
+               "spots %s blocks %s los %s" % (c.get("spots"), c.get("vfence_blocks"), c.get("vfence_los")), sp("road_fence_vertical", "road_fence_horizontal")),
+        Result("C31 autotile", "0.3.9 floor transitions are drawn where unlike floors meet", c.get("transition_cells", 0) > 10, "%d blend cells in the road chunk" % c.get("transition_cells", 0), sp("transitions")),
+        Result("C31 autotile", "0.3.9 the moat border autotiles (straight, corner, T + bridge joins)", "moat_corner" in snaps and len(c.get("moat_pieces", [])) >= 3, "pieces %s at %s" % (c.get("moat_pieces"), c.get("moat_corner")), sp("moat_corner")),
+        Result("C31 autotile", "0.3.9 walking up shows the player's back (body and gear)", bool(wu.get("back")) and bool(wu.get("gear_back")), str(wu), sp("player_walk_up_back")),
+    ]
+
+
 def check_capital(ctx):
     """0.3.8 Highfen, house, the only player shop, slimes, roadside logs."""
     if "capital" not in ctx.expected:
@@ -1123,7 +1157,7 @@ def check_capital(ctx):
     ]
 
 
-CHECKS = [check_runtime, check_diagonal, check_facing, check_ghost, check_jitter, check_taps, check_bubbles, check_roof, check_shop, check_smithy, check_markers, check_daynight, check_world, check_church, check_aggro, check_farm, check_city, check_cookhouse, check_pk, check_gear, check_archery, check_bank, check_v036, check_quest, check_xp, check_capital]
+CHECKS = [check_runtime, check_diagonal, check_facing, check_ghost, check_jitter, check_taps, check_bubbles, check_roof, check_shop, check_smithy, check_markers, check_daynight, check_world, check_church, check_aggro, check_farm, check_city, check_cookhouse, check_pk, check_gear, check_archery, check_bank, check_v036, check_quest, check_xp, check_capital, check_autotile]
 SCENARIOS = ["walk", "combat", "shop", "pshop", "smithy", "markers", "daynight", "world", "church", "aggro", "farm", "city", "cookhouse", "pk", "gear", "archery"]
 
 

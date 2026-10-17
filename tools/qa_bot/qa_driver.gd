@@ -321,6 +321,8 @@ func _run() -> void:
 			await _xp037()
 		"capital":
 			await _capital038()
+		"autotile":
+			await _autotile039()
 		_:
 			push_error("unknown QA scenario " + scenario)
 			await _finish(false)
@@ -1590,6 +1592,15 @@ func _pk() -> void:
 		if not PkRules.is_pk(v.tile) or maxi(absi(v.tile.x - p.tile.x), absi(v.tile.y - p.tile.y)) > 1:
 			p.stop()
 			var vt2 := w.find_free_tile_near(p.tile + Vector2i(1, 0), 1, true)
+			if not PkRules.is_pk(vt2) or not PkRules.is_pk(p.tile):
+				# 0.3.9 standing on the zone edge: step both of you a few tiles into the Scorch
+				for k in range(1, 12):
+					var q := w.find_free_tile_near(p.tile + Vector2i(0, -k), 1, true)
+					var q2 := w.find_free_tile_near(q + Vector2i(1, 0), 1, true)
+					if PkRules.is_pk(q) and PkRules.is_pk(q2) and q2 != q:
+						p.place_at(q)
+						vt2 = q2
+						break
 			if PkRules.is_pk(vt2):
 				v.place_at(vt2)
 				victim.pos = vt2
@@ -1600,6 +1611,8 @@ func _pk() -> void:
 		await until(func(): return victim.id != old_id, 6.0)
 	_notes["finish_tries"] = tries
 	await frames(30)
+	# 0.3.9 give the respawned view time to take the new name outside the Scorch
+	await until(func(): return is_instance_valid(v) and v.display_name == victim.name and not PkRules.is_pk(v.tile), 8.0)
 	_notes["reset"] = {"old_id": old_id, "old_name": old_name, "old_cb": old_cb, "new_id": victim.id, "new_name": victim.name, "new_cb": AdvBrain.cb_level(victim),
 		"new_coins": victim.coins, "new_tint": victim.tint, "view_name": v.display_name if is_instance_valid(v) else "", "view_pk": PkRules.is_pk(v.tile) if is_instance_valid(v) else true,
 		"estate": AdvBrain.estates.filter(func(e): return str(e["id"]) == "estate:" + old_id).size()}
@@ -2639,3 +2652,120 @@ func _xp037() -> void:
 	await _snap("skills_xp_tracker")
 	main.hud.show_panel("")
 	_notes["xp"] = res
+
+
+
+## 0.3.9 autotiled fences / walls / moat, floor transitions, 4-way facing.
+func _autotile039() -> void:
+	var p: Player = main.player
+	var w: World = main.world
+	var g: WorldGen = w.gen
+	var res := {}
+	main._set_zoom(2)
+	p.hp = p.max_hp()
+	# every fence piece kind present in the world
+	var kinds := {}
+	var broken := 0
+	var total := 0
+	var t_at := Vector2i(1 << 30, 0)
+	var corner_at := Vector2i(1 << 30, 0)
+	var vfence := Vector2i(1 << 30, 0)
+	var hfence := Vector2i(1 << 30, 0)
+	for src in [g._town_objects, g.road_decor]:
+		for q in src.keys():
+			if g.autotile_group_at(q) != "fence_rural":
+				continue
+			var pc := w.autotile_piece(q, "fence_rural")
+			var nm := Autotile.piece_name(pc.x)
+			kinds[nm] = int(kinds.get(nm, 0)) + 1
+			total += 1
+			broken += 1 if pc.y == 1 else 0
+			if nm == "t" and t_at.x == 1 << 30: t_at = q
+			if nm == "corner" and corner_at.x == 1 << 30: corner_at = q
+			if src == g.road_decor and nm == "straight_v" and vfence.x == 1 << 30 and g.autotile_group_at(q + Vector2i(0, 2)) != "": vfence = q
+			if src == g.road_decor and nm == "straight_h" and hfence.x == 1 << 30 and g.autotile_group_at(q + Vector2i(2, 0)) != "": hfence = q
+	res["fence_kinds"] = kinds
+	res["broken_share"] = float(broken) / maxf(1.0, float(total))
+	var spots := {"fence_corner_t": t_at if t_at.x != 1 << 30 else corner_at, "road_fence_vertical": vfence, "road_fence_horizontal": hfence}
+	res["spots"] = {}
+	for nm in spots.keys():
+		var q: Vector2i = spots[nm]
+		res["spots"][nm] = [q.x, q.y]
+		if q.x == 1 << 30:
+			continue
+		p.stop()
+		p.place_at(w.find_free_tile_near(q + Vector2i(2, 2), 4))
+		w.set_focus(q, true)
+		await frames(25)
+		label = nm
+		await _snap(nm)
+	# the road fence blocks walking but an arrow flies over it
+	if vfence.x != 1 << 30:
+		res["vfence_blocks"] = w.is_blocked(vfence)
+		res["vfence_los"] = Combat.line_of_sight(w, vfence + Vector2i(-2, 0), vfence + Vector2i(2, 0))
+	# floor transitions: a stretch of stone road on grass near Fenhollow's road
+	var road: Array = g.road_between("fenhollow", g.capital)
+	var tq: Vector2i = road[mini(30, road.size() - 1)]
+	p.place_at(w.find_free_tile_near(tq + Vector2i(0, 2), 4))
+	w.set_focus(tq, true)
+	await frames(25)
+	label = "transitions"
+	await _snap("transitions")
+	var tc := 0
+	var cv: Node = w.chunk_views.get(World.chunk_of(tq))
+	if cv:
+		for l in cv.get_children():
+			if l.name.begins_with("trans"):
+				tc += (l as TileMapLayer).get_used_cells().size()
+	res["transition_cells"] = tc
+	# the moat corner (the ring's diagonal side) with its bank pieces
+	var hc := g.town_center(g.capital)
+	var mc := Vector2i(1 << 30, 0)
+	for r in range(20, 40):
+		var q := hc + Vector2i(-r, -r)
+		if g.tile_at(q.x, q.y) == WorldGen.TileType.MOAT:
+			mc = q
+			break
+	res["moat_corner"] = [mc.x, mc.y]
+	if mc.x != 1 << 30:
+		p.place_at(w.find_free_tile_near(mc + Vector2i(4, 4), 6))
+		w.set_focus(mc, true)
+		await frames(25)
+		var mcv: Node = w.chunk_views.get(World.chunk_of(mc))
+		var mk := {}
+		for ch in w.chunk_views.values():
+			for l in ch.get_children():
+				if l.name == "autotile":
+					for cell in (l as TileMapLayer).get_used_cells():
+						var ac: Vector2i = (l as TileMapLayer).get_cell_atlas_coords(cell)
+						if (l as TileMapLayer).get_cell_source_id(cell) == w._overlay_src.get("autotile/moat_border", [-1])[0]:
+							mk[Autotile.piece_name(ac.x)] = true
+		res["moat_pieces"] = mk.keys()
+		label = "moat_corner"
+		await _snap("moat_corner")
+	# the player walks up: the back sheet shows (body and gear)
+	p.stop()
+	var start: Vector2i = g.town_spawn("fenhollow")
+	p.place_at(start)
+	w.set_focus(start, true)
+	await frames(20)
+	var up_to := start + Vector2i(0, -5)
+	up_to = w.find_free_tile_near(up_to, 2)
+	label = "walk_up"
+	await tap_tile(up_to, "north")
+	var saw_back := false
+	var gear_back := true
+	for i in 60:
+		await frames(1)
+		if p.facing.dir == "up" and not p.path.is_empty():
+			saw_back = p._sprite.texture == GameData.actor_texture("player", "up")
+			for l in p._layers.values():
+				if (l as Sprite2D).visible:
+					gear_back = gear_back and (l as Sprite2D).texture == GameData.actor_texture(str(l.get_meta("sprite_id")), "up")
+			if saw_back:
+				await _snap("player_walk_up_back")
+				break
+	res["walk_up"] = {"back": saw_back, "gear_back": gear_back, "dir": p.facing.dir}
+	await until(arrived, 10.0)
+	label = ""
+	_notes["autotile"] = res

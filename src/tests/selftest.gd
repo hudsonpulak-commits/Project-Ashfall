@@ -41,8 +41,10 @@ static func run(main) -> int:
 	check(mono, "xp curve strictly increasing to cap")
 	check(GameData.level_for_xp(GameData.xp_for_level(17)) == 17, "level_for_xp inverse")
 	var missing := 0
-	for cat in ["tiles", "objects", "actors", "items", "ui"]:
+	for cat in ["tiles", "objects", "actors", "items", "ui", "autotile", "transitions"]:
 		for id in GameData.sprites.get(cat, {}).keys():
+			if str(id).begins_with("_"):
+				continue
 			if not ResourceLoader.exists(GameData.sprite_def(cat, id)["path"]):
 				missing += 1
 				printerr("    missing sprite ", cat, "/", id)

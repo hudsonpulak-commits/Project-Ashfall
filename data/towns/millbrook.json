@@ -234,7 +234,12 @@
    "gate": [
     18,
     -2
-   ]
+   ],
+   "divider": {
+    "x": 16,
+    "to_y": -4,
+    "note": "0.3.9 a fence splits the paddock (T joint at the rim, end cap with a gap above the gate row)"
+   }
   }
  ],
  "citizens": {

@@ -57,17 +57,28 @@ func _ready() -> void:
 
 
 # ------------------------------------------------------------ shared art --
+static func has_title_art() -> bool:
+	var td := GameData.sprite_def("ui", "title_bg")
+	return not td.is_empty() and ResourceLoader.exists(str(td.get("path", "")))
+
+
 static func add_backdrop(host: Control) -> void:
 	var bg := ColorRect.new()
 	bg.color = Color("#1b2418")
 	bg.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	bg.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	host.add_child(bg)
-	var tex := GameData.texture("ui", "menu_bg")
+	# 0.3.9 data-driven title art slot: ui/title_bg (assets/ui/title_bg.png) when the
+	# file exists, else the placeholder ui/menu_bg. Cover-scaled, aspect kept.
+	var tex: Texture2D = null
+	var td := GameData.sprite_def("ui", "title_bg")
+	var use_title := not td.is_empty() and ResourceLoader.exists(str(td.get("path", "")))
+	tex = GameData.texture("ui", "title_bg") if use_title else GameData.texture("ui", "menu_bg")
 	if tex:
 		var tr := TextureRect.new()
+		tr.name = "TitleBg" if use_title else "MenuBg"
 		tr.texture = tex
-		tr.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+		tr.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR if use_title and str(td.get("filter", "linear")) == "linear" else CanvasItem.TEXTURE_FILTER_NEAREST
 		tr.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 		tr.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
 		tr.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
@@ -98,7 +109,12 @@ func _build() -> void:
 	var top := Control.new()
 	top.custom_minimum_size = Vector2(0, 70)
 	col.add_child(top)
-	col.add_child(title_label("AshFall", 40))
+	# 0.3.9 the title art carries the AshFall logo: hide our label, sit the menu
+	# low over the dark foreground so the logo and the dragon stay visible
+	var art := has_title_art()
+	var tl := title_label("AshFall", 40)
+	tl.visible = not art
+	col.add_child(tl)
 	var ver := Label.new()
 	ver.text = "v%s" % ProjectSettings.get_setting("application/config/version", "")
 	ver.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
@@ -108,10 +124,20 @@ func _build() -> void:
 	col.add_child(ver)
 	var gap := Control.new()
 	gap.custom_minimum_size = Vector2(0, 40)
+	if art:
+		gap.size_flags_vertical = Control.SIZE_EXPAND_FILL
+		top.custom_minimum_size = Vector2(0, 0)
+		ver.visible = false
 	col.add_child(gap)
 	var center := CenterContainer.new()
-	center.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	center.size_flags_vertical = Control.SIZE_SHRINK_END if art else Control.SIZE_EXPAND_FILL
 	col.add_child(center)
+	if art:
+		ver.visible = true
+		col.move_child(ver, col.get_child_count() - 1)   # version under the menu
+		var foot := Control.new()
+		foot.custom_minimum_size = Vector2(0, 6)
+		col.add_child(foot)
 	var host := PanelContainer.new()
 	host.add_theme_stylebox_override("panel", UIStyle.box(UIStyle.BG_ALPHA, UIStyle.BORDER, 2, 8))
 	host.custom_minimum_size = Vector2(250, 0)

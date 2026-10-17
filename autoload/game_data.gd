@@ -195,6 +195,17 @@ func texture(category: String, id: String) -> Texture2D:
 	return t
 
 
+## 0.3.9 actor sheet for a facing ("side" / "down" / "up"); falls back to the side sheet.
+func actor_texture(id: String, dir: String) -> Texture2D:
+	if dir != "side":
+		var p: String = str(sprite_def("actors", id).get("dir_paths", {}).get(dir, ""))
+		if p != "":
+			var t := _tex(p)
+			if t != null:
+				return t
+	return texture("actors", id)
+
+
 func frame_size(category: String, id: String) -> Vector2i:
 	var fs: Array = sprite_def(category, id).get("frame_size", [tile_size, tile_size])
 	return Vector2i(int(fs[0]), int(fs[1]))

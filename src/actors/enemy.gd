@@ -31,6 +31,7 @@ var tint := Color.WHITE             # 0.3.1 colour variant (enemies.json "tints"
 
 var _sprite: Sprite2D
 var _anim_t := 0.0
+var _shown_dir := "side"
 var facing := Facing.new()            # 0.2.5: hysteresis facing (see src/actors/facing.gd)
 var _tick_now := 0
 var _last_move_t := -100000
@@ -119,10 +120,10 @@ func tick(t: int, world, actors: Array) -> void:
 	if dead:
 		return
 	# 0.3.0 immediate: this tick's step direction; standing in a fight: the target
-	if tile.x != prev_tile.x:
-		facing.observe(tile.x - prev_tile.x, t)
-	elif tile == prev_tile and is_engaged():
-		facing.observe(target.tile.x - tile.x, t)
+	if tile != prev_tile:
+		facing.observe(tile.x - prev_tile.x, t, tile.y - prev_tile.y)
+	elif is_engaged():
+		facing.observe(target.tile.x - tile.x, t, target.tile.y - tile.y)
 
 
 func _tick_body(t: int, world, actors: Array) -> void:
@@ -344,7 +345,10 @@ func _process(delta: float) -> void:
 		if _sprite.hframes > 1:
 			var moving := _tick_now - _last_move_t <= int(Facing.cfg().get("anim_grace_ticks", 2))
 			_sprite.frame = Facing.anim_frame(_anim_t, float(sd.get("fps", 4)), _sprite.hframes) if (moving or is_engaged()) else 0
-		_sprite.flip_h = facing.left and bool(sd.get("flip", true))
+		if facing.dir != _shown_dir:   # 0.3.9 front / back / side sheets
+			_shown_dir = facing.dir
+			_sprite.texture = GameData.actor_texture(def.get("sprite", kind), facing.dir)
+		_sprite.flip_h = facing.left and bool(sd.get("flip", true)) and facing.dir == "side"
 
 
 func _update_pos() -> void:

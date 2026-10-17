@@ -25,6 +25,7 @@ var tick: int = 0
 var ground_layer: Node2D
 var entity_layer: Node2D             # y-sorted: objects + actors
 var _tileset: TileSet
+var _overlay_src: Dictionary = {}    # "autotile/<id>" / "transitions/<id>" -> [source id, cols]
 var _build_queue: Array = []
 var _focus_chunk := Vector2i(999999, 999999)
 var _animated: Array = []            # [Sprite2D, frames, fps]
@@ -72,7 +73,66 @@ func _build_tileset() -> TileSet:
 		for v in cols:
 			src.create_tile(Vector2i(v, 0))
 		ts.add_source(src, i)
+	# 0.3.9 autotile + transition overlay sheets (sources 100+ / 200+)
+	_overlay_src.clear()
+	var sid := 100
+	for cat in ["autotile", "transitions"]:
+		if cat == "transitions":
+			sid = 200
+		for id in GameData.sprites.get(cat, {}).keys():
+			if str(id).begins_with("_"):
+				continue
+			var fs := GameData.frame_size(cat, id)
+			if fs.y != tile_px:
+				continue   # the fence sheet is drawn by object sprites, not the tile layer
+			var tex := GameData.texture(cat, id)
+			var src := TileSetAtlasSource.new()
+			src.texture = tex
+			src.texture_region_size = Vector2i(tile_px, tile_px)
+			var cols := maxi(1, tex.get_width() / tile_px)
+			var rows := maxi(1, tex.get_height() / tile_px)
+			for r in rows:
+				for cx in cols:
+					src.create_tile(Vector2i(cx, r))
+			ts.add_source(src, sid)
+			_overlay_src[cat + "/" + id] = [sid, cols]
+			sid += 1
 	return ts
+
+
+## 0.3.9 overlay cells for one tile: [[layer, source id, atlas coords], ...].
+## layer 0/1 floor transitions, 2 wall caps / moat banks, 3 bridge joins.
+## `nm` = Callable(Vector2i) -> tile name. Pure: unit-tested and used by _build_view.
+func overlay_cells(p: Vector2i, nm: Callable) -> Array:
+	var out: Array = []
+	var here: String = nm.call(p)
+	var nb: Array = []
+	for d in [Vector2i(0, -1), Vector2i(1, 0), Vector2i(0, 1), Vector2i(-1, 0), Vector2i(-1, -1), Vector2i(1, -1), Vector2i(1, 1), Vector2i(-1, 1)]:
+		nb.append(nm.call(p + d))
+	var ov := Autotile.overlays_for(here, nb)
+	for i in ov.size():
+		var s: Array = _overlay_src.get("transitions/" + str(ov[i]), [])
+		if not s.is_empty():
+			var f := Autotile.transition_frame(ov[i], nb)
+			out.append([i, s[0], Vector2i(f % int(s[1]), f / int(s[1]))])
+	if Autotile.WALL_FAMILIES.has(here):
+		var s: Array = _overlay_src.get("autotile/" + str(Autotile.WALL_FAMILIES[here]), [])
+		if not s.is_empty():
+			var f := Autotile.piece_at(p, func(q): var t: String = nm.call(q); return t == here or t in Autotile.WALL_JOIN_ALSO)
+			out.append([2, s[0], Vector2i(f, 0)])
+	elif here == "moat":
+		var s: Array = _overlay_src.get("autotile/moat_border", [])
+		if not s.is_empty():
+			var m := 0
+			for k in 4:
+				if nb[k] in ["moat", "bridge"]:
+					m |= 1 << k
+			out.append([2, s[0], Vector2i(m, 0)])
+			for k in 4:
+				if nb[k] == "bridge":
+					out.append([3, s[0], Vector2i(16 + k, 0)])
+					break
+	return out
 
 
 func variants_for(tile_type: int) -> int:
@@ -341,6 +401,31 @@ func _build_view(c: Vector2i) -> void:
 			var v := 0 if nv <= 1 else int(gen.hash01(wx, wy, 7) * nv) % nv
 			layer.set_cell(Vector2i(lx, ly), t, Vector2i(v, 0))
 	root.add_child(layer)
+	# 0.3.9 overlays: names of the chunk + a 1-tile rim, computed once
+	var names := {}
+	var base := Vector2i(c.x * CHUNK, c.y * CHUNK)
+	for ly in range(-1, CHUNK + 1):
+		for lx in range(-1, CHUNK + 1):
+			var inside := lx >= 0 and ly >= 0 and lx < CHUNK and ly < CHUNK
+			var tt: int = ch.tile_local(lx, ly) if inside else gen.tile_at(base.x + lx, base.y + ly)
+			names[base + Vector2i(lx, ly)] = WorldGen.TILE_NAMES[tt]
+	var nm := func(q: Vector2i) -> String: return names.get(q, "")
+	var ovl: Array = []
+	for i in 4:
+		var l := TileMapLayer.new()
+		l.tile_set = _tileset
+		l.position = layer.position
+		l.name = ["trans0", "trans1", "autotile", "joins"][i]
+		ovl.append(l)
+	for ly in CHUNK:
+		for lx in CHUNK:
+			for cell in overlay_cells(base + Vector2i(lx, ly), nm):
+				(ovl[cell[0]] as TileMapLayer).set_cell(Vector2i(lx, ly), cell[1], cell[2])
+	for l in ovl:
+		if (l as TileMapLayer).get_used_cells().is_empty():
+			l.free()
+		else:
+			root.add_child(l)
 	ground_layer.add_child(root)
 	chunk_views[c] = root
 	var objs: Array = []
@@ -371,9 +456,33 @@ func _make_object_view(o: WorldObject) -> void:
 	elif o.def().get("keeper", false):
 		var b: Dictionary = gen.buildings.get(str(o.meta.get("building", "")), {})
 		apply_keeper_sprite(spr, buildings_view.keeper_sprite(b) if not b.is_empty() else "keeper_general")
+	elif GameData.sprite_def("objects", o.sprite_id(tick)).has("autotile"):
+		apply_autotile_sprite(spr, o.pos, str(GameData.sprite_def("objects", o.sprite_id(tick))["autotile"]))
 	else:
 		_apply_sprite(spr, o.sprite_id(tick))
 	entity_layer.add_child(spr)
+
+
+## 0.3.9 fences: piece from the same-group fences around, broken by tile hash.
+func autotile_piece(p: Vector2i, group: String) -> Vector2i:
+	var piece := Autotile.piece_at(p, func(q): return gen.autotile_group_at(q) == group)
+	var d := GameData.sprite_def("autotile", group)
+	var row := 0
+	if d.has("broken_row") and Autotile.is_broken(p):
+		row = int(d["broken_row"])
+	return Vector2i(piece, row)
+
+
+func apply_autotile_sprite(spr: Sprite2D, p: Vector2i, group: String) -> void:
+	spr.visible = true
+	spr.texture = GameData.texture("autotile", group)
+	var fs := GameData.frame_size("autotile", group)
+	var d := GameData.sprite_def("autotile", group)
+	spr.hframes = maxi(1, int(d.get("frames", 1)))
+	spr.vframes = maxi(1, int(d.get("rows", 1)))
+	spr.offset = Vector2(-fs.x / 2.0, -fs.y)
+	spr.frame_coords = autotile_piece(p, group)
+	spr.set_meta("autotile", group)
 
 
 ## Shopkeepers are drawn with an actor sheet (idle animation, faces right).
@@ -407,7 +516,7 @@ func _apply_sprite(spr: Sprite2D, sprite_id: String) -> void:
 
 
 func _refresh_object_view(o: WorldObject) -> void:
-	if o.view and is_instance_valid(o.view):
+	if o.view and is_instance_valid(o.view) and not o.view.has_meta("autotile"):
 		_apply_sprite(o.view, o.sprite_id(tick))
 
 

@@ -2267,5 +2267,1340 @@
     "h": 24
    }
   ]
+ },
+ "autotile_fence_16x24": {
+  "cell_w": 288,
+  "cell_h": 48,
+  "cols": 1,
+  "rows": 1,
+  "cells": [
+   {
+    "file": "assets/sprites/autotile/fence_rural.png",
+    "x": 0,
+    "y": 0,
+    "w": 288,
+    "h": 48
+   }
+  ]
+ },
+ "autotile_tiles_16x16": {
+  "cell_w": 320,
+  "cell_h": 16,
+  "cols": 1,
+  "rows": 6,
+  "cells": [
+   {
+    "file": "assets/sprites/autotile/wall_stone_wall.png",
+    "x": 0,
+    "y": 0,
+    "w": 288,
+    "h": 16
+   },
+   {
+    "file": "assets/sprites/autotile/wall_palisade.png",
+    "x": 0,
+    "y": 16,
+    "w": 288,
+    "h": 16
+   },
+   {
+    "file": "assets/sprites/autotile/wall_basalt_wall.png",
+    "x": 0,
+    "y": 32,
+    "w": 288,
+    "h": 16
+   },
+   {
+    "file": "assets/sprites/autotile/wall_sandstone_wall.png",
+    "x": 0,
+    "y": 48,
+    "w": 288,
+    "h": 16
+   },
+   {
+    "file": "assets/sprites/autotile/wall_capital_wall.png",
+    "x": 0,
+    "y": 64,
+    "w": 288,
+    "h": 16
+   },
+   {
+    "file": "assets/sprites/autotile/moat_border.png",
+    "x": 0,
+    "y": 80,
+    "w": 320,
+    "h": 16
+   }
+  ]
+ },
+ "transitions_256x256": {
+  "cell_w": 256,
+  "cell_h": 256,
+  "cols": 1,
+  "rows": 15,
+  "cells": [
+   {
+    "file": "assets/sprites/transitions/marsh.png",
+    "x": 0,
+    "y": 0,
+    "w": 256,
+    "h": 256
+   },
+   {
+    "file": "assets/sprites/transitions/grass.png",
+    "x": 0,
+    "y": 256,
+    "w": 256,
+    "h": 256
+   },
+   {
+    "file": "assets/sprites/transitions/sand.png",
+    "x": 0,
+    "y": 512,
+    "w": 256,
+    "h": 256
+   },
+   {
+    "file": "assets/sprites/transitions/ash.png",
+    "x": 0,
+    "y": 768,
+    "w": 256,
+    "h": 256
+   },
+   {
+    "file": "assets/sprites/transitions/dirt.png",
+    "x": 0,
+    "y": 1024,
+    "w": 256,
+    "h": 256
+   },
+   {
+    "file": "assets/sprites/transitions/path.png",
+    "x": 0,
+    "y": 1280,
+    "w": 256,
+    "h": 256
+   },
+   {
+    "file": "assets/sprites/transitions/road_dirt.png",
+    "x": 0,
+    "y": 1536,
+    "w": 256,
+    "h": 256
+   },
+   {
+    "file": "assets/sprites/transitions/boardwalk.png",
+    "x": 0,
+    "y": 1792,
+    "w": 256,
+    "h": 256
+   },
+   {
+    "file": "assets/sprites/transitions/planks.png",
+    "x": 0,
+    "y": 2048,
+    "w": 256,
+    "h": 256
+   },
+   {
+    "file": "assets/sprites/transitions/floor.png",
+    "x": 0,
+    "y": 2304,
+    "w": 256,
+    "h": 256
+   },
+   {
+    "file": "assets/sprites/transitions/stone_floor.png",
+    "x": 0,
+    "y": 2560,
+    "w": 256,
+    "h": 256
+   },
+   {
+    "file": "assets/sprites/transitions/plaster.png",
+    "x": 0,
+    "y": 2816,
+    "w": 256,
+    "h": 256
+   },
+   {
+    "file": "assets/sprites/transitions/cobble.png",
+    "x": 0,
+    "y": 3072,
+    "w": 256,
+    "h": 256
+   },
+   {
+    "file": "assets/sprites/transitions/road_stone.png",
+    "x": 0,
+    "y": 3328,
+    "w": 256,
+    "h": 256
+   },
+   {
+    "file": "assets/sprites/transitions/cobble_dark.png",
+    "x": 0,
+    "y": 3584,
+    "w": 256,
+    "h": 256
+   }
+  ]
+ },
+ "actors_dirs_039": {
+  "cell_w": 0,
+  "cell_h": 0,
+  "cols": 1,
+  "rows": 164,
+  "note": "0.3.9 front (down) / back (up) sheets, same frames as the side sheet; one file per cell",
+  "cells": [
+   {
+    "file": "assets/sprites/actors/gear/head_1_front.png",
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/gear/head_1_back.png",
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/gear/body_1_front.png",
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/gear/body_1_back.png",
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/gear/legs_1_front.png",
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/gear/legs_1_back.png",
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/gear/shield_1_front.png",
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/gear/shield_1_back.png",
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/gear/weapon_sword_1_front.png",
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/gear/weapon_sword_1_back.png",
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/gear/weapon_dagger_1_front.png",
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/gear/weapon_dagger_1_back.png",
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/gear/weapon_mace_1_front.png",
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/gear/weapon_mace_1_back.png",
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/gear/weapon_warhammer_1_front.png",
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/gear/weapon_warhammer_1_back.png",
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/gear/weapon_battleaxe_1_front.png",
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/gear/weapon_battleaxe_1_back.png",
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/gear/head_2_front.png",
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/gear/head_2_back.png",
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/gear/body_2_front.png",
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/gear/body_2_back.png",
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/gear/legs_2_front.png",
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/gear/legs_2_back.png",
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/gear/shield_2_front.png",
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/gear/shield_2_back.png",
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/gear/weapon_sword_2_front.png",
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/gear/weapon_sword_2_back.png",
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/gear/weapon_dagger_2_front.png",
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/gear/weapon_dagger_2_back.png",
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/gear/weapon_mace_2_front.png",
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/gear/weapon_mace_2_back.png",
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/gear/weapon_warhammer_2_front.png",
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/gear/weapon_warhammer_2_back.png",
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/gear/weapon_battleaxe_2_front.png",
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/gear/weapon_battleaxe_2_back.png",
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/gear/head_3_front.png",
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/gear/head_3_back.png",
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/gear/body_3_front.png",
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/gear/body_3_back.png",
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/gear/legs_3_front.png",
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/gear/legs_3_back.png",
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/gear/shield_3_front.png",
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/gear/shield_3_back.png",
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/gear/weapon_sword_3_front.png",
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/gear/weapon_sword_3_back.png",
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/gear/weapon_dagger_3_front.png",
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/gear/weapon_dagger_3_back.png",
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/gear/weapon_mace_3_front.png",
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/gear/weapon_mace_3_back.png",
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/gear/weapon_warhammer_3_front.png",
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/gear/weapon_warhammer_3_back.png",
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/gear/weapon_battleaxe_3_front.png",
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/gear/weapon_battleaxe_3_back.png",
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/gear/head_4_front.png",
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/gear/head_4_back.png",
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/gear/body_4_front.png",
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/gear/body_4_back.png",
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/gear/legs_4_front.png",
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/gear/legs_4_back.png",
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/gear/shield_4_front.png",
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/gear/shield_4_back.png",
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/gear/weapon_sword_4_front.png",
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/gear/weapon_sword_4_back.png",
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/gear/weapon_dagger_4_front.png",
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/gear/weapon_dagger_4_back.png",
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/gear/weapon_mace_4_front.png",
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/gear/weapon_mace_4_back.png",
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/gear/weapon_warhammer_4_front.png",
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/gear/weapon_warhammer_4_back.png",
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/gear/weapon_battleaxe_4_front.png",
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/gear/weapon_battleaxe_4_back.png",
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/gear/weapon_bow_1_front.png",
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/gear/weapon_bow_1_back.png",
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/gear/shield_buckler_1_front.png",
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/gear/shield_buckler_1_back.png",
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/gear/shield_kite_1_front.png",
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/gear/shield_kite_1_back.png",
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/gear/shield_heater_1_front.png",
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/gear/shield_heater_1_back.png",
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/gear/shield_tower_1_front.png",
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/gear/shield_tower_1_back.png",
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/gear/weapon_bow_2_front.png",
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/gear/weapon_bow_2_back.png",
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/gear/shield_buckler_2_front.png",
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/gear/shield_buckler_2_back.png",
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/gear/shield_kite_2_front.png",
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/gear/shield_kite_2_back.png",
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/gear/shield_heater_2_front.png",
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/gear/shield_heater_2_back.png",
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/gear/shield_tower_2_front.png",
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/gear/shield_tower_2_back.png",
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/gear/weapon_bow_3_front.png",
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/gear/weapon_bow_3_back.png",
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/gear/shield_buckler_3_front.png",
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/gear/shield_buckler_3_back.png",
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/gear/shield_kite_3_front.png",
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/gear/shield_kite_3_back.png",
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/gear/shield_heater_3_front.png",
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/gear/shield_heater_3_back.png",
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/gear/shield_tower_3_front.png",
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/gear/shield_tower_3_back.png",
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/gear/weapon_bow_4_front.png",
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/gear/weapon_bow_4_back.png",
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/gear/shield_buckler_4_front.png",
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/gear/shield_buckler_4_back.png",
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/gear/shield_kite_4_front.png",
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/gear/shield_kite_4_back.png",
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/gear/shield_heater_4_front.png",
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/gear/shield_heater_4_back.png",
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/gear/shield_tower_4_front.png",
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/gear/shield_tower_4_back.png",
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/player_front.png",
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/player_back.png",
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/npc_front.png",
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/npc_back.png",
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/giant_rat_front.png",
+    "x": 0,
+    "y": 0,
+    "w": 32,
+    "h": 16
+   },
+   {
+    "file": "assets/sprites/actors/giant_rat_back.png",
+    "x": 0,
+    "y": 0,
+    "w": 32,
+    "h": 16
+   },
+   {
+    "file": "assets/sprites/actors/goblin_front.png",
+    "x": 0,
+    "y": 0,
+    "w": 32,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/goblin_back.png",
+    "x": 0,
+    "y": 0,
+    "w": 32,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/keeper_general_front.png",
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/keeper_general_back.png",
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/keeper_helmets_front.png",
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/keeper_helmets_back.png",
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/keeper_body_front.png",
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/keeper_body_back.png",
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/keeper_legs_front.png",
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/keeper_legs_back.png",
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/keeper_shields_front.png",
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/keeper_shields_back.png",
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/keeper_swords_front.png",
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/keeper_swords_back.png",
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/keeper_axes_front.png",
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/keeper_axes_back.png",
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/keeper_maces_front.png",
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/keeper_maces_back.png",
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/keeper_archery_front.png",
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/keeper_archery_back.png",
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/keeper_estate_front.png",
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/keeper_estate_back.png",
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/keeper_player_front.png",
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/keeper_player_back.png",
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/chicken_front.png",
+    "x": 0,
+    "y": 0,
+    "w": 32,
+    "h": 16
+   },
+   {
+    "file": "assets/sprites/actors/chicken_back.png",
+    "x": 0,
+    "y": 0,
+    "w": 32,
+    "h": 16
+   },
+   {
+    "file": "assets/sprites/actors/wolf_front.png",
+    "x": 0,
+    "y": 0,
+    "w": 48,
+    "h": 16
+   },
+   {
+    "file": "assets/sprites/actors/wolf_back.png",
+    "x": 0,
+    "y": 0,
+    "w": 48,
+    "h": 16
+   },
+   {
+    "file": "assets/sprites/actors/town_guard_front.png",
+    "x": 0,
+    "y": 0,
+    "w": 32,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/town_guard_back.png",
+    "x": 0,
+    "y": 0,
+    "w": 32,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/cinder_brute_front.png",
+    "x": 0,
+    "y": 0,
+    "w": 32,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/cinder_brute_back.png",
+    "x": 0,
+    "y": 0,
+    "w": 32,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/citizen_front.png",
+    "x": 0,
+    "y": 0,
+    "w": 32,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/citizen_back.png",
+    "x": 0,
+    "y": 0,
+    "w": 32,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/priest_front.png",
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/priest_back.png",
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/cow_front.png",
+    "x": 0,
+    "y": 0,
+    "w": 48,
+    "h": 16
+   },
+   {
+    "file": "assets/sprites/actors/cow_back.png",
+    "x": 0,
+    "y": 0,
+    "w": 48,
+    "h": 16
+   },
+   {
+    "file": "assets/sprites/actors/villager_front.png",
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/villager_back.png",
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/keeper_cook_front.png",
+    "x": 0,
+    "y": 0,
+    "w": 16,
+    "h": 32
+   },
+   {
+    "file": "assets/sprites/actors/keeper_cook_back.png",
+    "x": 0,
+    "y": 0,
+    "w": 16,
+    "h": 32
+   },
+   {
+    "file": "assets/sprites/actors/goblin_warlord_front.png",
+    "x": 0,
+    "y": 0,
+    "w": 32,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/goblin_warlord_back.png",
+    "x": 0,
+    "y": 0,
+    "w": 32,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/slime_front.png",
+    "x": 0,
+    "y": 0,
+    "w": 32,
+    "h": 16
+   },
+   {
+    "file": "assets/sprites/actors/slime_back.png",
+    "x": 0,
+    "y": 0,
+    "w": 32,
+    "h": 16
+   }
+  ]
  }
 }

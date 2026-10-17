@@ -47,6 +47,9 @@ var _vis_last := Vector2.INF          # where the sprite stood at the end of las
 var _vis_pts: Array = []              # this tick's sprite waypoints (1 + steps) on the straight line
 
 
+var _shown_dir := "side"
+
+
 func _init() -> void:
 	skills = Skills.new()
 	inventory = ItemContainer.new(24, false)
@@ -536,12 +539,12 @@ func _update_facing() -> void:
 	if dead:
 		return
 	if last_steps > 0:
-		facing.observe((_vis_pts.back() as Vector2).x - (_vis_pts[0] as Vector2).x)
+		facing.observe((_vis_pts.back() as Vector2).x - (_vis_pts[0] as Vector2).x, 0, (_vis_pts.back() as Vector2).y - (_vis_pts[0] as Vector2).y)
 		return
 	if action.get("kind", "") == "fight":
 		var e = action.get("enemy")
 		if e != null and is_instance_valid(e) and not e.dead:
-			facing.observe(e.tile.x - tile.x)
+			facing.observe(e.tile.x - tile.x, 0, e.tile.y - tile.y)
 
 
 func foot_px(p: Vector2i) -> Vector2:
@@ -619,7 +622,11 @@ func _process(delta: float) -> void:
 		if _sprite.hframes > 1:
 			_sprite.frame = 0 if kneel else (Facing.anim_frame(_anim_t, anim_fps(), _sprite.hframes) if is_animating() else 0)
 		_sprite.scale.y = 0.8 if kneel else 1.0   # 0.3.1 kneeling at an altar (scales toward the feet)
-		_sprite.flip_h = facing.left and can_flip()
+		if facing.dir != _shown_dir:
+			_shown_dir = facing.dir
+			_sprite.texture = GameData.actor_texture(sprite_id, facing.dir)
+			_layer_key = ""   # gear layers follow the facing too
+		_sprite.flip_h = facing.left and can_flip() and facing.dir == "side"
 		_refresh_gear_visual()
 		_sync_gear_layers()
 
@@ -757,7 +764,7 @@ func _refresh_gear_visual() -> void:
 			add_child(spr)
 			_layers[slot] = spr
 		var sid: String = want[slot]
-		spr.texture = GameData.texture("actors", sid)
+		spr.texture = GameData.actor_texture(sid, facing.dir)
 		var fs := GameData.frame_size("actors", sid)
 		spr.hframes = maxi(1, GameData.frame_count("actors", sid))
 		spr.offset = Vector2(-fs.x / 2.0, -fs.y)

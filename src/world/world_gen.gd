@@ -209,6 +209,9 @@ func _fenced(origin: Vector2i, d: Dictionary, ground: int, crop: String) -> Rect
 			elif rim_x:
 				_town_tiles[p] = TileType.GRASS
 				_town_objects[p] = "fence_v"
+			elif d.has("divider") and x == origin.x + int(d["divider"]["x"]) and y <= origin.y + int(d["divider"]["to_y"]):
+				_town_tiles[p] = ground
+				_town_objects[p] = "fence_v"   # 0.3.9 paddock divider
 			else:
 				_town_tiles[p] = ground
 				if crop != "":
@@ -699,7 +702,14 @@ func _place_road_decor() -> void:
 	for vid in village_roads.keys():
 		lists.append(village_roads[vid])
 	var skip := int(dc.get("gate_skip", 10))
-	for tiles in lists:
+	# 0.3.9 which road owns each centre tile (-1 = shared): fences leave junctions open
+	var owner := {}
+	for li in lists.size():
+		for t in lists[li]:
+			owner[t] = li if owner.get(t, li) == li else -1
+	var jr := int(dc.get("junction_gap", 4))
+	for li in lists.size():
+		var tiles: Array = lists[li]
 		for i in range(skip, tiles.size() - skip):
 			var p: Vector2i = tiles[i]
 			var dir: Vector2i = (tiles[mini(i + 1, tiles.size() - 1)] - tiles[maxi(i - 1, 0)]).sign()
@@ -718,11 +728,20 @@ func _place_road_decor() -> void:
 				if not (t in [TileType.GRASS, TileType.DIRT]) or is_pk(q) or not mine_at(q, 3).is_empty():
 					continue
 				var r := hash01(q.x, q.y, 41)
-				if fence_run and t == TileType.GRASS:
+				if fence_run and t == TileType.GRASS and not _near_other_road(q, li, owner, jr):
 					road_decor[q] = "road_fence"
 				elif r < float(dc.get("chance", 0.07)):
 					var pick := hash01(q.x, q.y, 42)
 					road_decor[q] = "boulder" if pick < 0.3 else ("bush" if pick < 0.65 else "old_log")
+
+
+func _near_other_road(q: Vector2i, li: int, owner: Dictionary, r: int) -> bool:
+	for dy in range(-r, r + 1):
+		for dx in range(-r, r + 1):
+			var o: int = owner.get(q + Vector2i(dx, dy), li)
+			if o != li:
+				return true
+	return false
 
 
 ## Tiles just outside each city gate (middle gate cell + one step out).
@@ -966,6 +985,14 @@ func land_value(x: int, y: int) -> float:
 
 
 ## Integer hash -> [0,1). Stable across platforms (64-bit int math, masked).
+## Seed-independent hash (0.3.9 autotile deterioration: same look in every world).
+static func hash01_static(x: int, y: int, salt: int = 0) -> float:
+	var n: int = (x * 374761393 + y * 668265263 + salt * 2246822519) & 0xffffffff
+	n = ((n ^ (n >> 13)) * 1274126177) & 0xffffffff
+	n = n ^ (n >> 16)
+	return float(n & 0xffffff) / 16777216.0
+
+
 func hash01(x: int, y: int, salt: int = 0) -> float:
 	var n: int = (x * 374761393 + y * 668265263 + (world_seed + salt) * 2246822519) & 0xffffffff
 	n = ((n ^ (n >> 13)) * 1274126177) & 0xffffffff
@@ -1145,6 +1172,14 @@ func town_distance(x: int, y: int) -> float:
 ## Object id (or "") generated at a tile. 0.3.1: rocks ONLY in the named
 ## mines of data/mines.json (ore mix per mine); trees thin out by distance as
 ## before; the Scorch gets burnt trees, stumps and embers instead.
+## 0.3.9 autotile group of the placed fence/wall object at p ("" if none).
+func autotile_group_at(p: Vector2i) -> String:
+	var id: String = _town_objects.get(p, road_decor.get(p, ""))
+	if id == "":
+		return ""
+	return str(GameData.sprite_def("objects", str(GameData.objects.get(id, {}).get("sprite", id))).get("autotile", ""))
+
+
 func object_at(x: int, y: int, tile: int) -> String:
 	var p := Vector2i(x, y)
 	if _town_objects.has(p):

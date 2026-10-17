@@ -41,6 +41,7 @@ static func run(main, world: World, p: Player) -> void:
 	Patch037Tests.run(world, p)   # 0.3.7
 	Patch0371Tests.run(main, world, p)   # 0.3.7.1
 	Patch038Tests.run(main, world, p)   # 0.3.8
+	Patch039Tests.run(main, world, p)   # 0.3.9
 	p.place_at(world.gen.town_spawn("fenhollow"))
 	world.set_focus(p.tile, true)
 
@@ -838,7 +839,7 @@ static func _village_tests(world: World, p: Player) -> void:
 		var pr: Rect2i = pz["rect"]
 		for y in range(pr.position.y + 1, pr.end.y - 1):
 			for x in range(pr.position.x + 1, pr.end.x - 1):
-				clear_ok = clear_ok and gen.object_at(x, y, gen.tile_at(x, y)) == ""
+				clear_ok = clear_ok and gen.object_at(x, y, gen.tile_at(x, y)) in ["", "fence_v"]   # 0.3.9 a paddock divider is fine
 	check(between_ok, "each village has its own road starting at its gate %s" % str(info))
 	check(bands_ok, "distance bands use the cities only (villages are not towns for bands/home/travel)")
 	check(parts_ok, "every village has 2+ cottages, a well, a quern and a hearth")
