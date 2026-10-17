@@ -9,6 +9,11 @@ extends Control
 ## --save-path) skip the menu and go straight to the game scene.
 
 const GAME_SCENE := "res://scenes/main.tscn"
+## 0.3.9.6 looping title video (Ogg Theora, 540x960, 14.04 s seamless loop, no
+## audio) over the static title art, which stays as poster / loading / fallback.
+const TITLE_VIDEO := "res://assets/ui/title_loop.ogv"
+const VIDEO_SIZE := Vector2(540, 960)
+const VIDEO_TIMEOUT_MS := 4000     # no first frame by then -> keep the still
 const TOOL_ARGS := ["selftest", "screenshot", "qa", "soak", "fresh", "save-path"]
 
 var args: Dictionary = {}
@@ -22,9 +27,15 @@ var confirm_label: Label
 var slot_box: VBoxContainer
 var slot_mode := "load"     # "load" | "new"
 var buttons: Dictionary = {}  # name -> Button (QA)
+var video: VideoStreamPlayer = null   # 0.3.9.6 title video (null = static art)
+var video_state := "none"             # none | loading | playing | fallback (tests / QA)
+var _video_box: Control = null
+var _video_t0 := 0
 
 
 func _ready() -> void:
+	if has_meta("test_host"):
+		return   # 0.3.9.6 unit tests drive the title video helpers directly
 	Music.set_title()     # 0.3.4: title theme on the menu (also after "exit to menu")
 	for a in OS.get_cmdline_user_args():
 		var s: String = a.trim_prefix("--")
@@ -42,6 +53,7 @@ func _ready() -> void:
 	theme = UIStyle.make_theme()
 	add_backdrop(self)
 	_build()
+	_start_title_video.call_deferred()   # the still shows first; the video takes over once decoding
 	_show("main")
 	var pend := SaveSystem.boot_pending()
 	if not pend.is_empty():
@@ -84,6 +96,89 @@ static func add_backdrop(host: Control) -> void:
 		tr.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 		tr.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		host.add_child(tr)
+
+
+# ------------------------------------------------------- 0.3.9.6 video --
+## Cover-fits a looping, muted VideoStreamPlayer behind the menu (above the
+## still). The still (TitleBg) stays underneath as the poster while the stream
+## opens and as the fallback when the file / Theora support / stream is missing
+## or no frame arrives within VIDEO_TIMEOUT_MS.
+func _start_title_video(path: String = TITLE_VIDEO) -> void:
+	if not is_inside_tree() or not has_title_art():
+		return
+	video_state = "loading"
+	var stream: VideoStream = null
+	if ClassDB.class_exists("VideoStreamTheora") and ResourceLoader.exists(path):
+		stream = load(path) as VideoStream
+	if stream == null:
+		_video_fallback("no stream: " + path)
+		return
+	_video_box = Control.new()
+	_video_box.name = "TitleVideoBox"
+	_video_box.clip_contents = true
+	_video_box.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_video_box.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	add_child(_video_box)
+	move_child(_video_box, get_node("TitleBg").get_index() + 1)   # over the still, under the menu
+	video = VideoStreamPlayer.new()
+	video.name = "TitleVideo"
+	video.stream = stream
+	video.loop = true
+	video.autoplay = true
+	video.expand = true
+	video.volume_db = -80.0          # the clip has no audio; muted anyway
+	video.bus = &"Master"
+	video.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	video.modulate.a = 0.0           # hidden until the first frame is decoded
+	_video_box.add_child(video)
+	_video_box.resized.connect(_fit_video)
+	_fit_video()
+	_video_t0 = Time.get_ticks_msec()
+	SaveSystem.boot_log("BOOT title video started at %d ms" % _video_t0)
+
+
+func _fit_video() -> void:
+	if video == null or _video_box == null:
+		return
+	var box := _video_box.size
+	var k := maxf(box.x / VIDEO_SIZE.x, box.y / VIDEO_SIZE.y)   # cover, aspect kept
+	video.size = VIDEO_SIZE * k
+	video.position = (box - video.size) * 0.5
+
+
+func _process(_dt: float) -> void:
+	if video_state != "loading" or video == null:
+		return
+	var tex := video.get_video_texture()
+	if video.is_playing() and tex != null and tex.get_width() > 0:
+		video.modulate.a = 1.0
+		video_state = "playing"
+		SaveSystem.boot_log("BOOT title video first frame at %d ms" % Time.get_ticks_msec())
+	elif Time.get_ticks_msec() - _video_t0 > VIDEO_TIMEOUT_MS:
+		_video_fallback("no frame after %d ms" % VIDEO_TIMEOUT_MS)
+
+
+func _video_fallback(why: String) -> void:
+	stop_title_video()
+	video_state = "fallback"
+	SaveSystem.boot_log("BOOT title video fallback (%s): static title art" % why)
+
+
+## Stops and frees the video (leaving the menu, fallback). Idempotent.
+func stop_title_video() -> void:
+	if video != null and is_instance_valid(video):
+		video.stop()
+		video.queue_free()
+	video = null
+	if _video_box != null and is_instance_valid(_video_box):
+		_video_box.queue_free()
+	_video_box = null
+	if video_state == "playing" or video_state == "loading":
+		video_state = "none"
+
+
+func _exit_tree() -> void:
+	stop_title_video()
 
 
 static func title_label(text: String, size: int) -> Label:
@@ -157,10 +252,18 @@ func _build() -> void:
 	pages["main"] = m
 	if _latest_slot() > 0:
 		m.add_child(_btn("Continue", func(): _start("continue", _latest_slot())))
-	m.add_child(_btn("New Game", func(): _open_slots("new")))
-	m.add_child(_btn("Load Game", func(): _open_slots("load")))
-	m.add_child(_btn("Settings", func(): _show("settings")))
-	m.add_child(_btn("Quit", func(): get_tree().quit()))
+	# 0.3.9.6 two columns: the menu stays on the dark river at the bottom of the
+	# title video, clear of the bridge and the city
+	var grid := GridContainer.new()
+	grid.name = "MainGrid"
+	grid.columns = 2
+	grid.add_theme_constant_override("h_separation", 6)
+	grid.add_theme_constant_override("v_separation", 6)
+	m.add_child(grid)
+	for b in [_btn("New Game", func(): _open_slots("new")), _btn("Load Game", func(): _open_slots("load")),
+			_btn("Settings", func(): _show("settings")), _btn("Quit", func(): get_tree().quit())]:
+		b.custom_minimum_size = Vector2(107, 30)
+		grid.add_child(b)
 	# slots page (load / new)
 	var sp := VBoxContainer.new()
 	sp.add_theme_constant_override("separation", 6)
@@ -314,6 +417,7 @@ func _start(mode: String, slot: int, char_name: String = "") -> void:
 	SaveSystem.current_slot = slot
 	SaveSystem.launch = {"mode": mode, "slot": slot, "name": char_name}
 	SaveSystem.boot_log("BOOT menu -> %s slot %d" % [mode, slot])
+	stop_title_video()   # 0.3.9.6 no title video during loading / gameplay
 	get_tree().change_scene_to_file.call_deferred(GAME_SCENE)
 
 
