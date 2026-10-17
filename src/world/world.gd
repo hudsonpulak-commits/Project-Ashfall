@@ -468,7 +468,9 @@ func autotile_piece(p: Vector2i, group: String) -> Vector2i:
 	var piece := Autotile.piece_at(p, func(q): return gen.autotile_group_at(q) == group)
 	var d := GameData.sprite_def("autotile", group)
 	var row := 0
-	if d.has("broken_row") and Autotile.is_broken(p):
+	# 0.3.9.1 run ends: mostly a capped end post, sometimes (~30%) a broken end
+	var chance := Autotile.END_BROKEN_CHANCE if piece in [1, 2, 4, 8] else Autotile.BROKEN_CHANCE
+	if d.has("broken_row") and Autotile.is_broken(p, chance):
 		row = int(d["broken_row"])
 	return Vector2i(piece, row)
 

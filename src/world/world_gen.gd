@@ -733,6 +733,39 @@ func _place_road_decor() -> void:
 				elif r < float(dc.get("chance", 0.07)):
 					var pick := hash01(q.x, q.y, 42)
 					road_decor[q] = "boulder" if pick < 0.3 else ("bush" if pick < 0.65 else "old_log")
+	_prune_short_fences(int(dc.get("fence_min_run", 3)))
+
+
+## 0.3.9.1 every fence is a straight-joined run of >= min_run tiles: road fences
+## in shorter 4-connected runs (lone posts, diagonal steps) are removed.
+func _prune_short_fences(min_run: int) -> void:
+	var seen := {}
+	for q in road_decor.keys():
+		if road_decor.get(q, "") != "road_fence" or seen.has(q):
+			continue
+		var comp := fence_run_at(q)
+		for c in comp:
+			seen[c] = true
+		if comp.size() < min_run:
+			for c in comp:
+				if road_decor.get(c, "") == "road_fence":
+					road_decor.erase(c)
+
+
+## The 4-connected run of fence tiles (any fence object) containing q.
+func fence_run_at(q: Vector2i) -> Array:
+	var out: Array = []
+	var stack: Array = [q]
+	var seen := {q: true}
+	while not stack.is_empty():
+		var c: Vector2i = stack.pop_back()
+		out.append(c)
+		for d in [Vector2i(1, 0), Vector2i(-1, 0), Vector2i(0, 1), Vector2i(0, -1)]:
+			var n: Vector2i = c + d
+			if not seen.has(n) and autotile_group_at(n) == "fence_rural":
+				seen[n] = true
+				stack.append(n)
+	return out
 
 
 func _near_other_road(q: Vector2i, li: int, owner: Dictionary, r: int) -> bool:

@@ -42,6 +42,7 @@ static func run(main, world: World, p: Player) -> void:
 	Patch0371Tests.run(main, world, p)   # 0.3.7.1
 	Patch038Tests.run(main, world, p)   # 0.3.8
 	Patch039Tests.run(main, world, p)   # 0.3.9
+	Patch0391Tests.run(main, world, p)   # 0.3.9.1
 	p.place_at(world.gen.town_spawn("fenhollow"))
 	world.set_focus(p.tile, true)
 

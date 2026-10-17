@@ -1135,6 +1135,31 @@ def check_autotile(ctx):
     ]
 
 
+def check_gfx(ctx):
+    """0.3.9.1 directional frames (cow x4, player front/back with a shield) and fence runs/ends."""
+    if "gfx" not in ctx.expected:
+        return []
+    run = ctx.runs.get("gfx")
+    if not run:
+        return [Result("C32 gfx", "gfx run present", False, "no capture")]
+    c = run.res.get("gfx", {})
+    snaps = {e.get("name"): e.get("path") for e in run.events if e.get("type") == "snap"}
+    sp = lambda *n: [snaps[k] for k in n if k in snaps]
+    cow = c.get("cow", {})
+    pl = c.get("player", {})
+    f = c.get("fences", {})
+    cow_ok = len(cow) == 4 and cow["right"]["tex"] == cow["left"]["tex"] and cow["left"]["flip"] and not cow["right"]["flip"] \
+        and cow["down"]["tex"].endswith("_front.png") and cow["up"]["tex"].endswith("_back.png") and not cow["down"]["flip"] and not cow["up"]["flip"]
+    return [
+        Result("C32 gfx", "0.3.9.1 a cow shows its side (mirrored for left), front and back sheets - never a mirrored front/back", cow_ok, str(cow), sp("cow_right", "cow_left", "cow_down", "cow_up")),
+        Result("C32 gfx", "0.3.9.1 the player's front and back sheets; the shield sits under the body from behind",
+               pl.get("down", {}).get("tex", "").endswith("_front.png") and pl.get("up", {}).get("tex", "").endswith("_back.png") and pl.get("up", {}).get("shield_under") and not pl.get("down", {}).get("shield_under"),
+               str(pl), sp("player_front_shield", "player_back_shield")),
+        Result("C32 gfx", "0.3.9.1 road fences come in runs of 3+ ending in an end post or a broken end", f.get("short_runs", 1) == 0 and "fence_end_post" in snaps and "fence_end_broken" in snaps,
+               str(f), sp("fence_end_post", "fence_end_broken")),
+    ]
+
+
 def check_capital(ctx):
     """0.3.8 Highfen, house, the only player shop, slimes, roadside logs."""
     if "capital" not in ctx.expected:
@@ -1157,7 +1182,7 @@ def check_capital(ctx):
     ]
 
 
-CHECKS = [check_runtime, check_diagonal, check_facing, check_ghost, check_jitter, check_taps, check_bubbles, check_roof, check_shop, check_smithy, check_markers, check_daynight, check_world, check_church, check_aggro, check_farm, check_city, check_cookhouse, check_pk, check_gear, check_archery, check_bank, check_v036, check_quest, check_xp, check_capital, check_autotile]
+CHECKS = [check_runtime, check_diagonal, check_facing, check_ghost, check_jitter, check_taps, check_bubbles, check_roof, check_shop, check_smithy, check_markers, check_daynight, check_world, check_church, check_aggro, check_farm, check_city, check_cookhouse, check_pk, check_gear, check_archery, check_bank, check_v036, check_quest, check_xp, check_capital, check_autotile, check_gfx]
 SCENARIOS = ["walk", "combat", "shop", "pshop", "smithy", "markers", "daynight", "world", "church", "aggro", "farm", "city", "cookhouse", "pk", "gear", "archery"]
 
 

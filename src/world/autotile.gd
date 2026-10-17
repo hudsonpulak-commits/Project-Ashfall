@@ -15,6 +15,7 @@ const DIAG_BACK := 17       # '\'  NW <-> SE
 const PIECES := 18
 const DIRS4 := [Vector2i(0, -1), Vector2i(1, 0), Vector2i(0, 1), Vector2i(-1, 0)]
 const BROKEN_CHANCE := 0.15
+const END_BROKEN_CHANCE := 0.3
 ## City wall top tiles -> their cap sheet (data/sprites.json autotile wall_<family>).
 const WALL_FAMILIES := {"stone_wall": "wall_stone_wall", "palisade": "wall_palisade", "basalt_wall": "wall_basalt_wall", "sandstone_wall": "wall_sandstone_wall", "capital_wall": "wall_capital_wall"}
 const WALL_JOIN_ALSO := ["gate_wood", "gate_basalt", "gate_sand", "gate_capital"]

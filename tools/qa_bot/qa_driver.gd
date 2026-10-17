@@ -323,6 +323,8 @@ func _run() -> void:
 			await _capital038()
 		"autotile":
 			await _autotile039()
+		"gfx":
+			await _gfx0391()
 		_:
 			push_error("unknown QA scenario " + scenario)
 			await _finish(false)
@@ -2769,3 +2771,93 @@ func _autotile039() -> void:
 	await until(arrived, 10.0)
 	label = ""
 	_notes["autotile"] = res
+
+
+
+## 0.3.9.1 directional frames (cow x4, player front/back with a shield), fence runs and ends.
+func _gfx0391() -> void:
+	var p: Player = main.player
+	var w: World = main.world
+	var g: WorldGen = w.gen
+	var res := {}
+	main._set_zoom(3)
+	# a cow in 4 directions
+	var cow = null
+	for e in w.enemies.enemies:
+		if e.kind == "cow" and not e.dead:
+			cow = e
+			break
+	res["cow"] = {}
+	if cow != null:
+		p.stop()
+		p.place_at(w.find_free_tile_near(cow.tile + Vector2i(0, 3), 4))
+		w.set_focus(cow.tile, true)
+		await frames(20)
+		for dname in ["right", "left", "down", "up"]:
+			cow.facing.dir = "side" if dname in ["right", "left"] else dname
+			cow.facing.left = dname == "left"
+			cow.home = cow.tile
+			cow._last_move_t = -100
+			await frames(3)
+			cow.facing.dir = "side" if dname in ["right", "left"] else dname
+			cow.facing.left = dname == "left"
+			w.set_focus(cow.tile, true)
+			await frames(2)
+			res["cow"][dname] = {"tex": cow._sprite.texture.resource_path, "flip": cow._sprite.flip_h}
+			label = "cow_" + dname
+			await _snap("cow_" + dname)
+	# the player with a shield, front and back
+	var shield_id := ""
+	for iid in GameData.items.keys():
+		if str(GameData.item(iid).get("gear", {}).get("slot", "")) == "shield":
+			shield_id = iid
+			break
+	var keep: Dictionary = p.equipment.duplicate()
+	if shield_id != "":
+		p.equipment["shield"] = shield_id
+	p.stop()
+	p.place_at(g.town_spawn("fenhollow") + Vector2i(0, 2))
+	w.set_focus(p.tile, true)
+	await frames(20)
+	res["player"] = {}
+	for dname in ["down", "up"]:
+		p.facing.dir = dname
+		await frames(3)
+		var sh: Sprite2D = p._layers.get("shield")
+		res["player"][dname] = {"tex": p._sprite.texture.resource_path, "shield_under": sh != null and sh.get_index() < p._sprite.get_index(), "shield": sh != null}
+		label = "player_" + dname
+		await _snap("player_%s_shield" % ("front" if dname == "down" else "back"))
+	p.facing.dir = "side"
+	p.equipment = keep
+	# fence runs: a run with an end post and one with a broken end
+	main._set_zoom(2)
+	var end_post := Vector2i(1 << 30, 0)
+	var end_broken := Vector2i(1 << 30, 0)
+	var short := 0
+	var seen := {}
+	for q in g.road_decor.keys():
+		if g.road_decor[q] != "road_fence":
+			continue
+		if not seen.has(q):
+			var run := g.fence_run_at(q)
+			for c in run:
+				seen[c] = true
+			if run.size() < 3:
+				short += 1
+		var pc := w.autotile_piece(q, "fence_rural")
+		if Autotile.piece_name(pc.x) == "end":
+			if pc.y == 0 and end_post.x == 1 << 30: end_post = q
+			if pc.y == 1 and end_broken.x == 1 << 30: end_broken = q
+	res["fences"] = {"short_runs": short, "end_post": [end_post.x, end_post.y], "end_broken": [end_broken.x, end_broken.y]}
+	for pair in [["fence_end_post", end_post], ["fence_end_broken", end_broken]]:
+		var q: Vector2i = pair[1]
+		if q.x == 1 << 30:
+			continue
+		p.stop()
+		p.place_at(w.find_free_tile_near(q + Vector2i(2, 2), 4))
+		w.set_focus(q, true)
+		await frames(25)
+		label = pair[0]
+		await _snap(pair[0])
+	label = ""
+	_notes["gfx"] = res

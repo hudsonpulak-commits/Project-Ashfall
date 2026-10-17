@@ -777,6 +777,9 @@ func _refresh_gear_visual() -> void:
 		if _layers.has(slot):
 			move_child(_layers[slot], mini(idx, get_child_count() - 1))
 			idx += 1
+	# 0.3.9.1 a shield is held in front: from behind it sits under the body (only its edge peeks out)
+	if facing.dir == "up" and _layers.has("shield"):
+		move_child(_layers["shield"], _sprite.get_index())
 	_sync_gear_layers()
 
 

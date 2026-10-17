@@ -69,6 +69,7 @@
    "chance": 0.07,
    "fence_run": 7,
    "fence_every": 6,
+   "fence_min_run": 3,
    "gate_skip": 10,
    "note": "0.3.8 fence runs (7 tiles every 6th run) + rocks/bushes/old logs (chance per verge tile) one tile beyond the road edge"
   }

@@ -62,7 +62,38 @@ def fence_piece(i, broken):
     d.rectangle([6, top, 9, 21], fill=FM); d.line([(6, top), (6, 21)], fill=FL); d.line([(9, top), (9, 21)], fill=FD)
     d.line([(6, top), (9, top)], fill=FL)
     if broken: d.point((9, top), fill=(0, 0, 0, 0)); d.point((8, top + 1), fill=FD)
+    if i in (1, 2, 4, 8):
+        end_piece(d, i, broken)
     return im
+
+
+def end_piece(d, i, broken):
+    """0.3.9.1 run ends read clearly: a stout capped end post, or a snapped
+    stump with the last rail sagging to the ground (broken end)."""
+    C = (0, 0, 0, 0)
+    d.rectangle([4, 4, 11, 23], fill=C)            # redraw the post area
+    if i == 2: rx = (10, 15)
+    elif i == 8: rx = (0, 5)
+    else: rx = None
+    if not broken:
+        if rx:
+            for y in (13, 17): d.line([(rx[0], y), (rx[1], y)], fill=FM)
+        d.ellipse([4, 20, 11, 23], fill=FS)
+        d.rectangle([5, 6, 10, 21], fill=FM)
+        d.line([(5, 6), (5, 21)], fill=FL); d.line([(10, 6), (10, 21)], fill=FD)
+        d.rectangle([4, 4, 11, 5], fill=FL); d.line([(4, 5), (11, 5)], fill=FD)   # cap
+        d.point((7, 3), fill=FL); d.point((8, 3), fill=FL)                       # finial
+        d.line([(5, 21), (10, 21)], fill=FD)
+    else:
+        if rx:   # the last rail hangs from the neighbour down to the ground
+            a = rx[1] if i == 2 else rx[0]
+            d.line([(a, 13), (7, 21)], fill=FM); d.line([(a, 17), (8, 22)], fill=FD)
+        if i == 1:
+            d.line([(7, 0), (8, 8)], fill=FM)
+        d.ellipse([4, 20, 11, 23], fill=FS)
+        d.rectangle([6, 16, 9, 21], fill=FM); d.line([(6, 16), (6, 21)], fill=FL); d.line([(9, 16), (9, 21)], fill=FD)
+        for (x, y) in ((6, 15), (8, 14), (9, 15)): d.point((x, y), fill=FM)       # jagged snap
+        d.point((7, 15), fill=C); d.point((3, 22), fill=FL); d.point((12, 21), fill=FD); d.point((11, 22), fill=FM)
 
 def fence_sheet():
     im = Image.new("RGBA", (16 * 18, 48), (0, 0, 0, 0))
