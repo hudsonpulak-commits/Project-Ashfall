@@ -1,0 +1,859 @@
+{
+ "id": "cinderholt",
+ "name": "Cinderholt",
+ "origin": [
+  307,
+  -219
+ ],
+ "spawn": [
+  330,
+  -200
+ ],
+ "rows": [
+  "@@@@@@@@@@@@@@@@@@@@@@GGG@@@@@@@@@@@@@@@@@@@@@",
+  "@@@=:::::::::=:::::::::=:::::::::=:::::::::@@@",
+  "@@@========================================@@@",
+  "@::=.........=.........=.........=.........::@",
+  "@::=.........=.........=.........=.........::@",
+  "@::=.........=.........=.........=.........::@",
+  "@::=.........=.........=.........=.........::@",
+  "@::=.........=.........=.........=.........::@",
+  "@::=.........=.........=.........=.........::@",
+  "@::=.........=.........=.........=.........::@",
+  "@::=:::::::::=:::::::::=:::::::::=:::::::::::@",
+  "@============================================@",
+  "@::=:::::::::=:::::::::=:::::::::=:::::::::::@",
+  "@::=:::::::::=:::::::::=:::::::::=:::::::::::@",
+  "@::=:::::::::=:::::::::=:::::::::=.........::@",
+  "@::=:::::::::=:::::::::=:::::::::=.........::@",
+  "@::=:::::::::=::::###########::::=.........::@",
+  "@::=:::::::::=::::##B#E#H####::::=.........::@",
+  "G::=:::::::::=::::###########::::=.........::G",
+  "G=================###########=====.........==G",
+  "G::=:::::::::=::::###########::::=.........::G",
+  "@::=:::::::::=::::##W#####D##::::=.........::@",
+  "@::=:::::::::=::::###########::::=:::::::::::@",
+  "@::=:::::::::=:::::::::=:::::::::=:::::::::::@",
+  "@::=:::::::::=:::::::::=:::::::::=:::::::::::@",
+  "@::=:::::::::=.........=:::::::::=:::::::::::@",
+  "@::=.........=.........=:::::::::=:::::::::::@",
+  "@::=.........=.........=:::::::::=:::::::::::@",
+  "@===.........=.........======================@",
+  "@::=.........=.........=::::e::::=:::::::::::@",
+  "@::=.........=.........=e::::::::=:::::::::::@",
+  "@::=.........=.........=:::::::::=:::::::::::@",
+  "@::=.........=.........=:::::::::=:::::::::::@",
+  "@::=:::::::::=.........=:::::::::=:::::::::::@",
+  "@::=:::::::::=:::::::::=:::::::::=:::::::::::@",
+  "@@@=:::::::::=:::::::::=:::::::::=:::::::::@@@",
+  "@@@=:::::::::=:::::::::=:::::::::=:::::::::@@@",
+  "@@@[[[[[[[[[[[[[[[[[[[GGG[[[[[[[[[[[[[[[[[[@@@"
+ ],
+ "tiles": {
+  ".": "dirt",
+  ":": "dirt",
+  ",": "sand",
+  "~": "water",
+  "m": "marsh",
+  "=": "cobble_dark",
+  "#": "cobble_dark",
+  "_": "boardwalk",
+  "P": "plaster",
+  "%": "wall",
+  "^": "wall_front",
+  ";": "floor",
+  "+": "doorway",
+  "@": "basalt_wall",
+  "[": "basalt_front",
+  "G": "gate_basalt"
+ },
+ "objects": {
+  "a": {
+   "object": "ash_tree",
+   "ground": "dirt"
+  },
+  "l": {
+   "object": "alder_tree",
+   "ground": "dirt"
+  },
+  "b": {
+   "object": "blackthorn_tree",
+   "ground": "dirt"
+  },
+  "c": {
+   "object": "copper_rock",
+   "ground": "dirt"
+  },
+  "i": {
+   "object": "iron_rock",
+   "ground": "dirt"
+  },
+  "k": {
+   "object": "coal_rock",
+   "ground": "dirt"
+  },
+  "f": {
+   "object": "fishing_spot",
+   "ground": "water"
+  },
+  "r": {
+   "object": "reed_bed",
+   "ground": "marsh"
+  },
+  "g": {
+   "object": "fenroot_patch",
+   "ground": "marsh"
+  },
+  "B": {
+   "object": "bank_chest",
+   "ground": "cobble_dark"
+  },
+  "E": {
+   "object": "exchange_board",
+   "ground": "cobble_dark"
+  },
+  "H": {
+   "object": "hearth",
+   "ground": "cobble_dark"
+  },
+  "F": {
+   "object": "furnace",
+   "ground": "cobble"
+  },
+  "D": {
+   "object": "training_dummy",
+   "ground": "cobble_dark"
+  },
+  "W": {
+   "object": "workbench",
+   "ground": "cobble_dark"
+  },
+  "A": {
+   "object": "anvil",
+   "ground": "cobble"
+  },
+  "S": {
+   "object": "general_store",
+   "ground": "cobble"
+  },
+  "1": {
+   "object": "shop_helmets",
+   "ground": "cobble"
+  },
+  "2": {
+   "object": "shop_swords",
+   "ground": "cobble"
+  },
+  "3": {
+   "object": "shop_archery",
+   "ground": "cobble"
+  },
+  "4": {
+   "object": "shop_body",
+   "ground": "cobble"
+  },
+  "5": {
+   "object": "shop_shields",
+   "ground": "cobble"
+  },
+  "6": {
+   "object": "shop_axes",
+   "ground": "cobble"
+  },
+  "7": {
+   "object": "shop_legs",
+   "ground": "cobble"
+  },
+  "8": {
+   "object": "shop_maces",
+   "ground": "cobble"
+  },
+  "t": {
+   "object": "tin_rock",
+   "ground": "dirt"
+  },
+  "e": {
+   "object": "embers",
+   "ground": "dirt"
+  }
+ },
+ "roof": "#3a3e4c",
+ "building_style": "basalt",
+ "buildings": [
+  {
+   "id": "cinderholt_general",
+   "kind": "shop",
+   "shop": "general",
+   "style": "basalt",
+   "rect": [
+    4,
+    3,
+    9,
+    7
+   ],
+   "door": [
+    [
+     8,
+     9
+    ]
+   ],
+   "counter": [
+    [
+     6,
+     5
+    ],
+    [
+     7,
+     5
+    ],
+    [
+     8,
+     5
+    ],
+    [
+     9,
+     5
+    ],
+    [
+     10,
+     5
+    ]
+   ],
+   "keeper_at": [
+    8,
+    4
+   ],
+   "stand": [
+    8,
+    6
+   ],
+   "sign": [
+    9,
+    9
+   ],
+   "roof": "#3a3e4c",
+   "props": [
+    {
+     "object": "shelf_goods",
+     "at": [
+      5,
+      4
+     ]
+    },
+    {
+     "object": "shelf_goods",
+     "at": [
+      11,
+      4
+     ]
+    },
+    {
+     "object": "barrel",
+     "at": [
+      5,
+      5
+     ]
+    },
+    {
+     "object": "barrel",
+     "at": [
+      11,
+      5
+     ]
+    },
+    {
+     "object": "crate",
+     "at": [
+      5,
+      7
+     ]
+    },
+    {
+     "object": "sacks",
+     "at": [
+      11,
+      7
+     ]
+    }
+   ],
+   "name": "Cinderholt Supply",
+   "keeper": "Osric Coalby"
+  },
+  {
+   "id": "cinderholt_body",
+   "kind": "shop",
+   "shop": "body",
+   "style": "basalt",
+   "rect": [
+    14,
+    3,
+    9,
+    7
+   ],
+   "door": [
+    [
+     18,
+     9
+    ]
+   ],
+   "counter": [
+    [
+     16,
+     5
+    ],
+    [
+     17,
+     5
+    ],
+    [
+     18,
+     5
+    ],
+    [
+     19,
+     5
+    ],
+    [
+     20,
+     5
+    ]
+   ],
+   "keeper_at": [
+    18,
+    4
+   ],
+   "stand": [
+    18,
+    6
+   ],
+   "sign": [
+    19,
+    9
+   ],
+   "roof": "#3a3e4c",
+   "props": [
+    {
+     "object": "shelf_goods",
+     "at": [
+      15,
+      4
+     ]
+    },
+    {
+     "object": "shelf_goods",
+     "at": [
+      21,
+      4
+     ]
+    },
+    {
+     "object": "crate",
+     "at": [
+      15,
+      5
+     ]
+    },
+    {
+     "object": "crate",
+     "at": [
+      21,
+      5
+     ]
+    },
+    {
+     "object": "armour_stand",
+     "at": [
+      15,
+      7
+     ]
+    },
+    {
+     "object": "armour_stand",
+     "at": [
+      21,
+      7
+     ]
+    }
+   ]
+  },
+  {
+   "id": "cinderholt_shields",
+   "kind": "shop",
+   "shop": "shields",
+   "style": "basalt",
+   "rect": [
+    24,
+    3,
+    9,
+    7
+   ],
+   "door": [
+    [
+     28,
+     9
+    ]
+   ],
+   "counter": [
+    [
+     26,
+     5
+    ],
+    [
+     27,
+     5
+    ],
+    [
+     28,
+     5
+    ],
+    [
+     29,
+     5
+    ],
+    [
+     30,
+     5
+    ]
+   ],
+   "keeper_at": [
+    28,
+    4
+   ],
+   "stand": [
+    28,
+    6
+   ],
+   "sign": [
+    29,
+    9
+   ],
+   "roof": "#3a3e4c",
+   "props": [
+    {
+     "object": "shelf_goods",
+     "at": [
+      25,
+      4
+     ]
+    },
+    {
+     "object": "shelf_goods",
+     "at": [
+      31,
+      4
+     ]
+    },
+    {
+     "object": "barrel",
+     "at": [
+      25,
+      5
+     ]
+    },
+    {
+     "object": "barrel",
+     "at": [
+      31,
+      5
+     ]
+    },
+    {
+     "object": "shield_rack",
+     "at": [
+      25,
+      7
+     ]
+    },
+    {
+     "object": "shield_rack",
+     "at": [
+      31,
+      7
+     ]
+    }
+   ]
+  },
+  {
+   "id": "cinderholt_player",
+   "kind": "player",
+   "shop": "player",
+   "style": "basalt",
+   "rect": [
+    34,
+    3,
+    9,
+    7
+   ],
+   "door": [
+    [
+     38,
+     9
+    ]
+   ],
+   "counter": [
+    [
+     36,
+     5
+    ],
+    [
+     37,
+     5
+    ],
+    [
+     38,
+     5
+    ],
+    [
+     39,
+     5
+    ],
+    [
+     40,
+     5
+    ]
+   ],
+   "keeper_at": [
+    38,
+    4
+   ],
+   "stand": [
+    38,
+    6
+   ],
+   "sign": [
+    39,
+    9
+   ],
+   "roof": "#3a3e4c",
+   "name": "For sale",
+   "displays": [
+    [
+     35,
+     7
+    ],
+    [
+     36,
+     7
+    ],
+    [
+     40,
+     7
+    ],
+    [
+     41,
+     7
+    ],
+    [
+     35,
+     8
+    ],
+    [
+     36,
+     8
+    ],
+    [
+     40,
+     8
+    ],
+    [
+     41,
+     8
+    ]
+   ],
+   "props": [
+    {
+     "object": "crate",
+     "at": [
+      35,
+      4
+     ]
+    },
+    {
+     "object": "crate",
+     "at": [
+      41,
+      4
+     ]
+    }
+   ]
+  },
+  {
+   "id": "cinderholt_cook",
+   "kind": "cookhouse",
+   "shop": "cook",
+   "style": "basalt",
+   "rect": [
+    4,
+    26,
+    9,
+    7
+   ],
+   "door": [
+    [
+     8,
+     26
+    ]
+   ],
+   "counter": [
+    [
+     6,
+     30
+    ],
+    [
+     7,
+     30
+    ],
+    [
+     8,
+     30
+    ],
+    [
+     9,
+     30
+    ],
+    [
+     10,
+     30
+    ]
+   ],
+   "keeper_at": [
+    8,
+    31
+   ],
+   "stand": [
+    8,
+    29
+   ],
+   "sign": [
+    9,
+    26
+   ],
+   "roof": "#2e3240",
+   "props": [
+    {
+     "object": "shelf_goods",
+     "at": [
+      5,
+      31
+     ]
+    },
+    {
+     "object": "shelf_goods",
+     "at": [
+      11,
+      31
+     ]
+    },
+    {
+     "object": "barrel",
+     "at": [
+      5,
+      30
+     ]
+    },
+    {
+     "object": "barrel",
+     "at": [
+      11,
+      30
+     ]
+    },
+    {
+     "object": "oven",
+     "at": [
+      5,
+      27
+     ]
+    },
+    {
+     "object": "oven",
+     "at": [
+      11,
+      27
+     ]
+    }
+   ],
+   "name": "Ember Kitchen",
+   "keeper": "Greta Ashpan"
+  },
+  {
+   "id": "cinderholt_axes",
+   "kind": "smithy",
+   "shop": "axes",
+   "style": "basalt",
+   "roof": "#3a3e4c",
+   "rect": [
+    14,
+    25,
+    9,
+    9
+   ],
+   "door": [
+    [
+     18,
+     25
+    ]
+   ],
+   "counter": [
+    [
+     16,
+     31
+    ],
+    [
+     17,
+     31
+    ],
+    [
+     18,
+     31
+    ],
+    [
+     19,
+     31
+    ],
+    [
+     20,
+     31
+    ]
+   ],
+   "keeper_at": [
+    18,
+    32
+   ],
+   "stand": [
+    18,
+    30
+   ],
+   "sign": [
+    19,
+    25
+   ],
+   "name": "Blacksmith",
+   "keeper": "Smith",
+   "props": [
+    {
+     "object": "furnace",
+     "at": [
+      16,
+      29
+     ]
+    },
+    {
+     "object": "anvil",
+     "at": [
+      19,
+      29
+     ]
+    },
+    {
+     "object": "bellows",
+     "at": [
+      15,
+      28
+     ]
+    },
+    {
+     "object": "quench_barrel",
+     "at": [
+      21,
+      28
+     ]
+    },
+    {
+     "object": "coal_crate",
+     "at": [
+      15,
+      32
+     ]
+    },
+    {
+     "object": "weapon_rack",
+     "at": [
+      21,
+      32
+     ]
+    }
+   ]
+  }
+ ],
+ "specialists": [
+  "body",
+  "shields",
+  "axes",
+  "cook"
+ ],
+ "price_bias": {
+  "copper_ore": 0.85,
+  "iron_ore": 0.85,
+  "coal": 0.85,
+  "bronze_bar": 0.9,
+  "iron_bar": 0.9,
+  "raw_carp": 1.15,
+  "raw_eel": 1.2,
+  "cooked_carp": 1.15,
+  "cooked_eel": 1.15,
+  "reed_fibre": 1.15,
+  "fenroot": 1.2,
+  "tin_ore": 0.85
+ },
+ "tagline": "Basalt forge city of coal smoke, tight blocks and slate roofs.",
+ "theme": "cinderholt",
+ "gates": {
+  "north": [
+   [
+    22,
+    0
+   ],
+   [
+    23,
+    0
+   ],
+   [
+    24,
+    0
+   ]
+  ],
+  "south": [
+   [
+    22,
+    37
+   ],
+   [
+    23,
+    37
+   ],
+   [
+    24,
+    37
+   ]
+  ],
+  "west": [
+   [
+    0,
+    18
+   ],
+   [
+    0,
+    19
+   ],
+   [
+    0,
+    20
+   ]
+  ],
+  "east": [
+   [
+    45,
+    18
+   ],
+   [
+    45,
+    19
+   ],
+   [
+    45,
+    20
+   ]
+  ]
+ }
+}

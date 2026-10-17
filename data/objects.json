@@ -1,0 +1,435 @@
+{
+ "objects": {
+  "ash_tree": {
+   "name": "Ash tree",
+   "sprite": "tree_ash",
+   "depleted_sprite": "stump",
+   "blocks": true,
+   "type": "gather",
+   "skill": "forestry",
+   "level": 1,
+   "xp": 18,
+   "yield": "ash_log",
+   "chance": 0.35,
+   "deplete": 0.3,
+   "respawn": 14,
+   "verb": "Chop",
+   "doing": "chopping",
+   "attempt_ticks": 3
+  },
+  "alder_tree": {
+   "name": "Alder tree",
+   "sprite": "tree_alder",
+   "depleted_sprite": "stump",
+   "blocks": true,
+   "type": "gather",
+   "skill": "forestry",
+   "level": 12,
+   "xp": 42,
+   "yield": "alder_log",
+   "chance": 0.28,
+   "deplete": 0.2,
+   "respawn": 30,
+   "verb": "Chop",
+   "doing": "chopping",
+   "attempt_ticks": 3
+  },
+  "blackthorn_tree": {
+   "name": "Blackthorn",
+   "sprite": "tree_blackthorn",
+   "depleted_sprite": "stump",
+   "blocks": true,
+   "type": "gather",
+   "skill": "forestry",
+   "level": 25,
+   "xp": 85,
+   "yield": "blackthorn_log",
+   "chance": 0.22,
+   "deplete": 0.15,
+   "respawn": 60,
+   "verb": "Chop",
+   "doing": "chopping",
+   "attempt_ticks": 3
+  },
+  "copper_rock": {
+   "name": "Copper outcrop",
+   "sprite": "rock_copper",
+   "depleted_sprite": "rock_empty",
+   "blocks": true,
+   "type": "gather",
+   "skill": "mining",
+   "level": 1,
+   "xp": 20,
+   "yield": "copper_ore",
+   "chance": 0.35,
+   "deplete": 1.0,
+   "respawn": 8,
+   "verb": "Mine",
+   "doing": "mining",
+   "attempt_ticks": 3
+  },
+  "tin_rock": {
+   "name": "Tin outcrop",
+   "sprite": "rock_tin",
+   "depleted_sprite": "rock_empty",
+   "blocks": true,
+   "type": "gather",
+   "skill": "mining",
+   "level": 1,
+   "xp": 20,
+   "yield": "tin_ore",
+   "chance": 0.35,
+   "deplete": 1.0,
+   "respawn": 8,
+   "verb": "Mine",
+   "doing": "mining",
+   "attempt_ticks": 3
+  },
+  "iron_rock": {
+   "name": "Iron outcrop",
+   "sprite": "rock_iron",
+   "depleted_sprite": "rock_empty",
+   "blocks": true,
+   "type": "gather",
+   "skill": "mining",
+   "level": 12,
+   "xp": 40,
+   "yield": "iron_ore",
+   "chance": 0.28,
+   "deplete": 1.0,
+   "respawn": 16,
+   "verb": "Mine",
+   "doing": "mining",
+   "attempt_ticks": 3
+  },
+  "coal_rock": {
+   "name": "Coal seam",
+   "sprite": "rock_coal",
+   "depleted_sprite": "rock_empty",
+   "blocks": true,
+   "type": "gather",
+   "skill": "mining",
+   "level": 20,
+   "xp": 55,
+   "yield": "coal",
+   "chance": 0.24,
+   "deplete": 1.0,
+   "respawn": 40,
+   "verb": "Mine",
+   "doing": "mining",
+   "attempt_ticks": 3
+  },
+  "fishing_spot": {
+   "name": "Rippling pool",
+   "sprite": "fishing_spot",
+   "blocks": true,
+   "type": "gather",
+   "skill": "angling",
+   "level": 1,
+   "xp": 16,
+   "yield": "raw_carp",
+   "alt_yield": {
+    "item": "raw_eel",
+    "level": 15,
+    "chance": 0.35,
+    "xp": 38
+   },
+   "chance": 0.35,
+   "deplete": 0.0,
+   "respawn": 0,
+   "verb": "Fish",
+   "doing": "fishing",
+   "attempt_ticks": 4
+  },
+  "reed_bed": {
+   "name": "Reed bed",
+   "sprite": "reed_bed",
+   "depleted_sprite": "",
+   "blocks": false,
+   "type": "gather",
+   "skill": "foraging",
+   "level": 1,
+   "xp": 10,
+   "yield": "reed_fibre",
+   "chance": 0.5,
+   "deplete": 0.25,
+   "respawn": 20,
+   "verb": "Gather",
+   "doing": "gathering",
+   "attempt_ticks": 2
+  },
+  "fenroot_patch": {
+   "name": "Fenroot patch",
+   "sprite": "fenroot_patch",
+   "depleted_sprite": "",
+   "blocks": false,
+   "type": "gather",
+   "skill": "foraging",
+   "level": 5,
+   "xp": 24,
+   "yield": "fenroot",
+   "chance": 0.35,
+   "deplete": 0.5,
+   "respawn": 45,
+   "verb": "Forage",
+   "doing": "foraging",
+   "attempt_ticks": 2
+  },
+  "training_dummy": {
+   "name": "Training dummy",
+   "sprite": "dummy",
+   "blocks": true,
+   "type": "dummy",
+   "hp": 12,
+   "stipend": 2,
+   "verb": "Attack"
+  },
+  "bank_chest": {
+   "name": "Bank chest",
+   "sprite": "bank_chest",
+   "blocks": true,
+   "type": "bank",
+   "verb": "Open"
+  },
+  "exchange_board": {
+   "name": "Exchange board",
+   "sprite": "exchange_board",
+   "blocks": true,
+   "type": "exchange",
+   "verb": "Read"
+  },
+  "hearth": {
+   "name": "Hearth",
+   "sprite": "hearth",
+   "blocks": true,
+   "type": "station",
+   "station": "hearth",
+   "verb": "Cook on"
+  },
+  "furnace": {
+   "name": "Furnace",
+   "sprite": "furnace",
+   "blocks": true,
+   "type": "station",
+   "station": "furnace",
+   "verb": "Smelt at"
+  },
+  "workbench": {
+   "name": "Workbench",
+   "sprite": "workbench",
+   "blocks": true,
+   "type": "station",
+   "station": "workbench",
+   "verb": "Work at"
+  },
+  "anvil": {
+   "name": "Anvil",
+   "sprite": "anvil",
+   "blocks": true,
+   "type": "station",
+   "station": "anvil",
+   "verb": "Forge at"
+  },
+  "shop_counter": {
+   "name": "Counter",
+   "sprite": "counter",
+   "blocks": true,
+   "type": "shop",
+   "verb": "Trade at"
+  },
+  "shopkeeper": {
+   "name": "Shopkeeper",
+   "sprite": "",
+   "blocks": true,
+   "type": "shop",
+   "keeper": true,
+   "verb": "Talk to"
+  },
+  "display_stand": {
+   "name": "Display stand",
+   "sprite": "display_stand",
+   "blocks": true,
+   "type": "display",
+   "verb": "Stock"
+  },
+  "shelf_goods": {
+   "name": "Shelves",
+   "sprite": "shelf_goods",
+   "blocks": true,
+   "type": "prop"
+  },
+  "barrel": {
+   "name": "Barrel",
+   "sprite": "barrel",
+   "blocks": true,
+   "type": "prop"
+  },
+  "crate": {
+   "name": "Crate",
+   "sprite": "crate",
+   "blocks": true,
+   "type": "prop"
+  },
+  "sacks": {
+   "name": "Grain sacks",
+   "sprite": "sacks",
+   "blocks": true,
+   "type": "prop"
+  },
+  "helm_stand": {
+   "name": "Helm stand",
+   "sprite": "helm_stand",
+   "blocks": true,
+   "type": "prop"
+  },
+  "armour_stand": {
+   "name": "Armour stand",
+   "sprite": "armour_stand",
+   "blocks": true,
+   "type": "prop"
+  },
+  "shield_rack": {
+   "name": "Shield rack",
+   "sprite": "shield_rack",
+   "blocks": true,
+   "type": "prop"
+  },
+  "weapon_rack": {
+   "name": "Weapon rack",
+   "sprite": "weapon_rack",
+   "blocks": true,
+   "type": "prop"
+  },
+  "axe_rack": {
+   "name": "Axe rack",
+   "sprite": "axe_rack",
+   "blocks": true,
+   "type": "prop"
+  },
+  "bow_rack": {
+   "name": "Bow rack",
+   "sprite": "bow_rack",
+   "blocks": true,
+   "type": "prop"
+  },
+  "bellows": {
+   "name": "Bellows",
+   "sprite": "bellows",
+   "blocks": true,
+   "type": "prop"
+  },
+  "quench_barrel": {
+   "name": "Quench barrel",
+   "sprite": "quench_barrel",
+   "blocks": true,
+   "type": "prop"
+  },
+  "coal_crate": {
+   "name": "Coal crate",
+   "sprite": "coal_crate",
+   "blocks": true,
+   "type": "prop"
+  },
+  "burnt_tree": {
+   "name": "Burnt tree",
+   "sprite": "burnt_tree",
+   "blocks": true,
+   "type": "scenery",
+   "note": "0.3.1 Scorch decor"
+  },
+  "charred_stump": {
+   "name": "Charred stump",
+   "sprite": "charred_stump",
+   "blocks": false,
+   "type": "scenery",
+   "note": "0.3.1 Scorch decor"
+  },
+  "embers": {
+   "name": "Embers",
+   "sprite": "embers",
+   "blocks": false,
+   "type": "scenery",
+   "note": "0.3.1 Scorch decor (animated)"
+  },
+  "altar": {
+   "name": "Altar",
+   "sprite": "altar",
+   "blocks": true,
+   "type": "altar",
+   "verb": "Pray at",
+   "note": "0.3.1 church altar: kneel ~2 ticks, Prayer refilled to max, no XP (data/churches.json)"
+  },
+  "pew": {
+   "name": "Pew",
+   "sprite": "pew",
+   "blocks": true,
+   "type": "prop"
+  },
+  "candle_stand": {
+   "name": "Candles",
+   "sprite": "candle_stand",
+   "blocks": true,
+   "type": "prop"
+  },
+  "stained_glass": {
+   "name": "Stained-glass window",
+   "sprite": "stained_glass",
+   "blocks": true,
+   "type": "prop"
+  },
+  "wheat": {
+   "name": "Wheat",
+   "sprite": "wheat",
+   "depleted_sprite": "wheat_stubble",
+   "blocks": false,
+   "type": "gather",
+   "skill": "foraging",
+   "level": 1,
+   "xp": 8,
+   "yield": "wheat",
+   "chance": 0.6,
+   "deplete": 1.0,
+   "respawn": 40,
+   "verb": "Harvest",
+   "doing": "harvesting",
+   "attempt_ticks": 2,
+   "farm": true,
+   "note": "0.3.1 village wheat: one sheaf per stalk, regrows (respawn ticks)"
+  },
+  "quern": {
+   "name": "Quern",
+   "sprite": "quern",
+   "blocks": true,
+   "type": "station",
+   "station": "quern",
+   "verb": "Grind at",
+   "note": "0.3.1 village hand mill: wheat -> flour"
+  },
+  "well": {
+   "name": "Well",
+   "sprite": "well",
+   "blocks": true,
+   "type": "prop"
+  },
+  "fence": {
+   "name": "Fence",
+   "sprite": "fence",
+   "blocks": true,
+   "type": "prop"
+  },
+  "fence_v": {
+   "name": "Fence",
+   "sprite": "fence_v",
+   "blocks": true,
+   "type": "prop"
+  },
+  "oven": {
+   "name": "Cook's oven",
+   "sprite": "oven",
+   "blocks": true,
+   "type": "station",
+   "station": "hearth",
+   "verb": "Cook on"
+  }
+ }
+}

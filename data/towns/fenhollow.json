@@ -1,0 +1,858 @@
+{
+ "id": "fenhollow",
+ "name": "Fenhollow",
+ "origin": [
+  -23,
+  -19
+ ],
+ "spawn": [
+  0,
+  0
+ ],
+ "rows": [
+  "@@@@@@@@@@@@@@@@@@@@@@GGG@@@@@@@@@@@@@@@@@@@@@",
+  "@......................_.....................@",
+  "@......................_.....................@",
+  "@.~~~~~~..............._.....................@",
+  "@~~~~~~~~...........____.....................@",
+  "@~~~................_........................@",
+  "@.~~................_...................a....@",
+  "@..~................_........................@",
+  "@.@......................_____............a@.@",
+  "@.@@..........a...........................@@.@",
+  "@.mm.........................................@",
+  "@.mr.........................................@",
+  "@..mmrm.________.............................@",
+  "@......._....................................@",
+  "@...................................l........@",
+  "@.................___________................@",
+  "@.................__B_E_H_________...........@",
+  "@.................___________................@",
+  "G.................___________................G",
+  "G__...............___________..............__G",
+  "G.................___________................G",
+  "@.................___________................@",
+  "@.................__W_____D__................@",
+  "@.................___________................@",
+  "@........................._.........mmmmmm...@",
+  "@........................._..................@",
+  "@............................................@",
+  "@............................................@",
+  "@.@@....a.........._______.................@.@",
+  "@.@...................._...................@.@",
+  "@.mmmmmm..............._.....................@",
+  "@..mmrmmm.............._.....................@",
+  "@.mmrmmm..............._.....................@",
+  "@.........a............_.....................@",
+  "@......................_.....................@",
+  "@......................_.....................@",
+  "@......................_.....................@",
+  "@[[[[[[[[[[[[[[[[[[[[[GGG[[[[[[[[[[[[[[[[[[[[@"
+ ],
+ "tiles": {
+  ".": "grass",
+  ":": "dirt",
+  ",": "sand",
+  "~": "water",
+  "m": "marsh",
+  "=": "boardwalk",
+  "#": "boardwalk",
+  "_": "boardwalk",
+  "P": "plaster",
+  "%": "wall",
+  "^": "wall_front",
+  ";": "floor",
+  "+": "doorway",
+  "@": "palisade",
+  "[": "palisade_front",
+  "G": "gate_wood"
+ },
+ "objects": {
+  "a": {
+   "object": "ash_tree",
+   "ground": "grass"
+  },
+  "l": {
+   "object": "alder_tree",
+   "ground": "grass"
+  },
+  "b": {
+   "object": "blackthorn_tree",
+   "ground": "grass"
+  },
+  "c": {
+   "object": "copper_rock",
+   "ground": "dirt"
+  },
+  "i": {
+   "object": "iron_rock",
+   "ground": "dirt"
+  },
+  "k": {
+   "object": "coal_rock",
+   "ground": "dirt"
+  },
+  "f": {
+   "object": "fishing_spot",
+   "ground": "water"
+  },
+  "r": {
+   "object": "reed_bed",
+   "ground": "marsh"
+  },
+  "g": {
+   "object": "fenroot_patch",
+   "ground": "marsh"
+  },
+  "B": {
+   "object": "bank_chest",
+   "ground": "boardwalk"
+  },
+  "E": {
+   "object": "exchange_board",
+   "ground": "boardwalk"
+  },
+  "H": {
+   "object": "hearth",
+   "ground": "boardwalk"
+  },
+  "F": {
+   "object": "furnace",
+   "ground": "cobble"
+  },
+  "D": {
+   "object": "training_dummy",
+   "ground": "boardwalk"
+  },
+  "W": {
+   "object": "workbench",
+   "ground": "boardwalk"
+  },
+  "A": {
+   "object": "anvil",
+   "ground": "cobble"
+  },
+  "S": {
+   "object": "general_store",
+   "ground": "cobble"
+  },
+  "1": {
+   "object": "shop_helmets",
+   "ground": "cobble"
+  },
+  "2": {
+   "object": "shop_swords",
+   "ground": "cobble"
+  },
+  "3": {
+   "object": "shop_archery",
+   "ground": "cobble"
+  },
+  "4": {
+   "object": "shop_body",
+   "ground": "cobble"
+  },
+  "5": {
+   "object": "shop_shields",
+   "ground": "cobble"
+  },
+  "6": {
+   "object": "shop_axes",
+   "ground": "cobble"
+  },
+  "7": {
+   "object": "shop_legs",
+   "ground": "cobble"
+  },
+  "8": {
+   "object": "shop_maces",
+   "ground": "cobble"
+  },
+  "t": {
+   "object": "tin_rock",
+   "ground": "dirt"
+  },
+  "e": {
+   "object": "embers",
+   "ground": "dirt"
+  }
+ },
+ "roof": "#c4a05a",
+ "building_style": "timber",
+ "buildings": [
+  {
+   "id": "fenhollow_general",
+   "kind": "shop",
+   "shop": "general",
+   "style": "timber",
+   "rect": [
+    4,
+    5,
+    9,
+    7
+   ],
+   "door": [
+    [
+     8,
+     11
+    ]
+   ],
+   "counter": [
+    [
+     6,
+     7
+    ],
+    [
+     7,
+     7
+    ],
+    [
+     8,
+     7
+    ],
+    [
+     9,
+     7
+    ],
+    [
+     10,
+     7
+    ]
+   ],
+   "keeper_at": [
+    8,
+    6
+   ],
+   "stand": [
+    8,
+    8
+   ],
+   "sign": [
+    9,
+    11
+   ],
+   "roof": "#c4a05a",
+   "props": [
+    {
+     "object": "shelf_goods",
+     "at": [
+      5,
+      6
+     ]
+    },
+    {
+     "object": "shelf_goods",
+     "at": [
+      11,
+      6
+     ]
+    },
+    {
+     "object": "barrel",
+     "at": [
+      5,
+      7
+     ]
+    },
+    {
+     "object": "barrel",
+     "at": [
+      11,
+      7
+     ]
+    },
+    {
+     "object": "crate",
+     "at": [
+      5,
+      9
+     ]
+    },
+    {
+     "object": "sacks",
+     "at": [
+      11,
+      9
+     ]
+    }
+   ],
+   "name": "Fenhollow Provisions",
+   "keeper": "Marla Thatch"
+  },
+  {
+   "id": "fenhollow_helmets",
+   "kind": "shop",
+   "shop": "helmets",
+   "style": "timber",
+   "rect": [
+    30,
+    4,
+    9,
+    7
+   ],
+   "door": [
+    [
+     34,
+     10
+    ]
+   ],
+   "counter": [
+    [
+     32,
+     6
+    ],
+    [
+     33,
+     6
+    ],
+    [
+     34,
+     6
+    ],
+    [
+     35,
+     6
+    ],
+    [
+     36,
+     6
+    ]
+   ],
+   "keeper_at": [
+    34,
+    5
+   ],
+   "stand": [
+    34,
+    7
+   ],
+   "sign": [
+    35,
+    10
+   ],
+   "roof": "#c4a05a",
+   "props": [
+    {
+     "object": "shelf_goods",
+     "at": [
+      31,
+      5
+     ]
+    },
+    {
+     "object": "shelf_goods",
+     "at": [
+      37,
+      5
+     ]
+    },
+    {
+     "object": "barrel",
+     "at": [
+      31,
+      6
+     ]
+    },
+    {
+     "object": "barrel",
+     "at": [
+      37,
+      6
+     ]
+    },
+    {
+     "object": "helm_stand",
+     "at": [
+      31,
+      8
+     ]
+    },
+    {
+     "object": "helm_stand",
+     "at": [
+      37,
+      8
+     ]
+    }
+   ]
+  },
+  {
+   "id": "fenhollow_archery",
+   "kind": "shop",
+   "shop": "archery",
+   "style": "timber",
+   "rect": [
+    16,
+    8,
+    9,
+    7
+   ],
+   "door": [
+    [
+     20,
+     14
+    ]
+   ],
+   "counter": [
+    [
+     18,
+     10
+    ],
+    [
+     19,
+     10
+    ],
+    [
+     20,
+     10
+    ],
+    [
+     21,
+     10
+    ],
+    [
+     22,
+     10
+    ]
+   ],
+   "keeper_at": [
+    20,
+    9
+   ],
+   "stand": [
+    20,
+    11
+   ],
+   "sign": [
+    21,
+    14
+   ],
+   "roof": "#c4a05a",
+   "props": [
+    {
+     "object": "shelf_goods",
+     "at": [
+      17,
+      9
+     ]
+    },
+    {
+     "object": "shelf_goods",
+     "at": [
+      23,
+      9
+     ]
+    },
+    {
+     "object": "crate",
+     "at": [
+      17,
+      10
+     ]
+    },
+    {
+     "object": "crate",
+     "at": [
+      23,
+      10
+     ]
+    },
+    {
+     "object": "bow_rack",
+     "at": [
+      17,
+      12
+     ]
+    },
+    {
+     "object": "bow_rack",
+     "at": [
+      23,
+      12
+     ]
+    }
+   ]
+  },
+  {
+   "id": "fenhollow_player",
+   "kind": "player",
+   "shop": "player",
+   "style": "timber",
+   "rect": [
+    3,
+    14,
+    9,
+    7
+   ],
+   "door": [
+    [
+     7,
+     20
+    ]
+   ],
+   "counter": [
+    [
+     5,
+     16
+    ],
+    [
+     6,
+     16
+    ],
+    [
+     7,
+     16
+    ],
+    [
+     8,
+     16
+    ],
+    [
+     9,
+     16
+    ]
+   ],
+   "keeper_at": [
+    7,
+    15
+   ],
+   "stand": [
+    7,
+    17
+   ],
+   "sign": [
+    8,
+    20
+   ],
+   "roof": "#c4a05a",
+   "name": "For sale",
+   "displays": [
+    [
+     4,
+     18
+    ],
+    [
+     5,
+     18
+    ],
+    [
+     9,
+     18
+    ],
+    [
+     10,
+     18
+    ],
+    [
+     4,
+     19
+    ],
+    [
+     5,
+     19
+    ],
+    [
+     9,
+     19
+    ],
+    [
+     10,
+     19
+    ]
+   ],
+   "props": [
+    {
+     "object": "crate",
+     "at": [
+      4,
+      15
+     ]
+    },
+    {
+     "object": "crate",
+     "at": [
+      10,
+      15
+     ]
+    }
+   ]
+  },
+  {
+   "id": "fenhollow_cook",
+   "kind": "cookhouse",
+   "shop": "cook",
+   "style": "timber",
+   "rect": [
+    10,
+    26,
+    9,
+    7
+   ],
+   "door": [
+    [
+     14,
+     32
+    ]
+   ],
+   "counter": [
+    [
+     12,
+     28
+    ],
+    [
+     13,
+     28
+    ],
+    [
+     14,
+     28
+    ],
+    [
+     15,
+     28
+    ],
+    [
+     16,
+     28
+    ]
+   ],
+   "keeper_at": [
+    14,
+    27
+   ],
+   "stand": [
+    14,
+    29
+   ],
+   "sign": [
+    15,
+    32
+   ],
+   "roof": "#b8904a",
+   "props": [
+    {
+     "object": "shelf_goods",
+     "at": [
+      11,
+      27
+     ]
+    },
+    {
+     "object": "shelf_goods",
+     "at": [
+      17,
+      27
+     ]
+    },
+    {
+     "object": "barrel",
+     "at": [
+      11,
+      28
+     ]
+    },
+    {
+     "object": "barrel",
+     "at": [
+      17,
+      28
+     ]
+    },
+    {
+     "object": "oven",
+     "at": [
+      11,
+      31
+     ]
+    },
+    {
+     "object": "oven",
+     "at": [
+      17,
+      31
+     ]
+    }
+   ],
+   "name": "Reed Oven",
+   "keeper": "Bryn Potts"
+  },
+  {
+   "id": "fenhollow_swords",
+   "kind": "smithy",
+   "shop": "swords",
+   "style": "timber",
+   "roof": "#c4a05a",
+   "rect": [
+    26,
+    26,
+    9,
+    9
+   ],
+   "door": [
+    [
+     30,
+     26
+    ]
+   ],
+   "counter": [
+    [
+     28,
+     32
+    ],
+    [
+     29,
+     32
+    ],
+    [
+     30,
+     32
+    ],
+    [
+     31,
+     32
+    ],
+    [
+     32,
+     32
+    ]
+   ],
+   "keeper_at": [
+    30,
+    33
+   ],
+   "stand": [
+    30,
+    31
+   ],
+   "sign": [
+    31,
+    26
+   ],
+   "name": "Blacksmith",
+   "keeper": "Smith",
+   "props": [
+    {
+     "object": "furnace",
+     "at": [
+      28,
+      30
+     ]
+    },
+    {
+     "object": "anvil",
+     "at": [
+      31,
+      30
+     ]
+    },
+    {
+     "object": "bellows",
+     "at": [
+      27,
+      29
+     ]
+    },
+    {
+     "object": "quench_barrel",
+     "at": [
+      33,
+      29
+     ]
+    },
+    {
+     "object": "coal_crate",
+     "at": [
+      27,
+      33
+     ]
+    },
+    {
+     "object": "weapon_rack",
+     "at": [
+      33,
+      33
+     ]
+    }
+   ]
+  }
+ ],
+ "specialists": [
+  "helmets",
+  "swords",
+  "archery",
+  "cook"
+ ],
+ "price_bias": {
+  "reed_fibre": 0.85,
+  "fenroot": 0.85,
+  "ash_log": 0.9,
+  "raw_carp": 0.95,
+  "copper_ore": 1.1,
+  "iron_ore": 1.15,
+  "coal": 1.15,
+  "raw_eel": 1.1,
+  "alder_log": 1.1,
+  "blackthorn_log": 1.15,
+  "tin_ore": 1.1
+ },
+ "tagline": "Marsh timber town on winding boardwalks behind a wooden palisade.",
+ "theme": "fenhollow",
+ "gates": {
+  "north": [
+   [
+    22,
+    0
+   ],
+   [
+    23,
+    0
+   ],
+   [
+    24,
+    0
+   ]
+  ],
+  "south": [
+   [
+    22,
+    37
+   ],
+   [
+    23,
+    37
+   ],
+   [
+    24,
+    37
+   ]
+  ],
+  "west": [
+   [
+    0,
+    18
+   ],
+   [
+    0,
+    19
+   ],
+   [
+    0,
+    20
+   ]
+  ],
+  "east": [
+   [
+    45,
+    18
+   ],
+   [
+    45,
+    19
+   ],
+   [
+    45,
+    20
+   ]
+  ]
+ }
+}

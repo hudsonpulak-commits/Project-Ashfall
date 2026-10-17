@@ -1,0 +1,174 @@
+{
+	"id": "saltmere",
+	"name": "Saltmere",
+	"origin": [
+		277,
+		151
+	],
+	"spawn": [
+		300,
+		170
+	],
+	"rows": [
+		"..l....b....=....,,~~~~~",
+		"......l.....=....,~~f~~~",
+		".b..........=...,,~~~~~~",
+		"....l...l...=...,~~~f~~~",
+		"............=...,,~~~~~~",
+		"..l.........=....,,~~~~~",
+		"......b.....=.....,~~f~~",
+		"...l........=.....,,~~~~",
+		"............=......,,~~~",
+		"..l...l.....=.......,~~~",
+		"......############......",
+		"......#B##E##H#F##......",
+		"======############======",
+		"......##W##A##S###......",
+		"......#7#8#####D##......",
+		"......############......",
+		"............=......,,~~~",
+		"..b.........=.....,~~f~~",
+		"......l.....=.....,~~~~~",
+		"............=....,,~~~~~",
+		"...l....b...=...,,~~~f~~",
+		"............=...,~~~~~~~",
+		".l.....l....=...,~~f~~~~",
+		"............=....,,~~~~~"
+	],
+	"tiles": {
+		".": "grass",
+		"=": "path",
+		"#": "planks",
+		"~": "water",
+		",": "sand",
+		":": "dirt",
+		"m": "marsh",
+		"_": "planks"
+	},
+	"objects": {
+		"a": {
+			"object": "ash_tree",
+			"ground": "grass"
+		},
+		"l": {
+			"object": "alder_tree",
+			"ground": "grass"
+		},
+		"b": {
+			"object": "blackthorn_tree",
+			"ground": "grass"
+		},
+		"c": {
+			"object": "copper_rock",
+			"ground": "dirt"
+		},
+		"i": {
+			"object": "iron_rock",
+			"ground": "dirt"
+		},
+		"k": {
+			"object": "coal_rock",
+			"ground": "dirt"
+		},
+		"f": {
+			"object": "fishing_spot",
+			"ground": "water"
+		},
+		"r": {
+			"object": "reed_bed",
+			"ground": "marsh"
+		},
+		"g": {
+			"object": "fenroot_patch",
+			"ground": "marsh"
+		},
+		"B": {
+			"object": "bank_chest",
+			"ground": "cobble"
+		},
+		"E": {
+			"object": "exchange_board",
+			"ground": "cobble"
+		},
+		"H": {
+			"object": "hearth",
+			"ground": "cobble"
+		},
+		"F": {
+			"object": "furnace",
+			"ground": "cobble"
+		},
+		"D": {
+			"object": "training_dummy",
+			"ground": "cobble"
+		},
+		"W": {
+			"object": "workbench",
+			"ground": "cobble"
+		},
+		"A": {
+			"object": "anvil",
+			"ground": "cobble"
+		},
+		"S": {
+			"object": "general_store",
+			"ground": "cobble"
+		},
+		"1": {
+			"object": "shop_helmets",
+			"ground": "cobble"
+		},
+		"2": {
+			"object": "shop_swords",
+			"ground": "cobble"
+		},
+		"3": {
+			"object": "shop_archery",
+			"ground": "cobble"
+		},
+		"4": {
+			"object": "shop_body",
+			"ground": "cobble"
+		},
+		"5": {
+			"object": "shop_shields",
+			"ground": "cobble"
+		},
+		"6": {
+			"object": "shop_axes",
+			"ground": "cobble"
+		},
+		"7": {
+			"object": "shop_legs",
+			"ground": "cobble"
+		},
+		"8": {
+			"object": "shop_maces",
+			"ground": "cobble"
+		},
+		"t": {
+			"object": "tin_rock",
+			"ground": "dirt"
+		}
+	},
+	"specialists": [
+		"legs",
+		"maces"
+	],
+	"price_bias": {
+		"raw_carp": 0.85,
+		"raw_eel": 0.8,
+		"cooked_carp": 0.9,
+		"cooked_eel": 0.9,
+		"alder_log": 0.85,
+		"blackthorn_log": 0.85,
+		"plank": 0.9,
+		"copper_ore": 1.15,
+		"iron_ore": 1.2,
+		"coal": 1.2,
+		"bronze_bar": 1.1,
+		"iron_bar": 1.1,
+		"tin_ore": 1.15
+	},
+	"tagline": "Coastal town of eels, alder and blackthorn."
+}

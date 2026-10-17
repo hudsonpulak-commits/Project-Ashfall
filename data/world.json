@@ -1,0 +1,14 @@
+{
+ "note": "The continent: one landmass surrounded by impassable ocean. Towns are authored (data/towns/*.json); everything else is generated from the seed. Roads connect every pair of towns.",
+ "continent": {"center": [180, -10], "radius": 330},
+ "towns": ["fenhollow", "cinderholt", "saltmere"],
+ "villages": ["millbrook", "barrowby", "oxley"],
+ "note_villages": "0.3.1 small villages between the cities (data/towns/<id>.json, kind village; data/villages.json). Not cities: distance bands, travel, markets and respawn use towns only.",
+ "roads": [["fenhollow", "cinderholt"], ["fenhollow", "saltmere"], ["cinderholt", "saltmere"]],
+ "regions": {
+  "fenhollow": {"biome": "marsh", "label": "Fen lowlands"},
+  "cinderholt": {"biome": "hills", "label": "Cinder hills"},
+  "saltmere": {"biome": "forest_coast", "label": "Salt coast"}
+ },
+ "road_rules": {"note": "0.3.1 A* road costs per tile: land 1, dirt/sand/marsh multipliers, lake water = bridge_cost per tile (a wooden bridge; ocean is never crossed). meander = moisture-noise cost wobble so roads curve. pk_cost keeps roads out of the Scorch. margin = search box around the two towns. max_bridge = longest allowed span (selftest).", "dirt_cost": 1.1, "sand_cost": 1.3, "marsh_cost": 1.8, "bridge_cost": 4.0, "meander": 0.35, "pk_cost": 20.0, "margin": 90, "heuristic_weight": 1.2, "max_bridge": 14}
+}

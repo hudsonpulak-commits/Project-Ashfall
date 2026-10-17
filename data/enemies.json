@@ -1,0 +1,410 @@
+{
+ "note": "Enemy definitions and spawn camps. Stats feed src/combat/combat.gd; drops reference data/drops.json. Camps are [x,y] world tiles (snapped to the nearest walkable tile at load). Ticks are 0.6 s. 0.3.1: camps follow the distance bands in data/enemy_bands.json (proposals from tools/place_world.py). Optional enemy keys: retaliate (false = never swings back), town_ok (may stand/fight inside towns), chase_steps (tiles per tick while chasing), hp_range [min,max] rolled per spawn, tints (random colour variant per spawn).",
+ "enemies": {
+  "giant_rat": {
+   "name": "Giant rat",
+   "sprite": "giant_rat",
+   "level": 1,
+   "hp": 4,
+   "max_hit": 1,
+   "accuracy": 0.4,
+   "defence": 0,
+   "attack_ticks": 4,
+   "aggro": 3,
+   "leash": 7,
+   "wander": 3,
+   "respawn_ticks": 60,
+   "xp": 6,
+   "drops": "giant_rat"
+  },
+  "goblin": {
+   "name": "Goblin",
+   "sprite": "goblin",
+   "level": 5,
+   "hp": 9,
+   "max_hit": 2,
+   "accuracy": 0.5,
+   "defence": 2,
+   "attack_ticks": 4,
+   "aggro": 4,
+   "leash": 8,
+   "wander": 3,
+   "respawn_ticks": 90,
+   "xp": 14,
+   "drops": "goblin"
+  },
+  "chicken": {
+   "name": "Chicken",
+   "sprite": "chicken",
+   "level": 1,
+   "hp": 2,
+   "max_hit": 0,
+   "accuracy": 0.0,
+   "defence": 0,
+   "attack_ticks": 4,
+   "aggro": 0,
+   "leash": 6,
+   "wander": 3,
+   "respawn_ticks": 30,
+   "xp": 3,
+   "retaliate": false,
+   "drops": "chicken",
+   "note": "0.3.1: passive, never fights back; lives right by the towns"
+  },
+  "wolf": {
+   "name": "Wolf",
+   "sprite": "wolf",
+   "level": 4,
+   "hp": 8,
+   "max_hit": 2,
+   "accuracy": 0.5,
+   "defence": 1,
+   "attack_ticks": 3,
+   "aggro": 5,
+   "leash": 9,
+   "wander": 3,
+   "respawn_ticks": 80,
+   "xp": 11,
+   "chase_steps": 2,
+   "drops": "wolf",
+   "note": "0.3.1: aggressive, quick (chases 2 tiles per tick), packs of 3-4 mid-distance from towns"
+  },
+  "town_guard": {
+   "name": "Town guard",
+   "sprite": "town_guard",
+   "level": 8,
+   "hp": 14,
+   "max_hit": 2,
+   "accuracy": 0.6,
+   "defence": 4,
+   "attack_ticks": 4,
+   "aggro": 0,
+   "leash": 16,
+   "wander": 0,
+   "respawn_ticks": 150,
+   "xp": 22,
+   "town_ok": true,
+   "drops": "town_guard",
+   "note": "0.3.1: patrols its town (data/town_npcs.json); never starts a fight, fights back when attacked; tougher than a wolf, easier than a goblin camp"
+  },
+  "citizen": {
+   "name": "Citizen",
+   "sprite": "citizen",
+   "level": 1,
+   "hp": 4,
+   "hp_range": [
+    3,
+    5
+   ],
+   "max_hit": 1,
+   "accuracy": 0.2,
+   "defence": 0,
+   "attack_ticks": 5,
+   "aggro": 0,
+   "leash": 10,
+   "wander": 5,
+   "respawn_ticks": 60,
+   "xp": 4,
+   "town_ok": true,
+   "tints": [
+    "#d8c8a0",
+    "#a8c8e0",
+    "#c8a0b0",
+    "#b0d0a0",
+    "#e0b880",
+    "#c0b0e0"
+   ],
+   "drops": "citizen",
+   "note": "0.3.1: wanders the town plaza; never starts a fight, swings back weakly"
+  },
+  "cinder_brute": {
+   "name": "Cinder brute",
+   "sprite": "cinder_brute",
+   "level": 14,
+   "hp": 24,
+   "max_hit": 4,
+   "accuracy": 0.65,
+   "defence": 7,
+   "attack_ticks": 4,
+   "aggro": 5,
+   "leash": 9,
+   "wander": 3,
+   "respawn_ticks": 120,
+   "xp": 40,
+   "drops": "cinder_brute",
+   "note": "0.3.1: the toughest camp, only in the Scorch"
+  },
+  "cow": {
+   "name": "Cow",
+   "sprite": "cow",
+   "level": 2,
+   "hp": 8,
+   "max_hit": 1,
+   "accuracy": 0.3,
+   "defence": 0,
+   "attack_ticks": 5,
+   "aggro": 0,
+   "leash": 5,
+   "wander": 2,
+   "respawn_ticks": 50,
+   "xp": 6,
+   "retaliate": true,
+   "drops": "cow",
+   "note": "0.3.1 village pastures (towns/<village>.json pastures): passive, kicks back weakly when hit, respawns"
+  }
+ },
+ "camps": [
+  {
+   "enemy": "chicken",
+   "at": [
+    -32,
+    6
+   ],
+   "count": 4,
+   "spread": 2
+  },
+  {
+   "enemy": "chicken",
+   "at": [
+    30,
+    2
+   ],
+   "count": 4,
+   "spread": 2
+  },
+  {
+   "enemy": "chicken",
+   "at": [
+    362,
+    -208
+   ],
+   "count": 4,
+   "spread": 2
+  },
+  {
+   "enemy": "chicken",
+   "at": [
+    328,
+    -228
+   ],
+   "count": 4,
+   "spread": 2
+  },
+  {
+   "enemy": "chicken",
+   "at": [
+    318,
+    142
+   ],
+   "count": 4,
+   "spread": 2
+  },
+  {
+   "enemy": "chicken",
+   "at": [
+    330,
+    146
+   ],
+   "count": 4,
+   "spread": 2
+  },
+  {
+   "enemy": "giant_rat",
+   "at": [
+    16,
+    -50
+   ],
+   "count": 4,
+   "spread": 3
+  },
+  {
+   "enemy": "giant_rat",
+   "at": [
+    36,
+    -48
+   ],
+   "count": 4,
+   "spread": 3
+  },
+  {
+   "enemy": "giant_rat",
+   "at": [
+    276,
+    -226
+   ],
+   "count": 4,
+   "spread": 3
+  },
+  {
+   "enemy": "giant_rat",
+   "at": [
+    276,
+    -174
+   ],
+   "count": 4,
+   "spread": 3
+  },
+  {
+   "enemy": "giant_rat",
+   "at": [
+    326,
+    220
+   ],
+   "count": 4,
+   "spread": 3
+  },
+  {
+   "enemy": "giant_rat",
+   "at": [
+    300,
+    220
+   ],
+   "count": 4,
+   "spread": 3
+  },
+  {
+   "enemy": "wolf",
+   "at": [
+    82,
+    16
+   ],
+   "count": 3,
+   "spread": 2
+  },
+  {
+   "enemy": "wolf",
+   "at": [
+    46,
+    -74
+   ],
+   "count": 3,
+   "spread": 2
+  },
+  {
+   "enemy": "wolf",
+   "at": [
+    390,
+    -136
+   ],
+   "count": 3,
+   "spread": 2
+  },
+  {
+   "enemy": "wolf",
+   "at": [
+    286,
+    -126
+   ],
+   "count": 3,
+   "spread": 2
+  },
+  {
+   "enemy": "wolf",
+   "at": [
+    332,
+    92
+   ],
+   "count": 3,
+   "spread": 2
+  },
+  {
+   "enemy": "wolf",
+   "at": [
+    288,
+    248
+   ],
+   "count": 3,
+   "spread": 2
+  },
+  {
+   "enemy": "goblin",
+   "at": [
+    348,
+    -88
+   ],
+   "count": 4,
+   "spread": 3
+  },
+  {
+   "enemy": "goblin",
+   "at": [
+    96,
+    -78
+   ],
+   "count": 4,
+   "spread": 3
+  },
+  {
+   "enemy": "goblin",
+   "at": [
+    276,
+    56
+   ],
+   "count": 4,
+   "spread": 3
+  },
+  {
+   "enemy": "goblin",
+   "at": [
+    58,
+    106
+   ],
+   "count": 4,
+   "spread": 3
+  },
+  {
+   "enemy": "goblin",
+   "at": [
+    10,
+    -114
+   ],
+   "count": 4,
+   "spread": 3
+  },
+  {
+   "enemy": "goblin",
+   "at": [
+    206,
+    88
+   ],
+   "count": 4,
+   "spread": 3
+  },
+  {
+   "enemy": "wolf",
+   "at": [
+    312,
+    -300
+   ],
+   "count": 4,
+   "spread": 2
+  },
+  {
+   "enemy": "cinder_brute",
+   "at": [
+    288,
+    -268
+   ],
+   "count": 3,
+   "spread": 3
+  },
+  {
+   "enemy": "cinder_brute",
+   "at": [
+    242,
+    -268
+   ],
+   "count": 3,
+   "spread": 3
+  },
+  {
+   "enemy": "cinder_brute",
+   "at": [
+    230,
+    -336
+   ],
+   "count": 3,
+   "spread": 3
+  }
+ ]
+}

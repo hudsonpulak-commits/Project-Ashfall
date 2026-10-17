@@ -1,0 +1,393 @@
+{
+ "note": "0.3.1 town guards and citizens. Coordinates are TOWN-LOCAL (same grid as data/towns/<id>.json rows; add the town origin for world tiles). Guards walk their patrol waypoints in a loop (straight streets), never start a fight and fight back when hit. Citizens wander around a random spot inside 'area' [x, y, w, h]. Both respawn (enemies.json respawn_ticks) at their first waypoint / home.",
+ "towns": {
+  "fenhollow": {
+   "guards": [
+    {
+     "enemy": "town_guard",
+     "patrol": [
+      [
+       20,
+       12
+      ],
+      [
+       8,
+       12
+      ],
+      [
+       8,
+       20
+      ],
+      [
+       20,
+       22
+      ]
+     ]
+    },
+    {
+     "enemy": "town_guard",
+     "patrol": [
+      [
+       26,
+       16
+      ],
+      [
+       34,
+       16
+      ],
+      [
+       26,
+       28
+      ]
+     ]
+    },
+    {
+     "enemy": "town_guard",
+     "patrol": [
+      [
+       22,
+       1
+      ]
+     ],
+     "gate": "north"
+    },
+    {
+     "enemy": "town_guard",
+     "patrol": [
+      [
+       24,
+       1
+      ]
+     ],
+     "gate": "north"
+    },
+    {
+     "enemy": "town_guard",
+     "patrol": [
+      [
+       22,
+       36
+      ]
+     ],
+     "gate": "south"
+    },
+    {
+     "enemy": "town_guard",
+     "patrol": [
+      [
+       24,
+       36
+      ]
+     ],
+     "gate": "south"
+    },
+    {
+     "enemy": "town_guard",
+     "patrol": [
+      [
+       1,
+       18
+      ]
+     ],
+     "gate": "west"
+    },
+    {
+     "enemy": "town_guard",
+     "patrol": [
+      [
+       1,
+       20
+      ]
+     ],
+     "gate": "west"
+    },
+    {
+     "enemy": "town_guard",
+     "patrol": [
+      [
+       44,
+       18
+      ]
+     ],
+     "gate": "east"
+    },
+    {
+     "enemy": "town_guard",
+     "patrol": [
+      [
+       44,
+       20
+      ]
+     ],
+     "gate": "east"
+    }
+   ],
+   "citizens": {
+    "enemy": "citizen",
+    "count": 5,
+    "area": [
+     18,
+     15,
+     11,
+     9
+    ]
+   }
+  },
+  "cinderholt": {
+   "guards": [
+    {
+     "enemy": "town_guard",
+     "patrol": [
+      [
+       13,
+       11
+      ],
+      [
+       23,
+       11
+      ],
+      [
+       23,
+       19
+      ],
+      [
+       13,
+       19
+      ]
+     ]
+    },
+    {
+     "enemy": "town_guard",
+     "patrol": [
+      [
+       3,
+       19
+      ],
+      [
+       33,
+       19
+      ]
+     ]
+    },
+    {
+     "enemy": "town_guard",
+     "patrol": [
+      [
+       22,
+       1
+      ]
+     ],
+     "gate": "north"
+    },
+    {
+     "enemy": "town_guard",
+     "patrol": [
+      [
+       24,
+       1
+      ]
+     ],
+     "gate": "north"
+    },
+    {
+     "enemy": "town_guard",
+     "patrol": [
+      [
+       22,
+       36
+      ]
+     ],
+     "gate": "south"
+    },
+    {
+     "enemy": "town_guard",
+     "patrol": [
+      [
+       24,
+       36
+      ]
+     ],
+     "gate": "south"
+    },
+    {
+     "enemy": "town_guard",
+     "patrol": [
+      [
+       1,
+       18
+      ]
+     ],
+     "gate": "west"
+    },
+    {
+     "enemy": "town_guard",
+     "patrol": [
+      [
+       1,
+       20
+      ]
+     ],
+     "gate": "west"
+    },
+    {
+     "enemy": "town_guard",
+     "patrol": [
+      [
+       44,
+       18
+      ]
+     ],
+     "gate": "east"
+    },
+    {
+     "enemy": "town_guard",
+     "patrol": [
+      [
+       44,
+       20
+      ]
+     ],
+     "gate": "east"
+    }
+   ],
+   "citizens": {
+    "enemy": "citizen",
+    "count": 5,
+    "area": [
+     18,
+     16,
+     11,
+     7
+    ]
+   }
+  },
+  "saltmere": {
+   "guards": [
+    {
+     "enemy": "town_guard",
+     "patrol": [
+      [
+       28,
+       10
+      ],
+      [
+       28,
+       20
+      ],
+      [
+       14,
+       27
+      ],
+      [
+       8,
+       19
+      ]
+     ]
+    },
+    {
+     "enemy": "town_guard",
+     "patrol": [
+      [
+       20,
+       17
+      ],
+      [
+       10,
+       17
+      ]
+     ]
+    },
+    {
+     "enemy": "town_guard",
+     "patrol": [
+      [
+       22,
+       1
+      ]
+     ],
+     "gate": "north"
+    },
+    {
+     "enemy": "town_guard",
+     "patrol": [
+      [
+       24,
+       1
+      ]
+     ],
+     "gate": "north"
+    },
+    {
+     "enemy": "town_guard",
+     "patrol": [
+      [
+       23,
+       36
+      ]
+     ],
+     "gate": "south"
+    },
+    {
+     "enemy": "town_guard",
+     "patrol": [
+      [
+       23,
+       19
+      ]
+     ],
+     "gate": "south"
+    },
+    {
+     "enemy": "town_guard",
+     "patrol": [
+      [
+       1,
+       18
+      ]
+     ],
+     "gate": "west"
+    },
+    {
+     "enemy": "town_guard",
+     "patrol": [
+      [
+       1,
+       20
+      ]
+     ],
+     "gate": "west"
+    },
+    {
+     "enemy": "town_guard",
+     "patrol": [
+      [
+       44,
+       18
+      ]
+     ],
+     "gate": "east"
+    },
+    {
+     "enemy": "town_guard",
+     "patrol": [
+      [
+       44,
+       20
+      ]
+     ],
+     "gate": "east"
+    }
+   ],
+   "citizens": {
+    "enemy": "citizen",
+    "count": 5,
+    "area": [
+     16,
+     16,
+     10,
+     7
+    ]
+   }
+  }
+ }
+}

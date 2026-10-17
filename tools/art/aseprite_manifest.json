@@ -1,0 +1,2134 @@
+{
+ "actors_32x16": {
+  "cell_w": 32,
+  "cell_h": 16,
+  "cols": 2,
+  "rows": 1,
+  "cells": [
+   {
+    "file": "assets/sprites/actors/chicken.png",
+    "x": 0,
+    "y": 0,
+    "w": 32,
+    "h": 16
+   },
+   {
+    "file": "assets/sprites/actors/giant_rat.png",
+    "x": 32,
+    "y": 0,
+    "w": 32,
+    "h": 16
+   }
+  ]
+ },
+ "actors_32x24": {
+  "cell_w": 32,
+  "cell_h": 24,
+  "cols": 4,
+  "rows": 1,
+  "cells": [
+   {
+    "file": "assets/sprites/actors/cinder_brute.png",
+    "x": 0,
+    "y": 0,
+    "w": 32,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/citizen.png",
+    "x": 32,
+    "y": 0,
+    "w": 32,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/goblin.png",
+    "x": 64,
+    "y": 0,
+    "w": 32,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/town_guard.png",
+    "x": 96,
+    "y": 0,
+    "w": 32,
+    "h": 24
+   }
+  ]
+ },
+ "actors_48x16": {
+  "cell_w": 48,
+  "cell_h": 16,
+  "cols": 2,
+  "rows": 1,
+  "cells": [
+   {
+    "file": "assets/sprites/actors/cow.png",
+    "x": 0,
+    "y": 0,
+    "w": 48,
+    "h": 16
+   },
+   {
+    "file": "assets/sprites/actors/wolf.png",
+    "x": 48,
+    "y": 0,
+    "w": 48,
+    "h": 16
+   }
+  ]
+ },
+ "actors_64x24": {
+  "cell_w": 64,
+  "cell_h": 24,
+  "cols": 4,
+  "rows": 18,
+  "cells": [
+   {
+    "file": "assets/sprites/actors/gear/body_1.png",
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/gear/body_2.png",
+    "x": 64,
+    "y": 0,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/gear/body_3.png",
+    "x": 128,
+    "y": 0,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/gear/body_4.png",
+    "x": 192,
+    "y": 0,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/gear/head_1.png",
+    "x": 0,
+    "y": 24,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/gear/head_2.png",
+    "x": 64,
+    "y": 24,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/gear/head_3.png",
+    "x": 128,
+    "y": 24,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/gear/head_4.png",
+    "x": 192,
+    "y": 24,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/gear/legs_1.png",
+    "x": 0,
+    "y": 48,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/gear/legs_2.png",
+    "x": 64,
+    "y": 48,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/gear/legs_3.png",
+    "x": 128,
+    "y": 48,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/gear/legs_4.png",
+    "x": 192,
+    "y": 48,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/gear/shield_1.png",
+    "x": 0,
+    "y": 72,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/gear/shield_2.png",
+    "x": 64,
+    "y": 72,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/gear/shield_3.png",
+    "x": 128,
+    "y": 72,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/gear/shield_4.png",
+    "x": 192,
+    "y": 72,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/gear/shield_buckler_1.png",
+    "x": 0,
+    "y": 96,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/gear/shield_buckler_2.png",
+    "x": 64,
+    "y": 96,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/gear/shield_buckler_3.png",
+    "x": 128,
+    "y": 96,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/gear/shield_buckler_4.png",
+    "x": 192,
+    "y": 96,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/gear/shield_heater_1.png",
+    "x": 0,
+    "y": 120,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/gear/shield_heater_2.png",
+    "x": 64,
+    "y": 120,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/gear/shield_heater_3.png",
+    "x": 128,
+    "y": 120,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/gear/shield_heater_4.png",
+    "x": 192,
+    "y": 120,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/gear/shield_kite_1.png",
+    "x": 0,
+    "y": 144,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/gear/shield_kite_2.png",
+    "x": 64,
+    "y": 144,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/gear/shield_kite_3.png",
+    "x": 128,
+    "y": 144,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/gear/shield_kite_4.png",
+    "x": 192,
+    "y": 144,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/gear/shield_tower_1.png",
+    "x": 0,
+    "y": 168,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/gear/shield_tower_2.png",
+    "x": 64,
+    "y": 168,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/gear/shield_tower_3.png",
+    "x": 128,
+    "y": 168,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/gear/shield_tower_4.png",
+    "x": 192,
+    "y": 168,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/gear/weapon_battleaxe_1.png",
+    "x": 0,
+    "y": 192,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/gear/weapon_battleaxe_2.png",
+    "x": 64,
+    "y": 192,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/gear/weapon_battleaxe_3.png",
+    "x": 128,
+    "y": 192,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/gear/weapon_battleaxe_4.png",
+    "x": 192,
+    "y": 192,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/gear/weapon_bow_1.png",
+    "x": 0,
+    "y": 216,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/gear/weapon_bow_2.png",
+    "x": 64,
+    "y": 216,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/gear/weapon_bow_3.png",
+    "x": 128,
+    "y": 216,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/gear/weapon_bow_4.png",
+    "x": 192,
+    "y": 216,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/gear/weapon_dagger_1.png",
+    "x": 0,
+    "y": 240,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/gear/weapon_dagger_2.png",
+    "x": 64,
+    "y": 240,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/gear/weapon_dagger_3.png",
+    "x": 128,
+    "y": 240,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/gear/weapon_dagger_4.png",
+    "x": 192,
+    "y": 240,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/gear/weapon_mace_1.png",
+    "x": 0,
+    "y": 264,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/gear/weapon_mace_2.png",
+    "x": 64,
+    "y": 264,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/gear/weapon_mace_3.png",
+    "x": 128,
+    "y": 264,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/gear/weapon_mace_4.png",
+    "x": 192,
+    "y": 264,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/gear/weapon_sword_1.png",
+    "x": 0,
+    "y": 288,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/gear/weapon_sword_2.png",
+    "x": 64,
+    "y": 288,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/gear/weapon_sword_3.png",
+    "x": 128,
+    "y": 288,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/gear/weapon_sword_4.png",
+    "x": 192,
+    "y": 288,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/gear/weapon_warhammer_1.png",
+    "x": 0,
+    "y": 312,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/gear/weapon_warhammer_2.png",
+    "x": 64,
+    "y": 312,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/gear/weapon_warhammer_3.png",
+    "x": 128,
+    "y": 312,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/gear/weapon_warhammer_4.png",
+    "x": 192,
+    "y": 312,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/keeper_archery.png",
+    "x": 0,
+    "y": 336,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/keeper_axes.png",
+    "x": 64,
+    "y": 336,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/keeper_body.png",
+    "x": 128,
+    "y": 336,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/keeper_estate.png",
+    "x": 192,
+    "y": 336,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/keeper_general.png",
+    "x": 0,
+    "y": 360,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/keeper_helmets.png",
+    "x": 64,
+    "y": 360,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/keeper_legs.png",
+    "x": 128,
+    "y": 360,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/keeper_maces.png",
+    "x": 192,
+    "y": 360,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/keeper_player.png",
+    "x": 0,
+    "y": 384,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/keeper_shields.png",
+    "x": 64,
+    "y": 384,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/keeper_swords.png",
+    "x": 128,
+    "y": 384,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/npc.png",
+    "x": 192,
+    "y": 384,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/player.png",
+    "x": 0,
+    "y": 408,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/priest.png",
+    "x": 64,
+    "y": 408,
+    "w": 64,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/actors/villager.png",
+    "x": 128,
+    "y": 408,
+    "w": 64,
+    "h": 24
+   }
+  ]
+ },
+ "actors_16x32": {
+  "cell_w": 16,
+  "cell_h": 32,
+  "cols": 1,
+  "rows": 1,
+  "cells": [
+   {
+    "file": "assets/sprites/actors/keeper_cook.png",
+    "x": 0,
+    "y": 0,
+    "w": 16,
+    "h": 32
+   }
+  ]
+ },
+ "app_64x64": {
+  "cell_w": 64,
+  "cell_h": 64,
+  "cols": 1,
+  "rows": 1,
+  "cells": [
+   {
+    "file": "assets/sprites/app/icon_64.png",
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 64
+   }
+  ]
+ },
+ "buildings_48x48": {
+  "cell_w": 48,
+  "cell_h": 48,
+  "cols": 1,
+  "rows": 1,
+  "cells": [
+   {
+    "file": "assets/sprites/buildings/roof.png",
+    "x": 0,
+    "y": 0,
+    "w": 48,
+    "h": 48
+   }
+  ]
+ },
+ "buildings_16x16": {
+  "cell_w": 16,
+  "cell_h": 16,
+  "cols": 8,
+  "rows": 2,
+  "cells": [
+   {
+    "file": "assets/sprites/buildings/sign_archery.png",
+    "x": 0,
+    "y": 0,
+    "w": 16,
+    "h": 16
+   },
+   {
+    "file": "assets/sprites/buildings/sign_axes.png",
+    "x": 16,
+    "y": 0,
+    "w": 16,
+    "h": 16
+   },
+   {
+    "file": "assets/sprites/buildings/sign_body.png",
+    "x": 32,
+    "y": 0,
+    "w": 16,
+    "h": 16
+   },
+   {
+    "file": "assets/sprites/buildings/sign_church.png",
+    "x": 48,
+    "y": 0,
+    "w": 16,
+    "h": 16
+   },
+   {
+    "file": "assets/sprites/buildings/sign_cook.png",
+    "x": 64,
+    "y": 0,
+    "w": 16,
+    "h": 16
+   },
+   {
+    "file": "assets/sprites/buildings/sign_forsale.png",
+    "x": 80,
+    "y": 0,
+    "w": 16,
+    "h": 16
+   },
+   {
+    "file": "assets/sprites/buildings/sign_general.png",
+    "x": 96,
+    "y": 0,
+    "w": 16,
+    "h": 16
+   },
+   {
+    "file": "assets/sprites/buildings/sign_helmets.png",
+    "x": 112,
+    "y": 0,
+    "w": 16,
+    "h": 16
+   },
+   {
+    "file": "assets/sprites/buildings/sign_house.png",
+    "x": 0,
+    "y": 16,
+    "w": 16,
+    "h": 16
+   },
+   {
+    "file": "assets/sprites/buildings/sign_legs.png",
+    "x": 16,
+    "y": 16,
+    "w": 16,
+    "h": 16
+   },
+   {
+    "file": "assets/sprites/buildings/sign_maces.png",
+    "x": 32,
+    "y": 16,
+    "w": 16,
+    "h": 16
+   },
+   {
+    "file": "assets/sprites/buildings/sign_player.png",
+    "x": 48,
+    "y": 16,
+    "w": 16,
+    "h": 16
+   },
+   {
+    "file": "assets/sprites/buildings/sign_shields.png",
+    "x": 64,
+    "y": 16,
+    "w": 16,
+    "h": 16
+   },
+   {
+    "file": "assets/sprites/buildings/sign_smithy.png",
+    "x": 80,
+    "y": 16,
+    "w": 16,
+    "h": 16
+   },
+   {
+    "file": "assets/sprites/buildings/sign_swords.png",
+    "x": 96,
+    "y": 16,
+    "w": 16,
+    "h": 16
+   }
+  ]
+ },
+ "items_16x16": {
+  "cell_w": 16,
+  "cell_h": 16,
+  "cols": 8,
+  "rows": 11,
+  "cells": [
+   {
+    "file": "assets/sprites/items/alder_buckler.png",
+    "x": 0,
+    "y": 0,
+    "w": 16,
+    "h": 16
+   },
+   {
+    "file": "assets/sprites/items/alder_log.png",
+    "x": 16,
+    "y": 0,
+    "w": 16,
+    "h": 16
+   },
+   {
+    "file": "assets/sprites/items/alder_longbow.png",
+    "x": 32,
+    "y": 0,
+    "w": 16,
+    "h": 16
+   },
+   {
+    "file": "assets/sprites/items/ash_log.png",
+    "x": 48,
+    "y": 0,
+    "w": 16,
+    "h": 16
+   },
+   {
+    "file": "assets/sprites/items/ash_shortbow.png",
+    "x": 64,
+    "y": 0,
+    "w": 16,
+    "h": 16
+   },
+   {
+    "file": "assets/sprites/items/blackthorn_log.png",
+    "x": 80,
+    "y": 0,
+    "w": 16,
+    "h": 16
+   },
+   {
+    "file": "assets/sprites/items/blackthorn_warbow.png",
+    "x": 96,
+    "y": 0,
+    "w": 16,
+    "h": 16
+   },
+   {
+    "file": "assets/sprites/items/bones.png",
+    "x": 112,
+    "y": 0,
+    "w": 16,
+    "h": 16
+   },
+   {
+    "file": "assets/sprites/items/bread.png",
+    "x": 0,
+    "y": 16,
+    "w": 16,
+    "h": 16
+   },
+   {
+    "file": "assets/sprites/items/bronze_arrows.png",
+    "x": 16,
+    "y": 16,
+    "w": 16,
+    "h": 16
+   },
+   {
+    "file": "assets/sprites/items/bronze_bar.png",
+    "x": 32,
+    "y": 16,
+    "w": 16,
+    "h": 16
+   },
+   {
+    "file": "assets/sprites/items/bronze_battleaxe.png",
+    "x": 48,
+    "y": 16,
+    "w": 16,
+    "h": 16
+   },
+   {
+    "file": "assets/sprites/items/bronze_cap.png",
+    "x": 64,
+    "y": 16,
+    "w": 16,
+    "h": 16
+   },
+   {
+    "file": "assets/sprites/items/bronze_dagger.png",
+    "x": 80,
+    "y": 16,
+    "w": 16,
+    "h": 16
+   },
+   {
+    "file": "assets/sprites/items/bronze_greaves.png",
+    "x": 96,
+    "y": 16,
+    "w": 16,
+    "h": 16
+   },
+   {
+    "file": "assets/sprites/items/bronze_hatchet.png",
+    "x": 112,
+    "y": 16,
+    "w": 16,
+    "h": 16
+   },
+   {
+    "file": "assets/sprites/items/bronze_mace.png",
+    "x": 0,
+    "y": 32,
+    "w": 16,
+    "h": 16
+   },
+   {
+    "file": "assets/sprites/items/bronze_pick.png",
+    "x": 16,
+    "y": 32,
+    "w": 16,
+    "h": 16
+   },
+   {
+    "file": "assets/sprites/items/bronze_scale_vest.png",
+    "x": 32,
+    "y": 32,
+    "w": 16,
+    "h": 16
+   },
+   {
+    "file": "assets/sprites/items/bronze_sword.png",
+    "x": 48,
+    "y": 32,
+    "w": 16,
+    "h": 16
+   },
+   {
+    "file": "assets/sprites/items/bronze_warhammer.png",
+    "x": 64,
+    "y": 32,
+    "w": 16,
+    "h": 16
+   },
+   {
+    "file": "assets/sprites/items/burnt_bread.png",
+    "x": 80,
+    "y": 32,
+    "w": 16,
+    "h": 16
+   },
+   {
+    "file": "assets/sprites/items/burnt_meat.png",
+    "x": 96,
+    "y": 32,
+    "w": 16,
+    "h": 16
+   },
+   {
+    "file": "assets/sprites/items/charred_fish.png",
+    "x": 112,
+    "y": 32,
+    "w": 16,
+    "h": 16
+   },
+   {
+    "file": "assets/sprites/items/coal.png",
+    "x": 0,
+    "y": 48,
+    "w": 16,
+    "h": 16
+   },
+   {
+    "file": "assets/sprites/items/cooked_beef.png",
+    "x": 16,
+    "y": 48,
+    "w": 16,
+    "h": 16
+   },
+   {
+    "file": "assets/sprites/items/cooked_carp.png",
+    "x": 32,
+    "y": 48,
+    "w": 16,
+    "h": 16
+   },
+   {
+    "file": "assets/sprites/items/cooked_chicken.png",
+    "x": 48,
+    "y": 48,
+    "w": 16,
+    "h": 16
+   },
+   {
+    "file": "assets/sprites/items/cooked_eel.png",
+    "x": 64,
+    "y": 48,
+    "w": 16,
+    "h": 16
+   },
+   {
+    "file": "assets/sprites/items/cooked_rat_meat.png",
+    "x": 80,
+    "y": 48,
+    "w": 16,
+    "h": 16
+   },
+   {
+    "file": "assets/sprites/items/copper_ore.png",
+    "x": 96,
+    "y": 48,
+    "w": 16,
+    "h": 16
+   },
+   {
+    "file": "assets/sprites/items/cowhide.png",
+    "x": 112,
+    "y": 48,
+    "w": 16,
+    "h": 16
+   },
+   {
+    "file": "assets/sprites/items/dusk_battleaxe.png",
+    "x": 0,
+    "y": 64,
+    "w": 16,
+    "h": 16
+   },
+   {
+    "file": "assets/sprites/items/dusk_cuirass.png",
+    "x": 16,
+    "y": 64,
+    "w": 16,
+    "h": 16
+   },
+   {
+    "file": "assets/sprites/items/dusk_dagger.png",
+    "x": 32,
+    "y": 64,
+    "w": 16,
+    "h": 16
+   },
+   {
+    "file": "assets/sprites/items/dusk_helm.png",
+    "x": 48,
+    "y": 64,
+    "w": 16,
+    "h": 16
+   },
+   {
+    "file": "assets/sprites/items/dusk_mace.png",
+    "x": 64,
+    "y": 64,
+    "w": 16,
+    "h": 16
+   },
+   {
+    "file": "assets/sprites/items/dusk_sword.png",
+    "x": 80,
+    "y": 64,
+    "w": 16,
+    "h": 16
+   },
+   {
+    "file": "assets/sprites/items/dusk_tassets.png",
+    "x": 96,
+    "y": 64,
+    "w": 16,
+    "h": 16
+   },
+   {
+    "file": "assets/sprites/items/dusk_tower_shield.png",
+    "x": 112,
+    "y": 64,
+    "w": 16,
+    "h": 16
+   },
+   {
+    "file": "assets/sprites/items/dusk_warhammer.png",
+    "x": 0,
+    "y": 80,
+    "w": 16,
+    "h": 16
+   },
+   {
+    "file": "assets/sprites/items/feather.png",
+    "x": 16,
+    "y": 80,
+    "w": 16,
+    "h": 16
+   },
+   {
+    "file": "assets/sprites/items/fenroot.png",
+    "x": 32,
+    "y": 80,
+    "w": 16,
+    "h": 16
+   },
+   {
+    "file": "assets/sprites/items/flour.png",
+    "x": 48,
+    "y": 80,
+    "w": 16,
+    "h": 16
+   },
+   {
+    "file": "assets/sprites/items/iron_arrows.png",
+    "x": 64,
+    "y": 80,
+    "w": 16,
+    "h": 16
+   },
+   {
+    "file": "assets/sprites/items/iron_bar.png",
+    "x": 80,
+    "y": 80,
+    "w": 16,
+    "h": 16
+   },
+   {
+    "file": "assets/sprites/items/iron_battleaxe.png",
+    "x": 96,
+    "y": 80,
+    "w": 16,
+    "h": 16
+   },
+   {
+    "file": "assets/sprites/items/iron_dagger.png",
+    "x": 112,
+    "y": 80,
+    "w": 16,
+    "h": 16
+   },
+   {
+    "file": "assets/sprites/items/iron_hatchet.png",
+    "x": 0,
+    "y": 96,
+    "w": 16,
+    "h": 16
+   },
+   {
+    "file": "assets/sprites/items/iron_hauberk.png",
+    "x": 16,
+    "y": 96,
+    "w": 16,
+    "h": 16
+   },
+   {
+    "file": "assets/sprites/items/iron_helm.png",
+    "x": 32,
+    "y": 96,
+    "w": 16,
+    "h": 16
+   },
+   {
+    "file": "assets/sprites/items/iron_kite_shield.png",
+    "x": 48,
+    "y": 96,
+    "w": 16,
+    "h": 16
+   },
+   {
+    "file": "assets/sprites/items/iron_legguards.png",
+    "x": 64,
+    "y": 96,
+    "w": 16,
+    "h": 16
+   },
+   {
+    "file": "assets/sprites/items/iron_mace.png",
+    "x": 80,
+    "y": 96,
+    "w": 16,
+    "h": 16
+   },
+   {
+    "file": "assets/sprites/items/iron_ore.png",
+    "x": 96,
+    "y": 96,
+    "w": 16,
+    "h": 16
+   },
+   {
+    "file": "assets/sprites/items/iron_pick.png",
+    "x": 112,
+    "y": 96,
+    "w": 16,
+    "h": 16
+   },
+   {
+    "file": "assets/sprites/items/iron_sword.png",
+    "x": 0,
+    "y": 112,
+    "w": 16,
+    "h": 16
+   },
+   {
+    "file": "assets/sprites/items/iron_warhammer.png",
+    "x": 16,
+    "y": 112,
+    "w": 16,
+    "h": 16
+   },
+   {
+    "file": "assets/sprites/items/marks.png",
+    "x": 32,
+    "y": 112,
+    "w": 16,
+    "h": 16
+   },
+   {
+    "file": "assets/sprites/items/marsh_tonic.png",
+    "x": 48,
+    "y": 112,
+    "w": 16,
+    "h": 16
+   },
+   {
+    "file": "assets/sprites/items/plank.png",
+    "x": 64,
+    "y": 112,
+    "w": 16,
+    "h": 16
+   },
+   {
+    "file": "assets/sprites/items/raw_beef.png",
+    "x": 80,
+    "y": 112,
+    "w": 16,
+    "h": 16
+   },
+   {
+    "file": "assets/sprites/items/raw_carp.png",
+    "x": 96,
+    "y": 112,
+    "w": 16,
+    "h": 16
+   },
+   {
+    "file": "assets/sprites/items/raw_chicken.png",
+    "x": 112,
+    "y": 112,
+    "w": 16,
+    "h": 16
+   },
+   {
+    "file": "assets/sprites/items/raw_eel.png",
+    "x": 0,
+    "y": 128,
+    "w": 16,
+    "h": 16
+   },
+   {
+    "file": "assets/sprites/items/raw_rat_meat.png",
+    "x": 16,
+    "y": 128,
+    "w": 16,
+    "h": 16
+   },
+   {
+    "file": "assets/sprites/items/reed_fibre.png",
+    "x": 32,
+    "y": 128,
+    "w": 16,
+    "h": 16
+   },
+   {
+    "file": "assets/sprites/items/reed_rod.png",
+    "x": 48,
+    "y": 128,
+    "w": 16,
+    "h": 16
+   },
+   {
+    "file": "assets/sprites/items/steel_arrows.png",
+    "x": 64,
+    "y": 128,
+    "w": 16,
+    "h": 16
+   },
+   {
+    "file": "assets/sprites/items/steel_bar.png",
+    "x": 80,
+    "y": 128,
+    "w": 16,
+    "h": 16
+   },
+   {
+    "file": "assets/sprites/items/steel_battleaxe.png",
+    "x": 96,
+    "y": 128,
+    "w": 16,
+    "h": 16
+   },
+   {
+    "file": "assets/sprites/items/steel_brigandine.png",
+    "x": 112,
+    "y": 128,
+    "w": 16,
+    "h": 16
+   },
+   {
+    "file": "assets/sprites/items/steel_dagger.png",
+    "x": 0,
+    "y": 144,
+    "w": 16,
+    "h": 16
+   },
+   {
+    "file": "assets/sprites/items/steel_heater_shield.png",
+    "x": 16,
+    "y": 144,
+    "w": 16,
+    "h": 16
+   },
+   {
+    "file": "assets/sprites/items/steel_helm.png",
+    "x": 32,
+    "y": 144,
+    "w": 16,
+    "h": 16
+   },
+   {
+    "file": "assets/sprites/items/steel_legplates.png",
+    "x": 48,
+    "y": 144,
+    "w": 16,
+    "h": 16
+   },
+   {
+    "file": "assets/sprites/items/steel_mace.png",
+    "x": 64,
+    "y": 144,
+    "w": 16,
+    "h": 16
+   },
+   {
+    "file": "assets/sprites/items/steel_sword.png",
+    "x": 80,
+    "y": 144,
+    "w": 16,
+    "h": 16
+   },
+   {
+    "file": "assets/sprites/items/steel_warhammer.png",
+    "x": 96,
+    "y": 144,
+    "w": 16,
+    "h": 16
+   },
+   {
+    "file": "assets/sprites/items/tin_ore.png",
+    "x": 112,
+    "y": 144,
+    "w": 16,
+    "h": 16
+   },
+   {
+    "file": "assets/sprites/items/unknown.png",
+    "x": 0,
+    "y": 160,
+    "w": 16,
+    "h": 16
+   },
+   {
+    "file": "assets/sprites/items/wheat.png",
+    "x": 16,
+    "y": 160,
+    "w": 16,
+    "h": 16
+   },
+   {
+    "file": "assets/sprites/items/wolf_pelt.png",
+    "x": 32,
+    "y": 160,
+    "w": 16,
+    "h": 16
+   }
+  ]
+ },
+ "objects_16x24": {
+  "cell_w": 16,
+  "cell_h": 24,
+  "cols": 8,
+  "rows": 6,
+  "cells": [
+   {
+    "file": "assets/sprites/objects/altar.png",
+    "x": 0,
+    "y": 0,
+    "w": 16,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/objects/anvil.png",
+    "x": 16,
+    "y": 0,
+    "w": 16,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/objects/armour_stand.png",
+    "x": 32,
+    "y": 0,
+    "w": 16,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/objects/axe_rack.png",
+    "x": 48,
+    "y": 0,
+    "w": 16,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/objects/bank_chest.png",
+    "x": 64,
+    "y": 0,
+    "w": 16,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/objects/barrel.png",
+    "x": 80,
+    "y": 0,
+    "w": 16,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/objects/bellows.png",
+    "x": 96,
+    "y": 0,
+    "w": 16,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/objects/bow_rack.png",
+    "x": 112,
+    "y": 0,
+    "w": 16,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/objects/burnt_tree.png",
+    "x": 0,
+    "y": 24,
+    "w": 16,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/objects/charred_stump.png",
+    "x": 16,
+    "y": 24,
+    "w": 16,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/objects/coal_crate.png",
+    "x": 32,
+    "y": 24,
+    "w": 16,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/objects/counter.png",
+    "x": 48,
+    "y": 24,
+    "w": 16,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/objects/crate.png",
+    "x": 64,
+    "y": 24,
+    "w": 16,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/objects/display_stand.png",
+    "x": 80,
+    "y": 24,
+    "w": 16,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/objects/dummy.png",
+    "x": 96,
+    "y": 24,
+    "w": 16,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/objects/exchange_board.png",
+    "x": 112,
+    "y": 24,
+    "w": 16,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/objects/fence.png",
+    "x": 0,
+    "y": 48,
+    "w": 16,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/objects/fence_v.png",
+    "x": 16,
+    "y": 48,
+    "w": 16,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/objects/fenroot_patch.png",
+    "x": 32,
+    "y": 48,
+    "w": 16,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/objects/furnace.png",
+    "x": 48,
+    "y": 48,
+    "w": 16,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/objects/hearth.png",
+    "x": 64,
+    "y": 48,
+    "w": 16,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/objects/helm_stand.png",
+    "x": 80,
+    "y": 48,
+    "w": 16,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/objects/pew.png",
+    "x": 96,
+    "y": 48,
+    "w": 16,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/objects/quench_barrel.png",
+    "x": 112,
+    "y": 48,
+    "w": 16,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/objects/quern.png",
+    "x": 0,
+    "y": 72,
+    "w": 16,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/objects/reed_bed.png",
+    "x": 16,
+    "y": 72,
+    "w": 16,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/objects/rock_coal.png",
+    "x": 32,
+    "y": 72,
+    "w": 16,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/objects/rock_copper.png",
+    "x": 48,
+    "y": 72,
+    "w": 16,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/objects/rock_empty.png",
+    "x": 64,
+    "y": 72,
+    "w": 16,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/objects/rock_iron.png",
+    "x": 80,
+    "y": 72,
+    "w": 16,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/objects/rock_tin.png",
+    "x": 96,
+    "y": 72,
+    "w": 16,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/objects/sacks.png",
+    "x": 112,
+    "y": 72,
+    "w": 16,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/objects/shelf_goods.png",
+    "x": 0,
+    "y": 96,
+    "w": 16,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/objects/shield_rack.png",
+    "x": 16,
+    "y": 96,
+    "w": 16,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/objects/stump.png",
+    "x": 32,
+    "y": 96,
+    "w": 16,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/objects/tree_alder.png",
+    "x": 48,
+    "y": 96,
+    "w": 16,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/objects/tree_ash.png",
+    "x": 64,
+    "y": 96,
+    "w": 16,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/objects/tree_blackthorn.png",
+    "x": 80,
+    "y": 96,
+    "w": 16,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/objects/weapon_rack.png",
+    "x": 96,
+    "y": 96,
+    "w": 16,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/objects/well.png",
+    "x": 112,
+    "y": 96,
+    "w": 16,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/objects/wheat.png",
+    "x": 0,
+    "y": 120,
+    "w": 16,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/objects/wheat_stubble.png",
+    "x": 16,
+    "y": 120,
+    "w": 16,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/objects/workbench.png",
+    "x": 32,
+    "y": 120,
+    "w": 16,
+    "h": 24
+   }
+  ]
+ },
+ "objects_32x24": {
+  "cell_w": 32,
+  "cell_h": 24,
+  "cols": 3,
+  "rows": 1,
+  "cells": [
+   {
+    "file": "assets/sprites/objects/candle_stand.png",
+    "x": 0,
+    "y": 0,
+    "w": 32,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/objects/embers.png",
+    "x": 32,
+    "y": 0,
+    "w": 32,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/objects/fishing_spot.png",
+    "x": 64,
+    "y": 0,
+    "w": 32,
+    "h": 24
+   }
+  ]
+ },
+ "objects_16x16": {
+  "cell_w": 16,
+  "cell_h": 16,
+  "cols": 2,
+  "rows": 1,
+  "cells": [
+   {
+    "file": "assets/sprites/objects/oven.png",
+    "x": 0,
+    "y": 0,
+    "w": 16,
+    "h": 16
+   },
+   {
+    "file": "assets/sprites/objects/stained_glass.png",
+    "x": 16,
+    "y": 0,
+    "w": 16,
+    "h": 16
+   }
+  ]
+ },
+ "tiles_64x16": {
+  "cell_w": 64,
+  "cell_h": 16,
+  "cols": 4,
+  "rows": 5,
+  "cells": [
+   {
+    "file": "assets/sprites/tiles/ash.png",
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 16
+   },
+   {
+    "file": "assets/sprites/tiles/ash_edge.png",
+    "x": 64,
+    "y": 0,
+    "w": 64,
+    "h": 16
+   },
+   {
+    "file": "assets/sprites/tiles/bridge.png",
+    "x": 128,
+    "y": 0,
+    "w": 64,
+    "h": 16
+   },
+   {
+    "file": "assets/sprites/tiles/cobble.png",
+    "x": 192,
+    "y": 0,
+    "w": 64,
+    "h": 16
+   },
+   {
+    "file": "assets/sprites/tiles/dirt.png",
+    "x": 0,
+    "y": 16,
+    "w": 64,
+    "h": 16
+   },
+   {
+    "file": "assets/sprites/tiles/doorway.png",
+    "x": 64,
+    "y": 16,
+    "w": 64,
+    "h": 16
+   },
+   {
+    "file": "assets/sprites/tiles/floor.png",
+    "x": 128,
+    "y": 16,
+    "w": 64,
+    "h": 16
+   },
+   {
+    "file": "assets/sprites/tiles/grass.png",
+    "x": 192,
+    "y": 16,
+    "w": 64,
+    "h": 16
+   },
+   {
+    "file": "assets/sprites/tiles/marsh.png",
+    "x": 0,
+    "y": 32,
+    "w": 64,
+    "h": 16
+   },
+   {
+    "file": "assets/sprites/tiles/path.png",
+    "x": 64,
+    "y": 32,
+    "w": 64,
+    "h": 16
+   },
+   {
+    "file": "assets/sprites/tiles/planks.png",
+    "x": 128,
+    "y": 32,
+    "w": 64,
+    "h": 16
+   },
+   {
+    "file": "assets/sprites/tiles/sand.png",
+    "x": 192,
+    "y": 32,
+    "w": 64,
+    "h": 16
+   },
+   {
+    "file": "assets/sprites/tiles/stone_floor.png",
+    "x": 0,
+    "y": 48,
+    "w": 64,
+    "h": 16
+   },
+   {
+    "file": "assets/sprites/tiles/stone_front.png",
+    "x": 64,
+    "y": 48,
+    "w": 64,
+    "h": 16
+   },
+   {
+    "file": "assets/sprites/tiles/stone_wall.png",
+    "x": 128,
+    "y": 48,
+    "w": 64,
+    "h": 16
+   },
+   {
+    "file": "assets/sprites/tiles/wall.png",
+    "x": 192,
+    "y": 48,
+    "w": 64,
+    "h": 16
+   },
+   {
+    "file": "assets/sprites/tiles/wall_front.png",
+    "x": 0,
+    "y": 64,
+    "w": 64,
+    "h": 16
+   },
+   {
+    "file": "assets/sprites/tiles/water.png",
+    "x": 64,
+    "y": 64,
+    "w": 64,
+    "h": 16
+   }
+  ]
+ },
+ "tiles_16x16": {
+  "cell_w": 16,
+  "cell_h": 16,
+  "cols": 8,
+  "rows": 2,
+  "cells": [
+   {
+    "file": "assets/sprites/tiles/basalt_front.png",
+    "x": 0,
+    "y": 0,
+    "w": 16,
+    "h": 16
+   },
+   {
+    "file": "assets/sprites/tiles/basalt_wall.png",
+    "x": 16,
+    "y": 0,
+    "w": 16,
+    "h": 16
+   },
+   {
+    "file": "assets/sprites/tiles/boardwalk.png",
+    "x": 32,
+    "y": 0,
+    "w": 16,
+    "h": 16
+   },
+   {
+    "file": "assets/sprites/tiles/cobble_dark.png",
+    "x": 48,
+    "y": 0,
+    "w": 16,
+    "h": 16
+   },
+   {
+    "file": "assets/sprites/tiles/gate_basalt.png",
+    "x": 64,
+    "y": 0,
+    "w": 16,
+    "h": 16
+   },
+   {
+    "file": "assets/sprites/tiles/gate_sand.png",
+    "x": 80,
+    "y": 0,
+    "w": 16,
+    "h": 16
+   },
+   {
+    "file": "assets/sprites/tiles/gate_wood.png",
+    "x": 96,
+    "y": 0,
+    "w": 16,
+    "h": 16
+   },
+   {
+    "file": "assets/sprites/tiles/palisade.png",
+    "x": 112,
+    "y": 0,
+    "w": 16,
+    "h": 16
+   },
+   {
+    "file": "assets/sprites/tiles/palisade_front.png",
+    "x": 0,
+    "y": 16,
+    "w": 16,
+    "h": 16
+   },
+   {
+    "file": "assets/sprites/tiles/plaster.png",
+    "x": 16,
+    "y": 16,
+    "w": 16,
+    "h": 16
+   },
+   {
+    "file": "assets/sprites/tiles/plaster_front.png",
+    "x": 32,
+    "y": 16,
+    "w": 16,
+    "h": 16
+   },
+   {
+    "file": "assets/sprites/tiles/plaster_wall.png",
+    "x": 48,
+    "y": 16,
+    "w": 16,
+    "h": 16
+   },
+   {
+    "file": "assets/sprites/tiles/sandstone_front.png",
+    "x": 64,
+    "y": 16,
+    "w": 16,
+    "h": 16
+   },
+   {
+    "file": "assets/sprites/tiles/sandstone_wall.png",
+    "x": 80,
+    "y": 16,
+    "w": 16,
+    "h": 16
+   }
+  ]
+ },
+ "ui_16x16": {
+  "cell_w": 16,
+  "cell_h": 16,
+  "cols": 8,
+  "rows": 3,
+  "cells": [
+   {
+    "file": "assets/sprites/ui/icon_moon.png",
+    "x": 0,
+    "y": 0,
+    "w": 16,
+    "h": 16
+   },
+   {
+    "file": "assets/sprites/ui/icon_sun.png",
+    "x": 16,
+    "y": 0,
+    "w": 16,
+    "h": 16
+   },
+   {
+    "file": "assets/sprites/ui/light_torch.png",
+    "x": 32,
+    "y": 0,
+    "w": 16,
+    "h": 16
+   },
+   {
+    "file": "assets/sprites/ui/light_window.png",
+    "x": 48,
+    "y": 0,
+    "w": 16,
+    "h": 16
+   },
+   {
+    "file": "assets/sprites/ui/marker_fish.png",
+    "x": 64,
+    "y": 0,
+    "w": 16,
+    "h": 16
+   },
+   {
+    "file": "assets/sprites/ui/marker_house.png",
+    "x": 80,
+    "y": 0,
+    "w": 16,
+    "h": 16
+   },
+   {
+    "file": "assets/sprites/ui/marker_pickaxe.png",
+    "x": 96,
+    "y": 0,
+    "w": 16,
+    "h": 16
+   },
+   {
+    "file": "assets/sprites/ui/marker_pin.png",
+    "x": 112,
+    "y": 0,
+    "w": 16,
+    "h": 16
+   },
+   {
+    "file": "assets/sprites/ui/marker_skull.png",
+    "x": 0,
+    "y": 16,
+    "w": 16,
+    "h": 16
+   },
+   {
+    "file": "assets/sprites/ui/marker_star.png",
+    "x": 16,
+    "y": 16,
+    "w": 16,
+    "h": 16
+   },
+   {
+    "file": "assets/sprites/ui/marker_sword.png",
+    "x": 32,
+    "y": 16,
+    "w": 16,
+    "h": 16
+   },
+   {
+    "file": "assets/sprites/ui/marker_tree.png",
+    "x": 48,
+    "y": 16,
+    "w": 16,
+    "h": 16
+   },
+   {
+    "file": "assets/sprites/ui/missing.png",
+    "x": 64,
+    "y": 16,
+    "w": 16,
+    "h": 16
+   },
+   {
+    "file": "assets/sprites/ui/multi_combat.png",
+    "x": 80,
+    "y": 16,
+    "w": 16,
+    "h": 16
+   },
+   {
+    "file": "assets/sprites/ui/pk_skull.png",
+    "x": 96,
+    "y": 16,
+    "w": 16,
+    "h": 16
+   },
+   {
+    "file": "assets/sprites/ui/pk_zone.png",
+    "x": 112,
+    "y": 16,
+    "w": 16,
+    "h": 16
+   },
+   {
+    "file": "assets/sprites/ui/prayer_acc.png",
+    "x": 0,
+    "y": 32,
+    "w": 16,
+    "h": 16
+   },
+   {
+    "file": "assets/sprites/ui/prayer_def.png",
+    "x": 16,
+    "y": 32,
+    "w": 16,
+    "h": 16
+   },
+   {
+    "file": "assets/sprites/ui/prayer_dmg.png",
+    "x": 32,
+    "y": 32,
+    "w": 16,
+    "h": 16
+   },
+   {
+    "file": "assets/sprites/ui/prayer_gather.png",
+    "x": 48,
+    "y": 32,
+    "w": 16,
+    "h": 16
+   },
+   {
+    "file": "assets/sprites/ui/tap_marker.png",
+    "x": 64,
+    "y": 32,
+    "w": 16,
+    "h": 16
+   }
+  ]
+ },
+ "ui_32x32": {
+  "cell_w": 32,
+  "cell_h": 32,
+  "cols": 1,
+  "rows": 1,
+  "cells": [
+   {
+    "file": "assets/sprites/ui/light_glow.png",
+    "x": 0,
+    "y": 0,
+    "w": 32,
+    "h": 32
+   }
+  ]
+ },
+ "ui_180x320": {
+  "cell_w": 180,
+  "cell_h": 320,
+  "cols": 1,
+  "rows": 1,
+  "cells": [
+   {
+    "file": "assets/sprites/ui/menu_bg.png",
+    "x": 0,
+    "y": 0,
+    "w": 180,
+    "h": 320
+   }
+  ]
+ },
+ "ui_8x8": {
+  "cell_w": 8,
+  "cell_h": 8,
+  "cols": 1,
+  "rows": 1,
+  "cells": [
+   {
+    "file": "assets/sprites/ui/skull.png",
+    "x": 0,
+    "y": 0,
+    "w": 8,
+    "h": 8
+   }
+  ]
+ }
+}

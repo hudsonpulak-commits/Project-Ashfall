@@ -1,0 +1,10 @@
+{
+ "note": "0.3.1 distance bands: the further from town, the harder the creatures. Distance = tiles from the nearest town's edge (WorldGen.town_edge_distance). Every camp in data/enemies.json must sit inside its kind's band [min, max] (selftest), or inside a PK zone when pk is true. Town guards and citizens live inside the towns (data/town_npcs.json).",
+ "bands": {
+  "chicken":      {"min": 3,  "max": 22,  "label": "Chickens (by town)"},
+  "giant_rat":    {"min": 12, "max": 50,  "label": "Giant rats"},
+  "wolf":         {"min": 38, "max": 85,  "label": "Wolves", "pk": true},
+  "goblin":       {"min": 70, "max": 400, "label": "Goblin camps (far wilds)"},
+  "cinder_brute": {"min": 0,  "max": 0,   "label": "Cinder brutes (the Scorch only)", "pk": true, "pk_only": true}
+ }
+}

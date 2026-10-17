@@ -1,0 +1,40 @@
+{
+ "note": "0.3.1 PK rules for PK zones (data/pk_zones.json, 'the Scorch'). Anyone may attack anyone there (player <-> AI, AI <-> AI); every PK zone is multi-combat. The first actor to strike another (not retaliating within skull_minutes) is SKULLED for skull_minutes (1 min = 100 ticks) and keeps nothing on death. Dying in a PK zone: keep the keep_items most valuable item units (worn + pack; coins are never kept), everything else drops in a pile that is private to the killer for killer_private_ticks then public. If a creature killed you, the pile is yours for npc_kill_private_ticks then public. The town healer still takes the normal coin fee (10%) from carried coin. pvp: accuracy = base + (Attack + gear atk) x atk_per - (Defence x def_level_per + gear def x def_gear_per) x (1 - armour_break), clamped; max hit = the normal formula. AI: carry_coins = coins an adventurer-class AI has on it in the zone (+ carry_coin_share of its purse); carry_food = food units it brings.",
+ "skull_minutes": 10,
+ "ticks_per_minute": 100,
+ "keep_items": 3,
+ "killer_private_ticks": 100,
+ "npc_kill_private_ticks": 300,
+ "death_pile_ttl": 3000,
+ "coin_fee": 0.10,
+ "warn_once": true,
+ "warning_title": "The Scorch",
+ "warning_text": "You are entering the Scorch, a lawless burnt land in the north.\n\n- Anyone can attack you here, players and AI alike, and many may attack you at once (multi-combat).\n- If you die here you keep only your 3 most valuable items. Everything else drops for your killer.\n- Attack someone first and you are skulled for 10 minutes: while skulled you keep nothing.\n\nTap an AI player here to attack them.",
+ "pvp": {
+  "base_acc": 0.55,
+  "atk_per": 0.01,
+  "def_level_per": 0.008,
+  "def_gear_per": 0.006,
+  "min_acc": 0.1,
+  "max_acc": 0.9
+ },
+ "ai": {
+  "carry_coins": 40,
+  "carry_coin_share": 0.05,
+  "carry_food": 8,
+  "duel_k": 3.0,
+  "flee_chance": {"hero": 0.6, "opportunist": 0.35, "raider": 0.5, "default": 0.7},
+  "flee_below": 0.35,
+  "raid_encounter_chance": 0.35,
+  "gang_join_chance": 0.5,
+  "min_win_p": 0.6,
+  "hunt_radius": 14,
+  "new_players": true,
+  "new_players_note": "AI killed inside a PK zone quits; a new level-1 player takes the slot (AdvBrain.reincarnate): starter_kit tools, starter_coins marks; its bank + kept items go to an estate sale on the Exchange (price = estate_price x reference, proceeds are a sink, unsold after estate_ticks are lost).",
+  "starter_kit": ["bronze_hatchet", "bronze_pick", "reed_rod", "bronze_sword"],
+  "starter_coins": 25,
+  "estate_ticks": 7200,
+  "estate_price": 0.9,
+  "drift_to_player": 0.25
+ }
+}

@@ -1,0 +1,9 @@
+{
+ "_note": "0.3.1 level band for EconomyMonitor (src/economy/economy_monitor.gd). Below 'low' x base the daily monitor warms (store buy-backs/bounties up a step, gathering down a step) unless the index is already recovering faster than recovering_per_day or money is growing faster than max_money_growth per day; above 'high' it cools. Delete the level_band block for 0.3.0 behaviour.",
+ "level_band": {
+  "low": 0.92,
+  "high": 1.08,
+  "recovering_per_day": 0.002,
+  "max_money_growth": 0.01
+ }
+}

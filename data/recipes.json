@@ -1,0 +1,695 @@
+{
+ "recipes": [
+  {
+   "id": "cook_eel",
+   "station": "hearth",
+   "skill": "cooking",
+   "level": 15,
+   "xp": 45,
+   "ticks": 3,
+   "in": {
+    "raw_eel": 1
+   },
+   "out": {
+    "cooked_eel": 1
+   },
+   "fail": {
+    "base": 0.45,
+    "per_level": 0.02,
+    "min": 0.03,
+    "item": "charred_fish"
+   }
+  },
+  {
+   "id": "cook_carp",
+   "station": "hearth",
+   "skill": "cooking",
+   "level": 1,
+   "xp": 22,
+   "ticks": 3,
+   "in": {
+    "raw_carp": 1
+   },
+   "out": {
+    "cooked_carp": 1
+   },
+   "fail": {
+    "base": 0.4,
+    "per_level": 0.025,
+    "min": 0.02,
+    "item": "charred_fish"
+   }
+  },
+  {
+   "id": "cook_rat_meat",
+   "station": "hearth",
+   "skill": "cooking",
+   "level": 1,
+   "xp": 15,
+   "ticks": 3,
+   "in": {
+    "raw_rat_meat": 1
+   },
+   "out": {
+    "cooked_rat_meat": 1
+   },
+   "fail": {
+    "base": 0.45,
+    "per_level": 0.03,
+    "min": 0.05,
+    "item": "burnt_meat"
+   }
+  },
+  {
+   "id": "cook_chicken",
+   "station": "hearth",
+   "skill": "cooking",
+   "level": 1,
+   "xp": 18,
+   "ticks": 3,
+   "in": {
+    "raw_chicken": 1
+   },
+   "out": {
+    "cooked_chicken": 1
+   },
+   "fail": {
+    "base": 0.45,
+    "per_level": 0.03,
+    "min": 0.05,
+    "item": "burnt_meat"
+   }
+  },
+  {
+   "id": "smelt_bronze",
+   "station": "furnace",
+   "skill": "smithing",
+   "level": 1,
+   "xp": 14,
+   "ticks": 4,
+   "in": {
+    "copper_ore": 1,
+    "tin_ore": 1
+   },
+   "out": {
+    "bronze_bar": 1
+   }
+  },
+  {
+   "id": "smelt_iron",
+   "station": "furnace",
+   "skill": "smithing",
+   "level": 12,
+   "xp": 40,
+   "ticks": 4,
+   "in": {
+    "iron_ore": 1
+   },
+   "out": {
+    "iron_bar": 1
+   },
+   "fail": {
+    "chance": 0.4,
+    "xp": 0,
+    "message": "The iron ore is too impure and you fail to refine it."
+   }
+  },
+  {
+   "id": "smelt_steel",
+   "station": "furnace",
+   "skill": "smithing",
+   "level": 20,
+   "xp": 55,
+   "ticks": 4,
+   "in": {
+    "iron_ore": 1,
+    "coal": 1
+   },
+   "out": {
+    "steel_bar": 1
+   }
+  },
+  {
+   "id": "saw_plank",
+   "station": "workbench",
+   "skill": "joinery",
+   "level": 1,
+   "xp": 12,
+   "ticks": 3,
+   "in": {
+    "ash_log": 1
+   },
+   "out": {
+    "plank": 1
+   }
+  },
+  {
+   "id": "twist_rod",
+   "station": "workbench",
+   "skill": "joinery",
+   "level": 4,
+   "xp": 30,
+   "ticks": 4,
+   "in": {
+    "plank": 1,
+    "reed_fibre": 6
+   },
+   "out": {
+    "reed_rod": 1
+   }
+  },
+  {
+   "id": "forge_iron_sword",
+   "station": "anvil",
+   "skill": "smithing",
+   "level": 18,
+   "xp": 150,
+   "ticks": 6,
+   "in": {
+    "iron_bar": 3
+   },
+   "out": {
+    "iron_sword": 1
+   }
+  },
+  {
+   "id": "forge_iron_pick",
+   "station": "anvil",
+   "skill": "smithing",
+   "level": 16,
+   "xp": 110,
+   "ticks": 5,
+   "in": {
+    "iron_bar": 2,
+    "plank": 1
+   },
+   "out": {
+    "iron_pick": 1
+   }
+  },
+  {
+   "id": "forge_iron_hatchet",
+   "station": "anvil",
+   "skill": "smithing",
+   "level": 15,
+   "xp": 110,
+   "ticks": 5,
+   "in": {
+    "iron_bar": 2,
+    "plank": 1
+   },
+   "out": {
+    "iron_hatchet": 1
+   }
+  },
+  {
+   "id": "forge_bronze_sword",
+   "station": "anvil",
+   "skill": "smithing",
+   "level": 6,
+   "xp": 55,
+   "ticks": 5,
+   "in": {
+    "bronze_bar": 3
+   },
+   "out": {
+    "bronze_sword": 1
+   }
+  },
+  {
+   "id": "forge_bronze_pick",
+   "station": "anvil",
+   "skill": "smithing",
+   "level": 4,
+   "xp": 40,
+   "ticks": 5,
+   "in": {
+    "bronze_bar": 2,
+    "plank": 1
+   },
+   "out": {
+    "bronze_pick": 1
+   }
+  },
+  {
+   "id": "forge_bronze_hatchet",
+   "station": "anvil",
+   "skill": "smithing",
+   "level": 3,
+   "xp": 40,
+   "ticks": 5,
+   "in": {
+    "bronze_bar": 2,
+    "plank": 1
+   },
+   "out": {
+    "bronze_hatchet": 1
+   }
+  },
+  {
+   "id": "forge_bronze_cap",
+   "station": "anvil",
+   "skill": "smithing",
+   "level": 5,
+   "xp": 50,
+   "ticks": 5,
+   "in": {
+    "bronze_bar": 3
+   },
+   "out": {
+    "bronze_cap": 1
+   }
+  },
+  {
+   "id": "forge_bronze_greaves",
+   "station": "anvil",
+   "skill": "smithing",
+   "level": 7,
+   "xp": 62,
+   "ticks": 5,
+   "in": {
+    "bronze_bar": 4
+   },
+   "out": {
+    "bronze_greaves": 1
+   }
+  },
+  {
+   "id": "forge_bronze_scale_vest",
+   "station": "anvil",
+   "skill": "smithing",
+   "level": 9,
+   "xp": 78,
+   "ticks": 6,
+   "in": {
+    "bronze_bar": 5
+   },
+   "out": {
+    "bronze_scale_vest": 1
+   }
+  },
+  {
+   "id": "forge_bronze_battleaxe",
+   "station": "anvil",
+   "skill": "smithing",
+   "level": 6,
+   "xp": 55,
+   "ticks": 5,
+   "in": {
+    "bronze_bar": 3,
+    "plank": 1
+   },
+   "out": {
+    "bronze_battleaxe": 1
+   }
+  },
+  {
+   "id": "forge_bronze_mace",
+   "station": "anvil",
+   "skill": "smithing",
+   "level": 5,
+   "xp": 52,
+   "ticks": 5,
+   "in": {
+    "bronze_bar": 3,
+    "plank": 1
+   },
+   "out": {
+    "bronze_mace": 1
+   }
+  },
+  {
+   "id": "forge_iron_battleaxe",
+   "station": "anvil",
+   "skill": "smithing",
+   "level": 19,
+   "xp": 160,
+   "ticks": 6,
+   "in": {
+    "iron_bar": 3,
+    "plank": 1
+   },
+   "out": {
+    "iron_battleaxe": 1
+   }
+  },
+  {
+   "id": "forge_iron_mace",
+   "station": "anvil",
+   "skill": "smithing",
+   "level": 19,
+   "xp": 160,
+   "ticks": 6,
+   "in": {
+    "iron_bar": 3,
+    "plank": 1
+   },
+   "out": {
+    "iron_mace": 1
+   }
+  },
+  {
+   "id": "forge_iron_helm",
+   "station": "anvil",
+   "skill": "smithing",
+   "level": 20,
+   "xp": 165,
+   "ticks": 6,
+   "in": {
+    "iron_bar": 3
+   },
+   "out": {
+    "iron_helm": 1
+   }
+  },
+  {
+   "id": "forge_iron_kite_shield",
+   "station": "anvil",
+   "skill": "smithing",
+   "level": 21,
+   "xp": 180,
+   "ticks": 6,
+   "in": {
+    "iron_bar": 3,
+    "plank": 2
+   },
+   "out": {
+    "iron_kite_shield": 1
+   }
+  },
+  {
+   "id": "forge_iron_legguards",
+   "station": "anvil",
+   "skill": "smithing",
+   "level": 22,
+   "xp": 190,
+   "ticks": 7,
+   "in": {
+    "iron_bar": 3,
+    "plank": 2
+   },
+   "out": {
+    "iron_legguards": 1
+   }
+  },
+  {
+   "id": "forge_iron_hauberk",
+   "station": "anvil",
+   "skill": "smithing",
+   "level": 24,
+   "xp": 220,
+   "ticks": 8,
+   "in": {
+    "iron_bar": 4
+   },
+   "out": {
+    "iron_hauberk": 1
+   }
+  },
+  {
+   "id": "carve_ash_shortbow",
+   "station": "workbench",
+   "skill": "joinery",
+   "level": 5,
+   "xp": 40,
+   "ticks": 4,
+   "in": {
+    "ash_log": 4,
+    "reed_fibre": 6
+   },
+   "out": {
+    "ash_shortbow": 1
+   }
+  },
+  {
+   "id": "carve_alder_buckler",
+   "station": "workbench",
+   "skill": "joinery",
+   "level": 6,
+   "xp": 45,
+   "ticks": 4,
+   "in": {
+    "alder_log": 3,
+    "bronze_bar": 1
+   },
+   "out": {
+    "alder_buckler": 1
+   }
+  },
+  {
+   "id": "carve_alder_longbow",
+   "station": "workbench",
+   "skill": "joinery",
+   "level": 15,
+   "xp": 120,
+   "ticks": 6,
+   "in": {
+    "alder_log": 8,
+    "reed_fibre": 10
+   },
+   "out": {
+    "alder_longbow": 1
+   }
+  },
+  {
+   "id": "forge_steel_sword",
+   "station": "anvil",
+   "skill": "smithing",
+   "level": 27,
+   "xp": 230,
+   "ticks": 6,
+   "in": {
+    "steel_bar": 3
+   },
+   "out": {
+    "steel_sword": 1
+   }
+  },
+  {
+   "id": "forge_steel_mace",
+   "station": "anvil",
+   "skill": "smithing",
+   "level": 28,
+   "xp": 240,
+   "ticks": 6,
+   "in": {
+    "steel_bar": 3,
+    "plank": 1
+   },
+   "out": {
+    "steel_mace": 1
+   }
+  },
+  {
+   "id": "forge_steel_battleaxe",
+   "station": "anvil",
+   "skill": "smithing",
+   "level": 28,
+   "xp": 240,
+   "ticks": 6,
+   "in": {
+    "steel_bar": 3,
+    "plank": 1
+   },
+   "out": {
+    "steel_battleaxe": 1
+   }
+  },
+  {
+   "id": "forge_steel_helm",
+   "station": "anvil",
+   "skill": "smithing",
+   "level": 28,
+   "xp": 245,
+   "ticks": 6,
+   "in": {
+    "steel_bar": 3
+   },
+   "out": {
+    "steel_helm": 1
+   }
+  },
+  {
+   "id": "forge_steel_heater_shield",
+   "station": "anvil",
+   "skill": "smithing",
+   "level": 29,
+   "xp": 270,
+   "ticks": 6,
+   "in": {
+    "steel_bar": 3,
+    "plank": 2
+   },
+   "out": {
+    "steel_heater_shield": 1
+   }
+  },
+  {
+   "id": "forge_steel_legplates",
+   "station": "anvil",
+   "skill": "smithing",
+   "level": 30,
+   "xp": 285,
+   "ticks": 7,
+   "in": {
+    "steel_bar": 3,
+    "plank": 2
+   },
+   "out": {
+    "steel_legplates": 1
+   }
+  },
+  {
+   "id": "forge_steel_brigandine",
+   "station": "anvil",
+   "skill": "smithing",
+   "level": 32,
+   "xp": 330,
+   "ticks": 8,
+   "in": {
+    "steel_bar": 4
+   },
+   "out": {
+    "steel_brigandine": 1
+   }
+  },
+  {
+   "id": "forge_bronze_dagger",
+   "station": "anvil",
+   "skill": "smithing",
+   "level": 2,
+   "xp": 36,
+   "ticks": 4,
+   "in": {
+    "bronze_bar": 2
+   },
+   "out": {
+    "bronze_dagger": 1
+   }
+  },
+  {
+   "id": "forge_bronze_warhammer",
+   "station": "anvil",
+   "skill": "smithing",
+   "level": 8,
+   "xp": 70,
+   "ticks": 6,
+   "in": {
+    "bronze_bar": 4
+   },
+   "out": {
+    "bronze_warhammer": 1
+   }
+  },
+  {
+   "id": "forge_iron_dagger",
+   "station": "anvil",
+   "skill": "smithing",
+   "level": 14,
+   "xp": 100,
+   "ticks": 5,
+   "in": {
+    "iron_bar": 2
+   },
+   "out": {
+    "iron_dagger": 1
+   }
+  },
+  {
+   "id": "forge_iron_warhammer",
+   "station": "anvil",
+   "skill": "smithing",
+   "level": 23,
+   "xp": 200,
+   "ticks": 7,
+   "in": {
+    "iron_bar": 4
+   },
+   "out": {
+    "iron_warhammer": 1
+   }
+  },
+  {
+   "id": "forge_steel_dagger",
+   "station": "anvil",
+   "skill": "smithing",
+   "level": 26,
+   "xp": 155,
+   "ticks": 5,
+   "in": {
+    "steel_bar": 2
+   },
+   "out": {
+    "steel_dagger": 1
+   }
+  },
+  {
+   "id": "forge_steel_warhammer",
+   "station": "anvil",
+   "skill": "smithing",
+   "level": 31,
+   "xp": 300,
+   "ticks": 7,
+   "in": {
+    "steel_bar": 4
+   },
+   "out": {
+    "steel_warhammer": 1
+   }
+  },
+  {
+   "id": "grind_flour",
+   "station": "quern",
+   "skill": "cooking",
+   "level": 1,
+   "xp": 6,
+   "ticks": 3,
+   "in": {
+    "wheat": 2
+   },
+   "out": {
+    "flour": 1
+   }
+  },
+  {
+   "id": "bake_bread",
+   "station": "hearth",
+   "skill": "cooking",
+   "level": 3,
+   "xp": 20,
+   "ticks": 3,
+   "in": {
+    "flour": 1
+   },
+   "out": {
+    "bread": 1
+   },
+   "fail": {
+    "base": 0.4,
+    "per_level": 0.03,
+    "min": 0.04,
+    "item": "burnt_bread"
+   }
+  },
+  {
+   "id": "cook_beef",
+   "station": "hearth",
+   "skill": "cooking",
+   "level": 5,
+   "xp": 28,
+   "ticks": 3,
+   "in": {
+    "raw_beef": 1
+   },
+   "out": {
+    "cooked_beef": 1
+   },
+   "fail": {
+    "base": 0.45,
+    "per_level": 0.03,
+    "min": 0.05,
+    "item": "burnt_meat"
+   }
+  }
+ ]
+}

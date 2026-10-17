@@ -1,0 +1,1105 @@
+{
+ "currency": "marks",
+ "items": {
+  "marks": {
+   "name": "Marks",
+   "value": 1,
+   "stackable": true,
+   "category": "currency"
+  },
+  "ash_log": {
+   "name": "Ash log",
+   "value": 4,
+   "stackable": false,
+   "category": "resource"
+  },
+  "alder_log": {
+   "name": "Alder log",
+   "value": 11,
+   "stackable": false,
+   "category": "resource"
+  },
+  "blackthorn_log": {
+   "name": "Blackthorn log",
+   "value": 27,
+   "stackable": false,
+   "category": "resource"
+  },
+  "copper_ore": {
+   "name": "Copper ore",
+   "value": 6,
+   "stackable": false,
+   "category": "resource"
+  },
+  "tin_ore": {
+   "name": "Tin ore",
+   "value": 6,
+   "stackable": false,
+   "category": "resource",
+   "note": "Mined from tin outcrops (Mining 1), which sit beside copper. Smelt 1 tin + 1 copper ore into a bronze bar."
+  },
+  "iron_ore": {
+   "name": "Iron ore",
+   "value": 17,
+   "stackable": false,
+   "category": "resource"
+  },
+  "coal": {
+   "name": "Coal",
+   "value": 22,
+   "stackable": false,
+   "category": "resource"
+  },
+  "raw_carp": {
+   "name": "Raw carp",
+   "value": 5,
+   "stackable": false,
+   "category": "resource"
+  },
+  "raw_eel": {
+   "name": "Raw fen eel",
+   "value": 14,
+   "stackable": false,
+   "category": "resource"
+  },
+  "reed_fibre": {
+   "name": "Reed fibre",
+   "value": 3,
+   "stackable": true,
+   "category": "resource"
+  },
+  "fenroot": {
+   "name": "Fenroot",
+   "value": 9,
+   "stackable": false,
+   "category": "resource"
+  },
+  "bronze_bar": {
+   "name": "Bronze bar",
+   "value": 16,
+   "stackable": false,
+   "category": "material",
+   "note": "1 copper ore + 1 tin ore at a furnace (Smithing 1). Never fails."
+  },
+  "iron_bar": {
+   "name": "Iron bar",
+   "value": 34,
+   "stackable": false,
+   "category": "material",
+   "note": "1 iron ore at a furnace (Smithing 12); 40% of attempts fail and lose the ore."
+  },
+  "steel_bar": {
+   "name": "Steel bar",
+   "value": 50,
+   "stackable": false,
+   "category": "material",
+   "note": "1 iron ore + 1 coal at a furnace (Smithing 20). Never fails."
+  },
+  "plank": {
+   "name": "Ash plank",
+   "value": 9,
+   "stackable": false,
+   "category": "material"
+  },
+  "cooked_carp": {
+   "name": "Cooked carp",
+   "value": 9,
+   "stackable": false,
+   "category": "food",
+   "heals": 4
+  },
+  "cooked_eel": {
+   "name": "Cooked fen eel",
+   "value": 24,
+   "stackable": false,
+   "category": "food",
+   "heals": 9
+  },
+  "charred_fish": {
+   "name": "Charred fish",
+   "value": 0,
+   "stackable": false,
+   "category": "junk"
+  },
+  "marsh_tonic": {
+   "name": "Marsh tonic",
+   "value": 35,
+   "stackable": false,
+   "category": "consumable",
+   "note": "Brewing; +2 to a gathering skill for 100 ticks (M2)"
+  },
+  "bronze_hatchet": {
+   "name": "Bronze hatchet",
+   "value": 48,
+   "stackable": false,
+   "category": "tool",
+   "tool": {
+    "skill": "forestry",
+    "power": 0.1,
+    "durability": 220
+   }
+  },
+  "iron_hatchet": {
+   "name": "Iron hatchet",
+   "value": 100,
+   "stackable": false,
+   "category": "tool",
+   "tool": {
+    "skill": "forestry",
+    "power": 0.2,
+    "durability": 480
+   },
+   "requires": {
+    "forestry": 10
+   }
+  },
+  "bronze_pick": {
+   "name": "Bronze pick",
+   "value": 48,
+   "stackable": false,
+   "category": "tool",
+   "tool": {
+    "skill": "mining",
+    "power": 0.1,
+    "durability": 220
+   }
+  },
+  "iron_pick": {
+   "name": "Iron pick",
+   "value": 100,
+   "stackable": false,
+   "category": "tool",
+   "tool": {
+    "skill": "mining",
+    "power": 0.2,
+    "durability": 480
+   },
+   "requires": {
+    "mining": 10
+   }
+  },
+  "reed_rod": {
+   "name": "Reed rod",
+   "value": 25,
+   "stackable": false,
+   "category": "tool",
+   "tool": {
+    "skill": "angling",
+    "power": 0.1,
+    "durability": 180
+   }
+  },
+  "bronze_sword": {
+   "name": "Bronze sword",
+   "value": 62,
+   "stackable": false,
+   "category": "gear",
+   "gear": {
+    "slot": "weapon",
+    "line": "swords",
+    "tier": 1,
+    "atk": 4,
+    "str": 2,
+    "def": 0,
+    "level": 1,
+    "style": "melee",
+    "class": "sword"
+   },
+   "tool": {
+    "skill": "melee",
+    "power": 2,
+    "durability": 300
+   }
+  },
+  "iron_sword": {
+   "name": "Iron sword",
+   "value": 130,
+   "stackable": false,
+   "category": "gear",
+   "gear": {
+    "slot": "weapon",
+    "line": "swords",
+    "tier": 2,
+    "atk": 8,
+    "str": 4,
+    "def": 0,
+    "level": 10,
+    "style": "melee",
+    "class": "sword"
+   },
+   "tool": {
+    "skill": "melee",
+    "power": 4,
+    "durability": 600
+   }
+  },
+  "bronze_cap": {
+   "name": "Bronze cap",
+   "value": 65,
+   "stackable": false,
+   "category": "gear",
+   "gear": {
+    "slot": "head",
+    "line": "helmets",
+    "tier": 1,
+    "atk": 0,
+    "str": 0,
+    "def": 2,
+    "level": 1,
+    "durability": 400
+   }
+  },
+  "iron_helm": {
+   "name": "Iron helm",
+   "value": 130,
+   "stackable": false,
+   "category": "gear",
+   "gear": {
+    "slot": "head",
+    "line": "helmets",
+    "tier": 2,
+    "atk": 0,
+    "str": 0,
+    "def": 4,
+    "level": 10,
+    "durability": 800
+   }
+  },
+  "dusk_helm": {
+   "name": "Dusksteel helm",
+   "value": 560,
+   "stackable": false,
+   "category": "gear",
+   "gear": {
+    "slot": "head",
+    "line": "helmets",
+    "tier": 4,
+    "atk": 0,
+    "str": 0,
+    "def": 7,
+    "level": 30,
+    "durability": 1400
+   }
+  },
+  "bronze_scale_vest": {
+   "name": "Bronze scale vest",
+   "value": 95,
+   "stackable": false,
+   "category": "gear",
+   "gear": {
+    "slot": "body",
+    "line": "body",
+    "tier": 1,
+    "atk": 0,
+    "str": 0,
+    "def": 5,
+    "level": 1,
+    "durability": 400
+   }
+  },
+  "iron_hauberk": {
+   "name": "Iron hauberk",
+   "value": 180,
+   "stackable": false,
+   "category": "gear",
+   "gear": {
+    "slot": "body",
+    "line": "body",
+    "tier": 2,
+    "atk": 0,
+    "str": 0,
+    "def": 9,
+    "level": 10,
+    "durability": 800
+   }
+  },
+  "dusk_cuirass": {
+   "name": "Dusksteel cuirass",
+   "value": 720,
+   "stackable": false,
+   "category": "gear",
+   "gear": {
+    "slot": "body",
+    "line": "body",
+    "tier": 4,
+    "atk": 0,
+    "str": 0,
+    "def": 14,
+    "level": 30,
+    "durability": 1400
+   }
+  },
+  "bronze_greaves": {
+   "name": "Bronze greaves",
+   "value": 75,
+   "stackable": false,
+   "category": "gear",
+   "gear": {
+    "slot": "legs",
+    "line": "legs",
+    "tier": 1,
+    "atk": 0,
+    "str": 0,
+    "def": 3,
+    "level": 1,
+    "durability": 400
+   }
+  },
+  "iron_legguards": {
+   "name": "Iron legguards",
+   "value": 160,
+   "stackable": false,
+   "category": "gear",
+   "gear": {
+    "slot": "legs",
+    "line": "legs",
+    "tier": 2,
+    "atk": 0,
+    "str": 0,
+    "def": 6,
+    "level": 10,
+    "durability": 800
+   }
+  },
+  "dusk_tassets": {
+   "name": "Dusksteel tassets",
+   "value": 620,
+   "stackable": false,
+   "category": "gear",
+   "gear": {
+    "slot": "legs",
+    "line": "legs",
+    "tier": 4,
+    "atk": 0,
+    "str": 0,
+    "def": 10,
+    "level": 30,
+    "durability": 1400
+   }
+  },
+  "alder_buckler": {
+   "name": "Alder buckler",
+   "value": 60,
+   "stackable": false,
+   "category": "gear",
+   "gear": {
+    "slot": "shield",
+    "line": "shields",
+    "tier": 1,
+    "atk": 0,
+    "str": 0,
+    "def": 3,
+    "level": 1,
+    "durability": 400
+   }
+  },
+  "iron_kite_shield": {
+   "name": "Iron kite shield",
+   "value": 155,
+   "stackable": false,
+   "category": "gear",
+   "gear": {
+    "slot": "shield",
+    "line": "shields",
+    "tier": 2,
+    "atk": 0,
+    "str": 0,
+    "def": 6,
+    "level": 10,
+    "durability": 800
+   }
+  },
+  "dusk_tower_shield": {
+   "name": "Dusksteel tower shield",
+   "value": 600,
+   "stackable": false,
+   "category": "gear",
+   "gear": {
+    "slot": "shield",
+    "line": "shields",
+    "tier": 4,
+    "atk": 0,
+    "str": 0,
+    "def": 10,
+    "level": 30,
+    "durability": 1400
+   }
+  },
+  "dusk_sword": {
+   "name": "Dusksteel sword",
+   "value": 520,
+   "stackable": false,
+   "category": "gear",
+   "gear": {
+    "slot": "weapon",
+    "line": "swords",
+    "tier": 4,
+    "atk": 14,
+    "str": 7,
+    "def": 0,
+    "level": 30,
+    "style": "melee",
+    "class": "sword"
+   },
+   "tool": {
+    "skill": "melee",
+    "power": 6,
+    "durability": 1000
+   }
+  },
+  "bronze_battleaxe": {
+   "name": "Bronze battle axe",
+   "value": 70,
+   "stackable": false,
+   "category": "gear",
+   "gear": {
+    "slot": "weapon",
+    "line": "axes",
+    "tier": 1,
+    "atk": 2,
+    "str": 4,
+    "def": 0,
+    "level": 1,
+    "style": "melee",
+    "class": "battleaxe"
+   },
+   "tool": {
+    "skill": "melee",
+    "power": 3,
+    "durability": 300
+   }
+  },
+  "iron_battleaxe": {
+   "name": "Iron battle axe",
+   "value": 150,
+   "stackable": false,
+   "category": "gear",
+   "gear": {
+    "slot": "weapon",
+    "line": "axes",
+    "tier": 2,
+    "atk": 5,
+    "str": 8,
+    "def": 0,
+    "level": 10,
+    "style": "melee",
+    "class": "battleaxe"
+   },
+   "tool": {
+    "skill": "melee",
+    "power": 6,
+    "durability": 600
+   }
+  },
+  "dusk_battleaxe": {
+   "name": "Dusksteel battle axe",
+   "value": 600,
+   "stackable": false,
+   "category": "gear",
+   "gear": {
+    "slot": "weapon",
+    "line": "axes",
+    "tier": 4,
+    "atk": 9,
+    "str": 13,
+    "def": 0,
+    "level": 30,
+    "style": "melee",
+    "class": "battleaxe"
+   },
+   "tool": {
+    "skill": "melee",
+    "power": 9,
+    "durability": 1000
+   }
+  },
+  "bronze_mace": {
+   "name": "Bronze mace",
+   "value": 66,
+   "stackable": false,
+   "category": "gear",
+   "gear": {
+    "slot": "weapon",
+    "line": "maces",
+    "tier": 1,
+    "atk": 3,
+    "str": 3,
+    "def": 0,
+    "level": 1,
+    "style": "melee",
+    "class": "mace"
+   },
+   "tool": {
+    "skill": "melee",
+    "power": 2,
+    "durability": 300
+   }
+  },
+  "iron_mace": {
+   "name": "Iron mace",
+   "value": 140,
+   "stackable": false,
+   "category": "gear",
+   "gear": {
+    "slot": "weapon",
+    "line": "maces",
+    "tier": 2,
+    "atk": 6,
+    "str": 6,
+    "def": 0,
+    "level": 10,
+    "style": "melee",
+    "class": "mace"
+   },
+   "tool": {
+    "skill": "melee",
+    "power": 5,
+    "durability": 600
+   }
+  },
+  "dusk_mace": {
+   "name": "Dusksteel mace",
+   "value": 560,
+   "stackable": false,
+   "category": "gear",
+   "gear": {
+    "slot": "weapon",
+    "line": "maces",
+    "tier": 4,
+    "atk": 11,
+    "str": 10,
+    "def": 0,
+    "level": 30,
+    "style": "melee",
+    "class": "mace"
+   },
+   "tool": {
+    "skill": "melee",
+    "power": 8,
+    "durability": 1000
+   }
+  },
+  "ash_shortbow": {
+   "name": "Ash shortbow",
+   "value": 55,
+   "stackable": false,
+   "category": "gear",
+   "gear": {
+    "slot": "weapon",
+    "line": "archery",
+    "tier": 1,
+    "atk": 5,
+    "str": 2,
+    "def": 0,
+    "level": 1,
+    "style": "ranged",
+    "class": "bow"
+   },
+   "tool": {
+    "skill": "melee",
+    "power": 2,
+    "durability": 300
+   }
+  },
+  "alder_longbow": {
+   "name": "Alder longbow",
+   "value": 175,
+   "stackable": false,
+   "category": "gear",
+   "gear": {
+    "slot": "weapon",
+    "line": "archery",
+    "tier": 2,
+    "atk": 9,
+    "str": 4,
+    "def": 0,
+    "level": 10,
+    "style": "ranged",
+    "class": "bow"
+   },
+   "tool": {
+    "skill": "melee",
+    "power": 4,
+    "durability": 600
+   }
+  },
+  "blackthorn_warbow": {
+   "name": "Blackthorn warbow",
+   "value": 540,
+   "stackable": false,
+   "category": "gear",
+   "gear": {
+    "slot": "weapon",
+    "line": "archery",
+    "tier": 3,
+    "atk": 14,
+    "str": 7,
+    "def": 0,
+    "level": 25,
+    "style": "ranged",
+    "class": "bow"
+   },
+   "tool": {
+    "skill": "melee",
+    "power": 6,
+    "durability": 1000
+   }
+  },
+  "bronze_arrows": {
+   "name": "Bronze arrows",
+   "value": 2,
+   "stackable": true,
+   "category": "gear",
+   "gear": {
+    "slot": "ammo",
+    "line": "archery",
+    "tier": 1,
+    "atk": 0,
+    "str": 1,
+    "def": 0,
+    "level": 1
+   }
+  },
+  "iron_arrows": {
+   "name": "Iron arrows",
+   "value": 6,
+   "stackable": true,
+   "category": "gear",
+   "gear": {
+    "slot": "ammo",
+    "line": "archery",
+    "tier": 2,
+    "atk": 0,
+    "str": 2,
+    "def": 0,
+    "level": 10
+   }
+  },
+  "bones": {
+   "name": "Bones",
+   "value": 4,
+   "stackable": false,
+   "category": "bones",
+   "bury_xp": 5,
+   "note": "Always dropped by creatures. Tap and Bury: Prayer XP and restores 20% of your prayer points.",
+   "prayer_restore": 0.2
+  },
+  "raw_rat_meat": {
+   "name": "Raw rat meat",
+   "value": 2,
+   "stackable": false,
+   "category": "resource"
+  },
+  "cooked_rat_meat": {
+   "name": "Cooked rat meat",
+   "value": 4,
+   "stackable": false,
+   "category": "food",
+   "heals": 3
+  },
+  "burnt_meat": {
+   "name": "Burnt meat",
+   "value": 0,
+   "stackable": false,
+   "category": "junk"
+  },
+  "steel_sword": {
+   "name": "Steel sword",
+   "value": 195,
+   "stackable": false,
+   "category": "gear",
+   "gear": {
+    "slot": "weapon",
+    "line": "swords",
+    "tier": 3,
+    "atk": 11,
+    "str": 5,
+    "def": 0,
+    "level": 20,
+    "style": "melee",
+    "class": "sword"
+   },
+   "tool": {
+    "skill": "melee",
+    "power": 5,
+    "durability": 800
+   }
+  },
+  "steel_mace": {
+   "name": "Steel mace",
+   "value": 205,
+   "stackable": false,
+   "category": "gear",
+   "gear": {
+    "slot": "weapon",
+    "line": "maces",
+    "tier": 3,
+    "atk": 8,
+    "str": 8,
+    "def": 0,
+    "level": 20,
+    "style": "melee",
+    "class": "mace"
+   },
+   "tool": {
+    "skill": "melee",
+    "power": 6,
+    "durability": 800
+   }
+  },
+  "steel_battleaxe": {
+   "name": "Steel battle axe",
+   "value": 215,
+   "stackable": false,
+   "category": "gear",
+   "gear": {
+    "slot": "weapon",
+    "line": "axes",
+    "tier": 3,
+    "atk": 7,
+    "str": 10,
+    "def": 0,
+    "level": 20,
+    "style": "melee",
+    "class": "battleaxe"
+   },
+   "tool": {
+    "skill": "melee",
+    "power": 7,
+    "durability": 800
+   }
+  },
+  "steel_helm": {
+   "name": "Steel helm",
+   "value": 195,
+   "stackable": false,
+   "category": "gear",
+   "gear": {
+    "slot": "head",
+    "line": "helmets",
+    "tier": 3,
+    "atk": 0,
+    "str": 0,
+    "def": 5,
+    "level": 20,
+    "durability": 1100
+   }
+  },
+  "steel_brigandine": {
+   "name": "Steel brigandine",
+   "value": 260,
+   "stackable": false,
+   "category": "gear",
+   "gear": {
+    "slot": "body",
+    "line": "body",
+    "tier": 3,
+    "atk": 0,
+    "str": 0,
+    "def": 11,
+    "level": 20,
+    "durability": 1100
+   }
+  },
+  "steel_legplates": {
+   "name": "Steel legplates",
+   "value": 225,
+   "stackable": false,
+   "category": "gear",
+   "gear": {
+    "slot": "legs",
+    "line": "legs",
+    "tier": 3,
+    "atk": 0,
+    "str": 0,
+    "def": 8,
+    "level": 20,
+    "durability": 1100
+   }
+  },
+  "steel_heater_shield": {
+   "name": "Steel heater shield",
+   "value": 220,
+   "stackable": false,
+   "category": "gear",
+   "gear": {
+    "slot": "shield",
+    "line": "shields",
+    "tier": 3,
+    "atk": 0,
+    "str": 0,
+    "def": 8,
+    "level": 20,
+    "durability": 1100
+   }
+  },
+  "steel_arrows": {
+   "name": "Steel arrows",
+   "value": 10,
+   "stackable": true,
+   "category": "gear",
+   "gear": {
+    "slot": "ammo",
+    "line": "archery",
+    "tier": 3,
+    "atk": 0,
+    "str": 3,
+    "def": 0,
+    "level": 20
+   }
+  },
+  "bronze_dagger": {
+   "name": "Bronze dagger",
+   "value": 42,
+   "stackable": false,
+   "category": "gear",
+   "gear": {
+    "slot": "weapon",
+    "line": "swords",
+    "tier": 1,
+    "atk": 6,
+    "str": 1,
+    "def": 0,
+    "level": 1,
+    "style": "melee",
+    "class": "dagger"
+   },
+   "tool": {
+    "skill": "melee",
+    "power": 1,
+    "durability": 250
+   }
+  },
+  "bronze_warhammer": {
+   "name": "Bronze warhammer",
+   "value": 85,
+   "stackable": false,
+   "category": "gear",
+   "gear": {
+    "slot": "weapon",
+    "line": "maces",
+    "tier": 1,
+    "atk": 0,
+    "str": 6,
+    "def": 0,
+    "level": 1,
+    "style": "melee",
+    "class": "warhammer"
+   },
+   "tool": {
+    "skill": "melee",
+    "power": 4,
+    "durability": 350
+   }
+  },
+  "iron_dagger": {
+   "name": "Iron dagger",
+   "value": 90,
+   "stackable": false,
+   "category": "gear",
+   "gear": {
+    "slot": "weapon",
+    "line": "swords",
+    "tier": 2,
+    "atk": 11,
+    "str": 2,
+    "def": 0,
+    "level": 10,
+    "style": "melee",
+    "class": "dagger"
+   },
+   "tool": {
+    "skill": "melee",
+    "power": 2,
+    "durability": 500
+   }
+  },
+  "iron_warhammer": {
+   "name": "Iron warhammer",
+   "value": 175,
+   "stackable": false,
+   "category": "gear",
+   "gear": {
+    "slot": "weapon",
+    "line": "maces",
+    "tier": 2,
+    "atk": 2,
+    "str": 11,
+    "def": 0,
+    "level": 10,
+    "style": "melee",
+    "class": "warhammer"
+   },
+   "tool": {
+    "skill": "melee",
+    "power": 7,
+    "durability": 700
+   }
+  },
+  "steel_dagger": {
+   "name": "Steel dagger",
+   "value": 130,
+   "stackable": false,
+   "category": "gear",
+   "gear": {
+    "slot": "weapon",
+    "line": "swords",
+    "tier": 3,
+    "atk": 15,
+    "str": 3,
+    "def": 0,
+    "level": 20,
+    "style": "melee",
+    "class": "dagger"
+   },
+   "tool": {
+    "skill": "melee",
+    "power": 3,
+    "durability": 700
+   }
+  },
+  "steel_warhammer": {
+   "name": "Steel warhammer",
+   "value": 255,
+   "stackable": false,
+   "category": "gear",
+   "gear": {
+    "slot": "weapon",
+    "line": "maces",
+    "tier": 3,
+    "atk": 4,
+    "str": 14,
+    "def": 0,
+    "level": 20,
+    "style": "melee",
+    "class": "warhammer"
+   },
+   "tool": {
+    "skill": "melee",
+    "power": 9,
+    "durability": 900
+   }
+  },
+  "dusk_dagger": {
+   "name": "Dusksteel dagger",
+   "value": 440,
+   "stackable": false,
+   "category": "gear",
+   "gear": {
+    "slot": "weapon",
+    "line": "swords",
+    "tier": 4,
+    "atk": 19,
+    "str": 4,
+    "def": 0,
+    "level": 30,
+    "style": "melee",
+    "class": "dagger"
+   },
+   "tool": {
+    "skill": "melee",
+    "power": 4,
+    "durability": 900
+   }
+  },
+  "dusk_warhammer": {
+   "name": "Dusksteel warhammer",
+   "value": 640,
+   "stackable": false,
+   "category": "gear",
+   "gear": {
+    "slot": "weapon",
+    "line": "maces",
+    "tier": 4,
+    "atk": 6,
+    "str": 18,
+    "def": 0,
+    "level": 30,
+    "style": "melee",
+    "class": "warhammer"
+   },
+   "tool": {
+    "skill": "melee",
+    "power": 11,
+    "durability": 1100
+   }
+  },
+  "feather": {
+   "name": "Feather",
+   "value": 2,
+   "stackable": true,
+   "category": "resource",
+   "note": "0.3.1 chicken drop (fletching later)"
+  },
+  "raw_chicken": {
+   "name": "Raw chicken",
+   "value": 2,
+   "stackable": false,
+   "category": "resource"
+  },
+  "cooked_chicken": {
+   "name": "Cooked chicken",
+   "value": 5,
+   "stackable": false,
+   "category": "food",
+   "heals": 3
+  },
+  "wolf_pelt": {
+   "name": "Wolf pelt",
+   "value": 18,
+   "stackable": false,
+   "category": "resource",
+   "note": "0.3.1 wolf drop"
+  },
+  "wheat": {
+   "name": "Wheat",
+   "value": 2,
+   "stackable": true,
+   "category": "resource",
+   "note": "0.3.1 village fields (Foraging); grind 2 at a quern for flour"
+  },
+  "flour": {
+   "name": "Flour",
+   "value": 5,
+   "stackable": false,
+   "category": "resource",
+   "note": "0.3.1 quern: 2 wheat -> 1 flour (Cooking 1)"
+  },
+  "bread": {
+   "name": "Bread",
+   "value": 9,
+   "stackable": false,
+   "category": "food",
+   "heals": 4,
+   "note": "0.3.1 hearth: flour -> bread (Cooking 3)"
+  },
+  "burnt_bread": {
+   "name": "Burnt bread",
+   "value": 0,
+   "stackable": false,
+   "category": "junk"
+  },
+  "raw_beef": {
+   "name": "Raw beef",
+   "value": 3,
+   "stackable": false,
+   "category": "resource",
+   "note": "0.3.1 cow drop (always)"
+  },
+  "cooked_beef": {
+   "name": "Cooked beef",
+   "value": 8,
+   "stackable": false,
+   "category": "food",
+   "heals": 5,
+   "note": "0.3.1 hearth: Cooking 5"
+  },
+  "cowhide": {
+   "name": "Cowhide",
+   "value": 12,
+   "stackable": false,
+   "category": "resource",
+   "note": "0.3.1 cow drop (always); sells now, leather Crafting later"
+  }
+ }
+}

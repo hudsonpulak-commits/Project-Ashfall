@@ -1,0 +1,249 @@
+{
+ "id": "barrowby",
+ "name": "Barrowby",
+ "kind": "village",
+ "between": [
+  "fenhollow",
+  "saltmere"
+ ],
+ "tagline": "A herding hamlet on the Salt road.",
+ "origin": [
+  148,
+  126
+ ],
+ "spawn": [
+  160,
+  133
+ ],
+ "rows": [
+  "............=...........",
+  "............=...........",
+  "............=...........",
+  "............=...........",
+  "...=........=...........",
+  "...=........=...........",
+  "...=..H...O...Q...=.....",
+  "...==================...",
+  "....=..............=....",
+  "........................",
+  "........................",
+  "........................",
+  "........................",
+  "........................"
+ ],
+ "transparent": ".",
+ "tiles": {
+  "=": "path"
+ },
+ "objects": {
+  "H": {
+   "object": "hearth",
+   "ground": "path"
+  },
+  "O": {
+   "object": "well",
+   "ground": "path"
+  },
+  "Q": {
+   "object": "quern",
+   "ground": "path"
+  }
+ },
+ "roof": "#8a7050",
+ "gate": [
+  12,
+  0
+ ],
+ "buildings": [
+  {
+   "id": "barrowby_house_1",
+   "kind": "house",
+   "name": "Hay's cottage",
+   "keeper": "Dunstan Hay",
+   "keeper_sprite": "villager",
+   "sign_sprite": "sign_house",
+   "roof": "#8a7050",
+   "rect": [
+    1,
+    9,
+    7,
+    5
+   ],
+   "door": [
+    [
+     4,
+     9
+    ]
+   ],
+   "keeper_at": [
+    4,
+    12
+   ],
+   "stand": [
+    4,
+    11
+   ],
+   "sign": [
+    5,
+    9
+   ],
+   "props": [
+    {
+     "object": "barrel",
+     "at": [
+      2,
+      12
+     ]
+    },
+    {
+     "object": "sacks",
+     "at": [
+      6,
+      12
+     ]
+    }
+   ]
+  },
+  {
+   "id": "barrowby_house_2",
+   "kind": "house",
+   "name": "Crook's cottage",
+   "keeper": "Mabel Crook",
+   "keeper_sprite": "villager",
+   "sign_sprite": "sign_house",
+   "roof": "#8a7050",
+   "rect": [
+    16,
+    9,
+    7,
+    5
+   ],
+   "door": [
+    [
+     19,
+     9
+    ]
+   ],
+   "keeper_at": [
+    19,
+    12
+   ],
+   "stand": [
+    19,
+    11
+   ],
+   "sign": [
+    20,
+    9
+   ],
+   "props": [
+    {
+     "object": "crate",
+     "at": [
+      17,
+      12
+     ]
+    },
+    {
+     "object": "barrel",
+     "at": [
+      21,
+      12
+     ]
+    }
+   ]
+  },
+  {
+   "id": "barrowby_house_3",
+   "kind": "house",
+   "name": "Oxley's cottage",
+   "keeper": "Pell Oxley",
+   "keeper_sprite": "villager",
+   "sign_sprite": "sign_house",
+   "roof": "#8a7050",
+   "rect": [
+    16,
+    1,
+    7,
+    5
+   ],
+   "door": [
+    [
+     19,
+     5
+    ]
+   ],
+   "keeper_at": [
+    19,
+    2
+   ],
+   "stand": [
+    19,
+    3
+   ],
+   "sign": [
+    20,
+    5
+   ],
+   "props": [
+    {
+     "object": "sacks",
+     "at": [
+      17,
+      2
+     ]
+    },
+    {
+     "object": "crate",
+     "at": [
+      21,
+      2
+     ]
+    }
+   ]
+  }
+ ],
+ "farms": [
+  {
+   "id": "barrowby_wheat",
+   "rect": [
+    0,
+    15,
+    11,
+    8
+   ],
+   "crop": "wheat",
+   "ground": "dirt",
+   "gate": [
+    5,
+    15
+   ]
+  }
+ ],
+ "pastures": [
+  {
+   "id": "barrowby_pasture",
+   "rect": [
+    12,
+    15,
+    12,
+    8
+   ],
+   "enemy": "cow",
+   "count": 4,
+   "gate": [
+    18,
+    15
+   ]
+  }
+ ],
+ "citizens": {
+  "area": [
+   3,
+   5,
+   17,
+   4
+  ],
+  "count": 3
+ }
+}

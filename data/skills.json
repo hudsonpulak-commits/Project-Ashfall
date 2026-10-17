@@ -1,0 +1,114 @@
+{
+ "max_level": 60,
+ "xp_curve": {
+  "base": 100,
+  "growth": 1.085,
+  "note": "xp to reach level L = floor(base * (growth^(L-1) - 1) / (growth - 1)); L2=100, L10=1275, L30=11356, L60=143679"
+ },
+ "skills": [
+  {
+   "id": "forestry",
+   "name": "Forestry",
+   "category": "gathering",
+   "short": "FOR",
+   "color": "#5f9a46",
+   "desc": "Fell trees for logs. Feeds Joinery and Hearth fuel."
+  },
+  {
+   "id": "mining",
+   "name": "Mining",
+   "category": "gathering",
+   "short": "MIN",
+   "color": "#9a9ea6",
+   "desc": "Break ore and coal from outcrops. Feeds Smithing."
+  },
+  {
+   "id": "angling",
+   "name": "Angling",
+   "category": "gathering",
+   "short": "ANG",
+   "color": "#4a8ab0",
+   "desc": "Fish the fen pools and rivers. Feeds Cooking."
+  },
+  {
+   "id": "foraging",
+   "name": "Foraging",
+   "category": "gathering",
+   "short": "FRG",
+   "color": "#a8b84a",
+   "desc": "Gather fenroot, reeds and fungi. Feeds Brewing and Joinery (fibre)."
+  },
+  {
+   "id": "smithing",
+   "name": "Smithing",
+   "category": "production",
+   "short": "SMI",
+   "color": "#c8783c",
+   "desc": "Smelt bars and forge tools and blades. Tools wear out, so smiths are always in demand."
+  },
+  {
+   "id": "joinery",
+   "name": "Joinery",
+   "category": "production",
+   "short": "JOI",
+   "color": "#a8784a",
+   "desc": "Turn logs and fibre into planks, handles, rods and bows."
+  },
+  {
+   "id": "cooking",
+   "name": "Cooking",
+   "category": "production",
+   "short": "COO",
+   "color": "#e0a040",
+   "desc": "Cook fish and stews that restore Vitality in a fight."
+  },
+  {
+   "id": "brewing",
+   "name": "Brewing",
+   "category": "production",
+   "short": "BRW",
+   "color": "#5aa86a",
+   "desc": "Brew tonics from fen herbs: temporary skill and combat boosts."
+  },
+  {
+   "id": "attack",
+   "name": "Attack",
+   "category": "combat",
+   "short": "ATK",
+   "color": "#c84a3a",
+   "desc": "Accuracy: how often your blows land. Needed to wield daggers, swords and battle axes (stab / slash). Trains in the Accurate style."
+  },
+  {
+   "id": "strength",
+   "name": "Strength",
+   "category": "combat",
+   "short": "STR",
+   "color": "#e0883a",
+   "desc": "Max hit: how hard you hit. Needed to wield maces and warhammers (crush, armour breakers). Trains in the Aggressive style."
+  },
+  {
+   "id": "defence",
+   "name": "Defence",
+   "category": "combat",
+   "short": "DEF",
+   "color": "#5a8ac8",
+   "desc": "Blocking: enemies hit you less often. Needed to wear armour. Trains a little every time an enemy swings at you; a full same-tier armour set multiplies it."
+  },
+  {
+   "id": "vitality",
+   "name": "Vitality",
+   "category": "combat",
+   "short": "VIT",
+   "color": "#e86a8a",
+   "desc": "Your health pool. Trains alongside every combat skill."
+  },
+  {
+   "id": "prayer",
+   "name": "Prayer",
+   "category": "combat",
+   "short": "PRA",
+   "color": "#e8e0b0",
+   "desc": "Bury bones to train. Prayer effects arrive in a later milestone."
+  }
+ ]
+}

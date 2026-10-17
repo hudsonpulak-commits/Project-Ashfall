@@ -1,0 +1,249 @@
+{
+ "id": "oxley",
+ "name": "Oxley",
+ "kind": "village",
+ "between": [
+  "cinderholt",
+  "saltmere"
+ ],
+ "tagline": "Cattle country between the hills and the sea.",
+ "origin": [
+  276,
+  -26
+ ],
+ "spawn": [
+  288,
+  -20
+ ],
+ "rows": [
+  "........................",
+  "........................",
+  "........................",
+  "........................",
+  "........................",
+  "....=..............=....",
+  "...=====================",
+  "...=..H...O...Q...=.....",
+  "...=........=...........",
+  "...=........=...........",
+  "............=...........",
+  "............=...........",
+  "............=...........",
+  "............=..........."
+ ],
+ "transparent": ".",
+ "tiles": {
+  "=": "path"
+ },
+ "objects": {
+  "H": {
+   "object": "hearth",
+   "ground": "path"
+  },
+  "O": {
+   "object": "well",
+   "ground": "path"
+  },
+  "Q": {
+   "object": "quern",
+   "ground": "path"
+  }
+ },
+ "roof": "#946a44",
+ "gate": [
+  23,
+  6
+ ],
+ "buildings": [
+  {
+   "id": "oxley_house_1",
+   "kind": "house",
+   "name": "Byre's cottage",
+   "keeper": "Tamsin Byre",
+   "keeper_sprite": "villager",
+   "sign_sprite": "sign_house",
+   "roof": "#946a44",
+   "rect": [
+    1,
+    0,
+    7,
+    5
+   ],
+   "door": [
+    [
+     4,
+     4
+    ]
+   ],
+   "keeper_at": [
+    4,
+    1
+   ],
+   "stand": [
+    4,
+    2
+   ],
+   "sign": [
+    5,
+    4
+   ],
+   "props": [
+    {
+     "object": "barrel",
+     "at": [
+      2,
+      1
+     ]
+    },
+    {
+     "object": "sacks",
+     "at": [
+      6,
+      1
+     ]
+    }
+   ]
+  },
+  {
+   "id": "oxley_house_2",
+   "kind": "house",
+   "name": "Plough's cottage",
+   "keeper": "Rufus Plough",
+   "keeper_sprite": "villager",
+   "sign_sprite": "sign_house",
+   "roof": "#946a44",
+   "rect": [
+    16,
+    0,
+    7,
+    5
+   ],
+   "door": [
+    [
+     19,
+     4
+    ]
+   ],
+   "keeper_at": [
+    19,
+    1
+   ],
+   "stand": [
+    19,
+    2
+   ],
+   "sign": [
+    20,
+    4
+   ],
+   "props": [
+    {
+     "object": "crate",
+     "at": [
+      17,
+      1
+     ]
+    },
+    {
+     "object": "barrel",
+     "at": [
+      21,
+      1
+     ]
+    }
+   ]
+  },
+  {
+   "id": "oxley_house_3",
+   "kind": "house",
+   "name": "Wold's cottage",
+   "keeper": "Edda Wold",
+   "keeper_sprite": "villager",
+   "sign_sprite": "sign_house",
+   "roof": "#946a44",
+   "rect": [
+    16,
+    8,
+    7,
+    5
+   ],
+   "door": [
+    [
+     19,
+     8
+    ]
+   ],
+   "keeper_at": [
+    19,
+    11
+   ],
+   "stand": [
+    19,
+    10
+   ],
+   "sign": [
+    20,
+    8
+   ],
+   "props": [
+    {
+     "object": "sacks",
+     "at": [
+      17,
+      11
+     ]
+    },
+    {
+     "object": "crate",
+     "at": [
+      21,
+      11
+     ]
+    }
+   ]
+  }
+ ],
+ "farms": [
+  {
+   "id": "oxley_wheat",
+   "rect": [
+    0,
+    -9,
+    11,
+    8
+   ],
+   "crop": "wheat",
+   "ground": "dirt",
+   "gate": [
+    5,
+    -2
+   ]
+  }
+ ],
+ "pastures": [
+  {
+   "id": "oxley_pasture",
+   "rect": [
+    12,
+    -9,
+    12,
+    8
+   ],
+   "enemy": "cow",
+   "count": 4,
+   "gate": [
+    18,
+    -2
+   ]
+  }
+ ],
+ "citizens": {
+  "area": [
+   3,
+   5,
+   17,
+   4
+  ],
+  "count": 3
+ }
+}

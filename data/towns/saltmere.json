@@ -1,0 +1,762 @@
+{
+ "id": "saltmere",
+ "name": "Saltmere",
+ "origin": [
+  277,
+  151
+ ],
+ "spawn": [
+  300,
+  170
+ ],
+ "rows": [
+  "@@@@@@@@@@@@@@@@@@@@@@GGG@@@@@@@@@@@@@@@@@@@@@",
+  "@,,,,,,,,,,,,,,,,,,,,,,=,,,,,,,,,,~~~~~~~~~~~@",
+  "@,,,.........,.........=.........,~~~~~~~~~~~@",
+  "@,,,.........,.........=.........,~~~~~~~~~~~@",
+  "@,,,.........,.........,.........,~~~~~~~~~~~@",
+  "@,,,.........,.........,.........,~~~~~~~~~~~@",
+  "@,,,.........,.........,.........,~~~~~~f~~~~@",
+  "@,,,.........,.........,.........,~~~~~~~~~~~@",
+  "@,,,.........,.........,.........###########~@",
+  "@,,,,,,,,,,,,,,,,,,,,,,,.........###########~@",
+  "@,,,============================,,~~~~~~~~~~~@",
+  "@,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,~~~~~~~~~~~@",
+  "@,,,.........,.........,.........,~~~~~~~~~~~@",
+  "@,,,.........,.........,.........~~~~~~~~~~~~@",
+  "@,,,.........,.........,.........~~~~~~~~~f~~@",
+  "@,,,.........,.........,.........~~~~~~~~~~~~@",
+  "@,,,.........,.........,.........###########~@",
+  "@,,,.........,.........,.........############@",
+  "G,,,.........,.........P.........############G",
+  "G===,==,==,==,==PPPPPPPPPPP=#=############===G",
+  "G,,,,l,,,,,,,,,,PPPPPPPPPPP,=################G",
+  "@,,,,,,,,,,,,,,,BPPPEPPPHPP,=################@",
+  "@,,,,,,,,,,,,,,,PPPPPPPPPPP,=##~~~~~~~~~f~~~~@",
+  "@,,,,,,,,,,,,,,,WPPPPPDPPPP,=##~~~~~~~~~~~~~~@",
+  "@,,,,,,,l,,,,,,,,,,,,,,,,,,,=###############~@",
+  "@,,,,,,,,,,,,,,,,,,,,,,,,,,,=###############~@",
+  "@,,,,,,,,,,,,,,,,,,,,,,,,,,,=##~~~~~~~~~~~~~~@",
+  "@,,,===================,=======~~~~~~~~~~~~~~@",
+  "@,,,###########################~~~~~~~~~~~~~~@",
+  "@,,,,,,,,,,,,,,,,,,,,,,,,,,,=##~~~~~~~~~~~~~~@",
+  "@,,,,,,,,,,,,,,,,,,,,,,,,,,,~~~~~~~~f~~~~~~~~@",
+  "@,,,,,,,,,,,,,,,,,,,,,,,,,,~~~~~~~~~~~~~~~~~~@",
+  "@,,,,,,,,,,,,~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~@",
+  "@,,,,,,,,,,,,,,~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~@",
+  "@,,,,,,,,,,,,,,,,~~~~~~=f~~~~~~~~~~~~~~~~~~~~@",
+  "@,,,,,,,,,,,,,,,,,,~~~~=~~~~~~~~~~~~~~~~~~~~~@",
+  "@,,,,,,,,,,,,,,,,,,,,~~=~~~~~~~~~~~~~~~~~~~~~@",
+  "@[[[[[[[[[[[[[[[[[[[[[GGG[[[[[[[[[[[[[[[[[[[[@"
+ ],
+ "tiles": {
+  ".": "sand",
+  ":": "dirt",
+  ",": "sand",
+  "~": "water",
+  "m": "marsh",
+  "=": "planks",
+  "#": "planks",
+  "_": "boardwalk",
+  "P": "plaster",
+  "%": "wall",
+  "^": "wall_front",
+  ";": "floor",
+  "+": "doorway",
+  "@": "sandstone_wall",
+  "[": "sandstone_front",
+  "G": "gate_sand"
+ },
+ "objects": {
+  "a": {
+   "object": "ash_tree",
+   "ground": "sand"
+  },
+  "l": {
+   "object": "alder_tree",
+   "ground": "sand"
+  },
+  "b": {
+   "object": "blackthorn_tree",
+   "ground": "sand"
+  },
+  "c": {
+   "object": "copper_rock",
+   "ground": "dirt"
+  },
+  "i": {
+   "object": "iron_rock",
+   "ground": "dirt"
+  },
+  "k": {
+   "object": "coal_rock",
+   "ground": "dirt"
+  },
+  "f": {
+   "object": "fishing_spot",
+   "ground": "water"
+  },
+  "r": {
+   "object": "reed_bed",
+   "ground": "marsh"
+  },
+  "g": {
+   "object": "fenroot_patch",
+   "ground": "marsh"
+  },
+  "B": {
+   "object": "bank_chest",
+   "ground": "plaster"
+  },
+  "E": {
+   "object": "exchange_board",
+   "ground": "plaster"
+  },
+  "H": {
+   "object": "hearth",
+   "ground": "plaster"
+  },
+  "F": {
+   "object": "furnace",
+   "ground": "cobble"
+  },
+  "D": {
+   "object": "training_dummy",
+   "ground": "plaster"
+  },
+  "W": {
+   "object": "workbench",
+   "ground": "plaster"
+  },
+  "A": {
+   "object": "anvil",
+   "ground": "cobble"
+  },
+  "S": {
+   "object": "general_store",
+   "ground": "cobble"
+  },
+  "1": {
+   "object": "shop_helmets",
+   "ground": "cobble"
+  },
+  "2": {
+   "object": "shop_swords",
+   "ground": "cobble"
+  },
+  "3": {
+   "object": "shop_archery",
+   "ground": "cobble"
+  },
+  "4": {
+   "object": "shop_body",
+   "ground": "cobble"
+  },
+  "5": {
+   "object": "shop_shields",
+   "ground": "cobble"
+  },
+  "6": {
+   "object": "shop_axes",
+   "ground": "cobble"
+  },
+  "7": {
+   "object": "shop_legs",
+   "ground": "cobble"
+  },
+  "8": {
+   "object": "shop_maces",
+   "ground": "cobble"
+  },
+  "t": {
+   "object": "tin_rock",
+   "ground": "dirt"
+  },
+  "e": {
+   "object": "embers",
+   "ground": "dirt"
+  }
+ },
+ "roof": "#2a6a9a",
+ "building_style": "plaster",
+ "buildings": [
+  {
+   "id": "saltmere_general",
+   "kind": "shop",
+   "shop": "general",
+   "style": "plaster",
+   "rect": [
+    4,
+    12,
+    9,
+    7
+   ],
+   "door": [
+    [
+     8,
+     18
+    ]
+   ],
+   "counter": [
+    [
+     6,
+     14
+    ],
+    [
+     7,
+     14
+    ],
+    [
+     8,
+     14
+    ],
+    [
+     9,
+     14
+    ],
+    [
+     10,
+     14
+    ]
+   ],
+   "keeper_at": [
+    8,
+    13
+   ],
+   "stand": [
+    8,
+    15
+   ],
+   "sign": [
+    9,
+    18
+   ],
+   "roof": "#2a6a9a",
+   "props": [
+    {
+     "object": "shelf_goods",
+     "at": [
+      5,
+      13
+     ]
+    },
+    {
+     "object": "shelf_goods",
+     "at": [
+      11,
+      13
+     ]
+    },
+    {
+     "object": "barrel",
+     "at": [
+      5,
+      14
+     ]
+    },
+    {
+     "object": "barrel",
+     "at": [
+      11,
+      14
+     ]
+    },
+    {
+     "object": "crate",
+     "at": [
+      5,
+      16
+     ]
+    },
+    {
+     "object": "sacks",
+     "at": [
+      11,
+      16
+     ]
+    }
+   ],
+   "name": "Saltmere Chandlery",
+   "keeper": "Nell Brine"
+  },
+  {
+   "id": "saltmere_legs",
+   "kind": "shop",
+   "shop": "legs",
+   "style": "plaster",
+   "rect": [
+    14,
+    12,
+    9,
+    7
+   ],
+   "door": [
+    [
+     18,
+     18
+    ]
+   ],
+   "counter": [
+    [
+     16,
+     14
+    ],
+    [
+     17,
+     14
+    ],
+    [
+     18,
+     14
+    ],
+    [
+     19,
+     14
+    ],
+    [
+     20,
+     14
+    ]
+   ],
+   "keeper_at": [
+    18,
+    13
+   ],
+   "stand": [
+    18,
+    15
+   ],
+   "sign": [
+    19,
+    18
+   ],
+   "roof": "#2a6a9a",
+   "props": [
+    {
+     "object": "shelf_goods",
+     "at": [
+      15,
+      13
+     ]
+    },
+    {
+     "object": "shelf_goods",
+     "at": [
+      21,
+      13
+     ]
+    },
+    {
+     "object": "crate",
+     "at": [
+      15,
+      14
+     ]
+    },
+    {
+     "object": "crate",
+     "at": [
+      21,
+      14
+     ]
+    },
+    {
+     "object": "armour_stand",
+     "at": [
+      15,
+      16
+     ]
+    },
+    {
+     "object": "armour_stand",
+     "at": [
+      21,
+      16
+     ]
+    }
+   ]
+  },
+  {
+   "id": "saltmere_player",
+   "kind": "player",
+   "shop": "player",
+   "style": "plaster",
+   "rect": [
+    4,
+    2,
+    9,
+    7
+   ],
+   "door": [
+    [
+     8,
+     8
+    ]
+   ],
+   "counter": [
+    [
+     6,
+     4
+    ],
+    [
+     7,
+     4
+    ],
+    [
+     8,
+     4
+    ],
+    [
+     9,
+     4
+    ],
+    [
+     10,
+     4
+    ]
+   ],
+   "keeper_at": [
+    8,
+    3
+   ],
+   "stand": [
+    8,
+    5
+   ],
+   "sign": [
+    9,
+    8
+   ],
+   "roof": "#2a6a9a",
+   "name": "For sale",
+   "displays": [
+    [
+     5,
+     6
+    ],
+    [
+     6,
+     6
+    ],
+    [
+     10,
+     6
+    ],
+    [
+     11,
+     6
+    ],
+    [
+     5,
+     7
+    ],
+    [
+     6,
+     7
+    ],
+    [
+     10,
+     7
+    ],
+    [
+     11,
+     7
+    ]
+   ],
+   "props": [
+    {
+     "object": "crate",
+     "at": [
+      5,
+      3
+     ]
+    },
+    {
+     "object": "crate",
+     "at": [
+      11,
+      3
+     ]
+    }
+   ]
+  },
+  {
+   "id": "saltmere_cook",
+   "kind": "cookhouse",
+   "shop": "cook",
+   "style": "plaster",
+   "rect": [
+    24,
+    12,
+    9,
+    7
+   ],
+   "door": [
+    [
+     28,
+     18
+    ]
+   ],
+   "counter": [
+    [
+     26,
+     14
+    ],
+    [
+     27,
+     14
+    ],
+    [
+     28,
+     14
+    ],
+    [
+     29,
+     14
+    ],
+    [
+     30,
+     14
+    ]
+   ],
+   "keeper_at": [
+    28,
+    13
+   ],
+   "stand": [
+    28,
+    15
+   ],
+   "sign": [
+    29,
+    18
+   ],
+   "roof": "#1e5a8a",
+   "props": [
+    {
+     "object": "shelf_goods",
+     "at": [
+      25,
+      13
+     ]
+    },
+    {
+     "object": "shelf_goods",
+     "at": [
+      31,
+      13
+     ]
+    },
+    {
+     "object": "barrel",
+     "at": [
+      25,
+      14
+     ]
+    },
+    {
+     "object": "barrel",
+     "at": [
+      31,
+      14
+     ]
+    },
+    {
+     "object": "oven",
+     "at": [
+      25,
+      17
+     ]
+    },
+    {
+     "object": "oven",
+     "at": [
+      31,
+      17
+     ]
+    }
+   ],
+   "name": "Harbour Cookhouse",
+   "keeper": "Pip Saltkettle"
+  },
+  {
+   "id": "saltmere_maces",
+   "kind": "smithy",
+   "shop": "maces",
+   "style": "plaster",
+   "roof": "#2a6a9a",
+   "rect": [
+    14,
+    2,
+    9,
+    9
+   ],
+   "door": [
+    [
+     18,
+     10
+    ]
+   ],
+   "counter": [
+    [
+     16,
+     4
+    ],
+    [
+     17,
+     4
+    ],
+    [
+     18,
+     4
+    ],
+    [
+     19,
+     4
+    ],
+    [
+     20,
+     4
+    ]
+   ],
+   "keeper_at": [
+    18,
+    3
+   ],
+   "stand": [
+    18,
+    5
+   ],
+   "sign": [
+    19,
+    10
+   ],
+   "name": "Blacksmith",
+   "keeper": "Smith",
+   "props": [
+    {
+     "object": "furnace",
+     "at": [
+      16,
+      6
+     ]
+    },
+    {
+     "object": "anvil",
+     "at": [
+      19,
+      6
+     ]
+    },
+    {
+     "object": "bellows",
+     "at": [
+      15,
+      7
+     ]
+    },
+    {
+     "object": "quench_barrel",
+     "at": [
+      21,
+      7
+     ]
+    },
+    {
+     "object": "coal_crate",
+     "at": [
+      15,
+      3
+     ]
+    },
+    {
+     "object": "weapon_rack",
+     "at": [
+      21,
+      3
+     ]
+    }
+   ]
+  }
+ ],
+ "specialists": [
+  "legs",
+  "maces",
+  "cook"
+ ],
+ "price_bias": {
+  "raw_carp": 0.85,
+  "raw_eel": 0.8,
+  "cooked_carp": 0.9,
+  "cooked_eel": 0.9,
+  "alder_log": 0.85,
+  "blackthorn_log": 0.85,
+  "plank": 0.9,
+  "copper_ore": 1.15,
+  "iron_ore": 1.2,
+  "coal": 1.2,
+  "bronze_bar": 1.1,
+  "iron_bar": 1.1,
+  "tin_ore": 1.15
+ },
+ "tagline": "Sandstone harbour town of docks, white plaster and blue roofs.",
+ "theme": "saltmere",
+ "gates": {
+  "north": [
+   [
+    22,
+    0
+   ],
+   [
+    23,
+    0
+   ],
+   [
+    24,
+    0
+   ]
+  ],
+  "south": [
+   [
+    22,
+    37
+   ],
+   [
+    23,
+    37
+   ],
+   [
+    24,
+    37
+   ]
+  ],
+  "west": [
+   [
+    0,
+    18
+   ],
+   [
+    0,
+    19
+   ],
+   [
+    0,
+    20
+   ]
+  ],
+  "east": [
+   [
+    45,
+    18
+   ],
+   [
+    45,
+    19
+   ],
+   [
+    45,
+    20
+   ]
+  ]
+ }
+}

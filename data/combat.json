@@ -1,0 +1,84 @@
+{
+ "note": "0.2.4 combat skills. Weapon class (items.json gear.class) decides the skill needed to wield it, the default style and the swing speed. Armour (head/body/legs/shield) needs Defence. Accuracy = 0.55 + (Attack + gear atk) x 1% - enemy defence x (1 - armour_break) x 2% (10-95%). Max hit = 1 + Strength/6 + weapon power + gear str/4. Enemy accuracy = base - (gear def x 1% + Defence x defence_level_acc) (5-95%).",
+ "classes": {
+  "dagger": {
+   "skill": "attack",
+   "type": "stab",
+   "style": "accurate",
+   "attack_ticks": 3
+  },
+  "sword": {
+   "skill": "attack",
+   "type": "slash",
+   "style": "accurate",
+   "attack_ticks": 4
+  },
+  "battleaxe": {
+   "skill": "attack",
+   "type": "slash",
+   "style": "accurate",
+   "attack_ticks": 4
+  },
+  "mace": {
+   "skill": "strength",
+   "type": "crush",
+   "style": "aggressive",
+   "attack_ticks": 4,
+   "armour_break": 0.5
+  },
+  "warhammer": {
+   "skill": "strength",
+   "type": "crush",
+   "style": "aggressive",
+   "attack_ticks": 5,
+   "armour_break": 0.5
+  },
+  "bow": {
+   "skill": "attack",
+   "type": "ranged",
+   "style": "accurate",
+   "attack_ticks": 4
+  }
+ },
+ "armour_skill": "defence",
+ "styles": {
+  "accurate": {
+   "skill": "attack",
+   "label": "Accurate"
+  },
+  "aggressive": {
+   "skill": "strength",
+   "label": "Aggressive"
+  }
+ },
+ "damage_xp": 4.0,
+ "vitality_xp": 1.4,
+ "defence_level_acc": 0.005,
+ "defence_xp": {
+  "block": 2.0,
+  "hit_base": 2.0,
+  "hit_per_damage": 1.0
+ },
+ "set_bonus": {
+  "slots": [
+   "head",
+   "body",
+   "legs",
+   "shield"
+  ],
+  "mult": {
+   "1": 1.25,
+   "2": 1.5,
+   "3": 1.75,
+   "4": 2.0
+  },
+  "names": {
+   "1": "bronze",
+   "2": "iron",
+   "3": "steel",
+   "4": "dusk"
+  }
+ },
+ "aggro_level_gap": 10,
+ "note_combat_level": "0.3.1 combat level (Combat.combat_level) = floor((Attack + Strength + Defence + Vitality) / 4 + Prayer / 8), min 1; a new character is Combat 3. Enemies never START a fight with a player or AI player whose combat level is aggro_level_gap or more above the enemy's level (they still fight back when attacked). Applies everywhere, the Scorch included."
+}

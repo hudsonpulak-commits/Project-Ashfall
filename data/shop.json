@@ -1,0 +1,129 @@
+{
+ "note": "NPC shops. The general store (every town) sells basic goods at the town's Exchange reference x sell_factor and buys almost anything at the floor (base value x the monitor's buy factor, capped per item per day). Specialist shops sell one gear line, keep finite stock that restocks slowly, and price by scarcity: price = ref x sell_factor x (1 + scarcity_markup x (1 - stock/max)). Which town has which specialist is set in data/towns/*.json.",
+ "general_store": {
+  "name": "General store",
+  "sell_factor": 1.6,
+  "stock": [
+   "bronze_hatchet",
+   "bronze_pick",
+   "reed_rod",
+   "cooked_carp",
+   "plank",
+   "bronze_bar",
+   "tin_ore",
+   "bronze_arrows",
+   "bread"
+  ],
+  "no_buy": [
+   "marks"
+  ]
+ },
+ "specialist": {
+  "sell_factor": 1.15,
+  "buy_factor": 0.55,
+  "scarcity_markup": 0.6,
+  "restock_ticks": 200,
+  "max_stock": [
+   8,
+   5,
+   4,
+   3
+  ],
+  "start_stock": [
+   6,
+   3,
+   3,
+   2
+  ]
+ },
+ "lines": {
+  "helmets": [
+   "bronze_cap",
+   "iron_helm",
+   "steel_helm",
+   "dusk_helm"
+  ],
+  "body": [
+   "bronze_scale_vest",
+   "iron_hauberk",
+   "steel_brigandine",
+   "dusk_cuirass"
+  ],
+  "legs": [
+   "bronze_greaves",
+   "iron_legguards",
+   "steel_legplates",
+   "dusk_tassets"
+  ],
+  "shields": [
+   "alder_buckler",
+   "iron_kite_shield",
+   "steel_heater_shield",
+   "dusk_tower_shield"
+  ],
+  "swords": [
+   "bronze_sword",
+   "bronze_dagger",
+   "iron_sword",
+   "iron_dagger",
+   "steel_sword",
+   "steel_dagger",
+   "dusk_sword",
+   "dusk_dagger"
+  ],
+  "axes": [
+   "bronze_battleaxe",
+   "iron_battleaxe",
+   "steel_battleaxe",
+   "dusk_battleaxe"
+  ],
+  "maces": [
+   "bronze_mace",
+   "bronze_warhammer",
+   "iron_mace",
+   "iron_warhammer",
+   "steel_mace",
+   "steel_warhammer",
+   "dusk_mace",
+   "dusk_warhammer"
+  ],
+  "archery": [
+   "ash_shortbow",
+   "alder_longbow",
+   "blackthorn_warbow",
+   "bronze_arrows",
+   "iron_arrows",
+   "steel_arrows"
+  ],
+  "cook": [
+   "cooked_carp",
+   "cooked_eel",
+   "cooked_rat_meat",
+   "cooked_chicken"
+  ]
+ },
+ "line_names": {
+  "helmets": "Helmets",
+  "body": "Body armour",
+  "legs": "Leggings",
+  "shields": "Shields",
+  "swords": "Swords & daggers",
+  "axes": "Battle axes",
+  "maces": "Maces & warhammers",
+  "archery": "Archery",
+  "cook": "Cooked food"
+ },
+ "cookhouse": {
+  "note": "0.3.1 Cook House: finite stock of cooked food at ~80% of general-store price (sell_factor 1.28 \u2248 0.8 \u00d7 1.6). Restocks slowly so it is not an infinite cheap-food tap.",
+  "sell_factor": 1.28,
+  "restock_ticks": 300,
+  "max_stock": 40,
+  "start_stock": 24,
+  "stock": [
+   "cooked_carp",
+   "cooked_eel",
+   "cooked_rat_meat",
+   "cooked_chicken"
+  ]
+ }
+}

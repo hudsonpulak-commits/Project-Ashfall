@@ -1,0 +1,39 @@
+{
+ "note": "0.3.1 gear market balance (smith AI + surplus sink). production: smiths/prospectors scale crafting of a wearable (head/body/legs/shield/weapon) by own unsold stock (stash + own open asks), the town's Exchange listing depth and the price vs base: factor = 1/(1+max(0,own-own_free)/own_span) x 1/(1+max(0,depth-depth_free)/depth_span) x clamp((price/base - price_stop)/(price_full - price_stop), 0, 1). commission_from_stock: a smith fills a commission from finished stock before forging. scrap: the town armourer buys surplus wearables for scrap at price_share x base (below any healthy Exchange price) from a separate daily purse per town (a bounded coin faucet; the goods leave the game). An agent scraps a piece when its local price is under scrap_below_price x base or the town's listing depth is over depth_free; producers keep keep_producer of each. Adventurers' outgrown gear and the unsold rest of estate sales go the same way. stock_aware: crafts of these items also back off with own stock and town depth; price_band {item: [stop, full]} adds a local price term (0.3.1: planks in a glutted town).",
+ "production": {
+  "own_free": 20,
+  "own_span": 10,
+  "depth_free": 60,
+  "depth_span": 30,
+  "price_full": 0.7,
+  "price_stop": 0.45
+ },
+ "commission_from_stock": true,
+ "scrap": {
+  "price_share": 0.4,
+  "purse_per_town_day": 420,
+  "scrap_below_price": 0.8,
+  "depth_free": 4,
+  "keep_producer": 2,
+  "max_per_round": 6
+ },
+ "ai_wear_mult": 1,
+ "stock_aware": {
+  "items": [
+   "bronze_bar",
+   "iron_bar",
+   "steel_bar",
+   "plank"
+  ],
+  "own_free": 15,
+  "own_span": 15,
+  "depth_free": 30,
+  "depth_span": 30,
+  "price_band": {
+   "plank": [
+    0.65,
+    0.95
+   ]
+  }
+ }
+}

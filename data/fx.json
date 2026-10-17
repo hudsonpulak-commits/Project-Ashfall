@@ -1,0 +1,23 @@
+{
+ "note": "Visual effects tunables. hitsplat: each actor / enemy / dummy shows at most ONE damage bubble; a new hit replaces the old one at once (no stacking). The bubble follows its target. lifetime_s = how long a bubble lasts if no new hit comes (the last fade_s of it fades out). offset = pixels from the target's feet (bottom centre).",
+ "hitsplat": {
+  "lifetime_s": 0.6,
+  "fade_s": 0.2,
+  "font_size": 6,
+  "offset": [
+   -4,
+   -20
+  ]
+ },
+ "facing": {
+  "note": "0.2.5 sprite facing hysteresis (src/actors/facing.gd). Facing follows the net direction of travel (walk destination, or the fight target), observed once per tick; pure vertical never flips. A reversal of 1 tile must persist persist_ticks ticks; 2+ tiles turns at once; never two flips within min_flip_ticks ticks. anim_grace_ticks: keep the walk cycle running across short pauses so frames don't pop to 0 between ticks.",
+  "persist_ticks": 2,
+  "immediate_dx": 2,
+  "min_flip_ticks": 3,
+  "anim_grace_ticks": 2
+ },
+ "tap": {
+  "note": "0.2.5 custom tap targets (Energy bar): one action per tap; taps closer than debounce_ms are ignored.",
+  "debounce_ms": 250
+ }
+}

@@ -1,0 +1,373 @@
+{
+ "note": "Drop tables. 'always' entries always drop. Then one roll: with probability rare.chance pick a weighted rare entry, else with probability common.chance pick a weighted common entry, else nothing. qty is n or [min,max]. Coin ('marks') drops are paid from the Guild's daily purse (Market.pay_bounty), so they stay a bounded faucet.",
+ "tables": {
+  "giant_rat": {
+   "always": [
+    {
+     "item": "bones",
+     "qty": 1
+    }
+   ],
+   "common": {
+    "chance": 0.65,
+    "entries": [
+     {
+      "item": "raw_rat_meat",
+      "qty": 1,
+      "weight": 1
+     }
+    ]
+   },
+   "rare": {
+    "chance": 0.0,
+    "entries": []
+   }
+  },
+  "goblin": {
+   "always": [
+    {
+     "item": "bones",
+     "qty": 1
+    }
+   ],
+   "common": {
+    "chance": 0.55,
+    "entries": [
+     {
+      "item": "marks",
+      "qty": [
+       2,
+       8
+      ],
+      "weight": 5
+     },
+     {
+      "item": "copper_ore",
+      "qty": [
+       1,
+       3
+      ],
+      "weight": 3
+     },
+     {
+      "item": "tin_ore",
+      "qty": [
+       1,
+       3
+      ],
+      "weight": 3
+     },
+     {
+      "item": "bronze_bar",
+      "qty": 1,
+      "weight": 2
+     },
+     {
+      "item": "ash_log",
+      "qty": [
+       1,
+       2
+      ],
+      "weight": 2
+     },
+     {
+      "item": "raw_rat_meat",
+      "qty": 1,
+      "weight": 2
+     }
+    ]
+   },
+   "rare": {
+    "chance": 0.03,
+    "entries": [
+     {
+      "item": "bronze_sword",
+      "qty": 1,
+      "weight": 1
+     },
+     {
+      "item": "bronze_mace",
+      "qty": 1,
+      "weight": 1
+     },
+     {
+      "item": "bronze_battleaxe",
+      "qty": 1,
+      "weight": 1
+     },
+     {
+      "item": "bronze_cap",
+      "qty": 1,
+      "weight": 1
+     }
+    ]
+   }
+  },
+  "chicken": {
+   "always": [
+    {
+     "item": "bones",
+     "qty": 1
+    },
+    {
+     "item": "feather",
+     "qty": [
+      1,
+      4
+     ]
+    }
+   ],
+   "common": {
+    "chance": 0.75,
+    "entries": [
+     {
+      "item": "raw_chicken",
+      "qty": 1,
+      "weight": 1
+     }
+    ]
+   },
+   "rare": {
+    "chance": 0.0,
+    "entries": []
+   }
+  },
+  "wolf": {
+   "always": [
+    {
+     "item": "bones",
+     "qty": 1
+    }
+   ],
+   "common": {
+    "chance": 0.6,
+    "entries": [
+     {
+      "item": "wolf_pelt",
+      "qty": 1,
+      "weight": 1
+     }
+    ]
+   },
+   "rare": {
+    "chance": 0.0,
+    "entries": []
+   }
+  },
+  "town_guard": {
+   "always": [
+    {
+     "item": "bones",
+     "qty": 1
+    }
+   ],
+   "common": {
+    "chance": 0.7,
+    "entries": [
+     {
+      "item": "marks",
+      "qty": [
+       3,
+       12
+      ],
+      "weight": 1
+     }
+    ]
+   },
+   "rare": {
+    "chance": 0.025,
+    "entries": [
+     {
+      "item": "iron_sword",
+      "qty": 1,
+      "weight": 1
+     },
+     {
+      "item": "iron_helm",
+      "qty": 1,
+      "weight": 1
+     },
+     {
+      "item": "iron_hauberk",
+      "qty": 1,
+      "weight": 1
+     },
+     {
+      "item": "iron_legguards",
+      "qty": 1,
+      "weight": 1
+     },
+     {
+      "item": "iron_kite_shield",
+      "qty": 1,
+      "weight": 1
+     },
+     {
+      "item": "iron_dagger",
+      "qty": 1,
+      "weight": 1
+     }
+    ]
+   }
+  },
+  "citizen": {
+   "always": [
+    {
+     "item": "bones",
+     "qty": 1
+    }
+   ],
+   "common": {
+    "chance": 0.85,
+    "entries": [
+     {
+      "item": "marks",
+      "qty": [
+       1,
+       5
+      ],
+      "weight": 5
+     },
+     {
+      "item": "raw_chicken",
+      "qty": 1,
+      "weight": 2
+     },
+     {
+      "item": "ash_log",
+      "qty": 1,
+      "weight": 2
+     },
+     {
+      "item": "copper_ore",
+      "qty": 1,
+      "weight": 2
+     },
+     {
+      "item": "tin_ore",
+      "qty": 1,
+      "weight": 1
+     },
+     {
+      "item": "feather",
+      "qty": [
+       1,
+       3
+      ],
+      "weight": 1
+     }
+    ]
+   },
+   "rare": {
+    "chance": 0.0,
+    "entries": []
+   }
+  },
+  "cinder_brute": {
+   "always": [
+    {
+     "item": "bones",
+     "qty": 1
+    }
+   ],
+   "common": {
+    "chance": 0.75,
+    "entries": [
+     {
+      "item": "marks",
+      "qty": [
+       10,
+       30
+      ],
+      "weight": 4
+     },
+     {
+      "item": "coal",
+      "qty": [
+       2,
+       5
+      ],
+      "weight": 3
+     },
+     {
+      "item": "iron_ore",
+      "qty": [
+       2,
+       4
+      ],
+      "weight": 3
+     },
+     {
+      "item": "iron_bar",
+      "qty": 1,
+      "weight": 2
+     },
+     {
+      "item": "steel_bar",
+      "qty": 1,
+      "weight": 1
+     }
+    ]
+   },
+   "rare": {
+    "chance": 0.03,
+    "entries": [
+     {
+      "item": "steel_sword",
+      "qty": 1,
+      "weight": 1
+     },
+     {
+      "item": "steel_helm",
+      "qty": 1,
+      "weight": 1
+     },
+     {
+      "item": "steel_mace",
+      "qty": 1,
+      "weight": 1
+     },
+     {
+      "item": "steel_battleaxe",
+      "qty": 1,
+      "weight": 1
+     }
+    ]
+   }
+  },
+  "cow": {
+   "always": [
+    {
+     "item": "bones",
+     "qty": 1
+    },
+    {
+     "item": "raw_beef",
+     "qty": 1
+    },
+    {
+     "item": "cowhide",
+     "qty": 1
+    }
+   ],
+   "common": {
+    "chance": 0.0,
+    "entries": []
+   },
+   "rare": {
+    "chance": 0.0,
+    "entries": []
+   }
+  }
+ },
+ "ground": {
+  "note": "Ground items. Kill drops (and items the player drops) are private to their owner for private_ticks, then public: anyone may take them, and nearby AI players walk over and loot piles worth at least ai_loot_min_value (market value x qty; coins count 1 each). Every drop despawns drop_ttl ticks after it fell. Death piles are owner-only for death_ttl ticks and are NEVER public. Abstract (tier-1) AI near a public pile claim it with abstract_claim_chance per 10-tick check.",
+  "private_ticks": 100,
+  "drop_ttl": 500,
+  "death_ttl": 3000,
+  "ai_loot_radius": 10,
+  "ai_loot_min_value": 3,
+  "ai_loot_check_ticks": 5,
+  "abstract_claim_chance": 0.05
+ }
+}

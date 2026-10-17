@@ -1,0 +1,38 @@
+{
+ "note": "0.3.1 day/night cycle. One cycle = cycle_s real seconds (default 15 min): day_s bright, night_s dark, with dusk/dawn lerps of transition_s at the boundaries. Tint is CanvasModulate on the world only (HUD stays on a CanvasLayer and is not darkened). Hours 0-23 map linearly across the cycle so persona schedules (dawn/day/evening/night) follow the visible clock. Lights (windows, torches) fade in with night. zone_night_floor: minimum tint while the player is in a PK zone at night (0.3.1: the Scorch's embers keep it readable).",
+ "cycle_s": 900,
+ "day_s": 600,
+ "night_s": 300,
+ "transition_s": 40,
+ "day_tint": [
+  1.0,
+  0.98,
+  0.92
+ ],
+ "night_tint": [
+  0.36,
+  0.4,
+  0.7
+ ],
+ "hour_at_cycle_start": 6,
+ "lights": {
+  "window_color": "#ffd878",
+  "torch_color": "#ffb060",
+  "glow_scale": 1.6,
+  "glow_energy_night": 0.9,
+  "torches_per_town": 4,
+  "windows_per_building": 2,
+  "stained_glass_color": "#ffb8d0"
+ },
+ "hud": {
+  "show_icon": true,
+  "show_phase_label": true
+ },
+ "zone_night_floor": {
+  "scorch": [
+   0.62,
+   0.5,
+   0.46
+  ]
+ }
+}

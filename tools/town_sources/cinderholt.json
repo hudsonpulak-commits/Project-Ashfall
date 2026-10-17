@@ -1,0 +1,174 @@
+{
+	"id": "cinderholt",
+	"name": "Cinderholt",
+	"origin": [
+		307,
+		-219
+	],
+	"spawn": [
+		330,
+		-200
+	],
+	"rows": [
+		"..:::....:::=.:::...:::.",
+		".:::::...:::=.:::...:::.",
+		"..:::....:::=.:::...:::.",
+		"......a.....=......a....",
+		"..:::.......=.....:::...",
+		"..:::.......=.....:::...",
+		"..:::.......=.....:::...",
+		"............=...........",
+		"...a........=......a....",
+		"............=...........",
+		"......############......",
+		"......#B##E##H#F##......",
+		"======############======",
+		"......##W##A##S###......",
+		"......#4#5#6###D##......",
+		"......############......",
+		"............=...........",
+		"...:::......=....:::....",
+		"...:::......=....:::....",
+		"...:::......=....:::....",
+		"............=...........",
+		"..a.....:::.=.......a...",
+		"........:::.=...........",
+		"........:::.=..........."
+	],
+	"tiles": {
+		".": "dirt",
+		"=": "path",
+		"#": "cobble",
+		"~": "water",
+		",": "sand",
+		":": "dirt",
+		"m": "marsh",
+		"_": "planks"
+	},
+	"objects": {
+		"a": {
+			"object": "ash_tree",
+			"ground": "grass"
+		},
+		"l": {
+			"object": "alder_tree",
+			"ground": "grass"
+		},
+		"b": {
+			"object": "blackthorn_tree",
+			"ground": "grass"
+		},
+		"c": {
+			"object": "copper_rock",
+			"ground": "dirt"
+		},
+		"i": {
+			"object": "iron_rock",
+			"ground": "dirt"
+		},
+		"k": {
+			"object": "coal_rock",
+			"ground": "dirt"
+		},
+		"f": {
+			"object": "fishing_spot",
+			"ground": "water"
+		},
+		"r": {
+			"object": "reed_bed",
+			"ground": "marsh"
+		},
+		"g": {
+			"object": "fenroot_patch",
+			"ground": "marsh"
+		},
+		"B": {
+			"object": "bank_chest",
+			"ground": "cobble"
+		},
+		"E": {
+			"object": "exchange_board",
+			"ground": "cobble"
+		},
+		"H": {
+			"object": "hearth",
+			"ground": "cobble"
+		},
+		"F": {
+			"object": "furnace",
+			"ground": "cobble"
+		},
+		"D": {
+			"object": "training_dummy",
+			"ground": "cobble"
+		},
+		"W": {
+			"object": "workbench",
+			"ground": "cobble"
+		},
+		"A": {
+			"object": "anvil",
+			"ground": "cobble"
+		},
+		"S": {
+			"object": "general_store",
+			"ground": "cobble"
+		},
+		"1": {
+			"object": "shop_helmets",
+			"ground": "cobble"
+		},
+		"2": {
+			"object": "shop_swords",
+			"ground": "cobble"
+		},
+		"3": {
+			"object": "shop_archery",
+			"ground": "cobble"
+		},
+		"4": {
+			"object": "shop_body",
+			"ground": "cobble"
+		},
+		"5": {
+			"object": "shop_shields",
+			"ground": "cobble"
+		},
+		"6": {
+			"object": "shop_axes",
+			"ground": "cobble"
+		},
+		"7": {
+			"object": "shop_legs",
+			"ground": "cobble"
+		},
+		"8": {
+			"object": "shop_maces",
+			"ground": "cobble"
+		},
+		"t": {
+			"object": "tin_rock",
+			"ground": "dirt"
+		}
+	},
+	"specialists": [
+		"body",
+		"shields",
+		"axes"
+	],
+	"price_bias": {
+		"copper_ore": 0.85,
+		"iron_ore": 0.85,
+		"coal": 0.85,
+		"bronze_bar": 0.9,
+		"iron_bar": 0.9,
+		"raw_carp": 1.15,
+		"raw_eel": 1.2,
+		"cooked_carp": 1.15,
+		"cooked_eel": 1.15,
+		"reed_fibre": 1.15,
+		"fenroot": 1.2,
+		"tin_ore": 0.85
+	},
+	"tagline": "Hill town of copper, iron and coal."
+}

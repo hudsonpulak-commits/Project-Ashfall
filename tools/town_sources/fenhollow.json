@@ -1,0 +1,173 @@
+{
+	"id": "fenhollow",
+	"name": "Fenhollow",
+	"origin": [
+		-23,
+		-19
+	],
+	"spawn": [
+		0,
+		0
+	],
+	"rows": [
+		"...a....a...=.a.....a...",
+		".a.......l..=.....a....a",
+		"..f.a.......=......l....",
+		"..~~~~......=...........",
+		".~~~~~~,....=....:::::..",
+		".~~~~~~,....=....:::::..",
+		".~~~~~f,....=....:::::..",
+		"..~~~~,,....=....:::::..",
+		"...,,,......=....:::::..",
+		"............=...........",
+		"......############......",
+		"......#B##E##H#F##......",
+		"======############======",
+		"......##W##A##S###......",
+		"......#1#2#3###D##......",
+		"......############......",
+		"............=...........",
+		"..a.........=.....mmm...",
+		".....l......=....mrmgm..",
+		"............=....mgmrm..",
+		".a....a.....=.....mmm...",
+		"............=.a.........",
+		"...a........=......a....",
+		".......a....=..........a"
+	],
+	"tiles": {
+		".": "grass",
+		"=": "path",
+		"#": "cobble",
+		"~": "water",
+		",": "sand",
+		":": "dirt",
+		"m": "marsh",
+		"_": "planks"
+	},
+	"objects": {
+		"a": {
+			"object": "ash_tree",
+			"ground": "grass"
+		},
+		"l": {
+			"object": "alder_tree",
+			"ground": "grass"
+		},
+		"b": {
+			"object": "blackthorn_tree",
+			"ground": "grass"
+		},
+		"c": {
+			"object": "copper_rock",
+			"ground": "dirt"
+		},
+		"i": {
+			"object": "iron_rock",
+			"ground": "dirt"
+		},
+		"k": {
+			"object": "coal_rock",
+			"ground": "dirt"
+		},
+		"f": {
+			"object": "fishing_spot",
+			"ground": "water"
+		},
+		"r": {
+			"object": "reed_bed",
+			"ground": "marsh"
+		},
+		"g": {
+			"object": "fenroot_patch",
+			"ground": "marsh"
+		},
+		"B": {
+			"object": "bank_chest",
+			"ground": "cobble"
+		},
+		"E": {
+			"object": "exchange_board",
+			"ground": "cobble"
+		},
+		"H": {
+			"object": "hearth",
+			"ground": "cobble"
+		},
+		"F": {
+			"object": "furnace",
+			"ground": "cobble"
+		},
+		"D": {
+			"object": "training_dummy",
+			"ground": "cobble"
+		},
+		"W": {
+			"object": "workbench",
+			"ground": "cobble"
+		},
+		"A": {
+			"object": "anvil",
+			"ground": "cobble"
+		},
+		"S": {
+			"object": "general_store",
+			"ground": "cobble"
+		},
+		"1": {
+			"object": "shop_helmets",
+			"ground": "cobble"
+		},
+		"2": {
+			"object": "shop_swords",
+			"ground": "cobble"
+		},
+		"3": {
+			"object": "shop_archery",
+			"ground": "cobble"
+		},
+		"4": {
+			"object": "shop_body",
+			"ground": "cobble"
+		},
+		"5": {
+			"object": "shop_shields",
+			"ground": "cobble"
+		},
+		"6": {
+			"object": "shop_axes",
+			"ground": "cobble"
+		},
+		"7": {
+			"object": "shop_legs",
+			"ground": "cobble"
+		},
+		"8": {
+			"object": "shop_maces",
+			"ground": "cobble"
+		},
+		"t": {
+			"object": "tin_rock",
+			"ground": "dirt"
+		}
+	},
+	"specialists": [
+		"helmets",
+		"swords",
+		"archery"
+	],
+	"price_bias": {
+		"reed_fibre": 0.85,
+		"fenroot": 0.85,
+		"ash_log": 0.9,
+		"raw_carp": 0.95,
+		"copper_ore": 1.1,
+		"iron_ore": 1.15,
+		"coal": 1.15,
+		"raw_eel": 1.1,
+		"alder_log": 1.1,
+		"blackthorn_log": 1.15,
+		"tin_ore": 1.1
+	},
+	"tagline": "Marsh town of reeds, carp and ash timber."
+}

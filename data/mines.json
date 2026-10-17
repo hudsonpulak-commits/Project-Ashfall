@@ -1,0 +1,18 @@
+{
+ "note": "0.3.1 named mines. Rocks spawn ONLY inside these clusters (no scattered rocks, none inside towns). center = world tile, radius in tiles, density = chance per tile near the centre (falls off to ~55% at the rim), ores = weights of rock object ids. Tiers by distance from the nearest town's edge: copper + tin 15-30 tiles (one per town), iron 50-90, coal 100+, the richest (dense iron + coal) inside the Scorch. 'travel' = AI efficiency for far mines: factor = 1 / (1 + distance_from_home_town_centre / ref_tiles), never below min_factor; PK-zone mines are ignored by the abstract AI unless no other mine has that ore. Proposals come from tools/place_world.py; edit freely (selftest checks the tiers).",
+ "travel": {"ref_tiles": 260, "min_factor": 0.5},
+ "mines": [
+  {"id": "fenhollow_pits", "name": "Fenhollow Pits", "tier": "copper_tin", "town": "fenhollow", "center": [-30, -40], "radius": 6, "density": 0.32, "ores": {"copper_rock": 0.55, "tin_rock": 0.45}},
+  {"id": "cinderholt_pits", "name": "Cinderholt Pits", "tier": "copper_tin", "town": "cinderholt", "center": [303, -160], "radius": 6, "density": 0.32, "ores": {"copper_rock": 0.55, "tin_rock": 0.45}},
+  {"id": "saltmere_pits", "name": "Saltmere Pits", "tier": "copper_tin", "town": "saltmere", "center": [258, 140], "radius": 6, "density": 0.32, "ores": {"copper_rock": 0.55, "tin_rock": 0.45}},
+  {"id": "fenhollow_iron", "name": "Fenhollow Iron Cut", "tier": "iron", "town": "fenhollow", "center": [-39, -85], "radius": 6, "density": 0.3, "ores": {"iron_rock": 0.85, "tin_rock": 0.15}},
+  {"id": "cinderholt_iron", "name": "Cinderholt Iron Cut", "tier": "iron", "town": "cinderholt", "center": [240, -232], "radius": 6, "density": 0.3, "ores": {"iron_rock": 0.85, "tin_rock": 0.15}},
+  {"id": "cinderholt_iron2", "name": "Cinderholt Iron Cut East", "tier": "iron", "town": "cinderholt", "center": [240, -196], "radius": 6, "density": 0.3, "ores": {"iron_rock": 0.85, "tin_rock": 0.15}},
+  {"id": "saltmere_iron", "name": "Saltmere Iron Cut", "tier": "iron", "town": "saltmere", "center": [390, 149], "radius": 6, "density": 0.3, "ores": {"iron_rock": 0.85, "tin_rock": 0.15}},
+  {"id": "coal_1", "name": "Coal Seam 1", "tier": "coal", "center": [387, 56], "radius": 6, "density": 0.3, "ores": {"coal_rock": 0.75, "iron_rock": 0.25}},
+  {"id": "coal_2", "name": "Coal Seam 2", "tier": "coal", "center": [225, -103], "radius": 6, "density": 0.3, "ores": {"coal_rock": 0.75, "iron_rock": 0.25}},
+  {"id": "coal_3", "name": "Coal Seam 3", "tier": "coal", "center": [162, 188], "radius": 6, "density": 0.3, "ores": {"coal_rock": 0.75, "iron_rock": 0.25}},
+  {"id": "scorch_1", "name": "Scorch Deep Mine 1", "tier": "scorch", "center": [324, -271], "radius": 7, "density": 0.45, "ores": {"coal_rock": 0.5, "iron_rock": 0.5}},
+  {"id": "scorch_2", "name": "Scorch Deep Mine 2", "tier": "scorch", "center": [261, -316], "radius": 7, "density": 0.45, "ores": {"coal_rock": 0.5, "iron_rock": 0.5}}
+ ]
+}

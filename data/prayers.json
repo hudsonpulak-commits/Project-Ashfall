@@ -1,0 +1,107 @@
+{
+ "note": "Prayer buffs. One active at a time. Each actor has a prayer-points pool: max points = Prayer level x ticks_per_level (so a full pool runs a 1-point-per-tick buff for level x 50 ticks = 30 s per level). An active buff drains its 'drain' points per tick; at 0 points it ends, and you can't start one with 0 points. Restore: burying bones restores their 'prayer_restore' share of max points (data/items.json) and gives XP; with no buff active the pool also regains 1 point every regen_ticks ticks. Effects: def = enemies' accuracy against you x (1 - v); dmg = your damage x (1 + v); acc = your accuracy x (1 + v); gather = gathering success chance x (1 + v).",
+ "ticks_per_level": 50,
+ "buffs": [
+  {
+   "id": "stillwater_ward",
+   "name": "Stillwater Ward",
+   "level": 1,
+   "effect": "def",
+   "value": 0.05,
+   "icon": "prayer_def",
+   "desc": "Defence: Enemies hit you 5% less often.",
+   "drain": 1.0
+  },
+  {
+   "id": "ember_grip",
+   "name": "Ember Grip",
+   "level": 4,
+   "effect": "dmg",
+   "value": 0.05,
+   "icon": "prayer_dmg",
+   "desc": "Strength: +5% damage.",
+   "drain": 1.0
+  },
+  {
+   "id": "keen_sight",
+   "name": "Keen Sight",
+   "level": 7,
+   "effect": "acc",
+   "value": 0.05,
+   "icon": "prayer_acc",
+   "desc": "Attack: +5% accuracy.",
+   "drain": 1.0
+  },
+  {
+   "id": "reedsong",
+   "name": "Reedsong",
+   "level": 10,
+   "effect": "gather",
+   "value": 0.1,
+   "icon": "prayer_gather",
+   "desc": "+10% gathering success.",
+   "drain": 1.0
+  },
+  {
+   "id": "oakbark_ward",
+   "name": "Oakbark Ward",
+   "level": 13,
+   "effect": "def",
+   "value": 0.1,
+   "icon": "prayer_def",
+   "desc": "Defence: Enemies hit you 10% less often.",
+   "drain": 1.2
+  },
+  {
+   "id": "forgefire_grip",
+   "name": "Forgefire Grip",
+   "level": 16,
+   "effect": "dmg",
+   "value": 0.1,
+   "icon": "prayer_dmg",
+   "desc": "Strength: +10% damage.",
+   "drain": 1.2
+  },
+  {
+   "id": "hawk_sight",
+   "name": "Hawk Sight",
+   "level": 19,
+   "effect": "acc",
+   "value": 0.1,
+   "icon": "prayer_acc",
+   "desc": "Attack: +10% accuracy.",
+   "drain": 1.2
+  },
+  {
+   "id": "ironroot_ward",
+   "name": "Ironroot Ward",
+   "level": 24,
+   "effect": "def",
+   "value": 0.15,
+   "icon": "prayer_def",
+   "desc": "Defence: Enemies hit you 15% less often.",
+   "drain": 1.5
+  },
+  {
+   "id": "stormbrand",
+   "name": "Stormbrand",
+   "level": 28,
+   "effect": "dmg",
+   "value": 0.15,
+   "icon": "prayer_dmg",
+   "desc": "Strength: +15% damage.",
+   "drain": 1.5
+  },
+  {
+   "id": "dawnstar_sight",
+   "name": "Dawnstar Sight",
+   "level": 32,
+   "effect": "acc",
+   "value": 0.15,
+   "icon": "prayer_acc",
+   "desc": "Attack: +15% accuracy.",
+   "drain": 1.5
+  }
+ ],
+ "regen_ticks": 10
+}

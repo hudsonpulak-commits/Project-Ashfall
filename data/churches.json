@@ -1,0 +1,448 @@
+{
+ "note": "0.3.1 stone churches: one walk-in church per town (town-local coords, same grid as the town's rows; merged into that town's buildings). Grey stone walls/floor (style 'stone'), slate roof, pews, candles, stained glass. Tap the altar ('Pray at'): walk in, kneel kneel_ticks, Prayer points refilled to max, no XP (XP still comes from burying bones). The priest is the building's keeper: tap to talk; he also greets you on entering. World.nearest_altar(from) is the hook AI players use.",
+ "kneel_ticks": 2,
+ "style": "stone",
+ "roof": "#6c7079",
+ "keeper_sprite": "priest",
+ "sign": "sign_church",
+ "pray_line": "You kneel at the altar. Your prayer is restored.",
+ "full_line": "You kneel at the altar. Your prayer is already full.",
+ "greet": [
+  "Peace be with you. The altar is open to all who kneel.",
+  "Light a candle if you like. Then kneel and be restored.",
+  "Bones feed the spirit, child, but the altar mends it."
+ ],
+ "enter_greet": [
+  "Welcome, traveller. Kneel at the altar and your prayer is restored.",
+  "Come in out of the wind. The altar is just ahead.",
+  "The church is open. Rest your spirit at the altar."
+ ],
+ "towns": {
+  "fenhollow": {
+   "id": "fenhollow_church",
+   "kind": "church",
+   "name": "Fenhollow Church",
+   "keeper": "Father Aldric",
+   "style": "stone",
+   "rect": [
+    34,
+    16,
+    9,
+    8
+   ],
+   "door": [
+    [
+     38,
+     23
+    ]
+   ],
+   "keeper_at": [
+    41,
+    17
+   ],
+   "stand": [
+    41,
+    18
+   ],
+   "sign": [
+    39,
+    23
+   ],
+   "altar": [
+    38,
+    17
+   ],
+   "props": [
+    {
+     "object": "candle_stand",
+     "at": [
+      35,
+      17
+     ]
+    },
+    {
+     "object": "candle_stand",
+     "at": [
+      37,
+      17
+     ]
+    },
+    {
+     "object": "candle_stand",
+     "at": [
+      39,
+      17
+     ]
+    },
+    {
+     "object": "pew",
+     "at": [
+      35,
+      20
+     ]
+    },
+    {
+     "object": "pew",
+     "at": [
+      36,
+      20
+     ]
+    },
+    {
+     "object": "pew",
+     "at": [
+      37,
+      20
+     ]
+    },
+    {
+     "object": "pew",
+     "at": [
+      39,
+      20
+     ]
+    },
+    {
+     "object": "pew",
+     "at": [
+      40,
+      20
+     ]
+    },
+    {
+     "object": "pew",
+     "at": [
+      41,
+      20
+     ]
+    },
+    {
+     "object": "pew",
+     "at": [
+      35,
+      22
+     ]
+    },
+    {
+     "object": "pew",
+     "at": [
+      36,
+      22
+     ]
+    },
+    {
+     "object": "pew",
+     "at": [
+      37,
+      22
+     ]
+    },
+    {
+     "object": "pew",
+     "at": [
+      39,
+      22
+     ]
+    },
+    {
+     "object": "pew",
+     "at": [
+      40,
+      22
+     ]
+    },
+    {
+     "object": "pew",
+     "at": [
+      41,
+      22
+     ]
+    }
+   ]
+  },
+  "cinderholt": {
+   "id": "cinderholt_church",
+   "kind": "church",
+   "name": "Cinderholt Chapel",
+   "keeper": "Brother Varr",
+   "style": "stone",
+   "rect": [
+    34,
+    14,
+    9,
+    8
+   ],
+   "door": [
+    [
+     38,
+     21
+    ]
+   ],
+   "keeper_at": [
+    41,
+    15
+   ],
+   "stand": [
+    41,
+    16
+   ],
+   "sign": [
+    39,
+    21
+   ],
+   "altar": [
+    38,
+    15
+   ],
+   "props": [
+    {
+     "object": "candle_stand",
+     "at": [
+      35,
+      15
+     ]
+    },
+    {
+     "object": "candle_stand",
+     "at": [
+      37,
+      15
+     ]
+    },
+    {
+     "object": "candle_stand",
+     "at": [
+      39,
+      15
+     ]
+    },
+    {
+     "object": "pew",
+     "at": [
+      35,
+      18
+     ]
+    },
+    {
+     "object": "pew",
+     "at": [
+      36,
+      18
+     ]
+    },
+    {
+     "object": "pew",
+     "at": [
+      37,
+      18
+     ]
+    },
+    {
+     "object": "pew",
+     "at": [
+      39,
+      18
+     ]
+    },
+    {
+     "object": "pew",
+     "at": [
+      40,
+      18
+     ]
+    },
+    {
+     "object": "pew",
+     "at": [
+      41,
+      18
+     ]
+    },
+    {
+     "object": "pew",
+     "at": [
+      35,
+      20
+     ]
+    },
+    {
+     "object": "pew",
+     "at": [
+      36,
+      20
+     ]
+    },
+    {
+     "object": "pew",
+     "at": [
+      37,
+      20
+     ]
+    },
+    {
+     "object": "pew",
+     "at": [
+      39,
+      20
+     ]
+    },
+    {
+     "object": "pew",
+     "at": [
+      40,
+      20
+     ]
+    },
+    {
+     "object": "pew",
+     "at": [
+      41,
+      20
+     ]
+    }
+   ]
+  },
+  "saltmere": {
+   "id": "saltmere_church",
+   "kind": "church",
+   "name": "Saltmere Chapel",
+   "keeper": "Sister Mare",
+   "style": "stone",
+   "rect": [
+    24,
+    2,
+    9,
+    8
+   ],
+   "door": [
+    [
+     28,
+     9
+    ]
+   ],
+   "keeper_at": [
+    31,
+    3
+   ],
+   "stand": [
+    31,
+    4
+   ],
+   "sign": [
+    29,
+    9
+   ],
+   "altar": [
+    28,
+    3
+   ],
+   "props": [
+    {
+     "object": "candle_stand",
+     "at": [
+      25,
+      3
+     ]
+    },
+    {
+     "object": "candle_stand",
+     "at": [
+      27,
+      3
+     ]
+    },
+    {
+     "object": "candle_stand",
+     "at": [
+      29,
+      3
+     ]
+    },
+    {
+     "object": "pew",
+     "at": [
+      25,
+      6
+     ]
+    },
+    {
+     "object": "pew",
+     "at": [
+      26,
+      6
+     ]
+    },
+    {
+     "object": "pew",
+     "at": [
+      27,
+      6
+     ]
+    },
+    {
+     "object": "pew",
+     "at": [
+      29,
+      6
+     ]
+    },
+    {
+     "object": "pew",
+     "at": [
+      30,
+      6
+     ]
+    },
+    {
+     "object": "pew",
+     "at": [
+      31,
+      6
+     ]
+    },
+    {
+     "object": "pew",
+     "at": [
+      25,
+      8
+     ]
+    },
+    {
+     "object": "pew",
+     "at": [
+      26,
+      8
+     ]
+    },
+    {
+     "object": "pew",
+     "at": [
+      27,
+      8
+     ]
+    },
+    {
+     "object": "pew",
+     "at": [
+      29,
+      8
+     ]
+    },
+    {
+     "object": "pew",
+     "at": [
+      30,
+      8
+     ]
+    },
+    {
+     "object": "pew",
+     "at": [
+      31,
+      8
+     ]
+    }
+   ]
+  }
+ }
+}

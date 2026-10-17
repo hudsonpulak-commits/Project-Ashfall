@@ -1,0 +1,16 @@
+{
+ "note": "0.3.1 player-killing zones. Inside a zone's rect (world tiles [x, y, w, h], top-left + size; y grows south) anyone may attack anyone (rules: track 'ai' / PK). The same rect is listed in data/combat_zones.json as multi-combat. biome 'scorch' turns the land to charred ash (tiles ash / ash_edge; edge_tiles rows of ash_edge mark the border). The HUD shows 'warning' as a banner the first time you cross in, then a chat line on later entries, and a skull label while inside. decor = per-tile chances for burnt trees, stumps and embers on ash ground.",
+ "zones": [
+  {
+   "id": "scorch",
+   "name": "The Scorch",
+   "rect": [-250, -460, 850, 205],
+   "biome": "scorch",
+   "edge_tiles": 2,
+   "warning": "The Scorch - anyone can attack you",
+   "enter_line": "You enter the Scorch. Anyone can attack you here.",
+   "leave_line": "You leave the Scorch."
+  }
+ ],
+ "decor": {"burnt_tree": 0.045, "charred_stump": 0.02, "embers": 0.012, "edge_embers": 0.10}
+}

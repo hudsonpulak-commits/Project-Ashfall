@@ -1,0 +1,221 @@
+{
+ "note": "0.3.0 shop buildings. Each town (data/towns/*.json \"buildings\") places walk-in shops on the open-world tile map: wall tiles block, the doorway and floor are walkable, the counter and props block, and a keeper stands behind the counter. Coordinates in the town files are town-local (same grid as \"rows\"). This file holds per-shop look and talk. The roof covers the footprint except the facade row (the wall with the door) and fades out over roof_fade_s while the player stands on the doorway or inside.",
+ "roof_fade_s": 0.2,
+ "greet_cooldown_s": 20,
+ "visit_ticks": [
+  5,
+  9
+ ],
+ "shops": {
+  "general": {
+   "keeper_sprite": "keeper_general",
+   "sign": "sign_general",
+   "props": {
+    "back": "shelf_goods",
+    "corner": "barrel",
+    "rack": "crate",
+    "rack2": "sacks"
+   },
+   "greet": [
+    "Welcome in! Rope, bait, tools: if it's useful, it's on my shelves.",
+    "Mind the sacks. What can I find for you today?",
+    "Fair coin for fair goods. Have a look."
+   ]
+  },
+  "helmets": {
+   "name": "Crestwright's Helms",
+   "keeper": "Odile Crestwright",
+   "keeper_sprite": "keeper_helmets",
+   "sign": "sign_helmets",
+   "props": {
+    "back": "shelf_goods",
+    "corner": "barrel",
+    "rack": "helm_stand",
+    "rack2": "helm_stand"
+   },
+   "greet": [
+    "Welcome to Crestwright's Helms. A good head deserves good iron.",
+    "Try one on. If it rattles, it's the wrong size.",
+    "Every crest hammered right here in town."
+   ]
+  },
+  "body": {
+   "name": "The Mailhouse",
+   "keeper": "Bram of the Mailhouse",
+   "keeper_sprite": "keeper_body",
+   "sign": "sign_body",
+   "props": {
+    "back": "shelf_goods",
+    "corner": "crate",
+    "rack": "armour_stand",
+    "rack2": "armour_stand"
+   },
+   "greet": [
+    "The Mailhouse is open. Ring, scale or plate, we fit them all.",
+    "Welcome. Arms up, let's see your size.",
+    "Light armour or heavy? Either way you'll walk out safer."
+   ]
+  },
+  "legs": {
+   "name": "Greave & Gusset",
+   "keeper": "Wenna Gusset",
+   "keeper_sprite": "keeper_legs",
+   "sign": "sign_legs",
+   "props": {
+    "back": "shelf_goods",
+    "corner": "crate",
+    "rack": "armour_stand",
+    "rack2": "armour_stand"
+   },
+   "greet": [
+    "Greave & Gusset, at your service. Knees are precious.",
+    "Welcome! Nobody runs far on bruised shins.",
+    "Step up. Greaves, leg plates, buckles all included."
+   ]
+  },
+  "shields": {
+   "name": "Bossmaker's Shields",
+   "keeper": "Holt Bossmaker",
+   "keeper_sprite": "keeper_shields",
+   "sign": "sign_shields",
+   "props": {
+    "back": "shelf_goods",
+    "corner": "barrel",
+    "rack": "shield_rack",
+    "rack2": "shield_rack"
+   },
+   "greet": [
+    "Bossmaker's Shields. Better it hits the board than you.",
+    "Welcome. Rim, boss and grip, all sound, I promise.",
+    "A shield's the friend that never runs. Browse away."
+   ]
+  },
+  "swords": {
+   "name": "Edgewell Blades",
+   "keeper": "Sefa Edgewell",
+   "keeper_sprite": "keeper_swords",
+   "sign": "sign_swords",
+   "props": {
+    "back": "shelf_goods",
+    "corner": "barrel",
+    "rack": "weapon_rack",
+    "rack2": "weapon_rack"
+   },
+   "greet": [
+    "Welcome to Edgewell Blades. Sharp steel, fair prices.",
+    "Daggers for the quick, swords for the steady. Have a look.",
+    "Mind your fingers near the racks."
+   ]
+  },
+  "axes": {
+   "name": "Cleft & Haft",
+   "keeper": "Dunstan Haft",
+   "keeper_sprite": "keeper_axes",
+   "sign": "sign_axes",
+   "props": {
+    "back": "shelf_goods",
+    "corner": "crate",
+    "rack": "axe_rack",
+    "rack2": "axe_rack"
+   },
+   "greet": [
+    "Cleft & Haft. Big swings for big folk.",
+    "Welcome. Every head is balanced on its haft by hand.",
+    "Looking for something that splits more than logs?"
+   ]
+  },
+  "maces": {
+   "name": "Flange & Knob",
+   "keeper": "Gerda Flange",
+   "keeper_sprite": "keeper_maces",
+   "sign": "sign_maces",
+   "props": {
+    "back": "shelf_goods",
+    "corner": "barrel",
+    "rack": "weapon_rack",
+    "rack2": "weapon_rack"
+   },
+   "greet": [
+    "Flange & Knob. When plate won't cut, crush it.",
+    "Welcome! Maces, hammers, the honest kind of weapon.",
+    "Heavy stock today. Lift with your legs."
+   ]
+  },
+  "archery": {
+   "name": "Fletch & Stave",
+   "keeper": "Pell Stave",
+   "keeper_sprite": "keeper_archery",
+   "sign": "sign_archery",
+   "props": {
+    "back": "shelf_goods",
+    "corner": "crate",
+    "rack": "bow_rack",
+    "rack2": "bow_rack"
+   },
+   "greet": [
+    "Fletch & Stave. Straight shafts, true staves.",
+    "Welcome, archer. Arrows by the bundle, bows by the hand.",
+    "Keep your distance from trouble. Buy a bow."
+   ]
+  },
+  "player": {
+   "name": "Empty shop",
+   "keeper": "Tamsin Deed",
+   "keeper_sprite": "keeper_estate",
+   "sign": "sign_forsale",
+   "props": {},
+   "greet": [
+    "This shop's for sale. Fifteen hundred marks and the keys are yours.",
+    "Good bones, this place. Shelves, counter, a till that locks.",
+    "Thinking of selling to the town? Start here."
+   ]
+  },
+  "cook": {
+   "name": "Cook House",
+   "keeper": "Cook",
+   "keeper_sprite": "keeper_cook",
+   "sign": "sign_cook",
+   "roof": "#8a6a3a",
+   "props": {
+    "back": "shelf_goods",
+    "corner": "barrel",
+    "rack": "crate",
+    "rack2": "sacks"
+   },
+   "greet": [
+    "Hot from the oven, and cheaper than the general store.",
+    "Sit yourself down. Carp, eel, rat or chicken \u2014 all cooked.",
+    "Mind the ovens. Buy a meal or cook your own catch."
+   ]
+  }
+ },
+ "owned_greet": [
+  "Morning, boss. The till's been busy.",
+  "Welcome back. I kept the stands dusted.",
+  "Customers asked after you today."
+ ],
+ "owned_keeper": "Pip (your assistant)",
+ "smithy": {
+  "name": "Blacksmith",
+  "sign": "sign_smithy",
+  "smith_shops": [
+   "swords",
+   "axes",
+   "maces"
+  ],
+  "enter_greet": [
+   "Mind the sparks. Furnace is hot and the anvil's free, help yourself.",
+   "Come in, come in. Bars go in the furnace, blades come off the anvil.",
+   "Forge is lit. Smelt what you like; the counter's open if you'd rather buy."
+  ]
+ },
+ "cookhouse": {
+  "name": "Cook House",
+  "sign": "sign_cook",
+  "enter_greet": [
+   "Smell that? Oven's hot. Cook your own or buy a plate.",
+   "Come in, come in. Food's cheap and the fire's free.",
+   "Hungry? The counter sells cooked meals; the ovens are for guests."
+  ]
+ }
+}

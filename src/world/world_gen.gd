@@ -1,0 +1,1017 @@
+class_name WorldGen
+extends RefCounted
+## Deterministic, seeded world generation. Pure data: no nodes, no textures.
+## The same seed always produces the same tiles and objects, so the save only
+## needs to store *changes* (depleted nodes etc.), never the map.
+
+enum TileType { GRASS, PATH, WATER, SAND, DIRT, COBBLE, PLANKS, MARSH, WALL, WALL_FRONT, FLOOR, DOORWAY, ASH, ASH_EDGE, BRIDGE,
+	STONE_WALL, STONE_FRONT, STONE_FLOOR,
+	PALISADE, PALISADE_FRONT, BASALT_WALL, BASALT_FRONT, SANDSTONE_WALL, SANDSTONE_FRONT,
+	GATE_WOOD, GATE_BASALT, GATE_SAND, BOARDWALK, COBBLE_DARK, PLASTER, PLASTER_WALL, PLASTER_FRONT }
+const TILE_NAMES := ["grass", "path", "water", "sand", "dirt", "cobble", "planks", "marsh", "wall", "wall_front", "floor", "doorway",
+	"ash", "ash_edge", "bridge", "stone_wall", "stone_front", "stone_floor",
+	"palisade", "palisade_front", "basalt_wall", "basalt_front", "sandstone_wall", "sandstone_front",
+	"gate_wood", "gate_basalt", "gate_sand", "boardwalk", "cobble_dark", "plaster", "plaster_wall", "plaster_front"]
+const BLOCKING_TILES := [TileType.WATER, TileType.WALL, TileType.WALL_FRONT, TileType.STONE_WALL, TileType.STONE_FRONT,
+	TileType.PALISADE, TileType.PALISADE_FRONT, TileType.BASALT_WALL, TileType.BASALT_FRONT,
+	TileType.SANDSTONE_WALL, TileType.SANDSTONE_FRONT, TileType.PLASTER_WALL, TileType.PLASTER_FRONT]
+const FLOOR_TILES := [TileType.FLOOR, TileType.STONE_FLOOR, TileType.PLASTER]
+const GATE_TILES := [TileType.GATE_WOOD, TileType.GATE_BASALT, TileType.GATE_SAND]
+const CHUNK := 24
+const ROAD_SPACING := 72
+
+const OCEAN_LEVEL := 0.10
+const BEACH_LEVEL := 0.15
+const TOWN_DRY_RADIUS := 60.0
+const REGION_RADIUS := 190.0
+
+var world_seed: int
+var _height := FastNoiseLite.new()
+var _moist := FastNoiseLite.new()
+var _detail := FastNoiseLite.new()
+var _coast := FastNoiseLite.new()
+var _town: Dictionary = {}            # the home town (Fenhollow) for spawn
+var towns: Dictionary = {}            # id -> town dict (with "center": Vector2i)
+var town_order: Array = []
+var _town_rects: Dictionary = {}      # id -> Rect2i
+var _town_tiles: Dictionary = {}      # Vector2i -> tile type
+var _town_objects: Dictionary = {}    # Vector2i -> object id
+var _town_meta: Dictionary = {}       # Vector2i -> per-instance object data (shop, building, stand, slot)
+var buildings: Dictionary = {}        # 0.3.0: building id -> building dict (absolute coords, see _load_buildings)
+var building_order: Array = []
+var _building_tiles: Dictionary = {}  # Vector2i -> building id (whole footprint incl. walls)
+var continent_center := Vector2i(180, -10)
+var continent_radius := 330.0
+var regions: Dictionary = {}          # town id -> {"biome", "label"}
+var roads: Dictionary = {}            # "a|b" -> Array[Vector2i] ordered a -> b (8-connected)
+var road_tiles: Dictionary = {}       # Vector2i -> tile type (PATH, or BRIDGE over lake water)
+var bridges: Array = []               # 0.3.1: [{"road": "a|b", "tiles": [Vector2i...]}] one entry per span
+var mines: Array = []                 # 0.3.1: data/mines.json clusters (center Vector2i, radius, ores...)
+var pk_zones: Array = []              # 0.3.1: data/pk_zones.json zones with "r": Rect2i
+var _mine_grid: Dictionary = {}       # Vector2i(chunk) -> Array[mine index] (fast lookup)
+var _road_cfg: Dictionary = {}
+# 0.3.1 villages (data/towns/<id>.json kind "village"): NOT cities. town_at /
+# town_edge_distance / nearest_town ignore them (distance bands, home towns,
+# travel, respawn stay city-only); village_at / safe_at / place_at see them.
+var villages: Dictionary = {}         # id -> village dict (with "center")
+var village_order: Array = []
+var _village_rects: Dictionary = {}   # id -> Rect2i (the core rows: the safe zone)
+var farms: Array = []                 # [{"id", "village", "rect": Rect2i, "crop", "gate": Vector2i, "center"}]
+var pastures: Array = []              # [{"id", "village", "rect": Rect2i, "enemy", "count", "gate", "center"}]
+var village_paths: Dictionary = {}    # village id -> Array[Vector2i] (gate -> road)
+var _clear_rects: Array = []          # Rect2i: fields / pastures (no generated trees)
+
+## 0.3.1 cache: A* roads are deterministic per seed + data, so build each
+## distinct world once per process (tests build several WorldGens).
+static var _road_cache: Dictionary = {}
+
+
+## `town` may be a single town dict (tests/legacy) or omitted; the continent
+## layout and all towns come from GameData.world / GameData.towns.
+func _init(p_seed: int, town: Dictionary = {}, world_cfg: Dictionary = {}) -> void:
+	world_seed = p_seed
+	_height.seed = p_seed
+	_height.noise_type = FastNoiseLite.TYPE_SIMPLEX_SMOOTH
+	_height.frequency = 0.018
+	_height.fractal_octaves = 3
+	_moist.seed = p_seed + 101
+	_moist.frequency = 0.012
+	_detail.seed = p_seed + 202
+	_detail.frequency = 0.09
+	_coast.seed = p_seed + 303
+	_coast.frequency = 0.0045
+	_coast.fractal_octaves = 4
+	var cfg: Dictionary = world_cfg if not world_cfg.is_empty() else GameData.world
+	if cfg.has("continent"):
+		var c: Array = cfg["continent"]["center"]
+		continent_center = Vector2i(int(c[0]), int(c[1]))
+		continent_radius = float(cfg["continent"]["radius"])
+	regions = cfg.get("regions", {})
+	var ids: Array = cfg.get("towns", [])
+	if ids.is_empty() and not town.is_empty():
+		ids = [town["id"]]
+	for id in ids:
+		var t: Dictionary = GameData.towns.get(id, town if town.get("id", "") == id else {})
+		if not t.is_empty():
+			_load_town(t)
+	if not town.is_empty() and not towns.has(town["id"]):
+		_load_town(town)
+	_town = towns.get("fenhollow", towns.values()[0] if not towns.is_empty() else {})
+	_load_pk_zones()
+	_load_mines()
+	_road_cfg = cfg.get("road_rules", {})
+	_road_block = _village_footprints(cfg)
+	var key := "%d|%s|%s|%s" % [world_seed, str(ids), str(_road_cfg), str(_road_block)]
+	if _road_cache.has(key):
+		var c: Dictionary = _road_cache[key]
+		roads = c["roads"].duplicate()
+		road_tiles = c["road_tiles"].duplicate()
+		bridges = c["bridges"].duplicate(true)
+	else:
+		for pair in cfg.get("roads", []):
+			if towns.has(pair[0]) and towns.has(pair[1]):
+				_build_road(pair[0], pair[1])
+		_road_cache[key] = {"roads": roads.duplicate(), "road_tiles": road_tiles.duplicate(), "bridges": bridges.duplicate(true)}
+	for vid in cfg.get("villages", []):
+		var v: Dictionary = GameData.villages.get(vid, {})
+		if not v.is_empty():
+			_load_village(v)
+
+
+## 0.3.1 a village: core rows ("transparent" chars keep the terrain), cottages
+## (walk-in "house" buildings), a fenced wheat field, a fenced cow pasture and
+## a path from the village gate to the nearest road tile.
+func _load_village(v: Dictionary) -> void:
+	var origin := Vector2i(int(v["origin"][0]), int(v["origin"][1]))
+	var rows: Array = v["rows"]
+	var rect := Rect2i(origin, Vector2i(str(rows[0]).length(), rows.size()))
+	var t := v.duplicate()
+	t["center"] = rect.position + rect.size / 2
+	villages[v["id"]] = t
+	village_order.append(v["id"])
+	_village_rects[v["id"]] = rect
+	var tmap: Dictionary = v.get("tiles", {})
+	var omap: Dictionary = v.get("objects", {})
+	var clear := str(v.get("transparent", ""))
+	for y in rows.size():
+		var row: String = rows[y]
+		for x in row.length():
+			var ch := row[x]
+			var p := origin + Vector2i(x, y)
+			if tmap.has(ch):
+				_town_tiles[p] = TILE_NAMES.find(tmap[ch])
+			elif omap.has(ch):
+				_town_tiles[p] = TILE_NAMES.find(omap[ch]["ground"])
+				_town_objects[p] = omap[ch]["object"]
+			elif clear.find(ch) < 0:
+				_town_tiles[p] = TileType.GRASS
+	_load_buildings(v, origin)
+	for f in v.get("farms", []):
+		var fr := _fenced(origin, f, TILE_NAMES.find(str(f.get("ground", "dirt"))), str(f.get("crop", "wheat")))
+		farms.append({"id": str(f["id"]), "village": v["id"], "rect": fr, "crop": str(f.get("crop", "wheat")),
+			"gate": origin + Vector2i(int(f["gate"][0]), int(f["gate"][1])), "center": fr.position + fr.size / 2})
+	for pz in v.get("pastures", []):
+		var pr := _fenced(origin, pz, TileType.GRASS, "")
+		pastures.append({"id": str(pz["id"]), "village": v["id"], "rect": pr, "enemy": str(pz.get("enemy", "cow")),
+			"count": int(pz.get("count", 4)), "gate": origin + Vector2i(int(pz["gate"][0]), int(pz["gate"][1])), "center": pr.position + pr.size / 2})
+	var whole := rect   # 0.3.1 no generated trees/rocks anywhere in the village footprint (+1 tile)
+	for f in farms + pastures:
+		if f["village"] == v["id"]:
+			whole = whole.merge(f["rect"])
+	_clear_rects.append(whole.grow(1))
+	if v.has("gate"):
+		village_paths[v["id"]] = _path_to_road(origin + Vector2i(int(v["gate"][0]), int(v["gate"][1])), int(GameData.villages_cfg.get("path_search", 30)))
+
+
+## A fenced rect (village-local "rect"): fence posts on the rim except the gate,
+## `ground` inside, `crop` (object id) on every inside tile when given.
+func _fenced(origin: Vector2i, d: Dictionary, ground: int, crop: String) -> Rect2i:
+	var a: Array = d["rect"]
+	var r := Rect2i(origin + Vector2i(int(a[0]), int(a[1])), Vector2i(int(a[2]), int(a[3])))
+	var gate := origin + Vector2i(int(d["gate"][0]), int(d["gate"][1]))
+	_clear_rects.append(r)
+	for y in range(r.position.y, r.end.y):
+		for x in range(r.position.x, r.end.x):
+			var p := Vector2i(x, y)
+			var rim_y := y == r.position.y or y == r.end.y - 1
+			var rim_x := x == r.position.x or x == r.end.x - 1
+			if p == gate:
+				_town_tiles[p] = TileType.PATH
+			elif rim_y:
+				_town_tiles[p] = TileType.GRASS
+				_town_objects[p] = "fence"
+			elif rim_x:
+				_town_tiles[p] = TileType.GRASS
+				_town_objects[p] = "fence_v"
+			else:
+				_town_tiles[p] = ground
+				if crop != "":
+					_town_objects[p] = crop
+	return r
+
+
+## Path tiles from `from` to the nearest road tile (4-connected, longest axis
+## first); stops at water. Returns the tiles laid.
+func _path_to_road(from: Vector2i, search: int) -> Array:
+	var best := Vector2i.ZERO
+	var bd := INF
+	for q in road_tiles.keys():
+		var d := Vector2(q - from).length()
+		if d < bd and road_tiles[q] == TileType.PATH:
+			bd = d
+			best = q
+	var out: Array = []
+	if bd > search:
+		return out
+	var p := from
+	var guard := 0
+	while p != best and guard < search * 3:
+		guard += 1
+		if not _town_tiles.has(p) or _town_tiles[p] == TileType.GRASS:
+			if _terrain_at(p.x, p.y) == TileType.WATER:
+				break
+			_town_tiles[p] = TileType.PATH
+			out.append(p)
+		var d := best - p
+		if absi(d.x) >= absi(d.y):
+			p.x += signi(d.x)
+		else:
+			p.y += signi(d.y)
+	return out
+
+
+func village_at(p: Vector2i, margin: int = 0) -> String:
+	for id in _village_rects.keys():
+		if (_village_rects[id] as Rect2i).grow(margin).has_point(p):
+			return id
+	return ""
+
+
+## 0.3.1 safe ground: inside a city or a village (no starting aggro, no fights).
+func safe_at(p: Vector2i) -> bool:
+	return town_at(p, 0) != "" or village_at(p, 0) != ""
+
+
+## The settlement (city first, else village) whose rect grown by margin holds p.
+func place_at(p: Vector2i, margin: int = 6) -> String:
+	var t := town_at(p, margin)
+	return t if t != "" else village_at(p, margin)
+
+
+## 0.3.1 authored station tiles (e.g. the village querns) for `station`.
+func station_sites(station: String) -> Array:
+	var out: Array = []
+	for p in _town_objects.keys():
+		if str(GameData.object_def(str(_town_objects[p])).get("station", "")) == station:
+			out.append(p)
+	return out
+
+
+func in_clear_rect(p: Vector2i) -> bool:
+	for r in _clear_rects:
+		if (r as Rect2i).has_point(p):
+			return true
+	return false
+
+
+func nearest_farm(from: Vector2i, crop: String = "") -> Dictionary:
+	var best: Dictionary = {}
+	var bd := INF
+	for f in farms:
+		if crop != "" and f["crop"] != crop:
+			continue
+		var d := Vector2(from - (f["center"] as Vector2i)).length()
+		if d < bd:
+			bd = d
+			best = f
+	return best
+
+
+func nearest_pasture(from: Vector2i, enemy: String = "") -> Dictionary:
+	var best: Dictionary = {}
+	var bd := INF
+	for pz in pastures:
+		if enemy != "" and pz["enemy"] != enemy:
+			continue
+		var d := Vector2(from - (pz["center"] as Vector2i)).length()
+		if d < bd:
+			bd = d
+			best = pz
+	return best
+
+
+func _load_town(town: Dictionary) -> void:
+	var origin := Vector2i(int(town["origin"][0]), int(town["origin"][1]))
+	var rows: Array = town["rows"]
+	var rect := Rect2i(origin, Vector2i(rows[0].length(), rows.size()))
+	var t := town.duplicate()
+	t["center"] = rect.position + rect.size / 2
+	towns[town["id"]] = t
+	town_order.append(town["id"])
+	_town_rects[town["id"]] = rect
+	var tmap: Dictionary = town["tiles"]
+	var omap: Dictionary = town["objects"]
+	for y in rows.size():
+		var row: String = rows[y]
+		for x in row.length():
+			var ch := row[x]
+			var p := origin + Vector2i(x, y)
+			if tmap.has(ch):
+				_town_tiles[p] = TILE_NAMES.find(tmap[ch])
+			elif omap.has(ch):
+				_town_tiles[p] = TILE_NAMES.find(omap[ch]["ground"])
+				_town_objects[p] = omap[ch]["object"]
+			else:
+				_town_tiles[p] = TileType.GRASS
+	_load_buildings(town, origin)
+	_ensure_gate_approaches(town, origin)
+
+
+## Stamp a short clear approach just outside every gate (pier over water,
+## path over land) so path in/out is never blocked by ocean or a tree.
+func _ensure_gate_approaches(town: Dictionary, origin: Vector2i) -> void:
+	var gates: Dictionary = town.get("gates", {})
+	for dir in gates.keys():
+		var cells: Array = gates[dir]
+		if cells.is_empty():
+			continue
+		var mid_local: Array = cells[mini(1, cells.size() - 1)]
+		var mid := origin + Vector2i(int(mid_local[0]), int(mid_local[1]))
+		var step := Vector2i.ZERO
+		match str(dir):
+			"north": step = Vector2i(0, -1)
+			"south": step = Vector2i(0, 1)
+			"west": step = Vector2i(-1, 0)
+			"east": step = Vector2i(1, 0)
+		for i in range(1, 4):
+			var p: Vector2i = mid + step * i
+			var sides: Array[Vector2i] = [p]
+			if step.x != 0:
+				sides.append(p + Vector2i(0, -1))
+				sides.append(p + Vector2i(0, 1))
+			else:
+				sides.append(p + Vector2i(-1, 0))
+				sides.append(p + Vector2i(1, 0))
+			for q in sides:
+				if _town_rects.get(str(town["id"]), Rect2i()).has_point(q):
+					continue
+				var ter: int = _terrain_at(q.x, q.y)
+				# Planks only over water (harbour pier); path on land so road
+				# tiles that share the approach stay PATH for the roads selftest.
+				var ground: int = TileType.PLANKS if ter == TileType.WATER else TileType.PATH
+				_town_tiles[q] = ground
+				_town_objects[q] = ""   # suppress wilderness trees/rocks on the approach
+
+
+## 0.3.0 walk-in buildings (data/towns/*.json "buildings", town-local coords).
+## Walls ring the footprint; the wall row holding the door is the facade
+## (wall_front, never roofed); the door is walkable; the counter, keeper and
+## props are blocking objects carrying per-instance meta.
+func _load_buildings(town: Dictionary, origin: Vector2i) -> void:
+	var shops: Dictionary = GameData.buildings_cfg.get("shops", {})
+	var v := func(a) -> Vector2i: return origin + Vector2i(int(a[0]), int(a[1]))
+	var defs: Array = town.get("buildings", []).duplicate()
+	var church: Dictionary = GameData.churches.get("towns", {}).get(str(town["id"]), {})
+	if not church.is_empty():
+		defs.append(church)   # 0.3.1 one stone church per town (data/churches.json)
+	for bd in defs:
+		var r: Array = bd["rect"]
+		var rect := Rect2i(v.call(r), Vector2i(int(r[2]), int(r[3])))
+		var doors: Array = []
+		for d in bd["door"]:
+			doors.append(v.call(d))
+		var facade: int = rect.end.y - 1 if (doors[0] as Vector2i).y == rect.end.y - 1 else rect.position.y
+		var shop := str(bd.get("shop", ""))
+		var sd: Dictionary = shops.get(shop, {})
+		if str(bd.get("kind", "")) == "church":
+			sd = GameData.churches
+		var style := str(bd.get("style", sd.get("style", town.get("building_style", "timber"))))
+		if str(bd.get("kind", "")) == "church":
+			style = "stone"
+		var wall_t := TileType.WALL
+		var front_t := TileType.WALL_FRONT
+		var floor_t := TileType.FLOOR
+		match style:
+			"stone":
+				wall_t = TileType.STONE_WALL; front_t = TileType.STONE_FRONT; floor_t = TileType.STONE_FLOOR
+			"basalt":
+				wall_t = TileType.BASALT_WALL; front_t = TileType.BASALT_FRONT; floor_t = TileType.STONE_FLOOR
+			"sandstone":
+				wall_t = TileType.SANDSTONE_WALL; front_t = TileType.SANDSTONE_FRONT; floor_t = TileType.PLASTER
+			"plaster":
+				wall_t = TileType.PLASTER_WALL; front_t = TileType.PLASTER_FRONT; floor_t = TileType.PLASTER
+			_:
+				style = "timber"
+		var b := {
+			"id": str(bd["id"]), "town": str(town["id"]), "kind": str(bd.get("kind", "shop")), "shop": shop,
+			"name": str(bd.get("name", sd.get("name", ""))), "keeper": str(bd.get("keeper", sd.get("keeper", "Shopkeeper"))),
+			"keeper_sprite": str(bd.get("keeper_sprite", sd.get("keeper_sprite", "keeper_general"))), "sign_sprite": str(bd.get("sign_sprite", sd.get("sign", "sign_general"))),
+			"rect": rect, "doors": doors, "facade_y": facade, "keeper_at": v.call(bd["keeper_at"]), "stand": v.call(bd["stand"]),
+			"sign": v.call(bd["sign"]), "counter": [], "displays": [], "roof": str(bd.get("roof", sd.get("roof", town.get("roof", "#8a6a4a")))),
+			"style": style,
+		}
+		if bd.has("altar"):
+			b["altar"] = v.call(bd["altar"])
+		for y in range(rect.position.y, rect.end.y):
+			for x in range(rect.position.x, rect.end.x):
+				var p := Vector2i(x, y)
+				_building_tiles[p] = b["id"]
+				_town_objects.erase(p)
+				var edge := x == rect.position.x or x == rect.end.x - 1 or y == rect.position.y or y == rect.end.y - 1
+				if p in doors:
+					_town_tiles[p] = TileType.DOORWAY
+				elif edge:
+					_town_tiles[p] = front_t if y == facade else wall_t
+				else:
+					_town_tiles[p] = floor_t
+		var meta := {"building": b["id"], "shop": shop, "stand": b["stand"], "town": b["town"]}
+		for c in bd.get("counter", []):
+			var p: Vector2i = v.call(c)
+			b["counter"].append(p)
+			_town_objects[p] = "shop_counter"
+			_town_meta[p] = meta
+		_town_objects[b["keeper_at"]] = "shopkeeper"
+		_town_meta[b["keeper_at"]] = meta.merged({"name": b["keeper"], "keeper": true})
+		for pr in bd.get("props", []):
+			_town_objects[v.call(pr["at"])] = str(pr["object"])
+			_town_meta[v.call(pr["at"])] = {"building": b["id"]}
+		if b.has("altar"):
+			_town_objects[b["altar"]] = "altar"
+			_town_meta[b["altar"]] = {"building": b["id"], "town": b["town"]}
+		var di := 0
+		for dsp in bd.get("displays", []):
+			var p: Vector2i = v.call(dsp)
+			b["displays"].append(p)
+			_town_objects[p] = "display_stand"
+			_town_meta[p] = {"building": b["id"], "town": b["town"], "slot": di}
+			di += 1
+		buildings[b["id"]] = b
+		building_order.append(b["id"])
+
+
+## 0.3.1: the town object id placed at p ("" if none): props, stations, altar.
+func object_id_at(p: Vector2i) -> String:
+	return str(_town_objects.get(p, ""))
+
+
+## Building whose footprint (walls included) holds p, else {}.
+func building_at(p: Vector2i) -> Dictionary:
+	return buildings.get(_building_tiles.get(p, ""), {})
+
+
+## Inside for the roof: on the doorway or anywhere off the facade/walls in the footprint.
+func is_inside(p: Vector2i, b: Dictionary) -> bool:
+	if b.is_empty() or not (b["rect"] as Rect2i).has_point(p):
+		return false
+	return p in b["doors"] or (p.y != int(b["facade_y"]) and tile_at(p.x, p.y) in FLOOR_TILES)
+
+
+## Tiles the roof covers (footprint minus the facade row).
+func is_roofed(p: Vector2i, b: Dictionary) -> bool:
+	return not b.is_empty() and (b["rect"] as Rect2i).has_point(p) and p.y != int(b["facade_y"])
+
+
+func building_for_shop(town: String, shop: String) -> Dictionary:
+	for id in building_order:
+		var b: Dictionary = buildings[id]
+		if b["town"] == town and b["shop"] == shop:
+			return b
+	return {}
+
+
+func object_meta(p: Vector2i) -> Dictionary:
+	return _town_meta.get(p, {})
+
+
+## 0.3.1 roads: A* over the terrain between town centres. Ocean is
+## impassable; lake water costs road_rules.bridge_cost per tile (a wooden
+## bridge), so a road only crosses a lake where going round is much longer.
+## Diagonal steps are not allowed past water, so every bridge span is a
+## 4-connected walkable strip. Costs are data-driven (data/world.json
+## "road_rules"); a little moisture noise makes the roads meander.
+var _road_block: Array = []
+
+
+func _build_road(a: String, b: String) -> void:
+	var pa: Vector2i = towns[a]["center"]
+	var pb: Vector2i = towns[b]["center"]
+	# 0.3.1 walled cities: the road runs gate to gate (the pair of gates whose
+	# outside tiles are closest), never through a wall or another town.
+	var ga := gate_outside(a, pb)
+	var gb := gate_outside(b, pa)
+	if ga != Vector2i(1 << 30, 0) and gb != Vector2i(1 << 30, 0):
+		var best := INF
+		for qa in gate_outsides(a):
+			for qb in gate_outsides(b):
+				var d := Vector2(qa - qb).length()
+				if d < best:
+					best = d
+					ga = qa
+					gb = qb
+		pa = ga
+		pb = gb
+	var raw := _road_astar(pa, pb)
+	if raw.is_empty():
+		push_error("WorldGen: no road %s -> %s" % [a, b])
+		return
+	# inside the towns actors walk the streets; the road list starts at the edge
+	var ra: Rect2i = (_town_rects[a] as Rect2i).grow(1)
+	var rb: Rect2i = (_town_rects[b] as Rect2i).grow(1)
+	var tiles: Array = raw.filter(func(p): return not ra.has_point(p) and not rb.has_point(p))
+	roads[a + "|" + b] = tiles
+	var rev := tiles.duplicate()
+	rev.reverse()
+	roads[b + "|" + a] = rev
+	var span: Array = []
+	for p in tiles:
+		var water: bool = _terrain_at(p.x, p.y) == TileType.WATER
+		road_tiles[p] = TileType.BRIDGE if water else TileType.PATH
+		if water:
+			span.append(p)
+		elif not span.is_empty():
+			bridges.append({"road": a + "|" + b, "tiles": span})
+			span = []
+	if not span.is_empty():
+		bridges.append({"road": a + "|" + b, "tiles": span})
+
+
+## Tiles just outside each city gate (middle gate cell + one step out).
+func gate_outsides(tid: String) -> Array:
+	var out: Array = []
+	var t: Dictionary = towns.get(tid, {})
+	var gates: Dictionary = t.get("gates", {})
+	if gates.is_empty():
+		return out
+	var origin := Vector2i(int(t["origin"][0]), int(t["origin"][1]))
+	for dir in gates.keys():
+		var cells: Array = gates[dir]
+		if cells.is_empty():
+			continue
+		var m: Array = cells[mini(1, cells.size() - 1)]
+		var step: Vector2i = {"north": Vector2i(0, -1), "south": Vector2i(0, 1), "west": Vector2i(-1, 0), "east": Vector2i(1, 0)}.get(str(dir), Vector2i.ZERO)
+		out.append(origin + Vector2i(int(m[0]), int(m[1])) + step)
+	return out
+
+
+## The gate-outside tile of `tid` nearest to `toward` (or (1<<30, 0) if the town has no gates).
+func gate_outside(tid: String, toward: Vector2i) -> Vector2i:
+	var best := Vector2i(1 << 30, 0)
+	var bd := INF
+	for q in gate_outsides(tid):
+		var d := Vector2(q - toward).length()
+		if d < bd:
+			bd = d
+			best = q
+	return best
+
+
+## 0.3.1 village footprints (core + fields + pastures, from data) that roads keep out of.
+func _village_footprints(cfg: Dictionary) -> Array:
+	var out: Array = []
+	for vid in cfg.get("villages", []):
+		var v: Dictionary = GameData.villages.get(vid, {})
+		if v.is_empty():
+			continue
+		var o := Vector2i(int(v["origin"][0]), int(v["origin"][1]))
+		var rows: Array = v["rows"]
+		var r := Rect2i(o, Vector2i(str(rows[0]).length(), rows.size()))
+		for k in ["farms", "pastures"]:
+			for f in v.get(k, []):
+				var a: Array = f["rect"]
+				r = r.merge(Rect2i(o + Vector2i(int(a[0]), int(a[1])), Vector2i(int(a[2]), int(a[3]))))
+		out.append(r.grow(1))
+	return out
+
+
+func _road_cost(x: int, y: int) -> float:
+	var p := Vector2i(x, y)
+	for id in _town_rects.keys():
+		if (_town_rects[id] as Rect2i).has_point(p):
+			return 1.0 if towns[id].get("gates", {}).is_empty() else -1.0   # walled: only via the gates
+	for r in _road_block:
+		if (r as Rect2i).has_point(p):
+			return -1.0
+	var t := _terrain_at(x, y)
+	if t == TileType.WATER:
+		if land_value(x, y) < OCEAN_LEVEL:
+			return -1.0                                 # ocean: never
+		return float(_road_cfg.get("bridge_cost", 9.0))
+	var c := 1.0
+	match t:
+		TileType.MARSH: c = float(_road_cfg.get("marsh_cost", 1.8))
+		TileType.SAND: c = float(_road_cfg.get("sand_cost", 1.3))
+		TileType.DIRT: c = float(_road_cfg.get("dirt_cost", 1.1))
+	if is_pk(p):
+		c += float(_road_cfg.get("pk_cost", 20.0))     # roads keep out of the Scorch
+	return c * (1.0 + float(_road_cfg.get("meander", 0.35)) * (_moist.get_noise_2d(x * 3.1, y * 3.1) + 1.0) * 0.5)
+
+
+func _road_astar(pa: Vector2i, pb: Vector2i) -> Array:
+	var m := int(_road_cfg.get("margin", 90))
+	var r := Rect2i(Vector2i(mini(pa.x, pb.x), mini(pa.y, pb.y)), (pa - pb).abs() + Vector2i.ONE).grow(m)
+	var w := r.size.x
+	var hgt := r.size.y
+	var n := w * hgt
+	var ox := r.position.x
+	var oy := r.position.y
+	var bw := float(_road_cfg.get("bridge_cost", 9.0))
+	var hw := float(_road_cfg.get("heuristic_weight", 1.0))
+	var cost := PackedFloat32Array()
+	cost.resize(n)
+	cost.fill(0.0)                    # 0 = not evaluated yet
+	var g := PackedFloat32Array()
+	g.resize(n)
+	g.fill(INF)
+	var came := PackedInt32Array()
+	came.resize(n)
+	came.fill(-1)
+	var closed := PackedByteArray()
+	closed.resize(n)
+	var heap: Array = []
+	var s: int = (pa.y - oy) * w + (pa.x - ox)
+	var goal: int = (pb.y - oy) * w + (pb.x - ox)
+	g[s] = 0.0
+	cost[s] = 1.0
+	var counter := 0
+	Pathfinder._push(heap, [0.0, 0, s])
+	var dxs := [1, -1, 0, 0, 1, 1, -1, -1]
+	var dys := [0, 0, 1, -1, 1, -1, 1, -1]
+	while not heap.is_empty():
+		var cur: int = Pathfinder._pop(heap)[2]
+		if closed[cur] == 1:
+			continue
+		if cur == goal:
+			break
+		closed[cur] = 1
+		var cx := cur % w
+		var cy := cur / w
+		var here_water: bool = cost[cur] >= bw
+		var gc: float = g[cur]
+		for k in 8:
+			var qx: int = cx + dxs[k]
+			var qy: int = cy + dys[k]
+			if qx < 0 or qy < 0 or qx >= w or qy >= hgt:
+				continue
+			var i := qy * w + qx
+			if closed[i] == 1:
+				continue
+			var c: float = cost[i]
+			if c == 0.0:
+				c = _road_cost(qx + ox, qy + oy)
+				cost[i] = c
+			if c < 0.0:
+				continue
+			var step := 1.0
+			if k >= 4:
+				if here_water or c >= bw:
+					continue
+				var ia := cy * w + qx
+				var ib := qy * w + cx
+				var ca: float = cost[ia]
+				if ca == 0.0:
+					ca = _road_cost(qx + ox, cy + oy)
+					cost[ia] = ca
+				var cb: float = cost[ib]
+				if cb == 0.0:
+					cb = _road_cost(cx + ox, qy + oy)
+					cost[ib] = cb
+				if ca < 0.0 or cb < 0.0 or ca >= bw or cb >= bw:
+					continue              # no diagonal steps on or past water: bridges are 4-connected
+				step = 1.4142
+			var ng: float = gc + step * c
+			if ng < g[i]:
+				g[i] = ng
+				came[i] = cur
+				counter += 1
+				var dx := absi(qx + ox - pb.x)
+				var dy := absi(qy + oy - pb.y)
+				Pathfinder._push(heap, [ng + ((dx + dy) - 0.5858 * mini(dx, dy)) * hw, counter, i])
+	if came[goal] == -1:
+		return []
+	var out: Array = []
+	var c2 := goal
+	while c2 != -1:
+		out.append(Vector2i(ox + c2 % w, oy + c2 / w))
+		c2 = came[c2]
+	out.reverse()
+	return out
+
+
+func road_between(a: String, b: String) -> Array:
+	return roads.get(a + "|" + b, [])
+
+
+func town_spawn(id: String = "") -> Vector2i:
+	var t: Dictionary = towns.get(id, villages.get(id, _town)) if id != "" else _town
+	if t.is_empty():
+		return Vector2i.ZERO
+	return Vector2i(int(t["spawn"][0]), int(t["spawn"][1]))
+
+
+func town_center(id: String) -> Vector2i:
+	if towns.has(id):
+		return towns[id]["center"]
+	return villages[id]["center"] if villages.has(id) else Vector2i.ZERO
+
+
+func town_name(id: String) -> String:
+	return str(towns.get(id, villages.get(id, {})).get("name", id.capitalize()))
+
+
+func in_town(p: Vector2i) -> bool:
+	return town_at(p, 0) != ""
+
+
+## Town whose rectangle (grown by `margin`) contains p, else "".
+func town_at(p: Vector2i, margin: int = 6) -> String:
+	for id in _town_rects.keys():
+		if (_town_rects[id] as Rect2i).grow(margin).has_point(p):
+			return id
+	return ""
+
+
+func nearest_town(p: Vector2i) -> String:
+	var best := ""
+	var bd := INF
+	for id in towns.keys():
+		var d := Vector2(p - town_center(id)).length()
+		if d < bd:
+			bd = d
+			best = id
+	return best
+
+
+## 0..1 influence of town `id`'s region at p (1 at the town, 0 beyond REGION_RADIUS).
+func region_weight(id: String, x: int, y: int) -> float:
+	if not towns.has(id):
+		return 0.0
+	var d := Vector2(Vector2i(x, y) - town_center(id)).length()
+	return clampf(1.0 - d / REGION_RADIUS, 0.0, 1.0)
+
+
+func _biome_weight(biome: String, x: int, y: int) -> float:
+	var w := 0.0
+	for id in regions.keys():
+		if regions[id].get("biome", "") == biome:
+			w = maxf(w, region_weight(id, x, y))
+	return w
+
+
+func bounds() -> Rect2i:
+	var r := int(continent_radius * 1.2)
+	return Rect2i(continent_center - Vector2i(r, r), Vector2i(r * 2, r * 2))
+
+
+## Continent "landness": > OCEAN_LEVEL is land.
+func land_value(x: int, y: int) -> float:
+	var d := Vector2(Vector2i(x, y) - continent_center).length()
+	if d > continent_radius * 1.15:
+		return -1.0
+	var v := 1.0 - d / continent_radius + _coast.get_noise_2d(x, y) * 0.45
+	for id in towns.keys():
+		var dt := Vector2(Vector2i(x, y) - town_center(id)).length()
+		if dt < TOWN_DRY_RADIUS:
+			v += (TOWN_DRY_RADIUS - dt) / TOWN_DRY_RADIUS * 0.6
+	return v
+
+
+## Integer hash -> [0,1). Stable across platforms (64-bit int math, masked).
+func hash01(x: int, y: int, salt: int = 0) -> float:
+	var n: int = (x * 374761393 + y * 668265263 + (world_seed + salt) * 2246822519) & 0xffffffff
+	n = ((n ^ (n >> 13)) * 1274126177) & 0xffffffff
+	n = n ^ (n >> 16)
+	return float(n & 0xffffff) / 16777216.0
+
+
+## Tile type at any world tile, without needing a chunk.
+func tile_at(x: int, y: int) -> int:
+	var p := Vector2i(x, y)
+	if _town_tiles.has(p):
+		return _town_tiles[p]
+	if road_tiles.has(p):
+		return road_tiles[p]
+	var t := _terrain_at(x, y)
+	if t == TileType.WATER:
+		return t
+	var z := _biome_zone_at(p)
+	if not z.is_empty() and str(z.get("biome", "")) == "scorch":
+		var zr: Rect2i = z["r"]
+		var edge := mini(mini(p.x - zr.position.x, zr.end.x - 1 - p.x), mini(p.y - zr.position.y, zr.end.y - 1 - p.y))
+		return TileType.ASH_EDGE if edge < int(z.get("edge_tiles", 2)) else TileType.ASH
+	var mn := mine_at(p, 1)
+	if not mn.is_empty() and str(mn.get("ground", "dirt")) == "dirt" and _mine_ground(p, mn):
+		return TileType.DIRT
+	return t
+
+
+## The generated terrain alone (no towns, roads, Scorch or mine ground).
+func _terrain_at(x: int, y: int) -> int:
+	var p := Vector2i(x, y)
+	var v := land_value(x, y)
+	if v < OCEAN_LEVEL:
+		return TileType.WATER          # the ocean: impassable
+	if v < BEACH_LEVEL:
+		return TileType.SAND
+	var h := _height.get_noise_2d(x, y)
+	# keep a dry ring around towns so they never flood
+	for id in towns.keys():
+		var dt := Vector2(p - town_center(id)).length()
+		if dt < 34.0:
+			h += (34.0 - dt) / 34.0 * 0.5
+	if h < -0.34:
+		return TileType.WATER          # inland lakes
+	if h < -0.27:
+		return TileType.SAND
+	var hills := _biome_weight("hills", x, y)
+	var marsh := _biome_weight("marsh", x, y)
+	var m := _moist.get_noise_2d(x, y)
+	if m > 0.32 - marsh * 0.35 and h < 0.05 + marsh * 0.2:
+		return TileType.MARSH
+	if _detail.get_noise_2d(x, y) > 0.42 - hills * 0.35:
+		return TileType.DIRT
+	return TileType.GRASS
+
+
+## True for tiles that are road over lake water (a bridge).
+func is_bridge(p: Vector2i) -> bool:
+	return int(road_tiles.get(p, -1)) == TileType.BRIDGE
+
+
+# ------------------------------------------------------- 0.3.1 PK zones --
+func _load_pk_zones() -> void:
+	pk_zones.clear()
+	for z in GameData.pk_zones.get("zones", []):
+		var a: Array = z.get("rect", [0, 0, 0, 0])
+		var zz: Dictionary = (z as Dictionary).duplicate(true)
+		zz["r"] = Rect2i(int(a[0]), int(a[1]), int(a[2]), int(a[3]))
+		pk_zones.append(zz)
+
+
+## Terrain only (ash biome): the zone dict with its "r" Rect2i, from the
+## world data loaded at generation (unaffected by PkRules test overrides).
+func _biome_zone_at(p: Vector2i) -> Dictionary:
+	for z in pk_zones:
+		if (z["r"] as Rect2i).has_point(p):
+			return z
+	return {}
+
+
+## PK zone holding p, else {}. Rules, HUD and AI all go through PkRules
+## (the one is_pk helper; same data/pk_zones.json via GameData.pk_zones).
+func pk_zone_at(p: Vector2i) -> Dictionary:
+	return PkRules.zone_at(p)
+
+
+func is_pk(p: Vector2i) -> bool:
+	return PkRules.is_pk(p)
+
+
+# --------------------------------------------------------- 0.3.1 mines --
+## data/mines.json: named clusters; rocks spawn ONLY inside them.
+func _load_mines() -> void:
+	mines.clear()
+	_mine_grid.clear()
+	for md in GameData.mines.get("mines", []):
+		var m: Dictionary = (md as Dictionary).duplicate(true)
+		m["c"] = Vector2i(int(md["center"][0]), int(md["center"][1]))
+		m["radius"] = float(md.get("radius", 6))
+		m["pk"] = is_pk(m["c"])
+		var tot := 0.0
+		for k in m.get("ores", {}).keys():
+			tot += float(m["ores"][k])
+		m["_tot"] = maxf(tot, 0.0001)
+		mines.append(m)
+		var rr := int(ceil(float(m["radius"]))) + 3
+		var c0 := Vector2i(floori(float(m["c"].x - rr) / CHUNK), floori(float(m["c"].y - rr) / CHUNK))
+		var c1 := Vector2i(floori(float(m["c"].x + rr) / CHUNK), floori(float(m["c"].y + rr) / CHUNK))
+		for cy in range(c0.y, c1.y + 1):
+			for cx in range(c0.x, c1.x + 1):
+				var k2 := Vector2i(cx, cy)
+				if not _mine_grid.has(k2):
+					_mine_grid[k2] = []
+				_mine_grid[k2].append(mines.size() - 1)
+
+
+## Mine whose (ragged) area holds p, grown by `margin` tiles, else {}.
+func mine_at(p: Vector2i, margin: int = 0) -> Dictionary:
+	var k := Vector2i(floori(float(p.x) / CHUNK), floori(float(p.y) / CHUNK))
+	for i in _mine_grid.get(k, []):
+		var m: Dictionary = mines[i]
+		if Vector2(p - (m["c"] as Vector2i)).length() <= float(m["radius"]) + margin + 0.5:
+			return m
+	return {}
+
+
+func _mine_ground(p: Vector2i, m: Dictionary) -> bool:
+	var d := Vector2(p - (m["c"] as Vector2i)).length()
+	return d <= float(m["radius"]) + (hash01(p.x, p.y, 13) * 2.0 - 0.5)
+
+
+func mine_by_id(id: String) -> Dictionary:
+	for m in mines:
+		if str(m["id"]) == id:
+			return m
+	return {}
+
+
+## Mines that yield the rock object `def_id` (e.g. "iron_rock").
+func mines_with(def_id: String) -> Array:
+	return mines.filter(func(m): return float(m.get("ores", {}).get(def_id, 0.0)) > 0.0)
+
+
+## Closest mine with `def_id` to `from` (outside PK zones unless allow_pk).
+func nearest_mine(from: Vector2i, def_id: String, allow_pk: bool = false) -> Dictionary:
+	var best := {}
+	var bd := INF
+	for m in mines_with(def_id):
+		if bool(m["pk"]) and not allow_pk:
+			continue
+		var d := Vector2(from - (m["c"] as Vector2i)).length()
+		if d < bd:
+			bd = d
+			best = m
+	return best
+
+
+## Distance (tiles) from p to the nearest town's rectangle (0 inside a town).
+func town_edge_distance(p: Vector2i) -> float:
+	var best := INF
+	for id in _town_rects.keys():
+		var r: Rect2i = _town_rects[id]
+		var dx := maxi(maxi(r.position.x - p.x, 0), p.x - (r.end.x - 1))
+		var dy := maxi(maxi(r.position.y - p.y, 0), p.y - (r.end.y - 1))
+		best = minf(best, Vector2(dx, dy).length())
+	return best
+
+
+## Distance (tiles) to the nearest town centre.
+func town_distance(x: int, y: int) -> float:
+	var best := INF
+	for id in towns.keys():
+		best = minf(best, Vector2(Vector2i(x, y) - town_center(id)).length())
+	return best
+
+
+## Object id (or "") generated at a tile. 0.3.1: rocks ONLY in the named
+## mines of data/mines.json (ore mix per mine); trees thin out by distance as
+## before; the Scorch gets burnt trees, stumps and embers instead.
+func object_at(x: int, y: int, tile: int) -> String:
+	var p := Vector2i(x, y)
+	if _town_objects.has(p):
+		return _town_objects[p]
+	if town_at(p, 0) != "" or road_tiles.has(p) or _town_tiles.has(p) or village_at(p, 0) != "" or in_clear_rect(p):
+		return ""
+	var r := hash01(x, y, 1)
+	var r2 := hash01(x, y, 2)
+	if tile != TileType.WATER:
+		var mn := mine_at(p, 1)
+		if not mn.is_empty():
+			return _mine_rock(p, mn)
+	var dist := town_distance(x, y)
+	var coast := _biome_weight("forest_coast", x, y)
+	match tile:
+		TileType.GRASS:
+			if r > 0.935 - coast * 0.05:
+				if dist > 60.0 and r2 < 0.15 + coast * 0.15:
+					return "blackthorn_tree"
+				if dist > 20.0 and r2 < 0.35 + coast * 0.2:
+					return "alder_tree"
+				return "ash_tree"
+		TileType.MARSH:
+			if r > 0.93:
+				return "fenroot_patch" if r2 < 0.4 else "reed_bed"
+		TileType.ASH, TileType.ASH_EDGE:
+			var dec: Dictionary = GameData.pk_zones.get("decor", {})
+			if r > 1.0 - float(dec.get("burnt_tree", 0.05)):
+				return "burnt_tree"
+			if r > 1.0 - float(dec.get("burnt_tree", 0.05)) - float(dec.get("charred_stump", 0.02)):
+				return "charred_stump"
+			if r2 < float(dec.get("embers", 0.012)) or (tile == TileType.ASH_EDGE and r2 < float(dec.get("edge_embers", 0.12))):
+				return "embers"
+		TileType.WATER:
+			if r > 0.975 - coast * 0.015 and _touches_land(x, y):
+				return "fishing_spot"
+	return ""
+
+
+## A rock (or "") at p inside mine m: density falls off towards the rim.
+func _mine_rock(p: Vector2i, m: Dictionary) -> String:
+	var d := Vector2(p - (m["c"] as Vector2i)).length()
+	var rad := float(m["radius"])
+	if d > rad - 0.5:
+		return ""
+	var dens := float(m.get("density", 0.3)) * (1.0 - 0.45 * d / maxf(1.0, rad))
+	if hash01(p.x, p.y, 11) >= dens:
+		return ""
+	var pick := hash01(p.x, p.y, 12) * float(m["_tot"])
+	for k in m["ores"].keys():
+		pick -= float(m["ores"][k])
+		if pick <= 0.0:
+			return str(k)
+	return str(m["ores"].keys()[-1])
+
+
+func _touches_land(x: int, y: int) -> bool:
+	for d in [Vector2i(1, 0), Vector2i(-1, 0), Vector2i(0, 1), Vector2i(0, -1)]:
+		if tile_at(x + d.x, y + d.y) != TileType.WATER:
+			return true
+	return false
+
+
+func generate_chunk(c: Vector2i) -> ChunkData:
+	var ch := ChunkData.new(c)
+	var ox := c.x * CHUNK
+	var oy := c.y * CHUNK
+	for ly in CHUNK:
+		for lx in CHUNK:
+			var t := tile_at(ox + lx, oy + ly)
+			ch.tiles[ly * CHUNK + lx] = t
+	for ly in CHUNK:
+		for lx in CHUNK:
+			var wp := Vector2i(ox + lx, oy + ly)
+			var obj := object_at(wp.x, wp.y, ch.tiles[ly * CHUNK + lx])
+			if obj != "" and not GameData.object_def(obj).is_empty():
+				ch.objects[wp] = WorldObject.new(obj, wp)
+				if _town_meta.has(wp):
+					ch.objects[wp].meta = _town_meta[wp]
+	return ch

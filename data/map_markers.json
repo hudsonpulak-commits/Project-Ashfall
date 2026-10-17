@@ -1,0 +1,31 @@
+{
+ "note": "0.3.1 custom player map markers. Icons listed here must exist under sprites.json ui as marker_<id>. Colours tint the white placeholder art. Cap, long-press and label length are tunable.",
+ "max": 50,
+ "long_press_ms": 450,
+ "move_slop_px": 10,
+ "label_max": 16,
+ "hit_radius_map_px": 10,
+ "default_icon": "pin",
+ "default_colour": "#e05050",
+ "minimap_show_default": true,
+ "icons": [
+  "pin",
+  "star",
+  "skull",
+  "pickaxe",
+  "sword",
+  "fish",
+  "tree",
+  "house"
+ ],
+ "colours": [
+  "#e05050",
+  "#f0a040",
+  "#f0e060",
+  "#60c060",
+  "#50a0e0",
+  "#a060e0",
+  "#f0f0f0",
+  "#303030"
+ ]
+}

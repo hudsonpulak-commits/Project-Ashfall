@@ -1,0 +1,18 @@
+{
+ "note": "Combat zones. Everywhere is SINGLE-WAY combat by default: an actor (player or AI) that is in combat can only be attacked by the enemy it is fighting, and an enemy in combat with one actor can't be attacked by anyone else. 'In combat' lasts combat_ticks ticks after the last swing dealt or taken (an enemy aggroing onto you also counts). Multi-combat zones lift both rules inside their tile rects. To add one, append {\"id\": \"...\", \"name\": \"...\", \"rect\": [x, y, w, h]} (world tile coords, top-left + size) to 'zones'. Abstract (offscreen) AI fights take abstract_multi_damage extra incoming damage for camps inside a multi zone (0.5 = +50%).",
+ "combat_ticks": 8,
+ "abstract_multi_damage": 0.5,
+ "zones": [
+  {
+   "id": "scorch",
+   "name": "The Scorch",
+   "rect": [
+    -250,
+    -460,
+    850,
+    205
+   ],
+   "note": "0.3.1: the whole Scorch is multi-combat (user t31u). Keep in sync with data/pk_zones.json."
+  }
+ ]
+}

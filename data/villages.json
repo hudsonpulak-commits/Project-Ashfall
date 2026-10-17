@@ -1,0 +1,15 @@
+{
+ "note": "0.3.1 villages between the cities (data/towns/<id>.json with kind 'village', listed in world.json 'villages'; laid out by tools/layout_villages.py). A few cottages (walk-in, a villager who talks), a well, a quern (wheat -> flour, Cooking), a cooking hearth, citizens. The village rect is a safe zone like a town (no starting aggro, no fights inside) but villages are NOT cities: distance bands, home towns, travel, markets and respawn use the three cities only. Each village has a fenced wheat field (wheat regrows after harvest) and a fenced cow pasture (cows respawn). A short path joins the village gate to the road.",
+ "greet": [
+  "Mind the well, it's deeper than it looks.",
+  "The quern's free to use. Two sheaves make a sack of flour.",
+  "Cows are in the pasture. They kick back if you poke them, mind.",
+  "Bake your flour on the hearth and you've bread for the road."
+ ],
+ "enter_greet": [
+  "Come in, come in. Wipe your boots.",
+  "Oh! A visitor. Welcome to the village."
+ ],
+ "path_search": 30,
+ "torches_per_village": 2
+}

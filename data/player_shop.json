@@ -1,0 +1,30 @@
+{
+ "note": "0.3.0 player-owned shops. One empty building per town (data/towns/*.json, kind \"player\"); only the player can buy it (a coin sink). 8 display stands; a stand holds one item id: gear/tools up to gear_cap, anything else up to stack_cap. Sales go to the till minus the Exchange tax (2 % on sales of 50+ marks, TownMarket.tax_on). AI buy from it at their normal trading cadence (AIBrain.trade / trader buy_quote), only for things they need (or bargains of things they keep), capped by budget and per-agent daily lots. Chance per look = base x deal^deal_exp x attractiveness, deal = min(best local alternative, reference x alt_cap) / your price. Priced above the alternative: x pricey_mult. Above reference x max_ref_mult: never.",
+ "price": 1500,
+ "slots": 8,
+ "stack_cap": 50,
+ "gear_cap": 1,
+ "price_cap_ref_mult": 5.0,
+ "log_max": 40,
+ "ai": {
+  "base": 0.30,
+  "deal_exp": 3.0,
+  "alt_cap": 1.25,
+  "no_alt_ref_mult": 1.15,
+  "pricey_mult": 0.15,
+  "max_ref_mult": 1.6,
+  "max_chance": 0.95,
+  "lots_per_agent_day": 3,
+  "budget_frac": 0.4,
+  "bargain_at": 0.85
+ },
+ "attract": {
+  "note": "attractiveness = base + fill x stocked-stand share + variety x distinct-items share + demand x share of stocked items this town traded yesterday + decor (hook for future furniture, 0 now). Range about 0.6 - 1.4.",
+  "base": 0.6,
+  "fill": 0.3,
+  "variety": 0.2,
+  "demand": 0.3,
+  "decor": 0.0
+ },
+ "deal_labels": [[0.85, "Bargain", "#7ad070"], [1.0, "Good deal", "#b8d070"], [1.1, "Fair", "#e0d080"], [1.4, "Pricey", "#e0a060"], [999, "Overpriced", "#e06050"]]
+}

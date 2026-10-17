@@ -1,0 +1,423 @@
+{
+ "note": "AI player archetypes. 'focus' = skills in priority order (weights 1.0, 0.85; anything else 0.35). 'count' = how many of the 40 agents use it; 'home_weights' = which town they live near (regional supply). Travelling traders carry goods between towns along the roads. risk/patience shape Exchange pricing; schedule = active game hours. 0.3.1: personas with \"class\": \"adventurer\" are NOT part of the 40 (count 0); data/adventurers.json spawns them (ids adv_0..) and tunes how they train, gear up and PK. The old 'adventurer' persona (id kept for saves) is now labelled Sellsword.",
+ "personas": [
+  {
+   "id": "woodsman",
+   "label": "Woodsman",
+   "tint": "#4a8a3a",
+   "focus": [
+    "forestry",
+    "joinery"
+   ],
+   "sells": [
+    "ash_log",
+    "alder_log",
+    "blackthorn_log",
+    "plank"
+   ],
+   "buys": [
+    "bronze_hatchet",
+    "iron_hatchet"
+   ],
+   "risk": 0.2,
+   "patience": 0.7,
+   "schedule": "day",
+   "count": 3,
+   "home_weights": {
+    "fenhollow": 0.4,
+    "cinderholt": 0.2,
+    "saltmere": 0.4
+   }
+  },
+  {
+   "id": "prospector",
+   "label": "Prospector",
+   "tint": "#8a8e96",
+   "focus": [
+    "mining",
+    "smithing"
+   ],
+   "sells": [
+    "copper_ore",
+    "tin_ore",
+    "iron_ore",
+    "coal"
+   ],
+   "buys": [
+    "bronze_pick",
+    "iron_pick"
+   ],
+   "risk": 0.3,
+   "patience": 0.6,
+   "schedule": "day",
+   "count": 5,
+   "home_weights": {
+    "cinderholt": 0.7,
+    "fenhollow": 0.15,
+    "saltmere": 0.15
+   },
+   "min_per_town": 1,
+   "pit_duty": 2.6,
+   "note_pit_duty": "0.3.1 each town's min_per_town prospector weighs pit_duty_ores x pit_duty: its own copper/tin pits (and the far coal) see use even once iron pays more (regional supply)",
+   "pit_duty_ores": [
+    "copper_ore",
+    "tin_ore",
+    "coal"
+   ]
+  },
+  {
+   "id": "angler",
+   "label": "Angler",
+   "tint": "#3a7ab0",
+   "focus": [
+    "angling",
+    "cooking"
+   ],
+   "sells": [
+    "raw_carp",
+    "raw_eel"
+   ],
+   "buys": [
+    "reed_rod"
+   ],
+   "risk": 0.1,
+   "patience": 0.9,
+   "schedule": "dawn",
+   "count": 3,
+   "home_weights": {
+    "saltmere": 0.6,
+    "fenhollow": 0.3,
+    "cinderholt": 0.1
+   }
+  },
+  {
+   "id": "forager",
+   "label": "Forager",
+   "tint": "#7aa04a",
+   "focus": [
+    "foraging",
+    "joinery"
+   ],
+   "sells": [
+    "reed_fibre",
+    "fenroot"
+   ],
+   "buys": [],
+   "risk": 0.2,
+   "patience": 0.8,
+   "schedule": "dawn",
+   "count": 3,
+   "home_weights": {
+    "fenhollow": 0.8,
+    "saltmere": 0.2
+   }
+  },
+  {
+   "id": "farmer",
+   "label": "Farmer",
+   "tint": "#c8a040",
+   "focus": [
+    "foraging",
+    "cooking"
+   ],
+   "sells": [
+    "wheat",
+    "flour",
+    "bread",
+    "raw_beef",
+    "cowhide"
+   ],
+   "buys": [],
+   "risk": 0.2,
+   "patience": 0.8,
+   "schedule": "dawn",
+   "count": 3,
+   "home_weights": {
+    "fenhollow": 1,
+    "cinderholt": 1,
+    "saltmere": 1
+   },
+   "min_per_town": 1,
+   "note": "0.3.1 works the village wheat fields (harvest, quern, bake); adventurers hunt the pasture cows"
+  },
+  {
+   "id": "smith",
+   "label": "Smith",
+   "tint": "#c86a3a",
+   "focus": [
+    "smithing",
+    "mining"
+   ],
+   "sells": [
+    "bronze_bar",
+    "iron_bar",
+    "bronze_hatchet",
+    "bronze_pick",
+    "bronze_sword",
+    "iron_hatchet",
+    "iron_pick",
+    "iron_sword",
+    "steel_bar",
+    "steel_sword"
+   ],
+   "buys": [
+    "copper_ore",
+    "tin_ore",
+    "iron_ore",
+    "coal",
+    "plank"
+   ],
+   "risk": 0.4,
+   "patience": 0.5,
+   "schedule": "day",
+   "count": 5,
+   "home_weights": {
+    "cinderholt": 0.6,
+    "fenhollow": 0.2,
+    "saltmere": 0.2
+   },
+   "min_per_town": 1
+  },
+  {
+   "id": "cook",
+   "label": "Cook",
+   "tint": "#e0a040",
+   "focus": [
+    "cooking",
+    "angling"
+   ],
+   "sells": [
+    "cooked_carp",
+    "cooked_eel",
+    "cooked_beef",
+    "bread"
+   ],
+   "buys": [
+    "raw_carp",
+    "raw_eel",
+    "raw_rat_meat",
+    "raw_beef",
+    "flour"
+   ],
+   "risk": 0.2,
+   "patience": 0.6,
+   "schedule": "evening",
+   "count": 3,
+   "home_weights": {
+    "saltmere": 0.5,
+    "fenhollow": 0.3,
+    "cinderholt": 0.2
+   }
+  },
+  {
+   "id": "trader",
+   "label": "Travelling trader",
+   "tint": "#a04ab0",
+   "focus": [
+    "trade"
+   ],
+   "sells": [],
+   "buys": [],
+   "risk": 0.5,
+   "patience": 0.4,
+   "schedule": "any",
+   "count": 5,
+   "home_weights": {
+    "fenhollow": 1,
+    "cinderholt": 1,
+    "saltmere": 1
+   }
+  },
+  {
+   "id": "adventurer",
+   "label": "Sellsword",
+   "tint": "#c84a3a",
+   "focus": [
+    "attack",
+    "strength",
+    "defence",
+    "vitality"
+   ],
+   "sells": [
+    "bones",
+    "raw_rat_meat",
+    "copper_ore",
+    "bronze_bar",
+    "raw_beef",
+    "cowhide"
+   ],
+   "buys": [
+    "cooked_carp",
+    "cooked_rat_meat",
+    "bronze_sword",
+    "iron_sword",
+    "bronze_dagger",
+    "bronze_mace",
+    "cooked_beef",
+    "bread"
+   ],
+   "risk": 0.6,
+   "patience": 0.4,
+   "schedule": "night",
+   "count": 7,
+   "home_weights": {
+    "fenhollow": 1,
+    "cinderholt": 1,
+    "saltmere": 1
+   },
+   "herd_share": 0.4,
+   "note_herd": "0.3.1 share of adventurers (by id) who also hunt the village pasture cows (the rest stick to the camps)"
+  },
+  {
+   "id": "acolyte",
+   "label": "Acolyte",
+   "tint": "#e8e0b0",
+   "focus": [
+    "prayer"
+   ],
+   "sells": [],
+   "buys": [
+    "bones"
+   ],
+   "risk": 0.2,
+   "patience": 0.7,
+   "schedule": "day",
+   "count": 3,
+   "home_weights": {
+    "fenhollow": 1,
+    "cinderholt": 1,
+    "saltmere": 1
+   }
+  },
+  {
+   "id": "hero",
+   "label": "Adventurer",
+   "class": "adventurer",
+   "tint": "#d8c070",
+   "focus": [
+    "attack",
+    "strength",
+    "defence",
+    "vitality",
+    "prayer"
+   ],
+   "sells": [
+    "bones",
+    "raw_rat_meat"
+   ],
+   "buys": [
+    "cooked_carp",
+    "cooked_eel"
+   ],
+   "risk": 0.4,
+   "patience": 0.5,
+   "schedule": "any",
+   "count": 0,
+   "home_weights": {
+    "fenhollow": 1,
+    "cinderholt": 1,
+    "saltmere": 1
+   }
+  },
+  {
+   "id": "raider",
+   "label": "Raider",
+   "class": "adventurer",
+   "tint": "#8a2a2a",
+   "focus": [
+    "attack",
+    "strength",
+    "defence",
+    "vitality",
+    "prayer"
+   ],
+   "sells": [],
+   "buys": [
+    "cooked_eel",
+    "cooked_carp"
+   ],
+   "risk": 0.8,
+   "patience": 0.3,
+   "schedule": "any",
+   "count": 0,
+   "home_weights": {
+    "cinderholt": 0.7,
+    "fenhollow": 0.15,
+    "saltmere": 0.15
+   }
+  },
+  {
+   "id": "opportunist",
+   "label": "Opportunist",
+   "class": "adventurer",
+   "tint": "#c87a2a",
+   "focus": [
+    "attack",
+    "strength",
+    "defence",
+    "vitality",
+    "prayer"
+   ],
+   "sells": [],
+   "buys": [
+    "cooked_eel",
+    "cooked_carp"
+   ],
+   "risk": 0.6,
+   "patience": 0.4,
+   "schedule": "any",
+   "count": 0,
+   "home_weights": {
+    "cinderholt": 0.5,
+    "fenhollow": 0.25,
+    "saltmere": 0.25
+   }
+  }
+ ],
+ "name_parts": {
+  "first": [
+   "Wren",
+   "Tobin",
+   "Maera",
+   "Osk",
+   "Hale",
+   "Brin",
+   "Ysolde",
+   "Corr",
+   "Pell",
+   "Idra",
+   "Fenn",
+   "Ash",
+   "Rook",
+   "Sable",
+   "Teo",
+   "Liss",
+   "Odo",
+   "Marit",
+   "Kesh",
+   "Lune",
+   "Bram",
+   "Elka",
+   "Juno",
+   "Tamsin",
+   "Gil",
+   "Nessa",
+   "Orrin",
+   "Pim"
+  ],
+  "last": [
+   "Marsh",
+   "Reedwater",
+   "Cinder",
+   "Holt",
+   "Brack",
+   "Lowfen",
+   "Tallow",
+   "Kettle",
+   "Moss",
+   "Sedge",
+   "Varrow",
+   "Dunmere"
+  ]
+ }
+}

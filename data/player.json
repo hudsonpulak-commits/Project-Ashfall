@@ -1,0 +1,11 @@
+{
+ "note": "0.2.4 player-only stamina. Sprint (toggle by tapping the Energy bar) moves sprint_tiles_per_tick tiles per tick along the path while energy > 0; every tick you sprint-move costs sprint_drain energy (max 100 -> 200 ticks = 2 min of running). At 0 sprint switches off. Standing still with sprint on costs nothing. Regen per tick: regen_active while walking or busy (gathering, crafting, fighting), regen_idle when fully idle. AI players never sprint.",
+ "energy": {
+  "max": 100,
+  "sprint_tiles_per_tick": 2,
+  "sprint_drain": 0.5,
+  "regen_active": 0.15,
+  "regen_idle": 0.4,
+  "min_to_start": 1
+ }
+}
