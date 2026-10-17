@@ -32,6 +32,7 @@ static func run(main, world: World, p: Player) -> void:
 	_combat_level_tests(world, p)
 	ArcheryTests.run(world, p)   # 0.3.3
 	MusicTests.run()   # 0.3.4
+	Patch035Tests.run(world, p)   # 0.3.5
 	_village_tests(world, p)
 	_walled_city_tests(world, p)
 	_cookhouse_tests(world, p)

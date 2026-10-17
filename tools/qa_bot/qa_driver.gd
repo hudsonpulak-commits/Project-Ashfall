@@ -311,6 +311,8 @@ func _run() -> void:
 			await _gear()
 		"archery":
 			await _archery()
+		"bank":
+			await _bank035()
 		_:
 			push_error("unknown QA scenario " + scenario)
 			await _finish(false)
@@ -1880,3 +1882,141 @@ func _has_text(n: Node, t: String) -> bool:
 		if _has_text(c, t):
 			return true
 	return false
+
+
+## 0.3.5: bank building (exterior + interior frames, banker tap opens the bank),
+## no loose plaza chest / hearth, archery from 9-10 tiles, the dummy's blocked
+## counter-swing (Defence XP, no HP lost), an AI banking at the new building.
+func _bank035() -> void:
+	var p: Player = main.player
+	var w: World = main.world
+	var res := {}
+	var bank: Dictionary = {}
+	for id in w.gen.building_order:
+		var b: Dictionary = w.gen.buildings[id]
+		if b["town"] == "fenhollow" and b["kind"] == "bank":
+			bank = b
+	res["has_bank"] = not bank.is_empty()
+	if bank.is_empty():
+		_notes["bank"] = res
+		return
+	var r: Rect2i = bank["rect"]
+	var loose := 0
+	var hearth := 0
+	for tid in ["fenhollow", "cinderholt", "saltmere"]:
+		var c := w.gen.town_center(tid)
+		for y in range(c.y - 22, c.y + 23):
+			for x in range(c.x - 22, c.x + 23):
+				var o: WorldObject = w.object_at(Vector2i(x, y))
+				if o == null or not w.gen.building_at(o.pos).is_empty():
+					continue
+				if o.def_id == "bank_chest": loose += 1
+				if o.def_id == "hearth" and w.gen.place_at(o.pos, 0) == tid: hearth += 1
+	res["loose_chests"] = loose
+	res["plaza_hearths"] = hearth
+	# exterior: walk up to the door by tapping
+	var door: Vector2i = bank["doors"][0]
+	p.place_at(w.find_free_tile_near(door + Vector2i(0, 4), 2))
+	w.set_focus(p.tile, true)
+	await frames(20)
+	label = "bank_exterior"
+	await _snap("bank_exterior")
+	var opened := [false]
+	Events.bank_opened.connect(func(): opened[0] = true)
+	var keeper: WorldObject = w.object_at(bank["keeper_at"])
+	await tap_tile(keeper.pos, "banker")
+	await until(func(): return opened[0], 15.0)
+	await frames(20)
+	res["banker_opens"] = opened[0]
+	res["inside"] = r.has_point(p.tile)
+	res["panel"] = main.hud.panels["bank"].visible
+	label = "bank_interior"
+	await _snap("bank_interior")
+	main.hud.panels["bank"].visible = false
+	# AI banking at the new building
+	var ai = await _pick_ai("fenhollow")
+	res["ai_found"] = ai != null
+	if ai:
+		ai.place_at(w.find_free_tile_near(door + Vector2i(2, 3), 2))
+		ai.inventory.clear()
+		ai.inventory.add("ash_log", 5)
+		var went: bool = ai._go_bank(w)
+		var t_end := Time.get_ticks_msec() + 25000
+		while Time.get_ticks_msec() < t_end and ai.inventory.count("ash_log") > 0:
+			if ai.action.is_empty():
+				ai._go_bank(w)
+			await frames(5)
+		res["ai_went"] = went
+		res["ai_banked"] = ai.inventory.count("ash_log") == 0
+		res["ai_inside"] = r.has_point(ai.tile)
+	# archery from 9-10 tiles
+	var rat := _foe("giant_rat", "", w.gen.town_spawn("fenhollow"))
+	rat.max_hp = 999
+	rat.hp = 999
+	var keep_def: Dictionary = rat.def
+	rat.def = rat.def.duplicate()
+	rat.def["retaliate"] = false
+	rat.def["wander"] = 0
+	rat.wander_goal = rat.tile
+	rat.home = rat.tile
+	_clear_foes(p, w)
+	rat.reset_far()
+	var spot := Vector2i(-99999, 0)
+	for rr in [10, 9]:
+		for d in [Vector2i(1, 0), Vector2i(-1, 0), Vector2i(0, 1), Vector2i(0, -1), Vector2i(1, 1), Vector2i(-1, 1), Vector2i(1, -1), Vector2i(-1, -1)]:
+			var c2: Vector2i = rat.tile + d * rr
+			if not w.is_blocked(c2) and Combat.line_of_sight(w, c2, rat.tile):
+				spot = c2
+				break
+		if spot.x != -99999:
+			break
+	var shots := [0]
+	Events.projectile.connect(func(_a, _b, _s): shots[0] += 1)
+	p.inventory.clear()
+	p.equipment.erase("weapon")
+	p.inventory.add("ash_shortbow")
+	p.inventory.add("bronze_arrows", 2)
+	p.equip_slot(0)
+	p.place_at(spot)
+	p.stop()
+	p.hp = p.max_hp()
+	w.set_focus(p.tile, true)
+	await frames(20)
+	res["arch_dist"] = p._cheb(p.tile, rat.tile)
+	var start := p.tile
+	label = "archery_10"
+	await tap(tile_screen(rat.tile), "rat at 9-10 tiles")
+	await until(func(): return shots[0] >= 1, 10.0)
+	res["arch_shots"] = shots[0]
+	res["arch_moved"] = p._cheb(p.tile, start)
+	await _snap("archery_10_tiles")
+	p.stop()
+	rat.def = keep_def
+	rat.max_hp = int(rat.def.get("hp", 5))
+	rat.hp = rat.max_hp
+	rat.target = null
+	_clear_foes(p, w)
+	# dummy block
+	var dummy: WorldObject = w.find_nearest_object(w.gen.town_spawn("fenhollow"), ["training_dummy"], 60)
+	p.place_at(w.find_free_tile_near(dummy.pos + Vector2i(0, 2), 2))
+	p.hp = p.max_hp()
+	w.set_focus(p.tile, true)
+	await frames(10)
+	var hp0 := p.hp
+	var def0 := int(p.skills.xp.get("defence", 0))
+	var zero := [0]
+	Events.hitsplat.connect(func(t, _q, amt): if t == p and amt == 0: zero[0] += 1)
+	label = "dummy_block"
+	await tap_tile(dummy.pos, "training dummy")
+	var t2 := Time.get_ticks_msec() + 15000
+	var snapped := false
+	while Time.get_ticks_msec() < t2 and zero[0] < 3:
+		if zero[0] >= 1 and not snapped:
+			await _snap("dummy_block")
+			snapped = true
+		await frames(2)
+	res["dummy_blocks"] = zero[0]
+	res["dummy_def_xp"] = int(p.skills.xp.get("defence", 0)) - def0
+	res["dummy_hp_lost"] = hp0 - p.hp
+	p.stop()
+	_notes["bank"] = res

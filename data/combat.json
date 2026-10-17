@@ -34,9 +34,9 @@
    "armour_break": 0.5
   },
   "bow": {
-   "skill": "attack",
+   "skill": "archery",
    "type": "ranged",
-   "style": "accurate",
+   "style": "ranged",
    "attack_ticks": 4
   }
  },
@@ -49,6 +49,10 @@
   "aggressive": {
    "skill": "strength",
    "label": "Aggressive"
+  },
+  "ranged": {
+   "skill": "archery",
+   "label": "Ranged"
   }
  },
  "damage_xp": 4.0,
@@ -80,5 +84,13 @@
   }
  },
  "aggro_level_gap": 10,
- "note_combat_level": "0.3.1 combat level (Combat.combat_level) = floor((Attack + Strength + Defence + Vitality) / 4 + Prayer / 8), min 1; a new character is Combat 3. Enemies never START a fight with a player or AI player whose combat level is aggro_level_gap or more above the enemy's level (they still fight back when attacked). Applies everywhere, the Scorch included."
+ "note_combat_level": "0.3.3 combat level (Combat.combat_level) = floor((Attack + Strength + Defence + Vitality + Archery) / 5 + Prayer / 8), min 1; a new character is Combat 2. Enemies never START a fight with anyone aggro_level_gap+ combat levels above the enemy's level.",
+ "ranged": {
+  "note": "0.3.3 Archery. Bows shoot from up to range tiles (Chebyshev) with line of sight: wall/building tiles block, plants, rocks and fences don't. Each shot uses one *_arrows item (best usable tier); none = 'Out of arrows!' and the attack stops. Accuracy = 0.55 + (Archery + gear atk) x 1% - enemy def x 2%. Max hit = 1 + Archery/6 + bow power + gear str/4 + arrow tier x arrow_tier_power. arrow_drop_chance = arrows that land under the target (pick them up again). XP: damage_xp per damage to Archery + vitality_xp to Vitality.",
+  "range": 10,
+  "arrow_drop_chance": 0.5,
+  "arrow_tier_power": 1,
+  "projectile_sprite": "arrow",
+  "projectile_speed_px_s": 240
+ }
 }

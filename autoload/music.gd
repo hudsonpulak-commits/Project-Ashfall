@@ -63,14 +63,20 @@ func set_title() -> void:
 	_play("title")
 
 
-## Town id ("" = the wilds). Plays at once unless combat (or its fade) is on.
+## Town id ("" = the wilds). 0.3.5: the old area track fades out over
+## FADE_SEC, then the new one starts (from silence/title: at once).
 func set_area(town_id: String) -> void:
 	var k := town_id.to_lower() if town_id != "" and _tracks.get(town_id.to_lower()) != null else "ambient"
 	if k == area and current == k:
 		return
 	area = k
-	if not in_combat and not fading:
+	if in_combat or fading:
+		return            # the running fade ends on the new area track
+	if current == "" or current == "title" or not player.playing:
 		_play(area)
+	else:                 # 0.3.5 area change: fade the old track out first
+		fading = true
+		fade_left = FADE_SEC
 
 
 ## From the player's combat state every tick. true -> combat now, full volume.

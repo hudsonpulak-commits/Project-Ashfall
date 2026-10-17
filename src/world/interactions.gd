@@ -106,6 +106,9 @@ static func _gather(actor: Actor, world, obj: WorldObject, d: Dictionary, t: int
 		actor.stop()
 
 
+const DUMMY_XP_MULT := 3
+
+
 static func _dummy(actor: Actor, obj: WorldObject, d: Dictionary) -> void:
 	actor.set_status("Training on the dummy...")
 	var cd := int(actor.action.get("cooldown", 0))
@@ -121,8 +124,17 @@ static func _dummy(actor: Actor, obj: WorldObject, d: Dictionary) -> void:
 		dmg = actor.rng.randi_range(1, Combat.actor_max_hit(actor.skills.level("strength"), actor.weapon_power(), 0))
 	actor.on_hitsplat(obj, dmg)
 	if dmg > 0:
-		Combat.award_hit_xp(actor.skills, actor.current_style(), dmg)
+		# 0.3.5 the dummy is worth 3x the normal hit XP
+		for _i in DUMMY_XP_MULT:
+			Combat.award_hit_xp(actor.skills, actor.current_style(), dmg)
 		obj.hp -= dmg
+	# 0.3.5 the dummy swings back every time: always blocked (0 splat, no
+	# damage) and the block trains Defence
+	var blk := Combat.award_defence_xp(actor.skills, 0, 1.0, actor.rng)
+	actor.action["dummy_blocks"] = int(actor.action.get("dummy_blocks", 0)) + 1
+	actor.action["dummy_def_xp"] = int(actor.action.get("dummy_def_xp", 0)) + blk
+	if actor is Player:
+		Events.hitsplat.emit(actor, actor.tile, 0)
 	if obj.hp <= 0:
 		obj.hp = int(d.get("hp", 10))
 		var stipend := Market.pay_bounty(int(round(int(d.get("stipend", 0)) * Market.stipend_mult)))

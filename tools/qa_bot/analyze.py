@@ -1004,7 +1004,31 @@ def check_archery(ctx):
     ]
 
 
-CHECKS = [check_runtime, check_diagonal, check_facing, check_ghost, check_jitter, check_taps, check_bubbles, check_roof, check_shop, check_smithy, check_markers, check_daynight, check_world, check_church, check_aggro, check_farm, check_city, check_cookhouse, check_pk, check_gear, check_archery]
+def check_bank(ctx):
+    """0.3.5 bank building, plaza clean-up, archery 10, dummy block, AI banking."""
+    if "bank" not in ctx.expected:
+        return []
+    run = ctx.runs.get("bank")
+    if not run:
+        return [Result("C21 bank", "bank run present", False, "no bank capture")]
+    a = run.res.get("bank", {})
+    snaps = {e.get("name"): e.get("path") for e in run.events if e.get("type") == "snap"}
+    sp = lambda *n: [snaps[k] for k in n if k in snaps]
+    return [
+        Result("C21 bank", "no loose plaza bank chest or hearth/oven in the 3 cities", a.get("has_bank") and a.get("loose_chests") == 0 and a.get("plaza_hearths") == 0,
+               "loose chests %s hearths %s" % (a.get("loose_chests"), a.get("plaza_hearths")), sp("bank_exterior")),
+        Result("C21 bank", "tapping the banker walks inside and opens the bank", bool(a.get("banker_opens")) and bool(a.get("inside")) and bool(a.get("panel")),
+               "opens %s inside %s panel %s" % (a.get("banker_opens"), a.get("inside"), a.get("panel")), sp("bank_interior")),
+        Result("C21 bank", "an AI walks into the bank building and banks", bool(a.get("ai_banked")) and bool(a.get("ai_inside")),
+               "found %s went %s banked %s inside %s" % (a.get("ai_found"), a.get("ai_went"), a.get("ai_banked"), a.get("ai_inside"))),
+        Result("C22 archery10", "archery fires from 9-10 tiles without moving", a.get("arch_dist", 0) >= 9 and a.get("arch_shots", 0) >= 1 and a.get("arch_moved", 9) == 0,
+               "dist %s shots %s moved %s" % (a.get("arch_dist"), a.get("arch_shots"), a.get("arch_moved")), sp("archery_10_tiles")),
+        Result("C23 dummy", "dummy counter-swing shown blocked, Defence XP, no HP loss", a.get("dummy_blocks", 0) >= 1 and a.get("dummy_def_xp", 0) > 0 and a.get("dummy_hp_lost", 1) == 0,
+               "blocks %s def xp %s hp lost %s" % (a.get("dummy_blocks"), a.get("dummy_def_xp"), a.get("dummy_hp_lost")), sp("dummy_block")),
+    ]
+
+
+CHECKS = [check_runtime, check_diagonal, check_facing, check_ghost, check_jitter, check_taps, check_bubbles, check_roof, check_shop, check_smithy, check_markers, check_daynight, check_world, check_church, check_aggro, check_farm, check_city, check_cookhouse, check_pk, check_gear, check_archery, check_bank]
 SCENARIOS = ["walk", "combat", "shop", "pshop", "smithy", "markers", "daynight", "world", "church", "aggro", "farm", "city", "cookhouse", "pk", "gear", "archery"]
 
 

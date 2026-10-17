@@ -27,7 +27,7 @@
   "@::=:::::::::=:::::::::=:::::::::=.........::@",
   "@::=:::::::::=:::::::::=:::::::::=.........::@",
   "@::=:::::::::=::::###########::::=.........::@",
-  "@::=:::::::::=::::##B#E#H####::::=.........::@",
+  "@::=:::::::::=::::##_#E#_####::::=.........::@",
   "G::=:::::::::=::::###########::::=.........::G",
   "G=================###########=====.........==G",
   "G::=:::::::::=::::###########::::=.........::G",
@@ -774,6 +774,75 @@
      ]
     }
    ]
+  },
+  {
+   "id": "cinderholt_bank",
+   "kind": "bank",
+   "shop": "",
+   "name": "Cinderholt Bank",
+   "keeper": "Hulda Coin",
+   "keeper_sprite": "keeper_general",
+   "sign_sprite": "sign_bank",
+   "rect": [
+    13,
+    11,
+    7,
+    6
+   ],
+   "door": [
+    [
+     16,
+     16
+    ]
+   ],
+   "counter": [
+    [
+     14,
+     13
+    ],
+    [
+     15,
+     13
+    ]
+   ],
+   "keeper_at": [
+    14,
+    12
+   ],
+   "stand": [
+    16,
+    14
+   ],
+   "sign": [
+    17,
+    16
+   ],
+   "props": [
+    {
+     "object": "bank_chest",
+     "at": [
+      17,
+      12
+     ]
+    },
+    {
+     "object": "bank_chest",
+     "at": [
+      18,
+      12
+     ]
+    },
+    {
+     "object": "barrel",
+     "at": [
+      18,
+      15
+     ]
+    }
+   ],
+   "note": "0.3.5 bank building (replaces the open 'B' chest in the plaza; the plaza hearth/oven 'H' is gone too: cook in the Cook House)",
+   "style": "stone",
+   "roof": "#5a6070"
   }
  ],
  "specialists": [

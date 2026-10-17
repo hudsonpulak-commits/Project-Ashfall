@@ -2476,6 +2476,23 @@
     16,
     16
    ]
+  },
+  "sign_bank": {
+   "path": "res://assets/sprites/buildings/sign_bank.png",
+   "frame_size": [
+    16,
+    16
+   ]
+  }
+ },
+ "fx": {
+  "arrow": {
+   "path": "res://assets/sprites/fx/arrow.png",
+   "frame_size": [
+    8,
+    8
+   ],
+   "note": "0.3.3 arrow projectile, drawn pointing right (rotated in flight)"
   }
  }
 }

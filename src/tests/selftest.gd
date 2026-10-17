@@ -31,8 +31,8 @@ static func run(main) -> int:
 
 	# --- data
 	check(GameData.items.size() >= 20, "items loaded (%d)" % GameData.items.size())
-	check(GameData.skills.size() == 13 and GameData.skill_by_id.has("prayer") and GameData.skill_by_id.has("attack") and GameData.skill_by_id.has("strength")
-		and GameData.skill_by_id.has("defence") and not GameData.skill_by_id.has("melee"), "13 skills defined (Attack, Strength, Defence replace Melee; incl. Prayer)")
+	check(GameData.skills.size() == 14 and GameData.skill_by_id.has("archery") and GameData.skill_by_id.has("prayer") and GameData.skill_by_id.has("attack") and GameData.skill_by_id.has("strength")
+		and GameData.skill_by_id.has("defence") and not GameData.skill_by_id.has("melee"), "14 skills defined (Attack, Strength, Defence replace Melee; incl. Prayer, Archery)")
 	check(GameData.objects.size() >= 12, "world objects loaded")
 	check(GameData.xp_for_level(2) == 100, "xp curve L2 = 100")
 	var mono := true
@@ -69,7 +69,7 @@ static func run(main) -> int:
 					waters += 1
 	check(waters > 0, "wilderness has water (%d tiles in 9x9 chunks)" % waters)
 	check(not world.is_blocked(world.gen.town_spawn()), "spawn tile walkable")
-	var chest := world.find_nearest_object(world.gen.town_spawn(), ["bank_chest"], 12)
+	var chest := world.find_nearest_object(world.gen.town_spawn(), ["bank_chest"], 40)
 	check(chest != null and world.gen.town_at(chest.pos, 0) == "fenhollow", "bank chest in Fenhollow plaza")
 	check(world.chunk_views.size() == 25, "5x5 chunk views streamed (%d)" % world.chunk_views.size())
 
@@ -124,7 +124,7 @@ static func run(main) -> int:
 	check(p.action.is_empty() and p.inventory.count("ash_log") == 0, "gathering stops when pack is full")
 
 	# --- banking
-	var chest_obj := world.find_nearest_object(world.gen.town_spawn(), ["bank_chest"], 12)
+	var chest_obj := world.find_nearest_object(world.gen.town_spawn(), ["bank_chest"], 40)
 	var opened := [false]
 	var cb := func(): opened[0] = true
 	Events.bank_opened.connect(cb)
@@ -150,7 +150,7 @@ static func run(main) -> int:
 		"furnace: bronze bar = 1 copper ore + 1 tin ore (2+3 ore -> 2 bars, spare copper left)")
 	p.inventory.clear()
 	p.inventory.add("raw_carp", 3)
-	p.interact(world, world.find_nearest_object(p.tile, ["hearth"], 20))
+	p.interact(world, world.find_nearest_object(p.tile, ["hearth", "oven"], 40))
 	ticks(40)
 	check(p.inventory.count("cooked_carp") + p.inventory.count("charred_fish") == 3, "hearth: 3 carp cooked or charred")
 	check(int(p.skills.xp["cooking"]) > 0, "cooking xp gained")
@@ -287,7 +287,7 @@ static func run(main) -> int:
 		var need := ["bank_chest", "exchange_board"]
 		var have_all := not gen.building_for_shop(tid, "general").is_empty()
 		for oid in need:
-			have_all = have_all and world.find_nearest_object(c, [oid], 14) != null
+			have_all = have_all and world.find_nearest_object(c, [oid], 30) != null
 		check(have_all, "%s has a bank chest, general store and Exchange" % gen.town_name(tid))
 		for line in gen.towns[tid].get("specialists", []):
 			check(not gen.building_for_shop(tid, line).is_empty(), "%s has its %s shop" % [gen.town_name(tid), line])
@@ -598,7 +598,7 @@ static func _combat_tests(world: World, p: Player) -> void:
 	check(is_equal_approx(Prayer.points(ps, 1), 0.2 * tpl), "burying bones restores 20% of max points")
 	for i in 30:
 		Prayer.tick(ps, 1)
-	check(Prayer.points(ps, 1) > 2.0, "points regenerate slowly with no buff active")
+	check(Prayer.points(ps, 1) > 0.2 * tpl, "points regenerate slowly with no buff active")
 	p.inventory.add("bones")
 	p.prayer = {"id": "", "points": 0.0}
 	p.bury_slot(p.inventory.find("bones"))
@@ -980,8 +980,8 @@ static func _combat_skill_tests(main, world: World, p: Player) -> void:
 	check(Combat.req_skill("iron_dagger") == "attack" and Combat.req_skill("iron_sword") == "attack" and Combat.req_skill("iron_battleaxe") == "attack"
 		and Combat.req_skill("iron_mace") == "strength" and Combat.req_skill("iron_warhammer") == "strength"
 		and Combat.req_skill("iron_helm") == "defence" and Combat.req_skill("iron_hauberk") == "defence" and Combat.req_skill("iron_legguards") == "defence"
-		and Combat.req_skill("iron_kite_shield") == "defence" and Combat.req_skill("alder_longbow") == "attack",
-		"stab/slash (dagger, sword, battle axe) need Attack, crush (mace, warhammer) need Strength, armour needs Defence (bows: Attack)")
+		and Combat.req_skill("iron_kite_shield") == "defence" and Combat.req_skill("alder_longbow") == "archery",
+		"stab/slash (dagger, sword, battle axe) need Attack, crush (mace, warhammer) need Strength, armour needs Defence (bows: Archery)")
 	sk.set_level("attack", 10)
 	sk.set_level("strength", 1)
 	sk.set_level("defence", 1)

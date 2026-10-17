@@ -248,6 +248,9 @@ func _start_ai(data: Dictionary) -> void:
 	AIDirector.attach(world.entity_layer, world)
 	AIDirector.spawn_population()
 	AIDirector.from_save(data.get("ai", {}))
+	for a in AIDirector.agents:   # 0.3.5 new bank walls: free anyone saved inside
+		if a and is_instance_valid(a):
+			relocate_if_walled(world, a)
 	Market.monitor.money_supply_provider = money_supply
 
 
@@ -653,7 +656,7 @@ func _screenshot_mode() -> void:
 		var c: Vector2i = world.gen.town_spawn(player.current_town) - Vector2i(0, 0)
 		match str(args["panel"]):
 			"bank":
-				var ch: WorldObject = world.find_nearest_object(c, ["bank_chest"], 14)
+				var ch: WorldObject = world.find_nearest_object(c, ["bank_chest"], 30)
 				player.place_at(ch.pos + Vector2i(0, 1))
 				hud.show_panel("bank")
 			"exchange":

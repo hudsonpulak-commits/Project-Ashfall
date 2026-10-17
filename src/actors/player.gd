@@ -61,8 +61,8 @@ func weapon_id() -> String:
 
 func weapon_power() -> float:
 	var w: String = equipment.get("weapon", "")
-	if w != "" and GameData.item(w).get("gear", {}).get("style", "melee") != "melee":
-		return 0.0     # bows: ranged combat is a later milestone
+	if w != "":
+		return float(GameData.item(w).get("tool", {}).get("power", 0))   # 0.3.3: bows count too
 	return super.weapon_power()
 
 
@@ -75,6 +75,11 @@ func armour_ids() -> Array:
 
 
 ## Accurate (Attack XP) or Aggressive (Strength XP); the player can switch any time.
+## 0.3.3 overhead labels colour by level vs this player.
+func _enter_tree() -> void:
+	Overhead.viewer = self
+
+
 func set_style(style: String) -> void:
 	combat_style = style
 
@@ -529,6 +534,10 @@ func on_exchange(_world, _obj) -> void:
 func on_shop(world, obj) -> void:
 	var b: Dictionary = world.gen.buildings.get(str(obj.meta.get("building", "")), {}) if world else {}
 	if not b.is_empty():
+		if b["kind"] == "bank":     # 0.3.5 the banker opens your vault
+			action = {}
+			on_bank(world, obj)
+			return
 		var line := greet(world, b)
 		if b["kind"] in ["church", "house"]:   # 0.3.1 the priest / villagers talk; no shop panel
 			if line != "":

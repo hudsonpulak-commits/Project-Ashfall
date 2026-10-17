@@ -137,7 +137,7 @@ func _build() -> void:
 	info.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	top.add_child(info)
 	title_label = Label.new()
-	title_label.text = "Ashfen · Fenhollow"
+	title_label.text = "AshFall · Fenhollow"
 	title_label.add_theme_color_override("font_color", UIStyle.ACCENT)
 	title_label.add_theme_constant_override("outline_size", 3)
 	info.add_child(_ignore(title_label))
@@ -588,7 +588,7 @@ func _build_menu_panel() -> Control:
 			reset_b.text = "Tap again to erase your save")
 	v.add_child(reset_b)
 	var about := Label.new()
-	about.text = "Ashfen %s — an original game.\nTap the ground to walk; tap trees, rocks, pools,\nthe dummy, stations, shops, the Exchange board or\na bank chest. Map: see the continent, walk the roads." % ProjectSettings.get_setting("application/config/version", "")
+	about.text = "AshFall %s — an original game.\nTap the ground to walk; tap trees, rocks, pools,\nthe dummy, stations, shops, the Exchange board or\na bank chest. Map: see the continent, walk the roads." % ProjectSettings.get_setting("application/config/version", "")
 	about.add_theme_color_override("font_color", UIStyle.TEXT_DIM)
 	about.add_theme_font_size_override("font_size", 9)
 	v.add_child(about)
@@ -653,11 +653,11 @@ func _refresh_bars() -> void:
 
 func _refresh_title() -> void:
 	var t: String = world.gen.place_at(player.tile, 8)
-	title_label.text = "Ashfen · %s" % (world.gen.town_name(t) if t != "" else "the wilds")
+	title_label.text = "AshFall · %s" % (world.gen.town_name(t) if t != "" else "the wilds")
 
 
 func _bank_in_reach() -> bool:
-	var chest: WorldObject = world.find_nearest_object(player.tile, ["bank_chest"], 1)
+	var chest: WorldObject = world.find_nearest_object(player.tile, ["bank_chest"], 3)
 	return chest != null
 
 

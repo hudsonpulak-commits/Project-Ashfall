@@ -31,7 +31,7 @@
   "G,,,.........,.........P.........############G",
   "G===,==,==,==,==PPPPPPPPPPP=#=############===G",
   "G,,,,l,,,,,,,,,,PPPPPPPPPPP,=################G",
-  "@,,,,,,,,,,,,,,,BPPPEPPPHPP,=################@",
+  "@,,,,,,,,,,,,,,,_PPPEPPP_PP,=################@",
   "@,,,,,,,,,,,,,,,PPPPPPPPPPP,=##~~~~~~~~~f~~~~@",
   "@,,,,,,,,,,,,,,,WPPPPPDPPPP,=##~~~~~~~~~~~~~~@",
   "@,,,,,,,l,,,,,,,,,,,,,,,,,,,=###############~@",
@@ -677,6 +677,75 @@
      ]
     }
    ]
+  },
+  {
+   "id": "saltmere_bank",
+   "kind": "bank",
+   "shop": "",
+   "name": "Saltmere Bank",
+   "keeper": "Perrin Vault",
+   "keeper_sprite": "keeper_general",
+   "sign_sprite": "sign_bank",
+   "rect": [
+    9,
+    20,
+    7,
+    6
+   ],
+   "door": [
+    [
+     12,
+     25
+    ]
+   ],
+   "counter": [
+    [
+     10,
+     22
+    ],
+    [
+     11,
+     22
+    ]
+   ],
+   "keeper_at": [
+    10,
+    21
+   ],
+   "stand": [
+    12,
+    23
+   ],
+   "sign": [
+    13,
+    25
+   ],
+   "props": [
+    {
+     "object": "bank_chest",
+     "at": [
+      13,
+      21
+     ]
+    },
+    {
+     "object": "bank_chest",
+     "at": [
+      14,
+      21
+     ]
+    },
+    {
+     "object": "barrel",
+     "at": [
+      14,
+      24
+     ]
+    }
+   ],
+   "note": "0.3.5 bank building (replaces the open 'B' chest in the plaza; the plaza hearth/oven 'H' is gone too: cook in the Cook House)",
+   "style": "stone",
+   "roof": "#5a6070"
   }
  ],
  "specialists": [

@@ -22,6 +22,12 @@ static func run() -> void:
 	Music.set_area("")
 	check(Music.current == "ambient", "the wilds: ambient")
 	Music.set_area("fenhollow")
+	check(Music.fading and Music.current == "ambient", "0.3.5 entering Fenhollow fades the ambient track out first")
+	var ta := 0.0
+	while Music.fading and ta < 5.0:
+		Music.step(1.0 / 60.0)
+		ta += 1.0 / 60.0
+	check(absf(ta - Music.FADE_SEC) <= 2.0 / 60.0, "0.3.5 area fade takes %.2f s (want %.1f)" % [ta, Music.FADE_SEC])
 	check(Music.current == "fenhollow", "inside Fenhollow: the Fenhollow theme")
 	Music.set_combat(true)
 	check(Music.current == "combat" and is_equal_approx(Music.player.volume_db, full) and not Music.fading,
@@ -46,4 +52,6 @@ static func run() -> void:
 	Music.set_combat(false)
 	Music.step(2.0)
 	Music.set_area("")
+	check(Music.fading and Music.current == "fenhollow", "0.3.5 leaving town fades the town theme out")
+	Music.step(2.0)
 	check(Music.current == "ambient", "leaving town: ambient")

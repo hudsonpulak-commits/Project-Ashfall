@@ -26,7 +26,7 @@
   "@......._....................................@",
   "@...................................l........@",
   "@.................___________................@",
-  "@.................__B_E_H_________...........@",
+  "@.................____E___________...........@",
   "@.................___________................@",
   "G.................___________................G",
   "G__...............___________..............__G",
@@ -774,6 +774,75 @@
      ]
     }
    ]
+  },
+  {
+   "id": "fenhollow_bank",
+   "kind": "bank",
+   "shop": "",
+   "name": "Fenhollow Bank",
+   "keeper": "Osric Ledger",
+   "keeper_sprite": "keeper_general",
+   "sign_sprite": "sign_bank",
+   "rect": [
+    26,
+    12,
+    7,
+    6
+   ],
+   "door": [
+    [
+     29,
+     17
+    ]
+   ],
+   "counter": [
+    [
+     27,
+     14
+    ],
+    [
+     28,
+     14
+    ]
+   ],
+   "keeper_at": [
+    27,
+    13
+   ],
+   "stand": [
+    29,
+    15
+   ],
+   "sign": [
+    30,
+    17
+   ],
+   "props": [
+    {
+     "object": "bank_chest",
+     "at": [
+      30,
+      13
+     ]
+    },
+    {
+     "object": "bank_chest",
+     "at": [
+      31,
+      13
+     ]
+    },
+    {
+     "object": "barrel",
+     "at": [
+      31,
+      16
+     ]
+    }
+   ],
+   "note": "0.3.5 bank building (replaces the open 'B' chest in the plaza; the plaza hearth/oven 'H' is gone too: cook in the Cook House)",
+   "style": "stone",
+   "roof": "#5a6070"
   }
  ],
  "specialists": [
