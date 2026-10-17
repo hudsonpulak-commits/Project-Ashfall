@@ -508,6 +508,10 @@ static func run(_main, world: World, p: Player) -> Array:
 		steps.append(st[2] in p.gear_layer_ids())
 	ok(not false in steps and p.gear_layer_ids() == ["gear_legs_4", "gear_body_3", "gear_head_2", "gear_shield_buckler_1", "gear_weapon_battleaxe_1"],
 		"player: equipping each slot draws it, legs < body < head < shield < weapon (%s)" % ", ".join(p.gear_layer_ids()))
+	p.facing.dir = "down"   # 0.3.9.4: the order is per facing; facing the camera all 5 sit over the body
+	p._sprite.flip_h = false
+	p._layer_key = ""
+	p._refresh_gear_visual()
 	var body_i: int = p._sprite.get_index()
 	ok(p._layers["legs"].get_index() == body_i + 1 and p._layers["weapon"].get_index() == body_i + 5, "player gear layers sit right above the body sprite")
 	p._sprite.frame = 2

@@ -626,7 +626,10 @@ func _process(delta: float) -> void:
 			_shown_dir = facing.dir
 			_sprite.texture = GameData.actor_texture(sprite_id, facing.dir)
 			_layer_key = ""   # gear layers follow the facing too
-		_sprite.flip_h = facing.left and can_flip() and facing.dir == "side"
+		var fl: bool = facing.left and can_flip() and facing.dir == "side"
+		if fl != _sprite.flip_h:
+			_layer_key = ""   # 0.3.9.4 left/right swap which hand is near: re-order the gear layers
+		_sprite.flip_h = fl
 		_refresh_gear_visual()
 		_sync_gear_layers()
 
@@ -770,17 +773,44 @@ func _refresh_gear_visual() -> void:
 		spr.offset = Vector2(-fs.x / 2.0, -fs.y)
 		spr.set_meta("sprite_id", sid)
 		spr.visible = true
-	# draw order: right after the body, legs < body < head < shield < weapon. The art
-	# faces right and is mirrored with the body, so the order holds both ways.
-	var idx := _sprite.get_index() + 1
-	for slot in GEAR_DRAW_ORDER:
-		if _layers.has(slot):
-			move_child(_layers[slot], mini(idx, get_child_count() - 1))
-			idx += 1
-	# 0.3.9.1 a shield is held in front: from behind it sits under the body (only its edge peeks out)
-	if facing.dir == "up" and _layers.has("shield"):
-		move_child(_layers["shield"], _sprite.get_index())
+	_order_gear_layers()
 	_sync_gear_layers()
+
+
+## 0.3.9.4 per-facing gear layer order. The shield is in the LEFT hand, the
+## weapon in the RIGHT; the side sheets face right and are mirrored for left.
+##   down: legs < body < head < shield < weapon, all over the body
+##   up:   the shield under the body (held in front, hidden by the back)
+##   side, facing right: the left hand is the far side -> shield under the body
+##   side, facing left:  the shield is the near side -> drawn over everything;
+##                       the weapon (right hand) is far -> under the body
+static func gear_layer_plan(dir: String, left: bool) -> Dictionary:
+	var under: Array = []
+	if dir == "up" or (dir == "side" and not left):
+		under = ["shield"]
+	elif dir == "side" and left:
+		under = ["weapon"]
+	var over: Array = GEAR_DRAW_ORDER.filter(func(s): return not s in under)
+	if dir == "side" and left:
+		over = ["legs", "body", "head", "shield"]
+	return {"under": under, "over": over}
+
+
+func _order_gear_layers() -> void:
+	var plan := gear_layer_plan(facing.dir, _sprite.flip_h)
+	var seq: Array = []
+	for slot in plan["under"]:
+		if _layers.has(slot):
+			seq.append(_layers[slot])
+	seq.append(_sprite)
+	for slot in plan["over"]:
+		if _layers.has(slot):
+			seq.append(_layers[slot])
+	var base := _sprite.get_index()
+	for n in seq:
+		base = mini(base, n.get_index())
+	for i in seq.size():   # under... < body < over..., contiguous from the lowest slot
+		move_child(seq[i], base + i)
 
 
 ## Same frame and mirroring as the body, set in the same _process as the body

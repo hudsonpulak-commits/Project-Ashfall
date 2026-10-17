@@ -77,13 +77,26 @@ class Sprites:
                 dp = lp[:-4] + suf + ".png"
                 lsheets.append(Image.open(dp if suf and os.path.exists(dp) else lp).convert("RGBA"))
             for i in range(n):
-                fr = sheet.crop((i * fw, 0, (i + 1) * fw, fh))
-                for ls in lsheets:
-                    k = min(i, ls.width // fw - 1)
-                    fr = Image.alpha_composite(fr, ls.crop((k * fw, 0, (k + 1) * fw, fh)))
-                fr = fr.resize((self.w, self.h), Image.NEAREST)
+                body = sheet.crop((i * fw, 0, (i + 1) * fw, fh))
                 for facing in tags:
-                    im = fr.transpose(Image.FLIP_LEFT_RIGHT) if facing == "L" else fr
+                    # 0.3.9.4 per-facing order (src/actors/actor.gd gear_layer_plan):
+                    # shield under the body facing right (far hand) and from behind;
+                    # facing left the shield is on top and the weapon under the body
+                    under = ("shield",) if facing in ("R", "U") else (("weapon",) if facing == "L" else ())
+                    fr = Image.new("RGBA", (fw, fh))
+                    lay = list(zip(layers, lsheets))
+                    for l, ls in [x for x in lay if any("_%s_" % u in x[0] or x[0].startswith("gear_%s" % u) for u in under)]:
+                        k = min(i, ls.width // fw - 1)
+                        fr = Image.alpha_composite(fr, ls.crop((k * fw, 0, (k + 1) * fw, fh)))
+                    fr = Image.alpha_composite(fr, body)
+                    top = [x for x in lay if not any("_%s_" % u in x[0] or x[0].startswith("gear_%s" % u) for u in under)]
+                    if facing == "L":
+                        top = [x for x in top if "shield" not in x[0]] + [x for x in top if "shield" in x[0]]
+                    for l, ls in top:
+                        k = min(i, ls.width // fw - 1)
+                        fr = Image.alpha_composite(fr, ls.crop((k * fw, 0, (k + 1) * fw, fh)))
+                    im = fr.resize((self.w, self.h), Image.NEAREST)
+                    im = im.transpose(Image.FLIP_LEFT_RIGHT) if facing == "L" else im
                     a = np.asarray(im).astype(np.float32)
                     self.t.append((facing, i, a[..., :3], a[..., 3] > 128))
 
@@ -674,7 +687,7 @@ def check_gear(ctx):
                 blocked.append(lab)          # someone stood over you the whole still: can't judge
             elif not m or m["res"] > MATCH_OK or m["facing"] != want or len(x["gear"]) < 4:
                 miss.append(tiers[-1])
-    out.append(Result("C19 gear", "each tier set renders in draw order legs<body<head<shield<weapon, facing right and left", len(tiers) >= 10 and not miss and len(blocked) <= 2,
+    out.append(Result("C19 gear", "each tier set renders in the per-facing draw order (0.3.9.4: shield under the body facing right, on top facing left), facing right and left", len(tiers) >= 10 and not miss and len(blocked) <= 2,
                       "%d stills (%d not judged: another actor over you %s); bad %s; sets %s" % (len(tiers), len(blocked), blocked, miss, "; ".join("%s %s" % (t[0], "/".join(l.replace("gear_", "") for l in t[1])) for t in tiers[::2])), ev))
     return out
 

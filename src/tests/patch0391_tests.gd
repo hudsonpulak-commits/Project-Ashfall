@@ -125,9 +125,20 @@ static func run(main, world: World, p: Player) -> void:
 		p._process(0.016)
 		var sh: Sprite2D = p._layers.get("shield")
 		check(sh != null and sh.get_index() < p._sprite.get_index(), "shields: drawn under the body when the player faces away")
+		# 0.3.9.4 the shield is in the left hand: far side (under the body) facing
+		# right, near side (over the body, weapon under) facing left
 		p.facing.dir = "side"
+		p.facing.left = false
 		p._process(0.016)
-		check(sh != null and sh.get_index() > p._sprite.get_index(), "shields: drawn over the body from the side")
+		var right_ok: bool = sh != null and sh.get_index() < p._sprite.get_index()
+		p.facing.left = true
+		p._process(0.016)
+		var w: Sprite2D = p._layers.get("weapon")
+		var left_ok: bool = sh != null and sh.get_index() > p._sprite.get_index() and (w == null or not w.visible or w.get_index() < p._sprite.get_index())
+		if not (right_ok and left_ok):
+			print("    dbg right_ok=%s left_ok=%s flip=%s dir=%s sh=%s body=%s w=%s" % [right_ok, left_ok, p._sprite.flip_h, p.facing.dir, sh.get_index() if sh else -1, p._sprite.get_index(), w.get_index() if w else -1])
+		check(right_ok and left_ok, "shields: from the side, under the body facing right (far hand), over it facing left (near hand)")
+		p.facing.left = false
 		p.equipment = keep
 		p._process(0.016)
 	# --- fences: every fence is in a 4-connected run of >= 3, never a post or a lone diagonal ---
