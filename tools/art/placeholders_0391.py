@@ -12,6 +12,7 @@ outside the body: kept on the front; on the back a baked-in shield is hidden
 behind the body (only its outer edge column peeks out).
 Gear: helmets symmetric; body/legs as the side frame; weapons as the side; the
 shield's back sheet keeps only the edge that peeks out beside the body."""
+import os as _o, sys as _s; _s.path.insert(0, _o.path.join(_o.path.dirname(_o.path.abspath(__file__)))); import art_guard  # noqa: E402,F401  0.3.9.2: never overwrite hand-drawn art
 import json, os
 from collections import Counter
 from PIL import Image

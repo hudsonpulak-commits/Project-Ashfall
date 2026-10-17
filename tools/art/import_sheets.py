@@ -2,6 +2,7 @@
 """Split edited Aseprite sheets back into game sprites.
 Usage: python3 tools/art/import_sheets.py <folder with edited sheet PNGs>
 Uses tools/art/aseprite_manifest.json (cell positions -> asset paths). Only sheets present are imported."""
+import os as _o, sys as _s; _s.path.insert(0, _o.path.join(_o.path.dirname(_o.path.abspath(__file__)))); import art_guard  # noqa: E402,F401  0.3.9.2: never overwrite hand-drawn art
 import json,sys,os
 from PIL import Image
 man=json.load(open(os.path.join(os.path.dirname(__file__),'aseprite_manifest.json')))

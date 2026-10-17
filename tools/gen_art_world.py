@@ -6,6 +6,7 @@ assets/sprites/placeholders.json; --force overwrites).
 
 Usage: python3 tools/gen_art_world.py   (from the project root)
 """
+import os as _o, sys as _s; _s.path.insert(0, _o.path.join(_o.path.dirname(_o.path.abspath(__file__)), "art")); import art_guard  # noqa: E402,F401  0.3.9.2: never overwrite hand-drawn art
 import os, sys, json, hashlib, random
 from PIL import Image, ImageDraw
 

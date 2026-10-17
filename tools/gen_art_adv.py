@@ -10,6 +10,7 @@
 Like tools/gen_art.py it never overwrites a PNG the owner has replaced by hand
 (sha256 manifest in assets/sprites/placeholders.json). Swap any of them for
 hand-drawn art of the same size; data/sprites.json maps the ids."""
+import os as _o, sys as _s; _s.path.insert(0, _o.path.join(_o.path.dirname(_o.path.abspath(__file__)), "art")); import art_guard  # noqa: E402,F401  0.3.9.2: never overwrite hand-drawn art
 import os, sys, json, hashlib
 from PIL import Image, ImageDraw
 

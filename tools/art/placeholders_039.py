@@ -10,6 +10,7 @@ data/sprites.json + tools/art/aseprite_manifest.json. Re-runnable.
   actors/*_front.png / *_back.png   facing down / up (same frames as the side sheet)
 
 Piece index (Autotile.PIECES): N=1 E=2 S=4 W=8 -> 0..15, 16 '/' diagonal, 17 '\\' diagonal."""
+import os as _o, sys as _s; _s.path.insert(0, _o.path.join(_o.path.dirname(_o.path.abspath(__file__)))); import art_guard  # noqa: E402,F401  0.3.9.2: never overwrite hand-drawn art
 import json, os, random
 from PIL import Image, ImageDraw
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))

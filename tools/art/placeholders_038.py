@@ -3,6 +3,7 @@
 sheets listed in tools/art/aseprite_manifest.json and run import_sheets.py).
 Writes PNGs only when missing (never overwrites Hudson's art) and registers
 them in data/sprites.json + the Aseprite manifest. Re-runnable."""
+import os as _o, sys as _s; _s.path.insert(0, _o.path.join(_o.path.dirname(_o.path.abspath(__file__)))); import art_guard  # noqa: E402,F401  0.3.9.2: never overwrite hand-drawn art
 import json, os, random
 from PIL import Image, ImageDraw
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
