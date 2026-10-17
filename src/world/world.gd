@@ -146,7 +146,7 @@ func find_free_tile_near(p: Vector2i, max_r: int = 12, outdoor: bool = false) ->
 
 
 ## Nearest object of the given def ids within radius (Chebyshev), not depleted.
-func find_nearest_object(from: Vector2i, def_ids: Array, radius: int = 30) -> WorldObject:
+func find_nearest_object(from: Vector2i, def_ids: Array, radius: int = 30, allow_private: bool = false) -> WorldObject:
 	var best: WorldObject = null
 	var best_d := 1 << 30
 	var c0 := chunk_of(from - Vector2i(radius, radius))
@@ -157,7 +157,7 @@ func find_nearest_object(from: Vector2i, def_ids: Array, radius: int = 30) -> Wo
 				if not (o.def_id in def_ids) or o.is_depleted(tick):
 					continue
 				var d := maxi(absi(o.pos.x - from.x), absi(o.pos.y - from.y))
-				if d <= radius and d < best_d:
+				if d <= radius and d < best_d and (allow_private or not gen.is_private(o.pos)):
 					best_d = d
 					best = o
 	return best

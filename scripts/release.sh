@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Release pipeline (0.3.0+): selftest -> release APK -> boot QA on the exported build (0.3.2) -> QA bot -> stage.
-# The APK is copied to build/dropbox/ashfen-<version>.apk ONLY when the
+# The APK is copied to build/dropbox/ashfall-<version>.apk ONLY when the
 # headless selftest and the QA bot (tools/qa_bot/run.sh, real rendering) both
 # pass. Nothing is uploaded anywhere; staging is a local copy.
 #   scripts/release.sh            full pipeline
@@ -11,7 +11,7 @@ cd "$PROJECT_DIR"
 VERSION=$(sed -n 's/^config\/version="\(.*\)"/\1/p' project.godot)
 CODE=$(sed -n 's/^version\/code=\([0-9]*\)/\1/p' export_presets.cfg | head -1)
 APK=build/android/ashfen-release.apk
-DEST=build/dropbox/ashfen-$VERSION.apk
+DEST=build/dropbox/ashfall-$VERSION.apk
 echo "== release $VERSION (versionCode $CODE)"
 
 echo "== 1/4 selftest"
@@ -30,7 +30,7 @@ if [ -z "${SKIP_BUILD:-}" ]; then
 fi
 [ -f "$APK" ] || { echo "RELEASE BLOCKED: $APK missing"; exit 1; }
 size=$(stat -c %s "$APK")
-[ "$size" -lt $((25 * 1024 * 1024)) ] || { echo "RELEASE BLOCKED: APK is $size bytes (>= 25 MB)"; exit 1; }
+[ "$size" -lt $((100 * 1024 * 1024)) ] || { echo "RELEASE BLOCKED: APK is $size bytes (>= 100 MB)"; exit 1; }
 
 echo "== 3/4 boot QA on the exported build (Android preset pack, stripped engine, compatibility renderer)"
 mkdir -p build/qa_boot

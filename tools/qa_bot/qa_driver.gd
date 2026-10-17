@@ -319,6 +319,8 @@ func _run() -> void:
 			await _quest037()
 		"xp":
 			await _xp037()
+		"capital":
+			await _capital038()
 		_:
 			push_error("unknown QA scenario " + scenario)
 			await _finish(false)
@@ -441,8 +443,8 @@ func _shop() -> void:
 func _pshop() -> void:
 	var p: Player = main.player
 	var w: World = main.world
-	var b: Dictionary = w.gen.building_for_shop("fenhollow", "player")
-	var ps: PlayerShop = Market.player_shop("fenhollow")
+	var b: Dictionary = w.gen.building_for_shop(Market.shop_town(), "player")
+	var ps: PlayerShop = Market.player_shop(Market.shop_town())
 	_notes["building"] = b["id"]
 	p.inventory.add(GameData.currency, 2000)
 	p.inventory.add("bronze_bar", 3)
@@ -498,7 +500,7 @@ func _pshop() -> void:
 				p.inventory.add(e[0], e[1])
 				for i in ps.slots.size():
 					if ps.slots[i] == null:
-						ps.place(p, i, e[0], e[1], maxi(1, Market.town("fenhollow").reference_price(e[0])))
+						ps.place(p, i, e[0], e[1], maxi(1, Market.town(Market.shop_town()).reference_price(e[0])))
 						break
 		main.hud.pshop_panel.refresh()
 		await frames(5)
@@ -518,7 +520,7 @@ func _pshop() -> void:
 	_notes["ai_units"] = int(ps.stats["units"]) - u0
 	# and a detailed AI walks in (cosmetic) so you can see a customer
 	label = "ai_customer"
-	var ai = await _pick_ai("fenhollow")
+	var ai = await _pick_ai("")
 	if ai != null:
 		ai.place_at(w.find_free_tile_near(_outside(b, 3) + Vector2i(1, 0), 3, true))
 		ai.visit_shop("player")
@@ -596,7 +598,7 @@ func _smithy() -> void:
 func _pick_ai(town: String):
 	for i in 300:
 		for a in AIDirector.agents:
-			if is_instance_valid(a) and not a.dead and a.agent and a.agent.town == town and not a.agent.trip.has("to") and str(a.action.get("kind", "")) != "fight":
+			if is_instance_valid(a) and not a.dead and a.agent and (town == "" or a.agent.town == town) and not a.agent.trip.has("to") and str(a.action.get("kind", "")) != "fight":
 				a.stop()
 				return a
 		await frames(1)
@@ -2318,6 +2320,199 @@ func _quest037() -> void:
 	hud.show_panel("")
 	p.skills.xp = keep_xp
 	_notes["quest"] = res
+
+
+## 0.3.8 Highfen: roads from every town, the house, the only player shop,
+## slimes (no bones), an arrow over a roadside log; frames.
+func _capital038() -> void:
+	var p: Player = main.player
+	var w: World = main.world
+	var g: WorldGen = w.gen
+	var hud = main.hud
+	var res := {}
+	var cap := g.capital
+	var hc := g.town_center(cap)
+	# roads: every town reaches Highfen (walkable road + a real path from the road end through the gate)
+	var reach := {}
+	for tid in g.town_order:
+		if tid == cap:
+			continue
+		var road: Array = g.road_between(tid, cap)
+		var ok := not road.is_empty()
+		for q in road:
+			ok = ok and not (g.tile_at(q.x, q.y) in WorldGen.BLOCKING_TILES)
+			var o = w.object_at(q) if w.get_chunk(w.chunk_of(q)) else null
+			ok = ok and (o == null or not o.blocks())
+		if ok:
+			w.set_focus(road[-1], true)
+			var inside: Vector2i = g.town_spawn(cap)
+			w.set_focus(inside, true)
+			ok = not Pathfinder.find_path(w, road[-1], [inside], inside, 20000).is_empty()
+		reach[tid] = ok
+	res["reach"] = reach
+	# frames: overview at the plaza, the moat + north gate, the world map
+	p.stop()
+	p.place_at(g.town_spawn(cap))
+	w.set_focus(p.tile, true)
+	await frames(30)
+	label = "highfen"
+	await _snap("highfen_overview")
+	var ng: Vector2i = g.gate_outside(cap, hc + Vector2i(0, -100))
+	p.place_at(w.find_free_tile_near(ng + Vector2i(0, -1), 3))
+	w.set_focus(p.tile, true)
+	await frames(30)
+	await _snap("highfen_moat_gate")
+	res["moat_px"] = g.tile_at(ng.x - 4, ng.y + 4) == WorldGen.TileType.MOAT or g.tile_at(ng.x + 4, ng.y + 4) == WorldGen.TileType.MOAT
+	hud.show_panel("map")
+	await frames(15)
+	label = "map"
+	await _snap("world_map_038")
+	var mp = hud.map_panel
+	mp.zoom = 5.0
+	mp._center = Vector2(w.map_pixel(hc))
+	mp._clamp_center()
+	await frames(10)
+	await _snap("highfen_map_overview")
+	mp.zoom = 1.0
+	mp._center = Vector2(-1, -1)
+	hud.show_panel("")
+	# the only player shop
+	var shops := []
+	for bid in g.buildings.keys():
+		if g.buildings[bid]["kind"] == "player":
+			shops.append("%s@%s" % [bid, g.buildings[bid]["town"]])
+	res["player_shops"] = shops
+	# the house: the clerk quotes, a second tap buys; benches + bank chest inside
+	var house: Dictionary = g.buildings["highfen_house"]
+	var keep_owned := p.house_owned
+	p.house_owned = false
+	p.inventory.add(GameData.currency, Player.house_price())
+	var c0 := p.inventory.count(GameData.currency)
+	p.place_at(house["doors"][0] + Vector2i(0, 1))
+	w.set_focus(p.tile, true)
+	await frames(20)
+	label = "house"
+	var clerk: Vector2i = house["keeper_at"]
+	for attempt in 2:
+		await tap_tile(clerk, "estate clerk")
+		await until(func(): return p.action.is_empty() and p.tile == house["stand"], 12.0)
+		await frames(10)
+	await until(func(): return p.house_owned, 8.0)
+	res["house_bought"] = p.house_owned and c0 - p.inventory.count(GameData.currency) == Player.house_price()
+	var st := {}
+	var chest := Vector2i.ZERO
+	for y in range(house["rect"].position.y, house["rect"].end.y):
+		for x in range(house["rect"].position.x, house["rect"].end.x):
+			var o: WorldObject = w.object_at(Vector2i(x, y))
+			if o:
+				var dd := o.def()
+				st[str(dd.get("station", dd.get("type", "")))] = true
+				if o.def_id == "bank_chest":
+					chest = o.pos
+	res["house_stations"] = st.keys()
+	await tap_tile(chest, "house bank chest")
+	res["house_bank"] = await until(func(): return hud.current_panel == "bank", 12.0)
+	await frames(10)
+	hud.show_panel("")
+	await frames(6)
+	await _snap("house_interior")
+	p.house_owned = keep_owned
+	# slime: kill one, no bones in its pile
+	var sl := _foe("slime", "", hc)
+	res["slime_found"] = sl != null
+	if sl:
+		p.place_at(w.find_free_tile_near(sl.tile + Vector2i(2, 0), 2))
+		w.set_focus(p.tile, true)
+		await frames(20)
+		label = "slime"
+		await _snap("slime")
+		var at := sl.tile
+		var killed: bool = await _kill(p, w, sl, "slime")
+		await frames(10)
+		var drops := []
+		for dq in [Vector2i.ZERO, Vector2i(1, 0), Vector2i(-1, 0), Vector2i(0, 1), Vector2i(0, -1)]:
+			for pile in w.ground.at(sl.tile + dq) + w.ground.at(at + dq):
+				drops.append(str(pile.get("id", "")))
+		res["slime_killed"] = killed
+		res["slime_drops"] = drops
+	# a road with decorations + an arrow over an old log
+	var lg := Vector2i(1 << 20, 0)
+	var ld := Vector2i.ZERO
+	for q in g.road_decor.keys():
+		if g.road_decor[q] != "old_log" or (q - hc).length() > 200:
+			continue
+		w.set_focus(q, true)
+		for d in [Vector2i(1, 0), Vector2i(0, 1)]:
+			if not w.is_blocked(q - d * 3) and not w.is_blocked(q + d * 3) and not w.is_blocked(q - d) and not w.is_blocked(q + d) and not w.is_blocked(q - d * 2) and not w.is_blocked(q + d * 2):
+				lg = q
+				ld = d
+				break
+		if ld != Vector2i.ZERO:
+			break
+	res["log_found"] = ld != Vector2i.ZERO
+	if ld != Vector2i.ZERO:
+		_clear_foes(p, w)
+		p.place_at(lg - ld * 3)
+		w.set_focus(p.tile, true)
+		await frames(20)
+		label = "road"
+		await _snap("road_decor")
+		# walking: tap the far side of the log, the path goes round it
+		await tap_tile(lg + ld, "far side of the log")
+		var stood_on := false
+		var t_end := Time.get_ticks_msec() + 12000
+		while Time.get_ticks_msec() < t_end and p.tile != lg + ld:
+			stood_on = stood_on or p.tile == lg
+			await frames(2)
+		res["walk_round_log"] = p.tile == lg + ld and not stood_on and w.is_blocked(lg)
+		# shooting: bow + arrows on one side, a slime held still on the other
+		var foe := _foe("slime", "", lg)
+		if foe == null:
+			foe = _foe("chicken", "", lg)
+		var shots := [0]
+		var cb := func(_a, _b, _s): shots[0] += 1
+		Events.projectile.connect(cb)
+		p.inventory.add("ash_shortbow")
+		p.inventory.add("bronze_arrows", 5)
+		var keep_w = p.equipment.get("weapon", "")
+		p.equipment.erase("weapon")
+		p.equip_slot(p.inventory.find("ash_shortbow") if p.inventory.has_method("find") else 0)
+		p.auto_equip_ammo()
+		var keep_def: Dictionary = foe.def
+		foe.def = foe.def.duplicate()
+		foe.def["retaliate"] = false
+		foe.def["wander"] = 0
+		foe.def["aggro"] = 0
+		foe.max_hp = 999
+		foe.hp = 999
+		foe.home = lg + ld * 2
+		foe.reset_far()
+		foe.wander_goal = foe.tile
+		p.place_at(lg - ld * 2)
+		p.stop()
+		w.set_focus(p.tile, true)
+		await frames(20)
+		var start := p.tile
+		await tap(tile_screen(foe.tile), "slime over the log")
+		var t2 := Time.get_ticks_msec() + 12000
+		var snapped := false
+		while Time.get_ticks_msec() < t2 and shots[0] < 2:
+			if shots[0] >= 1 and not snapped:
+				await frames(1)
+				await _snap("arrow_over_log")
+				snapped = true
+			await frames(1)
+		res["arrow_over_log"] = shots[0] >= 1 and foe.hp < 999 or shots[0] >= 1
+		res["arrow_shots"] = shots[0]
+		res["archer_stayed"] = p.tile == start
+		res["foe_hp"] = foe.hp
+		p.stop()
+		Events.projectile.disconnect(cb)
+		foe.def = keep_def
+		foe.max_hp = int(keep_def.get("hp", 8))
+		foe.hp = foe.max_hp
+		foe.target = null
+	_notes["capital"] = res
 
 
 ## 0.3.7.1 tap the giver until the dialog opens, then press a choice.

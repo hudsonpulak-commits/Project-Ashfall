@@ -27,12 +27,12 @@ static func cfg() -> Dictionary:
 	return GameData.combat
 
 
-## 0.3.1 combat level, shared by the player, AI players and the aggro rule:
-## floor((Attack + Strength + Defence + Vitality) / 4 + Prayer / 8), min 1.
+## 0.3.3 combat level, shared by the player, AI players and the aggro rule:
+## floor((Attack + Strength + Defence + Vitality + Archery) / 5 + Prayer / 8), min 1.
 static func combat_level(skills: Skills) -> int:
 	if skills == null:
 		return 1
-	var base := (skills.level("attack") + skills.level("strength") + skills.level("defence") + skills.level("vitality")) / 4.0
+	var base := (skills.level("attack") + skills.level("strength") + skills.level("defence") + skills.level("vitality") + skills.level("archery")) / 5.0
 	return maxi(1, int(floor(base + skills.level("prayer") / 8.0)))
 
 
@@ -186,3 +186,53 @@ static func expected_fight(e: Dictionary, s: Dictionary, acc_mult: float = 1.0, 
 	var dx: Dictionary = cfg().get("defence_xp", {})
 	var per_swing := (1.0 - e_acc) * float(dx.get("block", 2.0)) + e_acc * (float(dx.get("hit_base", 2.0)) + float(dx.get("hit_per_damage", 1.0)) * (1.0 + e_max) / 2.0)
 	return {"ticks": ticks, "damage": taken, "swings": swings, "def_xp": per_swing * swings * float(s.get("set_mult", 1.0))}
+
+
+# ------------------------------------------------------------ 0.3.3 archery --
+static func rcfg() -> Dictionary:
+	return cfg().get("ranged", {})
+
+
+static func is_ranged(weapon_id: String) -> bool:
+	return weapon_id != "" and str(class_def(weapon_id).get("style", "")) == "ranged"
+
+
+static func ranged_range() -> int:
+	return int(rcfg().get("range", 5))
+
+
+static func is_arrow(item_id: String) -> bool:
+	return item_id.ends_with("_arrows") and GameData.item(item_id).get("gear", {}).get("slot", "") == "ammo"
+
+
+## Best arrows in the pack this skill set may shoot ("" = out of arrows).
+static func best_arrow(inv: ItemContainer, skills: Skills) -> String:
+	var best := ""
+	var bt := -1
+	for s in inv.slots:
+		if s == null or not is_arrow(str(s["id"])):
+			continue
+		var gd: Dictionary = GameData.item(s["id"])["gear"]
+		if skills.level("archery") < int(gd.get("level", 1)):
+			continue
+		if int(gd.get("tier", 1)) > bt:
+			bt = int(gd.get("tier", 1))
+			best = str(s["id"])
+	return best
+
+
+static func arrow_power(arrow_id: String) -> int:
+	if arrow_id == "":
+		return 0
+	return int(GameData.item(arrow_id).get("gear", {}).get("tier", 1)) * int(rcfg().get("arrow_tier_power", 1))
+
+
+## Line of sight: wall / building tiles block; plants, rocks, fences, logs, water and the moat don't.
+static func line_of_sight(world, a: Vector2i, b: Vector2i) -> bool:
+	var n := maxi(absi(b.x - a.x), absi(b.y - a.y))
+	for i in range(1, n):
+		var p := Vector2i(roundi(lerpf(a.x, b.x, float(i) / n)), roundi(lerpf(a.y, b.y, float(i) / n)))
+		var tt: int = world.tile_type(p)
+		if tt in WorldGen.BLOCKING_TILES and not (tt in WorldGen.SHOOT_OVER_TILES):
+			return false
+	return true

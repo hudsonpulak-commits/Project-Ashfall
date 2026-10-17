@@ -1101,7 +1101,27 @@ def check_xp(ctx):
     return out
 
 
-CHECKS = [check_runtime, check_diagonal, check_facing, check_ghost, check_jitter, check_taps, check_bubbles, check_roof, check_shop, check_smithy, check_markers, check_daynight, check_world, check_church, check_aggro, check_farm, check_city, check_cookhouse, check_pk, check_gear, check_archery, check_bank, check_v036, check_quest, check_xp]
+def check_capital(ctx):
+    """0.3.8 Highfen, house, the only player shop, slimes, roadside logs."""
+    if "capital" not in ctx.expected:
+        return []
+    run = ctx.runs.get("capital")
+    if not run:
+        return [Result("C30 capital", "capital run present", False, "no capture")]
+    c = run.res.get("capital", {})
+    snaps = {e.get("name"): e.get("path") for e in run.events if e.get("type") == "snap"}
+    sp = lambda *n: [snaps[k] for k in n if k in snaps]
+    return [
+        Result("C30 capital", "0.3.8 Highfen is reachable from every town by road", bool(c.get("reach")) and all(c.get("reach", {}).values()) and len(c.get("reach", {})) == 3, str(c.get("reach")), sp("highfen_overview", "highfen_moat_gate", "world_map_038")),
+        Result("C30 capital", "0.3.8 the moat rings Highfen; gates cross it on bridges", bool(c.get("moat_px")), "moat beside the north gate %s" % c.get("moat_px"), sp("highfen_moat_gate")),
+        Result("C30 capital", "0.3.8 the player shop exists only in Highfen", c.get("player_shops") == ["highfen_player@highfen"], str(c.get("player_shops"))),
+        Result("C30 capital", "0.3.8 buying the house (clerk, two taps) gives every station + the bank", bool(c.get("house_bought")) and bool(c.get("house_bank")) and all(k in (c.get("house_stations") or []) for k in ("hearth", "furnace", "anvil", "workbench", "quern", "bank")), "bought %s bank %s stations %s" % (c.get("house_bought"), c.get("house_bank"), c.get("house_stations")), sp("house_interior")),
+        Result("C30 capital", "0.3.8 a slime dies and drops no bones", bool(c.get("slime_killed")) and "bones" not in (c.get("slime_drops") or []), "killed %s drops %s" % (c.get("slime_killed"), c.get("slime_drops")), sp("slime")),
+        Result("C30 capital", "0.3.8 an old log blocks walking (path goes round) but an arrow flies over it", bool(c.get("walk_round_log")) and int(c.get("arrow_shots") or 0) >= 1 and bool(c.get("archer_stayed")), "walk round %s shots %s stayed %s hp %s" % (c.get("walk_round_log"), c.get("arrow_shots"), c.get("archer_stayed"), c.get("foe_hp")), sp("road_decor", "arrow_over_log")),
+    ]
+
+
+CHECKS = [check_runtime, check_diagonal, check_facing, check_ghost, check_jitter, check_taps, check_bubbles, check_roof, check_shop, check_smithy, check_markers, check_daynight, check_world, check_church, check_aggro, check_farm, check_city, check_cookhouse, check_pk, check_gear, check_archery, check_bank, check_v036, check_quest, check_xp, check_capital]
 SCENARIOS = ["walk", "combat", "shop", "pshop", "smithy", "markers", "daynight", "world", "church", "aggro", "farm", "city", "cookhouse", "pk", "gear", "archery"]
 
 

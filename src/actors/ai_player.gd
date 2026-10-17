@@ -648,7 +648,7 @@ func gear_worn() -> Dictionary:
 func visit_shop(shop: String) -> void:
 	if _world_ref == null or dead or agent == null or agent.trip.has("to") or not action.is_empty():
 		return   # only when idle: a visit must never interrupt gathering / crafting / fighting (economy-neutral)
-	var b: Dictionary = _world_ref.gen.building_for_shop(agent.town, shop)
+	var b: Dictionary = _world_ref.gen.building_for_shop(Market.shop_town() if shop == "player" else agent.town, shop)
 	if b.is_empty() or _cheb(b["stand"], tile) > 40:
 		return
 	var spot := shop_spot(b)

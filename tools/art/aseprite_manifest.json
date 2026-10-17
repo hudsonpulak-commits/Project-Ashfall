@@ -2,7 +2,7 @@
  "actors_32x16": {
   "cell_w": 32,
   "cell_h": 16,
-  "cols": 2,
+  "cols": 3,
   "rows": 1,
   "cells": [
    {
@@ -15,6 +15,13 @@
    {
     "file": "assets/sprites/actors/giant_rat.png",
     "x": 32,
+    "y": 0,
+    "w": 32,
+    "h": 16
+   },
+   {
+    "file": "assets/sprites/actors/slime.png",
+    "x": 64,
     "y": 0,
     "w": 32,
     "h": 16
@@ -1328,6 +1335,13 @@
     "y": 160,
     "w": 16,
     "h": 16
+   },
+   {
+    "file": "assets/sprites/items/slime_goo.png",
+    "x": 48,
+    "y": 160,
+    "w": 16,
+    "h": 16
    }
   ]
  },
@@ -2128,6 +2142,129 @@
     "y": 0,
     "w": 8,
     "h": 8
+   }
+  ]
+ },
+ "tiles_038_16x16": {
+  "cell_w": 16,
+  "cell_h": 16,
+  "cols": 11,
+  "rows": 1,
+  "note": "0.3.8 placeholders",
+  "cells": [
+   {
+    "file": "assets/sprites/tiles/road_stone.png",
+    "x": 0,
+    "y": 0,
+    "w": 16,
+    "h": 16
+   },
+   {
+    "file": "assets/sprites/tiles/road_dirt.png",
+    "x": 16,
+    "y": 0,
+    "w": 16,
+    "h": 16
+   },
+   {
+    "file": "assets/sprites/tiles/moat.png",
+    "x": 32,
+    "y": 0,
+    "w": 16,
+    "h": 16
+   },
+   {
+    "file": "assets/sprites/tiles/moat_edge.png",
+    "x": 48,
+    "y": 0,
+    "w": 16,
+    "h": 16
+   },
+   {
+    "file": "assets/sprites/tiles/capital_wall.png",
+    "x": 64,
+    "y": 0,
+    "w": 16,
+    "h": 16
+   },
+   {
+    "file": "assets/sprites/tiles/capital_front.png",
+    "x": 80,
+    "y": 0,
+    "w": 16,
+    "h": 16
+   },
+   {
+    "file": "assets/sprites/tiles/gate_capital.png",
+    "x": 96,
+    "y": 0,
+    "w": 16,
+    "h": 16
+   },
+   {
+    "file": "assets/sprites/tiles/capital_bldg_wall.png",
+    "x": 112,
+    "y": 0,
+    "w": 16,
+    "h": 16
+   },
+   {
+    "file": "assets/sprites/tiles/capital_bldg_front.png",
+    "x": 128,
+    "y": 0,
+    "w": 16,
+    "h": 16
+   },
+   {
+    "file": "assets/sprites/tiles/house_wall.png",
+    "x": 144,
+    "y": 0,
+    "w": 16,
+    "h": 16
+   },
+   {
+    "file": "assets/sprites/tiles/house_front.png",
+    "x": 160,
+    "y": 0,
+    "w": 16,
+    "h": 16
+   }
+  ]
+ },
+ "objects_038_16x24": {
+  "cell_w": 16,
+  "cell_h": 24,
+  "cols": 4,
+  "rows": 1,
+  "note": "0.3.8 placeholders",
+  "cells": [
+   {
+    "file": "assets/sprites/objects/road_fence.png",
+    "x": 0,
+    "y": 0,
+    "w": 16,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/objects/boulder.png",
+    "x": 16,
+    "y": 0,
+    "w": 16,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/objects/bush.png",
+    "x": 32,
+    "y": 0,
+    "w": 16,
+    "h": 24
+   },
+   {
+    "file": "assets/sprites/objects/old_log.png",
+    "x": 48,
+    "y": 0,
+    "w": 16,
+    "h": 24
    }
   ]
  }

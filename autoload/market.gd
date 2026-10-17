@@ -44,7 +44,13 @@ var econ_history: Array = []         # per-day totals across towns + global
 var notices: Array = []
 var monitor = null                   # EconomyMonitor
 var _next_id: int = 1
-var player_shops: Dictionary = {}    # 0.3.0 town id -> PlayerShop
+var player_shops: Dictionary = {}    # 0.3.0 town id -> PlayerShop (0.3.8: only the capital)
+var shop_overflow: Array = []        # 0.3.8 migrated stock that didn't fit Highfen's stands: [{item, qty}] -> player's bank
+
+
+## 0.3.8 the town with the realm's only player shop (the capital).
+func shop_town() -> String:
+	return str(GameData.world.get("capital", town_ids[0] if not town_ids.is_empty() else "fenhollow"))
 
 
 func _ready() -> void:
@@ -67,8 +73,8 @@ func reset_prices() -> void:
 	for id in town_ids:
 		towns[id] = TownMarket.new(self, id, GameData.towns.get(id, {"name": id}))
 	player_shops.clear()
-	for id in town_ids:
-		player_shops[id] = PlayerShop.new(id)
+	player_shops[shop_town()] = PlayerShop.new(shop_town())   # 0.3.8 the only player shop: the capital
+	shop_overflow.clear()
 	PlayerShop.version += 1
 	econ = {"faucet": 0, "sink": 0}
 	econ_history.clear()
@@ -78,15 +84,44 @@ func reset_prices() -> void:
 		monitor.reset()
 
 
-func player_shop(id: String) -> PlayerShop:
+## 0.3.8 an old save's shop in another town moves to the capital: ownership,
+## till and stock (into free stands; the rest goes to the player's bank).
+func migrate_shop(sd: Dictionary) -> void:
+	if not bool(sd.get("owned", false)):
+		return
+	var old := PlayerShop.new("")
+	old.from_save(sd)
+	var ps := player_shop(shop_town())
+	if not ps.owned:
+		ps.owned = true
+		ps.owner_name = old.owner_name
+	else:     # a second owned shop: refund what it cost
+		shop_overflow.append({"item": GameData.currency, "qty": PlayerShop.building_price()})
+	ps.till += old.till
+	ps.auto_bank = ps.auto_bank or old.auto_bank
+	for sl in old.slots:
+		if sl == null:
+			continue
+		var free := ps.slots.find(null)
+		if free >= 0:
+			ps.slots[free] = sl.duplicate()
+		else:
+			shop_overflow.append({"item": str(sl["item"]), "qty": int(sl["qty"])})
+	ps._bump()
+
+
+## 0.3.8 there is ONE player shop (Highfen): every town id maps to it, so AI
+## shoppers from any town browse it (they all trade at the capital).
+func player_shop(_id: String = "") -> PlayerShop:
+	var id := shop_town()
 	if not player_shops.has(id):
 		player_shops[id] = PlayerShop.new(id)
 	return player_shops[id]
 
 
-## Owned shop with something on its stands in this town, else null.
-func open_player_shop(id: String) -> PlayerShop:
-	var ps: PlayerShop = player_shops.get(id)
+## The owned player shop if it has something on its stands, else null.
+func open_player_shop(_id: String = "") -> PlayerShop:
+	var ps: PlayerShop = player_shops.get(shop_town())
 	return ps if ps != null and ps.owned and not ps.stocked().is_empty() else null
 
 
@@ -214,8 +249,13 @@ func from_save(d: Dictionary) -> void:
 				towns[id].from_save(d["towns"][id])
 	for id in player_shops.keys():          # pre-0.3.0 saves: every shop starts unowned
 		player_shops[id] = PlayerShop.new(id)
-	for id in d.get("player_shops", {}).keys():
-		player_shop(id).from_save(d["player_shops"][id])
+	var cap := shop_town()
+	var saved: Dictionary = d.get("player_shops", {})
+	if saved.has(cap):
+		player_shop(cap).from_save(saved[cap])
+	for id in saved.keys():
+		if id != cap:
+			migrate_shop(saved[id])
 	econ = d.get("econ", econ)
 	econ_history = d.get("econ_history", [])
 	notices = d.get("notices", [])

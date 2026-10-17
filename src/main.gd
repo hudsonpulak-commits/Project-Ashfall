@@ -230,6 +230,10 @@ func _start_player(data: Dictionary) -> void:
 	if bool(data.get("relayout_cities", false)):
 		relocate_piles_if_walled(world)
 	if data.has("player"):
+		if not Market.shop_overflow.is_empty():
+			player.receive_shop_overflow()
+		elif not data.get("market", {}).get("player_shops", {}).is_empty() and Market.player_shop(Market.shop_town()).owned and not data.get("market", {}).get("player_shops", {}).has(Market.shop_town()):
+			Events.say("Player shops now trade only in Highfen: your shop and its stock moved there.")
 		for tid in Market.player_shops.keys():
 			var ps: PlayerShop = Market.player_shops[tid]
 			if ps.owned and int(ps.unseen["qty"]) > 0:

@@ -17,7 +17,7 @@ OUT="${QA_OUT:-$ROOT/build/qa/$VERSION}"   # QA_OUT=dir to keep the release repo
 RUNS="$OUT/runs"
 SCEN=("$@")
 
-[ ${#SCEN[@]} -eq 0 ] && SCEN=(walk combat shop pshop smithy markers daynight world church aggro farm city cookhouse pk gear archery bank v036 quest xp)
+[ ${#SCEN[@]} -eq 0 ] && SCEN=(walk combat shop pshop smithy markers daynight world church aggro farm city cookhouse pk gear archery bank v036 quest xp capital)
 RES=${QA_RESOLUTION:-360x780}
 ZOOM=${QA_ZOOM:-3}
 

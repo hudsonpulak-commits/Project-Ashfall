@@ -30,9 +30,14 @@
    "pk_only": true
   },
   "goblin_warlord": {
-   "min": 100,
+   "min": 60,
    "max": 260,
    "label": "Goblin Warlord (Millbrook)"
+  },
+  "slime": {
+   "min": 3,
+   "max": 160,
+   "label": "Slimes (by towns and villages)"
   }
  }
 }

@@ -273,7 +273,7 @@ static func run(main) -> int:
 
 	# --- continent, towns, roads, regional markets
 	var gen: WorldGen = world.gen
-	check(gen.towns.size() == 3, "three towns on the continent")
+	check(gen.towns.size() == 4 and gen.capital == "highfen", "three towns + the capital Highfen on the continent")
 	var b := gen.bounds()
 	var ocean_ok := true
 	for q in [b.position, b.end - Vector2i.ONE, Vector2i(b.position.x, 0), Vector2i(b.end.x - 1, -10), Vector2i(180, b.position.y), Vector2i(180, b.end.y - 1)]:
@@ -299,16 +299,20 @@ static func run(main) -> int:
 	var min_d := 1 << 30
 	for x in gen.town_order:
 		for y in gen.town_order:
-			if x < y:
+			if x < y and x != gen.capital and y != gen.capital:
 				min_d = mini(min_d, int(Vector2(gen.town_center(x) - gen.town_center(y)).length()))
-	check(min_d >= 250, "towns are far apart (closest pair %d tiles)" % min_d)
+	var cap_d := 1 << 30
+	for x in gen.town_order:
+		if x != gen.capital:
+			cap_d = mini(cap_d, int(Vector2(gen.town_center(x) - gen.town_center(gen.capital)).length()))
+	check(min_d >= 250 and cap_d >= 150, "towns are far apart (closest pair %d tiles; capital %d from the nearest)" % [min_d, cap_d])
 	var roads_ok := true
 	for k in gen.roads.keys():
 		var road: Array = gen.roads[k]
 		for i in range(1, road.size()):
 			var d: Vector2i = (road[i] - road[i - 1]).abs()
-			roads_ok = roads_ok and maxi(d.x, d.y) == 1 and gen.tile_at(road[i].x, road[i].y) in [WorldGen.TileType.PATH, WorldGen.TileType.BRIDGE]
-	check(roads_ok and gen.roads.size() == 6, "roads link every pair of towns, 8-connected and walkable")
+			roads_ok = roads_ok and maxi(d.x, d.y) == 1 and not (gen.tile_at(road[i].x, road[i].y) in WorldGen.BLOCKING_TILES)
+	check(roads_ok and gen.roads.size() == 12, "roads link every pair of towns (via Highfen), 8-connected and walkable")
 	var fen := Market.town("fenhollow")
 	var cin := Market.town("cinderholt")
 	check(cin.reference_price("iron_ore") < fen.reference_price("iron_ore"), "regional prices: ore is cheaper in the hills")
@@ -1520,12 +1524,12 @@ static func _building_tests(main, world: World, p: Player) -> void:
 				g += 1 if b["shop"] == "general" else 0
 				pl += 1 if b["kind"] == "player" else 0
 				ck += 1 if b["shop"] == "cook" else 0
-		per_town_ok = per_town_ok and g == 1 and pl == 1 and ck == 1
+		per_town_ok = per_town_ok and g == 1 and pl == (1 if tid == Market.shop_town() else 0) and ck == 1   # 0.3.8 player shop: Highfen only
 		for sid in Market.town(tid).specialists:
 			if sid == "cook":
 				continue
 			per_town_ok = per_town_ok and where.get(sid, "") == tid
-	check(per_town_ok, "each town: general, player shop, cookhouse, and its gear specialists")
+	check(per_town_ok, "each town: general, cookhouse, its gear specialists (player shop: Highfen only)alists")
 	var walls_ok := true
 	var doors_ok := true
 	var reach_ok := true
@@ -1645,7 +1649,7 @@ static func _player_shop_tests(_main, world: World, p: Player) -> void:
 	p.inventory.add(coin, 5000)
 	check(ps.buy_building(p) == "" and ps.owned and p.inventory.count(coin) == 5000 - PlayerShop.building_price() and ps.owner_name == p.display_name,
 		"buying deducts %d marks and sets ownership" % PlayerShop.building_price())
-	check(world.buildings_view.label_for(world.gen.building_for_shop(tid, "player")) == ps.title() and ps.title() == "Your Shop", "the sign reads \"%s\" once owned (unnamed player)" % ps.title())
+	check(world.buildings_view.label_for(world.gen.building_for_shop(Market.shop_town(), "player")) == ps.title() and ps.title() == "Your Shop", "the sign reads \"%s\" once owned (unnamed player)" % ps.title())
 	ps.owner_name = "Hudson"
 	check(ps.title() == "Hudson's Shop", "a named player gets \"<name>'s Shop\"")
 	ps.owner_name = p.display_name
@@ -1743,6 +1747,8 @@ static func _smithy_tests(_main, world: World, p: Player) -> void:
 	var bv: BuildingsView = world.buildings_view
 	var ok := true
 	for tid in Market.town_ids:
+		if tid == gen.capital:
+			continue   # 0.3.8 Highfen has no smithy (its forge is in the player's house)
 		var n := 0
 		for id in gen.building_order:
 			var b: Dictionary = gen.buildings[id]

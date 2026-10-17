@@ -290,6 +290,116 @@
    ],
    "minimap_color": "#f0e8d8",
    "_order": 31
+  },
+  "road_stone": {
+   "path": "res://assets/sprites/tiles/road_stone.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "minimap_color": "#8f8c84",
+   "_order": 32,
+   "note": "0.3.8 placeholder"
+  },
+  "road_dirt": {
+   "path": "res://assets/sprites/tiles/road_dirt.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "minimap_color": "#9a7a4c",
+   "_order": 33,
+   "note": "0.3.8 placeholder"
+  },
+  "moat": {
+   "path": "res://assets/sprites/tiles/moat.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "minimap_color": "#2a5f86",
+   "_order": 34,
+   "note": "0.3.8 placeholder"
+  },
+  "moat_edge": {
+   "path": "res://assets/sprites/tiles/moat_edge.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "minimap_color": "#9c9a92",
+   "_order": 35,
+   "note": "0.3.8 placeholder"
+  },
+  "capital_wall": {
+   "path": "res://assets/sprites/tiles/capital_wall.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "minimap_color": "#c9c2b0",
+   "_order": 36,
+   "note": "0.3.8 placeholder"
+  },
+  "capital_front": {
+   "path": "res://assets/sprites/tiles/capital_front.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "minimap_color": "#bdb5a2",
+   "_order": 37,
+   "note": "0.3.8 placeholder"
+  },
+  "gate_capital": {
+   "path": "res://assets/sprites/tiles/gate_capital.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "minimap_color": "#8f8c84",
+   "_order": 38,
+   "note": "0.3.8 placeholder"
+  },
+  "capital_bldg_wall": {
+   "path": "res://assets/sprites/tiles/capital_bldg_wall.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "minimap_color": "#e2dccb",
+   "_order": 39,
+   "note": "0.3.8 placeholder"
+  },
+  "capital_bldg_front": {
+   "path": "res://assets/sprites/tiles/capital_bldg_front.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "minimap_color": "#d6cfbb",
+   "_order": 40,
+   "note": "0.3.8 placeholder"
+  },
+  "house_wall": {
+   "path": "res://assets/sprites/tiles/house_wall.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "minimap_color": "#b88a5a",
+   "_order": 41,
+   "note": "0.3.8 placeholder"
+  },
+  "house_front": {
+   "path": "res://assets/sprites/tiles/house_front.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "minimap_color": "#a87a4c",
+   "_order": 42,
+   "note": "0.3.8 placeholder"
   }
  },
  "objects": {
@@ -743,6 +853,46 @@
    ],
    "frames": 2,
    "anchor": "bottom"
+  },
+  "road_fence": {
+   "path": "res://assets/sprites/objects/road_fence.png",
+   "frame_size": [
+    16,
+    24
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.3.8 placeholder road decoration"
+  },
+  "boulder": {
+   "path": "res://assets/sprites/objects/boulder.png",
+   "frame_size": [
+    16,
+    24
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.3.8 placeholder road decoration"
+  },
+  "bush": {
+   "path": "res://assets/sprites/objects/bush.png",
+   "frame_size": [
+    16,
+    24
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.3.8 placeholder road decoration"
+  },
+  "old_log": {
+   "path": "res://assets/sprites/objects/old_log.png",
+   "frame_size": [
+    16,
+    24
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.3.8 placeholder road decoration"
   }
  },
  "actors": {
@@ -1636,6 +1786,18 @@
    "fps": 4,
    "anchor": "bottom",
    "flip": true
+  },
+  "slime": {
+   "path": "res://assets/sprites/actors/slime.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 2,
+   "fps": 3,
+   "anchor": "bottom",
+   "flip": true,
+   "note": "0.3.8 placeholder"
   }
  },
  "items": {
@@ -2237,6 +2399,14 @@
     16,
     16
    ]
+  },
+  "slime_goo": {
+   "path": "res://assets/sprites/items/slime_goo.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "note": "0.3.8 placeholder"
   }
  },
  "ui": {

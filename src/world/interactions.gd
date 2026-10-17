@@ -22,6 +22,11 @@ static func perform(actor: Actor, world, t: int) -> void:
 		actor.stop()
 		return
 	var d := obj.def()
+	if d.get("type", "") in ["station", "bank"] and world.gen.is_private(obj.pos) and not (actor is Player and actor.house_owned):
+		actor.stop()
+		if actor is Player:
+			actor.say("This is the townhouse's %s. Buy the house from the estate clerk to use it." % str(d.get("name", "bench")).to_lower())
+		return
 	match d.get("type", ""):
 		"gather":
 			_gather(actor, world, obj, d, t)

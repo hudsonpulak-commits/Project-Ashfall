@@ -170,6 +170,23 @@
    "xp": 60,
    "drops": "goblin",
    "note": "0.3.7 Goblin Slayer boss near Millbrook; reusable, respawns. hp 28 base x1.5 (0.3.6 rule). Art swappable in sprites.json actors.goblin_warlord"
+  },
+  "slime": {
+   "name": "Slime",
+   "sprite": "slime",
+   "level": 3,
+   "hp": 8,
+   "max_hit": 1,
+   "accuracy": 0.3,
+   "defence": 1,
+   "attack_ticks": 5,
+   "aggro": 0,
+   "leash": 5,
+   "wander": 2,
+   "respawn_ticks": 45,
+   "xp": 4,
+   "drops": "slime",
+   "note": "0.3.8 from Grok's enemies_slime.json (attack/strength 2 -> max_hit 1, accuracy 0.3; coins -> marks); passive low-level blob by towns and villages; drops no bones"
   }
  },
  "camps": [
@@ -347,8 +364,8 @@
   {
    "enemy": "goblin",
    "at": [
-    96,
-    -78
+    70,
+    -130
    ],
    "count": 4,
    "spread": 3
@@ -356,8 +373,8 @@
   {
    "enemy": "goblin",
    "at": [
-    276,
-    56
+    290,
+    60
    ],
    "count": 4,
    "spread": 3
@@ -383,8 +400,8 @@
   {
    "enemy": "goblin",
    "at": [
-    206,
-    88
+    200,
+    100
    ],
    "count": 4,
    "spread": 3
@@ -428,13 +445,140 @@
   {
    "enemy": "goblin_warlord",
    "at": [
-    144,
-    -66
+    150,
+    -114
    ],
    "count": 1,
    "spread": 1
+  },
+  {
+   "enemy": "slime",
+   "at": [
+    -30,
+    -26
+   ],
+   "count": 3,
+   "spread": 3
+  },
+  {
+   "enemy": "slime",
+   "at": [
+    29,
+    25
+   ],
+   "count": 3,
+   "spread": 3
+  },
+  {
+   "enemy": "slime",
+   "at": [
+    300,
+    -226
+   ],
+   "count": 3,
+   "spread": 3
+  },
+  {
+   "enemy": "slime",
+   "at": [
+    359,
+    -175
+   ],
+   "count": 3,
+   "spread": 3
+  },
+  {
+   "enemy": "slime",
+   "at": [
+    270,
+    144
+   ],
+   "count": 3,
+   "spread": 3
+  },
+  {
+   "enemy": "slime",
+   "at": [
+    329,
+    195
+   ],
+   "count": 3,
+   "spread": 3
+  },
+  {
+   "enemy": "slime",
+   "at": [
+    137,
+    -53
+   ],
+   "count": 3,
+   "spread": 3
+  },
+  {
+   "enemy": "slime",
+   "at": [
+    222,
+    32
+   ],
+   "count": 3,
+   "spread": 3
+  },
+  {
+   "enemy": "slime",
+   "at": [
+    125,
+    -105
+   ],
+   "count": 3,
+   "spread": 3
+  },
+  {
+   "enemy": "slime",
+   "at": [
+    162,
+    -78
+   ],
+   "count": 3,
+   "spread": 3
+  },
+  {
+   "enemy": "slime",
+   "at": [
+    141,
+    119
+   ],
+   "count": 3,
+   "spread": 3
+  },
+  {
+   "enemy": "slime",
+   "at": [
+    178,
+    146
+   ],
+   "count": 3,
+   "spread": 3
+  },
+  {
+   "enemy": "slime",
+   "at": [
+    269,
+    -33
+   ],
+   "count": 3,
+   "spread": 3
+  },
+  {
+   "enemy": "slime",
+   "at": [
+    306,
+    -6
+   ],
+   "count": 3,
+   "spread": 3
   }
  ],
  "note_show_level": "0.3.3: combat enemies (aggro, or retaliate with max_hit > 0) show 'Name (level)' overhead; show_level overrides (false for citizens and chickens).",
- "note_036": "0.3.6: every hp (and hp_range) x1.5 rounded up; rat level 5, goblin 8, town guard 30 with stats raised to match"
+ "note_036": "0.3.6: every hp (and hp_range) x1.5 rounded up; rat level 5, goblin 8, town guard 30 with stats raised to match",
+ "note_038": "0.3.8 Highfen (a city for distance bands) moved three goblin camps and the Warlord camp (now north of Millbrook, 68 tiles from Highfen's walls; warlord band min 100 -> 60)."
 }

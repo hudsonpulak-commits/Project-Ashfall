@@ -10,7 +10,7 @@ extends Node
 
 const FADE_SEC := 1.5
 const DIR := "res://assets/music/"
-const IDS := ["title", "ambient", "ambient_night", "combat", "fenhollow", "cinderholt", "saltmere"]
+const IDS := ["title", "ambient", "ambient_night", "combat", "fenhollow", "cinderholt", "saltmere", "highfen"]
 const SETTINGS := "user://settings.cfg"
 
 var player: AudioStreamPlayer

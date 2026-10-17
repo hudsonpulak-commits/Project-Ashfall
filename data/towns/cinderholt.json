@@ -475,8 +475,8 @@
   },
   {
    "id": "cinderholt_player",
-   "kind": "player",
-   "shop": "player",
+   "kind": "house",
+   "shop": "",
    "style": "basalt",
    "rect": [
     34,
@@ -490,28 +490,7 @@
      9
     ]
    ],
-   "counter": [
-    [
-     36,
-     5
-    ],
-    [
-     37,
-     5
-    ],
-    [
-     38,
-     5
-    ],
-    [
-     39,
-     5
-    ],
-    [
-     40,
-     5
-    ]
-   ],
+   "counter": [],
    "keeper_at": [
     38,
     4
@@ -525,41 +504,7 @@
     9
    ],
    "roof": "#3a3e4c",
-   "name": "For sale",
-   "displays": [
-    [
-     35,
-     7
-    ],
-    [
-     36,
-     7
-    ],
-    [
-     40,
-     7
-    ],
-    [
-     41,
-     7
-    ],
-    [
-     35,
-     8
-    ],
-    [
-     36,
-     8
-    ],
-    [
-     40,
-     8
-    ],
-    [
-     41,
-     8
-    ]
-   ],
+   "name": "Townhouse",
    "props": [
     {
      "object": "crate",
@@ -575,7 +520,11 @@
       4
      ]
     }
-   ]
+   ],
+   "keeper": "Dagny Soot",
+   "keeper_sprite": "villager",
+   "sign_sprite": "sign_house",
+   "note": "0.3.8 was this town's player shop; the only player shop is now in Highfen (old saves migrate there)"
   },
   {
    "id": "cinderholt_cook",

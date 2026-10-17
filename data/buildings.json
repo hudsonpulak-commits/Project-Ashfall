@@ -217,5 +217,16 @@
    "Come in, come in. Food's cheap and the fire's free.",
    "Hungry? The counter sells cooked meals; the ovens are for guests."
   ]
+ },
+ "player_house": {
+  "price": 5000,
+  "confirm_s": 20,
+  "note": "0.3.8 Highfen townhouse (Grok: player_house, price 5000). Tap the estate clerk inside to buy (tap again within confirm_s to confirm). Its hearth, oven, furnace, anvil, workbench, quern and bank chest work only for the owner; AIs never use them.",
+  "greet": [
+   "A fine townhouse, every bench a crafter needs and a strongbox. Yours for %d marks."
+  ],
+  "owned_greet": [
+   "Welcome home."
+  ]
  }
 }

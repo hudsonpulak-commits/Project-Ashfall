@@ -7,16 +7,26 @@ extends RefCounted
 enum TileType { GRASS, PATH, WATER, SAND, DIRT, COBBLE, PLANKS, MARSH, WALL, WALL_FRONT, FLOOR, DOORWAY, ASH, ASH_EDGE, BRIDGE,
 	STONE_WALL, STONE_FRONT, STONE_FLOOR,
 	PALISADE, PALISADE_FRONT, BASALT_WALL, BASALT_FRONT, SANDSTONE_WALL, SANDSTONE_FRONT,
-	GATE_WOOD, GATE_BASALT, GATE_SAND, BOARDWALK, COBBLE_DARK, PLASTER, PLASTER_WALL, PLASTER_FRONT }
+	GATE_WOOD, GATE_BASALT, GATE_SAND, BOARDWALK, COBBLE_DARK, PLASTER, PLASTER_WALL, PLASTER_FRONT,
+	ROAD_STONE, ROAD_DIRT, MOAT, MOAT_EDGE, CAPITAL_WALL, CAPITAL_FRONT, GATE_CAPITAL,
+	CAPITAL_BLDG_WALL, CAPITAL_BLDG_FRONT, HOUSE_WALL, HOUSE_FRONT }
 const TILE_NAMES := ["grass", "path", "water", "sand", "dirt", "cobble", "planks", "marsh", "wall", "wall_front", "floor", "doorway",
 	"ash", "ash_edge", "bridge", "stone_wall", "stone_front", "stone_floor",
 	"palisade", "palisade_front", "basalt_wall", "basalt_front", "sandstone_wall", "sandstone_front",
-	"gate_wood", "gate_basalt", "gate_sand", "boardwalk", "cobble_dark", "plaster", "plaster_wall", "plaster_front"]
+	"gate_wood", "gate_basalt", "gate_sand", "boardwalk", "cobble_dark", "plaster", "plaster_wall", "plaster_front",
+	"road_stone", "road_dirt", "moat", "moat_edge", "capital_wall", "capital_front", "gate_capital",
+	"capital_bldg_wall", "capital_bldg_front", "house_wall", "house_front"]
 const BLOCKING_TILES := [TileType.WATER, TileType.WALL, TileType.WALL_FRONT, TileType.STONE_WALL, TileType.STONE_FRONT,
 	TileType.PALISADE, TileType.PALISADE_FRONT, TileType.BASALT_WALL, TileType.BASALT_FRONT,
-	TileType.SANDSTONE_WALL, TileType.SANDSTONE_FRONT, TileType.PLASTER_WALL, TileType.PLASTER_FRONT]
+	TileType.SANDSTONE_WALL, TileType.SANDSTONE_FRONT, TileType.PLASTER_WALL, TileType.PLASTER_FRONT,
+	TileType.MOAT, TileType.CAPITAL_WALL, TileType.CAPITAL_FRONT, TileType.CAPITAL_BLDG_WALL, TileType.CAPITAL_BLDG_FRONT,
+	TileType.HOUSE_WALL, TileType.HOUSE_FRONT]
+## 0.3.8 arrows fly over open water (lakes, the moat); walls stop them
+const SHOOT_OVER_TILES := [TileType.WATER, TileType.MOAT]
+## 0.3.8 road surfaces (old PATH, stone capital roads, dirt village roads)
+const ROAD_SURFACES := [TileType.PATH, TileType.ROAD_STONE, TileType.ROAD_DIRT]
 const FLOOR_TILES := [TileType.FLOOR, TileType.STONE_FLOOR, TileType.PLASTER]
-const GATE_TILES := [TileType.GATE_WOOD, TileType.GATE_BASALT, TileType.GATE_SAND]
+const GATE_TILES := [TileType.GATE_WOOD, TileType.GATE_BASALT, TileType.GATE_SAND, TileType.GATE_CAPITAL]
 const CHUNK := 24
 const ROAD_SPACING := 72
 
@@ -50,6 +60,9 @@ var mines: Array = []                 # 0.3.1: data/mines.json clusters (center 
 var pk_zones: Array = []              # 0.3.1: data/pk_zones.json zones with "r": Rect2i
 var _mine_grid: Dictionary = {}       # Vector2i(chunk) -> Array[mine index] (fast lookup)
 var _road_cfg: Dictionary = {}
+var capital := ""                     # 0.3.8 the capital's town id ("" = none)
+var village_roads: Dictionary = {}    # 0.3.8 village id -> Array[Vector2i] village gate -> town gate (dirt)
+var road_decor: Dictionary = {}       # 0.3.8 Vector2i -> roadside object id (fence / rock / bush / log)
 # 0.3.1 villages (data/towns/<id>.json kind "village"): NOT cities. town_at /
 # town_edge_distance / nearest_town ignore them (distance bands, home towns,
 # travel, respawn stay city-only); village_at / safe_at / place_at see them.
@@ -97,21 +110,32 @@ func _init(p_seed: int, town: Dictionary = {}, world_cfg: Dictionary = {}) -> vo
 	if not town.is_empty() and not towns.has(town["id"]):
 		_load_town(town)
 	_town = towns.get("fenhollow", towns.values()[0] if not towns.is_empty() else {})
+	for id in towns.keys():
+		if str(towns[id].get("kind", "")) == "capital":
+			capital = id
 	_load_pk_zones()
 	_load_mines()
 	_road_cfg = cfg.get("road_rules", {})
 	_road_block = _village_footprints(cfg)
-	var key := "%d|%s|%s|%s" % [world_seed, str(ids), str(_road_cfg), str(_road_block)]
+	var key := "%d|%s|%s|%s|%s" % [world_seed, str(ids), str(_road_cfg), str(_road_block), str(cfg.get("village_roads", []))]
 	if _road_cache.has(key):
 		var c: Dictionary = _road_cache[key]
 		roads = c["roads"].duplicate()
 		road_tiles = c["road_tiles"].duplicate()
 		bridges = c["bridges"].duplicate(true)
+		village_roads = c["village_roads"].duplicate(true)
+		road_decor = c["decor"].duplicate()
 	else:
 		for pair in cfg.get("roads", []):
 			if towns.has(pair[0]) and towns.has(pair[1]):
 				_build_road(pair[0], pair[1])
-		_road_cache[key] = {"roads": roads.duplicate(), "road_tiles": road_tiles.duplicate(), "bridges": bridges.duplicate(true)}
+		_compose_capital_roads()
+		for pair in cfg.get("village_roads", []):
+			if GameData.villages.has(pair[0]) and towns.has(pair[1]):
+				_build_village_road(str(pair[0]), str(pair[1]))
+		_place_road_decor()
+		_road_cache[key] = {"roads": roads.duplicate(), "road_tiles": road_tiles.duplicate(), "bridges": bridges.duplicate(true),
+			"village_roads": village_roads.duplicate(true), "decor": road_decor.duplicate()}
 	for vid in cfg.get("villages", []):
 		var v: Dictionary = GameData.villages.get(vid, {})
 		if not v.is_empty():
@@ -159,7 +183,9 @@ func _load_village(v: Dictionary) -> void:
 		if f["village"] == v["id"]:
 			whole = whole.merge(f["rect"])
 	_clear_rects.append(whole.grow(1))
-	if v.has("gate"):
+	if village_roads.has(v["id"]):
+		village_paths[v["id"]] = village_roads[v["id"]]   # 0.3.8 winding dirt road to its town
+	elif v.has("gate"):
 		village_paths[v["id"]] = _path_to_road(origin + Vector2i(int(v["gate"][0]), int(v["gate"][1])), int(GameData.villages_cfg.get("path_search", 30)))
 
 
@@ -197,7 +223,7 @@ func _path_to_road(from: Vector2i, search: int) -> Array:
 	var bd := INF
 	for q in road_tiles.keys():
 		var d := Vector2(q - from).length()
-		if d < bd and road_tiles[q] == TileType.PATH:
+		if d < bd and road_tiles[q] in ROAD_SURFACES:
 			bd = d
 			best = q
 	var out: Array = []
@@ -239,9 +265,17 @@ func place_at(p: Vector2i, margin: int = 6) -> String:
 
 
 ## 0.3.1 authored station tiles (e.g. the village querns) for `station`.
+## 0.3.8 inside the player's (buyable) house: stations / chest are the owner's only.
+func is_private(p: Vector2i) -> bool:
+	var bid := str(_town_meta.get(p, {}).get("building", ""))
+	return bid != "" and str(buildings.get(bid, {}).get("kind", "")) == "player_house"
+
+
 func station_sites(station: String) -> Array:
 	var out: Array = []
 	for p in _town_objects.keys():
+		if is_private(p):
+			continue
 		if str(GameData.object_def(str(_town_objects[p])).get("station", "")) == station:
 			out.append(p)
 	return out
@@ -380,6 +414,10 @@ func _load_buildings(town: Dictionary, origin: Vector2i) -> void:
 				wall_t = TileType.SANDSTONE_WALL; front_t = TileType.SANDSTONE_FRONT; floor_t = TileType.PLASTER
 			"plaster":
 				wall_t = TileType.PLASTER_WALL; front_t = TileType.PLASTER_FRONT; floor_t = TileType.PLASTER
+			"capital":
+				wall_t = TileType.CAPITAL_BLDG_WALL; front_t = TileType.CAPITAL_BLDG_FRONT; floor_t = TileType.STONE_FLOOR
+			"house":
+				wall_t = TileType.HOUSE_WALL; front_t = TileType.HOUSE_FRONT; floor_t = TileType.FLOOR
 			_:
 				style = "timber"
 		var b := {
@@ -502,17 +540,189 @@ func _build_road(a: String, b: String) -> void:
 	var rev := tiles.duplicate()
 	rev.reverse()
 	roads[b + "|" + a] = rev
+	var surf: int = TileType.ROAD_STONE if capital != "" and (a == capital or b == capital) else TileType.PATH
+	_stamp_road(a + "|" + b, tiles, surf, 3)
+
+
+## 0.3.8 lay a road: surface tiles (bridges over lake water) + widening to 2-3
+## tiles (never into a town, a village footprint, the ocean or another road).
+func _stamp_road(rid: String, tiles: Array, surf: int, width: int) -> void:
 	var span: Array = []
 	for p in tiles:
 		var water: bool = _terrain_at(p.x, p.y) == TileType.WATER
-		road_tiles[p] = TileType.BRIDGE if water else TileType.PATH
+		if road_tiles.has(p) and road_tiles[p] != TileType.PATH:
+			if water and not span.is_empty():
+				span.append(p)
+			continue      # 0.3.8 a dirt road meeting a stone road keeps the stone
+		road_tiles[p] = TileType.BRIDGE if water else surf
 		if water:
 			span.append(p)
 		elif not span.is_empty():
-			bridges.append({"road": a + "|" + b, "tiles": span})
+			bridges.append({"road": rid, "tiles": span})
 			span = []
 	if not span.is_empty():
-		bridges.append({"road": a + "|" + b, "tiles": span})
+		bridges.append({"road": rid, "tiles": span})
+	# brush: 2x2 always (2 wide whatever the heading), the opposite pair on
+	# about half the tiles (3 wide)
+	for p in tiles:
+		var sides: Array = [Vector2i(1, 0), Vector2i(0, 1), Vector2i(1, 1)]
+		if width >= 3 and hash01(p.x, p.y, 31) < 0.55:
+			sides += [Vector2i(-1, 0), Vector2i(0, -1), Vector2i(-1, -1)]
+		var on_bridge: bool = road_tiles.get(p, -1) == TileType.BRIDGE
+		for sd in sides:
+			var q: Vector2i = p + sd
+			if road_tiles.has(q) or _blocked_for_road(q):
+				continue
+			var w: bool = _terrain_at(q.x, q.y) == TileType.WATER
+			if w and (not on_bridge or land_value(q.x, q.y) < OCEAN_LEVEL):
+				continue
+			if on_bridge and not w:
+				continue     # bridges stay their own width; no land spur beside them
+			road_tiles[q] = TileType.BRIDGE if w else surf
+
+
+func _blocked_for_road(q: Vector2i) -> bool:
+	if _town_tiles.has(q):
+		return true
+	for id in _town_rects.keys():
+		if (_town_rects[id] as Rect2i).grow(1).has_point(q):
+			return true
+	for r in _road_block:
+		if (r as Rect2i).has_point(q):
+			return true
+	return false
+
+
+## 0.3.8 every town has a road to the capital; a trip between two towns runs
+## town -> capital gate -> along the avenues through the plaza -> out the gate
+## facing the other town (one continuous 8-connected tile list).
+func _compose_capital_roads() -> void:
+	if capital == "":
+		return
+	var c: Vector2i = towns[capital]["center"]
+	for a in town_order:
+		for b in town_order:
+			if a == b or a == capital or b == capital or roads.has(a + "|" + b):
+				continue
+			var ra: Array = roads.get(a + "|" + capital, [])
+			var rb: Array = roads.get(capital + "|" + b, [])
+			if ra.is_empty() or rb.is_empty():
+				continue
+			var ga := gate_outside(capital, ra[-1])
+			var gb := gate_outside(capital, rb[0])
+			var mid: Array = _line8(ra[-1], ga) + _line8(ga, c) + _line8(c, gb) + _line8(gb, rb[0])
+			var out: Array = ra.duplicate()
+			for q in mid:
+				if q != out[-1]:
+					out.append(q)
+			for q in rb:
+				if q != out[-1]:
+					out.append(q)
+			roads[a + "|" + b] = out
+
+
+## Tiles from a to b (inclusive), 4-connected steps (no corner cutting).
+func _line8(a: Vector2i, b: Vector2i) -> Array:
+	var out: Array = [a]
+	var p := a
+	var guard := 0
+	while p != b and guard < 4000:
+		guard += 1
+		var d := b - p
+		if absi(d.x) >= absi(d.y):
+			p.x += signi(d.x)
+		else:
+			p.y += signi(d.y)
+		out.append(p)
+	return out
+
+
+## 0.3.8 a winding dirt road from a village gate to its town (data/world.json
+## village_roads): same A*, more meander, 2 tiles wide.
+func _build_village_road(vid: String, tid: String) -> void:
+	var v: Dictionary = GameData.villages[vid]
+	if not v.has("gate"):
+		return
+	var o := Vector2i(int(v["origin"][0]), int(v["origin"][1]))
+	var g := o + Vector2i(int(v["gate"][0]), int(v["gate"][1]))
+	var rows: Array = v["rows"]
+	var rect := Rect2i(o, Vector2i(str(rows[0]).length(), rows.size()))
+	var out_dir := Vector2i(0, 1)
+	if g.y == rect.position.y: out_dir = Vector2i(0, -1)
+	elif g.x == rect.position.x: out_dir = Vector2i(-1, 0)
+	elif g.x == rect.end.x - 1: out_dir = Vector2i(1, 0)
+	var start := g + out_dir
+	var goal := gate_outside(tid, start)
+	if goal == Vector2i(1 << 30, 0):
+		goal = towns[tid]["center"]
+	var keep := _road_cfg
+	_road_cfg = keep.duplicate()
+	_road_cfg["meander"] = float(keep.get("village_meander", 0.9))
+	_road_cfg["margin"] = int(keep.get("village_margin", 70))
+	# less direct: bend through a point pushed sideways off the straight line
+	var mid := (start + goal) / 2
+	var dv := Vector2(goal - start)
+	var side := 1.0 if hash01(start.x, start.y, 51) < 0.5 else -1.0
+	var bend := Vector2(-dv.y, dv.x).normalized() * dv.length() * float(keep.get("village_bend", 0.2)) * side
+	var mq := mid + Vector2i(roundi(bend.x), roundi(bend.y))
+	for k in 12:          # slide the bend point back towards the line until it is open land
+		if _road_cost(mq.x, mq.y) > 0.0 and _road_cost(mq.x, mq.y) < 3.0:
+			break
+		mq = mid + Vector2i(roundi(bend.x * (1.0 - (k + 1) / 12.0)), roundi(bend.y * (1.0 - (k + 1) / 12.0)))
+	var raw := _road_astar(start, mq)
+	var raw2 := _road_astar(mq, goal)
+	if raw.is_empty() or raw2.is_empty():
+		raw = _road_astar(start, goal)
+	else:
+		raw.pop_back()
+		raw += raw2
+	_road_cfg = keep
+	if raw.is_empty():
+		push_error("WorldGen: no village road %s -> %s" % [vid, tid])
+		return
+	var rt: Rect2i = (_town_rects[tid] as Rect2i).grow(1)
+	var tiles: Array = raw.filter(func(p): return not rt.has_point(p))
+	village_roads[vid] = tiles
+	_stamp_road("v:" + vid + "|" + tid, tiles, TileType.ROAD_DIRT, int(keep.get("village_width", 2)))
+
+
+## 0.3.8 roadside decorations just beyond the road edge: fence runs, rocks,
+## bushes and old logs. They block walking (objects.json) but not arrows
+## (Combat.line_of_sight ignores objects). Never near gates or bridges.
+func _place_road_decor() -> void:
+	var dc: Dictionary = _road_cfg.get("decor", {})
+	var lists: Array = []
+	for k in roads.keys():
+		var ab: PackedStringArray = str(k).split("|")
+		if ab[0] < ab[1] and (ab[0] == capital or ab[1] == capital or capital == ""):
+			lists.append(roads[k])
+	for vid in village_roads.keys():
+		lists.append(village_roads[vid])
+	var skip := int(dc.get("gate_skip", 10))
+	for tiles in lists:
+		for i in range(skip, tiles.size() - skip):
+			var p: Vector2i = tiles[i]
+			var dir: Vector2i = (tiles[mini(i + 1, tiles.size() - 1)] - tiles[maxi(i - 1, 0)]).sign()
+			var perp := Vector2i(-dir.y, dir.x)
+			if perp == Vector2i.ZERO or road_tiles.get(p, -1) == TileType.BRIDGE:
+				continue
+			var fence_run: bool = (i / int(dc.get("fence_run", 7))) % int(dc.get("fence_every", 6)) == 0
+			for sgn in [1, -1]:
+				var q: Vector2i = p + perp * sgn
+				while road_tiles.has(q):
+					q += perp * sgn
+				q += perp * sgn          # one tile of verge between road and decor
+				if road_decor.has(q) or road_tiles.has(q) or _blocked_for_road(q) or in_clear_rect(q):
+					continue
+				var t := _terrain_at(q.x, q.y)
+				if not (t in [TileType.GRASS, TileType.DIRT]) or is_pk(q) or not mine_at(q, 3).is_empty():
+					continue
+				var r := hash01(q.x, q.y, 41)
+				if fence_run and t == TileType.GRASS:
+					road_decor[q] = "road_fence"
+				elif r < float(dc.get("chance", 0.07)):
+					var pick := hash01(q.x, q.y, 42)
+					road_decor[q] = "boulder" if pick < 0.3 else ("bush" if pick < 0.65 else "old_log")
 
 
 ## Tiles just outside each city gate (middle gate cell + one step out).
@@ -594,7 +804,7 @@ func _road_astar(pa: Vector2i, pb: Vector2i) -> Array:
 	var n := w * hgt
 	var ox := r.position.x
 	var oy := r.position.y
-	var bw := float(_road_cfg.get("bridge_cost", 9.0))
+	var bw := float(_road_cfg.get("bridge_cost", 9.0)) * 0.999   # 0.3.8 float32 cost cells: 1.05 stored as 1.0499999
 	var hw := float(_road_cfg.get("heuristic_weight", 1.0))
 	var cost := PackedFloat32Array()
 	cost.resize(n)
@@ -939,6 +1149,8 @@ func object_at(x: int, y: int, tile: int) -> String:
 	var p := Vector2i(x, y)
 	if _town_objects.has(p):
 		return _town_objects[p]
+	if road_decor.has(p):
+		return road_decor[p]
 	if town_at(p, 0) != "" or road_tiles.has(p) or _town_tiles.has(p) or village_at(p, 0) != "" or in_clear_rect(p):
 		return ""
 	var r := hash01(x, y, 1)

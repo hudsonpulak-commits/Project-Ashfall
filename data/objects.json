@@ -449,6 +449,34 @@
    "giver": "kell",
    "verb": "Talk-to",
    "note": "0.3.7 quest giver (data/quests.json givers)"
+  },
+  "road_fence": {
+   "name": "Fence",
+   "sprite": "road_fence",
+   "blocks": true,
+   "type": "prop",
+   "note": "0.3.8 roadside decoration: blocks walking, arrows fly over"
+  },
+  "boulder": {
+   "name": "Rock",
+   "sprite": "boulder",
+   "blocks": true,
+   "type": "prop",
+   "note": "0.3.8 roadside decoration: blocks walking, arrows fly over"
+  },
+  "bush": {
+   "name": "Bush",
+   "sprite": "bush",
+   "blocks": true,
+   "type": "prop",
+   "note": "0.3.8 roadside decoration: blocks walking, arrows fly over"
+  },
+  "old_log": {
+   "name": "Old log",
+   "sprite": "old_log",
+   "blocks": true,
+   "type": "prop",
+   "note": "0.3.8 roadside decoration: blocks walking, arrows fly over"
   }
  }
 }

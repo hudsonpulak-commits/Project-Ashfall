@@ -679,7 +679,7 @@ func _refresh_title() -> void:
 
 
 func _bank_in_reach() -> bool:
-	var chest: WorldObject = world.find_nearest_object(player.tile, ["bank_chest"], 3)
+	var chest: WorldObject = world.find_nearest_object(player.tile, ["bank_chest"], 3, bool(player.get("house_owned")))
 	return chest != null
 
 

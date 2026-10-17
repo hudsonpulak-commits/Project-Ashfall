@@ -280,6 +280,30 @@ def main():
         r.stop()
     blanks["v032"] = r.longest_blank()
 
+    # ---- B8 (0.3.8): a 0.3.7 save that owns player shops in two towns and
+    # stands where Highfen's moat now is: loads, no script errors, moved off it
+    h = home("v037_shop")
+    fx = json.load(open(os.path.join(ROOT, "tools", "qa_bot", "fixtures", "save_v8_037_shop.json")))
+    fx["saved_unix"] = int(time.time()) - 600
+    json.dump(fx, open(os.path.join(h, "godot", "app_userdata", "Ashfen", "ashfen_save.json"), "w"))
+    r = Run("v037_shop", out, binary, a.display, h)
+    try:
+        r.wait_for(r"BOOT menu shown", 30)
+        time.sleep(0.8)
+        ok = r.click("LoadGame") and r.click("Slot1")
+        game = r.wait_for(r"BOOT gameplay \(slot (\d+)\) after (\d+) ms", 90)
+        time.sleep(3.0)
+        g_png = r.grab("boot_ingame_v037_shop.png")
+        evidence.append(g_png)
+        txt = r.text()
+        errs = [l for l in txt.splitlines() if "SCRIPT ERROR" in l]
+        sv_path = os.path.join(h, "godot", "app_userdata", "Ashfen", "ashfen_save.json")
+        res("B8", "0.3.7 save with shops in Fenhollow + Saltmere, standing in the new moat: loads with no script errors", ok and game and hud_visible(g_png) and not errs,
+            "gameplay at %s ms; script errors %d" % (game[0][1] if game else None, len(errs)))
+    finally:
+        r.stop()
+    blanks["v037_shop"] = r.longest_blank()
+
     # ---- B4: a damaged save
     h = home("bad")
     open(os.path.join(h, "godot", "app_userdata", "Ashfen", "ashfen_save.json"), "w").write('{"version": 3, "player": "oops", "world": 7}')

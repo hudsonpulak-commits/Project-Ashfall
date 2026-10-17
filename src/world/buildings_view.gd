@@ -51,13 +51,23 @@ static func roof_fade_s() -> float:
 
 ## Roof caption: the shop's name (player shop: "For sale" / "<name>'s Shop").
 func label_for(b: Dictionary) -> String:
+	if b.is_empty():
+		return ""
+	if b["kind"] == "player_house":   # 0.3.8
+		return "Your house" if _house_owned() else "Townhouse for sale · %d marks" % Player.house_price()
 	if b["kind"] == "player":
 		var ps = Market.player_shop(b["town"])
 		return ps.title() if ps.owned else "For sale · %d marks" % PlayerShop.building_price()
 	return str(b["name"])
 
 
+func _house_owned() -> bool:
+	return player != null and player is Player and player.house_owned
+
+
 func sign_sprite(b: Dictionary) -> String:
+	if b["kind"] == "player_house":
+		return "sign_house" if _house_owned() else "sign_forsale"
 	if b["kind"] == "player":
 		return "sign_player" if Market.player_shop(b["town"]).owned else "sign_forsale"
 	if b["kind"] == "smithy":
@@ -68,6 +78,8 @@ func sign_sprite(b: Dictionary) -> String:
 
 
 func keeper_sprite(b: Dictionary) -> String:
+	if b["kind"] == "player_house":
+		return "keeper_estate"
 	if b["kind"] == "player":
 		return "keeper_player" if Market.player_shop(b["town"]).owned else "keeper_estate"
 	return str(b["keeper_sprite"])

@@ -158,7 +158,7 @@ static func gate_torch_tiles(world) -> Array:
 	var out: Array = []
 	for tid in world.gen.town_order:
 		var t: Dictionary = world.gen.towns[tid]
-		var gates: Dictionary = t.get("gates", {})
+		var gates: Dictionary = t.get("gate_walls", t.get("gates", {}))   # 0.3.8 Highfen: the wall gates, not the bridge ends
 		if gates.is_empty():
 			continue
 		var o := Vector2i(int(t["origin"][0]), int(t["origin"][1]))

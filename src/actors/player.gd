@@ -328,6 +328,41 @@ func on_kill(enemy, t: int) -> void:
 	AIChatter.on_player_kill(tile, CombatRules.label(enemy), t)
 
 
+## 0.3.8 the Highfen townhouse (data/buildings.json player_house).
+var house_owned := false
+var _house_offer_ms := -1000000
+
+
+static func house_price() -> int:
+	return int(GameData.buildings_cfg.get("player_house", {}).get("price", 5000))
+
+
+## Tap the estate clerk: first tap quotes, a second tap within confirm_s buys.
+func house_clerk() -> String:
+	if house_owned:
+		say("Estate clerk: %s" % str(GameData.buildings_cfg.get("player_house", {}).get("owned_greet", ["Welcome home."])[0]))
+		return "owned"
+	var coin: String = GameData.currency
+	var now := Time.get_ticks_msec()
+	var confirm_ms := int(float(GameData.buildings_cfg.get("player_house", {}).get("confirm_s", 20)) * 1000.0)
+	if now - _house_offer_ms > confirm_ms:
+		_house_offer_ms = now
+		say("Estate clerk: This townhouse has every workbench and a bank chest. %d marks. Tap me again to buy." % house_price())
+		return "offer"
+	_house_offer_ms = -1000000
+	if inventory.count(coin) < house_price():
+		say("Estate clerk: You need %d marks in your pack (you have %d)." % [house_price(), inventory.count(coin)])
+		return "poor"
+	inventory.remove(coin, house_price())
+	Market.record_sink(house_price())
+	house_owned = true
+	say("You bought the Highfen townhouse! Its benches, ovens and bank chest are yours.")
+	Events.say("House purchased", "level")
+	if world_ref and world_ref.buildings_view:
+		world_ref.buildings_view.refresh_all()
+	return "bought"
+
+
 ## Each town's bank chest opens that town's own vault (goods don't teleport).
 var vaults: Dictionary = {}       # town id -> ItemContainer
 var current_town: String = ""
@@ -344,6 +379,24 @@ func set_town(id: String) -> void:
 	bank = vaults[id]
 	Events.bank_changed.emit()
 	Events.town_changed.emit(id)
+
+
+## 0.3.8 an old save's extra shop stock / refunds land in the Highfen vault.
+func receive_shop_overflow() -> int:
+	var n := 0
+	if Market.shop_overflow.is_empty():
+		return 0
+	var cap := Market.shop_town()
+	if not vaults.has(cap):
+		var cur := current_town
+		set_town(cap)
+		set_town(cur)
+	for e in Market.shop_overflow:
+		vaults[cap].add(str(e["item"]), int(e["qty"]))
+		n += int(e["qty"])
+	Market.shop_overflow.clear()
+	say("Player shops now trade only in Highfen: your shop moved there; items that didn't fit its stands are in the Highfen bank.")
+	return n
 
 
 func on_tick(t: int, world) -> void:
@@ -500,6 +553,7 @@ func to_save() -> Dictionary:
 	d["ammo_qty"] = ammo_qty
 	d["quests"] = quests.duplicate(true)
 	d["influence"] = influence
+	d["house_owned"] = house_owned
 	d["deaths"] = deaths
 	d["combat_style"] = combat_style
 	d["energy"] = energy
@@ -526,6 +580,7 @@ func from_save(d: Dictionary) -> void:
 	ammo_qty = int(d.get("ammo_qty", 0))
 	quests = (d.get("quests", {}) as Dictionary).duplicate(true)   # old saves: nothing started
 	influence = int(d.get("influence", 0))
+	house_owned = bool(d.get("house_owned", false))   # 0.3.8
 	if not d.has("ammo_qty"):
 		auto_equip_ammo()    # 0.3.6 old saves: arrows from the pack go in the quiver
 	deaths = int(d.get("deaths", 0))
@@ -634,6 +689,9 @@ func on_shop(world, obj) -> void:
 			on_bank(world, obj)
 			return
 		var line := greet(world, b)
+		if b["kind"] == "player_house":   # 0.3.8 the estate clerk sells the townhouse
+			house_clerk()
+			return
 		if b["kind"] in ["church", "house"]:   # 0.3.1 the priest / villagers talk; no shop panel
 			if line != "":
 				say("%s: %s" % [b["keeper"], line])

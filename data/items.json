@@ -1107,6 +1107,13 @@
    "stackable": true,
    "category": "tool",
    "note": "0.3.6 use on a log to light a cooking fire (consumes 1 flint + 1 log)"
+  },
+  "slime_goo": {
+   "name": "Slime goo",
+   "value": 3,
+   "stackable": true,
+   "category": "resource",
+   "note": "0.3.8 slime drop (Grok's enemies_slime.json)"
   }
  }
 }

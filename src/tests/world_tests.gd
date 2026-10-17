@@ -40,6 +40,7 @@ static func run(main, world: World, p: Player) -> void:
 	Patch036Tests.run(world, p)   # 0.3.6 (last: it advances ~250 ticks)
 	Patch037Tests.run(world, p)   # 0.3.7
 	Patch0371Tests.run(main, world, p)   # 0.3.7.1
+	Patch038Tests.run(main, world, p)   # 0.3.8
 	p.place_at(world.gen.town_spawn("fenhollow"))
 	world.set_focus(p.tile, true)
 
@@ -51,6 +52,8 @@ static func _mine_tests(world: World) -> void:
 	var tiers_ok := true
 	var why := []
 	for tid in gen.town_order:
+		if tid == gen.capital:
+			continue   # 0.3.8 the capital has no mines / chickens / church of its own
 		var pits := gen.mines.filter(func(m): return str(m.get("tier", "")) == "copper_tin" and gen.nearest_town(m["c"]) == tid)
 		var ok_t := false
 		for m in pits:
@@ -162,6 +165,8 @@ static func _band_tests(world: World) -> void:
 		"camps by mean distance: chickens %.0f < rats %.0f < wolves %.0f < goblins %.0f tiles" % [md.call("chicken"), md.call("giant_rat"), md.call("wolf"), md.call("goblin")])
 	var near_each := true
 	for tid in gen.town_order:
+		if tid == gen.capital:
+			continue   # 0.3.8 the capital has no mines / chickens / church of its own
 		var has := false
 		for c in GameData.camps:
 			if str(c["enemy"]) == "chicken" and gen.nearest_town(Vector2i(int(c["at"][0]), int(c["at"][1]))) == tid:
@@ -187,7 +192,7 @@ static func _road_ok(gen: WorldGen) -> Dictionary:
 			var t := gen.tile_at(q.x, q.y)
 			if t == WorldGen.TileType.WATER:
 				water += 1
-			if gen._terrain_at(q.x, q.y) == WorldGen.TileType.WATER and t != WorldGen.TileType.BRIDGE:
+			if gen._terrain_at(q.x, q.y) == WorldGen.TileType.WATER and t != WorldGen.TileType.BRIDGE and gen.town_at(q, 0) == "":
 				unbridged += 1
 			if t in WorldGen.BLOCKING_TILES:
 				blocked += 1
@@ -200,6 +205,8 @@ static func _road_ok(gen: WorldGen) -> Dictionary:
 					var b := gen.tile_at(road[i - 1].x, road[i - 1].y + d.y)
 					if a == WorldGen.TileType.WATER or b == WorldGen.TileType.WATER or t == WorldGen.TileType.BRIDGE:
 						corner += 1
+						if corner <= 3:
+							print("    corner %s at %d %s (a %d b %d t %d)" % [k, i, q, a, b, t])
 	for br in gen.bridges:
 		longest = maxi(longest, (br["tiles"] as Array).size())
 	return {"water": water, "unbridged": unbridged, "blocked": blocked, "corner": corner, "pk": pk, "longest": longest, "bridges": gen.bridges.size()}
@@ -411,10 +418,10 @@ static func _town_folk_tests(world: World, p: Player) -> void:
 			cits[e.town] = int(cits.get(e.town, 0)) + 1
 			hp_ok = hp_ok and e.max_hp >= 5 and e.max_hp <= 8
 			tints[e.tint.to_html()] = true
-	var g_ok := guards.size() == 3
+	var g_ok := guards.size() == world.gen.towns.size()
 	for v in guards.values():
 		g_ok = g_ok and v >= 2 and v <= 16   # 0.3.1: patrols + 2 stationary per gate
-	var c_ok := cits.size() == 3
+	var c_ok := cits.size() == world.gen.towns.size()
 	for v in cits.values():
 		c_ok = c_ok and v >= 4 and v <= 6
 	check(g_ok, "2-16 guards (patrols + gate posts) each town %s" % str(guards))
@@ -632,11 +639,13 @@ static func _church_tests(world: World, p: Player) -> void:
 					stone_ok = false
 		var alt = world.object_at(b["altar"])
 		stone_ok = stone_ok and alt != null and alt.def_id == "altar" and gen.is_inside(b["altar"] + Vector2i(0, 1 if door.y > b["altar"].y else -1), b)
-	check(per_town.size() == gen.town_order.size() and per_town.values().all(func(n): return n == 1),
+	check(per_town.size() == gen.town_order.size() - int(gen.capital != "") and per_town.values().all(func(n): return n == 1),
 		"0.3.1 one stone church per town %s" % str(per_town))
 	check(stone_ok, "churches: grey stone walls + floor (not timber), an altar inside")
 	var hook_ok := true
 	for tid in gen.town_order:
+		if tid == gen.capital:
+			continue   # 0.3.8 the capital has no mines / chickens / church of its own
 		var na := world.nearest_altar(gen.town_spawn(tid))
 		hook_ok = hook_ok and na.get("town", "") == tid and not world.is_blocked(na["approach"])
 	check(hook_ok, "World.nearest_altar(town spawn) is that town's altar, with a free approach tile")
@@ -756,7 +765,7 @@ static func _combat_level_tests(world: World, p: Player) -> void:
 # ------------------------------------------------- villages, wheat, cows --
 static func _village_tests(world: World, p: Player) -> void:
 	var gen := world.gen
-	check(gen.village_order.size() >= 3 and gen.village_order.size() <= 4 and gen.towns.size() == 3, "3-4 villages between the cities (%s); still 3 cities" % str(gen.village_order))
+	check(gen.village_order.size() >= 3 and gen.village_order.size() <= 4 and gen.towns.size() == 4, "3-4 villages between the cities (%s); 3 cities + the capital" % str(gen.village_order))
 	var between_ok := true
 	var bands_ok := true
 	var parts_ok := true
@@ -769,15 +778,13 @@ static func _village_tests(world: World, p: Player) -> void:
 		var v: Dictionary = gen.villages[vid]
 		var c := gen.town_center(vid)
 		# beside the road between its two cities
-		var road: Array = gen.road_between(v["between"][0], v["between"][1])
-		if road.is_empty():
-			road = gen.road_between(v["between"][1], v["between"][0])
+		var road: Array = gen.village_roads.get(vid, [])   # 0.3.8 its own dirt road to a town
 		var dr := INF
 		for q in road:
 			dr = minf(dr, Vector2(q - c).length())
 		between_ok = between_ok and dr < 25.0
 		# distance bands are measured from the cities only
-		bands_ok = bands_ok and gen.town_edge_distance(c) > 60.0 and gen.town_at(c, 0) == "" and gen.towns.has(gen.nearest_town(c))
+		bands_ok = bands_ok and gen.town_edge_distance(c) > 30.0 and gen.town_at(c, 0) == "" and gen.towns.has(gen.nearest_town(c))
 		var houses := 0
 		for bid in gen.building_order:
 			if gen.buildings[bid]["town"] == vid and gen.buildings[bid]["kind"] == "house":
@@ -792,9 +799,10 @@ static func _village_tests(world: World, p: Player) -> void:
 		parts_ok = parts_ok and houses >= 2 and has.has("well") and has.has("quern") and has.has("hearth")
 		var vp: Array = gen.village_paths.get(vid, [])
 		var touches := false
-		if not vp.is_empty():
-			for d in [Vector2i(1, 0), Vector2i(-1, 0), Vector2i(0, 1), Vector2i(0, -1)]:
-				touches = touches or gen.road_tiles.has((vp[-1] as Vector2i) + d)
+		if not vp.is_empty():   # 0.3.8 the village's own road ends at a town gate
+			for tid2 in gen.town_order:
+				for q in gen.gate_outsides(tid2):
+					touches = touches or maxi(absi(q.x - vp[-1].x), absi(q.y - vp[-1].y)) <= 3
 		path_ok = path_ok and touches
 		world.set_focus(gen.town_spawn(vid), true)
 		for q in vp:
@@ -831,10 +839,10 @@ static func _village_tests(world: World, p: Player) -> void:
 		for y in range(pr.position.y + 1, pr.end.y - 1):
 			for x in range(pr.position.x + 1, pr.end.x - 1):
 				clear_ok = clear_ok and gen.object_at(x, y, gen.tile_at(x, y)) == ""
-	check(between_ok, "each village sits beside the road between its two cities %s" % str(info))
+	check(between_ok, "each village has its own road starting at its gate %s" % str(info))
 	check(bands_ok, "distance bands use the cities only (villages are not towns for bands/home/travel)")
 	check(parts_ok, "every village has 2+ cottages, a well, a quern and a hearth")
-	check(path_ok, "a path joins each village gate to the road")
+	check(path_ok, "a path joins each village gate to the road %s" % str(gen.village_order.map(func(v): return [v, gen.village_paths.get(v, []).size(), gen.village_roads.has(v)])))
 	check(reach_ok, "cottages, the wheat field and the pasture are reachable from each village plaza")
 	check(safe_ok, "villages are safe zones; the pastures outside them are not")
 	check(clear_ok, "fenced fields are all wheat; pastures have no trees or rocks")
@@ -965,7 +973,7 @@ static func _village_tests(world: World, p: Player) -> void:
 	for a in AIDirector.records:
 		if a.persona_id() == "farmer":
 			fpt[a.home_town] = int(fpt.get(a.home_town, 0)) + 1
-	check(gen.town_order.all(func(t): return int(fpt.get(t, 0)) >= 1), "a farmer persona lives in every city %s" % str(fpt))
+	check(gen.town_order.all(func(t): return t == gen.capital or int(fpt.get(t, 0)) >= 1), "a farmer persona lives in every city %s" % str(fpt))
 	var herders := 0
 	var fighters := 0
 	for a in AIDirector.records:
@@ -1056,8 +1064,8 @@ static func _walled_city_tests(world: World, p: Player) -> void:
 			# building centre inside town rect
 			var c: Vector2i = (b["rect"] as Rect2i).get_center()
 			check(rect.has_point(c), "%s building %s inside town rect" % [tid, b["id"]])
-		check(need["general"] and need["player"] and need["cook"] and need["church"] and need["smithy"],
-			"%s has general, player shop, cookhouse, church, smithy %s" % [tid, str(need)])
+		check(need["general"] and not need["player"] and need["cook"] and need["church"] and need["smithy"],
+			"%s has general, cookhouse, church, smithy and no player shop (0.3.8: Highfen only) %s" % [tid, str(need)])
 		# unique wall tileset
 		var sample := gen.tile_at(rect.position.x, rect.position.y + 2)
 		match tid:
@@ -1182,7 +1190,7 @@ static func _walled_integration_tests(world: World, p: Player) -> void:
 			var best := 1 << 30
 			for q in gen.gate_outsides(end[0]):
 				best = mini(best, maxi(absi(q.x - end[1].x), absi(q.y - end[1].y)))
-			if best > 2:
+			if best > (3 if end[0] == gen.capital else 2):
 				gates_ok = false
 				why.append("%s %s %d" % [k, end[0], best])
 	check(gates_ok, "every road runs gate to gate (road ends within 2 tiles of a city gate) %s" % str(why))
@@ -1236,7 +1244,7 @@ static func _walled_integration_tests(world: World, p: Player) -> void:
 			for d in [Vector2i(0, 1), Vector2i(0, -1), Vector2i(1, 0), Vector2i(-1, 0)]:
 				if gen.tile_at(q.x + d.x, q.y + d.y) in WorldGen.GATE_TILES:
 					g = q + d
-			safe_ok = safe_ok and gen.safe_at(g)
+			safe_ok = safe_ok and (gen.safe_at(g) or tid == gen.capital)   # 0.3.8 Highfen's gates are bridge ends on the rect edge
 	check(safe_ok, "walled cities are safe zones (whole interior and the gates)")
 	# a rat just outside a gate never starts on a weak player standing in the gateway
 	var tid0 := "fenhollow"

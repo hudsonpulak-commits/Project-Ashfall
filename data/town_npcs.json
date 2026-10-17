@@ -388,6 +388,142 @@
      7
     ]
    }
+  },
+  "highfen": {
+   "guards": [
+    {
+     "enemy": "town_guard",
+     "patrol": [
+      [
+       35,
+       14
+      ],
+      [
+       35,
+       30
+      ],
+      [
+       22,
+       35
+      ],
+      [
+       48,
+       35
+      ]
+     ]
+    },
+    {
+     "enemy": "town_guard",
+     "patrol": [
+      [
+       35,
+       57
+      ],
+      [
+       35,
+       41
+      ],
+      [
+       50,
+       35
+      ],
+      [
+       20,
+       35
+      ]
+     ]
+    },
+    {
+     "enemy": "town_guard",
+     "patrol": [
+      [
+       34,
+       11
+      ]
+     ],
+     "gate": "north"
+    },
+    {
+     "enemy": "town_guard",
+     "patrol": [
+      [
+       36,
+       11
+      ]
+     ],
+     "gate": "north"
+    },
+    {
+     "enemy": "town_guard",
+     "patrol": [
+      [
+       34,
+       60
+      ]
+     ],
+     "gate": "south"
+    },
+    {
+     "enemy": "town_guard",
+     "patrol": [
+      [
+       36,
+       60
+      ]
+     ],
+     "gate": "south"
+    },
+    {
+     "enemy": "town_guard",
+     "patrol": [
+      [
+       11,
+       34
+      ]
+     ],
+     "gate": "west"
+    },
+    {
+     "enemy": "town_guard",
+     "patrol": [
+      [
+       11,
+       36
+      ]
+     ],
+     "gate": "west"
+    },
+    {
+     "enemy": "town_guard",
+     "patrol": [
+      [
+       60,
+       34
+      ]
+     ],
+     "gate": "east"
+    },
+    {
+     "enemy": "town_guard",
+     "patrol": [
+      [
+       60,
+       36
+      ]
+     ],
+     "gate": "east"
+    }
+   ],
+   "citizens": {
+    "enemy": "citizen",
+    "count": 6,
+    "area": [
+     28,
+     27,
+     16,
+     18
+    ]
+   }
   }
  }
 }
