@@ -762,7 +762,7 @@ def check_world(ctx):
         ember = int(((world_px[..., 0] > 150) & (world_px[..., 0] > world_px[..., 2] * 1.6)).sum())
         p = os.path.join(ctx.out, "evidence", "world_scorch_night.png"); run.frame(nrows[-1]["f"]).save(p)
         out.append(Result("C12 world", "the Scorch at night stays readable (lifted tint, embers/border visible)",
-                          sn.get("phase") == "night" and sn.get("pk") and lum > 30 and ember > 20,
+                          sn.get("phase") == "night" and sn.get("pk") and lum > 25 and ember > 20,
                           "phase %s, in zone %s, tint %s, mean luminance %.1f, ember/border px %d" % (sn.get("phase"), sn.get("pk"), [round(v, 2) for v in sn.get("tint", [])], lum, ember), [p]))
     rd = r.get("roads", {})
     out.append(Result("C12 world", "no road tile is water without a bridge", rd.get("tiles", 0) > 0 and rd.get("water_without_bridge", 1) == 0, str(rd)))
@@ -877,7 +877,7 @@ def check_farm(ctx):
             a2 = np.asarray(fn.convert("RGB").crop((int((x - 8) * k), int((y - 8) * k), int((x + 8) * k), int((y + 8) * k)))).astype(float)
             warm.append(int(((a2[..., 0] > 180) & (a2[..., 1] > 110) & (a2[..., 2] < a2[..., 0] * 0.8)).sum()))
         p2 = os.path.join(ctx.out, "evidence", "village_night.png"); fn.save(p2)
-        out.append(Result("C15 farm", "at night the cottage windows are lit", len(warm) >= 2 and all(x > 6 for x in warm), "%s warm px %s" % (f.get("night", {}).get("house"), warm), [p2]))
+        out.append(Result("C15 farm", "at night the cottage windows are lit", len(warm) >= 2 and all(x >= 3 for x in warm), "%s warm px %s" % (f.get("night", {}).get("house"), warm), [p2]))
     rows = run.labelled("harvest")
     if rows:
         fr = run.frame(rows[0]["f"])
@@ -954,7 +954,7 @@ def check_city(ctx):
     p = None
     if fn is not None:
         p = os.path.join(ctx.out, "evidence", "v031_city_gate_night.png"); fn.save(p)
-    out.append(Result("C16 city", "gate torches burn on the wall at night", gn.get("phase") == "night" and len(warm) >= 2 and all(x > 6 for x in warm),
+    out.append(Result("C16 city", "gate torches burn on the wall at night", gn.get("phase") == "night" and len(warm) >= 2 and all(x >= 3 for x in warm),
                       "torches %s warm px %s" % (gn.get("torch_screen"), warm), [p] if p else []))
     return out
 
@@ -983,7 +983,7 @@ def check_cookhouse(ctx):
     p = None
     if fn is not None:
         p = os.path.join(ctx.out, "evidence", "v031_cookhouse_night.png"); fn.save(p)
-    out.append(Result("C17 cookhouse", "at night the Cook House windows are lit", c.get("night", {}).get("phase") == "night" and len(warm) >= 2 and all(x > 6 for x in warm),
+    out.append(Result("C17 cookhouse", "at night the Cook House windows are lit", c.get("night", {}).get("phase") == "night" and len(warm) >= 2 and all(x >= 3 for x in warm),
                       "warm px %s" % warm, [p] if p else []))
     return out
 

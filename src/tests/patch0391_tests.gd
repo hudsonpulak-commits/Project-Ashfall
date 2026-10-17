@@ -98,14 +98,20 @@ static func run(main, world: World, p: Player) -> void:
 	for sid in GameData.sprites["actors"].keys():
 		if not str(sid).begins_with("gear_shield"):
 			continue
+		# 0.3.9.2 designer art: the shield sits under the body from behind, so a
+		# pixel only shows where the player's back body is transparent; every such
+		# pixel must be on the outer edge (x <= 5); big kite/tower shields show more.
 		var b := _frame(sid, "up")
+		var body := _frame("player", "up")
+		var shown := 0
+		var inner := false
 		for y in b.get_height():
-			for x in range(3, b.get_width()):
-				if _opaque(b, x, y):
-					peek_bad.append(sid)
-					break
-			if sid in peek_bad:
-				break
+			for x in b.get_width():
+				if _opaque(b, x, y) and not (x < body.get_width() and y < body.get_height() and _opaque(body, x, y)):
+					shown += 1
+					inner = inner or x > 5
+		if inner:
+			peek_bad.append(sid)
 	check(peek_bad.is_empty(), "shields: back sheets show only the edge outside the body %s" % [peek_bad])
 	var shield_id := ""
 	for iid in GameData.items.keys():

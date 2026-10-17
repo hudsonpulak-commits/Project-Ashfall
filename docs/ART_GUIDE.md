@@ -297,3 +297,10 @@ Example entry, for hand-drawn art for one helmet:
 ```
 
 The placeholders live in `assets/sprites/actors/gear/*.png` and are made by `tools/gen_art_adv.py`. Like `gen_art.py`, it never overwrites a PNG you have changed. To check your art in the game, run `QA_KEEP_FRAMES=1 tools/qa_bot/run.sh gear`. It puts every tier set on, facing right and left, into `evidence/v031_gear_player.png`, and checks that the rendered sprite matches body + layers on every frame (C19). It also runs C1 facing and C2 ghosting with gear on.
+
+## 0.3.9.2 designer art (short note)
+- Every actor, gear, tile, object, item, UI and transition PNG is now hand-drawn designer art (batches 1+2), plus the app icons and Hudson's exact title image (`assets/ui/title_bg.png`, lossless). All are listed with sha256 in `tools/art/protected_art.json`; `tools/art/art_guard.py` (imported by every generator) refuses to overwrite them, even with `--force`. They are no longer in `assets/sprites/placeholders.json`.
+- Hands: profile near hand at (8,15), (11,14), (8,15), (5,14) per walk frame; front/back hands at x=3 and x=12. Gear sheets must follow these.
+- Palette: 38 colours (designer handoff `palette.hex`).
+- Moat inner corners: `autotile/moat_border_corners` (NE, SE, SW, NW), drawn when both side neighbours are moat and the diagonal is land.
+- Back-facing shields are drawn under the body; only the outer edge (x <= 5) may show.

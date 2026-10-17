@@ -102,7 +102,13 @@ func _build_tileset() -> TileSet:
 
 ## 0.3.9 overlay cells for one tile: [[layer, source id, atlas coords], ...].
 ## layer 0/1 floor transitions, 2 wall caps / moat banks, 3 bridge joins.
+## 4 moat inner corners (0.3.9.2).
 ## `nm` = Callable(Vector2i) -> tile name. Pure: unit-tested and used by _build_view.
+## 0.3.9.2 moat inner corners NE, SE, SW, NW: [side a, side b, diagonal] as
+## indexes into overlay_cells' neighbour list (N E S W NW NE SE SW).
+const MOAT_CORNERS := [[0, 1, 5], [1, 2, 6], [2, 3, 7], [3, 0, 4]]
+
+
 func overlay_cells(p: Vector2i, nm: Callable) -> Array:
 	var out: Array = []
 	var here: String = nm.call(p)
@@ -132,6 +138,15 @@ func overlay_cells(p: Vector2i, nm: Callable) -> Array:
 				if nb[k] == "bridge":
 					out.append([3, s[0], Vector2i(16 + k, 0)])
 					break
+		# 0.3.9.2 inner corners: both side neighbours are moat and the diagonal
+		# between them is land (not moat, bridge or water) -> layer 4, NE SE SW NW.
+		var cs: Array = _overlay_src.get("autotile/moat_border_corners", [])
+		if not cs.is_empty():
+			for i in 4:
+				var sides: Array = MOAT_CORNERS[i]
+				var dg: String = nb[sides[2]]
+				if nb[sides[0]] == "moat" and nb[sides[1]] == "moat" and not dg in ["moat", "bridge", "water", ""]:
+					out.append([4, cs[0], Vector2i(i, 0)])
 	return out
 
 
@@ -411,11 +426,11 @@ func _build_view(c: Vector2i) -> void:
 			names[base + Vector2i(lx, ly)] = WorldGen.TILE_NAMES[tt]
 	var nm := func(q: Vector2i) -> String: return names.get(q, "")
 	var ovl: Array = []
-	for i in 4:
+	for i in 5:
 		var l := TileMapLayer.new()
 		l.tile_set = _tileset
 		l.position = layer.position
-		l.name = ["trans0", "trans1", "autotile", "joins"][i]
+		l.name = ["trans0", "trans1", "autotile", "joins", "corners"][i]
 		ovl.append(l)
 	for ly in CHUNK:
 		for lx in CHUNK:

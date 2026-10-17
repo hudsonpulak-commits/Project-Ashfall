@@ -3098,6 +3098,15 @@
    ],
    "frames": 20,
    "note": "0..15 banks by connection mask, 16..19 bridge joins N E S W"
+  },
+  "moat_border_corners": {
+   "path": "res://assets/sprites/autotile/moat_border_corners.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 4,
+   "note": "0.3.9.2 moat inner corners NE SE SW NW: both side neighbours are moat, the diagonal is land"
   }
  },
  "transitions": {
