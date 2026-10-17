@@ -131,12 +131,15 @@ static func run(main, world: World, p: Player) -> void:
 		p.facing.left = false
 		p._process(0.016)
 		var right_ok: bool = sh != null and sh.get_index() < p._sprite.get_index()
+		var right_dx: float = sh.position.x - p._sprite.position.x if sh != null else -99.0
 		p.facing.left = true
 		p._process(0.016)
 		var w: Sprite2D = p._layers.get("weapon")
 		var left_ok: bool = sh != null and sh.get_index() > p._sprite.get_index() and (w == null or not w.visible or w.get_index() < p._sprite.get_index())
 		if not (right_ok and left_ok):
 			print("    dbg right_ok=%s left_ok=%s flip=%s dir=%s sh=%s body=%s w=%s" % [right_ok, left_ok, p._sprite.flip_h, p.facing.dir, sh.get_index() if sh else -1, p._sprite.get_index(), w.get_index() if w else -1])
+		var left_dx: float = sh.position.x - p._sprite.position.x if sh != null else -99.0
+		check(is_equal_approx(right_dx, 1.0) and is_equal_approx(left_dx, 0.0), "shields: 0.3.9.5 behind the body (facing right) the shield sits 1 px forward; facing left no offset (dx right %s, left %s)" % [right_dx, left_dx])
 		check(right_ok and left_ok, "shields: from the side, under the body facing right (far hand), over it facing left (near hand)")
 		p.facing.left = false
 		p.equipment = keep

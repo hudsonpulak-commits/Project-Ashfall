@@ -87,7 +87,11 @@ class Sprites:
                     lay = list(zip(layers, lsheets))
                     for l, ls in [x for x in lay if any("_%s_" % u in x[0] or x[0].startswith("gear_%s" % u) for u in under)]:
                         k = min(i, ls.width // fw - 1)
-                        fr = Image.alpha_composite(fr, ls.crop((k * fw, 0, (k + 1) * fw, fh)))
+                        cell = ls.crop((k * fw, 0, (k + 1) * fw, fh))
+                        if facing == "R" and "shield" in l:
+                            # 0.3.9.5 gear_layer_offset: behind the body facing right, 1 px forward
+                            moved = Image.new("RGBA", (fw, fh)); moved.paste(cell, (1, 0)); cell = moved
+                        fr = Image.alpha_composite(fr, cell)
                     fr = Image.alpha_composite(fr, body)
                     top = [x for x in lay if not any("_%s_" % u in x[0] or x[0].startswith("gear_%s" % u) for u in under)]
                     if facing == "L":

@@ -95,3 +95,75 @@ static func run(_main, _world, _p) -> void:
 			if "head" in Actor.gear_layer_plan(d, l)["under"]:
 				under_ok = false
 	check(under_ok, "helmets: the head layer draws over the body in every facing")
+	_tier_colours()
+
+
+static func _lum(c: Color) -> float:
+	return 0.299 * c.r + 0.587 * c.g + 0.114 * c.b
+
+
+## Most common opaque colour other than the outline ink (the darkest colour).
+static func _dominant(img: Image) -> Color:
+	var counts := {}
+	for y in img.get_height():
+		for x in img.get_width():
+			var c := img.get_pixel(x, y)
+			if c.a8 == 255:
+				var k := Color8(c.r8, c.g8, c.b8)
+				counts[k] = int(counts.get(k, 0)) + 1
+	var ink := Color.WHITE
+	for k in counts.keys():
+		if _lum(k) < _lum(ink):
+			ink = k
+	var best := Color.TRANSPARENT
+	var n := -1
+	for k in counts.keys():
+		if k != ink and int(counts[k]) > n:
+			n = int(counts[k]); best = k
+	return best
+
+
+static func _palette(img: Image) -> Dictionary:
+	var out := {}
+	for y in img.get_height():
+		for x in img.get_width():
+			var c := img.get_pixel(x, y)
+			if c.a8 == 255:
+				out[Color8(c.r8, c.g8, c.b8).to_html(false)] = true
+	return out
+
+
+## 0.3.9.5 same tier = same colours in every facing: for each tier and armour
+## slot the dominant colour of the side, front and back sheets has the same hue
+## (within 25 deg) or all are greys (saturation < 0.15), and every front/back
+## armour colour of a tier is one of that tier's side armour colours.
+static func _tier_colours() -> void:
+	var hue_bad := []
+	var pal_bad := []
+	for t in [1, 2, 3, 4]:
+		var side_pal := {}
+		var fb_pal := {}
+		for slot in ["head", "body", "legs"]:
+			var sid := "gear_%s_%d" % [slot, t]
+			if GameData.sprite_def("actors", sid).is_empty():
+				continue
+			var doms := []
+			for d in ["side", "down", "up"]:
+				var img := _img(sid, d)
+				doms.append(_dominant(img))
+				if d == "side":
+					side_pal.merge(_palette(img))
+				else:
+					fb_pal.merge(_palette(img))
+			var c0: Color = doms[0]
+			for c in doms.slice(1):
+				var grey: bool = c0.s < 0.15 and c.s < 0.15
+				var dh: float = absf(c0.h - c.h) * 360.0
+				dh = minf(dh, 360.0 - dh)
+				if not grey and (c0.s < 0.15 or c.s < 0.15 or dh > 25.0):
+					hue_bad.append("T%d %s side #%s vs #%s" % [t, slot, c0.to_html(false), c.to_html(false)])
+		for k in fb_pal.keys():
+			if not side_pal.has(k):
+				pal_bad.append("T%d #%s" % [t, k])
+	check(hue_bad.is_empty(), "gear tiers: the dominant hue of each armour piece matches across side/front/back %s" % [hue_bad.slice(0, 6)])
+	check(pal_bad.is_empty(), "gear tiers: front/back armour colours are the tier's side colours %s" % [pal_bad.slice(0, 6)])

@@ -45,6 +45,7 @@ static func run(_main, _world, _p) -> void:
 	var semi := []
 	var holes := []
 	var gaps := []
+	var behind := []
 	for sid in GameData.sprites["actors"].keys():
 		var s := str(sid)
 		if not (s.begins_with("gear_shield") or (s.begins_with("gear_item_") and s.contains("shield"))):
@@ -62,12 +63,29 @@ static func run(_main, _world, _p) -> void:
 			var h1 := enclosed(fs.x, fs.y, func(x, y): return img.get_pixel(o + x, y).a8 == 255)
 			if not h1.is_empty():
 				holes.append("%s f%d %s" % [s, f, h1])
+			# 0.3.9.5 facing right the shield is under the body, shifted 1 px forward:
+			# it must still show (6+ px outside the body) and leave no enclosed gap
+			var peek := 0
+			for y in fs.y:
+				for x in fs.x:
+					if x >= 1 and img.get_pixel(o + x - 1, y).a8 == 255 and not (x < bfs.x and y < bfs.y and body.get_pixel(bo + x, y).a8 > 128):
+						peek += 1
+			if peek < 6:
+				behind.append("%s f%d (%d px)" % [s, f, peek])
+			var h3 := enclosed(fs.x, fs.y, func(x, y): return (x >= 1 and img.get_pixel(o + x - 1, y).a8 == 255) or (x < bfs.x and y < bfs.y and body.get_pixel(bo + x, y).a8 > 128))
+			if not h3.is_empty():
+				gaps.append("%s f%d behind+1px %s" % [s, f, h3])
 			var h2 := enclosed(fs.x, fs.y, func(x, y): return img.get_pixel(o + x, y).a8 == 255 or (x < bfs.x and y < bfs.y and body.get_pixel(bo + x, y).a8 > 128))
 			if not h2.is_empty():
 				gaps.append("%s f%d %s" % [s, f, h2])
 	check(semi.is_empty(), "shields: side sheets have no semi-transparent pixels %s" % [semi.slice(0, 6)])
 	check(holes.is_empty(), "shields: every side frame is fully opaque inside its outline (flood fill from outside) %s" % [holes.slice(0, 6)])
 	check(gaps.is_empty(), "shields: no ground shows through between the body and the side shield %s" % [gaps.slice(0, 6)])
+	check(behind.is_empty(), "shields: behind the body facing right (1 px forward) every side shield still peeks out (6+ px) %s" % [behind.slice(0, 6)])
+	check(Actor.gear_layer_offset("shield", "side", false) == Vector2(1, 0) and Actor.gear_layer_offset("shield", "side", true) == Vector2.ZERO
+		and Actor.gear_layer_offset("shield", "down", false) == Vector2.ZERO and Actor.gear_layer_offset("shield", "up", false) == Vector2.ZERO
+		and Actor.gear_layer_offset("weapon", "side", false) == Vector2.ZERO,
+		"gear offset: only the shield behind the body (side, facing right) moves 1 px forward")
 	var r := Actor.gear_layer_plan("side", false)
 	var l := Actor.gear_layer_plan("side", true)
 	var u := Actor.gear_layer_plan("up", false)

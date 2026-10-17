@@ -796,6 +796,15 @@ static func gear_layer_plan(dir: String, left: bool) -> Dictionary:
 	return {"under": under, "over": over}
 
 
+## 0.3.9.5 facing right the side shield is behind the body (far hand): nudge it
+## 1 px forward (+x, the facing direction) so more of it peeks out in front of
+## the chest. Facing left (shield over the body), front and back: no offset.
+static func gear_layer_offset(slot: String, dir: String, left: bool) -> Vector2:
+	if slot == "shield" and dir == "side" and not left:
+		return Vector2(1, 0)
+	return Vector2.ZERO
+
+
 func _order_gear_layers() -> void:
 	var plan := gear_layer_plan(facing.dir, _sprite.flip_h)
 	var seq: Array = []
@@ -821,7 +830,7 @@ func _sync_gear_layers() -> void:
 		if spr.visible:
 			spr.frame = mini(_sprite.frame, spr.hframes - 1)
 			spr.flip_h = _sprite.flip_h
-			spr.position = _sprite.position
+			spr.position = _sprite.position + gear_layer_offset(str(slot), facing.dir, _sprite.flip_h)
 
 
 ## Sprite ids of the gear layers showing now, draw order (tests / QA).
