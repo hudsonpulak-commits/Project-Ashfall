@@ -617,6 +617,21 @@ for y in range(2, N - 2, 1):
     for x in range(2, N - 2, 1):
         if VERGE[y, x] and inner[y, x] and (x * 7 + y * 13) % 9 == 0 and addo('hf4_lamp_post_double' if (x + y) % 3 == 0 else 'hf4_lamp_post', x, y): _lamps += 1
 print('v4 lamps', _lamps)
+# 0.3.13 v4: a wall banner hung on the inner face of the city wall either side of every gate
+_wb = 0
+for side, line in GATE_LINE.items():
+    xs = [p_[0] for p_ in line]; ys = [p_[1] for p_ in line]
+    if side in ('north', 'south'):
+        inw = 1 if side == 'north' else -1; y_ = ys[0]
+        for x_, d_ in ((min(xs), -1), (max(xs), 1)):
+            for k_ in (2, 3, 4):
+                if any(addo('hf4_banner_wall', x_ + d_ * k_, y_ + inw * j_) for j_ in (1, 2)): _wb += 1; break
+    else:
+        inw = 1 if side == 'west' else -1; x_ = xs[0]
+        for y_, d_ in ((min(ys), -1), (max(ys), 1)):
+            for k_ in (2, 3, 4):
+                if any(addo('hf4_banner_wall', x_ + inw * j_, y_ + d_ * k_) for j_ in (1, 2)): _wb += 1; break
+print('v4 wall banners', _wb)
 # round towers on the wall
 for (tx, ty) in TOWER_T: objs[(tx, ty)] = 'hf_wall_tower'
 print('wall towers', len(TOWER_T))
