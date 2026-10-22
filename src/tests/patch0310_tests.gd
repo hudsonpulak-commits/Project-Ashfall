@@ -121,12 +121,12 @@ static func run(main, world, p) -> void:
 		for dy in range(-r, r + 1):
 			for dx in range(-r, r + 1):
 				var q := c0 + Vector2i(dx, dy)
-				if face.x == 999999 and gen.tile_at(q.x, q.y) == WorldGen.TileType.CLIFF_FACE and not world.is_blocked(q + Vector2i(0, 1)) and not world.is_blocked(q + Vector2i(0, -1)):
+				if face.x == 999999 and gen.tile_at(q.x, q.y) == WorldGen.TileType.CLIFF_FACE and not world.is_blocked(q + Vector2i(0, 2)) and not world.is_blocked(q + Vector2i(0, -1)):   # 0.3.11 the face hangs into the cell below
 					face = q
 	var ok_path := false
 	var on_cliff := false
 	if face.x != 999999:
-		var path: Array = Pathfinder.find_path(world, face + Vector2i(0, 1), [face + Vector2i(0, -1)], face + Vector2i(0, -1), 20000)
+		var path: Array = Pathfinder.find_path(world, face + Vector2i(0, 2), [face + Vector2i(0, -1)], face + Vector2i(0, -1), 20000)
 		ok_path = not path.is_empty()
 		for q in path:
 			on_cliff = on_cliff or world.tile_type(q) in WorldGen.CLIFF_TILES
@@ -139,7 +139,7 @@ static func run(main, world, p) -> void:
 	check(zb.region_label.visible and zb.region_label.text.begins_with("The Mere Lands"), "entering a region shows its title")
 	# placeholder art is flagged for the designer
 	var unflagged := []
-	for pair in [["tiles", "cliff_face"], ["tiles", "cliff_lip"], ["tiles", "cliff_stairs"], ["tiles", "cliff_shadow"], ["tiles", "grass_boreal"], ["objects", "tree_spruce"], ["objects", "tree_mahogany"], ["objects", "magic_mushroom"], ["objects", "rock_dusk"]]:
+	for pair in [["tiles", "grass_boreal"], ["objects", "tree_spruce"], ["objects", "tree_mahogany"], ["objects", "magic_mushroom"], ["objects", "rock_dusk"]]:
 		if not "PLACEHOLDER" in str(GameData.sprite_def(pair[0], pair[1]).get("note", "")):
 			unflagged.append(pair[1])
-	check(unflagged.is_empty(), "0.3.10 recolour placeholders are flagged in data/sprites.json %s" % str(unflagged))
+	check(unflagged.is_empty(), "0.3.10 recolour placeholders are flagged in data/sprites.json %s (0.3.11: cliffs now use the designer's tiles)" % str(unflagged))

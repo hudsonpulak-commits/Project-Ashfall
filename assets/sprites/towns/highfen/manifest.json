@@ -1,0 +1,1803 @@
+{
+ "buildings": [
+  {
+   "name": "house_cottage_round",
+   "tiles": [
+    3,
+    3
+   ],
+   "px": [
+    48,
+    48
+   ],
+   "storeys": 1,
+   "footprint_origin_px": [
+    0,
+    0
+   ],
+   "layers": [
+    "house_cottage_round_floor.png",
+    "house_cottage_round_walls.png",
+    "house_cottage_round_roof.png"
+   ],
+   "fade_group": [
+    "house_cottage_round_roof.png"
+   ],
+   "door_px": [
+    24,
+    32
+   ],
+   "door_tile": [
+    1,
+    2
+   ],
+   "roof_tiles": [
+    [
+     1,
+     0
+    ],
+    [
+     0,
+     1
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     2,
+     1
+    ],
+    [
+     0,
+     2
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     2,
+     2
+    ]
+   ]
+  },
+  {
+   "name": "house_lshape",
+   "tiles": [
+    4,
+    3
+   ],
+   "px": [
+    64,
+    62
+   ],
+   "storeys": 2,
+   "footprint_origin_px": [
+    0,
+    14
+   ],
+   "layers": [
+    "house_lshape_floor.png",
+    "house_lshape_walls.png",
+    "house_lshape_upper1.png",
+    "house_lshape_roof.png"
+   ],
+   "fade_group": [
+    "house_lshape_upper1.png",
+    "house_lshape_roof.png"
+   ],
+   "door_px": [
+    20,
+    48
+   ],
+   "door_tile": [
+    1,
+    2
+   ],
+   "roof_tiles": [
+    [
+     2,
+     0
+    ],
+    [
+     3,
+     0
+    ],
+    [
+     0,
+     1
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     2,
+     1
+    ],
+    [
+     3,
+     1
+    ],
+    [
+     0,
+     2
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     2,
+     2
+    ],
+    [
+     3,
+     2
+    ]
+   ]
+  },
+  {
+   "name": "house_narrow_tall",
+   "tiles": [
+    2,
+    4
+   ],
+   "px": [
+    32,
+    78
+   ],
+   "storeys": 2,
+   "footprint_origin_px": [
+    0,
+    14
+   ],
+   "layers": [
+    "house_narrow_tall_floor.png",
+    "house_narrow_tall_walls.png",
+    "house_narrow_tall_upper1.png",
+    "house_narrow_tall_roof.png"
+   ],
+   "fade_group": [
+    "house_narrow_tall_upper1.png",
+    "house_narrow_tall_roof.png"
+   ],
+   "door_px": [
+    16,
+    64
+   ],
+   "door_tile": [
+    1,
+    3
+   ],
+   "roof_tiles": [
+    [
+     0,
+     0
+    ],
+    [
+     1,
+     0
+    ],
+    [
+     0,
+     1
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     0,
+     2
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     0,
+     3
+    ],
+    [
+     1,
+     3
+    ]
+   ]
+  },
+  {
+   "name": "house_twin_gable",
+   "tiles": [
+    5,
+    3
+   ],
+   "px": [
+    80,
+    62
+   ],
+   "storeys": 2,
+   "footprint_origin_px": [
+    0,
+    14
+   ],
+   "layers": [
+    "house_twin_gable_floor.png",
+    "house_twin_gable_walls.png",
+    "house_twin_gable_upper1.png",
+    "house_twin_gable_roof.png"
+   ],
+   "fade_group": [
+    "house_twin_gable_upper1.png",
+    "house_twin_gable_roof.png"
+   ],
+   "door_px": [
+    56,
+    48
+   ],
+   "door_tile": [
+    3,
+    2
+   ],
+   "roof_tiles": [
+    [
+     2,
+     0
+    ],
+    [
+     3,
+     0
+    ],
+    [
+     4,
+     0
+    ],
+    [
+     0,
+     1
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     2,
+     1
+    ],
+    [
+     3,
+     1
+    ],
+    [
+     4,
+     1
+    ],
+    [
+     0,
+     2
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     2,
+     2
+    ],
+    [
+     3,
+     2
+    ],
+    [
+     4,
+     2
+    ]
+   ]
+  },
+  {
+   "name": "house_tower_corner",
+   "tiles": [
+    4,
+    4
+   ],
+   "px": [
+    64,
+    84
+   ],
+   "storeys": 1,
+   "footprint_origin_px": [
+    0,
+    20
+   ],
+   "layers": [
+    "house_tower_corner_floor.png",
+    "house_tower_corner_walls.png",
+    "house_tower_corner_roof.png"
+   ],
+   "fade_group": [
+    "house_tower_corner_roof.png"
+   ],
+   "door_px": [
+    24,
+    70
+   ],
+   "door_tile": [
+    1,
+    3
+   ],
+   "roof_tiles": [
+    [
+     2,
+     0
+    ],
+    [
+     0,
+     1
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     2,
+     1
+    ],
+    [
+     3,
+     1
+    ],
+    [
+     0,
+     2
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     2,
+     2
+    ],
+    [
+     0,
+     3
+    ],
+    [
+     1,
+     3
+    ],
+    [
+     2,
+     3
+    ]
+   ]
+  },
+  {
+   "name": "house_crooked",
+   "tiles": [
+    3,
+    3
+   ],
+   "px": [
+    48,
+    62
+   ],
+   "storeys": 2,
+   "footprint_origin_px": [
+    0,
+    14
+   ],
+   "layers": [
+    "house_crooked_floor.png",
+    "house_crooked_walls.png",
+    "house_crooked_upper1.png",
+    "house_crooked_roof.png"
+   ],
+   "fade_group": [
+    "house_crooked_upper1.png",
+    "house_crooked_roof.png"
+   ],
+   "door_px": [
+    16,
+    48
+   ],
+   "door_tile": [
+    1,
+    2
+   ],
+   "roof_tiles": [
+    [
+     1,
+     0
+    ],
+    [
+     2,
+     0
+    ],
+    [
+     0,
+     1
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     2,
+     1
+    ],
+    [
+     0,
+     2
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     2,
+     2
+    ]
+   ]
+  },
+  {
+   "name": "house_longhouse",
+   "tiles": [
+    6,
+    2
+   ],
+   "px": [
+    96,
+    32
+   ],
+   "storeys": 1,
+   "footprint_origin_px": [
+    0,
+    0
+   ],
+   "layers": [
+    "house_longhouse_floor.png",
+    "house_longhouse_walls.png",
+    "house_longhouse_roof.png"
+   ],
+   "fade_group": [
+    "house_longhouse_roof.png"
+   ],
+   "door_px": [
+    40,
+    18
+   ],
+   "door_tile": [
+    2,
+    1
+   ],
+   "roof_tiles": [
+    [
+     0,
+     0
+    ],
+    [
+     1,
+     0
+    ],
+    [
+     2,
+     0
+    ],
+    [
+     3,
+     0
+    ],
+    [
+     4,
+     0
+    ],
+    [
+     5,
+     0
+    ],
+    [
+     0,
+     1
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     2,
+     1
+    ],
+    [
+     3,
+     1
+    ],
+    [
+     4,
+     1
+    ],
+    [
+     5,
+     1
+    ]
+   ]
+  },
+  {
+   "name": "house_stepped",
+   "tiles": [
+    4,
+    3
+   ],
+   "px": [
+    64,
+    62
+   ],
+   "storeys": 2,
+   "footprint_origin_px": [
+    0,
+    14
+   ],
+   "layers": [
+    "house_stepped_floor.png",
+    "house_stepped_walls.png",
+    "house_stepped_upper1.png",
+    "house_stepped_roof.png"
+   ],
+   "fade_group": [
+    "house_stepped_upper1.png",
+    "house_stepped_roof.png"
+   ],
+   "door_px": [
+    34,
+    48
+   ],
+   "door_tile": [
+    2,
+    2
+   ],
+   "roof_tiles": [
+    [
+     1,
+     0
+    ],
+    [
+     2,
+     0
+    ],
+    [
+     0,
+     1
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     2,
+     1
+    ],
+    [
+     3,
+     1
+    ],
+    [
+     0,
+     2
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     2,
+     2
+    ],
+    [
+     3,
+     2
+    ]
+   ]
+  },
+  {
+   "name": "shop_smith",
+   "tiles": [
+    4,
+    3
+   ],
+   "px": [
+    64,
+    48
+   ],
+   "storeys": 1,
+   "footprint_origin_px": [
+    0,
+    0
+   ],
+   "layers": [
+    "shop_smith_floor.png",
+    "shop_smith_walls.png",
+    "shop_smith_roof.png"
+   ],
+   "fade_group": [
+    "shop_smith_roof.png"
+   ],
+   "door_px": [
+    20,
+    34
+   ],
+   "door_tile": [
+    1,
+    2
+   ],
+   "roof_tiles": [
+    [
+     0,
+     0
+    ],
+    [
+     1,
+     0
+    ],
+    [
+     0,
+     1
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     2,
+     1
+    ],
+    [
+     3,
+     1
+    ],
+    [
+     0,
+     2
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     2,
+     2
+    ],
+    [
+     3,
+     2
+    ]
+   ]
+  },
+  {
+   "name": "shop_baker",
+   "tiles": [
+    3,
+    3
+   ],
+   "px": [
+    48,
+    62
+   ],
+   "storeys": 2,
+   "footprint_origin_px": [
+    0,
+    14
+   ],
+   "layers": [
+    "shop_baker_floor.png",
+    "shop_baker_walls.png",
+    "shop_baker_upper1.png",
+    "shop_baker_roof.png"
+   ],
+   "fade_group": [
+    "shop_baker_upper1.png",
+    "shop_baker_roof.png"
+   ],
+   "door_px": [
+    24,
+    48
+   ],
+   "door_tile": [
+    1,
+    2
+   ],
+   "roof_tiles": [
+    [
+     0,
+     0
+    ],
+    [
+     1,
+     0
+    ],
+    [
+     2,
+     0
+    ],
+    [
+     0,
+     1
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     2,
+     1
+    ],
+    [
+     0,
+     2
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     2,
+     2
+    ]
+   ]
+  },
+  {
+   "name": "shop_tavern",
+   "tiles": [
+    6,
+    4
+   ],
+   "px": [
+    96,
+    78
+   ],
+   "storeys": 2,
+   "footprint_origin_px": [
+    0,
+    14
+   ],
+   "layers": [
+    "shop_tavern_floor.png",
+    "shop_tavern_walls.png",
+    "shop_tavern_upper1.png",
+    "shop_tavern_roof.png"
+   ],
+   "fade_group": [
+    "shop_tavern_upper1.png",
+    "shop_tavern_roof.png"
+   ],
+   "door_px": [
+    30,
+    64
+   ],
+   "door_tile": [
+    1,
+    3
+   ],
+   "roof_tiles": [
+    [
+     3,
+     0
+    ],
+    [
+     4,
+     0
+    ],
+    [
+     5,
+     0
+    ],
+    [
+     0,
+     1
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     2,
+     1
+    ],
+    [
+     3,
+     1
+    ],
+    [
+     4,
+     1
+    ],
+    [
+     5,
+     1
+    ],
+    [
+     0,
+     2
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     2,
+     2
+    ],
+    [
+     3,
+     2
+    ],
+    [
+     4,
+     2
+    ],
+    [
+     5,
+     2
+    ],
+    [
+     0,
+     3
+    ],
+    [
+     1,
+     3
+    ],
+    [
+     2,
+     3
+    ],
+    [
+     3,
+     3
+    ],
+    [
+     4,
+     3
+    ],
+    [
+     5,
+     3
+    ]
+   ]
+  },
+  {
+   "name": "shop_general",
+   "tiles": [
+    4,
+    3
+   ],
+   "px": [
+    64,
+    48
+   ],
+   "storeys": 1,
+   "footprint_origin_px": [
+    0,
+    0
+   ],
+   "layers": [
+    "shop_general_floor.png",
+    "shop_general_walls.png",
+    "shop_general_roof.png"
+   ],
+   "fade_group": [
+    "shop_general_roof.png"
+   ],
+   "door_px": [
+    34,
+    34
+   ],
+   "door_tile": [
+    2,
+    2
+   ],
+   "roof_tiles": [
+    [
+     1,
+     0
+    ],
+    [
+     2,
+     0
+    ],
+    [
+     0,
+     1
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     2,
+     1
+    ],
+    [
+     3,
+     1
+    ],
+    [
+     0,
+     2
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     2,
+     2
+    ],
+    [
+     3,
+     2
+    ]
+   ]
+  },
+  {
+   "name": "guild_knights",
+   "tiles": [
+    7,
+    5
+   ],
+   "px": [
+    112,
+    128
+   ],
+   "storeys": 3,
+   "footprint_origin_px": [
+    0,
+    48
+   ],
+   "layers": [
+    "guild_knights_floor.png",
+    "guild_knights_walls.png",
+    "guild_knights_upper1.png",
+    "guild_knights_upper2.png",
+    "guild_knights_roof.png"
+   ],
+   "fade_group": [
+    "guild_knights_upper1.png",
+    "guild_knights_upper2.png",
+    "guild_knights_roof.png"
+   ],
+   "door_px": [
+    56,
+    114
+   ],
+   "door_tile": [
+    3,
+    4
+   ],
+   "roof_tiles": [
+    [
+     2,
+     0
+    ],
+    [
+     3,
+     0
+    ],
+    [
+     4,
+     0
+    ],
+    [
+     0,
+     1
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     2,
+     1
+    ],
+    [
+     3,
+     1
+    ],
+    [
+     4,
+     1
+    ],
+    [
+     5,
+     1
+    ],
+    [
+     6,
+     1
+    ],
+    [
+     0,
+     2
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     2,
+     2
+    ],
+    [
+     3,
+     2
+    ],
+    [
+     4,
+     2
+    ],
+    [
+     5,
+     2
+    ],
+    [
+     6,
+     2
+    ],
+    [
+     0,
+     3
+    ],
+    [
+     1,
+     3
+    ],
+    [
+     2,
+     3
+    ],
+    [
+     3,
+     3
+    ],
+    [
+     4,
+     3
+    ],
+    [
+     5,
+     3
+    ],
+    [
+     6,
+     3
+    ],
+    [
+     0,
+     4
+    ],
+    [
+     1,
+     4
+    ],
+    [
+     2,
+     4
+    ],
+    [
+     3,
+     4
+    ],
+    [
+     4,
+     4
+    ],
+    [
+     5,
+     4
+    ],
+    [
+     6,
+     4
+    ]
+   ]
+  },
+  {
+   "name": "church",
+   "tiles": [
+    5,
+    6
+   ],
+   "px": [
+    80,
+    130
+   ],
+   "storeys": 2,
+   "footprint_origin_px": [
+    0,
+    34
+   ],
+   "layers": [
+    "church_floor.png",
+    "church_walls.png",
+    "church_upper1.png",
+    "church_roof.png"
+   ],
+   "fade_group": [
+    "church_upper1.png",
+    "church_roof.png"
+   ],
+   "door_px": [
+    40,
+    116
+   ],
+   "door_tile": [
+    2,
+    5
+   ],
+   "roof_tiles": [
+    [
+     2,
+     0
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     2,
+     1
+    ],
+    [
+     3,
+     1
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     2,
+     2
+    ],
+    [
+     3,
+     2
+    ],
+    [
+     0,
+     3
+    ],
+    [
+     1,
+     3
+    ],
+    [
+     2,
+     3
+    ],
+    [
+     3,
+     3
+    ],
+    [
+     4,
+     3
+    ],
+    [
+     1,
+     4
+    ],
+    [
+     2,
+     4
+    ],
+    [
+     3,
+     4
+    ],
+    [
+     1,
+     5
+    ],
+    [
+     2,
+     5
+    ],
+    [
+     3,
+     5
+    ]
+   ]
+  },
+  {
+   "name": "palace",
+   "tiles": [
+    10,
+    9
+   ],
+   "px": [
+    160,
+    206
+   ],
+   "storeys": 4,
+   "footprint_origin_px": [
+    0,
+    62
+   ],
+   "layers": [
+    "palace_floor.png",
+    "palace_walls.png",
+    "palace_upper1.png",
+    "palace_upper2.png",
+    "palace_upper3.png",
+    "palace_roof.png"
+   ],
+   "fade_group": [
+    "palace_upper1.png",
+    "palace_upper2.png",
+    "palace_upper3.png",
+    "palace_roof.png"
+   ],
+   "door_px": [
+    80,
+    192
+   ],
+   "door_tile": [
+    5,
+    8
+   ],
+   "roof_tiles": [
+    [
+     4,
+     0
+    ],
+    [
+     5,
+     0
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     3,
+     1
+    ],
+    [
+     4,
+     1
+    ],
+    [
+     5,
+     1
+    ],
+    [
+     6,
+     1
+    ],
+    [
+     8,
+     1
+    ],
+    [
+     0,
+     2
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     2,
+     2
+    ],
+    [
+     3,
+     2
+    ],
+    [
+     4,
+     2
+    ],
+    [
+     5,
+     2
+    ],
+    [
+     6,
+     2
+    ],
+    [
+     7,
+     2
+    ],
+    [
+     8,
+     2
+    ],
+    [
+     9,
+     2
+    ],
+    [
+     1,
+     3
+    ],
+    [
+     2,
+     3
+    ],
+    [
+     3,
+     3
+    ],
+    [
+     4,
+     3
+    ],
+    [
+     5,
+     3
+    ],
+    [
+     6,
+     3
+    ],
+    [
+     7,
+     3
+    ],
+    [
+     8,
+     3
+    ],
+    [
+     2,
+     4
+    ],
+    [
+     3,
+     4
+    ],
+    [
+     4,
+     4
+    ],
+    [
+     5,
+     4
+    ],
+    [
+     6,
+     4
+    ],
+    [
+     7,
+     4
+    ],
+    [
+     2,
+     5
+    ],
+    [
+     3,
+     5
+    ],
+    [
+     4,
+     5
+    ],
+    [
+     5,
+     5
+    ],
+    [
+     6,
+     5
+    ],
+    [
+     7,
+     5
+    ],
+    [
+     1,
+     6
+    ],
+    [
+     2,
+     6
+    ],
+    [
+     3,
+     6
+    ],
+    [
+     4,
+     6
+    ],
+    [
+     5,
+     6
+    ],
+    [
+     6,
+     6
+    ],
+    [
+     7,
+     6
+    ],
+    [
+     8,
+     6
+    ],
+    [
+     0,
+     7
+    ],
+    [
+     1,
+     7
+    ],
+    [
+     2,
+     7
+    ],
+    [
+     3,
+     7
+    ],
+    [
+     4,
+     7
+    ],
+    [
+     5,
+     7
+    ],
+    [
+     6,
+     7
+    ],
+    [
+     7,
+     7
+    ],
+    [
+     8,
+     7
+    ],
+    [
+     9,
+     7
+    ],
+    [
+     1,
+     8
+    ],
+    [
+     2,
+     8
+    ],
+    [
+     3,
+     8
+    ],
+    [
+     4,
+     8
+    ],
+    [
+     5,
+     8
+    ],
+    [
+     6,
+     8
+    ],
+    [
+     7,
+     8
+    ],
+    [
+     8,
+     8
+    ]
+   ]
+  }
+ ],
+ "props": [
+  [
+   "tree_oak_a",
+   [
+    24,
+    32
+   ]
+  ],
+  [
+   "tree_oak_b",
+   [
+    24,
+    32
+   ]
+  ],
+  [
+   "tree_pine",
+   [
+    24,
+    32
+   ]
+  ],
+  [
+   "tree_autumn",
+   [
+    24,
+    32
+   ]
+  ],
+  [
+   "bush_a",
+   [
+    16,
+    16
+   ]
+  ],
+  [
+   "bush_b",
+   [
+    16,
+    16
+   ]
+  ],
+  [
+   "bush_flowers",
+   [
+    16,
+    16
+   ]
+  ],
+  [
+   "barrel",
+   [
+    16,
+    16
+   ]
+  ],
+  [
+   "crate",
+   [
+    16,
+    16
+   ]
+  ],
+  [
+   "crate_stack",
+   [
+    24,
+    24
+   ]
+  ],
+  [
+   "cart",
+   [
+    32,
+    20
+   ]
+  ],
+  [
+   "lamp_post",
+   [
+    16,
+    32
+   ]
+  ],
+  [
+   "fence_straight",
+   [
+    16,
+    16
+   ]
+  ],
+  [
+   "fence_curve",
+   [
+    32,
+    16
+   ]
+  ],
+  [
+   "flowerbed_small",
+   [
+    16,
+    12
+   ]
+  ],
+  [
+   "flowerbed_long",
+   [
+    32,
+    12
+   ]
+  ],
+  [
+   "well",
+   [
+    24,
+    24
+   ]
+  ],
+  [
+   "stall_fruit",
+   [
+    32,
+    24
+   ]
+  ],
+  [
+   "stall_cloth",
+   [
+    32,
+    24
+   ]
+  ],
+  [
+   "stall_fish",
+   [
+    32,
+    24
+   ]
+  ],
+  [
+   "sign_inn",
+   [
+    16,
+    16
+   ]
+  ],
+  [
+   "sign_bread",
+   [
+    16,
+    16
+   ]
+  ],
+  [
+   "sign_post_road",
+   [
+    16,
+    16
+   ]
+  ],
+  [
+   "statue_knight",
+   [
+    24,
+    32
+   ]
+  ],
+  [
+   "banner_pole",
+   [
+    16,
+    32
+   ]
+  ],
+  [
+   "crate_broken",
+   [
+    16,
+    16
+   ]
+  ],
+  [
+   "debris",
+   [
+    16,
+    16
+   ]
+  ],
+  [
+   "debris_b",
+   [
+    16,
+    16
+   ]
+  ],
+  [
+   "puddle",
+   [
+    16,
+    10
+   ]
+  ],
+  [
+   "mud_patch",
+   [
+    24,
+    12
+   ]
+  ]
+ ],
+ "wall_segments": {
+  "city_wall_seg_000": {
+   "offset_from_ring_px": [
+    481,
+    288
+   ],
+   "size": [
+    92,
+    212
+   ]
+  },
+  "city_wall_seg_045": {
+   "offset_from_ring_px": [
+    325,
+    480
+   ],
+   "size": [
+    176,
+    113
+   ]
+  },
+  "city_wall_seg_090": {
+   "offset_from_ring_px": [
+    77,
+    481
+   ],
+   "size": [
+    175,
+    112
+   ]
+  },
+  "city_wall_seg_135": {
+   "offset_from_ring_px": [
+    4,
+    289
+   ],
+   "size": [
+    93,
+    212
+   ]
+  },
+  "city_wall_seg_180": {
+   "offset_from_ring_px": [
+    4,
+    88
+   ],
+   "size": [
+    103,
+    201
+   ]
+  },
+  "city_wall_seg_225": {
+   "offset_from_ring_px": [
+    87,
+    4
+   ],
+   "size": [
+    201,
+    104
+   ]
+  },
+  "city_wall_seg_270": {
+   "offset_from_ring_px": [
+    288,
+    4
+   ],
+   "size": [
+    201,
+    104
+   ]
+  },
+  "city_wall_seg_315": {
+   "offset_from_ring_px": [
+    469,
+    87
+   ],
+   "size": [
+    104,
+    201
+   ]
+  }
+ },
+ "ring_center_px": 288
+}

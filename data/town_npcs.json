@@ -395,19 +395,19 @@
      "enemy": "town_guard",
      "patrol": [
       [
-       35,
-       14
+       36,
+       26
       ],
       [
-       35,
-       30
+       43,
+       34
       ],
       [
-       22,
-       35
+       36,
+       44
       ],
       [
-       48,
+       28,
        35
       ]
      ]
@@ -416,69 +416,97 @@
      "enemy": "town_guard",
      "patrol": [
       [
-       35,
-       57
+       36,
+       44
       ],
       [
-       35,
+       28,
+       35
+      ],
+      [
+       36,
+       26
+      ],
+      [
+       43,
+       34
+      ]
+     ]
+    },
+    {
+     "enemy": "town_guard",
+     "patrol": [
+      [
+       33,
+       56
+      ]
+     ],
+     "gate": "south"
+    },
+    {
+     "enemy": "town_guard",
+     "patrol": [
+      [
+       38,
+       56
+      ]
+     ],
+     "gate": "south"
+    },
+    {
+     "enemy": "town_guard",
+     "patrol": [
+      [
+       34,
+       50
+      ]
+     ],
+     "gate": "south"
+    },
+    {
+     "enemy": "town_guard",
+     "patrol": [
+      [
+       37,
+       50
+      ]
+     ],
+     "gate": "south"
+    },
+    {
+     "enemy": "town_guard",
+     "patrol": [
+      [
+       34,
+       42
+      ]
+     ]
+    },
+    {
+     "enemy": "town_guard",
+     "patrol": [
+      [
+       38,
+       42
+      ]
+     ]
+    },
+    {
+     "enemy": "town_guard",
+     "patrol": [
+      [
+       36,
+       2
+      ]
+     ],
+     "gate": "north"
+    },
+    {
+     "enemy": "town_guard",
+     "patrol": [
+      [
+       2,
        41
-      ],
-      [
-       50,
-       35
-      ],
-      [
-       20,
-       35
-      ]
-     ]
-    },
-    {
-     "enemy": "town_guard",
-     "patrol": [
-      [
-       34,
-       11
-      ]
-     ],
-     "gate": "north"
-    },
-    {
-     "enemy": "town_guard",
-     "patrol": [
-      [
-       36,
-       11
-      ]
-     ],
-     "gate": "north"
-    },
-    {
-     "enemy": "town_guard",
-     "patrol": [
-      [
-       34,
-       60
-      ]
-     ],
-     "gate": "south"
-    },
-    {
-     "enemy": "town_guard",
-     "patrol": [
-      [
-       36,
-       60
-      ]
-     ],
-     "gate": "south"
-    },
-    {
-     "enemy": "town_guard",
-     "patrol": [
-      [
-       11,
-       34
       ]
      ],
      "gate": "west"
@@ -487,28 +515,8 @@
      "enemy": "town_guard",
      "patrol": [
       [
-       11,
-       36
-      ]
-     ],
-     "gate": "west"
-    },
-    {
-     "enemy": "town_guard",
-     "patrol": [
-      [
-       60,
-       34
-      ]
-     ],
-     "gate": "east"
-    },
-    {
-     "enemy": "town_guard",
-     "patrol": [
-      [
-       60,
-       36
+       69,
+       33
       ]
      ],
      "gate": "east"
@@ -519,11 +527,12 @@
     "count": 6,
     "area": [
      28,
-     27,
-     16,
-     18
+     45,
+     17,
+     6
     ]
-   }
+   },
+   "note": "0.3.11 round walled Highfen: two guards walk the palace loop, four hold the wall gate, two flank the palace door, one at each outer road"
   }
  }
 }

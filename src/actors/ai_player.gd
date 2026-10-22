@@ -680,6 +680,9 @@ func shop_spot(b: Dictionary) -> Vector2i:
 			var q: Vector2i = w + d
 			if q == w and w != b["stand"]:
 				continue
+			if w != b["stand"] and not taken.has(q) and not _world_ref.is_blocked(q) and not _world_ref.gen.is_inside(q, b) \
+					and _world_ref.gen.building_at(q).is_empty():
+				return q   # 0.3.11 the Highfen stands line the plaza outside: browse them in the street
 			if not taken.has(q) and not _world_ref.is_blocked(q) and _world_ref.gen.is_inside(q, b) and not (q in b["doors"]) \
 					and (q == b["stand"] or not Pathfinder.find_path(_world_ref, b["stand"], [q], q, 300).is_empty()):
 				return q   # customer side only (tiles boxed in behind the counter are skipped)

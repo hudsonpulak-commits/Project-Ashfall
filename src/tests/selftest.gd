@@ -1538,6 +1538,20 @@ static func _building_tests(main, world: World, p: Player) -> void:
 	for id in gen.building_order:
 		var b: Dictionary = gen.buildings[id]
 		var r: Rect2i = b["rect"]
+		if b.has("art"):   # 0.3.11 layered-art buildings: every plan wall tile blocks
+			var plan := WorldGen.art_plan(str(b["art"]), bool(b["flip"]))
+			for py in plan.size():
+				for px in str(plan[py]).length():
+					if str(plan[py])[px] == "#":
+						walls_ok = walls_ok and world.is_blocked(r.position + Vector2i(px, py))
+			for c in b["counter"]:
+				walls_ok = walls_ok and world.is_blocked(c)
+			for d in b["doors"]:
+				doors_ok = doors_ok and not world.is_blocked(d)
+			if Pathfinder.find_path(world, gen.town_spawn(b["town"]), [b["stand"]], b["stand"], 30000).is_empty():
+				reach_ok = false
+				printerr("    unreachable: %s" % id)
+			continue
 		for x in range(r.position.x, r.end.x):
 			for y in [r.position.y, r.end.y - 1]:
 				var t := Vector2i(x, y)

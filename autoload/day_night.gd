@@ -191,6 +191,17 @@ static func window_tiles(world, b: Dictionary, n_win: int) -> Array:
 				out.append(Vector2i(x, fy))
 	if not out.is_empty():
 		return out
+	if b.has("art"):   # 0.3.11 layered-art buildings: their own facade tiles (the art draws the windows)
+		var af: Array = []
+		for x in range(r.position.x, r.end.x):
+			var t := Vector2i(x, fy)
+			if not (t in b["doors"]) and str(world.gen._building_tiles.get(t, "")) == str(b["id"]):
+				af.append(t)
+		if af.size() <= n_win:
+			return af
+		for i in n_win:
+			out.append(af[int(round(float(i + 0.5) * af.size() / n_win - 0.5))])
+		return out
 	var free: Array = []
 	var drawn: Array = []   # timber facade tiles whose art shows a window or a lantern
 	var nv: int = world.variants_for(WorldGen.TileType.WALL_FRONT) if world.has_method("variants_for") else 1

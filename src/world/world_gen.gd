@@ -10,30 +10,33 @@ enum TileType { GRASS, PATH, WATER, SAND, DIRT, COBBLE, PLANKS, MARSH, WALL, WAL
 	GATE_WOOD, GATE_BASALT, GATE_SAND, BOARDWALK, COBBLE_DARK, PLASTER, PLASTER_WALL, PLASTER_FRONT,
 	ROAD_STONE, ROAD_DIRT, MOAT, MOAT_EDGE, CAPITAL_WALL, CAPITAL_FRONT, GATE_CAPITAL,
 	CAPITAL_BLDG_WALL, CAPITAL_BLDG_FRONT, HOUSE_WALL, HOUSE_FRONT,
-	GRASS_LUSH, GRASS_BOREAL, GRASS_TROPIC, ROCKY, CLIFF_FACE, CLIFF_LIP, CLIFF_SHADOW, CLIFF_STAIRS }
+	GRASS_LUSH, GRASS_BOREAL, GRASS_TROPIC, ROCKY, CLIFF_FACE, CLIFF_LIP, CLIFF_SHADOW, CLIFF_STAIRS,
+	CITY_RING, ART_WALL, ART_FLOOR, CLIFF_FOOT }
 const TILE_NAMES := ["grass", "path", "water", "sand", "dirt", "cobble", "planks", "marsh", "wall", "wall_front", "floor", "doorway",
 	"ash", "ash_edge", "bridge", "stone_wall", "stone_front", "stone_floor",
 	"palisade", "palisade_front", "basalt_wall", "basalt_front", "sandstone_wall", "sandstone_front",
 	"gate_wood", "gate_basalt", "gate_sand", "boardwalk", "cobble_dark", "plaster", "plaster_wall", "plaster_front",
 	"road_stone", "road_dirt", "moat", "moat_edge", "capital_wall", "capital_front", "gate_capital",
 	"capital_bldg_wall", "capital_bldg_front", "house_wall", "house_front",
-	"grass_lush", "grass_boreal", "grass_tropic", "rocky", "cliff_face", "cliff_lip", "cliff_shadow", "cliff_stairs"]
+	"grass_lush", "grass_boreal", "grass_tropic", "rocky", "cliff_face", "cliff_lip", "cliff_shadow", "cliff_stairs",
+	"city_ring", "art_wall", "art_floor", "cliff_foot"]
 const BLOCKING_TILES := [TileType.WATER, TileType.WALL, TileType.WALL_FRONT, TileType.STONE_WALL, TileType.STONE_FRONT,
 	TileType.PALISADE, TileType.PALISADE_FRONT, TileType.BASALT_WALL, TileType.BASALT_FRONT,
 	TileType.SANDSTONE_WALL, TileType.SANDSTONE_FRONT, TileType.PLASTER_WALL, TileType.PLASTER_FRONT,
 	TileType.MOAT, TileType.CAPITAL_WALL, TileType.CAPITAL_FRONT, TileType.CAPITAL_BLDG_WALL, TileType.CAPITAL_BLDG_FRONT,
-	TileType.HOUSE_WALL, TileType.HOUSE_FRONT, TileType.CLIFF_FACE, TileType.CLIFF_LIP]
+	TileType.HOUSE_WALL, TileType.HOUSE_FRONT, TileType.CLIFF_FACE, TileType.CLIFF_LIP,
+	TileType.CITY_RING, TileType.ART_WALL, TileType.CLIFF_FOOT]
 ## 0.3.8 arrows fly over open water (lakes, the moat); walls stop them
 const SHOOT_OVER_TILES := [TileType.WATER, TileType.MOAT]
 ## 0.3.8 road surfaces (old PATH, stone capital roads, dirt village roads)
 const ROAD_SURFACES := [TileType.PATH, TileType.ROAD_STONE, TileType.ROAD_DIRT]
-const FLOOR_TILES := [TileType.FLOOR, TileType.STONE_FLOOR, TileType.PLASTER]
+const FLOOR_TILES := [TileType.FLOOR, TileType.STONE_FLOOR, TileType.PLASTER, TileType.ART_FLOOR]
 const GATE_TILES := [TileType.GATE_WOOD, TileType.GATE_BASALT, TileType.GATE_SAND, TileType.GATE_CAPITAL]
 const CHUNK := 24
 ## 0.3.10 open grassland of every region (region grasses are recolours of grass)
 const GRASS_TILES := [TileType.GRASS, TileType.GRASS_LUSH, TileType.GRASS_BOREAL, TileType.GRASS_TROPIC]
 ## 0.3.10 cliffs: face (south edge, rock face shows) and lip (other edges) block; shadow + stairs walk
-const CLIFF_TILES := [TileType.CLIFF_FACE, TileType.CLIFF_LIP]
+const CLIFF_TILES := [TileType.CLIFF_FACE, TileType.CLIFF_LIP, TileType.CLIFF_FOOT]
 const ROAD_SPACING := 72
 
 const OCEAN_LEVEL := 0.10
@@ -410,6 +413,9 @@ func _load_buildings(town: Dictionary, origin: Vector2i) -> void:
 	if not church.is_empty():
 		defs.append(church)   # 0.3.1 one stone church per town (data/churches.json)
 	for bd in defs:
+		if bd.has("art"):
+			_load_art_building(town, bd, v, shops)
+			continue
 		var r: Array = bd["rect"]
 		var rect := Rect2i(v.call(r), Vector2i(int(r[2]), int(r[3])))
 		var doors: Array = []
@@ -488,6 +494,102 @@ func _load_buildings(town: Dictionary, origin: Vector2i) -> void:
 		building_order.append(b["id"])
 
 
+## 0.3.11 the designer's layered town art (data/town_art.json): per-design tile plans.
+static var _town_art: Dictionary = {}
+
+
+static func town_art() -> Dictionary:
+	if _town_art.is_empty():
+		var f := FileAccess.open("res://data/town_art.json", FileAccess.READ)
+		if f:
+			_town_art = JSON.parse_string(f.get_as_text())
+	return _town_art
+
+
+static func art_plan(art: String, flip: bool) -> Array:
+	var rows: Array = town_art().get("buildings", {}).get(art, {}).get("plan", [])
+	if not flip:
+		return rows
+	var out: Array = []
+	for r in rows:
+		var s := ""
+		for i in range(str(r).length() - 1, -1, -1):
+			s += str(r)[i]
+		out.append(s)
+	return out
+
+
+## 0.3.11 a building drawn from layered art: the footprint follows the design's
+## plan (# wall, o floor, D door, . not the building), so round, L-shaped and
+## towered buildings keep their real shape; the bottom row is the facade.
+func _load_art_building(town: Dictionary, bd: Dictionary, v: Callable, shops: Dictionary) -> void:
+	var art := str(bd["art"])
+	var flip := bool(bd.get("flip", false))
+	var plan := art_plan(art, flip)
+	if plan.is_empty():
+		push_error("WorldGen: unknown town art %s" % art)
+		return
+	var at: Vector2i = v.call(bd["at"])
+	var rect := Rect2i(at, Vector2i(str(plan[0]).length(), plan.size()))
+	var doors: Array = []
+	for d in bd["door"]:
+		doors.append(v.call(d))
+	var shop := str(bd.get("shop", ""))
+	var sd: Dictionary = shops.get(shop, {})
+	if str(bd.get("kind", "")) == "church":
+		sd = GameData.churches
+	var closed := bool(bd.get("closed", false))
+	var b := {
+		"id": str(bd["id"]), "town": str(town["id"]), "kind": str(bd.get("kind", "shop")), "shop": shop,
+		"name": str(bd.get("name", sd.get("name", ""))), "keeper": str(bd.get("keeper", sd.get("keeper", "Shopkeeper"))),
+		"keeper_sprite": str(bd.get("keeper_sprite", sd.get("keeper_sprite", "keeper_general"))), "sign_sprite": str(bd.get("sign_sprite", sd.get("sign", "sign_general"))),
+		"rect": rect, "doors": [] if closed else doors, "facade_y": rect.end.y - 1, "keeper_at": v.call(bd["keeper_at"]), "stand": v.call(bd["stand"]),
+		"sign": v.call(bd["sign"]), "counter": [], "displays": [], "roof": str(bd.get("roof", sd.get("roof", town.get("roof", "#8a6a4a")))),
+		"style": "art", "art": art, "flip": flip, "greet": bd.get("greet", []), "no_keeper": bool(bd.get("no_keeper", false)) or closed,
+	}
+	if bd.has("altar"):
+		b["altar"] = v.call(bd["altar"])
+	for y in plan.size():
+		var row := str(plan[y])
+		for x in row.length():
+			var c := row[x]
+			if c == ".":
+				continue
+			var p := at + Vector2i(x, y)
+			_building_tiles[p] = b["id"]
+			_town_objects.erase(p)
+			if c == "D" and not closed:
+				_town_tiles[p] = TileType.DOORWAY
+			elif c == "o":
+				_town_tiles[p] = TileType.ART_FLOOR
+			else:
+				_town_tiles[p] = TileType.ART_WALL
+	var meta := {"building": b["id"], "shop": shop, "stand": b["stand"], "town": b["town"]}
+	for c in bd.get("counter", []):
+		var p: Vector2i = v.call(c)
+		b["counter"].append(p)
+		_town_objects[p] = "shop_counter"
+		_town_meta[p] = meta
+	if not b["no_keeper"]:
+		_town_objects[b["keeper_at"]] = "shopkeeper"
+		_town_meta[b["keeper_at"]] = meta.merged({"name": b["keeper"], "keeper": true})
+	for pr in bd.get("props", []):
+		_town_objects[v.call(pr["at"])] = str(pr["object"])
+		_town_meta[v.call(pr["at"])] = {"building": b["id"]}
+	if b.has("altar"):
+		_town_objects[b["altar"]] = "altar"
+		_town_meta[b["altar"]] = {"building": b["id"], "town": b["town"]}
+	var di := 0
+	for dsp in bd.get("displays", []):
+		var p: Vector2i = v.call(dsp)
+		b["displays"].append(p)
+		_town_objects[p] = "display_stand"
+		_town_meta[p] = {"building": b["id"], "town": b["town"], "slot": di}
+		di += 1
+	buildings[b["id"]] = b
+	building_order.append(b["id"])
+
+
 ## 0.3.1: the town object id placed at p ("" if none): props, stations, altar.
 func object_id_at(p: Vector2i) -> String:
 	return str(_town_objects.get(p, ""))
@@ -500,14 +602,15 @@ func building_at(p: Vector2i) -> Dictionary:
 
 ## Inside for the roof: on the doorway or anywhere off the facade/walls in the footprint.
 func is_inside(p: Vector2i, b: Dictionary) -> bool:
-	if b.is_empty() or not (b["rect"] as Rect2i).has_point(p):
+	if b.is_empty() or not (b["rect"] as Rect2i).has_point(p) or str(_building_tiles.get(p, "")) != str(b["id"]):
 		return false
 	return p in b["doors"] or (p.y != int(b["facade_y"]) and tile_at(p.x, p.y) in FLOOR_TILES)
 
 
 ## Tiles the roof covers (footprint minus the facade row).
 func is_roofed(p: Vector2i, b: Dictionary) -> bool:
-	return not b.is_empty() and (b["rect"] as Rect2i).has_point(p) and p.y != int(b["facade_y"])
+	return not b.is_empty() and (b["rect"] as Rect2i).has_point(p) and p.y != int(b["facade_y"]) \
+		and str(_building_tiles.get(p, "")) == str(b["id"])
 
 
 func building_for_shop(town: String, shop: String) -> Dictionary:
@@ -641,7 +744,7 @@ func _compose_capital_roads() -> void:
 				continue
 			var ga := gate_outside(capital, ra[-1])
 			var gb := gate_outside(capital, rb[0])
-			var mid: Array = _line8(ra[-1], ga) + _line8(ga, c) + _line8(c, gb) + _line8(gb, rb[0])
+			var mid: Array = _line8(ra[-1], ga) + _town_walk(capital, ga, gb) + _line8(gb, rb[0])
 			var out: Array = ra.duplicate()
 			for q in mid:
 				if q != out[-1]:
@@ -650,6 +753,45 @@ func _compose_capital_roads() -> void:
 				if q != out[-1]:
 					out.append(q)
 			roads[a + "|" + b] = out
+
+
+## 0.3.11 a walkable 4-connected path between two gate-outside tiles through a
+## town's streets (round Highfen: the straight gate-centre-gate line runs into
+## the palace). BFS over the town rect grown by 2; falls back to straight lines.
+func _town_walk(tid: String, a: Vector2i, b: Vector2i) -> Array:
+	var area: Rect2i = (_town_rects[tid] as Rect2i).grow(2)
+	var prev := {a: a}
+	var q: Array = [a]
+	var i := 0
+	while i < q.size():
+		var p: Vector2i = q[i]
+		i += 1
+		if p == b:
+			break
+		for d in [Vector2i(1, 0), Vector2i(-1, 0), Vector2i(0, 1), Vector2i(0, -1)]:
+			var n: Vector2i = p + d
+			if prev.has(n) or not area.has_point(n):
+				continue
+			if tile_at(n.x, n.y) in BLOCKING_TILES:
+				continue
+			var oid := str(_town_objects.get(n, ""))
+			if oid != "" and bool(GameData.object_def(oid).get("blocks", true)):
+				continue
+			if n.x < _town_rects[tid].position.x or n.y < _town_rects[tid].position.y or n.x >= _town_rects[tid].end.x or n.y >= _town_rects[tid].end.y:
+				if n != b and not _town_tiles.has(n) and object_at(n.x, n.y, tile_at(n.x, n.y)) != "":
+					continue
+			prev[n] = p
+			q.append(n)
+	if not prev.has(b):
+		var c: Vector2i = towns[tid]["center"]
+		return _line8(a, c) + _line8(c, b)
+	var out: Array = []
+	var p2 := b
+	while p2 != a:
+		out.push_front(p2)
+		p2 = prev[p2]
+	out.push_front(a)
+	return out
 
 
 static func _cheb(a: Vector2i, b: Vector2i) -> int:
@@ -1152,17 +1294,121 @@ func _cliff_edge(p: Vector2i) -> int:
 	return res
 
 
-## The cliff tile at p (or -1): face / lip / stairs on the high edge, shadow below a face.
+## The cliff tile at p (or -1), with the 0.3.11 diagonal-gap fill: where two
+## blocking cliff tiles touch only at a corner, one of the two open corner cells
+## becomes cliff too (the higher one, unless it sits by stairs / a road / a town).
 func _cliff_tile(p: Vector2i, t: int) -> int:
+	var r := _cliff_tile_raw(p, t)
+	if r >= 0 or t == TileType.WATER or t == TileType.ASH or t == TileType.ASH_EDGE:
+		return r
+	return TileType.CLIFF_LIP if cliff_gap_fill(p) else -1
+
+
+const _CLIFF_BLOCK := [TileType.CLIFF_FACE, TileType.CLIFF_LIP, TileType.CLIFF_FOOT]
+
+
+func _raw_at(q: Vector2i) -> int:
+	if _town_tiles.has(q) or road_tiles.has(q):
+		return -2
+	var tq := _terrain_at(q.x, q.y)
+	if tq == TileType.WATER:
+		return -2
+	return _cliff_tile_raw(q, tq)
+
+
+## 0.3.11 p is the cell picked to close a diagonal cliff gap.
+func cliff_gap_fill(p: Vector2i) -> bool:
+	var lp := cliff_level(p)
+	for h in [Vector2i(1, 0), Vector2i(-1, 0)]:
+		for v in [Vector2i(0, 1), Vector2i(0, -1)]:
+			var c: Vector2i = p + h + v
+			if cliff_level(c) == lp:
+				continue
+			if not (_raw_at(p + h) in _CLIFF_BLOCK) or not (_raw_at(p + v) in _CLIFF_BLOCK):
+				continue
+			var rc := _raw_at(c)
+			if rc == -2 or rc in _CLIFF_BLOCK:
+				continue
+			# p and c are the two open corners: pick one
+			var okp := _gap_ok(p)
+			var okc := _gap_ok(c)
+			if okp != okc:
+				if okp:
+					return true
+				continue
+			if not okp:
+				continue   # both by stairs/roads: leave it; diagonal steps past cliffs are forbidden anyway
+			if lp > cliff_level(c):
+				return true
+	return false
+
+
+func _gap_ok(q: Vector2i) -> bool:
+	if _town_tiles.has(q) or road_tiles.has(q) or cliff_free(q):
+		return false
+	for d in [Vector2i(1, 0), Vector2i(-1, 0), Vector2i(0, 1), Vector2i(0, -1)]:
+		var n: Vector2i = q + d
+		if road_tiles.has(n) or _raw_at(n) == TileType.CLIFF_STAIRS:
+			return false
+	return true
+
+
+## 0.3.11 which orthogonal neighbours are a terrace lower (N1 E2 S4 W8).
+func cliff_mask(p: Vector2i) -> int:
+	var l := cliff_level(p)
+	var m := 0
+	var ds := [Vector2i(0, -1), Vector2i(1, 0), Vector2i(0, 1), Vector2i(-1, 0)]
+	for k in 4:
+		var q: Vector2i = p + ds[k]
+		if cliff_level(q) < l and _terrain_at(q.x, q.y) != TileType.WATER:
+			m |= 1 << k
+	return m
+
+
+## Lower diagonal of a filled corner cell: 0 NE, 1 SE, 2 SW, 3 NW (-1 none).
+func cliff_low_diag(p: Vector2i) -> int:
+	var l := cliff_level(p)
+	var ds := [Vector2i(1, -1), Vector2i(1, 1), Vector2i(-1, 1), Vector2i(-1, -1)]
+	for k in 4:
+		if cliff_level(p + ds[k]) < l:
+			return k
+	return -1
+
+
+func _cliff_tile_raw(p: Vector2i, t: int) -> int:
 	if t == TileType.WATER or t == TileType.ASH or t == TileType.ASH_EDGE:
 		return -1
 	var e := _cliff_edge(p)
 	if e >= 0:
-		return TileType.CLIFF_STAIRS if is_ramp(p, e != 0) or _extra_ramp(p) else (TileType.CLIFF_FACE if e == 1 else TileType.CLIFF_LIP)
+		if is_ramp(p, e != 0) or _extra_ramp(p) or (e == 1 and _face_tight(p)):
+			return TileType.CLIFF_STAIRS
+		return TileType.CLIFF_FACE if e == 1 else TileType.CLIFF_LIP
+	# 0.3.11 a south face is 16x32: it hangs into the cell below (blocked foot);
+	# its shadow falls on the row below that
 	var n := p + Vector2i(0, -1)
-	if cliff_level(p) < cliff_level(n) and _cliff_edge(n) == 1 and not is_ramp(n, true) and not _extra_ramp(n):
+	if cliff_level(p) < cliff_level(n) and _is_wall_face(n):
+		return TileType.CLIFF_FOOT
+	var nn := p + Vector2i(0, -2)
+	if cliff_level(n) < cliff_level(nn) and cliff_level(p) <= cliff_level(n) and _cliff_edge(nn) == 1:
 		return TileType.CLIFF_SHADOW
 	return -1
+
+
+func _is_wall_face(q: Vector2i) -> bool:
+	return _cliff_edge(q) == 1 and not is_ramp(q, true) and not _extra_ramp(q) and not _face_tight(q)
+
+
+## 0.3.11 a south edge needs 2 clear rows of lower ground below it (face
+## overhang + shadow); where it has not, the edge becomes stone stairs.
+func _face_tight(q: Vector2i) -> bool:
+	var f := q + Vector2i(0, 1)
+	var sh := q + Vector2i(0, 2)
+	for c in [f, sh]:
+		if _town_tiles.has(c) or road_tiles.has(c) or _terrain_at(c.x, c.y) == TileType.WATER:
+			return true
+	if cliff_level(sh) < cliff_level(f) or cliff_level(f) >= cliff_level(q):
+		return true
+	return _cliff_edge(f) >= 0
 
 
 # 0.3.10 per-cell pocket check: a small basin or knoll can close a cliff ring
@@ -1178,6 +1424,13 @@ func _extra_ramp(p: Vector2i) -> bool:
 	if not _cells_ready:
 		return false
 	var c := Vector2i(floori(float(p.x) / _ramp_period), floori(float(p.y) / _ramp_period))
+	if _cell_hit(c, p):
+		return true
+	var c2 := Vector2i(floori(float(p.x) / _ramp_period), floori(float(p.y + 1) / _ramp_period))   # 0.3.11 a foot pick in the cell below
+	return c2 != c and _cell_hit(c2, p)
+
+
+func _cell_hit(c: Vector2i, p: Vector2i) -> bool:
 	var hit = _cell_ramps.get(c)
 	if hit == null:
 		if _cell_ramps.size() > 4000:
@@ -1206,6 +1459,11 @@ func _analyse_cell(c: Vector2i) -> Dictionary:
 			if e >= 0 and not is_ramp(q, e != 0):
 				blk[j * n + i] = 1
 				any_cliff = true
+			elif e < 0:
+				var up := q + Vector2i(0, -1)
+				if cliff_level(q) < cliff_level(up) and _cliff_edge(up) == 1 and not is_ramp(up, true):
+					blk[j * n + i] = 3   # 0.3.11 face overhang (blocked foot)
+					any_cliff = true
 	if not any_cliff:
 		return extra
 	var dirs := [Vector2i(0, -1), Vector2i(0, 1), Vector2i(1, 0), Vector2i(-1, 0)]
@@ -1251,16 +1509,23 @@ func _analyse_cell(c: Vector2i) -> Dictionary:
 				if b == 0 and not inq.has(w):
 					inq[w] = true
 					comp.append(w)
-				elif b == 1:
+				elif b == 1 or b == 3:
 					if fallback.x < 0:
 						fallback = w
 					var o2: Vector2i = w + d
+					if o2.x >= 0 and o2.y >= 0 and o2.x < n and o2.y < n and blk[o2.y * n + o2.x] + b == 4:
+						o2 += d   # through a face + its foot
 					if o2.x >= 0 and o2.y >= 0 and o2.x < n and o2.y < n and seen[o2.y * n + o2.x] == 1:
 						best = w
 						break
 		var pick := best if best.x >= 0 else fallback
 		if pick.x < 0:
 			break
+		if blk[pick.y * n + pick.x] == 3:   # opening a foot opens its face (stairs)
+			blk[pick.y * n + pick.x] = 0
+			pick += Vector2i(0, -1)
+		elif pick.y + 1 < n and blk[(pick.y + 1) * n + pick.x] == 3:
+			blk[(pick.y + 1) * n + pick.x] = 0
 		blk[pick.y * n + pick.x] = 0
 		extra[o + pick] = true
 	return extra
@@ -1464,6 +1729,13 @@ func object_at(x: int, y: int, tile: int) -> String:
 			return "" if _beside_stairs(p) else _pick_tree(rd, r2, dist)
 		if tile == TileType.ROCKY and r < 0.035:
 			return "" if _beside_stairs(p) else "boulder"
+		if tile == TileType.ROCKY and r < 0.075 and not _beside_stairs(p):   # 0.3.11 designer cliff props
+			var pre := "cinder_" if rid == "cinder" else ""
+			if r < 0.045:
+				return pre + ("cliff_outcrop_a" if r2 < 0.5 else "cliff_outcrop_b")
+			if r < 0.052:
+				return pre + "cliff_boulder"
+			return pre + ["prop_rocks", "prop_pebbles", "prop_grass_tuft"][int(r2 * 3.0) % 3]
 		if tile != TileType.ROCKY and r < float(rd.get("mushrooms", 0.0)) and _moist.get_noise_2d(x, y) > 0.0:
 			return "magic_mushroom"
 		return ""

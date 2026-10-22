@@ -442,44 +442,81 @@
    "note": "0.3.10 PLACEHOLDER recolour - designer redraw (docs/ART_TODO_0.3.10.md)"
   },
   "cliff_face": {
-   "path": "res://assets/sprites/tiles/cliff_face.png",
+   "path": "res://assets/sprites/cliffs/normal/cliff_top.png",
    "frame_size": [
     16,
     16
    ],
    "minimap_color": "#4a3f38",
    "_order": 47,
-   "note": "0.3.10 PLACEHOLDER recolour - designer redraw (docs/ART_TODO_0.3.10.md)"
+   "note": "0.3.11 designer cliff art; in-game the autotile pieces (autotile/cliff_*) draw the look over region ground"
   },
   "cliff_lip": {
-   "path": "res://assets/sprites/tiles/cliff_lip.png",
+   "path": "res://assets/sprites/cliffs/normal/cliff_top.png",
    "frame_size": [
     16,
     16
    ],
    "minimap_color": "#9a9088",
    "_order": 48,
-   "note": "0.3.10 PLACEHOLDER recolour - designer redraw (docs/ART_TODO_0.3.10.md)"
+   "note": "0.3.11 designer cliff art; in-game the autotile pieces (autotile/cliff_*) draw the look over region ground"
   },
   "cliff_shadow": {
-   "path": "res://assets/sprites/tiles/cliff_shadow.png",
+   "path": "res://assets/sprites/cliffs/normal/cliff_top.png",
    "frame_size": [
     16,
     16
    ],
    "minimap_color": "#2f4a2a",
    "_order": 49,
-   "note": "0.3.10 PLACEHOLDER recolour - designer redraw (docs/ART_TODO_0.3.10.md)"
+   "note": "0.3.11 designer cliff art; in-game the autotile pieces (autotile/cliff_*) draw the look over region ground"
   },
   "cliff_stairs": {
-   "path": "res://assets/sprites/tiles/cliff_stairs.png",
+   "path": "res://assets/sprites/cliffs/normal/cliff_stairs.png",
    "frame_size": [
     16,
     16
    ],
    "minimap_color": "#a89a88",
    "_order": 50,
-   "note": "0.3.10 PLACEHOLDER recolour - designer redraw (docs/ART_TODO_0.3.10.md)"
+   "note": "0.3.11 designer cliff art; in-game the autotile pieces (autotile/cliff_*) draw the look over region ground"
+  },
+  "city_ring": {
+   "path": "res://assets/sprites/tiles/city_ring.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "minimap_color": "#5a5450",
+   "note": "0.3.11 under the Highfen city wall art (blocking); the designer art draws over it"
+  },
+  "art_wall": {
+   "path": "res://assets/sprites/tiles/art_wall.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "minimap_color": "#6a5a4a",
+   "note": "0.3.11 under layered-art building walls (blocking); the designer art draws over it"
+  },
+  "art_floor": {
+   "path": "res://assets/sprites/tiles/art_floor.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "minimap_color": "#8a7a64",
+   "note": "0.3.11 under layered-art building floors; the designer art draws over it"
+  },
+  "cliff_foot": {
+   "path": "res://assets/sprites/cliffs/normal/cliff_top.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "note": "0.3.11 designer cliff art; in-game the autotile pieces (autotile/cliff_*) draw the look over region ground",
+   "minimap_color": "#4a3f38",
+   "_order": 50
   }
  },
  "objects": {
@@ -1038,6 +1075,426 @@
    "frames": 1,
    "anchor": "bottom",
    "note": "0.3.10 PLACEHOLDER recolour - designer redraw (docs/ART_TODO_0.3.10.md)"
+  },
+  "hf_banner_pole": {
+   "path": "res://assets/sprites/towns/highfen/props/banner_pole.png",
+   "frame_size": [
+    16,
+    32
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.3.11 designer Highfen prop (art_handoff/towns/highfen)"
+  },
+  "hf_barrel": {
+   "path": "res://assets/sprites/towns/highfen/props/barrel.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.3.11 designer Highfen prop (art_handoff/towns/highfen)"
+  },
+  "hf_bush_a": {
+   "path": "res://assets/sprites/towns/highfen/props/bush_a.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.3.11 designer Highfen prop (art_handoff/towns/highfen)"
+  },
+  "hf_bush_b": {
+   "path": "res://assets/sprites/towns/highfen/props/bush_b.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.3.11 designer Highfen prop (art_handoff/towns/highfen)"
+  },
+  "hf_bush_flowers": {
+   "path": "res://assets/sprites/towns/highfen/props/bush_flowers.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.3.11 designer Highfen prop (art_handoff/towns/highfen)"
+  },
+  "hf_cart": {
+   "path": "res://assets/sprites/towns/highfen/props/cart.png",
+   "frame_size": [
+    32,
+    20
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.3.11 designer Highfen prop (art_handoff/towns/highfen)"
+  },
+  "hf_crate": {
+   "path": "res://assets/sprites/towns/highfen/props/crate.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.3.11 designer Highfen prop (art_handoff/towns/highfen)"
+  },
+  "hf_crate_broken": {
+   "path": "res://assets/sprites/towns/highfen/props/crate_broken.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.3.11 designer Highfen prop (art_handoff/towns/highfen)"
+  },
+  "hf_crate_stack": {
+   "path": "res://assets/sprites/towns/highfen/props/crate_stack.png",
+   "frame_size": [
+    24,
+    24
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.3.11 designer Highfen prop (art_handoff/towns/highfen)"
+  },
+  "hf_debris": {
+   "path": "res://assets/sprites/towns/highfen/props/debris.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.3.11 designer Highfen prop (art_handoff/towns/highfen)"
+  },
+  "hf_debris_b": {
+   "path": "res://assets/sprites/towns/highfen/props/debris_b.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.3.11 designer Highfen prop (art_handoff/towns/highfen)"
+  },
+  "hf_fence_curve": {
+   "path": "res://assets/sprites/towns/highfen/props/fence_curve.png",
+   "frame_size": [
+    32,
+    16
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.3.11 designer Highfen prop (art_handoff/towns/highfen)"
+  },
+  "hf_fence_straight": {
+   "path": "res://assets/sprites/towns/highfen/props/fence_straight.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.3.11 designer Highfen prop (art_handoff/towns/highfen)"
+  },
+  "hf_flowerbed_long": {
+   "path": "res://assets/sprites/towns/highfen/props/flowerbed_long.png",
+   "frame_size": [
+    32,
+    12
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.3.11 designer Highfen prop (art_handoff/towns/highfen)"
+  },
+  "hf_flowerbed_small": {
+   "path": "res://assets/sprites/towns/highfen/props/flowerbed_small.png",
+   "frame_size": [
+    16,
+    12
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.3.11 designer Highfen prop (art_handoff/towns/highfen)"
+  },
+  "hf_lamp_post": {
+   "path": "res://assets/sprites/towns/highfen/props/lamp_post.png",
+   "frame_size": [
+    16,
+    32
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.3.11 designer Highfen prop (art_handoff/towns/highfen)"
+  },
+  "hf_mud_patch": {
+   "path": "res://assets/sprites/towns/highfen/props/mud_patch.png",
+   "frame_size": [
+    24,
+    12
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.3.11 designer Highfen prop (art_handoff/towns/highfen)"
+  },
+  "hf_puddle": {
+   "path": "res://assets/sprites/towns/highfen/props/puddle.png",
+   "frame_size": [
+    16,
+    10
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.3.11 designer Highfen prop (art_handoff/towns/highfen)"
+  },
+  "hf_sign_bread": {
+   "path": "res://assets/sprites/towns/highfen/props/sign_bread.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.3.11 designer Highfen prop (art_handoff/towns/highfen)"
+  },
+  "hf_sign_inn": {
+   "path": "res://assets/sprites/towns/highfen/props/sign_inn.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.3.11 designer Highfen prop (art_handoff/towns/highfen)"
+  },
+  "hf_sign_post_road": {
+   "path": "res://assets/sprites/towns/highfen/props/sign_post_road.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.3.11 designer Highfen prop (art_handoff/towns/highfen)"
+  },
+  "hf_stall_cloth": {
+   "path": "res://assets/sprites/towns/highfen/props/stall_cloth.png",
+   "frame_size": [
+    32,
+    24
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.3.11 designer Highfen prop (art_handoff/towns/highfen)"
+  },
+  "hf_stall_fish": {
+   "path": "res://assets/sprites/towns/highfen/props/stall_fish.png",
+   "frame_size": [
+    32,
+    24
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.3.11 designer Highfen prop (art_handoff/towns/highfen)"
+  },
+  "hf_stall_fruit": {
+   "path": "res://assets/sprites/towns/highfen/props/stall_fruit.png",
+   "frame_size": [
+    32,
+    24
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.3.11 designer Highfen prop (art_handoff/towns/highfen)"
+  },
+  "hf_statue_knight": {
+   "path": "res://assets/sprites/towns/highfen/props/statue_knight.png",
+   "frame_size": [
+    24,
+    32
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.3.11 designer Highfen prop (art_handoff/towns/highfen)"
+  },
+  "hf_tree_autumn": {
+   "path": "res://assets/sprites/towns/highfen/props/tree_autumn.png",
+   "frame_size": [
+    24,
+    32
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.3.11 designer Highfen prop (art_handoff/towns/highfen)"
+  },
+  "hf_tree_oak_a": {
+   "path": "res://assets/sprites/towns/highfen/props/tree_oak_a.png",
+   "frame_size": [
+    24,
+    32
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.3.11 designer Highfen prop (art_handoff/towns/highfen)"
+  },
+  "hf_tree_oak_b": {
+   "path": "res://assets/sprites/towns/highfen/props/tree_oak_b.png",
+   "frame_size": [
+    24,
+    32
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.3.11 designer Highfen prop (art_handoff/towns/highfen)"
+  },
+  "hf_tree_pine": {
+   "path": "res://assets/sprites/towns/highfen/props/tree_pine.png",
+   "frame_size": [
+    24,
+    32
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.3.11 designer Highfen prop (art_handoff/towns/highfen)"
+  },
+  "hf_well": {
+   "path": "res://assets/sprites/towns/highfen/props/well.png",
+   "frame_size": [
+    24,
+    24
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.3.11 designer Highfen prop (art_handoff/towns/highfen)"
+  },
+  "cliff_boulder": {
+   "path": "res://assets/sprites/cliffs/normal/cliff_boulder.png",
+   "frame_size": [
+    16,
+    24
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.3.11 designer cliff prop (normal)"
+  },
+  "cinder_cliff_boulder": {
+   "path": "res://assets/sprites/cliffs/cinder/cliff_boulder.png",
+   "frame_size": [
+    16,
+    24
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.3.11 designer cliff prop (cinder)"
+  },
+  "cliff_outcrop_a": {
+   "path": "res://assets/sprites/cliffs/normal/cliff_outcrop_a.png",
+   "frame_size": [
+    16,
+    32
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.3.11 designer cliff prop (normal)"
+  },
+  "cinder_cliff_outcrop_a": {
+   "path": "res://assets/sprites/cliffs/cinder/cliff_outcrop_a.png",
+   "frame_size": [
+    16,
+    32
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.3.11 designer cliff prop (cinder)"
+  },
+  "cliff_outcrop_b": {
+   "path": "res://assets/sprites/cliffs/normal/cliff_outcrop_b.png",
+   "frame_size": [
+    16,
+    32
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.3.11 designer cliff prop (normal)"
+  },
+  "cinder_cliff_outcrop_b": {
+   "path": "res://assets/sprites/cliffs/cinder/cliff_outcrop_b.png",
+   "frame_size": [
+    16,
+    32
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.3.11 designer cliff prop (cinder)"
+  },
+  "prop_grass_tuft": {
+   "path": "res://assets/sprites/cliffs/normal/prop_grass_tuft.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.3.11 designer cliff prop (normal)"
+  },
+  "cinder_prop_grass_tuft": {
+   "path": "res://assets/sprites/cliffs/cinder/prop_grass_tuft.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.3.11 designer cliff prop (cinder)"
+  },
+  "prop_pebbles": {
+   "path": "res://assets/sprites/cliffs/normal/prop_pebbles.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.3.11 designer cliff prop (normal)"
+  },
+  "cinder_prop_pebbles": {
+   "path": "res://assets/sprites/cliffs/cinder/prop_pebbles.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.3.11 designer cliff prop (cinder)"
+  },
+  "prop_rocks": {
+   "path": "res://assets/sprites/cliffs/normal/prop_rocks.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.3.11 designer cliff prop (normal)"
+  },
+  "cinder_prop_rocks": {
+   "path": "res://assets/sprites/cliffs/cinder/prop_rocks.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.3.11 designer cliff prop (cinder)"
   }
  },
  "actors": {
@@ -3289,6 +3746,402 @@
    ],
    "frames": 4,
    "note": "0.3.9.2 moat inner corners NE SE SW NW: both side neighbours are moat, the diagonal is land"
+  },
+  "cliff_corner_inner_ne": {
+   "path": "res://assets/sprites/cliffs/normal/cliff_corner_inner_ne.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 1,
+   "note": "0.3.11 designer cliff tile (normal)"
+  },
+  "cliff_corner_inner_nw": {
+   "path": "res://assets/sprites/cliffs/normal/cliff_corner_inner_nw.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 1,
+   "note": "0.3.11 designer cliff tile (normal)"
+  },
+  "cliff_corner_inner_se": {
+   "path": "res://assets/sprites/cliffs/normal/cliff_corner_inner_se.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 1,
+   "note": "0.3.11 designer cliff tile (normal)"
+  },
+  "cliff_corner_inner_sw": {
+   "path": "res://assets/sprites/cliffs/normal/cliff_corner_inner_sw.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 1,
+   "note": "0.3.11 designer cliff tile (normal)"
+  },
+  "cliff_corner_outer_ne": {
+   "path": "res://assets/sprites/cliffs/normal/cliff_corner_outer_ne.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 1,
+   "note": "0.3.11 designer cliff tile (normal)"
+  },
+  "cliff_corner_outer_nw": {
+   "path": "res://assets/sprites/cliffs/normal/cliff_corner_outer_nw.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 1,
+   "note": "0.3.11 designer cliff tile (normal)"
+  },
+  "cliff_corner_outer_se": {
+   "path": "res://assets/sprites/cliffs/normal/cliff_corner_outer_se.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 2,
+   "note": "0.3.11 designer cliff tile (normal); 16x32: edge cell + overhang into the cell below"
+  },
+  "cliff_corner_outer_sw": {
+   "path": "res://assets/sprites/cliffs/normal/cliff_corner_outer_sw.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 2,
+   "note": "0.3.11 designer cliff tile (normal); 16x32: edge cell + overhang into the cell below"
+  },
+  "cliff_face_s_a": {
+   "path": "res://assets/sprites/cliffs/normal/cliff_face_s_a.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 2,
+   "note": "0.3.11 designer cliff tile (normal); 16x32: edge cell + overhang into the cell below"
+  },
+  "cliff_face_s_b": {
+   "path": "res://assets/sprites/cliffs/normal/cliff_face_s_b.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 2,
+   "note": "0.3.11 designer cliff tile (normal); 16x32: edge cell + overhang into the cell below"
+  },
+  "cliff_face_s_c": {
+   "path": "res://assets/sprites/cliffs/normal/cliff_face_s_c.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 2,
+   "note": "0.3.11 designer cliff tile (normal); 16x32: edge cell + overhang into the cell below"
+  },
+  "cliff_face_s_d": {
+   "path": "res://assets/sprites/cliffs/normal/cliff_face_s_d.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 2,
+   "note": "0.3.11 designer cliff tile (normal); 16x32: edge cell + overhang into the cell below"
+  },
+  "cliff_rim_e": {
+   "path": "res://assets/sprites/cliffs/normal/cliff_rim_e.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 1,
+   "note": "0.3.11 designer cliff tile (normal)"
+  },
+  "cliff_rim_e_b": {
+   "path": "res://assets/sprites/cliffs/normal/cliff_rim_e_b.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 1,
+   "note": "0.3.11 designer cliff tile (normal)"
+  },
+  "cliff_rim_n": {
+   "path": "res://assets/sprites/cliffs/normal/cliff_rim_n.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 1,
+   "note": "0.3.11 designer cliff tile (normal)"
+  },
+  "cliff_rim_n_b": {
+   "path": "res://assets/sprites/cliffs/normal/cliff_rim_n_b.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 1,
+   "note": "0.3.11 designer cliff tile (normal)"
+  },
+  "cliff_rim_w": {
+   "path": "res://assets/sprites/cliffs/normal/cliff_rim_w.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 1,
+   "note": "0.3.11 designer cliff tile (normal)"
+  },
+  "cliff_rim_w_b": {
+   "path": "res://assets/sprites/cliffs/normal/cliff_rim_w_b.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 1,
+   "note": "0.3.11 designer cliff tile (normal)"
+  },
+  "cliff_shadow": {
+   "path": "res://assets/sprites/cliffs/normal/cliff_shadow.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 1,
+   "note": "0.3.11 designer cliff tile (normal)"
+  },
+  "cliff_stairs": {
+   "path": "res://assets/sprites/cliffs/normal/cliff_stairs.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 2,
+   "note": "0.3.11 designer cliff tile (normal); 16x32: edge cell + overhang into the cell below"
+  },
+  "cliff_top": {
+   "path": "res://assets/sprites/cliffs/normal/cliff_top.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 1,
+   "note": "0.3.11 designer cliff tile (normal)"
+  },
+  "cliff_top_dirt": {
+   "path": "res://assets/sprites/cliffs/normal/cliff_top_dirt.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 1,
+   "note": "0.3.11 designer cliff tile (normal)"
+  },
+  "cinder_cliff_corner_inner_ne": {
+   "path": "res://assets/sprites/cliffs/cinder/cliff_corner_inner_ne.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 1,
+   "note": "0.3.11 designer cliff tile (cinder)"
+  },
+  "cinder_cliff_corner_inner_nw": {
+   "path": "res://assets/sprites/cliffs/cinder/cliff_corner_inner_nw.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 1,
+   "note": "0.3.11 designer cliff tile (cinder)"
+  },
+  "cinder_cliff_corner_inner_se": {
+   "path": "res://assets/sprites/cliffs/cinder/cliff_corner_inner_se.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 1,
+   "note": "0.3.11 designer cliff tile (cinder)"
+  },
+  "cinder_cliff_corner_inner_sw": {
+   "path": "res://assets/sprites/cliffs/cinder/cliff_corner_inner_sw.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 1,
+   "note": "0.3.11 designer cliff tile (cinder)"
+  },
+  "cinder_cliff_corner_outer_ne": {
+   "path": "res://assets/sprites/cliffs/cinder/cliff_corner_outer_ne.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 1,
+   "note": "0.3.11 designer cliff tile (cinder)"
+  },
+  "cinder_cliff_corner_outer_nw": {
+   "path": "res://assets/sprites/cliffs/cinder/cliff_corner_outer_nw.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 1,
+   "note": "0.3.11 designer cliff tile (cinder)"
+  },
+  "cinder_cliff_corner_outer_se": {
+   "path": "res://assets/sprites/cliffs/cinder/cliff_corner_outer_se.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 2,
+   "note": "0.3.11 designer cliff tile (cinder); 16x32: edge cell + overhang into the cell below"
+  },
+  "cinder_cliff_corner_outer_sw": {
+   "path": "res://assets/sprites/cliffs/cinder/cliff_corner_outer_sw.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 2,
+   "note": "0.3.11 designer cliff tile (cinder); 16x32: edge cell + overhang into the cell below"
+  },
+  "cinder_cliff_face_s_a": {
+   "path": "res://assets/sprites/cliffs/cinder/cliff_face_s_a.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 2,
+   "note": "0.3.11 designer cliff tile (cinder); 16x32: edge cell + overhang into the cell below"
+  },
+  "cinder_cliff_face_s_b": {
+   "path": "res://assets/sprites/cliffs/cinder/cliff_face_s_b.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 2,
+   "note": "0.3.11 designer cliff tile (cinder); 16x32: edge cell + overhang into the cell below"
+  },
+  "cinder_cliff_face_s_c": {
+   "path": "res://assets/sprites/cliffs/cinder/cliff_face_s_c.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 2,
+   "note": "0.3.11 designer cliff tile (cinder); 16x32: edge cell + overhang into the cell below"
+  },
+  "cinder_cliff_face_s_d": {
+   "path": "res://assets/sprites/cliffs/cinder/cliff_face_s_d.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 2,
+   "note": "0.3.11 designer cliff tile (cinder); 16x32: edge cell + overhang into the cell below"
+  },
+  "cinder_cliff_rim_e": {
+   "path": "res://assets/sprites/cliffs/cinder/cliff_rim_e.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 1,
+   "note": "0.3.11 designer cliff tile (cinder)"
+  },
+  "cinder_cliff_rim_e_b": {
+   "path": "res://assets/sprites/cliffs/cinder/cliff_rim_e_b.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 1,
+   "note": "0.3.11 designer cliff tile (cinder)"
+  },
+  "cinder_cliff_rim_n": {
+   "path": "res://assets/sprites/cliffs/cinder/cliff_rim_n.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 1,
+   "note": "0.3.11 designer cliff tile (cinder)"
+  },
+  "cinder_cliff_rim_n_b": {
+   "path": "res://assets/sprites/cliffs/cinder/cliff_rim_n_b.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 1,
+   "note": "0.3.11 designer cliff tile (cinder)"
+  },
+  "cinder_cliff_rim_w": {
+   "path": "res://assets/sprites/cliffs/cinder/cliff_rim_w.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 1,
+   "note": "0.3.11 designer cliff tile (cinder)"
+  },
+  "cinder_cliff_rim_w_b": {
+   "path": "res://assets/sprites/cliffs/cinder/cliff_rim_w_b.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 1,
+   "note": "0.3.11 designer cliff tile (cinder)"
+  },
+  "cinder_cliff_shadow": {
+   "path": "res://assets/sprites/cliffs/cinder/cliff_shadow.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 1,
+   "note": "0.3.11 designer cliff tile (cinder)"
+  },
+  "cinder_cliff_stairs": {
+   "path": "res://assets/sprites/cliffs/cinder/cliff_stairs.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 2,
+   "note": "0.3.11 designer cliff tile (cinder); 16x32: edge cell + overhang into the cell below"
+  },
+  "cinder_cliff_top": {
+   "path": "res://assets/sprites/cliffs/cinder/cliff_top.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 1,
+   "note": "0.3.11 designer cliff tile (cinder)"
+  },
+  "cinder_cliff_top_dirt": {
+   "path": "res://assets/sprites/cliffs/cinder/cliff_top_dirt.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 1,
+   "note": "0.3.11 designer cliff tile (cinder)"
   }
  },
  "transitions": {

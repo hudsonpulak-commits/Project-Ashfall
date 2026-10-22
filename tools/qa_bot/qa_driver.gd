@@ -250,7 +250,24 @@ func walk_out(b: Dictionary) -> void:
 func _outside(b: Dictionary, n := 3) -> Vector2i:
 	var r: Rect2i = b["rect"]
 	var d: Vector2i = b["doors"][0]
-	return d + (Vector2i(0, n) if int(b["facade_y"]) == r.end.y - 1 else Vector2i(0, -n))
+	var dir := Vector2i(0, 1) if int(b["facade_y"]) == r.end.y - 1 else Vector2i(0, -1)
+	# 0.3.11: towns are denser - never land on another building's floor; prefer
+	# the furthest street tile up to n steps out, else the nearest one off-building
+	var g: WorldGen = main.world.gen
+	var best := d + dir
+	for k in range(1, n + 1):
+		var q := d + dir * k
+		if not g.building_at(q).is_empty():
+			break
+		best = q
+	if not g.building_at(best).is_empty():
+		for rr in range(1, 6):
+			for dy in range(-rr, rr + 1):
+				for dx in range(-rr, rr + 1):
+					var q2 := d + dir + Vector2i(dx, dy)
+					if g.building_at(q2).is_empty() and not main.world.is_blocked(q2):
+						return q2
+	return best
 
 
 func _finish(ok: bool) -> void:
@@ -529,12 +546,16 @@ func _pshop() -> void:
 		ai.place_at(w.find_free_tile_near(_outside(b, 3) + Vector2i(1, 0), 3, true))
 		ai.visit_shop("player")
 		_notes["ai_visit_action"] = str(ai.action.get("kind", ""))
-		await until(func(): return w.gen.is_inside(ai.tile, b), 12.0)
+		await until(func(): return w.gen.is_inside(ai.tile, b) or (not ai.action.is_empty() and ai.path.is_empty()), 12.0)
 		await until(func(): return ai.path.is_empty(), 8.0)
 		await frames(10)
 		await shot("v030_player_shop_stocked")
 		await frames(50)
-		_notes["ai_inside"] = w.gen.is_inside(ai.tile, b)
+		var at_stand := false   # 0.3.11 the stands are on the plaza: a customer at one counts
+		for dp in b.get("displays", []):
+			if maxi(absi(ai.tile.x - dp.x), absi(ai.tile.y - dp.y)) <= 1:
+				at_stand = true
+		_notes["ai_inside"] = w.gen.is_inside(ai.tile, b) or at_stand
 	label = "collect"
 	var till := ps.till
 	await tap_tile(b["keeper_at"], "keeper (collect)")
@@ -2381,7 +2402,13 @@ func _capital038() -> void:
 	w.set_focus(p.tile, true)
 	await frames(30)
 	await _snap("highfen_moat_gate")
-	res["moat_px"] = g.tile_at(ng.x - 4, ng.y + 4) == WorldGen.TileType.MOAT or g.tile_at(ng.x + 4, ng.y + 4) == WorldGen.TileType.MOAT
+	# 0.3.11 the moat is gone: a round city wall (CITY_RING) flanks the north gate
+	var ring := 0
+	for dy in range(1, 90):   # walking north from the palace hits the wall before the town's north gate
+		if g.tile_at(hc.x + 3, hc.y - dy) == WorldGen.TileType.CITY_RING or g.tile_at(hc.x - 3, hc.y - dy) == WorldGen.TileType.CITY_RING:
+			ring += 1
+			break
+	res["moat_px"] = ring > 0
 	hud.show_panel("map")
 	await frames(15)
 	label = "map"
@@ -2420,14 +2447,12 @@ func _capital038() -> void:
 	res["house_bought"] = p.house_owned and c0 - p.inventory.count(GameData.currency) == Player.house_price()
 	var st := {}
 	var chest := Vector2i.ZERO
-	for y in range(house["rect"].position.y, house["rect"].end.y):
-		for x in range(house["rect"].position.x, house["rect"].end.x):
-			var o: WorldObject = w.object_at(Vector2i(x, y))
-			if o:
-				var dd := o.def()
-				st[str(dd.get("station", dd.get("type", "")))] = true
-				if o.def_id == "bank_chest":
-					chest = o.pos
+	for q in g._town_objects.keys():   # 0.3.11 stations stand in the townhouse's work yard (meta building)
+		if str(g.object_meta(q).get("building", "")) == str(house["id"]):
+			var dd: Dictionary = GameData.object_def(str(g._town_objects[q]))
+			st[str(dd.get("station", dd.get("type", "")))] = true
+			if g._town_objects[q] == "bank_chest":
+				chest = q
 	res["house_stations"] = st.keys()
 	await tap_tile(chest, "house bank chest")
 	res["house_bank"] = await until(func(): return hud.current_panel == "bank", 12.0)
@@ -2720,29 +2745,28 @@ func _autotile039() -> void:
 			if l.name.begins_with("trans"):
 				tc += (l as TileMapLayer).get_used_cells().size()
 	res["transition_cells"] = tc
-	# the moat corner (the ring's diagonal side) with its bank pieces
+	# 0.3.11 the moat became a round city wall: find the ring on its diagonal
+	# side and on every compass side (the ring art is one piece per octant)
 	var hc := g.town_center(g.capital)
 	var mc := Vector2i(1 << 30, 0)
-	for r in range(20, 40):
+	for r in range(10, 60):
 		var q := hc + Vector2i(-r, -r)
-		if g.tile_at(q.x, q.y) == WorldGen.TileType.MOAT:
+		if g.tile_at(q.x, q.y) == WorldGen.TileType.CITY_RING:
 			mc = q
 			break
 	res["moat_corner"] = [mc.x, mc.y]
+	var mk := {}
+	for side in [["N", Vector2i(0, -1)], ["E", Vector2i(1, 0)], ["S", Vector2i(0, 1)], ["W", Vector2i(-1, 0)], ["NW", Vector2i(-1, -1)]]:
+		for r in range(5, 70):
+			var q3: Vector2i = hc + (side[1] as Vector2i) * r
+			if g.tile_at(q3.x, q3.y) == WorldGen.TileType.CITY_RING:
+				mk[side[0]] = true
+				break
+	res["moat_pieces"] = mk.keys()
 	if mc.x != 1 << 30:
 		p.place_at(w.find_free_tile_near(mc + Vector2i(4, 4), 6))
 		w.set_focus(mc, true)
 		await frames(25)
-		var mcv: Node = w.chunk_views.get(World.chunk_of(mc))
-		var mk := {}
-		for ch in w.chunk_views.values():
-			for l in ch.get_children():
-				if l.name == "autotile":
-					for cell in (l as TileMapLayer).get_used_cells():
-						var ac: Vector2i = (l as TileMapLayer).get_cell_atlas_coords(cell)
-						if (l as TileMapLayer).get_cell_source_id(cell) == w._overlay_src.get("autotile/moat_border", [-1])[0]:
-							mk[Autotile.piece_name(ac.x)] = true
-		res["moat_pieces"] = mk.keys()
 		label = "moat_corner"
 		await _snap("moat_corner")
 	# the player walks up: the back sheet shows (body and gear)

@@ -454,7 +454,7 @@ def check_shop(ctx):
         ev = [ctx.still("pshop", "forsale", "v030_player_shop_forsale"), ctx.still("pshop", "manage", "v030_player_shop_manage"), ctx.still("pshop", "ai_customer", "v030_player_shop_stocked", last=True)]
         out.append(Result("C8 player shop", "buy the empty shop (tap estate agent, tap Buy)", bool(ok_buy), "owned=%s, coins %s -> %s (price %s)" % (b.get("owned"), b.get("coins_before"), b.get("coins_after"), b.get("price")), ev[:1]))
         out.append(Result("C8 player shop", "stock 2 stands through the panel", ok_stock, "stocked stands: %s" % r.get("stocked"), ev[1:2]))
-        out.append(Result("C8 player shop", "AI shoppers buy (AIBrain.shop_browse) and one walks in", ok_sale and bool(r.get("ai_inside")), "units sold %s; customer inside %s" % (r.get("ai_units"), r.get("ai_inside")), ev[2:]))
+        out.append(Result("C8 player shop", "AI shoppers buy (AIBrain.shop_browse) and one comes to the stands", ok_sale and bool(r.get("ai_inside")), "units sold %s; customer inside %s" % (r.get("ai_units"), r.get("ai_inside")), ev[2:]))
         out.append(Result("C8 player shop", "collect the till at the counter", bool(ok_collect), "till %s -> coins %s -> %s, till after %s" % (c.get("till"), c.get("coins_before"), c.get("coins_after"), c.get("till_after"))))
     return out
 
@@ -1147,7 +1147,7 @@ def check_autotile(ctx):
                "road_fence_vertical" in snaps and "road_fence_horizontal" in snaps and c.get("vfence_blocks") and c.get("vfence_los"),
                "spots %s blocks %s los %s" % (c.get("spots"), c.get("vfence_blocks"), c.get("vfence_los")), sp("road_fence_vertical", "road_fence_horizontal")),
         Result("C31 autotile", "0.3.9 floor transitions are drawn where unlike floors meet", c.get("transition_cells", 0) > 10, "%d blend cells in the road chunk" % c.get("transition_cells", 0), sp("transitions")),
-        Result("C31 autotile", "0.3.9 the moat border autotiles (straight, corner, T + bridge joins)", "moat_corner" in snaps and len(c.get("moat_pieces", [])) >= 3, "pieces %s at %s" % (c.get("moat_pieces"), c.get("moat_corner")), sp("moat_corner")),
+        Result("C31 autotile", "0.3.11 the round city wall rings Highfen (moat replaced; ring found on every side)", "moat_corner" in snaps and len(c.get("moat_pieces", [])) >= 3, "pieces %s at %s" % (c.get("moat_pieces"), c.get("moat_corner")), sp("moat_corner")),
         Result("C31 autotile", "0.3.9 walking up shows the player's back (body and gear)", bool(wu.get("back")) and bool(wu.get("gear_back")), str(wu), sp("player_walk_up_back")),
     ]
 
@@ -1191,7 +1191,7 @@ def check_capital(ctx):
     return [
         Result("C30 capital", "0.3.8.1 a new character starts in Fenhollow near Kell", st.get("town") == "fenhollow" and bool(st.get("kell")), str(st), sp("new_game_kell")),
         Result("C30 capital", "0.3.8 Highfen is reachable from every town by road", bool(c.get("reach")) and all(c.get("reach", {}).values()) and len(c.get("reach", {})) == 3, str(c.get("reach")), sp("highfen_overview", "highfen_moat_gate", "world_map_038")),
-        Result("C30 capital", "0.3.8 the moat rings Highfen; gates cross it on bridges", bool(c.get("moat_px")), "moat beside the north gate %s" % c.get("moat_px"), sp("highfen_moat_gate")),
+        Result("C30 capital", "0.3.11 the city wall rings Highfen beside the north gate", bool(c.get("moat_px")), "city wall beside the north gate %s" % c.get("moat_px"), sp("highfen_moat_gate")),
         Result("C30 capital", "0.3.8 the player shop exists only in Highfen", c.get("player_shops") == ["highfen_player@highfen"], str(c.get("player_shops"))),
         Result("C30 capital", "0.3.8 buying the house (clerk, two taps) gives every station + the bank", bool(c.get("house_bought")) and bool(c.get("house_bank")) and all(k in (c.get("house_stations") or []) for k in ("hearth", "furnace", "anvil", "workbench", "quern", "bank")), "bought %s bank %s stations %s" % (c.get("house_bought"), c.get("house_bank"), c.get("house_stations")), sp("house_interior")),
         Result("C30 capital", "0.3.8 a slime dies and drops no bones", bool(c.get("slime_killed")) and "bones" not in (c.get("slime_drops") or []), "killed %s drops %s" % (c.get("slime_killed"), c.get("slime_drops")), sp("slime")),

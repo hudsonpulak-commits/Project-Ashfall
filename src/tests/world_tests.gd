@@ -49,6 +49,7 @@ static func run(main, world: World, p: Player) -> void:
 	Patch0395Tests.run(main, world, p)   # 0.3.9.5
 	Patch0396Tests.run(main, world, p)   # 0.3.9.6
 	Patch0310Tests.run(main, world, p)   # 0.3.10 lore regions
+	Patch0311Tests.run(main, world, p)   # 0.3.11 Highfen + cliff fixes
 	Patch0396VideoTests.run(main, world, p)   # 0.3.9.6 title video
 	p.place_at(world.gen.town_spawn("fenhollow"))
 	world.set_focus(p.tile, true)
@@ -636,7 +637,7 @@ static func _church_tests(world: World, p: Player) -> void:
 		per_town[b["town"]] = int(per_town.get(b["town"], 0)) + 1
 		var r: Rect2i = b["rect"]
 		var door: Vector2i = b["doors"][0]
-		for y in range(r.position.y, r.end.y):
+		for y in range(r.position.y, r.end.y if not b.has("art") else r.position.y):   # 0.3.11 layered-art churches draw their own stone
 			for x in range(r.position.x, r.end.x):
 				var q := Vector2i(x, y)
 				var t := gen.tile_at(x, y)
@@ -649,7 +650,7 @@ static func _church_tests(world: World, p: Player) -> void:
 					stone_ok = false
 		var alt = world.object_at(b["altar"])
 		stone_ok = stone_ok and alt != null and alt.def_id == "altar" and gen.is_inside(b["altar"] + Vector2i(0, 1 if door.y > b["altar"].y else -1), b)
-	check(per_town.size() == gen.town_order.size() - int(gen.capital != "") and per_town.values().all(func(n): return n == 1),
+	check(per_town.size() == gen.town_order.size() and per_town.values().all(func(n): return n == 1),   # 0.3.11 Highfen has its cathedral too
 		"0.3.1 one stone church per town %s" % str(per_town))
 	check(stone_ok, "churches: grey stone walls + floor (not timber), an altar inside")
 	var hook_ok := true
@@ -1326,7 +1327,10 @@ static func _walled_integration_tests(world: World, p: Player) -> void:
 	check(win_ok and styles.size() >= 3, "every city facade gets lit windows at night (styles %s)" % str(styles))
 	check(cook_lit == gen.town_order.size(), "each Cook House has lit windows at night (%d)" % cook_lit)
 	var gt: Array = DayNight.gate_torch_tiles(world)
-	var gt_ok := gt.size() == 8 * gen.town_order.size()
+	var gt_want := 0
+	for tid in gen.town_order:
+		gt_want += 2 * (gen.towns[tid].get("gate_walls", gen.towns[tid].get("gates", {})) as Dictionary).size()
+	var gt_ok := gt.size() == gt_want and gt_want >= 2 * gen.town_order.size()
 	for q in gt:
 		gt_ok = gt_ok and gen.tile_at(q.x, q.y) in WorldGen.BLOCKING_TILES
 	check(gt_ok, "a torch on the wall each side of every city gate (%d)" % gt.size())

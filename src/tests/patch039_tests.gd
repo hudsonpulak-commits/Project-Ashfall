@@ -58,16 +58,16 @@ static func run(main, world: World, p: Player) -> void:
 	check(cells.size() == 1 and cells[0][0] == 2 and cells[0][2] == Vector2i(Autotile.E | Autotile.S, 0), "walls: a city wall corner gets the corner cap (%s)" % [cells])
 	cells = world.overlay_cells(o, nmf.call({o: "capital_wall", Vector2i(1, -1): "capital_wall", Vector2i(-1, 1): "capital_wall"}))
 	check(cells.size() == 1 and cells[0][2] == Vector2i(Autotile.DIAG_SLASH, 0), "walls: a 45-degree wall run gets the diagonal cap")
-	# the real Highfen ring has corner and diagonal-ish pieces, never broken
+	# 0.3.11 the real Highfen ring is the designer's curved wall art (8 y-sorted octants) over blocking ring tiles
 	var hc := gen.town_center(gen.capital)
-	var kinds := {}
+	var ring_n := 0
 	for y in range(-30, 31):
 		for x in range(-30, 31):
-			var q := hc + Vector2i(x, y)
-			if WorldGen.TILE_NAMES[gen.tile_at(q.x, q.y)] == "capital_wall":
-				var f := Autotile.piece_at(q, func(r): var t: String = WorldGen.TILE_NAMES[gen.tile_at(r.x, r.y)]; return t == "capital_wall" or t in Autotile.WALL_JOIN_ALSO)
-				kinds[Autotile.piece_name(f)] = true
-	check(kinds.has("corner") and (kinds.has("straight_h") or kinds.has("straight_v")) and kinds.has("t"), "walls: Highfen's ring autotiles into straights, corners and T-joints %s" % [kinds.keys()])
+			if gen.tile_at(hc.x + x, hc.y + y) == WorldGen.TileType.CITY_RING:
+				ring_n += 1
+	var segs: Dictionary = WorldGen.town_art().get("ring", {}).get("segments", {})
+	check(ring_n > 150 and segs.size() == 8 and segs.values().all(func(sg): return ResourceLoader.exists(str(sg["path"]))),
+		"walls: Highfen's round wall is the designer ring art (8 segments) over %d blocking tiles" % ring_n)
 	# --- fences in the world: pens and road fences ---
 	var pen_corner := Vector2i(1 << 30, 0)
 	var road_f: Array = []

@@ -1,0 +1,588 @@
+{
+ "tile_size": 16,
+ "palettes": {
+  "normal": {
+   "tiles": [
+    {
+     "name": "cliff_top",
+     "file": "normal/cliff_top.png",
+     "size": [
+      16,
+      16
+     ],
+     "anchor": "top-left of cell"
+    },
+    {
+     "name": "cliff_top_dirt",
+     "file": "normal/cliff_top_dirt.png",
+     "size": [
+      16,
+      16
+     ],
+     "anchor": "top-left of cell"
+    },
+    {
+     "name": "cliff_face_s_a",
+     "file": "normal/cliff_face_s_a.png",
+     "size": [
+      16,
+      32
+     ],
+     "anchor": "top-left of the plateau edge cell; 16x32 pieces overhang one cell south"
+    },
+    {
+     "name": "cliff_face_s_b",
+     "file": "normal/cliff_face_s_b.png",
+     "size": [
+      16,
+      32
+     ],
+     "anchor": "top-left of the plateau edge cell; 16x32 pieces overhang one cell south"
+    },
+    {
+     "name": "cliff_face_s_c",
+     "file": "normal/cliff_face_s_c.png",
+     "size": [
+      16,
+      32
+     ],
+     "anchor": "top-left of the plateau edge cell; 16x32 pieces overhang one cell south"
+    },
+    {
+     "name": "cliff_face_s_d",
+     "file": "normal/cliff_face_s_d.png",
+     "size": [
+      16,
+      32
+     ],
+     "anchor": "top-left of the plateau edge cell; 16x32 pieces overhang one cell south"
+    },
+    {
+     "name": "cliff_rim_n",
+     "file": "normal/cliff_rim_n.png",
+     "size": [
+      16,
+      16
+     ],
+     "anchor": "top-left of cell"
+    },
+    {
+     "name": "cliff_rim_n_b",
+     "file": "normal/cliff_rim_n_b.png",
+     "size": [
+      16,
+      16
+     ],
+     "anchor": "top-left of cell"
+    },
+    {
+     "name": "cliff_rim_e",
+     "file": "normal/cliff_rim_e.png",
+     "size": [
+      16,
+      16
+     ],
+     "anchor": "top-left of cell"
+    },
+    {
+     "name": "cliff_rim_e_b",
+     "file": "normal/cliff_rim_e_b.png",
+     "size": [
+      16,
+      16
+     ],
+     "anchor": "top-left of cell"
+    },
+    {
+     "name": "cliff_rim_w",
+     "file": "normal/cliff_rim_w.png",
+     "size": [
+      16,
+      16
+     ],
+     "anchor": "top-left of cell"
+    },
+    {
+     "name": "cliff_rim_w_b",
+     "file": "normal/cliff_rim_w_b.png",
+     "size": [
+      16,
+      16
+     ],
+     "anchor": "top-left of cell"
+    },
+    {
+     "name": "cliff_corner_outer_ne",
+     "file": "normal/cliff_corner_outer_ne.png",
+     "size": [
+      16,
+      16
+     ],
+     "anchor": "top-left of cell"
+    },
+    {
+     "name": "cliff_corner_outer_nw",
+     "file": "normal/cliff_corner_outer_nw.png",
+     "size": [
+      16,
+      16
+     ],
+     "anchor": "top-left of cell"
+    },
+    {
+     "name": "cliff_corner_outer_se",
+     "file": "normal/cliff_corner_outer_se.png",
+     "size": [
+      16,
+      32
+     ],
+     "anchor": "top-left of the plateau edge cell; 16x32 pieces overhang one cell south"
+    },
+    {
+     "name": "cliff_corner_outer_sw",
+     "file": "normal/cliff_corner_outer_sw.png",
+     "size": [
+      16,
+      32
+     ],
+     "anchor": "top-left of the plateau edge cell; 16x32 pieces overhang one cell south"
+    },
+    {
+     "name": "cliff_corner_inner_ne",
+     "file": "normal/cliff_corner_inner_ne.png",
+     "size": [
+      16,
+      16
+     ],
+     "anchor": "top-left of cell"
+    },
+    {
+     "name": "cliff_corner_inner_nw",
+     "file": "normal/cliff_corner_inner_nw.png",
+     "size": [
+      16,
+      16
+     ],
+     "anchor": "top-left of cell"
+    },
+    {
+     "name": "cliff_corner_inner_se",
+     "file": "normal/cliff_corner_inner_se.png",
+     "size": [
+      16,
+      16
+     ],
+     "anchor": "top-left of cell"
+    },
+    {
+     "name": "cliff_corner_inner_sw",
+     "file": "normal/cliff_corner_inner_sw.png",
+     "size": [
+      16,
+      16
+     ],
+     "anchor": "top-left of cell"
+    },
+    {
+     "name": "cliff_stairs",
+     "file": "normal/cliff_stairs.png",
+     "size": [
+      16,
+      32
+     ],
+     "anchor": "top-left of the plateau edge cell; 16x32 pieces overhang one cell south"
+    },
+    {
+     "name": "cliff_shadow",
+     "file": "normal/cliff_shadow.png",
+     "size": [
+      16,
+      16
+     ],
+     "anchor": "top-left of cell"
+    },
+    {
+     "name": "cliff_outcrop_a",
+     "file": "normal/cliff_outcrop_a.png",
+     "size": [
+      16,
+      32
+     ],
+     "anchor": "top-left of the plateau edge cell; 16x32 pieces overhang one cell south"
+    },
+    {
+     "name": "cliff_outcrop_b",
+     "file": "normal/cliff_outcrop_b.png",
+     "size": [
+      16,
+      32
+     ],
+     "anchor": "top-left of the plateau edge cell; 16x32 pieces overhang one cell south"
+    },
+    {
+     "name": "cliff_boulder",
+     "file": "normal/cliff_boulder.png",
+     "size": [
+      16,
+      24
+     ],
+     "anchor": "top-left of cell"
+    },
+    {
+     "name": "prop_grass_tuft",
+     "file": "normal/prop_grass_tuft.png",
+     "size": [
+      16,
+      16
+     ],
+     "anchor": "top-left of cell"
+    },
+    {
+     "name": "prop_rocks",
+     "file": "normal/prop_rocks.png",
+     "size": [
+      16,
+      16
+     ],
+     "anchor": "top-left of cell"
+    },
+    {
+     "name": "prop_pebbles",
+     "file": "normal/prop_pebbles.png",
+     "size": [
+      16,
+      16
+     ],
+     "anchor": "top-left of cell"
+    }
+   ],
+   "sheet": "cliffs_normal_sheet.png",
+   "sheet_order": [
+    "cliff_top",
+    "cliff_top_dirt",
+    "cliff_face_s_a",
+    "cliff_face_s_b",
+    "cliff_face_s_c",
+    "cliff_face_s_d",
+    "cliff_rim_n",
+    "cliff_rim_n_b",
+    "cliff_rim_e",
+    "cliff_rim_e_b",
+    "cliff_rim_w",
+    "cliff_rim_w_b",
+    "cliff_corner_outer_ne",
+    "cliff_corner_outer_nw",
+    "cliff_corner_outer_se",
+    "cliff_corner_outer_sw",
+    "cliff_corner_inner_ne",
+    "cliff_corner_inner_nw",
+    "cliff_corner_inner_se",
+    "cliff_corner_inner_sw",
+    "cliff_stairs",
+    "cliff_shadow",
+    "cliff_outcrop_a",
+    "cliff_outcrop_b",
+    "cliff_boulder",
+    "prop_grass_tuft",
+    "prop_rocks",
+    "prop_pebbles"
+   ],
+   "sheet_slot": [
+    16,
+    32
+   ]
+  },
+  "cinder": {
+   "tiles": [
+    {
+     "name": "cliff_top",
+     "file": "cinder/cliff_top.png",
+     "size": [
+      16,
+      16
+     ],
+     "anchor": "top-left of cell"
+    },
+    {
+     "name": "cliff_top_dirt",
+     "file": "cinder/cliff_top_dirt.png",
+     "size": [
+      16,
+      16
+     ],
+     "anchor": "top-left of cell"
+    },
+    {
+     "name": "cliff_face_s_a",
+     "file": "cinder/cliff_face_s_a.png",
+     "size": [
+      16,
+      32
+     ],
+     "anchor": "top-left of the plateau edge cell; 16x32 pieces overhang one cell south"
+    },
+    {
+     "name": "cliff_face_s_b",
+     "file": "cinder/cliff_face_s_b.png",
+     "size": [
+      16,
+      32
+     ],
+     "anchor": "top-left of the plateau edge cell; 16x32 pieces overhang one cell south"
+    },
+    {
+     "name": "cliff_face_s_c",
+     "file": "cinder/cliff_face_s_c.png",
+     "size": [
+      16,
+      32
+     ],
+     "anchor": "top-left of the plateau edge cell; 16x32 pieces overhang one cell south"
+    },
+    {
+     "name": "cliff_face_s_d",
+     "file": "cinder/cliff_face_s_d.png",
+     "size": [
+      16,
+      32
+     ],
+     "anchor": "top-left of the plateau edge cell; 16x32 pieces overhang one cell south"
+    },
+    {
+     "name": "cliff_rim_n",
+     "file": "cinder/cliff_rim_n.png",
+     "size": [
+      16,
+      16
+     ],
+     "anchor": "top-left of cell"
+    },
+    {
+     "name": "cliff_rim_n_b",
+     "file": "cinder/cliff_rim_n_b.png",
+     "size": [
+      16,
+      16
+     ],
+     "anchor": "top-left of cell"
+    },
+    {
+     "name": "cliff_rim_e",
+     "file": "cinder/cliff_rim_e.png",
+     "size": [
+      16,
+      16
+     ],
+     "anchor": "top-left of cell"
+    },
+    {
+     "name": "cliff_rim_e_b",
+     "file": "cinder/cliff_rim_e_b.png",
+     "size": [
+      16,
+      16
+     ],
+     "anchor": "top-left of cell"
+    },
+    {
+     "name": "cliff_rim_w",
+     "file": "cinder/cliff_rim_w.png",
+     "size": [
+      16,
+      16
+     ],
+     "anchor": "top-left of cell"
+    },
+    {
+     "name": "cliff_rim_w_b",
+     "file": "cinder/cliff_rim_w_b.png",
+     "size": [
+      16,
+      16
+     ],
+     "anchor": "top-left of cell"
+    },
+    {
+     "name": "cliff_corner_outer_ne",
+     "file": "cinder/cliff_corner_outer_ne.png",
+     "size": [
+      16,
+      16
+     ],
+     "anchor": "top-left of cell"
+    },
+    {
+     "name": "cliff_corner_outer_nw",
+     "file": "cinder/cliff_corner_outer_nw.png",
+     "size": [
+      16,
+      16
+     ],
+     "anchor": "top-left of cell"
+    },
+    {
+     "name": "cliff_corner_outer_se",
+     "file": "cinder/cliff_corner_outer_se.png",
+     "size": [
+      16,
+      32
+     ],
+     "anchor": "top-left of the plateau edge cell; 16x32 pieces overhang one cell south"
+    },
+    {
+     "name": "cliff_corner_outer_sw",
+     "file": "cinder/cliff_corner_outer_sw.png",
+     "size": [
+      16,
+      32
+     ],
+     "anchor": "top-left of the plateau edge cell; 16x32 pieces overhang one cell south"
+    },
+    {
+     "name": "cliff_corner_inner_ne",
+     "file": "cinder/cliff_corner_inner_ne.png",
+     "size": [
+      16,
+      16
+     ],
+     "anchor": "top-left of cell"
+    },
+    {
+     "name": "cliff_corner_inner_nw",
+     "file": "cinder/cliff_corner_inner_nw.png",
+     "size": [
+      16,
+      16
+     ],
+     "anchor": "top-left of cell"
+    },
+    {
+     "name": "cliff_corner_inner_se",
+     "file": "cinder/cliff_corner_inner_se.png",
+     "size": [
+      16,
+      16
+     ],
+     "anchor": "top-left of cell"
+    },
+    {
+     "name": "cliff_corner_inner_sw",
+     "file": "cinder/cliff_corner_inner_sw.png",
+     "size": [
+      16,
+      16
+     ],
+     "anchor": "top-left of cell"
+    },
+    {
+     "name": "cliff_stairs",
+     "file": "cinder/cliff_stairs.png",
+     "size": [
+      16,
+      32
+     ],
+     "anchor": "top-left of the plateau edge cell; 16x32 pieces overhang one cell south"
+    },
+    {
+     "name": "cliff_shadow",
+     "file": "cinder/cliff_shadow.png",
+     "size": [
+      16,
+      16
+     ],
+     "anchor": "top-left of cell"
+    },
+    {
+     "name": "cliff_outcrop_a",
+     "file": "cinder/cliff_outcrop_a.png",
+     "size": [
+      16,
+      32
+     ],
+     "anchor": "top-left of the plateau edge cell; 16x32 pieces overhang one cell south"
+    },
+    {
+     "name": "cliff_outcrop_b",
+     "file": "cinder/cliff_outcrop_b.png",
+     "size": [
+      16,
+      32
+     ],
+     "anchor": "top-left of the plateau edge cell; 16x32 pieces overhang one cell south"
+    },
+    {
+     "name": "cliff_boulder",
+     "file": "cinder/cliff_boulder.png",
+     "size": [
+      16,
+      24
+     ],
+     "anchor": "top-left of cell"
+    },
+    {
+     "name": "prop_grass_tuft",
+     "file": "cinder/prop_grass_tuft.png",
+     "size": [
+      16,
+      16
+     ],
+     "anchor": "top-left of cell"
+    },
+    {
+     "name": "prop_rocks",
+     "file": "cinder/prop_rocks.png",
+     "size": [
+      16,
+      16
+     ],
+     "anchor": "top-left of cell"
+    },
+    {
+     "name": "prop_pebbles",
+     "file": "cinder/prop_pebbles.png",
+     "size": [
+      16,
+      16
+     ],
+     "anchor": "top-left of cell"
+    }
+   ],
+   "sheet": "cliffs_cinder_sheet.png",
+   "sheet_order": [
+    "cliff_top",
+    "cliff_top_dirt",
+    "cliff_face_s_a",
+    "cliff_face_s_b",
+    "cliff_face_s_c",
+    "cliff_face_s_d",
+    "cliff_rim_n",
+    "cliff_rim_n_b",
+    "cliff_rim_e",
+    "cliff_rim_e_b",
+    "cliff_rim_w",
+    "cliff_rim_w_b",
+    "cliff_corner_outer_ne",
+    "cliff_corner_outer_nw",
+    "cliff_corner_outer_se",
+    "cliff_corner_outer_sw",
+    "cliff_corner_inner_ne",
+    "cliff_corner_inner_nw",
+    "cliff_corner_inner_se",
+    "cliff_corner_inner_sw",
+    "cliff_stairs",
+    "cliff_shadow",
+    "cliff_outcrop_a",
+    "cliff_outcrop_b",
+    "cliff_boulder",
+    "prop_grass_tuft",
+    "prop_rocks",
+    "prop_pebbles"
+   ],
+   "sheet_slot": [
+    16,
+    32
+   ]
+  }
+ },
+ "mask": "N1|E2|S4|W8 (cardinal) + diagonals for inner corners"
+}

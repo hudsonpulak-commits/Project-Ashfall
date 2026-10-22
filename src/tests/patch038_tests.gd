@@ -33,21 +33,19 @@ static func run(main, world: World, p: Player) -> void:
 	check(gen.place_at(ns, 8) == "fenhollow" and kell != null and not world.is_blocked(ns), "0.3.8.1 new character spawns in Fenhollow near Kell (%s, kell %s)" % [ns, kell.pos if kell else null])
 	var hc: Vector2i = gen.town_center(cap) if cap != "" else Vector2i.ZERO
 	check(cap == "highfen" and (hc - gen.continent_center).length() <= 2, "Highfen is the capital at the continent centre (%s)" % hc)
-	# circle + moat + gates
-	var moat := 0
+	# 0.3.11 round city wall (designer ring art) with one gate on the south; no moat
 	var wall := 0
+	var open_at := []
 	for a in range(0, 360, 10):
-		var hit_m := false
 		var hit_w := false
-		for r in range(20, 37):
+		for r in range(14, 22):
 			var q := hc + Vector2i(roundi(cos(deg_to_rad(a)) * r), roundi(sin(deg_to_rad(a)) * r))
-			var tt := gen.tile_at(q.x, q.y)
-			hit_m = hit_m or tt == WorldGen.TileType.MOAT or tt == WorldGen.TileType.BRIDGE
-			hit_w = hit_w or tt in [WorldGen.TileType.CAPITAL_WALL, WorldGen.TileType.CAPITAL_FRONT, WorldGen.TileType.GATE_CAPITAL]
-		moat += int(hit_m)
+			hit_w = hit_w or gen.tile_at(q.x, q.y) == WorldGen.TileType.CITY_RING
 		wall += int(hit_w)
-	check(moat == 36 and wall == 36, "a round wall and a moat ring all the way round (%d/36 moat, %d/36 wall)" % [moat, wall])
-	check(gen.gate_outsides(cap).size() == 4 and WorldGen.TileType.MOAT in WorldGen.BLOCKING_TILES, "4 gates with bridges over the moat; the moat can't be walked")
+		if not hit_w:
+			open_at.append(a)
+	check(wall >= 34 and open_at.all(func(a): return a >= 70 and a <= 110), "0.3.11 a round city wall all the way round but the south gate (%d/36, open at %s)" % [wall, open_at])
+	check(gen.gate_outsides(cap).size() == 4 and WorldGen.TileType.CITY_RING in WorldGen.BLOCKING_TILES, "4 roads into Highfen; the city wall can't be walked")
 	# roads: every town -> Highfen by stone road, walkable, 2-3 wide
 	var road_report := []
 	var all_ok := true
@@ -141,19 +139,20 @@ static func run(main, world: World, p: Player) -> void:
 	# the house
 	var house: Dictionary = gen.buildings.get("highfen_house", {})
 	var inside := {}
-	for q in gen._town_objects.keys():
-		if not house.is_empty() and (house["rect"] as Rect2i).has_point(q):
+	var anv_at := Vector2i(1 << 20, 0)
+	for q in gen._town_objects.keys():   # 0.3.11 the stations stand in the townhouse's own work yard (meta building)
+		if not house.is_empty() and str(gen.object_meta(q).get("building", "")) == str(house["id"]):
 			var dd: Dictionary = GameData.object_def(str(gen._town_objects[q]))
 			inside[str(dd.get("station", dd.get("type", "")))] = true
+			if gen._town_objects[q] == "anvil":
+				anv_at = q
 	var need := ["hearth", "furnace", "anvil", "workbench", "quern", "bank"]
 	check(need.all(func(k): return inside.has(k)), "the townhouse has every station (%s) and a bank chest" % str(inside.keys()))
 	p.house_owned = false
-	var hw: Vector2i = house["rect"].position + Vector2i(4, 1)
 	var anv: WorldObject = null
-	for q in gen._town_objects.keys():
-		if (house["rect"] as Rect2i).has_point(q) and gen._town_objects[q] == "anvil":
-			world.set_focus(q, true)
-			anv = world.object_at(q)
+	if anv_at.x != 1 << 20:
+		world.set_focus(anv_at, true)
+		anv = world.object_at(anv_at)
 	check(anv != null and gen.is_private(anv.pos) and world.find_nearest_object(anv.pos, ["anvil"], 3) == null, "house benches are private: AIs never pick them")
 	var coin: String = GameData.currency
 	var c0 := p.inventory.count(coin)
@@ -193,12 +192,16 @@ static func run(main, world: World, p: Player) -> void:
 			dt = mini(dt, int((at - (gen.villages[vid]["center"] as Vector2i)).length()))
 		near += int(dt < 60)
 	check(total >= 7 and near == total, "slime camps by every town and village (%d/%d close)" % [near, total])
-	# old save standing on a changed tile (the moat) is moved somewhere safe
+	# old save standing on a changed tile (inside the 0.3.11 city wall) is moved somewhere safe
 	var keep_t := p.tile
-	var mt := hc + Vector2i(-5, -34)
+	var mt := hc
+	for r in range(10, 24):
+		if gen.tile_at(hc.x, hc.y - r) == WorldGen.TileType.CITY_RING:
+			mt = hc + Vector2i(0, -r)
+			break
 	world.set_focus(mt, true)
 	p.place_at(mt)
 	var moved: bool = main.relocate_if_walled(world, p)
-	check(gen.tile_at(mt.x, mt.y) == WorldGen.TileType.MOAT and moved and not world.is_blocked(p.tile), "an old save standing in the moat is moved to a free tile (%s)" % p.tile)
+	check(gen.tile_at(mt.x, mt.y) == WorldGen.TileType.CITY_RING and moved and not world.is_blocked(p.tile), "an old save standing in the city wall is moved to a free tile (%s)" % p.tile)
 	p.place_at(keep_t)
 	world.set_focus(keep_t, true)

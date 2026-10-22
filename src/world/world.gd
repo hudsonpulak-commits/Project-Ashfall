@@ -147,7 +147,97 @@ func overlay_cells(p: Vector2i, nm: Callable) -> Array:
 				var dg: String = nb[sides[2]]
 				if nb[sides[0]] == "moat" and nb[sides[1]] == "moat" and not dg in ["moat", "bridge", "water", ""]:
 					out.append([4, cs[0], Vector2i(i, 0)])
+	if gen != null and (here in CLIFF_NAMES or (nb.size() >= 4 and (str(nb[0]) in CLIFF_NAMES or str(nb[1]) in CLIFF_NAMES or str(nb[2]) in CLIFF_NAMES or str(nb[3]) in CLIFF_NAMES))):
+		for pc in cliff_pieces(p, here, nb):
+			var cs2: Array = _overlay_src.get("autotile/" + cliff_palette(p) + str(pc[0]), [])
+			if not cs2.is_empty():
+				var f2 := int(pc[1])
+				out.append([3 if str(pc[0]) == "cliff_shadow" else 2, cs2[0], Vector2i(f2 % int(cs2[1]), f2 / int(cs2[1]))])
 	return out
+
+
+## 0.3.11 the designer's cliff tiles (assets/sprites/cliffs/{normal,cinder},
+## art_handoff/cliffs README + pick()): edge cells autotile by the N1|E2|S4|W8
+## plateau mask, inner corners by the diagonals; south faces, south outer
+## corners and stairs are 16x32 (frame 1 hangs into the cell below), the shadow
+## lies 2 rows below. The Cinder region uses the cinder set.
+const CLIFF_NAMES := ["cliff_face", "cliff_lip", "cliff_shadow", "cliff_stairs", "cliff_foot"]
+
+
+func cliff_palette(p: Vector2i) -> String:
+	return "cinder_" if gen.region_map != null and gen.region_map.region_at(p) == "cinder" else ""
+
+
+## The piece drawn on a south edge cell (face variants by cell hash).
+func _south_piece(q: Vector2i) -> String:
+	if gen.tile_at(q.x, q.y) == WorldGen.TileType.CLIFF_STAIRS:
+		return "cliff_stairs"
+	var m: int = gen.cliff_mask(q)
+	if m & 2:
+		return "cliff_corner_outer_se"
+	if m & 8:
+		return "cliff_corner_outer_sw"
+	return ["cliff_face_s_a", "cliff_face_s_b", "cliff_face_s_c", "cliff_face_s_d"][posmod(q.x * 7 + q.y * 3, 4)]
+
+
+func cliff_pieces(p: Vector2i, here: String, nb: Array) -> Array:
+	var out: Array = []
+	if here == "cliff_shadow":
+		out.append(["cliff_shadow", 0])
+	if here in ["cliff_face", "cliff_lip", "cliff_stairs"]:
+		var m: int = gen.cliff_mask(p)
+		if m & 4:
+			out.append([_south_piece(p), 0])
+			return out
+		if here == "cliff_stairs":
+			return out   # east / west / north ramps: open ground
+		var v := "_b" if posmod(p.y * 5 + p.x * 3, 3) == 0 else ""
+		if (m & 1) and (m & 2):
+			out.append(["cliff_corner_outer_ne", 0])
+		elif (m & 1) and (m & 8):
+			out.append(["cliff_corner_outer_nw", 0])
+		elif m & 1:
+			out.append(["cliff_rim_n" + v, 0])
+		elif m & 2:
+			out.append(["cliff_rim_e" + v, 0])
+		elif m & 8:
+			out.append(["cliff_rim_w" + v, 0])
+		else:
+			var ic := _inner_corner(p)
+			if ic != "":
+				out.append([ic, 0])
+		return out
+	# the cell below a south edge: the overhang half of the 16x32 piece
+	var up := p + Vector2i(0, -1)
+	if nb.size() > 0 and str(nb[0]) in ["cliff_face", "cliff_stairs", "cliff_lip"] and (gen.cliff_mask(up) & 4):
+		out.append([_south_piece(up), 1])
+		return out
+	# plateau cells whose only lower neighbour is diagonal: inner corner
+	if not (here in CLIFF_NAMES) and gen.cliff_mask(p) == 0:
+		var ic2 := _inner_corner(p)
+		if ic2 != "":
+			out.append([ic2, 0])
+	return out
+
+
+func _inner_corner(p: Vector2i) -> String:
+	var l: int = gen.cliff_level(p)
+	if gen.cliff_level(p + Vector2i(1, 1)) < l:
+		return "cliff_corner_inner_se"
+	if gen.cliff_level(p + Vector2i(-1, 1)) < l:
+		return "cliff_corner_inner_sw"
+	if gen.cliff_level(p + Vector2i(1, -1)) < l:
+		return "cliff_corner_inner_ne"
+	if gen.cliff_level(p + Vector2i(-1, -1)) < l:
+		return "cliff_corner_inner_nw"
+	return ""
+
+
+## Cliff cells draw region ground underneath; the pieces above carry the look.
+func cliff_base_tile(p: Vector2i, t: int) -> int:
+	if t in [WorldGen.TileType.CLIFF_FACE, WorldGen.TileType.CLIFF_SHADOW, WorldGen.TileType.CLIFF_LIP, WorldGen.TileType.CLIFF_STAIRS, WorldGen.TileType.CLIFF_FOOT]:
+		return gen.region_grass(p)
+	return t
 
 
 func variants_for(tile_type: int) -> int:
@@ -412,6 +502,7 @@ func _build_view(c: Vector2i) -> void:
 			var t := ch.tile_local(lx, ly)
 			var wx := c.x * CHUNK + lx
 			var wy := c.y * CHUNK + ly
+			t = cliff_base_tile(Vector2i(wx, wy), t)
 			var nv := variants_for(t)
 			var v := 0 if nv <= 1 else int(gen.hash01(wx, wy, 7) * nv) % nv
 			layer.set_cell(Vector2i(lx, ly), t, Vector2i(v, 0))

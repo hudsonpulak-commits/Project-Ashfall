@@ -585,6 +585,258 @@
    "doing": "mining",
    "attempt_ticks": 3,
    "note": "0.3.10 Cinder + the Scorch"
+  },
+  "hf_banner_pole": {
+   "name": "Banner",
+   "sprite": "hf_banner_pole",
+   "blocks": true,
+   "type": "prop"
+  },
+  "hf_barrel": {
+   "name": "Barrel",
+   "sprite": "hf_barrel",
+   "blocks": true,
+   "type": "prop"
+  },
+  "hf_bush_a": {
+   "name": "Bush",
+   "sprite": "hf_bush_a",
+   "blocks": true,
+   "type": "prop"
+  },
+  "hf_bush_b": {
+   "name": "Bush",
+   "sprite": "hf_bush_b",
+   "blocks": true,
+   "type": "prop"
+  },
+  "hf_bush_flowers": {
+   "name": "Bush flowers",
+   "sprite": "hf_bush_flowers",
+   "blocks": true,
+   "type": "prop"
+  },
+  "hf_cart": {
+   "name": "Cart",
+   "sprite": "hf_cart",
+   "blocks": true,
+   "type": "prop"
+  },
+  "hf_crate": {
+   "name": "Crate",
+   "sprite": "hf_crate",
+   "blocks": true,
+   "type": "prop"
+  },
+  "hf_crate_broken": {
+   "name": "Crateroken",
+   "sprite": "hf_crate_broken",
+   "blocks": false,
+   "type": "prop"
+  },
+  "hf_crate_stack": {
+   "name": "Crate stack",
+   "sprite": "hf_crate_stack",
+   "blocks": true,
+   "type": "prop"
+  },
+  "hf_debris": {
+   "name": "Debris",
+   "sprite": "hf_debris",
+   "blocks": false,
+   "type": "prop"
+  },
+  "hf_debris_b": {
+   "name": "Debris",
+   "sprite": "hf_debris_b",
+   "blocks": false,
+   "type": "prop"
+  },
+  "hf_fence_curve": {
+   "name": "Fence curve",
+   "sprite": "hf_fence_curve",
+   "blocks": true,
+   "type": "prop"
+  },
+  "hf_fence_straight": {
+   "name": "Fence straight",
+   "sprite": "hf_fence_straight",
+   "blocks": true,
+   "type": "prop"
+  },
+  "hf_flowerbed_long": {
+   "name": "Flowerbed long",
+   "sprite": "hf_flowerbed_long",
+   "blocks": false,
+   "type": "prop"
+  },
+  "hf_flowerbed_small": {
+   "name": "Flowerbed small",
+   "sprite": "hf_flowerbed_small",
+   "blocks": false,
+   "type": "prop"
+  },
+  "hf_lamp_post": {
+   "name": "Lamp post",
+   "sprite": "hf_lamp_post",
+   "blocks": true,
+   "type": "prop"
+  },
+  "hf_mud_patch": {
+   "name": "Mud patch",
+   "sprite": "hf_mud_patch",
+   "blocks": false,
+   "type": "prop"
+  },
+  "hf_puddle": {
+   "name": "Puddle",
+   "sprite": "hf_puddle",
+   "blocks": false,
+   "type": "prop"
+  },
+  "hf_sign_bread": {
+   "name": "Bakery sign",
+   "sprite": "hf_sign_bread",
+   "blocks": true,
+   "type": "prop"
+  },
+  "hf_sign_inn": {
+   "name": "Inn sign",
+   "sprite": "hf_sign_inn",
+   "blocks": true,
+   "type": "prop"
+  },
+  "hf_sign_post_road": {
+   "name": "Signpost",
+   "sprite": "hf_sign_post_road",
+   "blocks": true,
+   "type": "prop"
+  },
+  "hf_stall_cloth": {
+   "name": "Cloth stall",
+   "sprite": "hf_stall_cloth",
+   "blocks": true,
+   "type": "prop"
+  },
+  "hf_stall_fish": {
+   "name": "Fish stall",
+   "sprite": "hf_stall_fish",
+   "blocks": true,
+   "type": "prop"
+  },
+  "hf_stall_fruit": {
+   "name": "Fruit stall",
+   "sprite": "hf_stall_fruit",
+   "blocks": true,
+   "type": "prop"
+  },
+  "hf_statue_knight": {
+   "name": "Statue of a knight",
+   "sprite": "hf_statue_knight",
+   "blocks": true,
+   "type": "prop"
+  },
+  "hf_tree_autumn": {
+   "name": "Autumn oak",
+   "sprite": "hf_tree_autumn",
+   "blocks": true,
+   "type": "prop"
+  },
+  "hf_tree_oak_a": {
+   "name": "Oak",
+   "sprite": "hf_tree_oak_a",
+   "blocks": true,
+   "type": "prop"
+  },
+  "hf_tree_oak_b": {
+   "name": "Oak",
+   "sprite": "hf_tree_oak_b",
+   "blocks": true,
+   "type": "prop"
+  },
+  "hf_tree_pine": {
+   "name": "Pine",
+   "sprite": "hf_tree_pine",
+   "blocks": true,
+   "type": "prop"
+  },
+  "hf_well": {
+   "name": "Well",
+   "sprite": "hf_well",
+   "blocks": true,
+   "type": "prop"
+  },
+  "cliff_boulder": {
+   "name": "Boulder",
+   "sprite": "cliff_boulder",
+   "blocks": true,
+   "type": "prop"
+  },
+  "cinder_cliff_boulder": {
+   "name": "Boulder",
+   "sprite": "cinder_cliff_boulder",
+   "blocks": true,
+   "type": "prop"
+  },
+  "cliff_outcrop_a": {
+   "name": "Rock outcrop",
+   "sprite": "cliff_outcrop_a",
+   "blocks": true,
+   "type": "prop"
+  },
+  "cinder_cliff_outcrop_a": {
+   "name": "Rock outcrop",
+   "sprite": "cinder_cliff_outcrop_a",
+   "blocks": true,
+   "type": "prop"
+  },
+  "cliff_outcrop_b": {
+   "name": "Rock outcrop",
+   "sprite": "cliff_outcrop_b",
+   "blocks": true,
+   "type": "prop"
+  },
+  "cinder_cliff_outcrop_b": {
+   "name": "Rock outcrop",
+   "sprite": "cinder_cliff_outcrop_b",
+   "blocks": true,
+   "type": "prop"
+  },
+  "prop_grass_tuft": {
+   "name": "Grass tuft",
+   "sprite": "prop_grass_tuft",
+   "blocks": false,
+   "type": "prop"
+  },
+  "cinder_prop_grass_tuft": {
+   "name": "Grass tuft",
+   "sprite": "cinder_prop_grass_tuft",
+   "blocks": false,
+   "type": "prop"
+  },
+  "prop_pebbles": {
+   "name": "Pebbles",
+   "sprite": "prop_pebbles",
+   "blocks": false,
+   "type": "prop"
+  },
+  "cinder_prop_pebbles": {
+   "name": "Pebbles",
+   "sprite": "cinder_prop_pebbles",
+   "blocks": false,
+   "type": "prop"
+  },
+  "prop_rocks": {
+   "name": "Rocks",
+   "sprite": "prop_rocks",
+   "blocks": false,
+   "type": "prop"
+  },
+  "cinder_prop_rocks": {
+   "name": "Rocks",
+   "sprite": "cinder_prop_rocks",
+   "blocks": false,
+   "type": "prop"
   }
  }
 }

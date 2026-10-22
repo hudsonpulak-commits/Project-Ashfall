@@ -25,14 +25,20 @@ func setup(w) -> void:
 	world = w
 	z_index = 50
 	_roof_tex = GameData.texture("buildings", "roof")
+	_setup_town_art(w)
 	for id in w.gen.building_order:
 		var b: Dictionary = w.gen.buildings[id]
 		alpha[id] = 1.0
-		var r := _Roof.new()
-		r.b = b
-		r.tex = _roof_tex
-		r.tile = w.tile_px
-		r.label_text = label_for(b)
+		var r: Node2D
+		if b.has("art"):
+			r = _setup_art_building(w, b)
+		else:
+			var rr := _Roof.new()
+			rr.b = b
+			rr.tex = _roof_tex
+			rr.tile = w.tile_px
+			r = rr
+		r.set("label_text", label_for(b))
 		add_child(r)
 		_roofs[id] = r
 		var s := Sprite2D.new()
@@ -43,6 +49,82 @@ func setup(w) -> void:
 		_signs[id] = s
 		_keeper_facing[id] = Facing.new()
 	refresh_all()
+
+
+## 0.3.11 layered town art: the ground decal (curved roads, plaza) and the
+## city wall ring (8 octant pieces, each y-sorted by its own base).
+func _setup_town_art(w) -> void:
+	var ring_def: Dictionary = WorldGen.town_art().get("ring", {})
+	for tid in w.gen.town_order:
+		var t: Dictionary = w.gen.towns[tid]
+		if not t.has("art"):
+			continue
+		var a: Dictionary = t["art"]
+		var org: Vector2 = Vector2(int(t["origin"][0]), int(t["origin"][1])) * float(w.tile_px)
+		var tex = load(str(a.get("ground_decal", "")))
+		if tex:
+			var g := Sprite2D.new()
+			g.name = "GroundDecal_%s" % tid
+			g.centered = false
+			g.texture = tex
+			g.position = org
+			g.z_index = 2
+			w.ground_layer.add_child(g)
+		var ro: Array = a.get("ring_origin_px", [])
+		if ro.size() == 2:
+			var segs: Dictionary = ring_def.get("segments", {})
+			for k in segs.keys():
+				var sg: Dictionary = segs[k]
+				var st = load(str(sg["path"]))
+				if st == null:
+					continue
+				var spr := Sprite2D.new()
+				spr.name = "Wall_%s_%s" % [tid, k]
+				spr.centered = false
+				spr.texture = st
+				var h := float(sg["size"][1])
+				spr.position = org + Vector2(float(ro[0]) + float(sg["offset"][0]), float(ro[1]) + float(sg["offset"][1]) + h - 1.0)
+				spr.offset = Vector2(0, -h + 1.0)
+				w.entity_layer.add_child(spr)
+
+
+## 0.3.11 a building drawn from layered art: floor under actors, ground walls
+## y-sorted with them (doorway gap), upper storeys + roof in one fade group.
+func _setup_art_building(w, b: Dictionary) -> Node2D:
+	var d: Dictionary = WorldGen.town_art().get("buildings", {}).get(str(b["art"]), {})
+	var r: Rect2i = b["rect"]
+	var ph := float(d.get("px", [0, 0])[1])
+	var tp: int = w.tile_px
+	var canvas: Vector2 = Vector2(r.position.x * tp, r.position.y * tp - float(d.get("origin_y", 0)))
+	var flip := bool(b.get("flip", false))
+	var fl := Sprite2D.new()
+	fl.centered = false
+	fl.texture = load(str(d.get("floor", "")))
+	fl.position = canvas
+	fl.flip_h = flip
+	fl.z_index = 3
+	w.ground_layer.add_child(fl)
+	var wl := Sprite2D.new()
+	wl.name = "Walls_%s" % b["id"]
+	wl.centered = false
+	wl.texture = load(str(d.get("walls", "")))
+	wl.flip_h = flip
+	wl.position = Vector2(canvas.x, canvas.y + ph - 1.0)
+	wl.offset = Vector2(0, -ph + 1.0)
+	w.entity_layer.add_child(wl)
+	var fg := _ArtRoof.new()
+	fg.b = b
+	fg.tile = tp
+	fg.canvas = canvas
+	for path in d.get("fade", []):
+		var s := Sprite2D.new()
+		s.centered = false
+		s.texture = load(str(path))
+		s.flip_h = flip
+		s.position = canvas
+		fg.add_child(s)
+	fg.show_label = not bool(b.get("no_keeper", false))
+	return fg
 
 
 static func roof_fade_s() -> float:
@@ -95,7 +177,7 @@ func keeper_name(b: Dictionary) -> String:
 func refresh_all() -> void:
 	for id in _roofs.keys():
 		var b: Dictionary = world.gen.buildings[id]
-		_roofs[id].label_text = label_for(b)
+		_roofs[id].set("label_text", label_for(b))
 		_roofs[id].queue_redraw()
 		_signs[id].texture = GameData.texture("buildings", sign_sprite(b))
 		var k = world.object_at(b["keeper_at"])
@@ -147,7 +229,7 @@ func step(dt: float) -> void:
 func _process(delta: float) -> void:
 	if world == null:
 		return
-	step(delta)
+	step(minf(delta, 1.0 / 30.0))   # 0.3.11 a long frame (first draw of a big art sprite) must not pop the roof
 	_apply_hiding()
 	_update_keepers()
 	_update_displays()
@@ -311,3 +393,25 @@ class _Roof extends Node2D:
 			var cy := (y0 + rows / 2.0) * tile + 3
 			draw_rect(Rect2(cx - w / 2 - 3, cy - 8, w + 6, 11), Color(0.12, 0.09, 0.06, 0.75))
 			draw_string(f, Vector2(cx - w / 2, cy), label_text, HORIZONTAL_ALIGNMENT_LEFT, -1, fs, Color("#f8ecc8"))
+
+
+## 0.3.11 the fade group of a layered-art building (upper storeys + roof as
+## child sprites) plus the shop caption.
+class _ArtRoof extends Node2D:
+	var b: Dictionary
+	var tile := 16
+	var canvas := Vector2.ZERO
+	var label_text := ""
+	var show_label := true
+
+	func _draw() -> void:
+		if label_text == "" or not show_label:
+			return
+		var r: Rect2i = b["rect"]
+		var f := ThemeDB.fallback_font
+		var fs := 7
+		var wd := f.get_string_size(label_text, HORIZONTAL_ALIGNMENT_LEFT, -1, fs).x
+		var cx := (r.position.x + r.size.x / 2.0) * tile
+		var cy := (r.position.y + 0.5) * tile + 3
+		draw_rect(Rect2(cx - wd / 2 - 3, cy - 8, wd + 6, 11), Color(0.12, 0.09, 0.06, 0.75))
+		draw_string(f, Vector2(cx - wd / 2, cy), label_text, HORIZONTAL_ALIGNMENT_LEFT, -1, fs, Color("#f8ecc8"))

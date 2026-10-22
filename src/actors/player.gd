@@ -431,7 +431,7 @@ func _shop_tick(world, t: int) -> void:
 	var bid: String = b["id"] if not b.is_empty() and world.gen.is_inside(tile, b) else ""
 	if bid != _in_building:
 		_in_building = bid
-		if bid != "" and b["kind"] in ["smithy", "church", "house", "cookhouse"] and str(action.get("kind", "")) != "shop":
+		if bid != "" and b["kind"] in ["smithy", "church", "house", "cookhouse", "hall"] and str(action.get("kind", "")) != "shop" and not b.get("no_keeper", false):
 			smith_greet(world, b)
 		elif bid != "" and b["kind"] == "player":
 			var ps := Market.player_shop(b["town"])
@@ -466,6 +466,8 @@ func smith_greet(world, b: Dictionary) -> String:
 		lines = GameData.villages_cfg.get("enter_greet", [])
 	elif b["kind"] == "cookhouse":
 		lines = GameData.buildings_cfg.get("cookhouse", {}).get("enter_greet", [])
+	elif b["kind"] == "hall":
+		lines = b.get("greet", [])
 	if lines.is_empty():
 		return ""
 	var line: String = lines[randi() % lines.size()]
@@ -487,6 +489,8 @@ func greet(world, b: Dictionary) -> String:
 		lines = GameData.churches.get("greet", [])
 	elif b["kind"] == "house":
 		lines = GameData.villages_cfg.get("greet", [])
+	if not (b.get("greet", []) as Array).is_empty():   # 0.3.11 per-building lines (palace, guild)
+		lines = b["greet"]
 	if lines.is_empty():
 		return ""
 	var line := str(lines[absi(hash([b["id"], Tick.tick_count])) % lines.size()])
@@ -692,7 +696,7 @@ func on_shop(world, obj) -> void:
 		if b["kind"] == "player_house":   # 0.3.8 the estate clerk sells the townhouse
 			house_clerk()
 			return
-		if b["kind"] in ["church", "house"]:   # 0.3.1 the priest / villagers talk; no shop panel
+		if b["kind"] in ["church", "house", "hall"]:   # 0.3.1 the priest / villagers talk; no shop panel
 			if line != "":
 				say("%s: %s" % [b["keeper"], line])
 			return
