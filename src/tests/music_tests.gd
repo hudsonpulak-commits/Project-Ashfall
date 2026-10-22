@@ -67,3 +67,24 @@ static func run() -> void:
 	check(Music.current == "highfen", "after the fight the Highfen theme returns")
 	Music.set_area("")
 	Music.step(4.0)
+	# 0.3.10 Hudson's new tracks: new slots, rotation, proximity areas
+	var slots_ok := true
+	for id in ["scorch", "guild", "ruins", "goblin"]:
+		slots_ok = slots_ok and Music._tracks.get(id) is AudioStreamOggVorbis
+	check(slots_ok, "0.3.10 scorch, guild, ruins and goblin music slots load")
+	var a: AudioStream = Music.next_stream("ambient")
+	var b: AudioStream = Music.next_stream("ambient")
+	var c: AudioStream = Music.next_stream("ambient")
+	check(Music.variant_count("ambient") == 2 and a != b and a == c and Music.next_stream("combat") == Music._tracks["combat"],
+		"0.3.10 a slot with several tracks rotates (ambient day 1 / day 3); single-track slots repeat")
+	var main = (Engine.get_main_loop() as SceneTree).current_scene
+	check(main != null and main.has_method("music_area"), "0.3.10 main has music_area")
+	if main and main.has_method("music_area"):
+		var gob := Vector2i.ZERO
+		for camp in GameData.camps:
+			if str(camp["enemy"]) == "goblin":
+				gob = Vector2i(int(camp["at"][0]), int(camp["at"][1]))
+				break
+		check(main.music_area(Vector2i(300, -300)) == "scorch" and main.music_area(gob) == "goblin"
+			and main.music_area(main.world.gen.town_center("highfen")) == "highfen",
+			"0.3.10 music areas: the Scorch, near a goblin camp, towns")

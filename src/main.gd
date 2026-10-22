@@ -432,7 +432,7 @@ func _on_tick(t: int) -> void:
 	player.on_tick(t, world)
 	# 0.3.4 music: combat cuts in at once; area = the town you're in, else ambient
 	Music.set_combat(not player.dead and (player.in_combat(t) or player.action.get("kind", "") == "fight"))
-	Music.set_area(world.gen.town_at(player.tile, 8), DayNight.is_night())
+	Music.set_area(music_area(player.tile), DayNight.is_night())
 	AIDirector.on_tick(t, world, player.tile)
 	player.flush_xp()   # 0.3.7 one XP line per tick
 	world.enemies.on_tick(t, [player] + AIDirector.agents, player.tile)
@@ -550,6 +550,30 @@ func _reset() -> void:
 	force_fresh = true
 	SaveSystem.launch = {"mode": "new", "slot": SaveSystem.current_slot, "name": player.char_name if player else ""}
 	get_tree().reload_current_scene()
+
+
+## 0.3.10 music slot for a tile: the Guild of Knights hall (a Highfen building
+## whose id has "guild") > town > the Scorch > near a goblin camp > ruins /
+## temple zones (data/music_zones.json) > "" (wilds: ambient day/night).
+func music_area(t: Vector2i) -> String:
+	var b: Dictionary = world.gen.building_at(t)
+	if not b.is_empty() and "guild" in str(b.get("id", "")):
+		return "guild"
+	var town := world.gen.town_at(t, 8)
+	if town != "":
+		return town
+	if str(world.gen._biome_zone_at(t).get("biome", "")) == "scorch":
+		return "scorch"
+	var mz: Dictionary = GameData.music_zones
+	var gr := float(mz.get("goblin_radius", 16))
+	for camp in GameData.camps:
+		if str(camp.get("enemy", "")).begins_with("goblin") or str(camp.get("enemy", "")).begins_with("ash_goblin"):
+			if Vector2(t - Vector2i(int(camp["at"][0]), int(camp["at"][1]))).length() <= gr:
+				return "goblin"
+	for z in mz.get("zones", []):
+		if Vector2(t - Vector2i(int(z["center"][0]), int(z["center"][1]))).length() <= float(z.get("radius", 12)):
+			return str(z.get("track", "ruins"))
+	return ""
 
 
 # -------------------------------------------------------------- screenshot --

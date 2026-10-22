@@ -28,6 +28,7 @@ var combat: Dictionary = {}       # data/combat.json (weapon classes, styles, de
 var player_cfg: Dictionary = {}   # data/player.json (energy / sprint)
 var buildings_cfg: Dictionary = {}  # data/buildings.json (0.3.0 shop look + talk)
 var player_shop_cfg: Dictionary = {}  # data/player_shop.json (0.3.0 player-owned shops)
+var music_zones: Dictionary = {}   # 0.3.10 data/music_zones.json
 var regions_cfg: Dictionary = {}   # 0.3.10 data/regions.json (lore regions, biomes, cliffs)
 var mines: Dictionary = {}        # data/mines.json (0.3.1 named mine clusters, travel factor)
 var pk_zones: Dictionary = {}     # data/pk_zones.json (0.3.1 the Scorch: rect, warning, decor)
@@ -84,6 +85,7 @@ func reload() -> void:
 	player_shop_cfg = _load_json("player_shop.json")
 	mines = _load_json("mines.json")
 	regions_cfg = _load_json("regions.json")
+	music_zones = _load_json("music_zones.json")
 	pk_zones = _load_json("pk_zones.json")
 	town_npcs = _load_json("town_npcs.json")
 	churches = _load_json("churches.json")

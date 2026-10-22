@@ -10,7 +10,11 @@ extends Node
 
 const FADE_SEC := 1.5
 const DIR := "res://assets/music/"
-const IDS := ["title", "ambient", "ambient_night", "combat", "fenhollow", "cinderholt", "saltmere", "highfen"]
+const IDS := ["title", "ambient", "ambient_night", "combat", "fenhollow", "cinderholt", "saltmere", "highfen",
+	"scorch", "guild", "ruins", "goblin"]
+## 0.3.10 a slot can hold several tracks: <id>.ogg, <id>_2.ogg, <id>_3.ogg ...
+## Each time the slot (re)starts it plays the next one in turn (rotation).
+const MAX_VARIANTS := 6
 const SETTINGS := "user://settings.cfg"
 
 var player: AudioStreamPlayer
@@ -21,6 +25,8 @@ var fading := false
 var fade_left := 0.0
 var volume := 0.8            # 0..1, the music volume setting
 var _tracks: Dictionary = {}
+var _variants: Dictionary = {}   # 0.3.10 id -> [AudioStream...]
+var _rot: Dictionary = {}        # 0.3.10 id -> next variant index
 
 
 func _ready() -> void:
@@ -33,6 +39,16 @@ func _ready() -> void:
 		if s is AudioStreamOggVorbis:
 			(s as AudioStreamOggVorbis).loop = true
 		_tracks[id] = s
+		var vs: Array = [s] if s != null else []
+		for k in range(2, MAX_VARIANTS + 1):
+			var vp: String = DIR + "%s_%d.ogg" % [id, k]
+			if not ResourceLoader.exists(vp):
+				break
+			var v = load(vp)
+			if v is AudioStreamOggVorbis:
+				(v as AudioStreamOggVorbis).loop = true
+				vs.append(v)
+		_variants[id] = vs
 	var cf := ConfigFile.new()
 	if cf.load(SETTINGS) == OK:
 		volume = clampf(float(cf.get_value("audio", "music", volume)), 0.0, 1.0)
@@ -50,10 +66,24 @@ func _play(id: String) -> void:
 		return
 	if id != current or not player.playing:
 		player.stop()
-		player.stream = _tracks[id]
+		player.stream = next_stream(id)
 		player.play()
 	current = id
 	player.volume_db = _db()
+
+
+## 0.3.10 rotation: the slot's next track (the only one when it has one).
+func next_stream(id: String) -> AudioStream:
+	var vs: Array = _variants.get(id, [])
+	if vs.size() <= 1:
+		return _tracks.get(id)
+	var i := int(_rot.get(id, 0)) % vs.size()
+	_rot[id] = i + 1
+	return vs[i]
+
+
+func variant_count(id: String) -> int:
+	return (_variants.get(id, []) as Array).size()
 
 
 ## Main menu / back to the menu: the title theme, combat forgotten.

@@ -53,3 +53,18 @@ Lore source: docs/specs/Lore_2026-10-21.md (Hudson's dated lore file, copied in)
 - Tests: patch0310_tests (regions, borders, elevation order, cliff density
   order, cliffs block + stairs path, ground/trees/mushrooms, dusk steel,
   region HUD, placeholder flags); mine tests rewritten for regions.
+
+## Music (Hudson's new alternative-metal tracks, 2026-10-22)
+Converted from /Game/Game music mp3s to Ogg Vorbis 112 kbps 44.1 kHz stereo
+(assets/music/), replacing the old files of the same slot. Title unchanged.
+- ambient (day wilds, rotates): ambient.ogg = ambiant day 1, ambient_2.ogg = ambiant day 3
+- ambient_night: ambiant night 2
+- combat: combat 1
+- fenhollow / highfen / saltmere / cinderholt: Fenhallow 2 / Highfen 2 / Saltmere 2 / Cinderholt 2
+- scorch (new slot, inside the Scorch): Scorched 2
+- guild (new slot, inside a building whose id has "guild" - the Guild of
+  Knights hall in Highfen, arriving with the stage 2 Highfen set): Guild of Knights 2
+- goblin (new slot, within 16 tiles of a goblin camp): Goblin village 1
+- ruins (new slot, data/music_zones.json zones; empty until the ruined temple is placed): Mysterious Ruins 1
+Music manager: same crossfade / fade mechanics; slots may hold <id>_N.ogg
+variants that rotate each time the slot starts. main.gd music_area() picks the slot.

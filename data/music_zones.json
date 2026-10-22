@@ -1,0 +1,5 @@
+{
+ "note": "0.3.10 music proximity zones (Music via main.gd music_area). goblin_radius: tiles around any goblin camp (data/enemies.json) that play the 'goblin' track. zones: [{id, center [x,y], radius, track}] e.g. the ruined temple (Lost Knowledge) -> 'ruins'. Add the temple here once it is placed (quest update). Priority: Guild hall > town > Scorch > goblin camp > zones > wilds.",
+ "goblin_radius": 16,
+ "zones": []
+}
