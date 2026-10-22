@@ -8,17 +8,20 @@
  ],
  "spawn": [
   180,
-  6
+  -5
  ],
  "tiles": {
   "g": "grass",
   "d": "dirt",
-  "#": "city_ring"
+  "#": "capital_wall",
+  "=": "road_stone",
+  ":": "cobble",
+  "G": "gate_capital"
  },
  "objects": {
   "A": {
    "object": "exchange_board",
-   "ground": "grass"
+   "ground": "cobble"
   },
   "B": {
    "object": "hf_banner_pole",
@@ -36,81 +39,93 @@
    "object": "hf_bush_b",
    "ground": "grass"
   },
-  "G": {
+  "H": {
    "object": "hf_bush_flowers",
    "ground": "grass"
   },
-  "H": {
-   "object": "hf_cart",
-   "ground": "grass"
-  },
   "I": {
+   "object": "hf_cart",
+   "ground": "cobble"
+  },
+  "J": {
    "object": "hf_crate",
    "ground": "grass"
   },
-  "J": {
+  "K": {
    "object": "hf_crate_broken",
    "ground": "grass"
   },
-  "K": {
+  "L": {
    "object": "hf_crate_stack",
    "ground": "grass"
   },
-  "L": {
+  "M": {
    "object": "hf_debris",
    "ground": "grass"
   },
-  "M": {
+  "N": {
    "object": "hf_debris_b",
    "ground": "grass"
   },
-  "N": {
+  "O": {
    "object": "hf_fence_straight",
    "ground": "grass"
   },
-  "O": {
+  "P": {
    "object": "hf_flowerbed_small",
    "ground": "grass"
   },
-  "P": {
+  "Q": {
+   "object": "hf_fountain",
+   "ground": "cobble"
+  },
+  "R": {
    "object": "hf_lamp_post",
    "ground": "grass"
   },
-  "Q": {
+  "S": {
    "object": "hf_sign_post_road",
    "ground": "grass"
   },
-  "R": {
+  "T": {
    "object": "hf_stall_cloth",
-   "ground": "grass"
+   "ground": "cobble"
   },
-  "S": {
+  "U": {
    "object": "hf_stall_fish",
    "ground": "grass"
   },
-  "T": {
+  "V": {
    "object": "hf_stall_fruit",
-   "ground": "grass"
+   "ground": "cobble"
   },
-  "U": {
+  "X": {
+   "object": "hf_statue_knight",
+   "ground": "cobble"
+  },
+  "Y": {
    "object": "hf_tree_autumn",
    "ground": "grass"
   },
-  "V": {
+  "Z": {
    "object": "hf_tree_oak_a",
    "ground": "grass"
   },
-  "X": {
+  "a": {
    "object": "hf_tree_oak_b",
    "ground": "grass"
   },
-  "Y": {
+  "b": {
    "object": "hf_tree_pine",
    "ground": "grass"
   },
-  "Z": {
+  "e": {
+   "object": "hf_wall_tower",
+   "ground": "capital_wall"
+  },
+  "f": {
    "object": "hf_well",
-   "ground": "grass"
+   "ground": "cobble"
   }
  },
  "roof": "#b8a888",
@@ -129,128 +144,225 @@
  "gates": {
   "north": [
    [
+    34,
+    0
+   ],
+   [
     35,
     0
    ],
    [
     36,
-    0
-   ],
-   [
-    37,
     0
    ]
   ],
   "south": [
    [
-    34,
-    71
-   ],
-   [
-    35,
-    71
-   ],
-   [
     36,
+    71
+   ],
+   [
+    37,
+    71
+   ],
+   [
+    38,
     71
    ]
   ],
   "west": [
    [
     0,
-    40
+    37
    ],
    [
     0,
-    41
+    38
    ],
    [
     0,
-    42
+    39
    ]
   ],
   "east": [
    [
     71,
-    32
+    37
    ],
    [
     71,
-    33
+    38
    ],
    [
     71,
-    34
+    39
    ]
   ]
  },
  "gate_walls": {
-  "south": [
+  "north": [
    [
     34,
-    54
+    6
    ],
    [
     35,
-    54
+    6
+   ],
+   [
+    34,
+    7
+   ],
+   [
+    35,
+    7
+   ]
+  ],
+  "east": [
+   [
+    67,
+    36
+   ],
+   [
+    68,
+    36
+   ],
+   [
+    67,
+    37
+   ],
+   [
+    68,
+    37
+   ],
+   [
+    67,
+    38
+   ],
+   [
+    68,
+    38
+   ]
+  ],
+  "west": [
+   [
+    3,
+    37
+   ],
+   [
+    4,
+    37
+   ],
+   [
+    3,
+    38
+   ],
+   [
+    4,
+    38
+   ]
+  ],
+  "south": [
+   [
+    34,
+    63
+   ],
+   [
+    35,
+    63
    ],
    [
     36,
-    54
+    63
+   ],
+   [
+    34,
+    64
+   ],
+   [
+    35,
+    64
+   ],
+   [
+    36,
+    64
    ],
    [
     37,
-    54
+    64
    ]
   ]
  },
  "art": {
-  "ground_decal": "res://assets/sprites/towns/highfen/ground_decal.png",
-  "ring_origin_px": [
-   288,
-   288
-  ],
   "market": [
    [
+    36,
+    37
+   ],
+   [
+    30,
+    40
+   ],
+   [
     32,
-    49
-   ],
-   [
-    34,
-    49
-   ],
-   [
-    37,
-    49
-   ],
-   [
-    39,
-    49
+    41
    ],
    [
     35,
-    51
+    40
    ],
    [
-    38,
-    51
+    37,
+    41
+   ],
+   [
+    39,
+    40
+   ],
+   [
+    41,
+    41
    ],
    [
     31,
-    48
+    36
    ],
    [
-    30,
-    50
+    39,
+    36
    ],
    [
-    30,
-    51
+    41,
+    39
+   ],
+   [
+    32,
+    35
+   ],
+   [
+    39,
+    35
+   ],
+   [
+    31,
+    40
+   ],
+   [
+    42,
+    40
+   ],
+   [
+    29,
+    41
+   ],
+   [
+    42,
+    41
    ]
   ],
   "plaza_px": [
    576,
-   798
+   616
   ]
  },
  "buildings": [
@@ -259,24 +371,24 @@
    "flip": false,
    "at": [
     31,
-    32
+    24
    ],
    "door": [
     [
      36,
-     40
+     32
     ]
    ],
    "sign": [
     37,
-    40
+    32
    ],
    "props": [
     {
      "object": "hf_banner_pole",
      "at": [
       34,
-      33
+      25
      ]
     }
    ],
@@ -291,11 +403,11 @@
    "roof": "#6c6a7a",
    "keeper_at": [
     36,
-    33
+    25
    ],
    "stand": [
     36,
-    34
+    26
    ],
    "greet": [
     "The King's throne room. Mind the carpet, it is older than you.",
@@ -305,35 +417,72 @@
    "note": "0.3.11 the palace and throne room at the heart of Highfen (designer art palace)"
   },
   {
-   "art": "guild_knights",
+   "art": "church",
    "flip": false,
    "at": [
-    44,
-    34
+    20,
+    30
    ],
    "door": [
     [
-     47,
-     38
+     22,
+     35
     ]
    ],
    "sign": [
-    48,
-    38
+    23,
+    35
+   ],
+   "props": [],
+   "counter": [],
+   "id": "highfen_church",
+   "kind": "church",
+   "name": "Highfen Cathedral",
+   "keeper": "Father Aldric",
+   "altar": [
+    22,
+    31
+   ],
+   "keeper_at": [
+    21,
+    33
+   ],
+   "stand": [
+    22,
+    32
+   ],
+   "note": "0.3.11 Highfen gets a church (designer church art)"
+  },
+  {
+   "art": "guild_knights",
+   "flip": false,
+   "at": [
+    43,
+    30
+   ],
+   "door": [
+    [
+     46,
+     34
+    ]
+   ],
+   "sign": [
+    47,
+    34
    ],
    "props": [
     {
      "object": "weapon_rack",
      "at": [
-      45,
-      35
+      44,
+      31
      ]
     },
     {
      "object": "weapon_rack",
      "at": [
-      49,
-      35
+      48,
+      31
      ]
     }
    ],
@@ -347,12 +496,12 @@
    "sign_sprite": "sign_general",
    "roof": "#5a5f6a",
    "keeper_at": [
-    47,
-    35
+    46,
+    31
    ],
    "stand": [
-    47,
-    36
+    46,
+    32
    ],
    "greet": [
     "The Guild of Knights. We keep the roads between the cities.",
@@ -362,65 +511,138 @@
    "note": "0.3.11 the Guild of Knights; the id contains 'guild' so the guild music slot plays inside"
   },
   {
-   "art": "church",
+   "art": "shop_smith",
    "flip": false,
    "at": [
-    23,
-    35
+    38,
+    44
    ],
    "door": [
     [
-     25,
-     40
+     39,
+     46
     ]
    ],
    "sign": [
-    26,
-    40
+    40,
+    46
    ],
    "props": [],
    "counter": [],
-   "id": "highfen_church",
-   "kind": "church",
-   "name": "Highfen Cathedral",
-   "keeper": "Father Aldric",
-   "altar": [
-    25,
-    36
-   ],
+   "id": "highfen_player",
+   "kind": "player",
+   "shop": "player",
+   "name": "For sale",
    "keeper_at": [
-    24,
-    38
+    40,
+    45
    ],
    "stand": [
-    25,
-    37
+    39,
+    45
    ],
-   "note": "0.3.11 Highfen gets a church (designer church art)"
+   "roof": "#b8a888",
+   "note": "0.3.8 the realm's ONLY player shop; 0.3.11 its 8 display stands line the market plaza in front of it",
+   "displays": [
+    [
+     37,
+     44
+    ],
+    [
+     39,
+     43
+    ],
+    [
+     38,
+     43
+    ],
+    [
+     40,
+     43
+    ],
+    [
+     36,
+     44
+    ],
+    [
+     37,
+     43
+    ],
+    [
+     40,
+     42
+    ],
+    [
+     35,
+     44
+    ]
+   ]
+  },
+  {
+   "art": "shop_tavern",
+   "flip": false,
+   "at": [
+    27,
+    45
+   ],
+   "door": [
+    [
+     28,
+     48
+    ]
+   ],
+   "sign": [
+    29,
+    48
+   ],
+   "props": [
+    {
+     "object": "oven",
+     "at": [
+      30,
+      46
+     ]
+    }
+   ],
+   "counter": [],
+   "id": "highfen_cook",
+   "kind": "cookhouse",
+   "shop": "cook",
+   "name": "The Gilded Spoon",
+   "keeper": "Maud Fairweather",
+   "roof": "#b8a888",
+   "keeper_at": [
+    31,
+    46
+   ],
+   "stand": [
+    31,
+    47
+   ]
   },
   {
    "art": "house_tower_corner",
    "flip": false,
    "at": [
-    43,
-    27
+    46,
+    42
    ],
    "door": [
     [
-     44,
-     30
+     47,
+     45
     ]
    ],
    "sign": [
-    45,
-    30
+    48,
+    45
    ],
    "props": [
     {
      "object": "bank_chest",
      "at": [
-      45,
-      28
+      48,
+      43
      ]
     }
    ],
@@ -434,30 +656,30 @@
    "sign_sprite": "sign_bank",
    "roof": "#8a8f9a",
    "keeper_at": [
-    44,
-    28
+    47,
+    43
    ],
    "stand": [
-    44,
-    29
+    47,
+    44
    ]
   },
   {
    "art": "shop_general",
    "flip": false,
    "at": [
-    26,
-    26
+    22,
+    41
    ],
    "door": [
     [
-     28,
-     28
+     24,
+     43
     ]
    ],
    "sign": [
-    29,
-    28
+    25,
+    43
    ],
    "props": [],
    "counter": [],
@@ -468,227 +690,30 @@
    "keeper": "Perrin Vale",
    "roof": "#b8a888",
    "keeper_at": [
-    27,
-    27
-   ],
-   "stand": [
-    28,
-    27
-   ]
-  },
-  {
-   "art": "shop_tavern",
-   "flip": false,
-   "at": [
-    25,
-    43
-   ],
-   "door": [
-    [
-     26,
-     46
-    ]
-   ],
-   "sign": [
-    27,
-    46
-   ],
-   "props": [
-    {
-     "object": "oven",
-     "at": [
-      28,
-      44
-     ]
-    }
-   ],
-   "counter": [],
-   "id": "highfen_cook",
-   "kind": "cookhouse",
-   "shop": "cook",
-   "name": "The Gilded Spoon",
-   "keeper": "Maud Fairweather",
-   "roof": "#b8a888",
-   "keeper_at": [
-    29,
-    44
-   ],
-   "stand": [
-    29,
-    45
-   ]
-  },
-  {
-   "art": "shop_smith",
-   "flip": false,
-   "at": [
-    40,
-    43
-   ],
-   "door": [
-    [
-     41,
-     45
-    ]
-   ],
-   "sign": [
-    42,
-    45
-   ],
-   "props": [],
-   "counter": [],
-   "id": "highfen_player",
-   "kind": "player",
-   "shop": "player",
-   "name": "For sale",
-   "keeper_at": [
-    42,
-    44
-   ],
-   "stand": [
-    41,
-    44
-   ],
-   "roof": "#b8a888",
-   "note": "0.3.8 the realm's ONLY player shop; 0.3.11 its 8 display stands line the market plaza in front of it",
-   "displays": [
-    [
-     38,
-     47
-    ],
-    [
-     39,
-     48
-    ],
-    [
-     38,
-     48
-    ],
-    [
-     37,
-     47
-    ],
-    [
-     36,
-     47
-    ],
-    [
-     39,
-     50
-    ],
-    [
-     35,
-     47
-    ],
-    [
-     39,
-     51
-    ]
-   ]
-  },
-  {
-   "art": "house_twin_gable",
-   "flip": true,
-   "at": [
-    45,
-    40
-   ],
-   "door": [
-    [
-     46,
-     42
-    ]
-   ],
-   "sign": [
-    47,
+    23,
     42
    ],
-   "props": [
-    {
-     "object": "hearth",
-     "at": [
-      51,
-      40
-     ]
-    },
-    {
-     "object": "furnace",
-     "at": [
-      51,
-      39
-     ]
-    },
-    {
-     "object": "anvil",
-     "at": [
-      51,
-      41
-     ]
-    },
-    {
-     "object": "workbench",
-     "at": [
-      43,
-      40
-     ]
-    },
-    {
-     "object": "quern",
-     "at": [
-      51,
-      38
-     ]
-    },
-    {
-     "object": "bank_chest",
-     "at": [
-      43,
-      39
-     ]
-    },
-    {
-     "object": "oven",
-     "at": [
-      43,
-      41
-     ]
-    }
-   ],
-   "counter": [],
-   "id": "highfen_house",
-   "kind": "player_house",
-   "shop": "",
-   "name": "Townhouse (for sale)",
-   "keeper": "Estate clerk",
-   "keeper_sprite": "keeper_general",
-   "sign_sprite": "sign_house",
-   "roof": "#8a5a3a",
-   "keeper_at": [
-    47,
-    41
-   ],
    "stand": [
-    46,
-    41
-   ],
-   "note": "0.3.8 player house; 0.3.11 a walk-in townhouse with a walled work yard behind it (stations + bank chest work for the owner only)"
+    24,
+    42
+   ]
   },
   {
    "art": "shop_baker",
    "flip": false,
    "at": [
-    40,
-    47
+    25,
+    22
    ],
    "door": [
     [
-     41,
-     49
+     26,
+     24
     ]
    ],
    "sign": [
-    42,
-    49
+    27,
+    24
    ],
    "props": [],
    "counter": [],
@@ -702,30 +727,117 @@
    "roof": "#8a7050",
    "no_keeper": true,
    "keeper_at": [
-    41,
-    49
+    26,
+    24
    ],
    "stand": [
-    41,
-    49
+    26,
+    24
    ]
   },
   {
-   "art": "house_crooked",
-   "flip": false,
+   "art": "house_twin_gable",
+   "flip": true,
    "at": [
-    31,
-    23
+    24,
+    26
    ],
    "door": [
     [
-     32,
-     25
+     25,
+     28
     ]
    ],
    "sign": [
-    33,
-    25
+    26,
+    28
+   ],
+   "props": [
+    {
+     "object": "hearth",
+     "at": [
+      28,
+      24
+     ]
+    },
+    {
+     "object": "furnace",
+     "at": [
+      30,
+      26
+     ]
+    },
+    {
+     "object": "anvil",
+     "at": [
+      28,
+      23
+     ]
+    },
+    {
+     "object": "workbench",
+     "at": [
+      24,
+      24
+     ]
+    },
+    {
+     "object": "quern",
+     "at": [
+      29,
+      24
+     ]
+    },
+    {
+     "object": "bank_chest",
+     "at": [
+      30,
+      25
+     ]
+    },
+    {
+     "object": "oven",
+     "at": [
+      30,
+      27
+     ]
+    }
+   ],
+   "counter": [],
+   "id": "highfen_house",
+   "kind": "player_house",
+   "shop": "",
+   "name": "Townhouse (for sale)",
+   "keeper": "Estate clerk",
+   "keeper_sprite": "keeper_general",
+   "sign_sprite": "sign_house",
+   "roof": "#8a5a3a",
+   "keeper_at": [
+    26,
+    27
+   ],
+   "stand": [
+    25,
+    27
+   ],
+   "note": "0.3.8 player house; 0.3.11 a walk-in townhouse with a walled work yard behind it (stations + bank chest work for the owner only)"
+  },
+  {
+   "art": "house_cottage_round",
+   "flip": false,
+   "at": [
+    40,
+    48
+   ],
+   "door": [
+    [
+     41,
+     50
+    ]
+   ],
+   "sign": [
+    42,
+    50
    ],
    "props": [],
    "counter": [],
@@ -739,30 +851,30 @@
    "roof": "#8a7050",
    "no_keeper": true,
    "keeper_at": [
-    32,
-    25
+    41,
+    50
    ],
    "stand": [
-    32,
-    25
+    41,
+    50
    ]
   },
   {
-   "art": "house_stepped",
-   "flip": true,
+   "art": "house_lshape",
+   "flip": false,
    "at": [
-    37,
-    23
+    42,
+    24
    ],
    "door": [
     [
-     38,
-     25
+     43,
+     26
     ]
    ],
    "sign": [
-    39,
-    25
+    44,
+    26
    ],
    "props": [],
    "counter": [],
@@ -775,30 +887,30 @@
    "sign_sprite": "sign_house",
    "roof": "#8a7050",
    "keeper_at": [
-    39,
-    24
+    44,
+    25
    ],
    "stand": [
-    38,
-    24
+    43,
+    25
    ]
   },
   {
-   "art": "house_narrow_tall",
-   "flip": false,
+   "art": "house_cottage_round",
+   "flip": true,
    "at": [
-    22,
-    30
+    16,
+    44
    ],
    "door": [
     [
-     23,
-     33
+     17,
+     46
     ]
    ],
    "sign": [
-    22,
-    33
+    18,
+    46
    ],
    "props": [],
    "counter": [],
@@ -812,31 +924,30 @@
    "roof": "#8a7050",
    "no_keeper": true,
    "keeper_at": [
-    23,
-    34
+    17,
+    46
    ],
    "stand": [
-    23,
-    34
-   ],
-   "closed": true
+    17,
+    46
+   ]
   },
   {
    "art": "house_cottage_round",
    "flip": false,
    "at": [
-    32,
-    44
+    14,
+    39
    ],
    "door": [
     [
-     33,
-     46
+     15,
+     41
     ]
    ],
    "sign": [
-    34,
-    46
+    16,
+    41
    ],
    "props": [],
    "counter": [],
@@ -850,30 +961,30 @@
    "roof": "#8a7050",
    "no_keeper": true,
    "keeper_at": [
-    33,
-    46
+    15,
+    41
    ],
    "stand": [
-    33,
-    46
+    15,
+    41
    ]
   },
   {
-   "art": "shop_baker",
-   "flip": false,
+   "art": "house_longhouse",
+   "flip": true,
    "at": [
-    25,
-    30
+    38,
+    15
    ],
    "door": [
     [
-     26,
-     32
+     41,
+     16
     ]
    ],
    "sign": [
-    27,
-    32
+    42,
+    16
    ],
    "props": [],
    "counter": [],
@@ -887,30 +998,31 @@
    "roof": "#8a7050",
    "no_keeper": true,
    "keeper_at": [
-    26,
-    32
+    41,
+    17
    ],
    "stand": [
-    26,
-    32
-   ]
+    41,
+    17
+   ],
+   "closed": true
   },
   {
-   "art": "house_twin_gable",
+   "art": "house_crooked",
    "flip": false,
    "at": [
-    12,
-    26
+    61,
+    40
    ],
    "door": [
     [
-     15,
-     28
+     62,
+     42
     ]
    ],
    "sign": [
-    16,
-    28
+    63,
+    42
    ],
    "props": [],
    "counter": [],
@@ -922,31 +1034,32 @@
    "keeper_sprite": "villager",
    "sign_sprite": "sign_house",
    "roof": "#8a7050",
+   "no_keeper": true,
    "keeper_at": [
-    14,
-    27
+    62,
+    42
    ],
    "stand": [
-    15,
-    27
+    62,
+    42
    ]
   },
   {
-   "art": "house_longhouse",
+   "art": "house_narrow_tall",
    "flip": false,
    "at": [
-    13,
-    22
+    60,
+    44
    ],
    "door": [
     [
-     15,
-     23
+     61,
+     47
     ]
    ],
    "sign": [
-    16,
-    23
+    60,
+    47
    ],
    "props": [],
    "counter": [],
@@ -960,31 +1073,31 @@
    "roof": "#8a7050",
    "no_keeper": true,
    "keeper_at": [
-    15,
-    24
+    61,
+    48
    ],
    "stand": [
-    15,
-    24
+    61,
+    48
    ],
    "closed": true
   },
   {
-   "art": "house_lshape",
-   "flip": false,
+   "art": "house_longhouse",
+   "flip": true,
    "at": [
-    17,
-    16
+    20,
+    56
    ],
    "door": [
     [
-     18,
-     18
+     23,
+     57
     ]
    ],
    "sign": [
-    19,
-    18
+    24,
+    57
    ],
    "props": [],
    "counter": [],
@@ -996,31 +1109,33 @@
    "keeper_sprite": "villager",
    "sign_sprite": "sign_house",
    "roof": "#8a7050",
+   "no_keeper": true,
    "keeper_at": [
-    19,
-    17
+    23,
+    58
    ],
    "stand": [
-    18,
-    17
-   ]
+    23,
+    58
+   ],
+   "closed": true
   },
   {
-   "art": "shop_general",
+   "art": "house_cottage_round",
    "flip": false,
    "at": [
-    23,
-    15
+    18,
+    52
    ],
    "door": [
     [
-     25,
-     17
+     19,
+     54
     ]
    ],
    "sign": [
-    26,
-    17
+    20,
+    54
    ],
    "props": [],
    "counter": [],
@@ -1032,31 +1147,32 @@
    "keeper_sprite": "villager",
    "sign_sprite": "sign_house",
    "roof": "#8a7050",
+   "no_keeper": true,
    "keeper_at": [
-    24,
-    16
+    19,
+    54
    ],
    "stand": [
-    25,
-    16
+    19,
+    54
    ]
   },
   {
    "art": "house_cottage_round",
-   "flip": false,
+   "flip": true,
    "at": [
-    29,
-    11
+    10,
+    45
    ],
    "door": [
     [
-     30,
-     13
+     11,
+     47
     ]
    ],
    "sign": [
-    31,
-    13
+    12,
+    47
    ],
    "props": [],
    "counter": [],
@@ -1070,30 +1186,30 @@
    "roof": "#8a7050",
    "no_keeper": true,
    "keeper_at": [
-    30,
-    13
+    11,
+    47
    ],
    "stand": [
-    30,
-    13
+    11,
+    47
    ]
   },
   {
-   "art": "house_stepped",
-   "flip": false,
+   "art": "house_cottage_round",
+   "flip": true,
    "at": [
-    37,
-    9
+    8,
+    41
    ],
    "door": [
     [
-     39,
-     11
+     9,
+     43
     ]
    ],
    "sign": [
-    40,
-    11
+    10,
+    43
    ],
    "props": [],
    "counter": [],
@@ -1105,31 +1221,32 @@
    "keeper_sprite": "villager",
    "sign_sprite": "sign_house",
    "roof": "#8a7050",
+   "no_keeper": true,
    "keeper_at": [
-    38,
-    10
+    9,
+    43
    ],
    "stand": [
-    39,
-    10
+    9,
+    43
    ]
   },
   {
-   "art": "house_cottage_round",
+   "art": "house_crooked",
    "flip": false,
    "at": [
-    40,
-    13
+    8,
+    32
    ],
    "door": [
     [
-     41,
-     15
+     9,
+     34
     ]
    ],
    "sign": [
-    42,
-    15
+    10,
+    34
    ],
    "props": [],
    "counter": [],
@@ -1143,30 +1260,30 @@
    "roof": "#8a7050",
    "no_keeper": true,
    "keeper_at": [
-    41,
-    15
+    9,
+    34
    ],
    "stand": [
-    41,
-    15
+    9,
+    34
    ]
   },
   {
-   "art": "house_lshape",
+   "art": "house_narrow_tall",
    "flip": false,
    "at": [
-    46,
-    14
+    9,
+    26
    ],
    "door": [
     [
-     47,
-     16
+     10,
+     29
     ]
    ],
    "sign": [
-    48,
-    16
+    9,
+    29
    ],
    "props": [],
    "counter": [],
@@ -1178,31 +1295,33 @@
    "keeper_sprite": "villager",
    "sign_sprite": "sign_house",
    "roof": "#8a7050",
+   "no_keeper": true,
    "keeper_at": [
-    48,
-    15
+    10,
+    30
    ],
    "stand": [
-    47,
-    15
-   ]
+    10,
+    30
+   ],
+   "closed": true
   },
   {
-   "art": "house_twin_gable",
+   "art": "house_cottage_round",
    "flip": true,
    "at": [
-    51,
-    16
+    19,
+    14
    ],
    "door": [
     [
-     52,
-     18
+     20,
+     16
     ]
    ],
    "sign": [
-    53,
-    18
+    21,
+    16
    ],
    "props": [],
    "counter": [],
@@ -1214,31 +1333,32 @@
    "keeper_sprite": "villager",
    "sign_sprite": "sign_house",
    "roof": "#8a7050",
+   "no_keeper": true,
    "keeper_at": [
-    54,
-    17
+    20,
+    16
    ],
    "stand": [
-    52,
-    17
+    20,
+    16
    ]
   },
   {
-   "art": "house_tower_corner",
+   "art": "house_longhouse",
    "flip": true,
    "at": [
-    53,
-    22
+    38,
+    10
    ],
    "door": [
     [
-     55,
-     25
+     41,
+     11
     ]
    ],
    "sign": [
-    56,
-    25
+    42,
+    11
    ],
    "props": [],
    "counter": [],
@@ -1250,31 +1370,33 @@
    "keeper_sprite": "villager",
    "sign_sprite": "sign_house",
    "roof": "#8a7050",
+   "no_keeper": true,
    "keeper_at": [
-    54,
-    24
+    41,
+    12
    ],
    "stand": [
-    55,
-    24
-   ]
+    41,
+    12
+   ],
+   "closed": true
   },
   {
-   "art": "house_longhouse",
-   "flip": true,
+   "art": "house_crooked",
+   "flip": false,
    "at": [
-    56,
-    28
+    61,
+    26
    ],
    "door": [
     [
-     59,
-     29
+     62,
+     28
     ]
    ],
    "sign": [
-    60,
-    29
+    63,
+    28
    ],
    "props": [],
    "counter": [],
@@ -1288,31 +1410,30 @@
    "roof": "#8a7050",
    "no_keeper": true,
    "keeper_at": [
-    59,
-    30
+    62,
+    28
    ],
    "stand": [
-    59,
-    30
-   ],
-   "closed": true
+    62,
+    28
+   ]
   },
   {
-   "art": "house_stepped",
-   "flip": true,
+   "art": "house_crooked",
+   "flip": false,
    "at": [
-    61,
-    35
+    62,
+    32
    ],
    "door": [
     [
-     62,
-     37
+     63,
+     34
     ]
    ],
    "sign": [
-    63,
-    37
+    64,
+    34
    ],
    "props": [],
    "counter": [],
@@ -1324,31 +1445,32 @@
    "keeper_sprite": "villager",
    "sign_sprite": "sign_house",
    "roof": "#8a7050",
+   "no_keeper": true,
    "keeper_at": [
     63,
-    36
+    34
    ],
    "stand": [
-    62,
-    36
+    63,
+    34
    ]
   },
   {
-   "art": "house_crooked",
-   "flip": true,
+   "art": "house_twin_gable",
+   "flip": false,
    "at": [
-    57,
-    39
+    66,
+    50
    ],
    "door": [
     [
-     58,
-     41
+     69,
+     52
     ]
    ],
    "sign": [
-    59,
-    41
+    70,
+    52
    ],
    "props": [],
    "counter": [],
@@ -1360,32 +1482,31 @@
    "keeper_sprite": "villager",
    "sign_sprite": "sign_house",
    "roof": "#8a7050",
-   "no_keeper": true,
    "keeper_at": [
-    58,
-    41
+    68,
+    51
    ],
    "stand": [
-    58,
-    41
+    69,
+    51
    ]
   },
   {
-   "art": "house_narrow_tall",
+   "art": "house_stepped",
    "flip": true,
    "at": [
-    57,
-    44
+    64,
+    54
    ],
    "door": [
     [
-     57,
-     47
+     65,
+     56
     ]
    ],
    "sign": [
-    58,
-    47
+    66,
+    56
    ],
    "props": [],
    "counter": [],
@@ -1397,33 +1518,31 @@
    "keeper_sprite": "villager",
    "sign_sprite": "sign_house",
    "roof": "#8a7050",
-   "no_keeper": true,
    "keeper_at": [
-    57,
-    48
+    66,
+    55
    ],
    "stand": [
-    57,
-    48
-   ],
-   "closed": true
+    65,
+    55
+   ]
   },
   {
-   "art": "house_lshape",
-   "flip": true,
+   "art": "house_crooked",
+   "flip": false,
    "at": [
-    54,
-    51
+    61,
+    59
    ],
    "door": [
     [
-     56,
-     53
+     62,
+     61
     ]
    ],
    "sign": [
-    57,
-    53
+    63,
+    61
    ],
    "props": [],
    "counter": [],
@@ -1435,31 +1554,32 @@
    "keeper_sprite": "villager",
    "sign_sprite": "sign_house",
    "roof": "#8a7050",
+   "no_keeper": true,
    "keeper_at": [
-    55,
-    52
+    62,
+    61
    ],
    "stand": [
-    56,
-    52
+    62,
+    61
    ]
   },
   {
-   "art": "house_cottage_round",
+   "art": "house_tower_corner",
    "flip": true,
    "at": [
-    49,
-    52
+    54,
+    62
    ],
    "door": [
     [
-     50,
-     54
+     56,
+     65
     ]
    ],
    "sign": [
-    51,
-    54
+    57,
+    65
    ],
    "props": [],
    "counter": [],
@@ -1471,32 +1591,31 @@
    "keeper_sprite": "villager",
    "sign_sprite": "sign_house",
    "roof": "#8a7050",
-   "no_keeper": true,
    "keeper_at": [
-    50,
-    54
+    55,
+    64
    ],
    "stand": [
-    50,
-    54
+    56,
+    64
    ]
   },
   {
-   "art": "house_twin_gable",
-   "flip": true,
+   "art": "house_narrow_tall",
+   "flip": false,
    "at": [
-    43,
-    57
+    51,
+    64
    ],
    "door": [
     [
-     44,
-     59
+     52,
+     67
     ]
    ],
    "sign": [
-    45,
-    59
+    51,
+    67
    ],
    "props": [],
    "counter": [],
@@ -1508,31 +1627,33 @@
    "keeper_sprite": "villager",
    "sign_sprite": "sign_house",
    "roof": "#8a7050",
+   "no_keeper": true,
    "keeper_at": [
-    46,
-    58
+    52,
+    68
    ],
    "stand": [
-    44,
-    58
-   ]
+    52,
+    68
+   ],
+   "closed": true
   },
   {
    "art": "house_longhouse",
    "flip": true,
    "at": [
-    24,
-    59
+    43,
+    67
    ],
    "door": [
     [
-     27,
-     60
+     46,
+     68
     ]
    ],
    "sign": [
-    28,
-    60
+    47,
+    68
    ],
    "props": [],
    "counter": [],
@@ -1546,31 +1667,31 @@
    "roof": "#8a7050",
    "no_keeper": true,
    "keeper_at": [
-    27,
-    61
+    46,
+    69
    ],
    "stand": [
-    27,
-    61
+    46,
+    69
    ],
    "closed": true
   },
   {
-   "art": "house_tower_corner",
-   "flip": true,
+   "art": "house_crooked",
+   "flip": false,
    "at": [
-    21,
-    53
+    27,
+    67
    ],
    "door": [
     [
-     23,
-     56
+     28,
+     69
     ]
    ],
    "sign": [
-    24,
-    56
+    29,
+    69
    ],
    "props": [],
    "counter": [],
@@ -1582,31 +1703,32 @@
    "keeper_sprite": "villager",
    "sign_sprite": "sign_house",
    "roof": "#8a7050",
+   "no_keeper": true,
    "keeper_at": [
-    22,
-    55
+    28,
+    69
    ],
    "stand": [
-    23,
-    55
+    28,
+    69
    ]
   },
   {
-   "art": "house_narrow_tall",
+   "art": "house_stepped",
    "flip": true,
    "at": [
-    31,
-    58
+    22,
+    66
    ],
    "door": [
     [
-     31,
-     61
+     23,
+     68
     ]
    ],
    "sign": [
-    32,
-    61
+    24,
+    68
    ],
    "props": [],
    "counter": [],
@@ -1618,33 +1740,31 @@
    "keeper_sprite": "villager",
    "sign_sprite": "sign_house",
    "roof": "#8a7050",
-   "no_keeper": true,
    "keeper_at": [
-    31,
-    62
+    24,
+    67
    ],
    "stand": [
-    31,
-    62
-   ],
-   "closed": true
+    23,
+    67
+   ]
   },
   {
-   "art": "shop_smith",
-   "flip": true,
+   "art": "house_lshape",
+   "flip": false,
    "at": [
-    19,
-    58
+    15,
+    64
    ],
    "door": [
     [
-     21,
-     60
+     16,
+     66
     ]
    ],
    "sign": [
-    22,
-    60
+    17,
+    66
    ],
    "props": [],
    "counter": [],
@@ -1657,30 +1777,30 @@
    "sign_sprite": "sign_house",
    "roof": "#8a7050",
    "keeper_at": [
-    20,
-    59
+    17,
+    65
    ],
    "stand": [
-    21,
-    59
+    16,
+    65
    ]
   },
   {
-   "art": "house_crooked",
+   "art": "house_cottage_round",
    "flip": true,
    "at": [
-    17,
-    50
+    11,
+    60
    ],
    "door": [
     [
-     18,
-     52
+     12,
+     62
     ]
    ],
    "sign": [
-    19,
-    52
+    13,
+    62
    ],
    "props": [],
    "counter": [],
@@ -1694,30 +1814,30 @@
    "roof": "#8a7050",
    "no_keeper": true,
    "keeper_at": [
-    18,
-    52
+    12,
+    62
    ],
    "stand": [
-    18,
-    52
+    12,
+    62
    ]
   },
   {
-   "art": "shop_baker",
-   "flip": true,
+   "art": "house_twin_gable",
+   "flip": false,
    "at": [
-    14,
-    46
+    5,
+    56
    ],
    "door": [
     [
-     15,
-     48
+     8,
+     58
     ]
    ],
    "sign": [
-    16,
-    48
+    9,
+    58
    ],
    "props": [],
    "counter": [],
@@ -1729,32 +1849,31 @@
    "keeper_sprite": "villager",
    "sign_sprite": "sign_house",
    "roof": "#8a7050",
-   "no_keeper": true,
    "keeper_at": [
-    15,
-    48
+    7,
+    57
    ],
    "stand": [
-    15,
-    48
+    8,
+    57
    ]
   },
   {
-   "art": "house_cottage_round",
+   "art": "house_stepped",
    "flip": true,
    "at": [
-    10,
-    42
+    2,
+    51
    ],
    "door": [
     [
-     11,
-     44
+     3,
+     53
     ]
    ],
    "sign": [
-    12,
-    44
+    4,
+    53
    ],
    "props": [],
    "counter": [],
@@ -1766,90 +1885,567 @@
    "keeper_sprite": "villager",
    "sign_sprite": "sign_house",
    "roof": "#8a7050",
-   "no_keeper": true,
    "keeper_at": [
-    11,
-    44
+    4,
+    52
    ],
    "stand": [
+    3,
+    52
+   ]
+  },
+  {
+   "art": "house_crooked",
+   "flip": false,
+   "at": [
+    1,
+    45
+   ],
+   "door": [
+    [
+     2,
+     47
+    ]
+   ],
+   "sign": [
+    3,
+    47
+   ],
+   "props": [],
+   "counter": [],
+   "id": "highfen_home_31",
+   "kind": "house",
+   "shop": "",
+   "name": "Lowe's house",
+   "keeper": "Merry Lowe",
+   "keeper_sprite": "villager",
+   "sign_sprite": "sign_house",
+   "roof": "#8a7050",
+   "no_keeper": true,
+   "keeper_at": [
+    2,
+    47
+   ],
+   "stand": [
+    2,
+    47
+   ]
+  },
+  {
+   "art": "house_cottage_round",
+   "flip": false,
+   "at": [
+    1,
+    21
+   ],
+   "door": [
+    [
+     2,
+     23
+    ]
+   ],
+   "sign": [
+    3,
+    23
+   ],
+   "props": [],
+   "counter": [],
+   "id": "highfen_home_32",
+   "kind": "house",
+   "shop": "",
+   "name": "Rook's house",
+   "keeper": "Jory Rook",
+   "keeper_sprite": "villager",
+   "sign_sprite": "sign_house",
+   "roof": "#8a7050",
+   "no_keeper": true,
+   "keeper_at": [
+    2,
+    23
+   ],
+   "stand": [
+    2,
+    23
+   ]
+  },
+  {
+   "art": "house_lshape",
+   "flip": true,
+   "at": [
+    4,
+    15
+   ],
+   "door": [
+    [
+     6,
+     17
+    ]
+   ],
+   "sign": [
+    7,
+    17
+   ],
+   "props": [],
+   "counter": [],
+   "id": "highfen_home_33",
+   "kind": "house",
+   "shop": "",
+   "name": "Cobb's house",
+   "keeper": "Tamsin Cobb",
+   "keeper_sprite": "villager",
+   "sign_sprite": "sign_house",
+   "roof": "#8a7050",
+   "keeper_at": [
+    5,
+    16
+   ],
+   "stand": [
+    6,
+    16
+   ]
+  },
+  {
+   "art": "house_crooked",
+   "flip": false,
+   "at": [
+    9,
+    11
+   ],
+   "door": [
+    [
+     10,
+     13
+    ]
+   ],
+   "sign": [
     11,
-    44
+    13
+   ],
+   "props": [],
+   "counter": [],
+   "id": "highfen_home_34",
+   "kind": "house",
+   "shop": "",
+   "name": "The Wrights' house",
+   "keeper": "Edric Wright",
+   "keeper_sprite": "villager",
+   "sign_sprite": "sign_house",
+   "roof": "#8a7050",
+   "no_keeper": true,
+   "keeper_at": [
+    10,
+    13
+   ],
+   "stand": [
+    10,
+    13
+   ]
+  },
+  {
+   "art": "house_stepped",
+   "flip": true,
+   "at": [
+    13,
+    7
+   ],
+   "door": [
+    [
+     14,
+     9
+    ]
+   ],
+   "sign": [
+    15,
+    9
+   ],
+   "props": [],
+   "counter": [],
+   "id": "highfen_home_35",
+   "kind": "house",
+   "shop": "",
+   "name": "Old Nell's",
+   "keeper": "Nell Ashby",
+   "keeper_sprite": "villager",
+   "sign_sprite": "sign_house",
+   "roof": "#8a7050",
+   "keeper_at": [
+    15,
+    8
+   ],
+   "stand": [
+    14,
+    8
+   ]
+  },
+  {
+   "art": "house_lshape",
+   "flip": false,
+   "at": [
+    18,
+    4
+   ],
+   "door": [
+    [
+     19,
+     6
+    ]
+   ],
+   "sign": [
+    20,
+    6
+   ],
+   "props": [],
+   "counter": [],
+   "id": "highfen_home_36",
+   "kind": "house",
+   "shop": "",
+   "name": "Fletcher's house",
+   "keeper": "Osric Fletcher",
+   "keeper_sprite": "villager",
+   "sign_sprite": "sign_house",
+   "roof": "#8a7050",
+   "keeper_at": [
+    20,
+    5
+   ],
+   "stand": [
+    19,
+    5
+   ]
+  },
+  {
+   "art": "house_cottage_round",
+   "flip": true,
+   "at": [
+    25,
+    2
+   ],
+   "door": [
+    [
+     26,
+     4
+    ]
+   ],
+   "sign": [
+    27,
+    4
+   ],
+   "props": [],
+   "counter": [],
+   "id": "highfen_home_37",
+   "kind": "house",
+   "shop": "",
+   "name": "The Moores' house",
+   "keeper": "Bryn Moore",
+   "keeper_sprite": "villager",
+   "sign_sprite": "sign_house",
+   "roof": "#8a7050",
+   "no_keeper": true,
+   "keeper_at": [
+    26,
+    4
+   ],
+   "stand": [
+    26,
+    4
+   ]
+  },
+  {
+   "art": "house_crooked",
+   "flip": false,
+   "at": [
+    43,
+    2
+   ],
+   "door": [
+    [
+     44,
+     4
+    ]
+   ],
+   "sign": [
+    45,
+    4
+   ],
+   "props": [],
+   "counter": [],
+   "id": "highfen_home_38",
+   "kind": "house",
+   "shop": "",
+   "name": "Hale's house",
+   "keeper": "Agnes Hale",
+   "keeper_sprite": "villager",
+   "sign_sprite": "sign_house",
+   "roof": "#8a7050",
+   "no_keeper": true,
+   "keeper_at": [
+    44,
+    4
+   ],
+   "stand": [
+    44,
+    4
+   ]
+  },
+  {
+   "art": "house_tower_corner",
+   "flip": true,
+   "at": [
+    47,
+    2
+   ],
+   "door": [
+    [
+     49,
+     5
+    ]
+   ],
+   "sign": [
+    50,
+    5
+   ],
+   "props": [],
+   "counter": [],
+   "id": "highfen_home_39",
+   "kind": "house",
+   "shop": "",
+   "name": "Thatcher's house",
+   "keeper": "Wat Thatcher",
+   "keeper_sprite": "villager",
+   "sign_sprite": "sign_house",
+   "roof": "#8a7050",
+   "keeper_at": [
+    48,
+    4
+   ],
+   "stand": [
+    49,
+    4
+   ]
+  },
+  {
+   "art": "house_narrow_tall",
+   "flip": false,
+   "at": [
+    53,
+    6
+   ],
+   "door": [
+    [
+     54,
+     9
+    ]
+   ],
+   "sign": [
+    53,
+    9
+   ],
+   "props": [],
+   "counter": [],
+   "id": "highfen_home_40",
+   "kind": "house",
+   "shop": "",
+   "name": "The Pikes' house",
+   "keeper": "Hedda Pike",
+   "keeper_sprite": "villager",
+   "sign_sprite": "sign_house",
+   "roof": "#8a7050",
+   "no_keeper": true,
+   "keeper_at": [
+    54,
+    10
+   ],
+   "stand": [
+    54,
+    10
+   ],
+   "closed": true
+  },
+  {
+   "art": "house_longhouse",
+   "flip": true,
+   "at": [
+    57,
+    9
+   ],
+   "door": [
+    [
+     60,
+     10
+    ]
+   ],
+   "sign": [
+    61,
+    10
+   ],
+   "props": [],
+   "counter": [],
+   "id": "highfen_home_41",
+   "kind": "house",
+   "shop": "",
+   "name": "Marsh's house",
+   "keeper": "Colm Marsh",
+   "keeper_sprite": "villager",
+   "sign_sprite": "sign_house",
+   "roof": "#8a7050",
+   "no_keeper": true,
+   "keeper_at": [
+    60,
+    11
+   ],
+   "stand": [
+    60,
+    11
+   ],
+   "closed": true
+  },
+  {
+   "art": "house_cottage_round",
+   "flip": false,
+   "at": [
+    62,
+    12
+   ],
+   "door": [
+    [
+     63,
+     14
+    ]
+   ],
+   "sign": [
+    64,
+    14
+   ],
+   "props": [],
+   "counter": [],
+   "id": "highfen_home_42",
+   "kind": "house",
+   "shop": "",
+   "name": "Reed's house",
+   "keeper": "Ida Reed",
+   "keeper_sprite": "villager",
+   "sign_sprite": "sign_house",
+   "roof": "#8a7050",
+   "no_keeper": true,
+   "keeper_at": [
+    63,
+    14
+   ],
+   "stand": [
+    63,
+    14
+   ]
+  },
+  {
+   "art": "house_lshape",
+   "flip": true,
+   "at": [
+    67,
+    18
+   ],
+   "door": [
+    [
+     69,
+     20
+    ]
+   ],
+   "sign": [
+    70,
+    20
+   ],
+   "props": [],
+   "counter": [],
+   "id": "highfen_home_43",
+   "kind": "house",
+   "shop": "",
+   "name": "The Crofts' house",
+   "keeper": "Lew Croft",
+   "keeper_sprite": "villager",
+   "sign_sprite": "sign_house",
+   "roof": "#8a7050",
+   "keeper_at": [
+    68,
+    19
+   ],
+   "stand": [
+    69,
+    19
    ]
   }
  ],
  "rows": [
-  "gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg",
-  "ggggggYggggEggggFggggggggggggggggggggggggggggggggggVgggggggEgggggggggggg",
-  "gggUgggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg",
-  "ggggggggggggggUgggggggggggggGggggggggVgggggggggggGggggggggggggggggFgUggg",
-  "gggggggEggFggggggggggggXggggggggggggYggggggggggGggggggggggggggggggggggVg",
-  "gggggggggYgggggggGgggggggggggggggggggggggggYggggggggggggggggGggggggggggg",
-  "ggggggggggggggggFggggggggggggggggggggggggYggggYgggggggggggggXgGYgggggggg",
-  "ggggggggggggggggggggggggggggggggggVgggggggGgggEggFggYggggVggggGggggggggg",
-  "ggggggEggggggVgVggggggYggggggggOgggggggggggggggggggEggggggggEgggYggUgggg",
-  "gggggggggggUgggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg",
-  "ggggYgggVgggggggggggggYgggggggXgggggLggggVgggggggggggggggggggggEgggggggg",
-  "gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggGgggggXgggg",
-  "ggggggggVggggggggXggggggggggggggggVggggggggggggggggUgggUgggggggggggggggg",
-  "ggEFggggggVgYggggggggggggggggggggggNgggggggggggggggggggggggggggggggggggg",
-  "ggggggggggggXgggggggggggggggggggggQggMggggggggggggggggggggggUggggggggggg",
-  "gggggYgFggFgggEggggggggggggggggggggggggggggggggggggggggggggggggYgggggggg",
-  "gggggggYgggggggggggggggggggggggggggggggddggggggggggggggggggVgggXEggggggg",
-  "gggggVggggggggggggggggdggggggggggggggggggggggggggggggggggggggggggggFgggg",
-  "ggggggggggggggggggggggggggggggg##########gggggggggggggggggggggggggggggFg",
-  "gggggggggYggggggggggggggggggg##############ggggggggggggggggggggggggggggg",
-  "ggggggggEgggggFgggggggggggg##################gggggggggggggggggYggggggggg",
-  "ggggggggggggggggggggggggg######gggggggggg######gggggXggggggggggggggggggg",
-  "ggVggggggggggggggggggggg#####gggggggggggggg#####gggggggggggggggggggggggg",
-  "ggggggggggggggggggggggg####gggggggggggggggggg####ggggggggggggggggggggggg",
-  "gggXgggggggggggggggggg####ggggggggggggggggggggg###gggggggggggggggggggggg",
-  "ggggVgggggggggggggggg###gggggggggggggggggggggggg###gggggggggggggggVggggg",
-  "ggggggggggggggggggggg##gggggggggggggggggggggggggg##ggggggggggggggggggggg",
-  "ggFggggggggggggggggg###ggggggggggggggggggLggggggg###gggggggggVgggggggggg",
-  "gggggggggggggggggggg##gggggggggggggggggggggggggggg###ggggggggggggggggggg",
-  "ggggggggggggggggggg##gggggggggggggggggggggggggggggg##ggggggggggggggggggg",
-  "ggggggggggggggggggM##gggggggggggFgggggggggggggggggg##gggCgggggggBggggggg",
-  "gggggggggXgggggggg###ggggggggggggggggggggggggggggggg##gggggggggggggggggg",
-  "ggFgggggggYggggggg##ggggggggggCggggggggggggggggggggg##ggggggggggggggFggg",
-  "ggggggYggggggggggg##gggggggggggggggggggggIggEggggggg##gggggMggCgGggggggg",
-  "gggggggggggggggggg##gggggggggggggggggggggggggggggggg##ggggggggggVJgggggg",
-  "gggggggggggggggggg##ggggggggggggggggggggggggggggggggg#gggggggggggggggggg",
-  "gggggggggVgGgggggg#gggggggggggggggggggggggggggggggggg#gggdgggggggggggggg",
-  "gggggggggKgggggggg##gggggggggggggggggggggKggggggggggg#gggggggggggggggggg",
-  "gggMggggggPggggggg##gggggggggggggggggggggggggggggggg##gggggggggggggggggg",
-  "ggggggggNggPgggggg##ggggggggJggggggggggggggggggggggg##ggggggEggggggggggg",
-  "ggggggFggggggggggg##gggggggggggggggggggggggggggggggg##gggggggggggggggggg",
-  "gggBgYggXgOggggggg##ggggggggggggggggggggggGggggggggg##gggggggggggggggggg",
-  "ggggVggVgggggggEggg##gggggggggggggggggggggggggggggg##gggggggggggYggggggg",
-  "ggggggggggggggggggg##gggggggggggPggggggNggggggggggg##ggggggggggggggggggg",
-  "gggggggggFggggggggg###gggggggggggggGgggggggggggggg###ggggggggggggggggggg",
-  "gggggggggggggggggggC##gggggggggggggggggggggggggggg##gggggggggggggggXgUgg",
-  "gggVgggggggggggggggg###ggggggggggggggPggggggggggg###gggggggggggggggggggg",
-  "ggggggggggggggggggggg###gggggggggggggggggggggggg###gggggggggggVggggggggg",
-  "gggggggggggggggggggggg###ggggIgPggggggggggggggg###gggggggggggggggggggggg",
-  "gggggggggggggggggggFggg###ggggggTgRggSgTgggggg####gggggggggggggggggggggg",
-  "gggggggggggggggggggggggg####ggHggggggggggggg#####gggddgggggggggggggggggg",
-  "gggXggggggggggggggggggggg#####CggggZggAggg#####gggggddgggggggggggEgggggg",
-  "ggggEggggggggggggggggggggg########gBgg########ggggggddgggggggYggYggggggg",
-  "ggggggggggggggggXggggggggggg######gggg######ggggggggdggggggggGgggggggggg",
-  "gggGYgggggggggUggggggggggggggg####gggg####gggggggggggggggggggggggggggUgg",
-  "gggYgggggggggUggggggVggggggggggggggggggggggggggggggggggggggggggggggggggg",
-  "ggggggggggggggggggggggggggggggggggggggggggggggEggggggXgggggEggggggggGggg",
-  "gggggggggggggggggggXggggggggggggggggJggggggggggggggggggggggggggggggggggg",
-  "gggggggggggggggggggggggggggggggggggggNggggggggggggGgggggggVggggggggggggg",
-  "ggggggUgggYVggggggggggggggggggggggggggggggggggggggggggggggggggggGggggggg",
-  "gggggggggggggggggggggggggggggggggggQggMggggggggggggggUgggggggggYgggggggg",
-  "gggggggggggggggggggggggggggggggggggMggggggggggYgFggggggggggggggggggggggg",
-  "gggggggggggYggggggggggggggggggggggggggggggggUggggggggFggggFgggggggYggggg",
-  "ggggggggXggYEgggggggggggggUgggggggggggggggggggggggggggggggggUggggggggggg",
-  "ggggggggggggggggggggggggggggggggXgggggggggggggggggggggggggggggggggggEUgg",
-  "gggggggggggUggYgggVgggggggggFggggQggBgggFgggggggggggXgggggggVgggggggggUg",
-  "gggggggggggggggggggggggggggEgggggggggPgUgggggggggggggggUggggggggggFggggg",
-  "gggEggVgggggVggggggggggggggggggYggPgggggggggggggggggFggggggggggVgggggggg",
-  "ggUggggggggggggggggggggggggggggggggCggggggggggFEgggggggggVgggggggggggggg",
-  "ggggggggggggggggggggggXgggggggggggggggggggXggggggggggggggggggggggggYgggg",
-  "gggggggggggVggggggggggggggggggggggggggggXggggggVggggYVgggggggggggggYgggg",
-  "gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg"
+  "gggggggggggggggggggggggggggggggggg::ggggddgggggggggggggggggggggggggggggg",
+  "ggggggbgggZEgbggFggggggggggggggggg:::ggggggggggggggggggggggggggggggggggg",
+  "ggggggggggggggggggggggggggggggggggg::ggggggggggggggZgggggggggZggggggHggg",
+  "ggggggggggggggggggggggggggggggggggg::gggagggggggggggggggbggggbggggggYggg",
+  "ggggggggggFgggggggggggggggggggggggL::ggggggggggggggggggggggggggggggggggg",
+  "ggggbggggggggggggggggggggggggggggC::ggggggggggggggggggggggggHgYggggggggg",
+  "gggggggggggggggggggggggggggg######::######e#ggggggggggggggggaggbgggggggg",
+  "gggggggggggggggggggggggg##########::############ggggZgggggggggHggggggggg",
+  "gggggggggggggggggggggg########gggg::gggggg########ggggggggggggggbggYHggg",
+  "ggggggggHgggggggggg#######gggggggg::gggggggggg######gggggggggggggggggggg",
+  "ggagbggggggggggggg######gggggggggg::gggggggggggg####gggggggggggEgggggggg",
+  "gggggggZgggggggg#####ggggggggggggg:::ggggggggggggg##e#gggggggggggggggggg",
+  "ggggggggggggggg#####gggggggggMgggg:::ggggggSCgCggg######ggggggggggggZggg",
+  "ggggggggggggggg###gggggggg:gggH::::::::::ggggggggggg######gggggggggggggg",
+  "gggggggggggggg###gggggggg:::::::ggg:::gg::::::gggggggg######gggggggggggg",
+  "ggggggggggggg####gggggg::::gggggggg::Cggggggg::gCggggggg#####ggggggggggg",
+  "gggggggggggg####ggggggg:ggggggggggg::ggggggggg:::ggggggggg#####ggggggggg",
+  "gggggggggg#####gggggggd:ggggg:::MgL::Jggdggggggg:::gggggggg###eggggggggg",
+  "ggggggggg#####gggggggg::ggKg::g:::::::::::gggggggg::::ggggg#g###aggggggg",
+  "gggggggg####gggggggg:::ggg:::gggg:::::::::::gggggEggggEgggggg####ggggggg",
+  "gggggggg###ggggggggF::g::::gggggggggggggg:::::gggggg::::gggggg###ggggggg",
+  "ggggggg###ggggg::::::Rg:ggCggggggggggggEggg:::::ggggggg:::ggggg###gggggg",
+  "gggggg####ggggg:::::::::gggggEggggggggggggggg::::gCggg::::Ngggg###gggggg",
+  "dgggg####ggggg::gg:g::ggggggggggggggggggggggggg:::::Mgggg:gggggg###ggggg",
+  "ggggg###ggggg:::ggHg:ggggggggggggggggggggggggggg:::::ggggg:ggggg###ggggg",
+  "gggg###gggggg::gggg::gggggggggggggggggggggggggggg::g:g:ggg:gggggg###gggg",
+  "gggg###ggggPg::ggg::Mgggggggggggggggggggggggggggggg:::gggg::ggggg###gggg",
+  "gggg##gggggg::gggg:ggggggggggggggggggggggFggggggggggg:g:gg::gggggg##gggg",
+  "dggg##gggggg::ggO::ggggggggggggggggggggggggggggggggg:::ggg::gggggg#egggg",
+  "dggg##gggggg::ggg::ggggggggggggggggggggggggggggggggJgg:g:g::gggggg##gggg",
+  "dddg####gggg::gggK:ggggggggggggggggggggggggggggggggg:::ggJ:::gggg###gggg",
+  "gddd###ggggg::gggg:ggggggggggggggggggggggggggggggggg::Pgggg::ggggg##gggg",
+  "ggddg##ggggg::ggH::ggggggggggggggggggggggggggggggggg::::ggg::ggggg##gggg",
+  "ggdgg##ggggg::ggg:gggggggggggggggggggggggggggggggggg::K:ggR::ggggg##gggg",
+  "ggg####ggggg::ggK:ggggggJEgggggg::::::::ggggggggggggg:g:ggg::ggggg###ggg",
+  "ggg####ggggg:gggg:ggggggggggggg:R::::::R:gggggggggggg:::ggg::ggggg###ggg",
+  "ggg##::::ggg:Rg:g:Lgggggg:gOgg:f:::::::A::::::::::gggg::Md:::::::::::::g",
+  "gg::::::::::::::::::::::::::::::::::Q:::::::::::::::::::::::::::::::::::",
+  "::::::gggCBg:Mg:::::::::::::::::::::::::::::::::::::::::::::::::::::::::",
+  "ggg##ggggggS:gggg::SggggMgJggg:::::::::::X:gggggg:::::::::::ggggggd##g::",
+  "ggg##ggggggg:ggggg:gggggggggggVI:::U:::V::Lgggggggggg:::ggg:ggggggg##ggg",
+  "ggg###gggggg:Cgggg:HgggggggggCg:T::::T:::UJgggggggggg:g:ggg:gggggg###ggg",
+  "ggg####ggggg::gggg::Mggggggggggg::::::::gggggggggggg::gggg::Lgggg###eggg",
+  "gggg###gggggg:ggggg:gggggggggggggg:::ggggggggggggggg:g:ggg:gggggg###gggg",
+  "ggggge#gggggC::gggg::gggggggggggMg:::gggggggggggggg:::gggg:Jggggg##ggggg",
+  "ggggg###gggggg:ggggg::Sggggggggggg:::gggggggggggggg:g:ggg::ggggg###ggggg",
+  "ggggg###gggggL:ggggg:::ggggggggggg:::ggggggggggggg:::ggg::gggggg###ggggg",
+  "gggggg###ggggg::ggggg::ggggggggggg:::gggggggggggg::Hgggg:gggggg###gggggg",
+  "gggggg###gggggg::gggg::gggHgggggggg::Cgggggggggg::::ggg::gggggg###gggggg",
+  "ggggggg###gggggg::ggg:::ggggggggggg:::gggggggg:::::ggg::Rggggg###ggggggg",
+  "ggggggg###ggggggg:::::::::::::ggggg:::Ngggggg::g::ggddg::ggggg###ggggggg",
+  "gggggggg###gggggggg:::g:::::B::::gg:::g:ggggg::::gggdd::ggggg###gggggggg",
+  "gggggggg####ggggggggg:::g::g::gg::::::::g:g::::gggggd:::gggg##e#gYgggggg",
+  "ggggggggg####gggggggggg:::ggg::::gg:::g:::::gOgggggg:::ggggg###ggggggggg",
+  "gggggggggg#e#gggggggggNgg:::gggg::::::::Ngg:::gggMg:::gggggg##gggggggggg",
+  "ggggggggggg###ggggggggggggggggggggg:::B:::::ggC::::::gggggg###gggggggggg",
+  "ggggggggggg#####ggggggggggM:::::ggg:::ggHggggggggggggggggg####gggggggggg",
+  "gggggggggggg#####gggggggggggggg::gg:::gggg::::::gggggg#gg####ggggggggggg",
+  "gggggggggggggg####ggggggggg:::::::::::gg::gg:ggggggg########gggggggggggg",
+  "ggggggggggggggg#####ggggggggggg::gg::::::g::gggggg###e#####ggggggggggYgg",
+  "gggggggggggggggg#####g##gggggggg::::::gggggggggggg####ggggggggggFggggggg",
+  "gggggggggggggggggg########ggggggggg::Cgggggggggg####gggggggggggggggggggg",
+  "ggggggggggggggggggge#######ggggggg:::ggggggggg######ggggggggggggbgHggggg",
+  "gggggggggggggggggggggggg######ggg#:::##ggg########gggggggggggggggggggggg",
+  "ggggggggggggggggggggggggg#########::::######e###gggggggggggggggggggggggg",
+  "gggggggggggggggggggggggggggg##e####::#######gggggggggggggggggggggggggggg",
+  "ggggggggggggggggggggggggggggggggggg::d:gggggggggggbggggggggggbggggFggggg",
+  "gggEggggggggZgggggggggggggggggggggg::d:gggggggggggEggggggggggggggggggggg",
+  "ggYgggggggggggggggggggggggggggggggg::R:ggggggggggggggggZgagggggggggggggg",
+  "ggggggggggggggggggggggggggbggggggggg:g:ggggggggggggggggggggggggggggggggg",
+  "gggggggggggggggggYgggggggggggggggggg:g:gdgggggggggbgbggggggggggZgggggggg",
+  "gggggggggggggggggggggggggggggggggggg::ggdggggggggggggggggggggggggggggggg"
  ],
  "note": "0.3.11 generated by tools/world/build_highfen_v2.py from the designer's Highfen set (art_handoff/towns/highfen, copied to assets/sprites/towns/highfen)"
 }

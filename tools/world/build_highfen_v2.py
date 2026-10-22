@@ -23,7 +23,8 @@ T = 16
 N = 72                     # town is N x N tiles
 SW = SH = N * T
 CX, CY = SW // 2, SH // 2  # ring centre (px)
-R = 17 * T                 # ring inner radius
+R = 28 * T                 # 0.3.11b city wall mean radius (px); oval: RX/RY below
+RX, RY = 30.0, 28.0          # wall radii in tiles (oval, wider than tall)
 
 # ---------------------------------------------------------------- copy art
 for sub in ('buildings', 'props', 'walls'):
@@ -109,31 +110,93 @@ def until(gen, ok):
         if not ok(p): break
     return out
 inb = lambda p: -8 <= p[0] <= SW + 8 and -8 <= p[1] <= SH + 8
-PLAZA = (CX, CY + R - 50, 60, 27)
+PLAZA = (CX, CY + 40, 104, 78)       # 0.3.11b big central cobble plaza (fountain at its centre)
+def stepped_ring(cx, cy, rx, ry, seed, amp=1):
+    """an irregular stepped oval: the radius jumps by whole tiles per ~20 deg sector"""
+    rr = random.Random(seed); sect = [rr.choice([-amp, 0, 0, amp]) for _ in range(18)]
+    return [(cx + (rx + sect[(t // 20) % 18] * T) * math.cos(math.radians(t)), cy + (ry + sect[(t // 20) % 18] * T) * math.sin(math.radians(t))) for t in range(0, 361, 2)]
+def wander(x0, y0, x1, y1, amp, seed, n=60):
+    rr = random.Random(seed); ph = rr.random() * 6
+    l = math.hypot(x1 - x0, y1 - y0); nx, ny = -(y1 - y0) / l, (x1 - x0) / l
+    return [(x0 + (x1 - x0) * t / n + nx * amp * math.sin(ph + t / 6), y0 + (y1 - y0) * t / n + ny * amp * math.sin(ph + t / 6)) for t in range(n + 1)]
 LANES = dict(
-    gate_road=until(((CX + 18 * math.sin(t / 5), CY + R - 30 + t * 4) for t in range(400)), inb),
-    palace_loop=ell(CX, CY - 14, 116, 128),
-    outer_ring=ell(CX, CY + 8, R + 46, R + 42),
-    north_track=until(((CX - 30 + 40 * math.sin(t / 9), CY + 8 - R - 42 - t * 4) for t in range(400)), inb),
-    west_track=until(((CX - R - 40 - t * 4, CY + 60 + 30 * math.sin(t / 8)) for t in range(400)), inb),
-    east_track=until(((CX + R + 40 + t * 4, CY - 40 + 26 * math.sin(t / 7)) for t in range(400)), inb),
-    market_spoke=[(CX + 10 * math.sin(t / 4), CY + 112 + t * 4) for t in range(0, 22)],
+    inner_ring=stepped_ring(CX, CY - 4, 18.5 * T, 17.5 * T, 3),
+    mid_ring=stepped_ring(CX, CY, 24 * T, 22.5 * T, 8),
+    gate_road=wander(CX + 4, PLAZA[1] + PLAZA[3] - 8, CX + 8, SH + 8, 10, 1),      # south spoke: plaza -> south gate -> edge
+    north_track=wander(CX - 6, CY - 4 - 17.5 * T, CX - 20, -8, 10, 2),             # north spoke: inner ring (behind the palace) -> edge
+    west_track=wander(PLAZA[0] - PLAZA[2] + 8, CY + 36, -8, CY + 30, 9, 4),          # west spoke: plaza -> edge
+    east_track=wander(PLAZA[0] + PLAZA[2] - 8, CY + 36, SW + 8, CY + 26, 9, 5),      # east spoke: plaza -> edge
 )
-W_ = dict(gate_road=18, palace_loop=16, outer_ring=16, north_track=13, west_track=13, east_track=13, market_spoke=13)
-road = np.zeros((SH, SW), bool)
-for k, p in LANES.items(): road |= roadmask(p, W_[k])
+W_ = {k: 16 for k in LANES}
+WID = dict(inner_ring=(2, 2), mid_ring=(1, 2), gate_road=(2, 3), north_track=(2, 3), west_track=(2, 3), east_track=(2, 3))
+COBBLE_LANES = ('inner_ring', 'mid_ring', 'gate_road', 'north_track', 'west_track', 'east_track')
+roadT = np.zeros((N, N), np.uint8)       # 0 none, 1 road_stone, 2 cobble
+_rr = random.Random(int(os.environ.get('HF_ROAD_SEED', 23)))
+def lay(pts, kind, wmin, wmax):
+    cells = []
+    for (x, y) in pts:
+        tx, ty = int(x // T), int(y // T)
+        if cells:
+            px_, py_ = cells[-1]
+            order = _rr.random() < .5          # staggered steps: x-then-y or y-then-x
+            while (px_, py_) != (tx, ty):
+                if (order and px_ != tx) or py_ == ty: px_ += 1 if tx > px_ else -1
+                else: py_ += 1 if ty > py_ else -1
+                cells.append((px_, py_))
+        else: cells.append((tx, ty))
+    w = wmin; jog = 0
+    for i, (cx, cy) in enumerate(cells):
+        if i % _rr.randint(4, 7) == 0:
+            w = _rr.randint(wmin, wmax)
+            if _rr.random() < .3: jog = _rr.choice((-1, 0, 1)) if wmax > 1 else 0
+        a, b = cells[max(0, i - 1)], cells[min(len(cells) - 1, i + 1)]
+        horiz = abs(b[0] - a[0]) >= abs(b[1] - a[1])
+        for k in range(w):
+            o = k - (w - 1) // 2 + (jog if k == w - 1 else 0)
+            qx, qy = (cx, cy + o) if horiz else (cx + o, cy)
+            if 0 <= qx < N and 0 <= qy < N: roadT[qy, qx] = max(roadT[qy, qx], kind)
+for k, p in LANES.items():
+    lay(p, 2 if k in COBBLE_LANES else 1, *WID[k])
 plaza = ((X - PLAZA[0]) / PLAZA[2]) ** 2 + ((Y - PLAZA[1]) / PLAZA[3]) ** 2 <= 1
-road |= plaza
+pt = plaza.reshape(N, T, N, T).mean(axis=(1, 3)) > 0.35
+roadT[pt] = 2
+road = np.kron(roadT > 0, np.ones((T, T), bool))
+plaza = np.kron(pt, np.ones((T, T), bool))
 
 # ---------------------------------------------------------------- city wall ring (tile collision from its alpha)
-ring = L('walls', 'city_wall_ring_full'); rc = M['ring_center_px']; rox, roy = CX - rc, CY - rc
-ringA = np.zeros((SH, SW), bool); ra = np.array(ring)[..., 3] > 0
-ringA[roy:roy + ra.shape[0], rox:rox + ra.shape[1]] = ra[:SH - roy, :SW - rox]
-cov = ringA.reshape(N, T, N, T).mean(axis=(1, 3))
-wall_t = cov > 0.15
-# the gate: the open columns in the ring under the centre line (south)
-gate_cols = [tx for tx in range(N) if abs(tx * T + 8 - CX) < 40 and not wall_t[(CY + R) // T:(CY + R + 40) // T, tx].any()]
-print('ring gate columns', gate_cols)
+# 0.3.11b (Hudson): a roughly round ring of capital_wall TILES on an irregular
+# stepped outline (radius constant per ~15 deg sector, sectors step in and out);
+# the wall autotiles, so every turn gets a tower post; gates where roads cross
+_wr = random.Random(5)
+SECT = 30
+srad = [_wr.choice((-1, 0, 0, 0, 1)) for i in range(SECT)]      # stepped: whole-tile jumps per 12 deg sector
+def ring_r(x, y):
+    a = (math.atan2(y + .5 - CY / T, x + .5 - CX / T) + 2 * math.pi) % (2 * math.pi)
+    k = srad[int(a / (2 * math.pi) * SECT) % SECT]
+    return math.hypot((x + .5 - CX / T) / (RX + k), (y + .5 - CY / T) / (RY + k))
+inner = np.array([[ring_r(x, y) < 1.0 for x in range(N)] for y in range(N)])
+wall_t = ndi.binary_dilation(inner, structure=np.ones((3, 3), bool), iterations=2) & ~inner   # thick: 2 tiles
+gate_t = wall_t & (roadT > 0)
+for _ in range(2):    # every gate at least 3 wall tiles wide (merge split openings)
+    gl0, n0 = ndi.label(gate_t, structure=np.ones((3, 3), bool))
+    for i in range(1, n0 + 1):
+        if (gl0 == i).sum() < 3:
+            gate_t |= ndi.binary_dilation(gl0 == i, structure=np.ones((3, 3), bool)) & wall_t
+wall_t &= ~gate_t
+for (yy, xx) in zip(*np.nonzero(gate_t)): roadT[yy, xx] = 2
+gl, ng_ = ndi.label(gate_t, structure=np.ones((3, 3), bool))
+GATES_RING = {}
+for i in range(1, ng_ + 1):
+    ys_, xs_ = np.nonzero(gl == i); my, mx = ys_.mean() - CY / T, xs_.mean() - CX / T
+    side = ('east' if mx > 0 else 'west') if abs(mx) > abs(my) else ('south' if my > 0 else 'north')
+    print("gate comp", side, list(zip(xs_.tolist(), ys_.tolist())))
+    GATES_RING.setdefault(side, []).extend([[int(a), int(b)] for a, b in zip(xs_, ys_)])
+print('wall tiles', int(wall_t.sum()), 'gates', {k: len(v) for k, v in GATES_RING.items()})
+assert sorted(GATES_RING) == ['east', 'north', 'south', 'west'] and ng_ == 4, (GATES_RING.keys(), ng_)
+INNER_PX = np.kron(ndi.binary_erosion(inner, iterations=1), np.ones((T, T), bool))
+OUTER_KEEP = np.kron(ndi.binary_dilation(inner, iterations=3), np.ones((T, T), bool))
+ringA = np.kron(wall_t | gate_t, np.ones((T, T), bool))
+road = np.kron(roadT > 0, np.ones((T, T), bool))
 
 # ---------------------------------------------------------------- building placement (tile-snapped)
 occ = ndi.binary_dilation(road | ringA, iterations=2)       # px: no building pixel here
@@ -164,8 +227,8 @@ def place(n, tx, ty, inside, flip=False, role=None, reach=320, extra=None, quiet
             x0, y0 = ox * T, oy * T - E
             if ox < 1 or oy < 1 or ox + W > N - 1 or oy + H > N - 2 or y0 < 0 or x0 + w > SW: continue
             ys, xs = np.nonzero(al); dd = np.hypot(xs + x0 - CX, ys + y0 - CY)
-            if inside and dd.max() > R - 4: why['ring'] = why.get('ring', 0) + 1; continue
-            if not inside and dd.min() < R + 34: continue
+            if inside and not INNER_PX[ys + y0, xs + x0].all(): why['ring'] = why.get('ring', 0) + 1; continue
+            if not inside and OUTER_KEEP[ys + y0, xs + x0].any(): continue
             if (occ[y0:y0 + h, x0:x0 + w] & al).any(): why['occ'] = why.get('occ', 0) + 1; continue
             # tiles: footprint + 1 margin all round free; the tile in front of the door free
             bad = False
@@ -186,37 +249,42 @@ def place(n, tx, ty, inside, flip=False, role=None, reach=320, extra=None, quiet
     else: QW.append(why)
     return None
 
-# inside the walls (designer's scene, roles mapped onto the game's Highfen buildings)
-place('palace', CX, CY - 14, True, role='palace')
-place('guild_knights', CX + 190, CY - 12, True, role='guild')
-place('church', CX - 150, CY + 4, True, role='church')
-place('house_tower_corner', CX + 120, CY - 84, True, role='bank')
-place('shop_general', CX - 120, CY - 116, True, role='general')
-place('shop_tavern', CX - 112, CY + 128, True, role='cook')
-place('shop_smith', CX + 104, CY + 140, True, role='player_shop')
-place('house_twin_gable', CX + 168, CY + 74, True, role='player_house', flip=True)
-place('shop_baker', CX + 30, CY + 150, True, role='baker')
-place('house_crooked', CX - 40, CY - 168, True, role='home')
-place('house_stepped', CX + 60, CY - 176, True, role='home', flip=True)
-place('house_narrow_tall', CX - 200, CY - 60, True, role='home')
-for i, n in enumerate(['house_lshape', 'house_cottage_round', 'house_twin_gable', 'house_stepped', 'house_longhouse', 'house_tower_corner',
-                       'house_narrow_tall', 'shop_baker', 'house_crooked', 'house_lshape', 'house_cottage_round', 'house_longhouse']):
-    an = i * 30 + 7; pfx, pfy = CX + 196 * math.cos(math.radians(an)), CY + 186 * math.sin(math.radians(an))
-    cand = sorted([(x, y) for x in range(CX - R, CX + R, 8) for y in range(CY - R, CY + R, 8) if 150 < math.hypot(x - CX, y - CY) < R - 20],
-                  key=lambda c: math.hypot(c[0] - pfx, c[1] - pfy))
-    for (x, y) in cand:
-        if place(n, x, y, True, flip=i % 2 == 0, role='home', reach=1, quiet=True): break
+# 0.3.11b layout after Hudson's reference: palace on the plaza's north side, church
+# west, guild east, market on the south side; dense houses between the rings
+PY = PLAZA[1]
+place('palace', CX, PY - PLAZA[3] - 96, True, role='palace')
+place('church', CX - 168, PY - 30, True, role='church')
+place('guild_knights', CX + 176, PY - 40, True, role='guild')
+place('shop_smith', CX + 70, PY + PLAZA[3] + 40, True, role='player_shop')
+place('shop_tavern', CX - 96, PY + PLAZA[3] + 46, True, role='cook')
+place('house_tower_corner', CX + 196, PY + 70, True, role='bank')
+place('shop_general', CX - 200, PY + 70, True, role='general')
+place('shop_baker', CX - 150, CY - 200, True, role='baker')
+place('house_twin_gable', CX - 210, CY - 110, True, role='player_house', flip=True)
+HOUSES = ['house_lshape', 'house_cottage_round', 'house_twin_gable', 'house_stepped', 'house_crooked', 'house_tower_corner', 'house_narrow_tall',
+          'house_longhouse', 'house_cottage_round', 'house_lshape', 'house_crooked', 'house_stepped']
+# dense fill: walk the bands between the rings and the wall, try every design (mirrored on alternate tries)
+fill = 0
+for band in (15.0, 20.5, 26.0):
+    for k in range(0, 360, 7):
+        n = HOUSES[(k // 7 + int(band)) % len(HOUSES)]
+        x, y = CX + band * T * math.cos(math.radians(k)), CY + band * T * 0.94 * math.sin(math.radians(k))
+        if place(n, x, y, True, flip=(k // 7) % 2 == 1, role='home', reach=40, quiet=True) or \
+           place(HOUSES[(k // 7 + 3) % len(HOUSES)], x, y, True, flip=(k // 7) % 2 == 0, role='home', reach=40, quiet=True):
+            fill += 1
+print('inside houses', fill)
 import collections; _c = collections.Counter()
 for w in QW: _c.update(w)
 print('ring-house rejections', dict(_c))
-OUT = ['house_twin_gable', 'house_longhouse', 'house_lshape', 'shop_general', 'house_cottage_round', 'house_stepped', 'house_cottage_round', 'house_lshape',
-       'house_twin_gable', 'house_tower_corner', 'house_longhouse', 'house_stepped', 'house_crooked', 'house_narrow_tall', 'house_lshape', 'house_cottage_round',
-       'house_twin_gable', 'house_longhouse', 'house_tower_corner', 'house_narrow_tall', 'shop_smith', 'house_crooked', 'shop_baker', 'house_cottage_round']
+# lore: the civilian houses circle the city OUTSIDE the wall
+OUT = HOUSES * 3
+nout = 0
 for i, n in enumerate(OUT):
-    ang = (200 + i * (340 / len(OUT))) % 360
-    if 75 < ang < 105: ang += 30
-    rr = R + 74 + (i % 3) * 34
-    place(n, CX + rr * math.cos(math.radians(ang)), CY + rr * math.sin(math.radians(ang)), False, flip=i >= 8, role='home', reach=90)
+    ang = i * (360 / len(OUT)) + 3
+    for rr in (R + 70, R + 110, R + 150):
+        if place(n, CX + rr * math.cos(math.radians(ang)), CY + rr * math.sin(math.radians(ang)), False, flip=i % 2 == 1, role='home', reach=24, quiet=True):
+            nout += 1; break
+print('outside houses', nout)
 
 # ---------------------------------------------------------------- tile grid
 grid = [['.'] * N for _ in range(N)]     # '.' grass
@@ -228,6 +296,7 @@ for y in range(N):
 for y in range(N):
     for x in range(N):
         if wall_t[y, x]: grid[y][x] = 'W'
+        elif roadT[y, x]: grid[y][x] = 'r' if roadT[y, x] == 1 else 'c'
 for b in blds:
     ox, oy = b['at']
     for ly, r in enumerate(b['rows']):
@@ -253,7 +322,7 @@ gates = dict(north=edge_gate('north_track', 'north'), south=edge_gate('gate_road
 objs = {}                 # (x,y) -> object id
 def free_tile(x, y, allow_road=False, margin_doors=True):
     if not (1 <= x < N - 1 and 1 <= y < N - 1): return False
-    if grid[y][x] not in '.d' or (x, y) in objs: return False
+    if grid[y][x] not in ('.drc' if allow_road else '.d') or (x, y) in objs: return False
     if not allow_road and rcov[y, x] > 0.05: return False
     for b in blds:
         dx, dy = b['door']
@@ -398,11 +467,15 @@ def addo(name, x, y, allow_road=False):
     return False
 px2t = lambda x, y: (int(x // T), int(y // T))
 # stalls in a curved row across the plaza, the well, the statue, the exchange board
-for i, s in enumerate(['stall_fruit', 'stall_cloth', 'stall_fish', 'stall_fruit']):
-    tx, ty = px2t(PLAZA[0] - 60 + i * 38, PLAZA[1] - 10 + (i % 2) * 6)
+# 0.3.11b the fountain at the plaza's centre (placeholder art - no designer fountain)
+for (ax, ay) in [(0, 0), (1, 0), (0, 1)]:
+    if addo('hf_fountain', PLAZA[0] // T + ax, PLAZA[1] // T + ay - 1, True): MARKET.append((PLAZA[0] // T + ax, PLAZA[1] // T + ay - 1)); break
+# market stalls in two staggered rows on the plaza's south side
+for i, s in enumerate(['stall_fruit', 'stall_cloth', 'stall_fish', 'stall_cloth', 'stall_fruit', 'stall_fish']):
+    tx, ty = px2t(PLAZA[0] - 84 + i * 34, PLAZA[1] + 30 + (i % 2) * 20)
     if addo('hf_' + s, tx, ty, True): MARKET.append((tx, ty))
-for nm, dx, dy in [('hf_well', -6, 22), ('exchange_board', 40, 18), ('hf_statue_knight', 70, -26), ('hf_lamp_post', -76, -24), ('hf_lamp_post', 74, 8),
-                   ('hf_cart', -96, 4), ('hf_crate_stack', 90, -12), ('hf_barrel', -84, 18)]:
+for nm, dx, dy in [('hf_well', -70, -30), ('exchange_board', 60, -34), ('hf_statue_knight', 80, 10), ('hf_lamp_post', -50, -50), ('hf_lamp_post', 50, -50),
+                   ('hf_cart', -96, 30), ('hf_crate_stack', 96, 30), ('hf_barrel', -100, 46), ('hf_crate', 100, 50)]:
     tx, ty = px2t(PLAZA[0] + dx, PLAZA[1] + dy)
     for (ax, ay) in [(0, 0), (1, 0), (-1, 0), (0, 1), (0, -1), (1, 1), (-1, 1)]:
         if addo(nm, tx + ax, ty + ay, True): MARKET.append((tx + ax, ty + ay)); break
@@ -425,26 +498,24 @@ for k in range(400):
     if math.hypot(x * T + 8 - CX, y * T + 8 - CY) < R - 24 and rnd.random() < .25:
         addo(rnd.choice(['hf_bush_a', 'hf_bush_flowers', 'hf_flowerbed_small', 'hf_bush_b', 'hf_debris', 'hf_barrel', 'hf_crate']), x, y)
 
-# ---------------------------------------------------------------- ground decal: roads, plaza, puddles, mud
-decal = road_tex(road, 3)
-dimg = Image.fromarray(decal)
-for k in range(140):
-    x, y = rnd.randrange(16, SW - 32), rnd.randrange(16, SH - 16)
-    nm = rnd.choice(['puddle', 'mud_patch'])
-    im = L('props', nm)
-    on_road = road[y:y + im.height, x:x + im.width].mean() > .6
-    if on_road or rnd.random() < .25:
-        tx, ty = px2t(x + im.width / 2, y + im.height / 2)
-        if 0 <= tx < N and 0 <= ty < N and grid[ty][tx] in '.d':
-            dimg.alpha_composite(im, (x, y))
-dimg.save(os.path.join(DST, 'ground_decal.png'))
+# 0.3.11b: no painted ground decal - roads and plaza are tiles
+# round towers along the wall (placeholder art): outer wall tiles every ~20 deg, never beside a gate
+GATE_ALL = {tuple(p) for v in GATES_RING.values() for p in v}
+outer_wall = wall_t & ~ndi.binary_dilation(inner, structure=np.ones((3, 3), bool))
+last_a = -99; towers = 0
+cand = sorted(zip(*np.nonzero(outer_wall)), key=lambda q: math.atan2(q[0] + .5 - CY / T, q[1] + .5 - CX / T))
+for (ty, tx) in cand:
+    a = math.degrees(math.atan2(ty + .5 - CY / T, tx + .5 - CX / T))
+    if a - last_a < 20 or any(abs(tx - g[0]) <= 3 and abs(ty - g[1]) <= 3 for g in GATE_ALL): continue
+    objs[(int(tx), int(ty))] = 'hf_wall_tower'; last_a = a; towers += 1
+print('wall towers', towers)
 
 # ---------------------------------------------------------------- reachability (4-connected, objects block)
 def walk(x, y):
     if not (0 <= x < N and 0 <= y < N): return False
     if (x, y) in objs: return False
     c = grid[y][x]
-    return c in '.d'
+    return c in '.drc'
 blocked_obj = set(objs)
 inside_walk = {}
 for b in out_b:
@@ -480,9 +551,11 @@ road_fails = [b['art'] + str(b['at']) for b in blds if (road[b['px'][1]:b['px'][
 
 # ---------------------------------------------------------------- write data
 OBJ_CH = {}
-chars = iter('ABCEFGHIJKLMNOPQRSTUVXYZabcefhijklmnpqrstuvwxyz0123456789!$%&()*+,/;<>?@[]_{|}')
+chars = iter('ABCEFHIJKLMNOPQRSTUVXYZabefhijklmnpqstuvwxyz0123456789!$%&()*+,/;<>?@[]_{|}')
 for o in sorted(set(objs.values()) - {'display_stand', 'hearth', 'furnace', 'anvil', 'workbench', 'quern', 'bank_chest', 'oven'}):
     OBJ_CH[o] = next(chars)
+GATE_SET = {tuple(p) for v in GATES_RING.values() for p in v}
+for p in GATE_SET: grid[p[1]][p[0]] = 'c'
 rows = []
 for y in range(N):
     r = ''
@@ -491,6 +564,9 @@ for y in range(N):
         o = objs.get((x, y))
         if o in OBJ_CH: r += OBJ_CH[o]
         elif c == 'W': r += '#'
+        elif c == 'r': r += '='
+        elif c == 'c': r += ':'
+        elif (x, y) in GATE_SET: r += 'G'
         elif c == 'B': r += 'g'
         elif c == 'd': r += 'd'
         else: r += 'g'
@@ -499,28 +575,35 @@ ground_of = lambda x, y: 'dirt' if grid[y][x] == 'd' else 'grass'
 objects = {}
 for o, ch in OBJ_CH.items():
     xs = [p for p, v in objs.items() if v == o]
-    objects[ch] = {'object': o, 'ground': 'grass'}
+    objects[ch] = {'object': o, 'ground': 'capital_wall' if o == 'hf_wall_tower' else ('cobble' if xs and all(roadT[p[1], p[0]] for p in xs) else 'grass')}
 town_art = dict(note='0.3.11 per-design tile plans for the layered town buildings (tools/world/build_highfen_v2.py). plan: # wall, o floor, D door, . outside',
-                buildings=ART, ring=dict(segments=segs, center_px=rc))
+                buildings=ART)
 json.dump(town_art, open(os.path.join(REPO, 'data/town_art.json'), 'w'), indent=1)
 old = json.load(open(os.path.join(REPO, 'data/towns/highfen.json')))
 spawn = [PLAZA[0] // T, PLAZA[1] // T + 3]
 while not walk(*spawn) or tuple(spawn) not in seen: spawn[1] += 1
 town = dict(id='highfen', name='Highfen', kind='capital', origin=old['origin'], spawn=[old['origin'][0] + spawn[0], old['origin'][1] + spawn[1]],
-            tiles={'g': 'grass', 'd': 'dirt', '#': 'city_ring'}, objects=objects, roof='#b8a888', building_style='capital',
+            tiles={'g': 'grass', 'd': 'dirt', '#': 'capital_wall', '=': 'road_stone', ':': 'cobble', 'G': 'gate_capital'}, objects=objects, roof='#b8a888', building_style='capital',
             specialists=old['specialists'], price_bias=old['price_bias'],
             tagline='The walled capital at the heart of the realm: a round city of soot-dark stone, the palace at its centre, the Guild of Knights, a market by the gate and houses ringing the wall.',
             theme='highfen', gates=gates,
-            gate_walls=dict(south=[[x, max(y for y in range(N) if wall_t[y, gate_cols[0] - 1])] for x in gate_cols]),
-            art=dict(ground_decal=f'{RES}/ground_decal.png', ring_origin_px=[rox, roy], market=[list(p) for p in MARKET], plaza_px=list(PLAZA[:2])),
+            gate_walls=GATES_RING,
+            art=dict(market=[list(p) for p in MARKET], plaza_px=list(PLAZA[:2])),
             buildings=out_b, rows=rows,
             note="0.3.11 generated by tools/world/build_highfen_v2.py from the designer's Highfen set (art_handoff/towns/highfen, copied to assets/sprites/towns/highfen)")
 json.dump(town, open(os.path.join(REPO, 'data/towns/highfen.json'), 'w'), indent=1)
 # debug image
 os.makedirs(os.path.join(REPO, 'build'), exist_ok=True)
-dbg = Image.new('RGBA', (SW, SH), (60, 80, 50, 255)); dbg.alpha_composite(dimg)
+dbg = Image.new('RGBA', (SW, SH), (60, 80, 50, 255))
+from PIL import ImageDraw as _ID
+_dd = _ID.Draw(dbg)
+for y in range(N):
+    for x in range(N):
+        col = {'r': (150, 140, 120, 255), 'c': (175, 170, 160, 255), 'W': (70, 64, 70, 255)}.get(grid[y][x])
+        if (x, y) in GATE_SET: col = (200, 160, 60, 255)
+        if col: _dd.rectangle([x * T, y * T, x * T + T - 1, y * T + T - 1], fill=col)
 items = [(b['px'][1] + BM[b['art']]['px'][1], 'b', b) for b in blds] + [(y * T + T, 'p', (o, x, y)) for (x, y), o in objs.items()]
-seg_items = [(roy + v['offset'][1] + v['size'][1], 's', (k, v)) for k, v in segs.items()]
+seg_items = []
 for base, kind, it in sorted(items + seg_items, key=lambda t: t[0]):
     if kind == 's':
         dbg.alpha_composite(L('walls', it[0]), (rox + it[1]['offset'][0], roy + it[1]['offset'][1]))

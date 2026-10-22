@@ -2405,7 +2405,7 @@ func _capital038() -> void:
 	# 0.3.11 the moat is gone: a round city wall (CITY_RING) flanks the north gate
 	var ring := 0
 	for dy in range(1, 90):   # walking north from the palace hits the wall before the town's north gate
-		if g.tile_at(hc.x + 3, hc.y - dy) == WorldGen.TileType.CITY_RING or g.tile_at(hc.x - 3, hc.y - dy) == WorldGen.TileType.CITY_RING:
+		if g.tile_at(hc.x + 3, hc.y - dy) == WorldGen.TileType.CAPITAL_WALL or g.tile_at(hc.x - 3, hc.y - dy) == WorldGen.TileType.CAPITAL_WALL:
 			ring += 1
 			break
 	res["moat_px"] = ring > 0
@@ -2751,7 +2751,7 @@ func _autotile039() -> void:
 	var mc := Vector2i(1 << 30, 0)
 	for r in range(10, 60):
 		var q := hc + Vector2i(-r, -r)
-		if g.tile_at(q.x, q.y) == WorldGen.TileType.CITY_RING:
+		if g.tile_at(q.x, q.y) == WorldGen.TileType.CAPITAL_WALL:
 			mc = q
 			break
 	res["moat_corner"] = [mc.x, mc.y]
@@ -2759,7 +2759,7 @@ func _autotile039() -> void:
 	for side in [["N", Vector2i(0, -1)], ["E", Vector2i(1, 0)], ["S", Vector2i(0, 1)], ["W", Vector2i(-1, 0)], ["NW", Vector2i(-1, -1)]]:
 		for r in range(5, 70):
 			var q3: Vector2i = hc + (side[1] as Vector2i) * r
-			if g.tile_at(q3.x, q3.y) == WorldGen.TileType.CITY_RING:
+			if g.tile_at(q3.x, q3.y) == WorldGen.TileType.CAPITAL_WALL:
 				mk[side[0]] = true
 				break
 	res["moat_pieces"] = mk.keys()

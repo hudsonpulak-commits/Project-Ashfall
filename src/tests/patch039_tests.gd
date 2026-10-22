@@ -58,16 +58,17 @@ static func run(main, world: World, p: Player) -> void:
 	check(cells.size() == 1 and cells[0][0] == 2 and cells[0][2] == Vector2i(Autotile.E | Autotile.S, 0), "walls: a city wall corner gets the corner cap (%s)" % [cells])
 	cells = world.overlay_cells(o, nmf.call({o: "capital_wall", Vector2i(1, -1): "capital_wall", Vector2i(-1, 1): "capital_wall"}))
 	check(cells.size() == 1 and cells[0][2] == Vector2i(Autotile.DIAG_SLASH, 0), "walls: a 45-degree wall run gets the diagonal cap")
-	# 0.3.11 the real Highfen ring is the designer's curved wall art (8 y-sorted octants) over blocking ring tiles
+	# 0.3.11b Highfen's wall is tiled again (capital_wall, autotiled) with round towers along it
 	var hc := gen.town_center(gen.capital)
 	var ring_n := 0
-	for y in range(-30, 31):
-		for x in range(-30, 31):
-			if gen.tile_at(hc.x + x, hc.y + y) == WorldGen.TileType.CITY_RING:
+	var towers := 0
+	for y in range(-36, 37):
+		for x in range(-36, 37):
+			if gen.tile_at(hc.x + x, hc.y + y) == WorldGen.TileType.CAPITAL_WALL:
 				ring_n += 1
-	var segs: Dictionary = WorldGen.town_art().get("ring", {}).get("segments", {})
-	check(ring_n > 150 and segs.size() == 8 and segs.values().all(func(sg): return ResourceLoader.exists(str(sg["path"]))),
-		"walls: Highfen's round wall is the designer ring art (8 segments) over %d blocking tiles" % ring_n)
+			if str(gen._town_objects.get(hc + Vector2i(x, y), "")) == "hf_wall_tower":
+				towers += 1
+	check(ring_n > 300 and towers >= 8, "walls: Highfen's thick tiled wall (%d capital_wall tiles) with %d towers" % [ring_n, towers])
 	# --- fences in the world: pens and road fences ---
 	var pen_corner := Vector2i(1 << 30, 0)
 	var road_f: Array = []

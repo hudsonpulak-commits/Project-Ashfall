@@ -33,18 +33,19 @@ static func run(main, world: World, p: Player) -> void:
 	check(gen.place_at(ns, 8) == "fenhollow" and kell != null and not world.is_blocked(ns), "0.3.8.1 new character spawns in Fenhollow near Kell (%s, kell %s)" % [ns, kell.pos if kell else null])
 	var hc: Vector2i = gen.town_center(cap) if cap != "" else Vector2i.ZERO
 	check(cap == "highfen" and (hc - gen.continent_center).length() <= 2, "Highfen is the capital at the continent centre (%s)" % hc)
-	# 0.3.11 round city wall (designer ring art) with one gate on the south; no moat
+	# 0.3.11b a thick, stepped oval of capital_wall tiles with 4 cardinal gates; no moat
 	var wall := 0
 	var open_at := []
 	for a in range(0, 360, 10):
 		var hit_w := false
-		for r in range(14, 22):
+		for r in range(22, 36):
 			var q := hc + Vector2i(roundi(cos(deg_to_rad(a)) * r), roundi(sin(deg_to_rad(a)) * r))
-			hit_w = hit_w or gen.tile_at(q.x, q.y) == WorldGen.TileType.CITY_RING
+			hit_w = hit_w or gen.tile_at(q.x, q.y) == WorldGen.TileType.CAPITAL_WALL
 		wall += int(hit_w)
 		if not hit_w:
 			open_at.append(a)
-	check(wall >= 34 and open_at.all(func(a): return a >= 70 and a <= 110), "0.3.11 a round city wall all the way round but the south gate (%d/36, open at %s)" % [wall, open_at])
+	var cardinal := func(a): return [0, 90, 180, 270, 360].any(func(c): return absi(a - c) <= 15)
+	check(wall >= 28 and open_at.all(cardinal) and (gen.towns[gen.capital].get("gate_walls", {}) as Dictionary).size() == 4, "0.3.11b a tiled city wall all the way round, open only at the 4 cardinal gates (%d/36, open at %s)" % [wall, open_at])
 	check(gen.gate_outsides(cap).size() == 4 and WorldGen.TileType.CITY_RING in WorldGen.BLOCKING_TILES, "4 roads into Highfen; the city wall can't be walked")
 	# roads: every town -> Highfen by stone road, walkable, 2-3 wide
 	var road_report := []
@@ -195,13 +196,13 @@ static func run(main, world: World, p: Player) -> void:
 	# old save standing on a changed tile (inside the 0.3.11 city wall) is moved somewhere safe
 	var keep_t := p.tile
 	var mt := hc
-	for r in range(10, 24):
-		if gen.tile_at(hc.x, hc.y - r) == WorldGen.TileType.CITY_RING:
-			mt = hc + Vector2i(0, -r)
+	for r in range(20, 36):
+		if gen.tile_at(hc.x - 8, hc.y - r) == WorldGen.TileType.CAPITAL_WALL:
+			mt = hc + Vector2i(-8, -r)
 			break
 	world.set_focus(mt, true)
 	p.place_at(mt)
 	var moved: bool = main.relocate_if_walled(world, p)
-	check(gen.tile_at(mt.x, mt.y) == WorldGen.TileType.CITY_RING and moved and not world.is_blocked(p.tile), "an old save standing in the city wall is moved to a free tile (%s)" % p.tile)
+	check(gen.tile_at(mt.x, mt.y) == WorldGen.TileType.CAPITAL_WALL and moved and not world.is_blocked(p.tile), "an old save standing in the city wall is moved to a free tile (%s)" % p.tile)
 	p.place_at(keep_t)
 	world.set_focus(keep_t, true)

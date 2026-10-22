@@ -837,6 +837,18 @@
    "sprite": "cinder_prop_rocks",
    "blocks": false,
    "type": "prop"
+  },
+  "hf_fountain": {
+   "name": "Fountain",
+   "sprite": "hf_fountain",
+   "blocks": true,
+   "type": "prop"
+  },
+  "hf_wall_tower": {
+   "name": "Wall tower",
+   "sprite": "hf_wall_tower",
+   "blocks": true,
+   "type": "prop"
   }
  }
 }

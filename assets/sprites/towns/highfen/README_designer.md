@@ -75,3 +75,10 @@ Towers rise one extra drum height above the roof.
 - Outside-the-wall houses reuse the house set, mirrored on the second use. A unique house per lot would need more house designs.
 - **`src/preview.py`** places buildings with an occupancy search. It then runs a **collision check** and **exits 1** if any building pixel, across all its layers and its full drawn height, overlaps a road pixel. The current result is 0 overlaps.
 - **`contact_sheet_3x.png`**: one labelled block per building (assembled, then each layer, with fade layers marked), followed by props, wall segments and roads. Labels don't overlap.
+
+## v3 (tile-based walls/roads, reference layout)
+- Run `src/gen_highfen_v3.py` to build the assets, then `src/preview_v3.py` to build the preview. The preview exits 1 if any building touches a road.
+- `tiles_v3/`: dark-stone wall autotile (16 frames of 16x32: a 16 px walkway on top and a 16 px stone face below; mask N1|E2|S4|W8) with named straight/corner/end/tee cuts, `v3_wall_tower_round` (48x64), `v3_wall_gatehouse` (64x64, passage x20-44), the `v3_cobble_autotile` (16 frames), and cobble fills (plain/worn/cracked/mossy/puddle).
+- `props_v3/`: large and small fountains (4 animation frames each), 5 market stalls, trees, hedge, garden bed, veg patch, crates, barrels, round well, cart, bench.
+- `buildings_v3/`: 18 house designs (v3_house_01..18) plus richer narrow_tall and longhouse, bank, cookhouse, player house, temple, town hall and keep. Every building has floor (with furniture), walls (with a doorway gap), upper storeys and a roof; the upper storeys and roof form the fade group.
+- Data for all of the above is in `manifest_v3.json`. The v2 files are unchanged.

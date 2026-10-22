@@ -85,7 +85,12 @@ static func run(main, world, p) -> void:
 	var hf: Dictionary = gen.towns["highfen"]
 	var hc := gen.town_center("highfen")
 	var pal: Dictionary = gen.buildings.get("highfen_palace", {})
-	check(not pal.is_empty() and ((pal["rect"] as Rect2i).get_center() - hc).length() <= 3 and pal.get("art", "") == "palace", "Highfen: the palace (throne room) stands at the centre")
+	var pc: Vector2i = (pal["rect"] as Rect2i).get_center() if not pal.is_empty() else Vector2i(9999, 0)
+	var fnt: WorldObject = null
+	world.set_focus(hc, true)
+	fnt = world.find_nearest_object(hc, ["hf_fountain"], 6)
+	check(not pal.is_empty() and absi(pc.x - hc.x) <= 3 and pc.y < hc.y and pal.get("art", "") == "palace" and fnt != null,
+		"Highfen: the palace (throne room) stands on the north side of the central plaza, the fountain at its centre")
 	var guild: Dictionary = gen.buildings.get("highfen_guild", {})
 	var gin := Vector2i(1 << 30, 0)
 	if not guild.is_empty():
@@ -129,7 +134,12 @@ static func run(main, world, p) -> void:
 	check(bv.roof_alpha("highfen_guild") == 1.0 and fg.visible, "walking out brings them back")
 	p.place_at(keep)
 	world.set_focus(keep, true)
-	check(hf.get("art", {}).has("ground_decal") and ResourceLoader.exists(str(hf["art"]["ground_decal"])), "Highfen's curved roads + plaza are a ground decal (off the tile grid)")
+	var cob := 0
+	for y in range(-30, 31):
+		for x in range(-30, 31):
+			if gen.tile_at(hc.x + x, hc.y + y) in [WorldGen.TileType.COBBLE, WorldGen.TileType.ROAD_STONE]:
+				cob += 1
+	check(not hf.get("art", {}).has("ground_decal") and cob > 400, "Highfen's roads, rings and plaza are cobble / road tiles (%d), no painted decal" % cob)
 
 
 class _FakeWorld:

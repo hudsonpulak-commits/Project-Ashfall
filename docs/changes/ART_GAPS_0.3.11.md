@@ -7,3 +7,5 @@
 - The designer stairs exist only for south faces. There are no N/E/W stairs.
 - There is no tile for a 1-tile-wide cliff strip.
 - Cinder close-up: some faces render without a lip, and the plateau top isn't drawn with cliff_top.
+- There is no designer fountain or round wall tower. Both are placeholders (props/fountain.png and props/wall_tower.png), drawn by tools/world/register_highfen_art.py.
+- The designer's smooth ring wall art and the ground decal are no longer used (Hudson's revision).

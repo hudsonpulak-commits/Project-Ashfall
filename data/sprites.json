@@ -1495,6 +1495,26 @@
    "frames": 1,
    "anchor": "bottom",
    "note": "0.3.11 designer cliff prop (cinder)"
+  },
+  "hf_fountain": {
+   "path": "res://assets/sprites/towns/highfen/props/fountain.png",
+   "frame_size": [
+    40,
+    34
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.3.11 designer Highfen prop (art_handoff/towns/highfen)"
+  },
+  "hf_wall_tower": {
+   "path": "res://assets/sprites/towns/highfen/props/wall_tower.png",
+   "frame_size": [
+    24,
+    44
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.3.11 designer Highfen prop (art_handoff/towns/highfen)"
   }
  },
  "actors": {
