@@ -318,7 +318,10 @@ func ai_near_tap(p: Vector2i):
 
 
 func take_hit(dmg: int, attacker, t: int) -> void:
+	var was_dead := dead
 	super.take_hit(dmg, attacker, t)
+	if dmg > 0 and not was_dead:
+		Sfx.play("player_damaged")   # 0.3.13 sfx: only when the player takes damage
 	Events.player_hp_changed.emit(hp, max_hp())
 
 

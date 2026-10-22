@@ -25,6 +25,7 @@ Market="*res://autoload/market.gd"
 AIDirector="*res://autoload/ai_director.gd"
 DayNight="*res://autoload/day_night.gd"
 Music="*res://autoload/music.gd"
+Sfx="*res://autoload/sfx.gd"
 
 [display]
 

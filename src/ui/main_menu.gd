@@ -311,6 +311,19 @@ func _build() -> void:
 	vol.custom_minimum_size = Vector2(200, 28)
 	vol.value_changed.connect(func(v): Music.set_volume(v))
 	st.add_child(vol)
+	var sl2 := Label.new()   # 0.3.13 sound-effects volume (own SFX bus)
+	sl2.text = "Sound effects volume"
+	sl2.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	st.add_child(sl2)
+	var svol := HSlider.new()
+	svol.name = "SfxVolume"
+	svol.min_value = 0.0
+	svol.max_value = 1.0
+	svol.step = 0.05
+	svol.value = Sfx.volume
+	svol.custom_minimum_size = Vector2(200, 28)
+	svol.value_changed.connect(func(v): Sfx.set_volume(v))
+	st.add_child(svol)
 	st.add_child(_btn("Back", func(): _show("main"), "SettingsBack"))
 
 
