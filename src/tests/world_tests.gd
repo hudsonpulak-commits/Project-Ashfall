@@ -48,6 +48,7 @@ static func run(main, world: World, p: Player) -> void:
 	Patch0394Tests.run(main, world, p)   # 0.3.9.4
 	Patch0395Tests.run(main, world, p)   # 0.3.9.5
 	Patch0396Tests.run(main, world, p)   # 0.3.9.6
+	Patch0310Tests.run(main, world, p)   # 0.3.10 lore regions
 	Patch0396VideoTests.run(main, world, p)   # 0.3.9.6 title video
 	p.place_at(world.gen.town_spawn("fenhollow"))
 	world.set_focus(p.tile, true)
@@ -57,37 +58,38 @@ static func run(main, world: World, p: Player) -> void:
 static func _mine_tests(world: World) -> void:
 	var gen := world.gen
 	check(gen.mines.size() >= 10, "0.3.1 named mines loaded from data/mines.json (%d)" % gen.mines.size())
-	var tiers_ok := true
+	# 0.3.10 ores by lore region (data/mines.json "region" == WorldRegions.region_at(center))
+	var reg_ok := true
 	var why := []
-	for tid in gen.town_order:
-		if tid == gen.capital:
-			continue   # 0.3.8 the capital has no mines / chickens / church of its own
-		var pits := gen.mines.filter(func(m): return str(m.get("tier", "")) == "copper_tin" and gen.nearest_town(m["c"]) == tid)
-		var ok_t := false
-		for m in pits:
-			var e := gen.town_edge_distance(m["c"])
-			ok_t = ok_t or (e >= 15.0 and e <= 30.0 and float(m["ores"].get("copper_rock", 0)) > 0 and float(m["ores"].get("tin_rock", 0)) > 0)
-		tiers_ok = tiers_ok and ok_t
-		if not ok_t:
-			why.append(tid)
-	check(tiers_ok, "every town has a copper + tin mine 15-30 tiles outside it %s" % str(why))
-	var iron_ok := true
-	var coal_ok := true
+	var by_region := {}
 	var scorch_ok := true
 	var n_scorch := 0
 	for m in gen.mines:
-		var e := gen.town_edge_distance(m["c"])
-		match str(m.get("tier", "")):
-			"iron":
-				iron_ok = iron_ok and e >= 50.0 and e <= 90.0 and not m["pk"]
-			"coal":
-				coal_ok = coal_ok and e >= 100.0 and not m["pk"]
-			"scorch":
-				n_scorch += 1
-				scorch_ok = scorch_ok and m["pk"] and float(m.get("density", 0)) > 0.35
-	check(iron_ok and gen.mines.filter(func(m): return m.get("tier") == "iron").size() >= 3, "iron mines sit 50-90 tiles out (one per town at least)")
-	check(coal_ok and gen.mines.filter(func(m): return m.get("tier") == "coal").size() >= 2, "coal mines sit 100+ tiles from every town")
-	check(scorch_ok and n_scorch >= 1, "the richest (densest iron + coal) mines are inside the Scorch (%d)" % n_scorch)
+		var r := gen.region_map.region_at(m["c"])
+		if r != str(m.get("region", "")):
+			reg_ok = false
+			why.append(str(m["id"]))
+		if not by_region.has(r):
+			by_region[r] = {}
+		for k in m["ores"].keys():
+			by_region[r][k] = float(by_region[r].get(k, 0.0)) + float(m["ores"][k])
+		if str(m.get("tier", "")) == "scorch":
+			n_scorch += 1
+			scorch_ok = scorch_ok and m["pk"] and float(m.get("density", 0)) > 0.35 and float(m["ores"].get("dusk_rock", 0)) > 0
+	check(reg_ok, "0.3.10 every mine's region matches the region map %s" % str(why))
+	var top := func(r: String) -> String:
+		var d: Dictionary = by_region.get(r, {})
+		var best := ""
+		for k in d.keys():
+			if best == "" or d[k] > d[best]:
+				best = k
+		return best
+	check(top.call("lower") in ["copper_rock", "tin_rock"] and float(by_region.get("lower", {}).get("tin_rock", 0)) > 0, "Lower Ashfen: mostly copper + tin")
+	check(top.call("mere") == "coal_rock", "the Mere Lands: abundant coal")
+	check(float(by_region.get("cinder", {}).get("dusk_rock", 0)) > 0 and float(by_region.get("cinder", {}).get("iron_rock", 0)) > 0, "Cinder: iron + dusk ore")
+	var cen: Dictionary = by_region.get("central", {})
+	check(float(cen.get("copper_rock", 0)) > 0 and float(cen.get("tin_rock", 0)) > 0 and float(cen.get("iron_rock", 0)) > 0 and not cen.has("dusk_rock"), "Central Ashfen: some copper, tin and iron")
+	check(scorch_ok and n_scorch >= 1, "the richest mines (dense dusk ore + iron + coal) are inside the Scorch (%d)" % n_scorch)
 	# every mine is on land and holds every ore it lists
 	var content_ok := true
 	var counts := {}

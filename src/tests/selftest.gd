@@ -1030,12 +1030,12 @@ static func _combat_skill_tests(main, world: World, p: Player) -> void:
 		and int(wh["str"]) > int(mc["str"]) and int(wh["str"]) >= int(GameData.item("steel_battleaxe")["gear"]["str"]) and int(wh["atk"]) < int(mc["atk"]),
 		"daggers: more accuracy, lower max hit; warhammers: highest strength bonus, lower accuracy")
 	var forge_ok := true
-	for m in ["bronze", "iron", "steel"]:
+	for m in ["bronze", "iron", "steel", "dusk"]:
 		for k in ["dagger", "warhammer"]:
 			var r := Interactions.recipe_by_id("forge_%s_%s" % [m, k])
-			forge_ok = forge_ok and r.get("station", "") == "anvil" and r["out"].has("%s_%s" % [m, k]) and _ins(r).has(m + "_bar")
-	check(forge_ok and Interactions.recipe_by_id("forge_dusk_dagger").is_empty() and Interactions.recipe_by_id("forge_dusk_warhammer").is_empty(),
-		"bronze/iron/steel daggers and warhammers are forged at the anvil; dusk is shop-only")
+			var bar: String = "dusk_steel_bar" if m == "dusk" else m + "_bar"
+			forge_ok = forge_ok and r.get("station", "") == "anvil" and r["out"].has("%s_%s" % [m, k]) and _ins(r).has(bar)
+	check(forge_ok, "bronze/iron/steel/dusk daggers and warhammers are forged at the anvil (0.3.10 dusk steel from dusk ore)")
 	check("iron_dagger" in Market.shop_cfg["lines"]["swords"] and "steel_warhammer" in Market.shop_cfg["lines"]["maces"],
 		"daggers sell at the swords shop, warhammers at the maces shop")
 	var anvil: WorldObject = world.find_nearest_object(p.tile, ["anvil"], 200)

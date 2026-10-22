@@ -545,7 +545,7 @@ func minimap_texture(c: Vector2i) -> ImageTexture:
 	var img := Image.create(CHUNK, CHUNK, false, Image.FORMAT_RGBA8)
 	for ly in CHUNK:
 		for lx in CHUNK:
-			img.set_pixel(lx, ly, GameData.tile_color(ch.tile_local(lx, ly)))
+			img.set_pixel(lx, ly, region_tinted(c * CHUNK + Vector2i(lx, ly), ch.tile_local(lx, ly)))
 	for o in ch.objects.values():
 		var lp: Vector2i = o.pos - c * CHUNK
 		var t: String = o.def().get("type", "")
@@ -580,6 +580,22 @@ func minimap_texture(c: Vector2i) -> ImageTexture:
 	return tex
 
 
+## 0.3.10 minimap / map colour of a tile, tinted by its lore region on open ground.
+const REGION_TINT := 0.22
+var _tint_cache: Dictionary = {}
+
+func region_tinted(p: Vector2i, t: int) -> Color:
+	var col := GameData.tile_color(t)
+	if not (t in WorldGen.GRASS_TILES or t in [WorldGen.TileType.DIRT, WorldGen.TileType.ROCKY, WorldGen.TileType.MARSH, WorldGen.TileType.SAND]):
+		return col
+	if gen.region_map == null or gen.in_town(p):
+		return col
+	var rid := gen.region_map.region_at(p)
+	if not _tint_cache.has(rid):
+		_tint_cache[rid] = Color(str(gen.region_map.def(rid).get("minimap_tint", "#ffffff")))
+	return col.lerp(_tint_cache[rid], REGION_TINT)
+
+
 # --------------------------------------------------------------- world map --
 const MAP_STEP := 5                  # tiles per map pixel
 var _map_tex: ImageTexture = null
@@ -600,7 +616,7 @@ func world_map_texture() -> ImageTexture:
 			var x := b.position.x + px * MAP_STEP + MAP_STEP / 2
 			var y := b.position.y + py * MAP_STEP + MAP_STEP / 2
 			var t := gen.tile_at(x, y)
-			var col := GameData.tile_color(t)
+			var col := region_tinted(Vector2i(x, y), t)
 			if t == WorldGen.TileType.WATER and gen.land_value(x, y) < WorldGen.OCEAN_LEVEL:
 				col = ocean
 			img.set_pixel(px, py, col)

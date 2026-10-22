@@ -560,6 +560,14 @@ func _screenshot_mode() -> void:
 		player.place_at(world.gen.town_spawn(tid) + Vector2i(0, 1))
 		player.set_town(tid)
 		world.set_focus(player.tile, true)
+	if args.has("at"):   # 0.3.10 region frames: --at=x,y (nearest free tile)
+		var xy := str(args["at"]).split(",")
+		player.place_at(world.find_free_tile_near(Vector2i(int(xy[0]), int(xy[1])), 12))
+		world.set_focus(player.tile, true)
+	if args.has("region_banner"):   # 0.3.10 frame of the region entry title
+		hud.zone_banner._update_region(0.0)
+		var rid := world.gen.region_map.region_at(player.tile)
+		hud.zone_banner.show_region(str(world.gen.region_map.def(rid).get("banner", rid)))
 	if args.has("stand_shop"):
 		var b: Dictionary = world.gen.building_for_shop(player.current_town, str(args["stand_shop"]))
 		if not b.is_empty():

@@ -14,6 +14,14 @@
   "blackthorn_log": {
    "tier": 3,
    "xp": 4
+  },
+  "spruce_log": {
+   "tier": 4,
+   "xp": 5
+  },
+  "mahogany_log": {
+   "tier": 5,
+   "xp": 6
   }
  }
 }

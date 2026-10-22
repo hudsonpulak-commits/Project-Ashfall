@@ -130,6 +130,21 @@
    }
   },
   {
+   "id": "smelt_dusk_steel",
+   "station": "furnace",
+   "skill": "smithing",
+   "level": 30,
+   "xp": 80,
+   "ticks": 4,
+   "in": {
+    "dusk_ore": 1,
+    "coal": 1
+   },
+   "out": {
+    "dusk_steel_bar": 1
+   }
+  },
+  {
    "id": "saw_plank",
    "station": "workbench",
    "skill": "joinery",
@@ -635,6 +650,136 @@
    },
    "out": {
     "steel_warhammer": 1
+   }
+  },
+  {
+   "id": "forge_dusk_sword",
+   "station": "anvil",
+   "skill": "smithing",
+   "level": 37,
+   "xp": 322,
+   "ticks": 6,
+   "in": {
+    "dusk_steel_bar": 3
+   },
+   "out": {
+    "dusk_sword": 1
+   }
+  },
+  {
+   "id": "forge_dusk_mace",
+   "station": "anvil",
+   "skill": "smithing",
+   "level": 38,
+   "xp": 336,
+   "ticks": 6,
+   "in": {
+    "dusk_steel_bar": 3,
+    "plank": 1
+   },
+   "out": {
+    "dusk_mace": 1
+   }
+  },
+  {
+   "id": "forge_dusk_battleaxe",
+   "station": "anvil",
+   "skill": "smithing",
+   "level": 38,
+   "xp": 336,
+   "ticks": 6,
+   "in": {
+    "dusk_steel_bar": 3,
+    "plank": 1
+   },
+   "out": {
+    "dusk_battleaxe": 1
+   }
+  },
+  {
+   "id": "forge_dusk_helm",
+   "station": "anvil",
+   "skill": "smithing",
+   "level": 38,
+   "xp": 343,
+   "ticks": 6,
+   "in": {
+    "dusk_steel_bar": 3
+   },
+   "out": {
+    "dusk_helm": 1
+   }
+  },
+  {
+   "id": "forge_dusk_tower_shield",
+   "station": "anvil",
+   "skill": "smithing",
+   "level": 39,
+   "xp": 378,
+   "ticks": 6,
+   "in": {
+    "dusk_steel_bar": 3,
+    "plank": 2
+   },
+   "out": {
+    "dusk_tower_shield": 1
+   }
+  },
+  {
+   "id": "forge_dusk_tassets",
+   "station": "anvil",
+   "skill": "smithing",
+   "level": 40,
+   "xp": 399,
+   "ticks": 7,
+   "in": {
+    "dusk_steel_bar": 3,
+    "plank": 2
+   },
+   "out": {
+    "dusk_tassets": 1
+   }
+  },
+  {
+   "id": "forge_dusk_cuirass",
+   "station": "anvil",
+   "skill": "smithing",
+   "level": 42,
+   "xp": 461,
+   "ticks": 8,
+   "in": {
+    "dusk_steel_bar": 4
+   },
+   "out": {
+    "dusk_cuirass": 1
+   }
+  },
+  {
+   "id": "forge_dusk_dagger",
+   "station": "anvil",
+   "skill": "smithing",
+   "level": 36,
+   "xp": 217,
+   "ticks": 5,
+   "in": {
+    "dusk_steel_bar": 2
+   },
+   "out": {
+    "dusk_dagger": 1
+   }
+  },
+  {
+   "id": "forge_dusk_warhammer",
+   "station": "anvil",
+   "skill": "smithing",
+   "level": 41,
+   "xp": 420,
+   "ticks": 7,
+   "in": {
+    "dusk_steel_bar": 4
+   },
+   "out": {
+    "dusk_warhammer": 1
    }
   },
   {

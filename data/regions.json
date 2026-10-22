@@ -1,0 +1,208 @@
+{
+ "note": "0.3.10 the four lore regions of the Kingdom of Ashfen (docs/specs/Lore_2026-10-21.md). Lookup = nearest anchor after a noise warp (warp_tiles); blend_tiles = width of the soft border where the neighbouring region's ground and trees dither in. elevation = base terrace level (Lower/Mere 0, Central 1, Cinder 2); relief = extra terrace noise amplitude (more = more local cliffs); sea_cliffs = how often beaches get a cliff behind them. grass = the region's grass tile; rocky/dirt/marsh = ground mix weights; tree_chance = per-tile tree chance on grass, trees = species weights (tree_min_town = minimum tiles from a town centre); mushrooms = magic mushroom chance per damp/forest tile. Edit freely; WorldRegions reads it.",
+ "warp_tiles": 22,
+ "blend_tiles": 26,
+ "terrace": {
+  "frequency": 0.011,
+  "ramp_period": 24,
+  "ramp_width": 3,
+  "road_ramp_tiles": 3,
+  "keep_clear_tiles": 8
+ },
+ "order": [
+  "cinder",
+  "central",
+  "lower",
+  "mere"
+ ],
+ "regions": {
+  "cinder": {
+   "name": "Cinder",
+   "banner": "Cinder - the cold northern highlands",
+   "minimap_tint": "#8fa0b8",
+   "anchors": [
+    [
+     330,
+     -200
+    ],
+    [
+     180,
+     -215
+    ],
+    [
+     30,
+     -200
+    ],
+    [
+     -90,
+     -175
+    ],
+    [
+     450,
+     -190
+    ]
+   ],
+   "elevation": 2,
+   "relief": 3.0,
+   "sea_cliffs": 0.35,
+   "grass": "grass_boreal",
+   "rocky": 0.42,
+   "dirt": 0.15,
+   "marsh": 0.0,
+   "tree_chance": 0.1,
+   "trees": {
+    "ash_tree": 10,
+    "pine_tree": 45,
+    "dead_tree": 20,
+    "spruce_tree": 25
+   },
+   "mushrooms": 0.0
+  },
+  "central": {
+   "name": "Central Ashfen",
+   "banner": "Central Ashfen - the high heart of the kingdom",
+   "minimap_tint": "#b8b090",
+   "anchors": [
+    [
+     180,
+     -10
+    ],
+    [
+     300,
+     -25
+    ],
+    [
+     245,
+     -110
+    ],
+    [
+     420,
+     -60
+    ],
+    [
+     250,
+     60
+    ],
+    [
+     60,
+     -150
+    ]
+   ],
+   "elevation": 1,
+   "relief": 1.7,
+   "sea_cliffs": 0.3,
+   "grass": "grass",
+   "rocky": 0.22,
+   "dirt": 0.12,
+   "marsh": 0.3,
+   "tree_chance": 0.05,
+   "trees": {
+    "ash_tree": 50,
+    "pine_tree": 20,
+    "dead_tree": 10,
+    "alder_tree": 20
+   },
+   "mushrooms": 0.0015
+  },
+  "lower": {
+   "name": "Lower Ashfen",
+   "banner": "Lower Ashfen - fertile forest and farmland",
+   "minimap_tint": "#7fc070",
+   "anchors": [
+    [
+     0,
+     0
+    ],
+    [
+     140,
+     -90
+    ],
+    [
+     -90,
+     -60
+    ],
+    [
+     -70,
+     70
+    ],
+    [
+     50,
+     90
+    ],
+    [
+     90,
+     -40
+    ]
+   ],
+   "elevation": 0,
+   "relief": 0.9,
+   "sea_cliffs": 0.2,
+   "grass": "grass_lush",
+   "rocky": 0.0,
+   "dirt": 0.05,
+   "marsh": 1.0,
+   "tree_chance": 0.12,
+   "trees": {
+    "ash_tree": 45,
+    "pine_tree": 12,
+    "dead_tree": 3,
+    "alder_tree": 25,
+    "blackthorn_tree": 15
+   },
+   "mushrooms": 0.006
+  },
+  "mere": {
+   "name": "The Mere Lands",
+   "banner": "The Mere Lands - warm rainforest and sandy shores",
+   "minimap_tint": "#5fb88a",
+   "anchors": [
+    [
+     300,
+     170
+    ],
+    [
+     160,
+     140
+    ],
+    [
+     430,
+     140
+    ],
+    [
+     250,
+     265
+    ],
+    [
+     60,
+     215
+    ],
+    [
+     -40,
+     190
+    ]
+   ],
+   "elevation": 0,
+   "relief": 0.35,
+   "sea_cliffs": 0.5,
+   "beach_bonus": 0.018,
+   "grass": "grass_tropic",
+   "rocky": 0.0,
+   "dirt": 0.04,
+   "marsh": 0.7,
+   "tree_chance": 0.14,
+   "trees": {
+    "ash_tree": 62,
+    "pine_tree": 5,
+    "dead_tree": 8,
+    "mahogany_tree": 25
+   },
+   "mushrooms": 0.007
+  }
+ },
+ "tree_min_town": {
+  "alder_tree": 20,
+  "blackthorn_tree": 45,
+  "spruce_tree": 30,
+  "mahogany_tree": 40
+ }
+}

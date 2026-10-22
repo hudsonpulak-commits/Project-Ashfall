@@ -9,18 +9,20 @@ enum TileType { GRASS, PATH, WATER, SAND, DIRT, COBBLE, PLANKS, MARSH, WALL, WAL
 	PALISADE, PALISADE_FRONT, BASALT_WALL, BASALT_FRONT, SANDSTONE_WALL, SANDSTONE_FRONT,
 	GATE_WOOD, GATE_BASALT, GATE_SAND, BOARDWALK, COBBLE_DARK, PLASTER, PLASTER_WALL, PLASTER_FRONT,
 	ROAD_STONE, ROAD_DIRT, MOAT, MOAT_EDGE, CAPITAL_WALL, CAPITAL_FRONT, GATE_CAPITAL,
-	CAPITAL_BLDG_WALL, CAPITAL_BLDG_FRONT, HOUSE_WALL, HOUSE_FRONT }
+	CAPITAL_BLDG_WALL, CAPITAL_BLDG_FRONT, HOUSE_WALL, HOUSE_FRONT,
+	GRASS_LUSH, GRASS_BOREAL, GRASS_TROPIC, ROCKY, CLIFF_FACE, CLIFF_LIP, CLIFF_SHADOW, CLIFF_STAIRS }
 const TILE_NAMES := ["grass", "path", "water", "sand", "dirt", "cobble", "planks", "marsh", "wall", "wall_front", "floor", "doorway",
 	"ash", "ash_edge", "bridge", "stone_wall", "stone_front", "stone_floor",
 	"palisade", "palisade_front", "basalt_wall", "basalt_front", "sandstone_wall", "sandstone_front",
 	"gate_wood", "gate_basalt", "gate_sand", "boardwalk", "cobble_dark", "plaster", "plaster_wall", "plaster_front",
 	"road_stone", "road_dirt", "moat", "moat_edge", "capital_wall", "capital_front", "gate_capital",
-	"capital_bldg_wall", "capital_bldg_front", "house_wall", "house_front"]
+	"capital_bldg_wall", "capital_bldg_front", "house_wall", "house_front",
+	"grass_lush", "grass_boreal", "grass_tropic", "rocky", "cliff_face", "cliff_lip", "cliff_shadow", "cliff_stairs"]
 const BLOCKING_TILES := [TileType.WATER, TileType.WALL, TileType.WALL_FRONT, TileType.STONE_WALL, TileType.STONE_FRONT,
 	TileType.PALISADE, TileType.PALISADE_FRONT, TileType.BASALT_WALL, TileType.BASALT_FRONT,
 	TileType.SANDSTONE_WALL, TileType.SANDSTONE_FRONT, TileType.PLASTER_WALL, TileType.PLASTER_FRONT,
 	TileType.MOAT, TileType.CAPITAL_WALL, TileType.CAPITAL_FRONT, TileType.CAPITAL_BLDG_WALL, TileType.CAPITAL_BLDG_FRONT,
-	TileType.HOUSE_WALL, TileType.HOUSE_FRONT]
+	TileType.HOUSE_WALL, TileType.HOUSE_FRONT, TileType.CLIFF_FACE, TileType.CLIFF_LIP]
 ## 0.3.8 arrows fly over open water (lakes, the moat); walls stop them
 const SHOOT_OVER_TILES := [TileType.WATER, TileType.MOAT]
 ## 0.3.8 road surfaces (old PATH, stone capital roads, dirt village roads)
@@ -28,6 +30,10 @@ const ROAD_SURFACES := [TileType.PATH, TileType.ROAD_STONE, TileType.ROAD_DIRT]
 const FLOOR_TILES := [TileType.FLOOR, TileType.STONE_FLOOR, TileType.PLASTER]
 const GATE_TILES := [TileType.GATE_WOOD, TileType.GATE_BASALT, TileType.GATE_SAND, TileType.GATE_CAPITAL]
 const CHUNK := 24
+## 0.3.10 open grassland of every region (region grasses are recolours of grass)
+const GRASS_TILES := [TileType.GRASS, TileType.GRASS_LUSH, TileType.GRASS_BOREAL, TileType.GRASS_TROPIC]
+## 0.3.10 cliffs: face (south edge, rock face shows) and lip (other edges) block; shadow + stairs walk
+const CLIFF_TILES := [TileType.CLIFF_FACE, TileType.CLIFF_LIP]
 const ROAD_SPACING := 72
 
 const OCEAN_LEVEL := 0.10
@@ -40,6 +46,7 @@ var _height := FastNoiseLite.new()
 var _moist := FastNoiseLite.new()
 var _detail := FastNoiseLite.new()
 var _coast := FastNoiseLite.new()
+var region_map: WorldRegions          # 0.3.10 lore regions + terrace elevation (data/regions.json)
 var _town: Dictionary = {}            # the home town (Fenhollow) for spawn
 var towns: Dictionary = {}            # id -> town dict (with "center": Vector2i)
 var town_order: Array = []
@@ -60,6 +67,10 @@ var mines: Array = []                 # 0.3.1: data/mines.json clusters (center 
 var pk_zones: Array = []              # 0.3.1: data/pk_zones.json zones with "r": Rect2i
 var _mine_grid: Dictionary = {}       # Vector2i(chunk) -> Array[mine index] (fast lookup)
 var _road_cfg: Dictionary = {}
+var _ramp_period := 36
+var _ramp_width := 3
+var _road_ramp := 3
+var _keep_clear := 8
 var capital := ""                     # 0.3.8 the capital's town id ("" = none)
 var village_roads: Dictionary = {}    # 0.3.8 village id -> Array[Vector2i] village gate -> town gate (dirt)
 var road_decor: Dictionary = {}       # 0.3.8 Vector2i -> roadside object id (fence / rock / bush / log)
@@ -100,6 +111,12 @@ func _init(p_seed: int, town: Dictionary = {}, world_cfg: Dictionary = {}) -> vo
 		continent_center = Vector2i(int(c[0]), int(c[1]))
 		continent_radius = float(cfg["continent"]["radius"])
 	regions = cfg.get("regions", {})
+	region_map = WorldRegions.new(p_seed)
+	var tcfg: Dictionary = region_map.cfg.get("terrace", {})
+	_ramp_period = maxi(8, int(tcfg.get("ramp_period", 36)))
+	_ramp_width = clampi(int(tcfg.get("ramp_width", 3)), 1, _ramp_period - 4)
+	_road_ramp = int(tcfg.get("road_ramp_tiles", 3))
+	_keep_clear = int(tcfg.get("keep_clear_tiles", 8))
 	var ids: Array = cfg.get("towns", [])
 	if ids.is_empty() and not town.is_empty():
 		ids = [town["id"]]
@@ -140,6 +157,7 @@ func _init(p_seed: int, town: Dictionary = {}, world_cfg: Dictionary = {}) -> vo
 		var v: Dictionary = GameData.villages.get(vid, {})
 		if not v.is_empty():
 			_load_village(v)
+	_cells_ready = true
 
 
 ## 0.3.1 a village: core rows ("transparent" chars keep the terrain), cottages
@@ -168,7 +186,7 @@ func _load_village(v: Dictionary) -> void:
 				_town_tiles[p] = TILE_NAMES.find(omap[ch]["ground"])
 				_town_objects[p] = omap[ch]["object"]
 			elif clear.find(ch) < 0:
-				_town_tiles[p] = TileType.GRASS
+				_town_tiles[p] = region_grass(p)
 	_load_buildings(v, origin)
 	for f in v.get("farms", []):
 		var fr := _fenced(origin, f, TILE_NAMES.find(str(f.get("ground", "dirt"))), str(f.get("crop", "wheat")))
@@ -204,10 +222,10 @@ func _fenced(origin: Vector2i, d: Dictionary, ground: int, crop: String) -> Rect
 			if p == gate:
 				_town_tiles[p] = TileType.PATH
 			elif rim_y:
-				_town_tiles[p] = TileType.GRASS
+				_town_tiles[p] = region_grass(p)
 				_town_objects[p] = "fence"
 			elif rim_x:
-				_town_tiles[p] = TileType.GRASS
+				_town_tiles[p] = region_grass(p)
 				_town_objects[p] = "fence_v"
 			elif d.has("divider") and x == origin.x + int(d["divider"]["x"]) and y <= origin.y + int(d["divider"]["to_y"]):
 				_town_tiles[p] = ground
@@ -236,7 +254,7 @@ func _path_to_road(from: Vector2i, search: int) -> Array:
 	var guard := 0
 	while p != best and guard < search * 3:
 		guard += 1
-		if not _town_tiles.has(p) or _town_tiles[p] == TileType.GRASS:
+		if not _town_tiles.has(p) or _town_tiles[p] in GRASS_TILES:
 			if _terrain_at(p.x, p.y) == TileType.WATER:
 				break
 			_town_tiles[p] = TileType.PATH
@@ -339,7 +357,7 @@ func _load_town(town: Dictionary) -> void:
 				_town_tiles[p] = TILE_NAMES.find(omap[ch]["ground"])
 				_town_objects[p] = omap[ch]["object"]
 			else:
-				_town_tiles[p] = TileType.GRASS
+				_town_tiles[p] = region_grass(p)
 	_load_buildings(town, origin)
 	_ensure_gate_approaches(town, origin)
 
@@ -539,6 +557,16 @@ func _build_road(a: String, b: String) -> void:
 	var ra: Rect2i = (_town_rects[a] as Rect2i).grow(1)
 	var rb: Rect2i = (_town_rects[b] as Rect2i).grow(1)
 	var tiles: Array = raw.filter(func(p): return not ra.has_point(p) and not rb.has_point(p))
+	# 0.3.10 if the A* wandered through the rect corners (round capital walls),
+	# reconnect the road straight to its gate so it always runs gate to gate
+	if not tiles.is_empty() and _cheb(tiles[0], pa) > 2:
+		var lead: Array = _line8(pa, tiles[0]).filter(func(p): return not ra.has_point(p) or p == pa)
+		lead.pop_back()
+		tiles = lead + tiles
+	if not tiles.is_empty() and _cheb(tiles[-1], pb) > 2:
+		var tail: Array = _line8(tiles[-1], pb).filter(func(p): return not rb.has_point(p) or p == pb)
+		tail.pop_front()
+		tiles = tiles + tail
 	roads[a + "|" + b] = tiles
 	var rev := tiles.duplicate()
 	rev.reverse()
@@ -622,6 +650,10 @@ func _compose_capital_roads() -> void:
 				if q != out[-1]:
 					out.append(q)
 			roads[a + "|" + b] = out
+
+
+static func _cheb(a: Vector2i, b: Vector2i) -> int:
+	return maxi(absi(a.x - b.x), absi(a.y - b.y))
 
 
 ## Tiles from a to b (inclusive), 4-connected steps (no corner cutting).
@@ -725,10 +757,10 @@ func _place_road_decor() -> void:
 				if road_decor.has(q) or road_tiles.has(q) or _blocked_for_road(q) or in_clear_rect(q):
 					continue
 				var t := _terrain_at(q.x, q.y)
-				if not (t in [TileType.GRASS, TileType.DIRT]) or is_pk(q) or not mine_at(q, 3).is_empty():
+				if not (t in GRASS_TILES or t == TileType.DIRT) or is_pk(q) or not mine_at(q, 3).is_empty():
 					continue
 				var r := hash01(q.x, q.y, 41)
-				if fence_run and t == TileType.GRASS and not _near_other_road(q, li, owner, jr):
+				if fence_run and t in GRASS_TILES and not _near_other_road(q, li, owner, jr):
 					road_decor[q] = "road_fence"
 				elif r < float(dc.get("chance", 0.07)):
 					var pick := hash01(q.x, q.y, 42)
@@ -1051,7 +1083,197 @@ func tile_at(x: int, y: int) -> int:
 	var mn := mine_at(p, 1)
 	if not mn.is_empty() and str(mn.get("ground", "dirt")) == "dirt" and _mine_ground(p, mn):
 		return TileType.DIRT
+	var ct := _cliff_tile(p, t)
+	if ct >= 0:
+		return ct
 	return t
+
+
+# ------------------------------------------------------ 0.3.10 cliffs --
+## Terrace level for cliff comparisons (beaches behind a sea cliff drop one).
+func cliff_level(q: Vector2i) -> int:
+	var l := region_map.level(q)
+	if region_map.sea_cliff(q) and _is_beach(q):
+		l -= 1
+	return l
+
+
+func _is_beach(q: Vector2i) -> bool:
+	return land_value(q.x, q.y) < _beach_level(q)
+
+
+func _beach_level(q: Vector2i) -> float:
+	return BEACH_LEVEL + region_map.field(q, "beach_bonus")
+
+
+## No cliffs in or around towns, villages, fields, mines, the Scorch or water.
+func cliff_free(q: Vector2i) -> bool:
+	if town_at(q, _keep_clear) != "" or village_at(q, _keep_clear) != "":
+		return true
+	if not mine_at(q, 3).is_empty() or not _biome_zone_at(q).is_empty():
+		return true
+	for r in _clear_rects:
+		if (r as Rect2i).grow(3).has_point(q):
+			return true
+	return false
+
+
+## Walkable ramp / stone stairs: near any road or authored tile, and where a
+## cliff run crosses the coarse gap grid (every ramp_period tiles both ways):
+## vertical gap strips cut east-west cliff runs, horizontal strips cut
+## north-south runs. Any pocket larger than one grid cell must cross a strip
+## that way, so no cliff line walls an area off -> every area stays reachable.
+## `ns` = the lower side is north/south (an east-west run).
+func is_ramp(q: Vector2i, ns: bool = true) -> bool:
+	if ns and posmod(q.x, _ramp_period) < _ramp_width:
+		return true
+	if not ns and posmod(q.y, _ramp_period) < _ramp_width:
+		return true
+	for dy in range(-_road_ramp, _road_ramp + 1):
+		for dx in range(-_road_ramp, _road_ramp + 1):
+			var r := q + Vector2i(dx, dy)
+			if road_tiles.has(r) or _town_tiles.has(r):
+				return true
+	return false
+
+
+## Edge of a higher terrace: -1 none, 0 = lip with the lower side east/west,
+## 1 = face (lower ground south), 2 = lip with the lower side north.
+func _cliff_edge(p: Vector2i) -> int:
+	var l := cliff_level(p)
+	var res := -1
+	for k in 4:
+		var q: Vector2i = p + [Vector2i(0, 1), Vector2i(1, 0), Vector2i(-1, 0), Vector2i(0, -1)][k]
+		if cliff_level(q) < l and _terrain_at(q.x, q.y) != TileType.WATER:
+			res = [1, 0, 0, 2][k]
+			break
+	if res < 0 or _is_beach(p) or cliff_free(p):
+		return -1
+	return res
+
+
+## The cliff tile at p (or -1): face / lip / stairs on the high edge, shadow below a face.
+func _cliff_tile(p: Vector2i, t: int) -> int:
+	if t == TileType.WATER or t == TileType.ASH or t == TileType.ASH_EDGE:
+		return -1
+	var e := _cliff_edge(p)
+	if e >= 0:
+		return TileType.CLIFF_STAIRS if is_ramp(p, e != 0) or _extra_ramp(p) else (TileType.CLIFF_FACE if e == 1 else TileType.CLIFF_LIP)
+	var n := p + Vector2i(0, -1)
+	if cliff_level(p) < cliff_level(n) and _cliff_edge(n) == 1 and not is_ramp(n, true) and not _extra_ramp(n):
+		return TileType.CLIFF_SHADOW
+	return -1
+
+
+# 0.3.10 per-cell pocket check: a small basin or knoll can close a cliff ring
+# inside one ramp-grid cell. The first time a cell is asked, flood-fill it (plus
+# a 2-tile rim) from its border; every walkable pocket that is not reached gets
+# one cliff tile turned into stairs, next to reached ground. Cached per cell,
+# deterministic (terrain + roads + towns only), so every area stays reachable.
+var _cell_ramps: Dictionary = {}     # Vector2i cell -> {Vector2i: true}
+var _cells_ready := false            # set at the end of _init (roads + villages known)
+
+
+func _extra_ramp(p: Vector2i) -> bool:
+	if not _cells_ready:
+		return false
+	var c := Vector2i(floori(float(p.x) / _ramp_period), floori(float(p.y) / _ramp_period))
+	var hit = _cell_ramps.get(c)
+	if hit == null:
+		if _cell_ramps.size() > 4000:
+			_cell_ramps.clear()
+		hit = _analyse_cell(c)
+		_cell_ramps[c] = hit
+	return (hit as Dictionary).has(p)
+
+
+func _analyse_cell(c: Vector2i) -> Dictionary:
+	var extra := {}
+	var o := c * _ramp_period - Vector2i(2, 2)
+	var n := _ramp_period + 4
+	var blk := PackedByteArray()      # 0 walkable, 1 cliff, 2 water
+	blk.resize(n * n)
+	var any_cliff := false
+	for j in n:
+		for i in n:
+			var q := o + Vector2i(i, j)
+			if _town_tiles.has(q) or road_tiles.has(q):
+				continue
+			if _terrain_at(q.x, q.y) == TileType.WATER:
+				blk[j * n + i] = 2
+				continue
+			var e := _cliff_edge(q)
+			if e >= 0 and not is_ramp(q, e != 0):
+				blk[j * n + i] = 1
+				any_cliff = true
+	if not any_cliff:
+		return extra
+	var dirs := [Vector2i(0, -1), Vector2i(0, 1), Vector2i(1, 0), Vector2i(-1, 0)]
+	for _iter in 12:
+		var seen := PackedByteArray()
+		seen.resize(n * n)
+		var queue: Array = []
+		for j in n:
+			for i in n:
+				if (i == 0 or j == 0 or i == n - 1 or j == n - 1) and blk[j * n + i] == 0:
+					seen[j * n + i] = 1
+					queue.append(Vector2i(i, j))
+		var h := 0
+		while h < queue.size():
+			var v: Vector2i = queue[h]
+			h += 1
+			for d in dirs:
+				var w: Vector2i = v + d
+				if w.x >= 0 and w.y >= 0 and w.x < n and w.y < n and seen[w.y * n + w.x] == 0 and blk[w.y * n + w.x] == 0:
+					seen[w.y * n + w.x] = 1
+					queue.append(w)
+		var pocket := -1
+		for k in n * n:
+			if blk[k] == 0 and seen[k] == 0:
+				pocket = k
+				break
+		if pocket < 0:
+			break
+		# walk the pocket; open the first rim cliff whose far side is reached ground (else any rim cliff)
+		var comp: Array = [Vector2i(pocket % n, pocket / n)]
+		var inq := {comp[0]: true}
+		var best := Vector2i(-1, -1)
+		var fallback := Vector2i(-1, -1)
+		var hh := 0
+		while hh < comp.size() and best.x < 0:
+			var v: Vector2i = comp[hh]
+			hh += 1
+			for d in dirs:
+				var w: Vector2i = v + d
+				if w.x < 0 or w.y < 0 or w.x >= n or w.y >= n:
+					continue
+				var b := blk[w.y * n + w.x]
+				if b == 0 and not inq.has(w):
+					inq[w] = true
+					comp.append(w)
+				elif b == 1:
+					if fallback.x < 0:
+						fallback = w
+					var o2: Vector2i = w + d
+					if o2.x >= 0 and o2.y >= 0 and o2.x < n and o2.y < n and seen[o2.y * n + o2.x] == 1:
+						best = w
+						break
+		var pick := best if best.x >= 0 else fallback
+		if pick.x < 0:
+			break
+		blk[pick.y * n + pick.x] = 0
+		extra[o + pick] = true
+	return extra
+
+
+## Region-coloured open ground for a dithered region pick.
+func region_grass(p: Vector2i) -> int:
+	var rid := region_map.ground_region(p, hash01(p.x, p.y, 31))
+	match str(region_map.def(rid).get("grass", "grass")):
+		"grass_lush": return TileType.GRASS_LUSH
+		"grass_boreal": return TileType.GRASS_BOREAL
+		"grass_tropic": return TileType.GRASS_TROPIC
+	return TileType.GRASS
 
 
 ## The generated terrain alone (no towns, roads, Scorch or mine ground).
@@ -1060,7 +1282,7 @@ func _terrain_at(x: int, y: int) -> int:
 	var v := land_value(x, y)
 	if v < OCEAN_LEVEL:
 		return TileType.WATER          # the ocean: impassable
-	if v < BEACH_LEVEL:
+	if v < _beach_level(p):
 		return TileType.SAND
 	var h := _height.get_noise_2d(x, y)
 	# keep a dry ring around towns so they never flood
@@ -1072,14 +1294,18 @@ func _terrain_at(x: int, y: int) -> int:
 		return TileType.WATER          # inland lakes
 	if h < -0.27:
 		return TileType.SAND
-	var hills := _biome_weight("hills", x, y)
-	var marsh := _biome_weight("marsh", x, y)
+	# 0.3.10 ground mix by lore region (data/regions.json), dithered at borders
+	var rb := region_map.blend_at(p)
+	var marsh := region_map.field_b(rb, "marsh")
 	var m := _moist.get_noise_2d(x, y)
-	if m > 0.32 - marsh * 0.35 and h < 0.05 + marsh * 0.2:
+	if m > 0.32 - marsh * 0.25 and h < 0.05 + marsh * 0.15:
 		return TileType.MARSH
-	if _detail.get_noise_2d(x, y) > 0.42 - hills * 0.35:
+	var dn := _detail.get_noise_2d(x, y)
+	if dn > 0.62 - region_map.field_b(rb, "rocky") * 0.75:
+		return TileType.ROCKY
+	if _detail.get_noise_2d(x + 7000, y - 3000) > 0.5 - region_map.field_b(rb, "dirt") * 1.2:
 		return TileType.DIRT
-	return TileType.GRASS
+	return region_grass(p)
 
 
 ## True for tiles that are road over lake water (a bridge).
@@ -1228,18 +1454,25 @@ func object_at(x: int, y: int, tile: int) -> String:
 		if not mn.is_empty():
 			return _mine_rock(p, mn)
 	var dist := town_distance(x, y)
-	var coast := _biome_weight("forest_coast", x, y)
+	if tile in GRASS_TILES or tile == TileType.ROCKY:
+		# 0.3.10 trees by lore region (data/regions.json): density + species mix,
+		# dithered at borders; magic mushrooms in damp forest of Lower Ashfen / the Mere
+		var rid := region_map.ground_region(p, hash01(x, y, 33))
+		var rd := region_map.def(rid)
+		var tc := float(rd.get("tree_chance", 0.065)) * (0.35 if tile == TileType.ROCKY else 1.0)
+		if r > 1.0 - tc:
+			return "" if _beside_stairs(p) else _pick_tree(rd, r2, dist)
+		if tile == TileType.ROCKY and r < 0.035:
+			return "" if _beside_stairs(p) else "boulder"
+		if tile != TileType.ROCKY and r < float(rd.get("mushrooms", 0.0)) and _moist.get_noise_2d(x, y) > 0.0:
+			return "magic_mushroom"
+		return ""
 	match tile:
-		TileType.GRASS:
-			if r > 0.935 - coast * 0.05:
-				if dist > 60.0 and r2 < 0.15 + coast * 0.15:
-					return "blackthorn_tree"
-				if dist > 20.0 and r2 < 0.35 + coast * 0.2:
-					return "alder_tree"
-				return "ash_tree"
 		TileType.MARSH:
 			if r > 0.93:
 				return "fenroot_patch" if r2 < 0.4 else "reed_bed"
+			if r < float(region_map.def(region_map.region_at(p)).get("mushrooms", 0.0)) * 1.5:
+				return "magic_mushroom"
 		TileType.ASH, TileType.ASH_EDGE:
 			var dec: Dictionary = GameData.pk_zones.get("decor", {})
 			if r > 1.0 - float(dec.get("burnt_tree", 0.05)):
@@ -1249,9 +1482,38 @@ func object_at(x: int, y: int, tile: int) -> String:
 			if r2 < float(dec.get("embers", 0.012)) or (tile == TileType.ASH_EDGE and r2 < float(dec.get("edge_embers", 0.12))):
 				return "embers"
 		TileType.WATER:
-			if r > 0.975 - coast * 0.015 and _touches_land(x, y):
+			if r > 0.975 - region_map.field(p, "sea_cliffs") * 0.01 and _touches_land(x, y):
 				return "fishing_spot"
 	return ""
+
+
+## 0.3.10 keep the landing of every ramp / stairs clear (no tree or boulder plugs it).
+func _beside_stairs(p: Vector2i) -> bool:
+	for d in STAIR_CLEAR:
+		if tile_at(p.x + d.x, p.y + d.y) == TileType.CLIFF_STAIRS:
+			return true
+	return false
+
+const STAIR_CLEAR := [Vector2i(0, -1), Vector2i(0, 1), Vector2i(1, 0), Vector2i(-1, 0), Vector2i(0, -2), Vector2i(0, 2), Vector2i(2, 0), Vector2i(-2, 0),
+	Vector2i(1, 1), Vector2i(-1, 1), Vector2i(1, -1), Vector2i(-1, -1)]
+
+
+## 0.3.10 a tree species from a region's weights; higher tiers keep their distance from towns.
+func _pick_tree(rd: Dictionary, r2: float, dist: float) -> String:
+	var trees: Dictionary = rd.get("trees", {"ash_tree": 1})
+	var mins: Dictionary = region_map.cfg.get("tree_min_town", {})
+	var tot := 0.0
+	for k in trees.keys():
+		if dist >= float(mins.get(k, 0)):
+			tot += float(trees[k])
+	var pick := r2 * tot
+	for k in trees.keys():
+		if dist < float(mins.get(k, 0)):
+			continue
+		pick -= float(trees[k])
+		if pick <= 0.0:
+			return str(k)
+	return "ash_tree"
 
 
 ## A rock (or "") at p inside mine m: density falls off towards the rim.

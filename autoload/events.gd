@@ -20,6 +20,7 @@ signal map_requested()
 signal station_opened(station: String, pos: Vector2i)
 signal report_ready(title: String, body: String)
 signal player_hp_changed(hp: int, max_hp: int)
+signal region_entered(region_id: String)   # 0.3.10 lore region (data/regions.json)
 signal zone_entered(zone_id: String, warning: String)   # 0.3.1 PK zone (data/pk_zones.json)
 signal zone_left(zone_id: String)
 

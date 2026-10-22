@@ -19,6 +19,11 @@ var _in_zone := ""
 var _mine_id := ""
 var _banner_left := 0.0
 var _started := false
+var _region := ""                 # 0.3.10 lore region the player stands in
+var region_label: Label           # 0.3.10 fading region title ("Lower Ashfen - ...")
+var _region_left := 0.0
+const REGION_SECONDS := 3.5
+const REGION_CONFIDENCE := 0.62   # announce only once well inside (no flicker on the dithered border)
 
 
 func _ready() -> void:
@@ -55,6 +60,14 @@ func _ready() -> void:
 	hb.add_child(banner_label)
 	banner.visible = false
 	add_child(banner)
+	region_label = Label.new()
+	region_label.add_theme_font_size_override("font_size", 14)
+	region_label.add_theme_color_override("font_color", Color("#f0e6c8"))
+	region_label.add_theme_constant_override("outline_size", 4)
+	region_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	region_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	region_label.visible = false
+	add_child(region_label)
 
 
 ## The persistent skull row lives in the HUD's info column.
@@ -105,6 +118,7 @@ func _process(dt: float) -> void:
 		_mine_id = mid
 		if mid != "" and _started:
 			Events.say("%s (%s)." % [str(m.get("name", mid)), mine_summary(m)])
+	_update_region(dt)
 	_started = true
 	if banner.visible:
 		_banner_left -= dt
@@ -113,6 +127,39 @@ func _process(dt: float) -> void:
 		banner.position = Vector2(roundf((vs.x - banner.size.x) / 2.0), roundf(vs.y * 0.24))
 		if _banner_left <= 0.0:
 			banner.visible = false
+
+
+## 0.3.10 lore regions: chat line + a fading title on entry.
+func _update_region(dt: float) -> void:
+	var rm: WorldRegions = world.gen.region_map
+	if rm != null:
+		var b := rm.blend_at(player.tile)
+		var rid := str(b[0])
+		if rid != _region and (float(b[2]) >= REGION_CONFIDENCE or _region == ""):
+			_region = rid
+			Events.region_entered.emit(rid)
+			if _started:
+				show_region(str(rm.def(rid).get("banner", rm.region_name(rid))))
+	if region_label.visible:
+		_region_left -= dt
+		region_label.modulate.a = clampf(_region_left / 0.8, 0.0, 1.0)
+		var vs := get_viewport_rect().size
+		region_label.size = Vector2(vs.x, 24)
+		region_label.position = Vector2(0, roundf(vs.y * 0.17))
+		if _region_left <= 0.0:
+			region_label.visible = false
+
+
+func current_region() -> String:
+	return _region
+
+
+func show_region(text: String) -> void:
+	region_label.text = text
+	region_label.visible = true
+	region_label.modulate.a = 1.0
+	_region_left = REGION_SECONDS
+	Events.say("You enter %s." % text.get_slice(" - ", 0))
 
 
 func _zone_def(id: String) -> Dictionary:

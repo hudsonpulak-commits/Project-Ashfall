@@ -400,6 +400,86 @@
    "minimap_color": "#a87a4c",
    "_order": 42,
    "note": "0.3.8 placeholder"
+  },
+  "grass_lush": {
+   "path": "res://assets/sprites/tiles/grass_lush.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "minimap_color": "#4f8a3a",
+   "_order": 43,
+   "note": "0.3.10 PLACEHOLDER recolour - designer redraw (docs/ART_TODO_0.3.10.md)"
+  },
+  "grass_boreal": {
+   "path": "res://assets/sprites/tiles/grass_boreal.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "minimap_color": "#5f7a5c",
+   "_order": 44,
+   "note": "0.3.10 PLACEHOLDER recolour - designer redraw (docs/ART_TODO_0.3.10.md)"
+  },
+  "grass_tropic": {
+   "path": "res://assets/sprites/tiles/grass_tropic.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "minimap_color": "#7a9a34",
+   "_order": 45,
+   "note": "0.3.10 PLACEHOLDER recolour - designer redraw (docs/ART_TODO_0.3.10.md)"
+  },
+  "rocky": {
+   "path": "res://assets/sprites/tiles/rocky.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "minimap_color": "#8a8278",
+   "_order": 46,
+   "note": "0.3.10 PLACEHOLDER recolour - designer redraw (docs/ART_TODO_0.3.10.md)"
+  },
+  "cliff_face": {
+   "path": "res://assets/sprites/tiles/cliff_face.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "minimap_color": "#4a3f38",
+   "_order": 47,
+   "note": "0.3.10 PLACEHOLDER recolour - designer redraw (docs/ART_TODO_0.3.10.md)"
+  },
+  "cliff_lip": {
+   "path": "res://assets/sprites/tiles/cliff_lip.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "minimap_color": "#9a9088",
+   "_order": 48,
+   "note": "0.3.10 PLACEHOLDER recolour - designer redraw (docs/ART_TODO_0.3.10.md)"
+  },
+  "cliff_shadow": {
+   "path": "res://assets/sprites/tiles/cliff_shadow.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "minimap_color": "#2f4a2a",
+   "_order": 49,
+   "note": "0.3.10 PLACEHOLDER recolour - designer redraw (docs/ART_TODO_0.3.10.md)"
+  },
+  "cliff_stairs": {
+   "path": "res://assets/sprites/tiles/cliff_stairs.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "minimap_color": "#a89a88",
+   "_order": 50,
+   "note": "0.3.10 PLACEHOLDER recolour - designer redraw (docs/ART_TODO_0.3.10.md)"
   }
  },
  "objects": {
@@ -419,7 +499,8 @@
     24
    ],
    "frames": 1,
-   "anchor": "bottom"
+   "anchor": "bottom",
+   "note": "0.3.10 now the Oak tree (Forestry 15) - designer redraw as oak"
   },
   "tree_blackthorn": {
    "path": "res://assets/sprites/objects/tree_blackthorn.png",
@@ -428,7 +509,8 @@
     24
    ],
    "frames": 1,
-   "anchor": "bottom"
+   "anchor": "bottom",
+   "note": "0.3.10 now the Ash tree (Forestry 30) - designer redraw as ash"
   },
   "stump": {
    "path": "res://assets/sprites/objects/stump.png",
@@ -896,6 +978,66 @@
    "frames": 1,
    "anchor": "bottom",
    "note": "0.3.8 placeholder road decoration"
+  },
+  "tree_pine": {
+   "path": "res://assets/sprites/objects/tree_pine.png",
+   "frame_size": [
+    16,
+    24
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.3.10 PLACEHOLDER recolour - designer redraw (docs/ART_TODO_0.3.10.md)"
+  },
+  "tree_dead": {
+   "path": "res://assets/sprites/objects/tree_dead.png",
+   "frame_size": [
+    16,
+    24
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.3.10 PLACEHOLDER recolour - designer redraw (docs/ART_TODO_0.3.10.md)"
+  },
+  "tree_spruce": {
+   "path": "res://assets/sprites/objects/tree_spruce.png",
+   "frame_size": [
+    16,
+    24
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.3.10 PLACEHOLDER recolour - designer redraw (docs/ART_TODO_0.3.10.md)"
+  },
+  "tree_mahogany": {
+   "path": "res://assets/sprites/objects/tree_mahogany.png",
+   "frame_size": [
+    16,
+    24
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.3.10 PLACEHOLDER recolour - designer redraw (docs/ART_TODO_0.3.10.md)"
+  },
+  "magic_mushroom": {
+   "path": "res://assets/sprites/objects/magic_mushroom.png",
+   "frame_size": [
+    16,
+    24
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.3.10 PLACEHOLDER recolour - designer redraw (docs/ART_TODO_0.3.10.md)"
+  },
+  "rock_dusk": {
+   "path": "res://assets/sprites/objects/rock_dusk.png",
+   "frame_size": [
+    16,
+    24
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.3.10 PLACEHOLDER recolour - designer redraw (docs/ART_TODO_0.3.10.md)"
   }
  },
  "actors": {
@@ -2738,6 +2880,46 @@
     16
    ],
    "note": "0.3.8 placeholder"
+  },
+  "magic_mushroom": {
+   "path": "res://assets/sprites/items/magic_mushroom.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "note": "0.3.10 PLACEHOLDER recolour - designer redraw (docs/ART_TODO_0.3.10.md)"
+  },
+  "dusk_ore": {
+   "path": "res://assets/sprites/items/dusk_ore.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "note": "0.3.10 PLACEHOLDER recolour - designer redraw (docs/ART_TODO_0.3.10.md)"
+  },
+  "dusk_steel_bar": {
+   "path": "res://assets/sprites/items/dusk_steel_bar.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "note": "0.3.10 PLACEHOLDER recolour - designer redraw (docs/ART_TODO_0.3.10.md)"
+  },
+  "spruce_log": {
+   "path": "res://assets/sprites/items/spruce_log.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "note": "0.3.10 PLACEHOLDER recolour - designer redraw (docs/ART_TODO_0.3.10.md)"
+  },
+  "mahogany_log": {
+   "path": "res://assets/sprites/items/mahogany_log.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "note": "0.3.10 PLACEHOLDER recolour - designer redraw (docs/ART_TODO_0.3.10.md)"
   }
  },
  "ui": {
@@ -3112,23 +3294,29 @@
  "transitions": {
   "_rules": {
    "priority": {
-    "marsh": 1,
-    "grass": 2,
-    "sand": 3,
-    "ash": 3,
-    "dirt": 4,
-    "path": 5,
-    "road_dirt": 5,
-    "boardwalk": 6,
-    "planks": 6,
-    "floor": 6,
-    "stone_floor": 6,
-    "plaster": 6,
-    "cobble": 7,
-    "road_stone": 7,
-    "cobble_dark": 8
+    "marsh": 10,
+    "grass": 20,
+    "sand": 30,
+    "ash": 30,
+    "dirt": 40,
+    "path": 50,
+    "road_dirt": 50,
+    "boardwalk": 60,
+    "planks": 60,
+    "floor": 60,
+    "stone_floor": 60,
+    "plaster": 60,
+    "cobble": 70,
+    "road_stone": 70,
+    "cobble_dark": 80,
+    "grass_lush": 21,
+    "grass_tropic": 22,
+    "grass_boreal": 23,
+    "rocky": 35,
+    "cliff_shadow": 15,
+    "cliff_stairs": 36
    },
-   "doc": "0.3.9 a tile is overlaid by up to 2 higher-priority neighbouring floors; frame = edges(N1 E2 S4 W8) | corners(NW1 NE2 SE4 SW8)<<4 (corners only where both sides are not that floor). Water, walls and the moat never blend."
+   "doc": "0.3.9 a tile is overlaid by up to 2 higher-priority neighbouring floors; frame = edges(N1 E2 S4 W8) | corners(NW1 NE2 SE4 SW8)<<4 (corners only where both sides are not that floor). Water, walls and the moat never blend. 0.3.10 priorities x10 so the region grasses (21-23) and rocky ground (35) blend softly into each other."
   },
   "marsh": {
    "path": "res://assets/sprites/transitions/marsh.png",
@@ -3264,6 +3452,46 @@
    ],
    "frames": 256,
    "cols": 16
+  },
+  "grass_lush": {
+   "path": "res://assets/sprites/transitions/grass_lush.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 256,
+   "cols": 16,
+   "note": "0.3.10 PLACEHOLDER recolour - designer redraw (docs/ART_TODO_0.3.10.md)"
+  },
+  "grass_boreal": {
+   "path": "res://assets/sprites/transitions/grass_boreal.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 256,
+   "cols": 16,
+   "note": "0.3.10 PLACEHOLDER recolour - designer redraw (docs/ART_TODO_0.3.10.md)"
+  },
+  "grass_tropic": {
+   "path": "res://assets/sprites/transitions/grass_tropic.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 256,
+   "cols": 16,
+   "note": "0.3.10 PLACEHOLDER recolour - designer redraw (docs/ART_TODO_0.3.10.md)"
+  },
+  "rocky": {
+   "path": "res://assets/sprites/transitions/rocky.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 256,
+   "cols": 16,
+   "note": "0.3.10 PLACEHOLDER recolour - designer redraw (docs/ART_TODO_0.3.10.md)"
   }
  }
 }

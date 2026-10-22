@@ -36,6 +36,9 @@ func _process(_dt: float) -> bool:
 	var objs := PackedByteArray()
 	objs.resize(w * h)
 	var obj_ids: Array = [""]
+	var regs := PackedByteArray()   # 0.3.10 lore region index per tile (meta.region_ids)
+	regs.resize(w * h)
+	var reg_ids: Array = gen.region_map.ids
 	var counts := {}
 	var minx := 1 << 30; var miny := 1 << 30; var maxx := -(1 << 30); var maxy := -(1 << 30)
 	for py in h:
@@ -50,6 +53,7 @@ func _process(_dt: float) -> bool:
 				minx = mini(minx, x); maxx = maxi(maxx, x)
 				miny = mini(miny, y); maxy = maxi(maxy, y)
 			tiles[py * w + px] = code
+			regs[py * w + px] = maxi(0, reg_ids.find(gen.region_map.region_at(Vector2i(x, y))))
 			var o: String = gen.object_at(x, y, t)
 			if o != "" and not gd.object_def(o).is_empty():
 				var i := obj_ids.find(o)
@@ -169,7 +173,11 @@ func _process(_dt: float) -> bool:
 	var meta := {"seed": seed_v, "origin": [b.position.x, b.position.y], "size": [w, h],
 		"land_extent": [minx, miny, maxx, maxy], "tile_names": WG.TILE_NAMES,
 		"tile_colors": WG.TILE_NAMES.map(func(n): return "#" + gd.tile_color(WG.TILE_NAMES.find(n)).to_html(false)),
-		"object_ids": obj_ids, "object_counts": counts}
+		"object_ids": obj_ids, "object_counts": counts,
+		"blocking_tiles": WG.BLOCKING_TILES, "region_ids": reg_ids,
+		"region_names": reg_ids.map(func(r): return gen.region_map.region_name(r)),
+		"region_tints": reg_ids.map(func(r): return str(gen.region_map.def(r).get("minimap_tint", "#ffffff"))),
+		"object_blocks": obj_ids.map(func(o): return o != "" and bool(gd.object_def(o).get("blocks", true)))}
 	var f := FileAccess.open(out_dir.path_join("world_dump.json"), FileAccess.WRITE)
 	f.store_string(JSON.stringify({"meta": meta, "towns": towns, "buildings": buildings, "roads": roads, "camps": camps,
 		"zones": gd.combat_zones if "combat_zones" in gd else [],
@@ -180,5 +188,7 @@ func _process(_dt: float) -> bool:
 	f.store_buffer(tiles); f.close()
 	f = FileAccess.open(out_dir.path_join("world_objects.bin"), FileAccess.WRITE)
 	f.store_buffer(objs); f.close()
+	f = FileAccess.open(out_dir.path_join("world_regions.bin"), FileAccess.WRITE)
+	f.store_buffer(regs); f.close()
 	print("MAP_EXPORT ok seed=%d bounds=%s land=%s objects=%s" % [seed_v, b, meta["land_extent"], counts])
 	return true

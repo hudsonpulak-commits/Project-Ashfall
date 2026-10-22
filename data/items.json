@@ -8,19 +8,19 @@
    "category": "currency"
   },
   "ash_log": {
-   "name": "Ash log",
+   "name": "Logs",
    "value": 4,
    "stackable": false,
    "category": "resource"
   },
   "alder_log": {
-   "name": "Alder log",
+   "name": "Oak log",
    "value": 11,
    "stackable": false,
    "category": "resource"
   },
   "blackthorn_log": {
-   "name": "Blackthorn log",
+   "name": "Ash log",
    "value": 27,
    "stackable": false,
    "category": "resource"
@@ -1114,6 +1114,39 @@
    "stackable": true,
    "category": "resource",
    "note": "0.3.8 slime drop (Grok's enemies_slime.json)"
+  },
+  "spruce_log": {
+   "name": "Spruce log",
+   "value": 48,
+   "stackable": false,
+   "category": "resource"
+  },
+  "mahogany_log": {
+   "name": "Mahogany log",
+   "value": 80,
+   "stackable": false,
+   "category": "resource"
+  },
+  "magic_mushroom": {
+   "name": "Magic mushroom",
+   "value": 30,
+   "stackable": false,
+   "category": "resource",
+   "note": "0.3.10 glowing cyan; Foraging 10. TODO potion brewing use."
+  },
+  "dusk_ore": {
+   "name": "Dusk ore",
+   "value": 45,
+   "stackable": false,
+   "category": "resource",
+   "note": "0.3.10 mined in Cinder and the Scorch (Mining 30). Smelt with coal into dusk steel."
+  },
+  "dusk_steel_bar": {
+   "name": "Dusk steel bar",
+   "value": 110,
+   "stackable": false,
+   "category": "material",
+   "note": "1 dusk ore + 1 coal at a furnace (Smithing 30). One tier above steel; forged into the dusk gear at an anvil (Smithing 36-42)."
   }
  }
 }
