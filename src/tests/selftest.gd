@@ -147,13 +147,13 @@ static func run(main) -> int:
 	p.inventory.add("copper_ore", 3)
 	p.inventory.add("tin_ore", 2)
 	p.interact(world, world.find_nearest_object(p.tile, ["furnace"], 20))
-	ticks(40)
+	ticks(80)   # 0.3.13 Fenhollow's forge hall is a longer walk from the bank
 	check(p.inventory.count("bronze_bar") == 2 and p.inventory.count("copper_ore") == 1 and p.inventory.count("tin_ore") == 0,
 		"furnace: bronze bar = 1 copper ore + 1 tin ore (2+3 ore -> 2 bars, spare copper left)")
 	p.inventory.clear()
 	p.inventory.add("raw_carp", 3)
 	p.interact(world, world.find_nearest_object(p.tile, ["hearth", "oven"], 40))
-	ticks(40)
+	ticks(80)
 	check(p.inventory.count("cooked_carp") + p.inventory.count("charred_fish") == 3, "hearth: 3 carp cooked or charred")
 	check(int(p.skills.xp["cooking"]) > 0, "cooking xp gained")
 

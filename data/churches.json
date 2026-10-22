@@ -22,60 +22,60 @@
    "art": "fh_church",
    "flip": false,
    "at": [
-    26,
-    15
+    40,
+    33
    ],
    "door": [
     [
-     29,
-     21
+     43,
+     39
     ]
    ],
    "sign": [
-    30,
-    21
+    44,
+    39
    ],
    "props": [
     {
      "object": "pew",
      "at": [
-      27,
-      18
+      41,
+      36
      ]
     },
     {
      "object": "pew",
      "at": [
-      28,
-      18
+      42,
+      36
      ]
     },
     {
      "object": "pew",
      "at": [
-      30,
-      18
+      44,
+      36
      ]
     },
     {
      "object": "pew",
      "at": [
-      28,
-      19
+      42,
+      37
      ]
     },
     {
      "object": "pew",
      "at": [
-      30,
-      19
+      44,
+      37
      ]
     },
     {
      "object": "pew",
      "at": [
-      30,
-      20
+      44,
+      38
      ]
     }
    ],
@@ -87,16 +87,16 @@
    "name": "Fenhollow Church",
    "keeper": "Father Aldric",
    "altar": [
-    29,
-    16
+    43,
+    34
    ],
    "keeper_at": [
-    28,
-    16
+    42,
+    34
    ],
    "stand": [
-    29,
-    20
+    43,
+    38
    ],
    "note": "0.3.13 Fenhollow v1 (designer fh_church)"
   },

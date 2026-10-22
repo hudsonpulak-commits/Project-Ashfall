@@ -318,7 +318,7 @@ def place(n, tx, ty, flip=False, role=None, reach=80, quiet=False):
             if bad: continue
             dx_, dy_ = ox + dl[0], oy + dl[1]
             front = [(dx_, dy_ + k) for k in (1, 2, 3)]
-            if tile_used[front[0][1], front[0][0]] or grid[front[0][1]][front[0][0]] not in 'g:' or grid[front[1][1]][front[1][0]] not in 'g:=': continue
+            if tile_used[front[0][1], front[0][0]] or grid[front[0][1]][front[0][0]] not in 'g:' or grid[front[1][1]][front[1][0]] not in 'g:=' or (role == 'church' and grid[front[2][1]][front[2][0]] not in 'g:='): continue
             for (lx, ly) in tiles: tile_used[oy + ly, ox + lx] = True
             route = spur_route(dx_, dy_ + 1)
             if route is None:
@@ -339,7 +339,7 @@ CIVIC = [('fh_church', (37, 14), 'church', False), ('fh_kell_lodge', (30, 46), '
          ('fh_smithy', (55, 20), 'helmets', False), ('fh_house_12', (20, 20), 'archery', False)]
 left = []
 for n, p, role, flip in CIVIC:
-    if not place(n, *p, flip=flip, role=role, reach=240): left.append((n, role))
+    if not place(n, *p, flip=flip, role=role, reach=400): left.append((n, role))
 HOUSES = [h for h in M['houses'] if h != 'fh_house_12'] + ['fh_house_12']
 rr = random.Random(7)
 mud_d = ndi.distance_transform_edt(~(pathpx | bwpx))
@@ -503,7 +503,7 @@ for b in out_b + [church]:
 def door_zone(x, y):
     for b in blds:
         dx, dy = b['door']
-        if abs(x - dx) <= 1 and dy <= y <= dy + 2: return True
+        if abs(x - dx) <= 1 and dy <= y <= dy + 3: return True
     return False
 def free_tile(x, y, allow_path=False, on_bw=False, water=False):
     if not (1 <= x < GW - 1 and 1 <= y < GH - 1) or (x, y) in objs or (x, y) in BT: return False
@@ -698,21 +698,22 @@ for f in sorted(x for x in os.listdir(os.path.join(DST, 'props')) if x.endswith(
 json.dump(s_, open(SP, 'w'), indent=1); json.dump(o_, open(OB, 'w'), indent=1)
 
 # ---------------------------------------------------------------- write data
-GROUND = {'g': 'marsh', ':': 'path', '~': 'water', '=': 'boardwalk', '#': 'palisade'}
+GROUND = {'g': 'marsh', ':': 'path', '~': 'water', '=': 'boardwalk', '#': 'palisade', 'G': 'gate_wood'}
+GPASS = {(x, y) for v in GATE_TILES.values() for x, y in v if grid[y][x] in ':=g'}   # passages are gate tiles (safe zone, 'through a gate')
 OBJ_CH = {}
 chars = iter('ABCEFHIJKLMNOPQRSTUVWXYZabcdefhijklmnopqrstuvwxyz0123456789!$%&()*+,/;<>?@[]_{|}^')
 STATIONS = {'pew', 'candle_stand', 'bank_chest', 'oven', 'furnace', 'anvil'}
 OBJ_CH['quest_giver'] = 'K'
 for o in sorted(set(objs.values()) - STATIONS - {'quest_giver'}):
     c = next(chars)
-    while c in GROUND or c == 'K': c = next(chars)
+    while c in GROUND or c in 'KG': c = next(chars)
     OBJ_CH[o] = c
 rows = []
 for y in range(GH):
     r = ''
     for x in range(GW):
         o = objs.get((x, y))
-        r += OBJ_CH[o] if o in OBJ_CH else grid[y][x]
+        r += OBJ_CH[o] if o in OBJ_CH else ('G' if (x, y) in GPASS else grid[y][x])
     rows.append(r)
 objects = {}
 for o, ch in OBJ_CH.items():

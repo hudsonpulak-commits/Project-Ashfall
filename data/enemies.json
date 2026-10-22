@@ -193,7 +193,7 @@
   {
    "enemy": "chicken",
    "at": [
-    -32,
+    -46,
     6
    ],
    "count": 4,
@@ -202,7 +202,7 @@
   {
    "enemy": "chicken",
    "at": [
-    30,
+    45,
     2
    ],
    "count": 4,
@@ -456,8 +456,8 @@
   {
    "enemy": "slime",
    "at": [
-    -30,
-    -26
+    -44,
+    -37
    ],
    "count": 3,
    "spread": 3
@@ -465,8 +465,8 @@
   {
    "enemy": "slime",
    "at": [
-    29,
-    25
+    43,
+    36
    ],
    "count": 3,
    "spread": 3
@@ -582,5 +582,6 @@
  ],
  "note_show_level": "0.3.3: combat enemies (aggro, or retaliate with max_hit > 0) show 'Name (level)' overhead; show_level overrides (false for citizens and chickens).",
  "note_036": "0.3.6: every hp (and hp_range) x1.5 rounded up; rat level 5, goblin 8, town guard 30 with stats raised to match",
- "note_038": "0.3.8 Highfen (a city for distance bands) moved three goblin camps and the Warlord camp (now north of Millbrook, 68 tiles from Highfen's walls; warlord band min 100 -> 60)."
+ "note_038": "0.3.8 Highfen (a city for distance bands) moved three goblin camps and the Warlord camp (now north of Millbrook, 68 tiles from Highfen's walls; warlord band min 100 -> 60).",
+ "note_0313": "0.3.13: Fenhollow grew to 74x60 (rect -37..36, -30..29); the 2 chicken and 2 slime camps that sat inside the new palisade moved outside it"
 }

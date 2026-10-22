@@ -14,7 +14,8 @@
   ":": "path",
   "~": "water",
   "=": "boardwalk",
-  "#": "palisade"
+  "#": "palisade",
+  "G": "gate_wood"
  },
  "objects": {
   "K": {
@@ -1450,18 +1451,18 @@
    "art": "fh_general_store",
    "flip": false,
    "at": [
-    19,
-    28
+    25,
+    18
    ],
    "door": [
     [
-     21,
-     31
+     27,
+     21
     ]
    ],
    "sign": [
-    22,
-    31
+    28,
+    21
    ],
    "props": [],
    "counter": [],
@@ -1473,12 +1474,12 @@
    "name": "Fenhollow Provisions",
    "keeper": "Marla Thatch",
    "keeper_at": [
-    21,
-    29
+    27,
+    19
    ],
    "stand": [
-    21,
-    30
+    27,
+    20
    ],
    "note": "0.3.13 Fenhollow v1 (designer fh_general_store)"
   },
@@ -1537,25 +1538,25 @@
    "art": "fh_cookhouse",
    "flip": false,
    "at": [
-    27,
-    34
+    20,
+    28
    ],
    "door": [
     [
-     29,
-     38
+     22,
+     32
     ]
    ],
    "sign": [
-    30,
-    38
+    23,
+    32
    ],
    "props": [
     {
      "object": "oven",
      "at": [
-      30,
-      35
+      23,
+      29
      ]
     }
    ],
@@ -1568,12 +1569,12 @@
    "name": "Reed Oven",
    "keeper": "Bryn Potts",
    "keeper_at": [
-    29,
-    35
+    22,
+    29
    ],
    "stand": [
-    29,
-    37
+    22,
+    31
    ],
    "note": "0.3.13 Fenhollow v1 (designer fh_cookhouse)"
   },
@@ -1581,18 +1582,18 @@
    "art": "fh_player_shop",
    "flip": false,
    "at": [
-    43,
-    35
+    49,
+    17
    ],
    "door": [
     [
-     45,
-     39
+     51,
+     21
     ]
    ],
    "sign": [
-    46,
-    39
+    52,
+    21
    ],
    "props": [],
    "counter": [],
@@ -1606,12 +1607,12 @@
    "keeper_sprite": "villager",
    "sign_sprite": "sign_house",
    "keeper_at": [
-    45,
-    36
+    51,
+    18
    ],
    "stand": [
-    45,
-    38
+    51,
+    20
    ],
    "note": "0.3.13 Fenhollow v1 (designer fh_player_shop)"
   },
@@ -1619,18 +1620,18 @@
    "art": "fh_smithy",
    "flip": false,
    "at": [
-    51,
-    18
+    44,
+    10
    ],
    "door": [
     [
-     53,
-     21
+     46,
+     13
     ]
    ],
    "sign": [
-    54,
-    21
+    47,
+    13
    ],
    "props": [],
    "counter": [],
@@ -1640,12 +1641,12 @@
    "kind": "shop",
    "shop": "helmets",
    "keeper_at": [
-    53,
-    19
+    46,
+    11
    ],
    "stand": [
-    53,
-    20
+    46,
+    12
    ],
    "note": "0.3.13 Fenhollow v1 (designer fh_smithy)"
   },
@@ -1653,17 +1654,17 @@
    "art": "fh_house_12",
    "flip": false,
    "at": [
-    12,
+    14,
     27
    ],
    "door": [
     [
-     14,
+     16,
      30
     ]
    ],
    "sign": [
-    15,
+    17,
     30
    ],
    "props": [],
@@ -1674,11 +1675,11 @@
    "kind": "shop",
    "shop": "archery",
    "keeper_at": [
-    14,
+    16,
     28
    ],
    "stand": [
-    14,
+    16,
     29
    ],
    "note": "0.3.13 Fenhollow v1 (designer fh_house_12)"
@@ -1687,18 +1688,18 @@
    "art": "fh_house_01",
    "flip": false,
    "at": [
-    39,
-    32
+    25,
+    35
    ],
    "door": [
     [
-     42,
-     34
+     28,
+     37
     ]
    ],
    "sign": [
-    43,
-    34
+    29,
+    37
    ],
    "props": [],
    "counter": [],
@@ -1713,12 +1714,12 @@
    "sign_sprite": "sign_house",
    "note": "0.3.13 Fenhollow v1 (designer fh_house_01)",
    "keeper_at": [
-    41,
-    33
+    27,
+    36
    ],
    "stand": [
-    42,
-    33
+    28,
+    36
    ]
   },
   {
@@ -1763,18 +1764,18 @@
    "art": "fh_house_03",
    "flip": false,
    "at": [
-    41,
-    11
+    38,
+    12
    ],
    "door": [
     [
-     43,
-     14
+     40,
+     15
     ]
    ],
    "sign": [
-    44,
-    14
+    41,
+    15
    ],
    "props": [],
    "counter": [],
@@ -1789,95 +1790,19 @@
    "sign_sprite": "sign_house",
    "note": "0.3.13 Fenhollow v1 (designer fh_house_03)",
    "keeper_at": [
-    43,
-    12
+    40,
+    13
    ],
    "stand": [
-    43,
-    13
+    40,
+    14
    ]
   },
   {
    "art": "fh_house_04",
    "flip": false,
    "at": [
-    56,
-    31
-   ],
-   "door": [
-    [
-     58,
-     34
-    ]
-   ],
-   "sign": [
-    59,
-    34
-   ],
-   "props": [],
-   "counter": [],
-   "style": "timber",
-   "roof": "#9a8a5a",
-   "id": "fenhollow_home_6",
-   "kind": "house",
-   "shop": "",
-   "name": "Bulrush Cottage",
-   "keeper": "Nell Marsh",
-   "keeper_sprite": "villager",
-   "sign_sprite": "sign_house",
-   "note": "0.3.13 Fenhollow v1 (designer fh_house_04)",
-   "keeper_at": [
-    58,
-    32
-   ],
-   "stand": [
-    58,
-    33
-   ]
-  },
-  {
-   "art": "fh_house_07",
-   "flip": false,
-   "at": [
-    32,
-    15
-   ],
-   "door": [
-    [
-     34,
-     19
-    ]
-   ],
-   "sign": [
-    35,
-    19
-   ],
-   "props": [],
-   "counter": [],
-   "style": "timber",
-   "roof": "#9a8a5a",
-   "id": "fenhollow_home_7",
-   "kind": "house",
-   "shop": "",
-   "name": "The Peats' house",
-   "keeper": "Ivo Peat",
-   "keeper_sprite": "villager",
-   "sign_sprite": "sign_house",
-   "note": "0.3.13 Fenhollow v1 (designer fh_house_07)",
-   "keeper_at": [
-    34,
-    16
-   ],
-   "stand": [
-    34,
-    18
-   ]
-  },
-  {
-   "art": "fh_house_10",
-   "flip": false,
-   "at": [
-    48,
+    47,
     38
    ],
    "door": [
@@ -1894,14 +1819,14 @@
    "counter": [],
    "style": "timber",
    "roof": "#9a8a5a",
-   "id": "fenhollow_home_8",
+   "id": "fenhollow_home_6",
    "kind": "house",
    "shop": "",
-   "name": "Heron's Rest",
-   "keeper": "Wenna Heron",
+   "name": "Bulrush Cottage",
+   "keeper": "Nell Marsh",
    "keeper_sprite": "villager",
    "sign_sprite": "sign_house",
-   "note": "0.3.13 Fenhollow v1 (designer fh_house_10)",
+   "note": "0.3.13 Fenhollow v1 (designer fh_house_04)",
    "keeper_at": [
     49,
     39
@@ -1912,21 +1837,97 @@
    ]
   },
   {
-   "art": "fh_house_02",
-   "flip": true,
+   "art": "fh_house_05",
+   "flip": false,
    "at": [
-    46,
-    11
+    30,
+    14
    ],
    "door": [
     [
-     48,
-     13
+     32,
+     17
     ]
    ],
    "sign": [
-    49,
-    13
+    33,
+    17
+   ],
+   "props": [],
+   "counter": [],
+   "style": "timber",
+   "roof": "#9a8a5a",
+   "id": "fenhollow_home_7",
+   "kind": "house",
+   "shop": "",
+   "name": "The Peats' house",
+   "keeper": "Ivo Peat",
+   "keeper_sprite": "villager",
+   "sign_sprite": "sign_house",
+   "note": "0.3.13 Fenhollow v1 (designer fh_house_05)",
+   "keeper_at": [
+    32,
+    15
+   ],
+   "stand": [
+    32,
+    16
+   ]
+  },
+  {
+   "art": "fh_house_08",
+   "flip": false,
+   "at": [
+    56,
+    31
+   ],
+   "door": [
+    [
+     58,
+     35
+    ]
+   ],
+   "sign": [
+    59,
+    35
+   ],
+   "props": [],
+   "counter": [],
+   "style": "timber",
+   "roof": "#9a8a5a",
+   "id": "fenhollow_home_8",
+   "kind": "house",
+   "shop": "",
+   "name": "Heron's Rest",
+   "keeper": "Wenna Heron",
+   "keeper_sprite": "villager",
+   "sign_sprite": "sign_house",
+   "note": "0.3.13 Fenhollow v1 (designer fh_house_08)",
+   "keeper_at": [
+    58,
+    32
+   ],
+   "stand": [
+    58,
+    34
+   ]
+  },
+  {
+   "art": "fh_house_10",
+   "flip": false,
+   "at": [
+    10,
+    26
+   ],
+   "door": [
+    [
+     11,
+     29
+    ]
+   ],
+   "sign": [
+    12,
+    29
    ],
    "props": [],
    "counter": [],
@@ -1939,52 +1940,14 @@
    "keeper": "Pim Lark",
    "keeper_sprite": "villager",
    "sign_sprite": "sign_house",
-   "note": "0.3.13 Fenhollow v1 (designer fh_house_02, flipped)",
+   "note": "0.3.13 Fenhollow v1 (designer fh_house_10)",
    "keeper_at": [
-    47,
-    12
+    11,
+    27
    ],
    "stand": [
-    48,
-    12
-   ]
-  },
-  {
-   "art": "fh_house_10",
-   "flip": true,
-   "at": [
-    38,
-    35
-   ],
-   "door": [
-    [
-     40,
-     38
-    ]
-   ],
-   "sign": [
-    41,
-    38
-   ],
-   "props": [],
-   "counter": [],
-   "style": "timber",
-   "roof": "#9a8a5a",
-   "id": "fenhollow_home_10",
-   "kind": "house",
-   "shop": "",
-   "name": "The Alders' house",
-   "keeper": "Bran Alder",
-   "keeper_sprite": "villager",
-   "sign_sprite": "sign_house",
-   "note": "0.3.13 Fenhollow v1 (designer fh_house_10, flipped)",
-   "keeper_at": [
-    40,
-    36
-   ],
-   "stand": [
-    40,
-    37
+    11,
+    28
    ]
   }
  ],
@@ -1992,61 +1955,61 @@
   "g~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~gg::=ggggggggg~~~~~~~~~~~~~~~~~~~~~~~~gg",
   "g~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~gg::gggggggggg~~~~~~~~~~~~~~~~~~~~~~~~gg",
   "g~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~gg::gggggggggN~~~~~~~~~~~~~~~~~~~~~~~~~~",
-  "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~gg::gggggggggg~~J~~~~~~~~~~~~~~~~~~~~~~~",
+  "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~gg::gggggggggg~~~~~~~~~~~~~~~~~~~~~~~~~~",
   "~~~~~~~~~~~~~~~~~~~~~~~~~~~~J~~~~ggg::ggggggggMgg~~~~~~~~~~~~~~~~~~~~~~~~~",
-  "~~~~~~~~~~~~~~~~~~~~~~~~~~~gNgPggPgg::gggggg##ggNgP~~~~~~~~~~~~~W~~~~~~~~~",
-  "~~~~~~~~~~~~~~~~~~~~R~~~~gOgg######g::g##########gPg~~~~~Pgggg~~~~~~~~~~~~",
-  "~~~~~~~~~~~~~~~~~~~~~~~ggg##########::############gNgP~NPgggggO~J~~~~~~~~~",
-  "~~~~~~~~~~~~~~~~~J~~~Nggg###########::#####gggg####gggOgggggggg~=~~~~~~~~~",
-  "~~~~~~~~~~~~~~~~~~~~ggg#####gggggEgg:ggggBgggggggg##gggggggggggg=~~~~~~~~~",
+  "~~~~~~~~~~~~~~~~~~~~~~~~~~~gNgPggOgg::gggggg##ggNgP~~~~~~~~~~~~~W~~~~~~~~~",
+  "~~~~~~~~~~~~~~~~~~~~~~~~~gOgg######gGGg##########gPg~~~~~gNggg~~~~~~~~~~~~",
+  "~~~~~~~~~~~~~~~~~~~~~~~ggg##########GG############gNgP~NPgggggO~J~~~~~~~~~",
+  "~~~~~~~~~~~~~~~~~J~~~gPgg###########GG#####gggg####gggOgggggggg~=~~~~~~~~~",
+  "~~~~~~~~~~~~~~~~~~~~Pgg#####gggggggg:ggggBgggggggg##gggggggggggg=~~~~~~~~~",
   "~~~~~~~~~~~~~~~~~~~ggg###gggHggggggg:gggggggggggggg###gggPggggIg=~~~~~~~~~",
-  "~~~~~~~gggggJ~~~~Ngg####gFgggEggEgg::ggggggggggggggg###ggggggggg~~~J~~~~~~",
-  "~~~~~~~ggNgggg~ggg####Lgggggg::::::::gggggggggggggggg###ggggggggg~~~~~~~~~",
-  "~~~~~~~ggggggNgN#####gggPg::gLgLgHgg:MHgggggggggggggggg##ggggggggO~~~~~~~~",
-  "~~~~~~~Ngggggg#####QgHg:::gIgggggggg::ggLgggggg:::QIgggg##gggggNgggg~~~~~~",
-  "~~~~~~~ggggPg####gggg:::ggggggggggggg:ggggg::Q::::::gHHgg###gggggggggg~~~~",
-  "~~~~~~~Rgggg###gggg::gFgggggggggggggg::ggL::::::::::::ggIP###ggggggPgPgg~~",
-  "~~~~~~~~ggg##ggggggggggggggggggggggggg::g:::INgM:::ggg:::gg###gggggggggggg",
-  "~~~~~~~gPg##gggggPZggggggggggggggggggg::::Hggggg:::ggggggggg####gggggggggg",
-  "~~~~~~~gg##NggggOO~~ggNgggggggggggggg:::gggggggg:::gggggggggg#####ggMggggg",
-  "~~~~~~gP###ggZgg~J~~~~NBPgggggggHg:::::ggggggggg:::ggggggggggg#####gggggg~",
-  "~~~~~~gg##ggN~J~~~~~~~~~gggggggggg:::::gIggggggg:::gggggggNgggg####gggP~~~",
-  "~~~~~~g###gO~~~~~~~~J~~~~ggNg::::::====ggggggggg::::::g~~~gggggg###gg~~~~~",
-  "~~~~~~g###P~~~~~~~Pg~~~~~~~ggg~~~~~====~~ggggggg:ggggg~Y~~~gggPg###g~~~~~~",
-  "~~~~~Jg###g~~~~~NgggggY~~~~~~~~~~Y====~~~~~g:::::IgOgP==~~~~Iggg###g~~~~~~",
-  "~~~~~gg###Og~gPggggggP=~~~~~~~~~~~=Q==~~~~~~ggOgggZ~==========gg###g======",
-  "~~~~~gg###gggggg:::::::L======~~~~~==:=~Y~~~~~gZ~~~============::::=======",
-  "~~~~~g####ggggggggggggggg:======gOg::::g=~~~~~~~~=======H=======:::=======",
-  "~~~~~gg###ggggggggggggggggggggg:::::b:C::=~~~~~=======~~~~~~~~~=###g======",
-  "~~~~~gg###gggggggggggggggggggFgg::::::::::g==========gOgP~~~~~~g###g~~~~~~",
-  "~~~~Rgg###gNggggggggggggggggFggg:::::::::::::=====gFggggggg~~~~g###gP~~~~~",
-  "~~~~~gg###gggg:gggggggggggQggHg::::::::a:gggg::ggggNgAggggggg~gP###gNg~~~~",
-  "=====gg###gggg:gggggV::Igggg::::gg:::::gggggggEgggEggggggggggggg###ggM~W~~",
-  "=====::::::gI::ggggIg:::g:::::Ngggg::ggggggggggggggggggggggggIgg####gg~~~~",
-  "======::::::::::LLgg:::::::ggggggg::EggggggggggPggggggggggggggggg###gO~~~~",
-  "======g###gg::::::::::::gPgggggggg::gggggg:ggggggggggggggg::ggggg###g~~~~~",
-  "~~~~~~g###ggNgg:::g::gggggggggggggN::ggggg:gggggggggggggNg:::gLgg##Ng~~~~~",
-  "~~~~~~N###ggIgFQ::gggHggQgggggggggg:::gggg:gggggggggggggIg:::ggg###g~~~~~~",
-  "~~~~~~g###ggggggg:PggggggggggggggI::::gggg:ggggggggg:UggE:::gggg##gg~~~~~~",
-  "~~~~~~g######gHgg::gggggggggS::::::::::::::ggggggggg:ggg:::gggg##ggg~~~~~~",
-  "~~~~~~O#######PgLg::ggggggggggggggggM::::::gg:gBgggg::g:::gggg##ggP~~~~~~~",
-  "~~~~~~~g#######gggg::::ggggggggggggggg::::::::gggggg::::gggHM##ggg~~R~~~~~",
-  "~~~~~~~~~~~#####gggg:::gHggggggggggggg::gg:::::gg::::ggHgEgg##ggPJ~~~~~~~~",
-  "~~~~~~~~~~~~gg##gggggg::ggggggggggggg::gEgggg::::::gggN~ggN##Mgg~~~~~~~~~~",
-  "~~~~~~~~~~~~gg###gEggLg:::ggggggggggg:QgBggQgO==ggggggg~Pg##ggg~~NggNg~~~~",
-  "~~~~~~~~~~~~~gN##ggggggIg::gT:Kgggggg:gggggggN~~ZgggHgggg##gNg~~~gggggg~~~",
-  "~~~~~~~~~~~~W~gg##gMggEggIg::::gFggg::IgggggM~J~~gggggg###ggg~~~~gggggNggg",
-  "~~~~~~~~~~~~~~ggg##ggggggggHgggg:::::ggggggg~~~~gNgg#####gON~~~~~ggggggggg",
-  "~~~~~~~~~~~~~~~ggg###ggBgggggIggggg:::ggggggggggg#######Ngg~~~~~~~~~~~gggg",
-  "~~~~~~~~~~~~~~~~gOg#####gggggggEgHgg::::::gIgg########ggggJ~~~~W~~~~~~~~gg",
-  "~~~~~~~~~~~~~~~~~ggg#######ggMgggggg:ggggggg#######ggggggg~~~~~~~~~~~~~~~~",
-  "~~~~~~~~~~~~~~~~~~~gPM#############g::g#########ggggggggggOgP~~~~~~~~~~~~~",
-  "~~~~~~~~~~~~~~~~~~W~~gggg###########::#######ggggggggPgggggggOg~J~~~~~~~~~",
-  "~~~~R~~~~~~~~~~~~~~~~~~~Nggg########::#####gggggQggggggggggPgggO~~~~~~~~~~",
-  "ggg~~~~~~~~~~~~~~~~~~~~~~~PNgggPgggg:ggggNgNg~~~ggggggggggggggggg~~~~~~~~~",
-  "ggggM~~~~~~R~~~~~~~~~~~~~~~~NggggXgg::gggg~~~~=~~PgNONPggggggggggg~~~~~~~~",
-  "gggggPggg~~~~~~~~~~~~~~~~~~~~gMggggg::ggO~~~~~=~~~~~~ggPggggggggggg~~~~~~~",
-  "ggMgggggOg~~~~~~~~~~~~~~~~~~~Ngggggg::ggg~~~~~=~~~~~~~JgggggggggggNg~~~~~~",
+  "~~~~~~~gggggJ~~~~Ngg####gFgggEggEgg::HgggMgggggggggg###ggggggggg~~~J~~~~~~",
+  "~~~~~~~ggNgggg~ggg####Lgggggg::::::::gggggggggggggggg###ggggggQgg~~~~~~~~~",
+  "~~~~~~~ggggggNgN#####gggPg::gLgLgHgg:Mggggggggggggggggg##ggggggggO~~~~~~~~",
+  "~~~~~~~Ngggggg#####ggHg:::Iggggggggg::gggggggg::gHQIgggg##gggggNgggg~~~~~~",
+  "~~~~~~~gggggN####gggg:::ggggEgggggggH:gggggIg:::::::gHHgg###gggggggggg~~~~",
+  "~~~~~~~~gggg###gggg::gFgggFEggggggggg:::::QI::::::gL::ggIP###ggggggPgggP~~",
+  "~~~~~~~~ggg##gggggggggggggggggggggggg:::::::INgM:ggggg:::gg###gggggggggggg",
+  "~~~~~~~gPg##gggggPZggggggggggggg::::::::::Hggggg:ggggg::gggg####gggggggggg",
+  "~~~~~~~gg##gggggOO~~ggggBgggggggggggg:::gggggggg:ggggg:gggggg#####gggggggg",
+  "~~~~~~gP###MNggg~~~~~~ggPgggggggggHHg::ggggggggg:ggggg:ggIgggg#####gMgggg~",
+  "~~~~~~gg##ggg~~~~~~~~~~~gggggggggg:::::gIggggggg:ggggg:ZNgggggg####gggP~~~",
+  "~~~~~~g###gO~~~~~~~~J~~~~gV::::::::====ggggggggg:Hg::::~~~ZgAggg###gg~~~~~",
+  "~~~~~~g###P~~~~J~~Pg~~~~~~~ggI~~~~~====~~ggggggg:ggggg~Y~~~ggggL###g~~~~~~",
+  "~~~~~Jg###g~~~~~ggggggY~~~~~~~~~~Y====~~~~~g:::::ggggP==~~~~Iggg###g~~~~~~",
+  "~~~~~gg###Og~gOZgggggP=~~~~~~~~~~~=Q==~~~~~~ggIgggg~==========gg###g======",
+  "~~~~~gg###gggggg:::::::L======~~~~~==:=~Y~~~~~ggW~~L===========:GGG=======",
+  "~~~~~g####ggggggggggggggg:======gOg::::g=~~~~~~~~=======H=======GGG=======",
+  "~~~~~gg###ggggggggggggggggggggg:::::b:C::=~R~~~=======~~~~~~~~~=###g======",
+  "~~~~~gg###gggggggggggggggggEgFgg::::::::::g==========gOgP~~~~~~g###g~~~~~~",
+  "~~~~~gg###g:ggggggggggggggggFggg:::::::::::::=====gFggggggg~~~~g###gP~~~~~",
+  "~~~~~gg###g:ggIg:gggggggggQgggg::::::::a:gggg::ggLgNggggggggN~gP###gNg~~~~",
+  "=====gg###::gLgg:ggggggggggg::::gg:::::ggEggQgEggggggggggggggggg###ggM~W~~",
+  "=====::GGG::gEg::ggIgS::g:::::ggggg::ggIgggggggggggggggggggggggg####gO~~~~",
+  "======:GGG::::::::ggg::::::ggggggg::EggggggggggPggggggggggggggBgg###gg~~~~",
+  "======g###gg::::::::::::gggggggggg::ggLgggggggggggggggggggggggggg###g~~~~~",
+  "~~~~~~g###ggggg:::g::gggEgggggggggN::gggggggggggggggggggNg:::gLgg##Ng~~~~~",
+  "~~~~~~N###ggggFQ::gggHgggggggggBggg:::ggggggggggggggggggIg:::ggg###g~~~~~~",
+  "~~~~~~g###ggggggg:PgggggggHg::::::::::gggggggggggggg:UggE:::gggg##gg~~~~~~",
+  "~~~~~~N######gHgg::ggggggggggggggBggg::Egggggggggggg:ggg:::gggg##ggg~~~~~~",
+  "~~~~~~g#######PgLg::ggggggggggggggggMg::Hgg:gggggggg::g:::gggg##ggP~~~~~~~",
+  "~~~~~~~g#######gggg::::ggggggggggggggg::::::gggggggg::::gggHM##ggg~~R~~~~~",
+  "~~~~~~~~~~~#####gggg:::ggggggggggggggg::Fg:::gQgg::::ggggEgg##ggg~~~~~~~~~",
+  "~~~~~~~~~~~~gg##gggggg::ggggggggggggg::gEggHg::::::gggNJggN##Mgg~~~~~~~~~~",
+  "~~~~~~~~~~~~gg###gEggLg:::ggggggggggg:QggggggO==gggEggg~gg##ggg~~NggNg~~~~",
+  "~~~~~~~~~~~~~gP##ggggggIg::gT:KgggggQ:gggggggg~~Zgggggggg##ggO~~~gggggg~~~",
+  "~~~~~~~~~~~~W~gg##gMggEggIg::::gFgEg::IgggggP~~~~gPgggg###ggg~~~~gggggNggg",
+  "~~~~~~~~~~~~~~gPg##ggggggggHgggg:::::ggggggg~~~~gggg#####gON~~~~~ggggggggg",
+  "~~~~~~~~~~~~~~~ggg###ggggggggIggggg:::ggggggggggg#######Ngg~~~~~~~~~~~gggg",
+  "~~~~~~~~~~~~~~~~NOg#####gggggggEgHgg::::::gIgg########ggggJ~~~~~R~~~~~~~gg",
+  "~~~~~~~~~~~~~~~~~ggg#######ggMgggggg::gggggg#######ggggggg~~~~~~~~~~~~~~~~",
+  "~~~~~~~~~~~~~~~~~~~gPM#############gGGg#########PgggMgggggggP~~~~~~~~~~~~~",
+  "~~W~~~~~~~~~~~~J~~W~~gggg###########GG#######ggggggggggggggggOg~~~~~~~~~~~",
+  "~~~~R~~~~~~~~~~~~~~~~~~~NgOg########GG#####gggggEggggggggggPgggg~~~~~~~~~~",
+  "ggg~~~~~~~~~~~~~~~~~~R~~~~gggggPgggg:ggggNgPg~~~ggggggggggggggggg~~~~~~~~~",
+  "gggNg~~~~~~~~~~~~~~~~~~~~~~~NggggXgg::gggg~~~~=~~PgNONPggggggggggg~~~~~~~~",
+  "gggggPgOg~~~~~~~~~~~~~~~~~~~~gMggggg::ggO~~~~~=~~~~~~ggPggggggggggg~~~~~~~",
+  "gggggggggP~~~~~~~~~~~~~~~~~~~Ngggggg::ggg~~~~~=R~~~~~~JgggggggggggNg~~~~~~",
   "gggggggggg~~~~~~~~~~~~~~~~~~~ggggggg::ggggggg~=~~~~~~~~~gggggggggggg~~~~~~",
   "gggggggggg~~~~~~~~~~~~~~~~~~~ggg~~gg::=gggggg~~~~~~~~~~~ggggggggggggg~~~~~"
  ],

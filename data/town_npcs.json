@@ -67,8 +67,8 @@
      "enemy": "town_guard",
      "patrol": [
       [
-       10,
-       33
+       11,
+       32
       ]
      ],
      "gate": "west"
