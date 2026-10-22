@@ -19,146 +19,86 @@
  ],
  "towns": {
   "fenhollow": {
+   "art": "fh_church",
+   "flip": false,
+   "at": [
+    40,
+    33
+   ],
+   "door": [
+    [
+     43,
+     39
+    ]
+   ],
+   "sign": [
+    44,
+    39
+   ],
+   "props": [
+    {
+     "object": "pew",
+     "at": [
+      41,
+      36
+     ]
+    },
+    {
+     "object": "pew",
+     "at": [
+      42,
+      36
+     ]
+    },
+    {
+     "object": "pew",
+     "at": [
+      44,
+      36
+     ]
+    },
+    {
+     "object": "pew",
+     "at": [
+      42,
+      37
+     ]
+    },
+    {
+     "object": "pew",
+     "at": [
+      44,
+      37
+     ]
+    },
+    {
+     "object": "pew",
+     "at": [
+      44,
+      38
+     ]
+    }
+   ],
+   "counter": [],
+   "style": "timber",
+   "roof": "#9a8a5a",
    "id": "fenhollow_church",
    "kind": "church",
    "name": "Fenhollow Church",
    "keeper": "Father Aldric",
-   "style": "stone",
-   "rect": [
-    34,
-    16,
-    9,
-    8
-   ],
-   "door": [
-    [
-     38,
-     23
-    ]
+   "altar": [
+    43,
+    34
    ],
    "keeper_at": [
-    41,
-    17
+    42,
+    34
    ],
    "stand": [
-    41,
-    18
+    43,
+    38
    ],
-   "sign": [
-    39,
-    23
-   ],
-   "altar": [
-    38,
-    17
-   ],
-   "props": [
-    {
-     "object": "candle_stand",
-     "at": [
-      35,
-      17
-     ]
-    },
-    {
-     "object": "candle_stand",
-     "at": [
-      37,
-      17
-     ]
-    },
-    {
-     "object": "candle_stand",
-     "at": [
-      39,
-      17
-     ]
-    },
-    {
-     "object": "pew",
-     "at": [
-      35,
-      20
-     ]
-    },
-    {
-     "object": "pew",
-     "at": [
-      36,
-      20
-     ]
-    },
-    {
-     "object": "pew",
-     "at": [
-      37,
-      20
-     ]
-    },
-    {
-     "object": "pew",
-     "at": [
-      39,
-      20
-     ]
-    },
-    {
-     "object": "pew",
-     "at": [
-      40,
-      20
-     ]
-    },
-    {
-     "object": "pew",
-     "at": [
-      41,
-      20
-     ]
-    },
-    {
-     "object": "pew",
-     "at": [
-      35,
-      22
-     ]
-    },
-    {
-     "object": "pew",
-     "at": [
-      36,
-      22
-     ]
-    },
-    {
-     "object": "pew",
-     "at": [
-      37,
-      22
-     ]
-    },
-    {
-     "object": "pew",
-     "at": [
-      39,
-      22
-     ]
-    },
-    {
-     "object": "pew",
-     "at": [
-      40,
-      22
-     ]
-    },
-    {
-     "object": "pew",
-     "at": [
-      41,
-      22
-     ]
-    }
-   ]
+   "note": "0.3.13 Fenhollow v1 (designer fh_church)"
   },
   "cinderholt": {
    "id": "cinderholt_church",

@@ -140,12 +140,16 @@ static func run(main, world, p) -> void:
 			if gen.tile_at(hc.x + x, hc.y + y) in [WorldGen.TileType.COBBLE, WorldGen.TileType.ROAD_STONE]:
 				cob += 1
 	check(str(hf.get("art", {}).get("ground_decal", "")).ends_with("ground_decal.png") and cob > 400, "Highfen's roads, rings and plaza are cobble tiles (%d) under the designer's 45-degree cobble autotile" % cob)
-	var gr_n: int = bv._gate_roofs.size()
+	var hroofs := []   # 0.3.13 Fenhollow has gate roofs too: only Highfen's count here
+	for i in bv._gate_roofs.size():
+		if str((bv._gate_roofs[i][0] as Sprite2D).name).contains("_highfen_"):
+			hroofs.append(i)
+	var gr_n: int = hroofs.size()
 	var sg: Array = hf["gate_walls"]["south"]
 	p.place_at(Vector2i(int(hf["origin"][0]) + int(sg[0][0]), int(hf["origin"][1]) + int(sg[0][1])))
 	bv.step(5.0)
 	var faded := 0
-	for i in gr_n:
+	for i in hroofs:
 		if bv.gate_roof_alpha(i) == 0.0:
 			faded += 1
 	check(gr_n == 4 and faded == 1, "Highfen's 4 gatehouse roofs: standing in the S passage fades only that roof (%d/%d)" % [faded, gr_n])

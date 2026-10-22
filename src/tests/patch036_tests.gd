@@ -38,7 +38,7 @@ static func run(world: World, p: Player) -> void:
 	# tools
 	p.inventory.clear()
 	p.equipment.erase("weapon")
-	var tree: WorldObject = world.find_nearest_object(world.gen.town_spawn("fenhollow") + Vector2i(0, 40), ["ash_tree", "alder_tree"], 60)
+	var tree: WorldObject = world.find_nearest_object(world.gen.town_spawn("fenhollow") + Vector2i(0, 40), ["ash_tree"], 60)   # 0.3.13 an alder (Forestry 15) can be nearer now
 	var msgs: Array = []
 	var mcb := func(t, _k = ""): msgs.append(str(t))
 	Events.message.connect(mcb)

@@ -97,7 +97,7 @@ static func run(world: World, p: Player) -> void:
 	for dx in range(-30, 30):
 		for dy in range(-30, 30):
 			var q := c0 + Vector2i(dx, dy)
-			if world.tile_type(q) == WorldGen.TileType.WALL and not world.is_blocked(q + Vector2i(-1, 0)) and not world.is_blocked(q + Vector2i(1, 0)):
+			if world.tile_type(q) in [WorldGen.TileType.WALL, WorldGen.TileType.ART_WALL] and not world.is_blocked(q + Vector2i(-1, 0)) and not world.is_blocked(q + Vector2i(1, 0)):
 				check(not Combat.line_of_sight(world, q + Vector2i(-1, 0), q + Vector2i(1, 0)), "a building wall blocks line of sight")
 				wall_found = true
 				break

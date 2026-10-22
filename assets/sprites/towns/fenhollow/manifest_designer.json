@@ -1,0 +1,1883 @@
+{
+ "version": "fenhollow v1 (AshFall stage 2)",
+ "tile_px": 16,
+ "start": "new players spawn by the S gate next to fh_kell_lodge (Kell, Goblin Slayer quest giver)",
+ "buildings": [
+  {
+   "name": "fh_house_01",
+   "tiles": [
+    4,
+    2
+   ],
+   "px": [
+    64,
+    46
+   ],
+   "storeys": 2,
+   "footprint_origin_px": [
+    0,
+    14
+   ],
+   "layers": [
+    "fh_house_01_floor.png",
+    "fh_house_01_walls.png",
+    "fh_house_01_upper1.png",
+    "fh_house_01_roof.png"
+   ],
+   "fade_group": [
+    "fh_house_01_upper1.png",
+    "fh_house_01_roof.png"
+   ],
+   "door_px": [
+    38,
+    32
+   ],
+   "door_tile": [
+    2,
+    1
+   ],
+   "roof_tiles": [
+    [
+     0,
+     0
+    ],
+    [
+     1,
+     0
+    ],
+    [
+     2,
+     0
+    ],
+    [
+     3,
+     0
+    ],
+    [
+     0,
+     1
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     2,
+     1
+    ],
+    [
+     3,
+     1
+    ]
+   ]
+  },
+  {
+   "name": "fh_house_02",
+   "tiles": [
+    3,
+    2
+   ],
+   "px": [
+    48,
+    46
+   ],
+   "storeys": 2,
+   "footprint_origin_px": [
+    0,
+    14
+   ],
+   "layers": [
+    "fh_house_02_floor.png",
+    "fh_house_02_walls.png",
+    "fh_house_02_upper1.png",
+    "fh_house_02_roof.png"
+   ],
+   "fade_group": [
+    "fh_house_02_upper1.png",
+    "fh_house_02_roof.png"
+   ],
+   "door_px": [
+    23,
+    32
+   ],
+   "door_tile": [
+    1,
+    1
+   ],
+   "roof_tiles": [
+    [
+     1,
+     0
+    ],
+    [
+     2,
+     0
+    ],
+    [
+     0,
+     1
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     2,
+     1
+    ]
+   ]
+  },
+  {
+   "name": "fh_house_03",
+   "tiles": [
+    3,
+    4
+   ],
+   "px": [
+    48,
+    78
+   ],
+   "storeys": 2,
+   "footprint_origin_px": [
+    0,
+    14
+   ],
+   "layers": [
+    "fh_house_03_floor.png",
+    "fh_house_03_walls.png",
+    "fh_house_03_upper1.png",
+    "fh_house_03_roof.png"
+   ],
+   "fade_group": [
+    "fh_house_03_upper1.png",
+    "fh_house_03_roof.png"
+   ],
+   "door_px": [
+    23,
+    61
+   ],
+   "door_tile": [
+    1,
+    2
+   ],
+   "roof_tiles": [
+    [
+     0,
+     1
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     2,
+     1
+    ],
+    [
+     0,
+     2
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     2,
+     2
+    ],
+    [
+     1,
+     3
+    ]
+   ]
+  },
+  {
+   "name": "fh_house_04",
+   "tiles": [
+    3,
+    3
+   ],
+   "px": [
+    48,
+    62
+   ],
+   "storeys": 2,
+   "footprint_origin_px": [
+    0,
+    14
+   ],
+   "layers": [
+    "fh_house_04_floor.png",
+    "fh_house_04_walls.png",
+    "fh_house_04_upper1.png",
+    "fh_house_04_roof.png"
+   ],
+   "fade_group": [
+    "fh_house_04_upper1.png",
+    "fh_house_04_roof.png"
+   ],
+   "door_px": [
+    22,
+    48
+   ],
+   "door_tile": [
+    1,
+    2
+   ],
+   "roof_tiles": [
+    [
+     0,
+     0
+    ],
+    [
+     1,
+     0
+    ],
+    [
+     0,
+     1
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     2,
+     1
+    ],
+    [
+     0,
+     2
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     2,
+     2
+    ]
+   ]
+  },
+  {
+   "name": "fh_house_05",
+   "tiles": [
+    4,
+    3
+   ],
+   "px": [
+    64,
+    62
+   ],
+   "storeys": 2,
+   "footprint_origin_px": [
+    0,
+    14
+   ],
+   "layers": [
+    "fh_house_05_floor.png",
+    "fh_house_05_walls.png",
+    "fh_house_05_upper1.png",
+    "fh_house_05_roof.png"
+   ],
+   "fade_group": [
+    "fh_house_05_upper1.png",
+    "fh_house_05_roof.png"
+   ],
+   "door_px": [
+    31,
+    48
+   ],
+   "door_tile": [
+    1,
+    2
+   ],
+   "roof_tiles": [
+    [
+     0,
+     0
+    ],
+    [
+     1,
+     0
+    ],
+    [
+     0,
+     1
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     2,
+     1
+    ],
+    [
+     3,
+     1
+    ],
+    [
+     0,
+     2
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     2,
+     2
+    ],
+    [
+     3,
+     2
+    ]
+   ]
+  },
+  {
+   "name": "fh_house_06",
+   "tiles": [
+    4,
+    4
+   ],
+   "px": [
+    64,
+    64
+   ],
+   "storeys": 1,
+   "footprint_origin_px": [
+    0,
+    0
+   ],
+   "layers": [
+    "fh_house_06_floor.png",
+    "fh_house_06_walls.png",
+    "fh_house_06_roof.png"
+   ],
+   "fade_group": [
+    "fh_house_06_roof.png"
+   ],
+   "door_px": [
+    38,
+    50
+   ],
+   "door_tile": [
+    2,
+    3
+   ],
+   "roof_tiles": [
+    [
+     0,
+     1
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     2,
+     1
+    ],
+    [
+     3,
+     1
+    ],
+    [
+     0,
+     2
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     2,
+     2
+    ],
+    [
+     3,
+     2
+    ],
+    [
+     0,
+     3
+    ],
+    [
+     1,
+     3
+    ],
+    [
+     2,
+     3
+    ],
+    [
+     3,
+     3
+    ]
+   ]
+  },
+  {
+   "name": "fh_house_07",
+   "tiles": [
+    3,
+    4
+   ],
+   "px": [
+    48,
+    78
+   ],
+   "storeys": 2,
+   "footprint_origin_px": [
+    0,
+    14
+   ],
+   "layers": [
+    "fh_house_07_floor.png",
+    "fh_house_07_walls.png",
+    "fh_house_07_upper1.png",
+    "fh_house_07_roof.png"
+   ],
+   "fade_group": [
+    "fh_house_07_upper1.png",
+    "fh_house_07_roof.png"
+   ],
+   "door_px": [
+    23,
+    64
+   ],
+   "door_tile": [
+    1,
+    3
+   ],
+   "roof_tiles": [
+    [
+     1,
+     0
+    ],
+    [
+     0,
+     1
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     2,
+     1
+    ],
+    [
+     0,
+     2
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     2,
+     2
+    ],
+    [
+     0,
+     3
+    ],
+    [
+     1,
+     3
+    ],
+    [
+     2,
+     3
+    ]
+   ]
+  },
+  {
+   "name": "fh_house_08",
+   "tiles": [
+    2,
+    4
+   ],
+   "px": [
+    32,
+    78
+   ],
+   "storeys": 2,
+   "footprint_origin_px": [
+    0,
+    14
+   ],
+   "layers": [
+    "fh_house_08_floor.png",
+    "fh_house_08_walls.png",
+    "fh_house_08_upper1.png",
+    "fh_house_08_roof.png"
+   ],
+   "fade_group": [
+    "fh_house_08_upper1.png",
+    "fh_house_08_roof.png"
+   ],
+   "door_px": [
+    20,
+    64
+   ],
+   "door_tile": [
+    1,
+    3
+   ],
+   "roof_tiles": [
+    [
+     0,
+     0
+    ],
+    [
+     0,
+     1
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     0,
+     2
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     0,
+     3
+    ],
+    [
+     1,
+     3
+    ]
+   ]
+  },
+  {
+   "name": "fh_house_09",
+   "tiles": [
+    4,
+    4
+   ],
+   "px": [
+    64,
+    64
+   ],
+   "storeys": 1,
+   "footprint_origin_px": [
+    0,
+    0
+   ],
+   "layers": [
+    "fh_house_09_floor.png",
+    "fh_house_09_walls.png",
+    "fh_house_09_roof.png"
+   ],
+   "fade_group": [
+    "fh_house_09_roof.png"
+   ],
+   "door_px": [
+    29,
+    50
+   ],
+   "door_tile": [
+    1,
+    3
+   ],
+   "roof_tiles": [
+    [
+     1,
+     1
+    ],
+    [
+     2,
+     1
+    ],
+    [
+     3,
+     1
+    ],
+    [
+     0,
+     2
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     2,
+     2
+    ],
+    [
+     3,
+     2
+    ],
+    [
+     1,
+     3
+    ],
+    [
+     2,
+     3
+    ]
+   ]
+  },
+  {
+   "name": "fh_house_10",
+   "tiles": [
+    2,
+    3
+   ],
+   "px": [
+    32,
+    48
+   ],
+   "storeys": 1,
+   "footprint_origin_px": [
+    0,
+    0
+   ],
+   "layers": [
+    "fh_house_10_floor.png",
+    "fh_house_10_walls.png",
+    "fh_house_10_roof.png"
+   ],
+   "fade_group": [
+    "fh_house_10_roof.png"
+   ],
+   "door_px": [
+    12,
+    34
+   ],
+   "door_tile": [
+    0,
+    2
+   ],
+   "roof_tiles": [
+    [
+     0,
+     0
+    ],
+    [
+     0,
+     1
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     0,
+     2
+    ],
+    [
+     1,
+     2
+    ]
+   ]
+  },
+  {
+   "name": "fh_house_11",
+   "tiles": [
+    3,
+    3
+   ],
+   "px": [
+    48,
+    48
+   ],
+   "storeys": 1,
+   "footprint_origin_px": [
+    0,
+    0
+   ],
+   "layers": [
+    "fh_house_11_floor.png",
+    "fh_house_11_walls.png",
+    "fh_house_11_roof.png"
+   ],
+   "fade_group": [
+    "fh_house_11_roof.png"
+   ],
+   "door_px": [
+    18,
+    34
+   ],
+   "door_tile": [
+    1,
+    2
+   ],
+   "roof_tiles": [
+    [
+     0,
+     1
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     2,
+     1
+    ],
+    [
+     0,
+     2
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     2,
+     2
+    ]
+   ]
+  },
+  {
+   "name": "fh_house_12",
+   "tiles": [
+    4,
+    3
+   ],
+   "px": [
+    64,
+    48
+   ],
+   "storeys": 1,
+   "footprint_origin_px": [
+    0,
+    0
+   ],
+   "layers": [
+    "fh_house_12_floor.png",
+    "fh_house_12_walls.png",
+    "fh_house_12_roof.png"
+   ],
+   "fade_group": [
+    "fh_house_12_roof.png"
+   ],
+   "door_px": [
+    29,
+    34
+   ],
+   "door_tile": [
+    1,
+    2
+   ],
+   "roof_tiles": [
+    [
+     1,
+     0
+    ],
+    [
+     2,
+     0
+    ],
+    [
+     0,
+     1
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     2,
+     1
+    ],
+    [
+     3,
+     1
+    ],
+    [
+     0,
+     2
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     2,
+     2
+    ],
+    [
+     3,
+     2
+    ]
+   ]
+  },
+  {
+   "name": "fh_church",
+   "tiles": [
+    4,
+    6
+   ],
+   "px": [
+    64,
+    130
+   ],
+   "storeys": 2,
+   "footprint_origin_px": [
+    0,
+    34
+   ],
+   "layers": [
+    "fh_church_floor.png",
+    "fh_church_walls.png",
+    "fh_church_upper1.png",
+    "fh_church_roof.png"
+   ],
+   "fade_group": [
+    "fh_church_upper1.png",
+    "fh_church_roof.png"
+   ],
+   "door_px": [
+    32,
+    116
+   ],
+   "door_tile": [
+    2,
+    5
+   ],
+   "roof_tiles": [
+    [
+     1,
+     1
+    ],
+    [
+     2,
+     1
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     2,
+     2
+    ],
+    [
+     0,
+     3
+    ],
+    [
+     1,
+     3
+    ],
+    [
+     2,
+     3
+    ],
+    [
+     3,
+     3
+    ],
+    [
+     1,
+     4
+    ],
+    [
+     2,
+     4
+    ],
+    [
+     1,
+     5
+    ],
+    [
+     2,
+     5
+    ]
+   ]
+  },
+  {
+   "name": "fh_bank",
+   "tiles": [
+    5,
+    4
+   ],
+   "px": [
+    80,
+    78
+   ],
+   "storeys": 2,
+   "footprint_origin_px": [
+    0,
+    14
+   ],
+   "layers": [
+    "fh_bank_floor.png",
+    "fh_bank_walls.png",
+    "fh_bank_upper1.png",
+    "fh_bank_roof.png"
+   ],
+   "fade_group": [
+    "fh_bank_upper1.png",
+    "fh_bank_roof.png"
+   ],
+   "door_px": [
+    40,
+    64
+   ],
+   "door_tile": [
+    2,
+    3
+   ],
+   "roof_tiles": [
+    [
+     1,
+     0
+    ],
+    [
+     2,
+     0
+    ],
+    [
+     3,
+     0
+    ],
+    [
+     0,
+     1
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     2,
+     1
+    ],
+    [
+     3,
+     1
+    ],
+    [
+     4,
+     1
+    ],
+    [
+     0,
+     2
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     2,
+     2
+    ],
+    [
+     3,
+     2
+    ],
+    [
+     4,
+     2
+    ],
+    [
+     0,
+     3
+    ],
+    [
+     1,
+     3
+    ],
+    [
+     2,
+     3
+    ],
+    [
+     3,
+     3
+    ],
+    [
+     4,
+     3
+    ]
+   ]
+  },
+  {
+   "name": "fh_general_store",
+   "tiles": [
+    5,
+    3
+   ],
+   "px": [
+    80,
+    62
+   ],
+   "storeys": 2,
+   "footprint_origin_px": [
+    0,
+    14
+   ],
+   "layers": [
+    "fh_general_store_floor.png",
+    "fh_general_store_walls.png",
+    "fh_general_store_upper1.png",
+    "fh_general_store_roof.png"
+   ],
+   "fade_group": [
+    "fh_general_store_upper1.png",
+    "fh_general_store_roof.png"
+   ],
+   "door_px": [
+    30,
+    48
+   ],
+   "door_tile": [
+    1,
+    2
+   ],
+   "roof_tiles": [
+    [
+     3,
+     0
+    ],
+    [
+     4,
+     0
+    ],
+    [
+     0,
+     1
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     2,
+     1
+    ],
+    [
+     3,
+     1
+    ],
+    [
+     4,
+     1
+    ],
+    [
+     0,
+     2
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     2,
+     2
+    ],
+    [
+     3,
+     2
+    ],
+    [
+     4,
+     2
+    ]
+   ]
+  },
+  {
+   "name": "fh_smithy",
+   "tiles": [
+    4,
+    3
+   ],
+   "px": [
+    64,
+    48
+   ],
+   "storeys": 1,
+   "footprint_origin_px": [
+    0,
+    0
+   ],
+   "layers": [
+    "fh_smithy_floor.png",
+    "fh_smithy_walls.png",
+    "fh_smithy_roof.png"
+   ],
+   "fade_group": [
+    "fh_smithy_roof.png"
+   ],
+   "door_px": [
+    18,
+    34
+   ],
+   "door_tile": [
+    1,
+    2
+   ],
+   "roof_tiles": [
+    [
+     0,
+     0
+    ],
+    [
+     1,
+     0
+    ],
+    [
+     0,
+     1
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     2,
+     1
+    ],
+    [
+     3,
+     1
+    ],
+    [
+     0,
+     2
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     2,
+     2
+    ],
+    [
+     3,
+     2
+    ]
+   ]
+  },
+  {
+   "name": "fh_cookhouse",
+   "tiles": [
+    4,
+    4
+   ],
+   "px": [
+    64,
+    64
+   ],
+   "storeys": 1,
+   "footprint_origin_px": [
+    0,
+    0
+   ],
+   "layers": [
+    "fh_cookhouse_floor.png",
+    "fh_cookhouse_walls.png",
+    "fh_cookhouse_roof.png"
+   ],
+   "fade_group": [
+    "fh_cookhouse_roof.png"
+   ],
+   "door_px": [
+    26,
+    50
+   ],
+   "door_tile": [
+    1,
+    3
+   ],
+   "roof_tiles": [
+    [
+     3,
+     0
+    ],
+    [
+     0,
+     1
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     2,
+     1
+    ],
+    [
+     3,
+     1
+    ],
+    [
+     0,
+     2
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     2,
+     2
+    ],
+    [
+     3,
+     2
+    ],
+    [
+     0,
+     3
+    ],
+    [
+     1,
+     3
+    ],
+    [
+     2,
+     3
+    ],
+    [
+     3,
+     3
+    ]
+   ]
+  },
+  {
+   "name": "fh_player_shop",
+   "tiles": [
+    3,
+    4
+   ],
+   "px": [
+    48,
+    78
+   ],
+   "storeys": 2,
+   "footprint_origin_px": [
+    0,
+    14
+   ],
+   "layers": [
+    "fh_player_shop_floor.png",
+    "fh_player_shop_walls.png",
+    "fh_player_shop_upper1.png",
+    "fh_player_shop_roof.png"
+   ],
+   "fade_group": [
+    "fh_player_shop_upper1.png",
+    "fh_player_shop_roof.png"
+   ],
+   "door_px": [
+    22,
+    64
+   ],
+   "door_tile": [
+    1,
+    3
+   ],
+   "roof_tiles": [
+    [
+     0,
+     0
+    ],
+    [
+     1,
+     0
+    ],
+    [
+     0,
+     1
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     2,
+     1
+    ],
+    [
+     0,
+     2
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     2,
+     2
+    ],
+    [
+     0,
+     3
+    ],
+    [
+     1,
+     3
+    ],
+    [
+     2,
+     3
+    ]
+   ]
+  },
+  {
+   "name": "fh_kell_lodge",
+   "tiles": [
+    6,
+    4
+   ],
+   "px": [
+    96,
+    78
+   ],
+   "storeys": 2,
+   "footprint_origin_px": [
+    0,
+    14
+   ],
+   "layers": [
+    "fh_kell_lodge_floor.png",
+    "fh_kell_lodge_walls.png",
+    "fh_kell_lodge_upper1.png",
+    "fh_kell_lodge_roof.png"
+   ],
+   "fade_group": [
+    "fh_kell_lodge_upper1.png",
+    "fh_kell_lodge_roof.png"
+   ],
+   "door_px": [
+    34,
+    64
+   ],
+   "door_tile": [
+    2,
+    3
+   ],
+   "roof_tiles": [
+    [
+     4,
+     0
+    ],
+    [
+     5,
+     0
+    ],
+    [
+     0,
+     1
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     2,
+     1
+    ],
+    [
+     3,
+     1
+    ],
+    [
+     4,
+     1
+    ],
+    [
+     5,
+     1
+    ],
+    [
+     0,
+     2
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     2,
+     2
+    ],
+    [
+     3,
+     2
+    ],
+    [
+     4,
+     2
+    ],
+    [
+     5,
+     2
+    ],
+    [
+     0,
+     3
+    ],
+    [
+     1,
+     3
+    ],
+    [
+     2,
+     3
+    ],
+    [
+     3,
+     3
+    ],
+    [
+     4,
+     3
+    ],
+    [
+     5,
+     3
+    ]
+   ]
+  },
+  {
+   "name": "fh_guard_post",
+   "tiles": [
+    3,
+    3
+   ],
+   "px": [
+    48,
+    82
+   ],
+   "storeys": 2,
+   "footprint_origin_px": [
+    0,
+    34
+   ],
+   "layers": [
+    "fh_guard_post_floor.png",
+    "fh_guard_post_walls.png",
+    "fh_guard_post_upper1.png",
+    "fh_guard_post_roof.png"
+   ],
+   "fade_group": [
+    "fh_guard_post_upper1.png",
+    "fh_guard_post_roof.png"
+   ],
+   "door_px": [
+    18,
+    68
+   ],
+   "door_tile": [
+    1,
+    2
+   ],
+   "roof_tiles": [
+    [
+     2,
+     0
+    ],
+    [
+     0,
+     1
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     2,
+     1
+    ],
+    [
+     0,
+     2
+    ],
+    [
+     1,
+     2
+    ]
+   ]
+  }
+ ],
+ "houses": [
+  "fh_house_01",
+  "fh_house_02",
+  "fh_house_03",
+  "fh_house_04",
+  "fh_house_05",
+  "fh_house_06",
+  "fh_house_07",
+  "fh_house_08",
+  "fh_house_09",
+  "fh_house_10",
+  "fh_house_11",
+  "fh_house_12"
+ ],
+ "civic": [
+  "fh_church",
+  "fh_bank",
+  "fh_general_store",
+  "fh_smithy",
+  "fh_cookhouse",
+  "fh_player_shop",
+  "fh_kell_lodge",
+  "fh_guard_post"
+ ],
+ "props": [
+  [
+   "fh_reeds_a",
+   [
+    16,
+    24
+   ]
+  ],
+  [
+   "fh_reeds_b",
+   [
+    24,
+    20
+   ]
+  ],
+  [
+   "fh_reeds_c",
+   [
+    12,
+    28
+   ]
+  ],
+  [
+   "fh_fish_trap",
+   [
+    24,
+    16
+   ]
+  ],
+  [
+   "fh_rope_coil",
+   [
+    16,
+    16
+   ]
+  ],
+  [
+   "fh_lantern_pole",
+   [
+    16,
+    34
+   ]
+  ],
+  [
+   "fh_barrel",
+   [
+    16,
+    16
+   ]
+  ],
+  [
+   "fh_crates",
+   [
+    24,
+    24
+   ]
+  ],
+  [
+   "fh_drying_rack",
+   [
+    30,
+    26
+   ]
+  ],
+  [
+   "fh_rowboat",
+   [
+    32,
+    16
+   ]
+  ],
+  [
+   "fh_stilts",
+   [
+    16,
+    24
+   ]
+  ],
+  [
+   "fh_sign_smith",
+   [
+    16,
+    24
+   ]
+  ],
+  [
+   "fh_sign_cook",
+   [
+    16,
+    24
+   ]
+  ],
+  [
+   "fh_sign_store",
+   [
+    16,
+    24
+   ]
+  ],
+  [
+   "fh_sign_kell",
+   [
+    16,
+    24
+   ]
+  ],
+  [
+   "fh_town_sign",
+   [
+    48,
+    28
+   ]
+  ],
+  [
+   "fh_cart",
+   [
+    32,
+    20
+   ]
+  ],
+  [
+   "fh_mud_puddle",
+   [
+    16,
+    16
+   ]
+  ]
+ ],
+ "diag_autotiles": {
+  "rule": "45-degree corner autotiles (shared by Saltmere v2 and Highfen v3.1).\nMask = which tile CORNERS are inside the terrain: NW=1, NE=2, SE=4, SW=8 (16 frames, frame index = mask).\nA set corner owns the 45deg diamond around it (|dx|+|dy|<=8 px); two set corners on one side own that half tile.\n=> 1 corner = outer 45deg diagonal cut, 3 corners = inner 45deg diagonal, 2 adjacent = straight edge, 2 opposite = saddle.\nA 45deg run alternates diag_out_* / diag_in_* tiles; a straight edge meeting a diag is the straight->diagonal transition.\nSample the shape on the (GH+1)x(GW+1) vertex grid; tile (y,x) frame = V[y,x]*1+V[y,x+1]*2+V[y+1,x+1]*4+V[y+1,x]*8.",
+  "frame_names": {
+   "0": "empty",
+   "15": "full",
+   "3": "edge_n",
+   "6": "edge_e",
+   "12": "edge_s",
+   "9": "edge_w",
+   "1": "diag_out_nw",
+   "2": "diag_out_ne",
+   "4": "diag_out_se",
+   "8": "diag_out_sw",
+   "14": "diag_in_nw",
+   "13": "diag_in_ne",
+   "11": "diag_in_se",
+   "7": "diag_in_sw",
+   "5": "saddle_nw_se",
+   "10": "saddle_ne_sw"
+  },
+  "sheets": [
+   "tiles/fh_diag_marsh_bank.png",
+   "tiles/fh_diag_mud_path.png",
+   "tiles/fh_diag_palisade.png"
+  ],
+  "named": "tiles/named/<sheet>_<frame>.png",
+  "palisade": "fh_diag_palisade 16x30 frames: stake tops + 14px log face hanging into the next row; draw rows top->bottom, y-sorted with sprites",
+  "layering": "water (fh_water_*_4f, deep >2.5 tiles from bank) -> fh_diag_marsh_bank (reed edge) -> fh_diag_mud_path -> boardwalk -> palisade rows / sprites"
+ },
+ "boardwalk": {
+  "sheet": "tiles/fh_boardwalk_autotile.png",
+  "frame": [
+   16,
+   20
+  ],
+  "rule": "edge mask N1|E2|S4|W8 of boardwalk neighbours (16 frames: ends, straights, bends, tees, cross); the 4px below = posts into water",
+  "names": {
+   "0": "post_single",
+   "1": "end_s",
+   "2": "end_w",
+   "4": "end_n",
+   "8": "end_e",
+   "5": "straight_ns",
+   "10": "straight_ew",
+   "3": "bend_ne",
+   "6": "bend_se",
+   "12": "bend_sw",
+   "9": "bend_nw",
+   "7": "tee_nes",
+   "14": "tee_esw",
+   "13": "tee_nsw",
+   "11": "tee_new",
+   "15": "cross"
+  }
+ },
+ "palisade": {
+  "watchtower": "tiles/fh_palisade_watchtower.png 48x80 (place on straight or corner runs, base on the wall row)",
+  "gates": {
+   "fh_gate_front": {
+    "layers": [
+     "fh_gate_front_floor.png",
+     "fh_gate_front_walls.png",
+     "fh_gate_front_roof.png"
+    ],
+    "fade_group": [
+     "fh_gate_front_roof.png"
+    ],
+    "size_px": [
+     64,
+     64
+    ],
+    "roof_tiles": [
+     [
+      1,
+      0
+     ],
+     [
+      1,
+      1
+     ],
+     [
+      1,
+      2
+     ],
+     [
+      1,
+      3
+     ],
+     [
+      2,
+      0
+     ],
+     [
+      2,
+      1
+     ],
+     [
+      2,
+      2
+     ],
+     [
+      2,
+      3
+     ]
+    ],
+    "passage_px": [
+     22,
+     8,
+     20,
+     56
+    ],
+    "note": "passage runs N-S through x22..42",
+    "guards": "two town_guard actors stand beside the passage (see preview)"
+   },
+   "fh_gate_back": {
+    "layers": [
+     "fh_gate_back_floor.png",
+     "fh_gate_back_walls.png",
+     "fh_gate_back_roof.png"
+    ],
+    "fade_group": [
+     "fh_gate_back_roof.png"
+    ],
+    "size_px": [
+     64,
+     64
+    ],
+    "roof_tiles": [
+     [
+      1,
+      0
+     ],
+     [
+      1,
+      1
+     ],
+     [
+      1,
+      2
+     ],
+     [
+      1,
+      3
+     ],
+     [
+      2,
+      0
+     ],
+     [
+      2,
+      1
+     ],
+     [
+      2,
+      2
+     ],
+     [
+      2,
+      3
+     ]
+    ],
+    "passage_px": [
+     22,
+     8,
+     20,
+     56
+    ],
+    "note": "passage runs N-S through x22..42",
+    "guards": "two town_guard actors stand beside the passage (see preview)"
+   },
+   "fh_gate_side": {
+    "layers": [
+     "fh_gate_side_floor.png",
+     "fh_gate_side_walls.png",
+     "fh_gate_side_roof.png"
+    ],
+    "fade_group": [
+     "fh_gate_side_roof.png"
+    ],
+    "size_px": [
+     48,
+     112
+    ],
+    "roof_tiles": [
+     [
+      0,
+      3
+     ],
+     [
+      0,
+      4
+     ],
+     [
+      1,
+      3
+     ],
+     [
+      1,
+      4
+     ],
+     [
+      2,
+      3
+     ],
+     [
+      2,
+      4
+     ]
+    ],
+    "passage_px": [
+     0,
+     48,
+     48,
+     18
+    ],
+    "note": "passage runs E-W across rows 48..66 (tile rows 3-4)",
+    "guards": "two town_guard actors stand beside the passage (see preview)"
+   }
+  },
+  "gate_use": "front = S gate (outer face), back = N gate (seen from inside), side = E/W gates; centre on a straight wall run of >=5 tiles each side, cut only the passage vertices so the logs butt flush",
+  "continuity_rule": "Build the ring on the vertex grid as a 4-connected band at least 2 vertices thick (dilate the inside-ellipse boundary with a cross). Keep a straight 2-vertex run of >=5 tiles each side of every gate, right up to the passage. Tie each E/W run end to the nearest ring vertex with a dilated connector. Then de-saddle: any tile whose frame is 5 or 10 has all 4 corners set. Result: only edge, full and inner/outer 45deg frames, so the wall is continuous. Only tiles wholly inside a gate sprite are hidden. Watchtowers snap to the nearest full (15) palisade tile: centre x = tile+8, base = tile y+18."
+ }
+}

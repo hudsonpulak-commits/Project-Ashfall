@@ -1149,6 +1149,114 @@
    "sprite": "sm_mooring_post",
    "blocks": true,
    "type": "prop"
+  },
+  "fh_barrel": {
+   "name": "Barrel",
+   "sprite": "fh_barrel",
+   "blocks": true,
+   "type": "prop"
+  },
+  "fh_cart": {
+   "name": "Cart",
+   "sprite": "fh_cart",
+   "blocks": true,
+   "type": "prop"
+  },
+  "fh_crates": {
+   "name": "Crates",
+   "sprite": "fh_crates",
+   "blocks": true,
+   "type": "prop"
+  },
+  "fh_drying_rack": {
+   "name": "Drying rack",
+   "sprite": "fh_drying_rack",
+   "blocks": true,
+   "type": "prop"
+  },
+  "fh_fish_trap": {
+   "name": "Fish trap",
+   "sprite": "fh_fish_trap",
+   "blocks": true,
+   "type": "prop"
+  },
+  "fh_lantern_pole": {
+   "name": "Lantern",
+   "sprite": "fh_lantern_pole",
+   "blocks": true,
+   "type": "prop"
+  },
+  "fh_mud_puddle": {
+   "name": "Mud",
+   "sprite": "fh_mud_puddle",
+   "blocks": false,
+   "type": "prop"
+  },
+  "fh_reeds_a": {
+   "name": "Reeds",
+   "sprite": "fh_reeds_a",
+   "blocks": false,
+   "type": "prop"
+  },
+  "fh_reeds_b": {
+   "name": "Reeds",
+   "sprite": "fh_reeds_b",
+   "blocks": false,
+   "type": "prop"
+  },
+  "fh_reeds_c": {
+   "name": "Reeds",
+   "sprite": "fh_reeds_c",
+   "blocks": false,
+   "type": "prop"
+  },
+  "fh_rope_coil": {
+   "name": "Rope",
+   "sprite": "fh_rope_coil",
+   "blocks": false,
+   "type": "prop"
+  },
+  "fh_rowboat": {
+   "name": "Rowboat",
+   "sprite": "fh_rowboat",
+   "blocks": true,
+   "type": "prop"
+  },
+  "fh_sign_cook": {
+   "name": "Cookhouse sign",
+   "sprite": "fh_sign_cook",
+   "blocks": true,
+   "type": "prop"
+  },
+  "fh_sign_kell": {
+   "name": "Kell's Lodge",
+   "sprite": "fh_sign_kell",
+   "blocks": true,
+   "type": "prop"
+  },
+  "fh_sign_smith": {
+   "name": "Blacksmith sign",
+   "sprite": "fh_sign_smith",
+   "blocks": true,
+   "type": "prop"
+  },
+  "fh_sign_store": {
+   "name": "Provisions sign",
+   "sprite": "fh_sign_store",
+   "blocks": true,
+   "type": "prop"
+  },
+  "fh_stilts": {
+   "name": "Stilts",
+   "sprite": "fh_stilts",
+   "blocks": true,
+   "type": "prop"
+  },
+  "fh_town_sign": {
+   "name": "Fenhollow",
+   "sprite": "fh_town_sign",
+   "blocks": true,
+   "type": "prop"
   }
  }
 }

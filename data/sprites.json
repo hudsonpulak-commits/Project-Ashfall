@@ -2017,6 +2017,186 @@
    "frames": 1,
    "anchor": "bottom",
    "note": "0.3.12 designer Saltmere prop (art_handoff/towns/saltmere)"
+  },
+  "fh_barrel": {
+   "path": "res://assets/sprites/towns/fenhollow/props/fh_barrel.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.3.13 designer Fenhollow v1 prop (art_handoff/towns/fenhollow)"
+  },
+  "fh_cart": {
+   "path": "res://assets/sprites/towns/fenhollow/props/fh_cart.png",
+   "frame_size": [
+    32,
+    20
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.3.13 designer Fenhollow v1 prop (art_handoff/towns/fenhollow)"
+  },
+  "fh_crates": {
+   "path": "res://assets/sprites/towns/fenhollow/props/fh_crates.png",
+   "frame_size": [
+    24,
+    24
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.3.13 designer Fenhollow v1 prop (art_handoff/towns/fenhollow)"
+  },
+  "fh_drying_rack": {
+   "path": "res://assets/sprites/towns/fenhollow/props/fh_drying_rack.png",
+   "frame_size": [
+    30,
+    26
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.3.13 designer Fenhollow v1 prop (art_handoff/towns/fenhollow)"
+  },
+  "fh_fish_trap": {
+   "path": "res://assets/sprites/towns/fenhollow/props/fh_fish_trap.png",
+   "frame_size": [
+    24,
+    16
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.3.13 designer Fenhollow v1 prop (art_handoff/towns/fenhollow)"
+  },
+  "fh_lantern_pole": {
+   "path": "res://assets/sprites/towns/fenhollow/props/fh_lantern_pole.png",
+   "frame_size": [
+    16,
+    34
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.3.13 designer Fenhollow v1 prop (art_handoff/towns/fenhollow)"
+  },
+  "fh_mud_puddle": {
+   "path": "res://assets/sprites/towns/fenhollow/props/fh_mud_puddle.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.3.13 designer Fenhollow v1 prop (art_handoff/towns/fenhollow)"
+  },
+  "fh_reeds_a": {
+   "path": "res://assets/sprites/towns/fenhollow/props/fh_reeds_a.png",
+   "frame_size": [
+    16,
+    24
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.3.13 designer Fenhollow v1 prop (art_handoff/towns/fenhollow)"
+  },
+  "fh_reeds_b": {
+   "path": "res://assets/sprites/towns/fenhollow/props/fh_reeds_b.png",
+   "frame_size": [
+    24,
+    20
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.3.13 designer Fenhollow v1 prop (art_handoff/towns/fenhollow)"
+  },
+  "fh_reeds_c": {
+   "path": "res://assets/sprites/towns/fenhollow/props/fh_reeds_c.png",
+   "frame_size": [
+    12,
+    28
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.3.13 designer Fenhollow v1 prop (art_handoff/towns/fenhollow)"
+  },
+  "fh_rope_coil": {
+   "path": "res://assets/sprites/towns/fenhollow/props/fh_rope_coil.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.3.13 designer Fenhollow v1 prop (art_handoff/towns/fenhollow)"
+  },
+  "fh_rowboat": {
+   "path": "res://assets/sprites/towns/fenhollow/props/fh_rowboat.png",
+   "frame_size": [
+    32,
+    16
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.3.13 designer Fenhollow v1 prop (art_handoff/towns/fenhollow)"
+  },
+  "fh_sign_cook": {
+   "path": "res://assets/sprites/towns/fenhollow/props/fh_sign_cook.png",
+   "frame_size": [
+    16,
+    24
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.3.13 designer Fenhollow v1 prop (art_handoff/towns/fenhollow)"
+  },
+  "fh_sign_kell": {
+   "path": "res://assets/sprites/towns/fenhollow/props/fh_sign_kell.png",
+   "frame_size": [
+    16,
+    24
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.3.13 designer Fenhollow v1 prop (art_handoff/towns/fenhollow)"
+  },
+  "fh_sign_smith": {
+   "path": "res://assets/sprites/towns/fenhollow/props/fh_sign_smith.png",
+   "frame_size": [
+    16,
+    24
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.3.13 designer Fenhollow v1 prop (art_handoff/towns/fenhollow)"
+  },
+  "fh_sign_store": {
+   "path": "res://assets/sprites/towns/fenhollow/props/fh_sign_store.png",
+   "frame_size": [
+    16,
+    24
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.3.13 designer Fenhollow v1 prop (art_handoff/towns/fenhollow)"
+  },
+  "fh_stilts": {
+   "path": "res://assets/sprites/towns/fenhollow/props/fh_stilts.png",
+   "frame_size": [
+    16,
+    24
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.3.13 designer Fenhollow v1 prop (art_handoff/towns/fenhollow)"
+  },
+  "fh_town_sign": {
+   "path": "res://assets/sprites/towns/fenhollow/props/fh_town_sign.png",
+   "frame_size": [
+    48,
+    28
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.3.13 designer Fenhollow v1 prop (art_handoff/towns/fenhollow)"
   }
  },
  "actors": {

@@ -7,46 +7,8 @@
      "enemy": "town_guard",
      "patrol": [
       [
-       20,
-       12
-      ],
-      [
-       8,
-       12
-      ],
-      [
-       8,
-       20
-      ],
-      [
-       20,
-       22
-      ]
-     ]
-    },
-    {
-     "enemy": "town_guard",
-     "patrol": [
-      [
-       26,
-       16
-      ],
-      [
-       34,
-       16
-      ],
-      [
-       26,
-       28
-      ]
-     ]
-    },
-    {
-     "enemy": "town_guard",
-     "patrol": [
-      [
-       22,
-       1
+       35,
+       11
       ]
      ],
      "gate": "north"
@@ -55,8 +17,8 @@
      "enemy": "town_guard",
      "patrol": [
       [
-       24,
-       1
+       36,
+       8
       ]
      ],
      "gate": "north"
@@ -65,8 +27,8 @@
      "enemy": "town_guard",
      "patrol": [
       [
-       22,
-       36
+       35,
+       48
       ]
      ],
      "gate": "south"
@@ -74,64 +36,133 @@
     {
      "enemy": "town_guard",
      "patrol": [
+      [
+       38,
+       49
+      ]
+     ],
+     "gate": "south"
+    },
+    {
+     "enemy": "town_guard",
+     "patrol": [
+      [
+       61,
+       25
+      ]
+     ],
+     "gate": "east"
+    },
+    {
+     "enemy": "town_guard",
+     "patrol": [
+      [
+       61,
+       27
+      ]
+     ],
+     "gate": "east"
+    },
+    {
+     "enemy": "town_guard",
+     "patrol": [
+      [
+       11,
+       32
+      ]
+     ],
+     "gate": "west"
+    },
+    {
+     "enemy": "town_guard",
+     "patrol": [
+      [
+       10,
+       34
+      ]
+     ],
+     "gate": "west"
+    },
+    {
+     "enemy": "town_guard",
+     "patrol": [
+      [
+       37,
+       30
+      ],
       [
        24,
-       36
+       26
+      ],
+      [
+       16,
+       26
       ]
-     ],
-     "gate": "south"
+     ]
     },
     {
      "enemy": "town_guard",
      "patrol": [
       [
-       1,
-       18
+       37,
+       30
+      ],
+      [
+       46,
+       31
+      ],
+      [
+       55,
+       26
       ]
-     ],
-     "gate": "west"
+     ]
     },
     {
      "enemy": "town_guard",
      "patrol": [
       [
-       1,
-       20
+       36,
+       12
+      ],
+      [
+       27,
+       13
+      ],
+      [
+       19,
+       16
       ]
-     ],
-     "gate": "west"
+     ]
     },
     {
      "enemy": "town_guard",
      "patrol": [
       [
-       44,
-       18
-      ]
-     ],
-     "gate": "east"
-    },
-    {
-     "enemy": "town_guard",
-     "patrol": [
+       39,
+       41
+      ],
       [
-       44,
-       20
+       47,
+       43
+      ],
+      [
+       55,
+       40
       ]
-     ],
-     "gate": "east"
+     ]
     }
    ],
    "citizens": {
     "enemy": "citizen",
-    "count": 5,
+    "count": 6,
     "area": [
-     18,
-     15,
-     11,
-     9
+     29,
+     24,
+     17,
+     13
     ]
-   }
+   },
+   "note": "0.3.13 two guards inside each of the 4 palisade gates + 4 lane patrols"
   },
   "cinderholt": {
    "guards": [

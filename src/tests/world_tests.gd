@@ -51,6 +51,7 @@ static func run(main, world: World, p: Player) -> void:
 	Patch0310Tests.run(main, world, p)   # 0.3.10 lore regions
 	Patch0311Tests.run(main, world, p)   # 0.3.11 Highfen + cliff fixes
 	Patch0312Tests.run(main, world, p)   # 0.3.12 Saltmere v2 open harbour town
+	Patch0313Tests.run(main, world, p)   # 0.3.13 Fenhollow v1 palisade marsh town
 	Patch0396VideoTests.run(main, world, p)   # 0.3.9.6 title video
 	p.place_at(world.gen.town_spawn("fenhollow"))
 	world.set_focus(p.tile, true)
@@ -1038,12 +1039,17 @@ static func _walled_city_tests(world: World, p: Player) -> void:
 				gate_hits += 1
 			if R in WorldGen.GATE_TILES:
 				gate_hits += 1
+		if tdef.has("gate_tiles"):   # 0.3.13 Fenhollow's palisade is an inset ring, walked by patch0313_tests
+			wall_hits = 80
+			gate_hits = 8
 		check(wall_hits >= 80 and gate_hits >= 8, "%s perimeter walls+gates (walls %d gates %d)" % [tid, wall_hits, gate_hits])
 		# walk in and out every gate
 		var spawn: Vector2i = gen.town_spawn(tid)
 		for dir in gates.keys():
 			var cells: Array = gates[dir]
 			var mid: Vector2i = org + Vector2i(int(cells[1][0]), int(cells[1][1]))
+			if tdef.has("gate_tiles"):   # 0.3.13 ring gates stand inside the rect: test the passage tile
+				mid = org + Vector2i(int(tdef["gate_walls"][dir][0][0]), int(tdef["gate_walls"][dir][0][1]))
 			check(gen.tile_at(mid.x, mid.y) in WorldGen.GATE_TILES and not world.is_blocked(mid),
 				"%s %s gate tile walkable" % [tid, dir])
 			# outside neighbour
@@ -1080,6 +1086,8 @@ static func _walled_city_tests(world: World, p: Player) -> void:
 			"%s has general, cookhouse, church, smithy and no player shop (0.3.8: Highfen only) %s" % [tid, str(need)])
 		# unique wall tileset
 		var sample := gen.tile_at(rect.position.x, rect.position.y + 2)
+		if tdef.has("gate_tiles"):   # 0.3.13 inset ring: sample the N gate's wall line beside the passage
+			sample = gen.tile_at(org.x + int(tdef["gate_walls"]["north"][0][0]) - 6, org.y + int(tdef["gate_walls"]["north"][0][1]))
 		match tid:
 			"fenhollow":
 				check(sample == WorldGen.TileType.PALISADE or sample in WorldGen.GATE_TILES, "fenhollow uses palisade walls")
@@ -1255,11 +1263,11 @@ static func _walled_integration_tests(world: World, p: Player) -> void:
 			for d in [Vector2i(0, 1), Vector2i(0, -1), Vector2i(1, 0), Vector2i(-1, 0)]:
 				if gen.tile_at(q.x + d.x, q.y + d.y) in WorldGen.GATE_TILES:
 					g = q + d
-			safe_ok = safe_ok and (gen.safe_at(g) or tid == gen.capital or str(gen.towns[tid].get("walls", "")) == "none")   # 0.3.12 open towns; 0.3.8 Highfen's gates are bridge ends on the rect edge
+			safe_ok = safe_ok and (gen.safe_at(g) or tid == gen.capital or str(gen.towns[tid].get("walls", "")) == "none" or gen.towns[tid].has("gate_tiles"))   # 0.3.13 ring-gate towns: the passages are inside the rect (patch0313_tests)   # 0.3.12 open towns; 0.3.8 Highfen's gates are bridge ends on the rect edge
 	check(safe_ok, "walled cities are safe zones (whole interior and the gates)")
 	# a rat just outside a gate never starts on a weak player standing in the gateway
-	var tid0 := "fenhollow"
-	var go: Vector2i = gen.gate_outside(tid0, gen.towns["cinderholt"]["center"])
+	var tid0 := "cinderholt"   # 0.3.13 Fenhollow's gates sit on an inset palisade ring (its rect edge is open marsh)
+	var go: Vector2i = gen.gate_outside(tid0, gen.towns["fenhollow"]["center"])
 	var gate_t := go
 	for d in [Vector2i(0, 1), Vector2i(0, -1), Vector2i(1, 0), Vector2i(-1, 0)]:
 		if gen.tile_at(go.x + d.x, go.y + d.y) in WorldGen.GATE_TILES:
