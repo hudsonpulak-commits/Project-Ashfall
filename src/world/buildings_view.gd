@@ -122,7 +122,8 @@ func _setup_art_building(w, b: Dictionary) -> Node2D:
 	var r: Rect2i = b["rect"]
 	var ph := float(d.get("px", [0, 0])[1])
 	var tp: int = w.tile_px
-	var canvas: Vector2 = Vector2(r.position.x * tp, r.position.y * tp - float(d.get("origin_y", 0)))
+	# 0.3.13 inset_x: the plan may carry an invisible collision rim left/right of the art (Fenhollow)
+	var canvas: Vector2 = Vector2(r.position.x * tp + float(d.get("inset_x", 0)), r.position.y * tp - float(d.get("origin_y", 0)))
 	var flip := bool(b.get("flip", false))
 	var fl := Sprite2D.new()
 	fl.centered = false

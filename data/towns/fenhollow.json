@@ -2,802 +2,128 @@
  "id": "fenhollow",
  "name": "Fenhollow",
  "origin": [
-  -23,
-  -19
+  -37,
+  -30
  ],
  "spawn": [
-  0,
-  0
- ],
- "rows": [
-  "@@@@@@@@@@@@@@@@@@@@@@GGG@@@@@@@@@@@@@@@@@@@@@",
-  "@......................_.....................@",
-  "@......................_.....................@",
-  "@.~~~~~~..............._.....................@",
-  "@~~~~~~~~...........____.....................@",
-  "@~~~................_........................@",
-  "@.~~................_...................a....@",
-  "@..~................_........................@",
-  "@.@......................_____............a@.@",
-  "@.@@..........a...........................@@.@",
-  "@.mm.........................................@",
-  "@.mr.........................................@",
-  "@..mmrm.________.............................@",
-  "@......._....................................@",
-  "@...................................l........@",
-  "@.................___________................@",
-  "@.................____E___________...........@",
-  "@.................___________................@",
-  "G.................___________................G",
-  "G__...............___________..............__G",
-  "G................._________K_................G",
-  "@.................___________................@",
-  "@.................__W_____D__................@",
-  "@.................___________................@",
-  "@........................._.........mmmmmm...@",
-  "@........................._..................@",
-  "@............................................@",
-  "@............................................@",
-  "@.@@....a.........._______.................@.@",
-  "@.@...................._...................@.@",
-  "@.mmmmmm..............._.....................@",
-  "@..mmrmmm.............._.....................@",
-  "@.mmrmmm..............._.....................@",
-  "@.........a............_.....................@",
-  "@......................_.....................@",
-  "@......................_.....................@",
-  "@......................_.....................@",
-  "@[[[[[[[[[[[[[[[[[[[[[GGG[[[[[[[[[[[[[[[[[[[[@"
+  -7,
+  16
  ],
  "tiles": {
-  ".": "grass",
-  ":": "dirt",
-  ",": "sand",
+  "g": "marsh",
+  ":": "path",
   "~": "water",
-  "m": "marsh",
   "=": "boardwalk",
-  "#": "boardwalk",
-  "_": "boardwalk",
-  "P": "plaster",
-  "%": "wall",
-  "^": "wall_front",
-  ";": "floor",
-  "+": "doorway",
-  "@": "palisade",
-  "[": "palisade_front",
-  "G": "gate_wood"
+  "#": "palisade"
  },
  "objects": {
-  "a": {
-   "object": "ash_tree",
-   "ground": "grass"
-  },
-  "l": {
-   "object": "alder_tree",
-   "ground": "grass"
-  },
-  "b": {
-   "object": "blackthorn_tree",
-   "ground": "grass"
-  },
-  "c": {
-   "object": "copper_rock",
-   "ground": "dirt"
-  },
-  "i": {
-   "object": "iron_rock",
-   "ground": "dirt"
-  },
-  "k": {
-   "object": "coal_rock",
-   "ground": "dirt"
-  },
-  "f": {
-   "object": "fishing_spot",
-   "ground": "water"
-  },
-  "r": {
-   "object": "reed_bed",
+  "K": {
+   "object": "quest_giver",
    "ground": "marsh"
   },
-  "g": {
-   "object": "fenroot_patch",
+  "A": {
+   "object": "alder_tree",
    "ground": "marsh"
   },
   "B": {
-   "object": "bank_chest",
-   "ground": "boardwalk"
+   "object": "ash_tree",
+   "ground": "marsh"
+  },
+  "C": {
+   "object": "exchange_board",
+   "ground": "path"
   },
   "E": {
-   "object": "exchange_board",
-   "ground": "boardwalk"
-  },
-  "H": {
-   "object": "hearth",
-   "ground": "boardwalk"
+   "object": "fh_barrel",
+   "ground": "marsh"
   },
   "F": {
-   "object": "furnace",
-   "ground": "cobble"
+   "object": "fh_cart",
+   "ground": "marsh"
   },
-  "D": {
-   "object": "training_dummy",
-   "ground": "boardwalk"
+  "H": {
+   "object": "fh_crates",
+   "ground": "marsh"
   },
-  "W": {
-   "object": "workbench",
-   "ground": "boardwalk"
+  "I": {
+   "object": "fh_drying_rack",
+   "ground": "marsh"
   },
-  "A": {
-   "object": "anvil",
-   "ground": "cobble"
+  "J": {
+   "object": "fh_fish_trap",
+   "ground": "water"
+  },
+  "L": {
+   "object": "fh_lantern_pole",
+   "ground": "marsh"
+  },
+  "M": {
+   "object": "fh_mud_puddle",
+   "ground": "marsh"
+  },
+  "N": {
+   "object": "fh_reeds_a",
+   "ground": "marsh"
+  },
+  "O": {
+   "object": "fh_reeds_b",
+   "ground": "marsh"
+  },
+  "P": {
+   "object": "fh_reeds_c",
+   "ground": "marsh"
+  },
+  "Q": {
+   "object": "fh_rope_coil",
+   "ground": "marsh"
+  },
+  "R": {
+   "object": "fh_rowboat",
+   "ground": "water"
   },
   "S": {
-   "object": "general_store",
-   "ground": "cobble"
+   "object": "fh_sign_cook",
+   "ground": "marsh"
   },
-  "1": {
-   "object": "shop_helmets",
-   "ground": "cobble"
+  "T": {
+   "object": "fh_sign_kell",
+   "ground": "path"
   },
-  "2": {
-   "object": "shop_swords",
-   "ground": "cobble"
+  "U": {
+   "object": "fh_sign_smith",
+   "ground": "marsh"
   },
-  "3": {
-   "object": "shop_archery",
-   "ground": "cobble"
+  "V": {
+   "object": "fh_sign_store",
+   "ground": "marsh"
   },
-  "4": {
-   "object": "shop_body",
-   "ground": "cobble"
+  "W": {
+   "object": "fh_stilts",
+   "ground": "water"
   },
-  "5": {
-   "object": "shop_shields",
-   "ground": "cobble"
+  "X": {
+   "object": "fh_town_sign",
+   "ground": "marsh"
   },
-  "6": {
-   "object": "shop_axes",
-   "ground": "cobble"
+  "Y": {
+   "object": "fishing_spot",
+   "ground": "water"
   },
-  "7": {
-   "object": "shop_legs",
-   "ground": "cobble"
+  "Z": {
+   "object": "reed_bed",
+   "ground": "marsh"
   },
-  "8": {
-   "object": "shop_maces",
-   "ground": "cobble"
+  "a": {
+   "object": "training_dummy",
+   "ground": "path"
   },
-  "t": {
-   "object": "tin_rock",
-   "ground": "dirt"
-  },
-  "e": {
-   "object": "embers",
-   "ground": "dirt"
-  },
-  "K": {
-   "object": "quest_giver",
+  "b": {
+   "object": "workbench",
    "ground": "path"
   }
  },
- "roof": "#c4a05a",
+ "roof": "#9a8a5a",
  "building_style": "timber",
- "buildings": [
-  {
-   "id": "fenhollow_general",
-   "kind": "shop",
-   "shop": "general",
-   "style": "timber",
-   "rect": [
-    4,
-    5,
-    9,
-    7
-   ],
-   "door": [
-    [
-     8,
-     11
-    ]
-   ],
-   "counter": [
-    [
-     6,
-     7
-    ],
-    [
-     7,
-     7
-    ],
-    [
-     8,
-     7
-    ],
-    [
-     9,
-     7
-    ],
-    [
-     10,
-     7
-    ]
-   ],
-   "keeper_at": [
-    8,
-    6
-   ],
-   "stand": [
-    8,
-    8
-   ],
-   "sign": [
-    9,
-    11
-   ],
-   "roof": "#c4a05a",
-   "props": [
-    {
-     "object": "shelf_goods",
-     "at": [
-      5,
-      6
-     ]
-    },
-    {
-     "object": "shelf_goods",
-     "at": [
-      11,
-      6
-     ]
-    },
-    {
-     "object": "barrel",
-     "at": [
-      5,
-      7
-     ]
-    },
-    {
-     "object": "barrel",
-     "at": [
-      11,
-      7
-     ]
-    },
-    {
-     "object": "crate",
-     "at": [
-      5,
-      9
-     ]
-    },
-    {
-     "object": "sacks",
-     "at": [
-      11,
-      9
-     ]
-    }
-   ],
-   "name": "Fenhollow Provisions",
-   "keeper": "Marla Thatch"
-  },
-  {
-   "id": "fenhollow_helmets",
-   "kind": "shop",
-   "shop": "helmets",
-   "style": "timber",
-   "rect": [
-    30,
-    4,
-    9,
-    7
-   ],
-   "door": [
-    [
-     34,
-     10
-    ]
-   ],
-   "counter": [
-    [
-     32,
-     6
-    ],
-    [
-     33,
-     6
-    ],
-    [
-     34,
-     6
-    ],
-    [
-     35,
-     6
-    ],
-    [
-     36,
-     6
-    ]
-   ],
-   "keeper_at": [
-    34,
-    5
-   ],
-   "stand": [
-    34,
-    7
-   ],
-   "sign": [
-    35,
-    10
-   ],
-   "roof": "#c4a05a",
-   "props": [
-    {
-     "object": "shelf_goods",
-     "at": [
-      31,
-      5
-     ]
-    },
-    {
-     "object": "shelf_goods",
-     "at": [
-      37,
-      5
-     ]
-    },
-    {
-     "object": "barrel",
-     "at": [
-      31,
-      6
-     ]
-    },
-    {
-     "object": "barrel",
-     "at": [
-      37,
-      6
-     ]
-    },
-    {
-     "object": "helm_stand",
-     "at": [
-      31,
-      8
-     ]
-    },
-    {
-     "object": "helm_stand",
-     "at": [
-      37,
-      8
-     ]
-    }
-   ]
-  },
-  {
-   "id": "fenhollow_archery",
-   "kind": "shop",
-   "shop": "archery",
-   "style": "timber",
-   "rect": [
-    16,
-    8,
-    9,
-    7
-   ],
-   "door": [
-    [
-     20,
-     14
-    ]
-   ],
-   "counter": [
-    [
-     18,
-     10
-    ],
-    [
-     19,
-     10
-    ],
-    [
-     20,
-     10
-    ],
-    [
-     21,
-     10
-    ],
-    [
-     22,
-     10
-    ]
-   ],
-   "keeper_at": [
-    20,
-    9
-   ],
-   "stand": [
-    20,
-    11
-   ],
-   "sign": [
-    21,
-    14
-   ],
-   "roof": "#c4a05a",
-   "props": [
-    {
-     "object": "shelf_goods",
-     "at": [
-      17,
-      9
-     ]
-    },
-    {
-     "object": "shelf_goods",
-     "at": [
-      23,
-      9
-     ]
-    },
-    {
-     "object": "crate",
-     "at": [
-      17,
-      10
-     ]
-    },
-    {
-     "object": "crate",
-     "at": [
-      23,
-      10
-     ]
-    },
-    {
-     "object": "bow_rack",
-     "at": [
-      17,
-      12
-     ]
-    },
-    {
-     "object": "bow_rack",
-     "at": [
-      23,
-      12
-     ]
-    }
-   ]
-  },
-  {
-   "id": "fenhollow_player",
-   "kind": "house",
-   "shop": "",
-   "style": "timber",
-   "rect": [
-    3,
-    14,
-    9,
-    7
-   ],
-   "door": [
-    [
-     7,
-     20
-    ]
-   ],
-   "counter": [],
-   "keeper_at": [
-    7,
-    15
-   ],
-   "stand": [
-    7,
-    17
-   ],
-   "sign": [
-    8,
-    20
-   ],
-   "roof": "#c4a05a",
-   "name": "Townhouse",
-   "props": [
-    {
-     "object": "crate",
-     "at": [
-      4,
-      15
-     ]
-    },
-    {
-     "object": "crate",
-     "at": [
-      10,
-      15
-     ]
-    }
-   ],
-   "keeper": "Wynn Tallow",
-   "keeper_sprite": "villager",
-   "sign_sprite": "sign_house",
-   "note": "0.3.8 was this town's player shop; the only player shop is now in Highfen (old saves migrate there)"
-  },
-  {
-   "id": "fenhollow_cook",
-   "kind": "cookhouse",
-   "shop": "cook",
-   "style": "timber",
-   "rect": [
-    10,
-    26,
-    9,
-    7
-   ],
-   "door": [
-    [
-     14,
-     32
-    ]
-   ],
-   "counter": [
-    [
-     12,
-     28
-    ],
-    [
-     13,
-     28
-    ],
-    [
-     14,
-     28
-    ],
-    [
-     15,
-     28
-    ],
-    [
-     16,
-     28
-    ]
-   ],
-   "keeper_at": [
-    14,
-    27
-   ],
-   "stand": [
-    14,
-    29
-   ],
-   "sign": [
-    15,
-    32
-   ],
-   "roof": "#b8904a",
-   "props": [
-    {
-     "object": "shelf_goods",
-     "at": [
-      11,
-      27
-     ]
-    },
-    {
-     "object": "shelf_goods",
-     "at": [
-      17,
-      27
-     ]
-    },
-    {
-     "object": "barrel",
-     "at": [
-      11,
-      28
-     ]
-    },
-    {
-     "object": "barrel",
-     "at": [
-      17,
-      28
-     ]
-    },
-    {
-     "object": "oven",
-     "at": [
-      11,
-      31
-     ]
-    },
-    {
-     "object": "oven",
-     "at": [
-      17,
-      31
-     ]
-    }
-   ],
-   "name": "Reed Oven",
-   "keeper": "Bryn Potts"
-  },
-  {
-   "id": "fenhollow_swords",
-   "kind": "smithy",
-   "shop": "swords",
-   "style": "timber",
-   "roof": "#c4a05a",
-   "rect": [
-    26,
-    26,
-    9,
-    9
-   ],
-   "door": [
-    [
-     30,
-     26
-    ]
-   ],
-   "counter": [
-    [
-     28,
-     32
-    ],
-    [
-     29,
-     32
-    ],
-    [
-     30,
-     32
-    ],
-    [
-     31,
-     32
-    ],
-    [
-     32,
-     32
-    ]
-   ],
-   "keeper_at": [
-    30,
-    33
-   ],
-   "stand": [
-    30,
-    31
-   ],
-   "sign": [
-    31,
-    26
-   ],
-   "name": "Blacksmith",
-   "keeper": "Smith",
-   "props": [
-    {
-     "object": "furnace",
-     "at": [
-      28,
-      30
-     ]
-    },
-    {
-     "object": "anvil",
-     "at": [
-      31,
-      30
-     ]
-    },
-    {
-     "object": "bellows",
-     "at": [
-      27,
-      29
-     ]
-    },
-    {
-     "object": "quench_barrel",
-     "at": [
-      33,
-      29
-     ]
-    },
-    {
-     "object": "coal_crate",
-     "at": [
-      27,
-      33
-     ]
-    },
-    {
-     "object": "weapon_rack",
-     "at": [
-      33,
-      33
-     ]
-    }
-   ]
-  },
-  {
-   "id": "fenhollow_bank",
-   "kind": "bank",
-   "shop": "",
-   "name": "Fenhollow Bank",
-   "keeper": "Osric Ledger",
-   "keeper_sprite": "keeper_general",
-   "sign_sprite": "sign_bank",
-   "rect": [
-    26,
-    12,
-    7,
-    6
-   ],
-   "door": [
-    [
-     29,
-     17
-    ]
-   ],
-   "counter": [
-    [
-     27,
-     14
-    ],
-    [
-     28,
-     14
-    ]
-   ],
-   "keeper_at": [
-    27,
-    13
-   ],
-   "stand": [
-    29,
-    15
-   ],
-   "sign": [
-    30,
-    17
-   ],
-   "props": [
-    {
-     "object": "bank_chest",
-     "at": [
-      30,
-      13
-     ]
-    },
-    {
-     "object": "bank_chest",
-     "at": [
-      31,
-      13
-     ]
-    },
-    {
-     "object": "barrel",
-     "at": [
-      31,
-      16
-     ]
-    }
-   ],
-   "note": "0.3.5 bank building (replaces the open 'B' chest in the plaza; the plaza hearth/oven 'H' is gone too: cook in the Cook House)",
-   "style": "stone",
-   "roof": "#5a6070"
-  }
- ],
  "specialists": [
   "helmets",
   "swords",
@@ -817,64 +143,1912 @@
   "blackthorn_log": 1.15,
   "tin_ore": 1.1
  },
- "tagline": "Marsh timber town on winding boardwalks behind a wooden palisade.",
+ "tagline": "Marsh timber town behind a wooden palisade: winding mud lanes, raised boardwalks over the creek and pools, watchtowers on the ring.",
  "theme": "fenhollow",
+ "walls": "palisade",
  "gates": {
   "north": [
    [
-    22,
+    36,
     0
    ],
    [
-    23,
+    37,
     0
    ],
    [
-    24,
+    38,
     0
    ]
   ],
   "south": [
    [
-    22,
-    37
+    36,
+    59
    ],
    [
-    23,
-    37
+    37,
+    59
    ],
    [
-    24,
-    37
+    38,
+    59
    ]
   ],
   "west": [
    [
     0,
-    18
+    33
    ],
    [
     0,
-    19
+    34
    ],
    [
     0,
-    20
+    35
    ]
   ],
   "east": [
    [
-    45,
-    18
+    73,
+    26
    ],
    [
-    45,
-    19
+    73,
+    27
    ],
    [
-    45,
-    20
+    73,
+    28
    ]
   ]
- }
+ },
+ "gate_walls": {
+  "north": [
+   [
+    36,
+    7
+   ],
+   [
+    37,
+    7
+   ]
+  ],
+  "south": [
+   [
+    36,
+    52
+   ],
+   [
+    37,
+    52
+   ]
+  ],
+  "east": [
+   [
+    65,
+    26
+   ],
+   [
+    65,
+    27
+   ]
+  ],
+  "west": [
+   [
+    8,
+    33
+   ],
+   [
+    8,
+    34
+   ]
+  ]
+ },
+ "gate_tiles": {
+  "north": [
+   [
+    36,
+    6
+   ],
+   [
+    36,
+    7
+   ],
+   [
+    36,
+    8
+   ],
+   [
+    37,
+    6
+   ],
+   [
+    37,
+    7
+   ],
+   [
+    37,
+    8
+   ]
+  ],
+  "south": [
+   [
+    36,
+    51
+   ],
+   [
+    36,
+    52
+   ],
+   [
+    36,
+    53
+   ],
+   [
+    37,
+    51
+   ],
+   [
+    37,
+    52
+   ],
+   [
+    37,
+    53
+   ]
+  ],
+  "east": [
+   [
+    64,
+    26
+   ],
+   [
+    64,
+    27
+   ],
+   [
+    65,
+    26
+   ],
+   [
+    65,
+    27
+   ],
+   [
+    66,
+    26
+   ],
+   [
+    66,
+    27
+   ]
+  ],
+  "west": [
+   [
+    7,
+    33
+   ],
+   [
+    7,
+    34
+   ],
+   [
+    8,
+    33
+   ],
+   [
+    8,
+    34
+   ],
+   [
+    9,
+    33
+   ],
+   [
+    9,
+    34
+   ]
+  ]
+ },
+ "ring_qa": {
+  "samples": 1315,
+  "gaps": [],
+  "gap_count": 0,
+  "gates": [
+   "east",
+   "north",
+   "south",
+   "west"
+  ],
+  "sealed": true,
+  "opens": 4,
+  "note": "0.3.13 palisade ring walk: a ray from the centre every 2 px of perimeter must cross wall art over the composited palisade/tower/gate alpha; tile flood sealed with the gates shut and open through each"
+ },
+ "kell": {
+  "at": [
+   30,
+   45
+  ],
+  "lodge": "fenhollow_kell_lodge"
+ },
+ "art": {
+  "market": [
+   [
+    38,
+    28
+   ],
+   [
+    36,
+    28
+   ],
+   [
+    39,
+    31
+   ]
+  ],
+  "plaza_px": [
+   592,
+   480
+  ],
+  "ground_decal": "res://assets/sprites/towns/fenhollow/ground_decal.png",
+  "ysort": [
+   {
+    "path": "res://assets/sprites/towns/fenhollow/rows/pal_row_05_0.png",
+    "pos": [
+     688,
+     80
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/fenhollow/rows/pal_row_06_0.png",
+    "pos": [
+     448,
+     96
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/fenhollow/rows/pal_row_06_1.png",
+    "pos": [
+     608,
+     96
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/fenhollow/rows/pal_row_07_0.png",
+    "pos": [
+     400,
+     112
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/fenhollow/rows/pal_row_07_1.png",
+    "pos": [
+     624,
+     112
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/fenhollow/rows/pal_row_08_0.png",
+    "pos": [
+     384,
+     128
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/fenhollow/rows/pal_row_08_1.png",
+    "pos": [
+     624,
+     128
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/fenhollow/rows/pal_row_08_2.png",
+    "pos": [
+     736,
+     128
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/fenhollow/rows/pal_row_09_0.png",
+    "pos": [
+     352,
+     144
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/fenhollow/rows/pal_row_09_1.png",
+    "pos": [
+     784,
+     144
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/fenhollow/rows/pal_row_10_0.png",
+    "pos": [
+     336,
+     160
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/fenhollow/rows/pal_row_10_1.png",
+    "pos": [
+     800,
+     160
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/fenhollow/rows/pal_row_11_0.png",
+    "pos": [
+     304,
+     176
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/fenhollow/rows/pal_row_11_1.png",
+    "pos": [
+     816,
+     176
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/fenhollow/rows/pal_row_12_0.png",
+    "pos": [
+     272,
+     192
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/fenhollow/rows/pal_row_12_1.png",
+    "pos": [
+     832,
+     192
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/fenhollow/rows/pal_row_13_0.png",
+    "pos": [
+     240,
+     208
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/fenhollow/rows/pal_row_13_1.png",
+    "pos": [
+     864,
+     208
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/fenhollow/rows/pal_row_14_0.png",
+    "pos": [
+     208,
+     224
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/fenhollow/rows/pal_row_14_1.png",
+    "pos": [
+     880,
+     224
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/fenhollow/rows/pal_row_15_0.png",
+    "pos": [
+     192,
+     240
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/fenhollow/rows/pal_row_15_1.png",
+    "pos": [
+     896,
+     240
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/fenhollow/rows/pal_row_16_0.png",
+    "pos": [
+     176,
+     256
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/fenhollow/rows/pal_row_16_1.png",
+    "pos": [
+     912,
+     256
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/fenhollow/rows/pal_row_17_0.png",
+    "pos": [
+     160,
+     272
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/fenhollow/rows/pal_row_17_1.png",
+    "pos": [
+     928,
+     272
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/fenhollow/rows/pal_row_18_0.png",
+    "pos": [
+     144,
+     288
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/fenhollow/rows/pal_row_18_1.png",
+    "pos": [
+     960,
+     288
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/fenhollow/rows/pal_row_19_0.png",
+    "pos": [
+     128,
+     304
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/fenhollow/rows/pal_row_19_1.png",
+    "pos": [
+     960,
+     304
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/fenhollow/rows/pal_row_20_0.png",
+    "pos": [
+     128,
+     320
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/fenhollow/rows/pal_row_20_1.png",
+    "pos": [
+     976,
+     320
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/fenhollow/rows/pal_row_21_0.png",
+    "pos": [
+     112,
+     336
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/fenhollow/rows/pal_row_21_1.png",
+    "pos": [
+     992,
+     336
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/fenhollow/rows/pal_row_22_0.png",
+    "pos": [
+     112,
+     352
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/fenhollow/rows/pal_row_22_1.png",
+    "pos": [
+     1024,
+     352
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/fenhollow/rows/pal_row_23_0.png",
+    "pos": [
+     112,
+     368
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/fenhollow/rows/pal_row_23_1.png",
+    "pos": [
+     1024,
+     368
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/fenhollow/rows/pal_row_24_0.png",
+    "pos": [
+     112,
+     384
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/fenhollow/rows/pal_row_25_0.png",
+    "pos": [
+     112,
+     400
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/fenhollow/rows/pal_row_26_0.png",
+    "pos": [
+     96,
+     416
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/fenhollow/rows/pal_row_27_0.png",
+    "pos": [
+     96,
+     432
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/fenhollow/rows/pal_row_28_0.png",
+    "pos": [
+     96,
+     448
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/fenhollow/rows/pal_row_29_0.png",
+    "pos": [
+     112,
+     464
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/fenhollow/rows/pal_row_29_1.png",
+    "pos": [
+     1024,
+     464
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/fenhollow/rows/pal_row_30_0.png",
+    "pos": [
+     112,
+     480
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/fenhollow/rows/pal_row_30_1.png",
+    "pos": [
+     1024,
+     480
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/fenhollow/rows/pal_row_31_0.png",
+    "pos": [
+     1024,
+     496
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/fenhollow/rows/pal_row_32_0.png",
+    "pos": [
+     1008,
+     512
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/fenhollow/rows/pal_row_33_0.png",
+    "pos": [
+     1008,
+     528
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/fenhollow/rows/pal_row_34_0.png",
+    "pos": [
+     1024,
+     544
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/fenhollow/rows/pal_row_35_0.png",
+    "pos": [
+     1040,
+     560
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/fenhollow/rows/pal_row_36_0.png",
+    "pos": [
+     112,
+     576
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/fenhollow/rows/pal_row_36_1.png",
+    "pos": [
+     1024,
+     576
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/fenhollow/rows/pal_row_37_0.png",
+    "pos": [
+     112,
+     592
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/fenhollow/rows/pal_row_37_1.png",
+    "pos": [
+     1024,
+     592
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/fenhollow/rows/pal_row_38_0.png",
+    "pos": [
+     112,
+     608
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/fenhollow/rows/pal_row_38_1.png",
+    "pos": [
+     1008,
+     608
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/fenhollow/rows/pal_row_39_0.png",
+    "pos": [
+     96,
+     624
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/fenhollow/rows/pal_row_39_1.png",
+    "pos": [
+     992,
+     624
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/fenhollow/rows/pal_row_40_0.png",
+    "pos": [
+     96,
+     640
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/fenhollow/rows/pal_row_40_1.png",
+    "pos": [
+     976,
+     640
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/fenhollow/rows/pal_row_41_0.png",
+    "pos": [
+     112,
+     656
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/fenhollow/rows/pal_row_41_1.png",
+    "pos": [
+     960,
+     656
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/fenhollow/rows/pal_row_42_0.png",
+    "pos": [
+     160,
+     672
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/fenhollow/rows/pal_row_42_1.png",
+    "pos": [
+     944,
+     672
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/fenhollow/rows/pal_row_43_0.png",
+    "pos": [
+     208,
+     688
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/fenhollow/rows/pal_row_43_1.png",
+    "pos": [
+     928,
+     688
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/fenhollow/rows/pal_row_44_0.png",
+    "pos": [
+     224,
+     704
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/fenhollow/rows/pal_row_44_1.png",
+    "pos": [
+     912,
+     704
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/fenhollow/rows/pal_row_45_0.png",
+    "pos": [
+     224,
+     720
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/fenhollow/rows/pal_row_45_1.png",
+    "pos": [
+     896,
+     720
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/fenhollow/rows/pal_row_46_0.png",
+    "pos": [
+     240,
+     736
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/fenhollow/rows/pal_row_46_1.png",
+    "pos": [
+     864,
+     736
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/fenhollow/rows/pal_row_47_0.png",
+    "pos": [
+     256,
+     752
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/fenhollow/rows/pal_row_47_1.png",
+    "pos": [
+     816,
+     752
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/fenhollow/rows/pal_row_48_0.png",
+    "pos": [
+     272,
+     768
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/fenhollow/rows/pal_row_48_1.png",
+    "pos": [
+     768,
+     768
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/fenhollow/rows/pal_row_49_0.png",
+    "pos": [
+     288,
+     784
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/fenhollow/rows/pal_row_49_1.png",
+    "pos": [
+     720,
+     784
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/fenhollow/rows/pal_row_50_0.png",
+    "pos": [
+     304,
+     800
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/fenhollow/rows/pal_row_50_1.png",
+    "pos": [
+     688,
+     800
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/fenhollow/rows/pal_row_51_0.png",
+    "pos": [
+     336,
+     816
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/fenhollow/rows/pal_row_51_1.png",
+    "pos": [
+     608,
+     816
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/fenhollow/rows/pal_row_52_0.png",
+    "pos": [
+     384,
+     832
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/fenhollow/rows/pal_row_52_1.png",
+    "pos": [
+     624,
+     832
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/fenhollow/rows/pal_row_53_0.png",
+    "pos": [
+     432,
+     848
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/fenhollow/rows/pal_row_53_1.png",
+    "pos": [
+     624,
+     848
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/fenhollow/tiles/fh_palisade_watchtower.png",
+    "pos": [
+     864,
+     690
+    ],
+    "base": 80
+   },
+   {
+    "path": "res://assets/sprites/towns/fenhollow/tiles/fh_palisade_watchtower.png",
+    "pos": [
+     224,
+     642
+    ],
+    "base": 80
+   },
+   {
+    "path": "res://assets/sprites/towns/fenhollow/tiles/fh_palisade_watchtower.png",
+    "pos": [
+     208,
+     178
+    ],
+    "base": 80
+   },
+   {
+    "path": "res://assets/sprites/towns/fenhollow/tiles/fh_palisade_watchtower.png",
+    "pos": [
+     928,
+     194
+    ],
+    "base": 80
+   },
+   {
+    "path": "res://assets/sprites/towns/fenhollow/tiles/fh_gate_back_walls.png",
+    "pos": [
+     560,
+     104
+    ],
+    "base": 64
+   },
+   {
+    "path": "res://assets/sprites/towns/fenhollow/tiles/fh_gate_front_walls.png",
+    "pos": [
+     560,
+     824
+    ],
+    "base": 64
+   },
+   {
+    "path": "res://assets/sprites/towns/fenhollow/tiles/fh_gate_side_walls.png",
+    "pos": [
+     1024,
+     375
+    ],
+    "base": 112
+   },
+   {
+    "path": "res://assets/sprites/towns/fenhollow/tiles/fh_gate_side_walls.png",
+    "pos": [
+     112,
+     487
+    ],
+    "base": 112
+   }
+  ],
+  "fades": [
+   {
+    "path": "res://assets/sprites/towns/fenhollow/tiles/fh_gate_back_roof.png",
+    "pos": [
+     560,
+     104
+    ],
+    "tiles": [
+     [
+      36,
+      6
+     ],
+     [
+      36,
+      7
+     ],
+     [
+      36,
+      8
+     ],
+     [
+      36,
+      9
+     ],
+     [
+      37,
+      6
+     ],
+     [
+      37,
+      7
+     ],
+     [
+      37,
+      8
+     ],
+     [
+      37,
+      9
+     ]
+    ]
+   },
+   {
+    "path": "res://assets/sprites/towns/fenhollow/tiles/fh_gate_front_roof.png",
+    "pos": [
+     560,
+     824
+    ],
+    "tiles": [
+     [
+      36,
+      51
+     ],
+     [
+      36,
+      52
+     ],
+     [
+      36,
+      53
+     ],
+     [
+      36,
+      54
+     ],
+     [
+      37,
+      51
+     ],
+     [
+      37,
+      52
+     ],
+     [
+      37,
+      53
+     ],
+     [
+      37,
+      54
+     ]
+    ]
+   },
+   {
+    "path": "res://assets/sprites/towns/fenhollow/tiles/fh_gate_side_roof.png",
+    "pos": [
+     1024,
+     375
+    ],
+    "tiles": [
+     [
+      64,
+      26
+     ],
+     [
+      64,
+      27
+     ],
+     [
+      65,
+      26
+     ],
+     [
+      65,
+      27
+     ],
+     [
+      66,
+      26
+     ],
+     [
+      66,
+      27
+     ]
+    ]
+   },
+   {
+    "path": "res://assets/sprites/towns/fenhollow/tiles/fh_gate_side_roof.png",
+    "pos": [
+     112,
+     487
+    ],
+    "tiles": [
+     [
+      7,
+      33
+     ],
+     [
+      7,
+      34
+     ],
+     [
+      8,
+      33
+     ],
+     [
+      8,
+      34
+     ],
+     [
+      9,
+      33
+     ],
+     [
+      9,
+      34
+     ]
+    ]
+   }
+  ]
+ },
+ "buildings": [
+  {
+   "art": "fh_kell_lodge",
+   "flip": false,
+   "at": [
+    26,
+    40
+   ],
+   "door": [
+    [
+     29,
+     44
+    ]
+   ],
+   "sign": [
+    30,
+    44
+   ],
+   "props": [],
+   "counter": [],
+   "style": "timber",
+   "roof": "#9a8a5a",
+   "id": "fenhollow_kell_lodge",
+   "kind": "house",
+   "shop": "",
+   "name": "Kell's Lodge",
+   "keeper": "Kell",
+   "keeper_sprite": "villager",
+   "sign_sprite": "sign_house",
+   "note": "0.3.13 Fenhollow v1 (designer fh_kell_lodge)",
+   "no_keeper": true,
+   "keeper_at": [
+    29,
+    44
+   ],
+   "stand": [
+    29,
+    44
+   ]
+  },
+  {
+   "art": "fh_guard_post",
+   "flip": false,
+   "at": [
+    39,
+    45
+   ],
+   "door": [
+    [
+     41,
+     48
+    ]
+   ],
+   "sign": [
+    42,
+    48
+   ],
+   "props": [],
+   "counter": [],
+   "style": "timber",
+   "roof": "#9a8a5a",
+   "id": "fenhollow_guard_post",
+   "kind": "house",
+   "shop": "",
+   "name": "Guard Post",
+   "keeper": "Sergeant Rook",
+   "keeper_sprite": "villager",
+   "sign_sprite": "sign_house",
+   "note": "0.3.13 Fenhollow v1 (designer fh_guard_post)",
+   "no_keeper": true,
+   "keeper_at": [
+    41,
+    48
+   ],
+   "stand": [
+    41,
+    48
+   ]
+  },
+  {
+   "art": "fh_bank",
+   "flip": false,
+   "at": [
+    41,
+    19
+   ],
+   "door": [
+    [
+     44,
+     23
+    ]
+   ],
+   "sign": [
+    45,
+    23
+   ],
+   "props": [
+    {
+     "object": "bank_chest",
+     "at": [
+      43,
+      20
+     ]
+    },
+    {
+     "object": "bank_chest",
+     "at": [
+      45,
+      20
+     ]
+    }
+   ],
+   "counter": [],
+   "style": "stone",
+   "roof": "#5a6070",
+   "id": "fenhollow_bank",
+   "kind": "bank",
+   "shop": "",
+   "name": "Fenhollow Bank",
+   "keeper": "Osric Ledger",
+   "keeper_sprite": "keeper_general",
+   "sign_sprite": "sign_bank",
+   "keeper_at": [
+    44,
+    20
+   ],
+   "stand": [
+    44,
+    22
+   ],
+   "note": "0.3.13 Fenhollow v1 (designer fh_bank)"
+  },
+  {
+   "art": "fh_general_store",
+   "flip": false,
+   "at": [
+    19,
+    28
+   ],
+   "door": [
+    [
+     21,
+     31
+    ]
+   ],
+   "sign": [
+    22,
+    31
+   ],
+   "props": [],
+   "counter": [],
+   "style": "timber",
+   "roof": "#c4a05a",
+   "id": "fenhollow_general",
+   "kind": "shop",
+   "shop": "general",
+   "name": "Fenhollow Provisions",
+   "keeper": "Marla Thatch",
+   "keeper_at": [
+    21,
+    29
+   ],
+   "stand": [
+    21,
+    30
+   ],
+   "note": "0.3.13 Fenhollow v1 (designer fh_general_store)"
+  },
+  {
+   "art": "fh_kell_lodge",
+   "flip": true,
+   "at": [
+    48,
+    33
+   ],
+   "door": [
+    [
+     52,
+     37
+    ]
+   ],
+   "sign": [
+    53,
+    37
+   ],
+   "props": [
+    {
+     "object": "furnace",
+     "at": [
+      51,
+      34
+     ]
+    },
+    {
+     "object": "anvil",
+     "at": [
+      53,
+      34
+     ]
+    }
+   ],
+   "counter": [],
+   "style": "timber",
+   "roof": "#c4a05a",
+   "id": "fenhollow_swords",
+   "kind": "smithy",
+   "shop": "swords",
+   "name": "Blacksmith",
+   "keeper": "Smith",
+   "keeper_at": [
+    52,
+    34
+   ],
+   "stand": [
+    52,
+    36
+   ],
+   "note": "0.3.13 Fenhollow v1 (designer fh_kell_lodge, flipped); the forge hall: fh_smithy is too small for keeper + furnace + anvil"
+  },
+  {
+   "art": "fh_cookhouse",
+   "flip": false,
+   "at": [
+    27,
+    34
+   ],
+   "door": [
+    [
+     29,
+     38
+    ]
+   ],
+   "sign": [
+    30,
+    38
+   ],
+   "props": [
+    {
+     "object": "oven",
+     "at": [
+      30,
+      35
+     ]
+    }
+   ],
+   "counter": [],
+   "style": "timber",
+   "roof": "#b8904a",
+   "id": "fenhollow_cook",
+   "kind": "cookhouse",
+   "shop": "cook",
+   "name": "Reed Oven",
+   "keeper": "Bryn Potts",
+   "keeper_at": [
+    29,
+    35
+   ],
+   "stand": [
+    29,
+    37
+   ],
+   "note": "0.3.13 Fenhollow v1 (designer fh_cookhouse)"
+  },
+  {
+   "art": "fh_player_shop",
+   "flip": false,
+   "at": [
+    43,
+    35
+   ],
+   "door": [
+    [
+     45,
+     39
+    ]
+   ],
+   "sign": [
+    46,
+    39
+   ],
+   "props": [],
+   "counter": [],
+   "style": "timber",
+   "roof": "#c4a05a",
+   "id": "fenhollow_player",
+   "kind": "house",
+   "shop": "",
+   "name": "Townhouse",
+   "keeper": "Wynn Tallow",
+   "keeper_sprite": "villager",
+   "sign_sprite": "sign_house",
+   "keeper_at": [
+    45,
+    36
+   ],
+   "stand": [
+    45,
+    38
+   ],
+   "note": "0.3.13 Fenhollow v1 (designer fh_player_shop)"
+  },
+  {
+   "art": "fh_smithy",
+   "flip": false,
+   "at": [
+    51,
+    18
+   ],
+   "door": [
+    [
+     53,
+     21
+    ]
+   ],
+   "sign": [
+    54,
+    21
+   ],
+   "props": [],
+   "counter": [],
+   "style": "timber",
+   "roof": "#c4a05a",
+   "id": "fenhollow_helmets",
+   "kind": "shop",
+   "shop": "helmets",
+   "keeper_at": [
+    53,
+    19
+   ],
+   "stand": [
+    53,
+    20
+   ],
+   "note": "0.3.13 Fenhollow v1 (designer fh_smithy)"
+  },
+  {
+   "art": "fh_house_12",
+   "flip": false,
+   "at": [
+    12,
+    27
+   ],
+   "door": [
+    [
+     14,
+     30
+    ]
+   ],
+   "sign": [
+    15,
+    30
+   ],
+   "props": [],
+   "counter": [],
+   "style": "timber",
+   "roof": "#c4a05a",
+   "id": "fenhollow_archery",
+   "kind": "shop",
+   "shop": "archery",
+   "keeper_at": [
+    14,
+    28
+   ],
+   "stand": [
+    14,
+    29
+   ],
+   "note": "0.3.13 Fenhollow v1 (designer fh_house_12)"
+  },
+  {
+   "art": "fh_house_01",
+   "flip": false,
+   "at": [
+    39,
+    32
+   ],
+   "door": [
+    [
+     42,
+     34
+    ]
+   ],
+   "sign": [
+    43,
+    34
+   ],
+   "props": [],
+   "counter": [],
+   "style": "timber",
+   "roof": "#9a8a5a",
+   "id": "fenhollow_home_3",
+   "kind": "house",
+   "shop": "",
+   "name": "Eel Cottage",
+   "keeper": "Tilda Fenn",
+   "keeper_sprite": "villager",
+   "sign_sprite": "sign_house",
+   "note": "0.3.13 Fenhollow v1 (designer fh_house_01)",
+   "keeper_at": [
+    41,
+    33
+   ],
+   "stand": [
+    42,
+    33
+   ]
+  },
+  {
+   "art": "fh_house_02",
+   "flip": false,
+   "at": [
+    20,
+    38
+   ],
+   "door": [
+    [
+     22,
+     40
+    ]
+   ],
+   "sign": [
+    23,
+    40
+   ],
+   "props": [],
+   "counter": [],
+   "style": "timber",
+   "roof": "#9a8a5a",
+   "id": "fenhollow_home_4",
+   "kind": "house",
+   "shop": "",
+   "name": "The Sedges' house",
+   "keeper": "Caro Sedge",
+   "keeper_sprite": "villager",
+   "sign_sprite": "sign_house",
+   "note": "0.3.13 Fenhollow v1 (designer fh_house_02)",
+   "keeper_at": [
+    21,
+    39
+   ],
+   "stand": [
+    22,
+    39
+   ]
+  },
+  {
+   "art": "fh_house_03",
+   "flip": false,
+   "at": [
+    41,
+    11
+   ],
+   "door": [
+    [
+     43,
+     14
+    ]
+   ],
+   "sign": [
+    44,
+    14
+   ],
+   "props": [],
+   "counter": [],
+   "style": "timber",
+   "roof": "#9a8a5a",
+   "id": "fenhollow_home_5",
+   "kind": "house",
+   "shop": "",
+   "name": "Withy House",
+   "keeper": "Aldo Withy",
+   "keeper_sprite": "villager",
+   "sign_sprite": "sign_house",
+   "note": "0.3.13 Fenhollow v1 (designer fh_house_03)",
+   "keeper_at": [
+    43,
+    12
+   ],
+   "stand": [
+    43,
+    13
+   ]
+  },
+  {
+   "art": "fh_house_04",
+   "flip": false,
+   "at": [
+    56,
+    31
+   ],
+   "door": [
+    [
+     58,
+     34
+    ]
+   ],
+   "sign": [
+    59,
+    34
+   ],
+   "props": [],
+   "counter": [],
+   "style": "timber",
+   "roof": "#9a8a5a",
+   "id": "fenhollow_home_6",
+   "kind": "house",
+   "shop": "",
+   "name": "Bulrush Cottage",
+   "keeper": "Nell Marsh",
+   "keeper_sprite": "villager",
+   "sign_sprite": "sign_house",
+   "note": "0.3.13 Fenhollow v1 (designer fh_house_04)",
+   "keeper_at": [
+    58,
+    32
+   ],
+   "stand": [
+    58,
+    33
+   ]
+  },
+  {
+   "art": "fh_house_07",
+   "flip": false,
+   "at": [
+    32,
+    15
+   ],
+   "door": [
+    [
+     34,
+     19
+    ]
+   ],
+   "sign": [
+    35,
+    19
+   ],
+   "props": [],
+   "counter": [],
+   "style": "timber",
+   "roof": "#9a8a5a",
+   "id": "fenhollow_home_7",
+   "kind": "house",
+   "shop": "",
+   "name": "The Peats' house",
+   "keeper": "Ivo Peat",
+   "keeper_sprite": "villager",
+   "sign_sprite": "sign_house",
+   "note": "0.3.13 Fenhollow v1 (designer fh_house_07)",
+   "keeper_at": [
+    34,
+    16
+   ],
+   "stand": [
+    34,
+    18
+   ]
+  },
+  {
+   "art": "fh_house_10",
+   "flip": false,
+   "at": [
+    48,
+    38
+   ],
+   "door": [
+    [
+     49,
+     41
+    ]
+   ],
+   "sign": [
+    50,
+    41
+   ],
+   "props": [],
+   "counter": [],
+   "style": "timber",
+   "roof": "#9a8a5a",
+   "id": "fenhollow_home_8",
+   "kind": "house",
+   "shop": "",
+   "name": "Heron's Rest",
+   "keeper": "Wenna Heron",
+   "keeper_sprite": "villager",
+   "sign_sprite": "sign_house",
+   "note": "0.3.13 Fenhollow v1 (designer fh_house_10)",
+   "keeper_at": [
+    49,
+    39
+   ],
+   "stand": [
+    49,
+    40
+   ]
+  },
+  {
+   "art": "fh_house_02",
+   "flip": true,
+   "at": [
+    46,
+    11
+   ],
+   "door": [
+    [
+     48,
+     13
+    ]
+   ],
+   "sign": [
+    49,
+    13
+   ],
+   "props": [],
+   "counter": [],
+   "style": "timber",
+   "roof": "#9a8a5a",
+   "id": "fenhollow_home_9",
+   "kind": "house",
+   "shop": "",
+   "name": "Mudlark House",
+   "keeper": "Pim Lark",
+   "keeper_sprite": "villager",
+   "sign_sprite": "sign_house",
+   "note": "0.3.13 Fenhollow v1 (designer fh_house_02, flipped)",
+   "keeper_at": [
+    47,
+    12
+   ],
+   "stand": [
+    48,
+    12
+   ]
+  },
+  {
+   "art": "fh_house_10",
+   "flip": true,
+   "at": [
+    38,
+    35
+   ],
+   "door": [
+    [
+     40,
+     38
+    ]
+   ],
+   "sign": [
+    41,
+    38
+   ],
+   "props": [],
+   "counter": [],
+   "style": "timber",
+   "roof": "#9a8a5a",
+   "id": "fenhollow_home_10",
+   "kind": "house",
+   "shop": "",
+   "name": "The Alders' house",
+   "keeper": "Bran Alder",
+   "keeper_sprite": "villager",
+   "sign_sprite": "sign_house",
+   "note": "0.3.13 Fenhollow v1 (designer fh_house_10, flipped)",
+   "keeper_at": [
+    40,
+    36
+   ],
+   "stand": [
+    40,
+    37
+   ]
+  }
+ ],
+ "rows": [
+  "g~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~gg::=ggggggggg~~~~~~~~~~~~~~~~~~~~~~~~gg",
+  "g~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~gg::gggggggggg~~~~~~~~~~~~~~~~~~~~~~~~gg",
+  "g~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~gg::gggggggggN~~~~~~~~~~~~~~~~~~~~~~~~~~",
+  "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~gg::gggggggggg~~J~~~~~~~~~~~~~~~~~~~~~~~",
+  "~~~~~~~~~~~~~~~~~~~~~~~~~~~~J~~~~ggg::ggggggggMgg~~~~~~~~~~~~~~~~~~~~~~~~~",
+  "~~~~~~~~~~~~~~~~~~~~~~~~~~~gNgPggPgg::gggggg##ggNgP~~~~~~~~~~~~~W~~~~~~~~~",
+  "~~~~~~~~~~~~~~~~~~~~R~~~~gOgg######g::g##########gPg~~~~~Pgggg~~~~~~~~~~~~",
+  "~~~~~~~~~~~~~~~~~~~~~~~ggg##########::############gNgP~NPgggggO~J~~~~~~~~~",
+  "~~~~~~~~~~~~~~~~~J~~~Nggg###########::#####gggg####gggOgggggggg~=~~~~~~~~~",
+  "~~~~~~~~~~~~~~~~~~~~ggg#####gggggEgg:ggggBgggggggg##gggggggggggg=~~~~~~~~~",
+  "~~~~~~~~~~~~~~~~~~~ggg###gggHggggggg:gggggggggggggg###gggPggggIg=~~~~~~~~~",
+  "~~~~~~~gggggJ~~~~Ngg####gFgggEggEgg::ggggggggggggggg###ggggggggg~~~J~~~~~~",
+  "~~~~~~~ggNgggg~ggg####Lgggggg::::::::gggggggggggggggg###ggggggggg~~~~~~~~~",
+  "~~~~~~~ggggggNgN#####gggPg::gLgLgHgg:MHgggggggggggggggg##ggggggggO~~~~~~~~",
+  "~~~~~~~Ngggggg#####QgHg:::gIgggggggg::ggLgggggg:::QIgggg##gggggNgggg~~~~~~",
+  "~~~~~~~ggggPg####gggg:::ggggggggggggg:ggggg::Q::::::gHHgg###gggggggggg~~~~",
+  "~~~~~~~Rgggg###gggg::gFgggggggggggggg::ggL::::::::::::ggIP###ggggggPgPgg~~",
+  "~~~~~~~~ggg##ggggggggggggggggggggggggg::g:::INgM:::ggg:::gg###gggggggggggg",
+  "~~~~~~~gPg##gggggPZggggggggggggggggggg::::Hggggg:::ggggggggg####gggggggggg",
+  "~~~~~~~gg##NggggOO~~ggNgggggggggggggg:::gggggggg:::gggggggggg#####ggMggggg",
+  "~~~~~~gP###ggZgg~J~~~~NBPgggggggHg:::::ggggggggg:::ggggggggggg#####gggggg~",
+  "~~~~~~gg##ggN~J~~~~~~~~~gggggggggg:::::gIggggggg:::gggggggNgggg####gggP~~~",
+  "~~~~~~g###gO~~~~~~~~J~~~~ggNg::::::====ggggggggg::::::g~~~gggggg###gg~~~~~",
+  "~~~~~~g###P~~~~~~~Pg~~~~~~~ggg~~~~~====~~ggggggg:ggggg~Y~~~gggPg###g~~~~~~",
+  "~~~~~Jg###g~~~~~NgggggY~~~~~~~~~~Y====~~~~~g:::::IgOgP==~~~~Iggg###g~~~~~~",
+  "~~~~~gg###Og~gPggggggP=~~~~~~~~~~~=Q==~~~~~~ggOgggZ~==========gg###g======",
+  "~~~~~gg###gggggg:::::::L======~~~~~==:=~Y~~~~~gZ~~~============::::=======",
+  "~~~~~g####ggggggggggggggg:======gOg::::g=~~~~~~~~=======H=======:::=======",
+  "~~~~~gg###ggggggggggggggggggggg:::::b:C::=~~~~~=======~~~~~~~~~=###g======",
+  "~~~~~gg###gggggggggggggggggggFgg::::::::::g==========gOgP~~~~~~g###g~~~~~~",
+  "~~~~Rgg###gNggggggggggggggggFggg:::::::::::::=====gFggggggg~~~~g###gP~~~~~",
+  "~~~~~gg###gggg:gggggggggggQggHg::::::::a:gggg::ggggNgAggggggg~gP###gNg~~~~",
+  "=====gg###gggg:gggggV::Igggg::::gg:::::gggggggEgggEggggggggggggg###ggM~W~~",
+  "=====::::::gI::ggggIg:::g:::::Ngggg::ggggggggggggggggggggggggIgg####gg~~~~",
+  "======::::::::::LLgg:::::::ggggggg::EggggggggggPggggggggggggggggg###gO~~~~",
+  "======g###gg::::::::::::gPgggggggg::gggggg:ggggggggggggggg::ggggg###g~~~~~",
+  "~~~~~~g###ggNgg:::g::gggggggggggggN::ggggg:gggggggggggggNg:::gLgg##Ng~~~~~",
+  "~~~~~~N###ggIgFQ::gggHggQgggggggggg:::gggg:gggggggggggggIg:::ggg###g~~~~~~",
+  "~~~~~~g###ggggggg:PggggggggggggggI::::gggg:ggggggggg:UggE:::gggg##gg~~~~~~",
+  "~~~~~~g######gHgg::gggggggggS::::::::::::::ggggggggg:ggg:::gggg##ggg~~~~~~",
+  "~~~~~~O#######PgLg::ggggggggggggggggM::::::gg:gBgggg::g:::gggg##ggP~~~~~~~",
+  "~~~~~~~g#######gggg::::ggggggggggggggg::::::::gggggg::::gggHM##ggg~~R~~~~~",
+  "~~~~~~~~~~~#####gggg:::gHggggggggggggg::gg:::::gg::::ggHgEgg##ggPJ~~~~~~~~",
+  "~~~~~~~~~~~~gg##gggggg::ggggggggggggg::gEgggg::::::gggN~ggN##Mgg~~~~~~~~~~",
+  "~~~~~~~~~~~~gg###gEggLg:::ggggggggggg:QgBggQgO==ggggggg~Pg##ggg~~NggNg~~~~",
+  "~~~~~~~~~~~~~gN##ggggggIg::gT:Kgggggg:gggggggN~~ZgggHgggg##gNg~~~gggggg~~~",
+  "~~~~~~~~~~~~W~gg##gMggEggIg::::gFggg::IgggggM~J~~gggggg###ggg~~~~gggggNggg",
+  "~~~~~~~~~~~~~~ggg##ggggggggHgggg:::::ggggggg~~~~gNgg#####gON~~~~~ggggggggg",
+  "~~~~~~~~~~~~~~~ggg###ggBgggggIggggg:::ggggggggggg#######Ngg~~~~~~~~~~~gggg",
+  "~~~~~~~~~~~~~~~~gOg#####gggggggEgHgg::::::gIgg########ggggJ~~~~W~~~~~~~~gg",
+  "~~~~~~~~~~~~~~~~~ggg#######ggMgggggg:ggggggg#######ggggggg~~~~~~~~~~~~~~~~",
+  "~~~~~~~~~~~~~~~~~~~gPM#############g::g#########ggggggggggOgP~~~~~~~~~~~~~",
+  "~~~~~~~~~~~~~~~~~~W~~gggg###########::#######ggggggggPgggggggOg~J~~~~~~~~~",
+  "~~~~R~~~~~~~~~~~~~~~~~~~Nggg########::#####gggggQggggggggggPgggO~~~~~~~~~~",
+  "ggg~~~~~~~~~~~~~~~~~~~~~~~PNgggPgggg:ggggNgNg~~~ggggggggggggggggg~~~~~~~~~",
+  "ggggM~~~~~~R~~~~~~~~~~~~~~~~NggggXgg::gggg~~~~=~~PgNONPggggggggggg~~~~~~~~",
+  "gggggPggg~~~~~~~~~~~~~~~~~~~~gMggggg::ggO~~~~~=~~~~~~ggPggggggggggg~~~~~~~",
+  "ggMgggggOg~~~~~~~~~~~~~~~~~~~Ngggggg::ggg~~~~~=~~~~~~~JgggggggggggNg~~~~~~",
+  "gggggggggg~~~~~~~~~~~~~~~~~~~ggggggg::ggggggg~=~~~~~~~~~gggggggggggg~~~~~~",
+  "gggggggggg~~~~~~~~~~~~~~~~~~~ggg~~gg::=gggggg~~~~~~~~~~~ggggggggggggg~~~~~"
+ ],
+ "note": "0.3.13 generated by tools/world/build_fenhollow_v1.py from the designer's Fenhollow v1 set (art_handoff/towns/fenhollow)"
 }
