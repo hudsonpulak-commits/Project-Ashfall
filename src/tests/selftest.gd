@@ -1636,7 +1636,8 @@ static func _building_tests(main, world: World, p: Player) -> void:
 	opened.clear()
 	Events.shop_opened.connect(c1)
 	p.place_at(outside)
-	p.handle_tap(world, b0["counter"][0])
+	# 0.3.13 Fenhollow v1 shops have no counter tiles: tap the keeper's desk instead
+	p.handle_tap(world, b0["counter"][0] if not (b0.get("counter", []) as Array).is_empty() else b0["keeper_at"])
 	_run_until(func(): return not opened.is_empty(), 120)
 	Events.shop_opened.disconnect(c1)
 	check(opened == ["general"] and p.tile == b0["stand"], "tapping the counter opens the shop from the counter front")

@@ -448,7 +448,11 @@ static func _town_folk_tests(world: World, p: Player) -> void:
 	for e in em.enemies:
 		if e.kind == "town_guard" and e.town == "fenhollow" and e.patrol.size() >= 4:
 			g = e
-	p.place_at(world.gen.town_spawn("fenhollow"))
+	if g == null:   # 0.3.13 Fenhollow v1's guards stand their gates; walk any patrolling town guard
+		for e in em.enemies:
+			if e.kind == "town_guard" and e.patrol.size() >= 4 and (g == null or e.town == "cinderholt"):
+				g = e
+	p.place_at(world.gen.town_spawn(g.town if g else "fenhollow"))
 	world.set_focus(p.tile, true)
 	var visited := {}
 	var stuck: int = 0
@@ -868,7 +872,7 @@ static func _village_tests(world: World, p: Player) -> void:
 	# a house: walk in, the villager talks (no shop panel)
 	var hb: Dictionary = {}
 	for bid in gen.building_order:
-		if gen.buildings[bid]["kind"] == "house":
+		if gen.buildings[bid]["kind"] == "house" and not gen.buildings[bid].get("no_keeper", false):
 			hb = gen.buildings[bid]
 			break
 	var opened := []

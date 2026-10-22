@@ -70,4 +70,4 @@ Fenhollow is rebuilt as a marsh town from the designer's Fenhollow v1 set (art_h
 - Wall ring QA: 1496 samples, 0 gaps, 4 gates. Reachability: 0 fails.
 - Test change: patch0311 "relocated inside the city wall" radius widened from 17 to 26 tiles. The larger v4 buildings fill the band freed by the dropped ring road; 26 is still inside the wall.
 
-Selftest: 927/927.
+Selftest: 939/939 (also fixed 3 latent SCRIPT ERRORs the release gate rejects: no-counter shop tap, gate-standing Fenhollow guards, no-keeper first house).
