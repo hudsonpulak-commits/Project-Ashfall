@@ -1253,7 +1253,10 @@ func _beach_level(q: Vector2i) -> float:
 
 ## No cliffs in or around towns, villages, fields, mines, the Scorch or water.
 func cliff_free(q: Vector2i) -> bool:
-	if town_at(q, _keep_clear) != "" or village_at(q, _keep_clear) != "":
+	var tclr := town_at(q, _keep_clear)
+	if tclr != "" and (_town_rects[tclr] as Rect2i).grow(int(towns[tclr].get("cliff_clear", _keep_clear))).has_point(q):
+		return true   # 0.3.12 a town may keep a smaller clear margin (Saltmere: the sea cliffs just south stay intact)
+	if village_at(q, _keep_clear) != "":
 		return true
 	if not mine_at(q, 3).is_empty() or not _biome_zone_at(q).is_empty():
 		return true
