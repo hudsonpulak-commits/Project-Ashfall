@@ -113,7 +113,20 @@ static func _highfen_v4(world, gen: WorldGen) -> void:
 	check(arts.get("v4_player_shop", "") == "highfen_player" and arts.get("v4_guild", "") == "highfen_guild" and arts.get("v4_general_store", "") == "highfen_general",
 		"the v4 player shop, guild and general store keep their roles")
 	var objs := JSON.stringify(t.get("objects", {}))
-	for o in ["hf4_statue_knight", "hf4_lamp_post", "hf4_banner_", "hf4_tree_oak"]:
+	var forge: Dictionary = gen.buildings.get("highfen_smithy", {})
+	check(str(forge.get("kind", "")) == "smithy", "the Highfen v4 forge has the smithing role (%s)" % forge.get("kind", "?"))
+	for fid in ["fenhollow_swords", "highfen_smithy"]:   # stations stand on the drawn floor, not the art's rim
+		var fz: Dictionary = gen.buildings.get(fid, {})
+		var r: Rect2i = fz["rect"]
+		var n := 0
+		for y in range(r.position.y, r.end.y):
+			for x in range(r.position.x, r.end.x):
+				var o: WorldObject = world.object_at(Vector2i(x, y))
+				if o != null and o.def_id in ["furnace", "anvil"]:
+					n += 1
+					check(gen.is_inside(o.pos, fz) or gen.is_inside(o.pos + Vector2i(0, 1), fz), "%s's %s stands on the floor (%s)" % [fid, o.def_id, str(o.pos)])
+		check(n == 2, "%s has a furnace and an anvil (%d)" % [fid, n])
+	for o in ["hf4_statue_knight", "hf4_lamp_post", "hf4_banner_", "hf4_banner_wall", "hf4_tree_oak"]:
 		check(objs.contains(o), "Highfen places the v4 %s" % o)
 	var rq: Dictionary = t.get("ring_qa", {})
 	check(int(rq.get("gap_count", -1)) == 0 and (rq.get("gates", []) as Array).size() == 4, "Highfen's wall ring stays continuous after the v4 street plan")

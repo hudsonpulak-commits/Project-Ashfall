@@ -357,15 +357,17 @@ func _run() -> void:
 func _walk_origin() -> Vector2i:
 	var w: World = main.world
 	var c0: Vector2i = w.gen.town_spawn("fenhollow")
-	for r in range(0, 70):
-		for dy in range(-r, r + 1):
-			for dx in range(-r, r + 1):
+	# 0.3.13: open ground (no props, no blocking tiles) so the walk legs measure walking, not clutter
+	# (Fenhollow's redesign packs racks/crates/reeds right up to the spawn; within r 70 there is no clear patch)
+	for r in range(0, 240, 2):
+		for dy in range(-r, r + 1, 2):
+			for dx in range(-r, r + 1, 2):
 				if maxi(absi(dx), absi(dy)) != r:
 					continue
 				var c := c0 + Vector2i(dx, dy)
 				var ok := true
 				for yy in range(-6, 7):
-					for xx in range(-10, 10):
+					for xx in range(-20, 12):
 						var q := c + Vector2i(xx, yy)
 						w.get_chunk(w.chunk_of(q))
 						if w.is_blocked(q) or w.object_at(q) != null:
@@ -374,7 +376,9 @@ func _walk_origin() -> Vector2i:
 					if not ok:
 						break
 				if ok:
+					_ev("walk_origin", {"tile": [c.x, c.y], "r": r})
 					return c
+	_ev("walk_origin", {"tile": [c0.x, c0.y], "r": -1})
 	return c0
 
 

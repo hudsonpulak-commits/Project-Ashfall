@@ -516,12 +516,19 @@ for b in blds:
                     sign_sprite='sign_house', roof='#8a5a3a', keeper_at=rel(k), stand=rel(ad if ad != k else inn[0]),
                     note='0.3.8 player house; 0.3.11 a walk-in townhouse with a walled work yard behind it (stations + bank chest work for the owner only)')
         base['_yard'] = True
-    elif role == 'smithy':
+    elif role == 'smithy':   # 0.3.13 a working forge: furnace + anvil under the roof (stations only where all 8 neighbours are building tiles)
+        def _inb(b_, x_, y_):
+            lx_, ly_ = x_ - b_['at'][0], y_ - b_['at'][1]
+            return 0 <= ly_ < len(b_['rows']) and 0 <= lx_ < len(b_['rows'][0]) and b_['rows'][ly_][lx_] != '.'
         cand = [p for p in inn if p != ad]; k = cand[-1] if cand else door
-        base.update(id='highfen_smithy', kind='house', shop='', name='Highfen Forge', keeper='Bram Ironside', keeper_sprite='villager', sign_sprite='sign_house',
-                    roof='#8a7050', keeper_at=rel(k), stand=rel(ad if ad != k else door), note='0.3.13 Highfen v4 smithy (art only; smithing stays in Fenhollow)')
-        top = sorted([p for p in inn if p != k and p != ad and p[1] < door[1] - 1], key=lambda p: -abs(p[0] - door[0]))
-        if top and len(inn) > 3: base['props'].append(dict(object='anvil', at=rel(top[0])))
+        base.update(id='highfen_smithy', kind='smithy', shop='', name='Highfen Forge', keeper='Bram Ironside', keeper_sprite='villager',
+                    roof='#8a7050', keeper_at=rel(k), stand=rel(ad if ad != k else door), note='0.3.13 Highfen v4 forge (designer v4_smithy): furnace + anvil, smithing role')
+        base['sign_sprite'] = 'sign_smithy'
+        sp = sorted([p for p in inn if p not in (k, ad, tuple(door)) and all(_inb(b, p[0] + a_, p[1] + c_) for a_ in (-1, 0, 1) for c_ in (-1, 0, 1))], key=lambda p: (p[1], -abs(p[0] - door[0])))
+        if len(sp) < 2:
+            sp = sorted([p for p in inn if p not in (k, ad, tuple(door))], key=lambda p: (p[1], -abs(p[0] - door[0])))
+        print('highfen forge stations', sp[:2])
+        base['props'] = [dict(object=o, at=rel(p)) for o, p in zip(['furnace', 'anvil'], sp[:2])]
     elif role in ('baker', 'home'):
         nm, kp = NAMES_HOME[hi % len(NAMES_HOME)]; hi += 1
         if role == 'baker': nm, kp = ("Hob's bakery", 'Hob Larder')
@@ -610,6 +617,21 @@ for y in range(2, N - 2, 1):
     for x in range(2, N - 2, 1):
         if VERGE[y, x] and inner[y, x] and (x * 7 + y * 13) % 9 == 0 and addo('hf4_lamp_post_double' if (x + y) % 3 == 0 else 'hf4_lamp_post', x, y): _lamps += 1
 print('v4 lamps', _lamps)
+# 0.3.13 v4: a wall banner hung on the inner face of the city wall either side of every gate
+_wb = 0
+for side, line in GATE_LINE.items():
+    xs = [p_[0] for p_ in line]; ys = [p_[1] for p_ in line]
+    if side in ('north', 'south'):
+        inw = 1 if side == 'north' else -1; y_ = ys[0]
+        for x_, d_ in ((min(xs), -1), (max(xs), 1)):
+            for k_ in (2, 3, 4):
+                if any(addo('hf4_banner_wall', x_ + d_ * k_, y_ + inw * j_) for j_ in (1, 2)): _wb += 1; break
+    else:
+        inw = 1 if side == 'west' else -1; x_ = xs[0]
+        for y_, d_ in ((min(ys), -1), (max(ys), 1)):
+            for k_ in (2, 3, 4):
+                if any(addo('hf4_banner_wall', x_ + inw * j_, y_ + d_ * k_) for j_ in (1, 2)): _wb += 1; break
+print('v4 wall banners', _wb)
 # round towers on the wall
 for (tx, ty) in TOWER_T: objs[(tx, ty)] = 'hf_wall_tower'
 print('wall towers', len(TOWER_T))

@@ -55,7 +55,7 @@ import diagtiles as dg
 def plan_of(b):
     n = b['name']; E = b['footprint_origin_px'][1]; W, H = b['tiles']; d = tuple(b['door_tile']); H = d[1] + 1   # rows below the door (fh_house_03 porch) are decor, not floor
     f = np.array(L('buildings', n + '_floor'))[..., 3] > 0
-    S = {(x, y) for y in range(H) for x in range(W) if f[E + y * T:E + y * T + T, x * T:x * T + T].sum() >= 24} | {d}
+    S = {(x, y) for y in range(H) for x in range(W) if f[E + y * T:E + y * T + T, x * T:x * T + T].sum() >= 160} | {d}
     rows = ['#' * (W + 2)]
     for y in range(H):
         r = '#'

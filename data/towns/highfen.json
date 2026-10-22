@@ -36,110 +36,114 @@
    "ground": "grass"
   },
   "F": {
-   "object": "hf4_lamp_post_double",
+   "object": "hf4_banner_wall",
    "ground": "grass"
   },
   "H": {
+   "object": "hf4_lamp_post_double",
+   "ground": "grass"
+  },
+  "I": {
    "object": "hf4_statue_knight",
    "ground": "cobble"
   },
-  "I": {
+  "J": {
    "object": "hf4_tree_birch",
    "ground": "grass"
   },
-  "J": {
+  "K": {
    "object": "hf4_tree_dead",
    "ground": "grass"
   },
-  "K": {
+  "L": {
    "object": "hf4_tree_elm",
    "ground": "grass"
   },
-  "L": {
+  "M": {
    "object": "hf4_tree_oak",
    "ground": "grass"
   },
-  "M": {
+  "N": {
    "object": "hf4_tree_pine",
    "ground": "grass"
   },
-  "N": {
+  "O": {
    "object": "hf4_tree_young",
    "ground": "grass"
   },
-  "O": {
+  "P": {
    "object": "hf_barrel",
    "ground": "grass"
   },
-  "P": {
+  "Q": {
    "object": "hf_bush_a",
    "ground": "grass"
   },
-  "Q": {
+  "R": {
    "object": "hf_bush_flowers",
    "ground": "grass"
   },
-  "R": {
+  "S": {
    "object": "hf_crate_broken",
    "ground": "grass"
   },
-  "S": {
+  "T": {
    "object": "hf_fountain",
    "ground": "cobble"
   },
-  "T": {
+  "U": {
    "object": "hf_v3_barrels",
    "ground": "grass"
   },
-  "U": {
+  "V": {
    "object": "hf_v3_bench",
    "ground": "cobble"
   },
-  "V": {
+  "X": {
    "object": "hf_v3_cart",
    "ground": "grass"
   },
-  "X": {
+  "Y": {
    "object": "hf_v3_crate_pile",
    "ground": "grass"
   },
-  "Y": {
+  "Z": {
    "object": "hf_v3_garden_bed",
    "ground": "grass"
   },
-  "Z": {
+  "a": {
    "object": "hf_v3_hedge",
    "ground": "grass"
   },
-  "a": {
+  "b": {
    "object": "hf_v3_stall_blue",
    "ground": "grass"
   },
-  "b": {
+  "e": {
    "object": "hf_v3_stall_green",
    "ground": "grass"
   },
-  "e": {
+  "f": {
    "object": "hf_v3_stall_orange",
    "ground": "cobble"
   },
-  "f": {
+  "h": {
    "object": "hf_v3_stall_purple",
    "ground": "cobble"
   },
-  "h": {
+  "i": {
    "object": "hf_v3_stall_red",
    "ground": "grass"
   },
-  "i": {
+  "j": {
    "object": "hf_v3_veg_patch",
    "ground": "grass"
   },
-  "j": {
+  "k": {
    "object": "hf_v3_well_round",
    "ground": "grass"
   },
-  "k": {
+  "l": {
    "object": "hf_wall_tower",
    "ground": "capital_wall"
   }
@@ -1681,21 +1685,27 @@
    ],
    "props": [
     {
-     "object": "anvil",
+     "object": "furnace",
      "at": [
       55,
+      25
+     ]
+    },
+    {
+     "object": "anvil",
+     "at": [
+      56,
       25
      ]
     }
    ],
    "counter": [],
    "id": "highfen_smithy",
-   "kind": "house",
+   "kind": "smithy",
    "shop": "",
    "name": "Highfen Forge",
    "keeper": "Bram Ironside",
    "keeper_sprite": "villager",
-   "sign_sprite": "sign_house",
    "roof": "#8a7050",
    "keeper_at": [
     58,
@@ -1705,7 +1715,8 @@
     56,
     26
    ],
-   "note": "0.3.13 Highfen v4 smithy (art only; smithing stays in Fenhollow)"
+   "note": "0.3.13 Highfen v4 forge (designer v4_smithy): furnace + anvil, smithing role",
+   "sign_sprite": "sign_smithy"
   },
   {
    "art": "v3_house_09",
@@ -4107,76 +4118,76 @@
  ],
  "rows": [
   "ggggggggggggggggggggggggggggggggggg::ggggggggggggggggggggggggggggggggggg",
-  "ggggggggggggggggggggggigggggggggggg::ggggggggggggggggggggggggggggggggggg",
-  "ggggXggggggggggggggggggggKggggggggg::ggggggggggggJgggggggggggggggggggggg",
+  "ggggggggggggggggggggggjgggggggggggg::ggggggggggggggggggggggggggggggggggg",
+  "ggggYggggggggggggggggggggLggggggggg::ggggggggggggKgggggggggggggggggggggg",
   "ggggggggggggggggggggggggggggggggggg::ggggggggggggggggggggggggggggggggggg",
-  "ggggggggggggggggggggggggggggggggggg::ggggggggggggggggggggggggggggIggggLg",
-  "ggggVgggggggggggggggggggggggggggggg::ggggggggggggggggggggZggggggggJggggg",
-  "ggggggggggggggggggggggggggggggMgggg::ggggggggggggggggggggggggggggggigggg",
-  "ggggggggggggggggggggggggggggggggggg::gggggggggggggggggggJgggggggggggggPg",
-  "gggPgLgggILgggggggggggggggggggggggg::ggggggggggggggggggggggggggggggggggg",
-  "gggggMgggggggggggggg##############g::g##############gggggggggggVgggggggg",
+  "ggggggggggggggggggggggggggggggggggg::ggggggggggggggggggggggggggggJggggMg",
+  "ggggXgggggggggggggggggggggggggggggg::ggggggggggggggggggggaggggggggKggggg",
+  "ggggggggggggggggggggggggggggggNgggg::ggggggggggggggggggggggggggggggjgggg",
+  "ggggggggggggggggggggggggggggggggggg::gggggggggggggggggggKgggggggggggggQg",
+  "gggQgMgggJMgggggggggggggggggggggggg::ggggggggggggggggggggggggggggggggggg",
+  "gggggNgggggggggggggg##############g::g##############gggggggggggXgggggggg",
   "ggggggggggggggggggg################::################ggggggggggggggggggg",
-  "gggggggggggggXgggg###k############g::g#############k##gggggggggggggKgggg",
-  "ggIgggggggggggggg###ggggggggggggggg::ggggggggggggggg###ggggggggggggggVVg",
-  "ggggggggVggggggg###gggggggggggggOgg::gggggggggggggggg###gggggggggggggggg",
-  "gggggJgVggggggg###ggggggggggggOgggg::ggggggggggggggggg###ggggggggggggggg",
-  "gggggVgXgggggg####ggggggYgggggggRgg::gggggggggggLggggg####gggggggggggggg",
-  "gggggggggggig###gggggggggPggggggFg::::gggggggigggggggggg###ggggggggggggg",
-  "gggggggggggg###gggggVggggFggggggg:::::::::ggggggggggggggg###ggggggggggKg",
-  "ggggggggggg###gggggggggggggggg:::gggggggg:::::gggggggggggg###ggggggggKgg",
-  "gggggggggg###gggggggggggg:::::ggggggggFgggggg:::gKggggKgggg###ggggggVggg",
-  "ggggggggg###ggggggggggg:::gggggFggggggggggggggg::ggggggggggg###ggggggggg",
-  "gggggggg###gggQggIgggg::gggggggggggQgggggggggXgg::gggggiggggg###gggggggg",
-  "ggggggg###ggggggggggg::gggggggggggggMggZgYgggggg::gggggggggggg###ggggggg",
-  "gggggg###ggggggggggg::gggggggggggggggggggggggggKg::gggigggggggg###gggggg",
-  "ggggg###ggggggggggg:::ggggggggggggggggggggggggggFg:ggggggggggggg###ggggg",
-  "ggggg#k#ggggggggggg::ggggggggggXgggggggggigggggggg::gggggggggggg#k#ggggg",
-  "ggggg###gggTggiggg::ggggggggggggggggggggggggggggggg::ggggggggggg###ggggg",
-  "ggggg###ggggKggggg::ggggggggggggNggggggZgMggggggggg::ggggggggKgg###ggggg",
-  "ggggg###gggggggTg::g::gggggggggggggggggggggggggggg::::gggggggggg###ggggg",
-  "ggggg###ggggggggg:gigg::ggggCCgFggggggggFgBBgggg::ggg:gggggggggg###ggggg",
-  "gdggg###ggggggggg:gggggg::ggggggggggggggggFggg::gggFg::ggggggYgg###ggggg",
+  "gggggggggggggYgggg###l############g::g#############l##gggggggggggggLgggg",
+  "ggJgggggggggggggg###gggggggggggggFg::gFggggggggggggg###ggggggggggggggXXg",
+  "ggggggggXggggggg###gggggggggggggPgg::gggggggggggggggg###gggggggggggggggg",
+  "gggggKgXggggggg###ggggggggggggPgggg::ggggggggggggggggg###ggggggggggggggg",
+  "gggggXgYgggggg####ggggggZgggggggSgg::gggggggggggMggggg####gggggggggggggg",
+  "gggggggggggjg###gggggggggQggggggHg::::gggggggjgggggggggg###ggggggggggggg",
+  "gggggggggggg###gggggXggggHggggggg:::::::::ggggggggggggggg###ggggggggggLg",
+  "ggggggggggg###gggggggggggggggg:::gggggggg:::::gggggggggggg###ggggggggLgg",
+  "gggggggggg###gggggggggggg:::::ggggggggHgggggg:::gLggggLgggg###ggggggXggg",
+  "ggggggggg###ggggggggggg:::gggggHggggggggggggggg::ggggggggggg###ggggggggg",
+  "gggggggg###gggRggJgggg::gggggggggggRgggggggggYgg::gggggjggggg###gggggggg",
+  "ggggggg###ggggggggggg::gggggggggggggNggagZgggggg::gggggggggggg###ggggggg",
+  "gggggg###ggggggggggg::gggggggggggggggggggggggggLg::gggjgggggggg###gggggg",
+  "ggggg###ggggggggggg:::ggggggggggggggggggggggggggHg:ggggggggggggg###ggggg",
+  "ggggg#l#ggggggggggg::ggggggggggYgggggggggjgggggggg::gggggggggggg#l#ggggg",
+  "ggggg###gggUggjggg::ggggggggggggggggggggggggggggggg::ggggggggggg###ggggg",
+  "ggggg###ggggLggggg::ggggggggggggOggggggagNggggggggg::ggggggggLgg###ggggg",
+  "ggggg###gggggggUg::g::gggggggggggggggggggggggggggg::::gggggggggg###ggggg",
+  "ggggg###ggggggggg:gjgg::ggggCCgHggggggggHgBBgggg::ggg:gggggggggg###ggggg",
+  "gdggg###ggggggggg:gggggg::ggggggggggggggggHggg::gggHg::ggggggZgg###ggggg",
   "gdggg###ggggggggg:gggggggg::ggg::::::::::ggg::gggggggg:ggggggggg###ggggg",
-  "ggggg###ggggggggg:ggggPggggg::::::::::::::::gggggggggg:ggggggggg###ggggg",
-  "ggdgg###gggOggggg:ggggggggggg:::U:::::U::::gNggggggggg:ggggggggg###ggggg",
-  "gggggg#ggggggggg:::ggggggggg:::j::::::::A:::ggggggggg:::ggggggggg#gggggg",
+  "ggggg###ggggggggg:ggggQggggg::::::::::::::::gggggggggg:ggggggggg###ggggg",
+  "ggdgg###FggPggggg:ggggggggggg:::V:::::V::::gOggggggggg:ggggggggF###ggggg",
+  "gggggg#ggggggggg:::ggggggggg:::k::::::::A:::ggggggggg:::ggggggggg#gggggg",
   "::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::",
-  "::::::::::::::::::::::::::::::V:::::S:::::H:::::::::::::::::::::::::::::",
-  "gggggg#gggggggg:::gggggggggg:::X:::::::T::::gggggggggg:::gggggggg#gggggg",
-  "ggggg###gMgggFgg:gggggggggggg:::::::::::::fggVggggggggg:gggggggj###dgggg",
-  "ggggg###gggggggg::ggggggFggg:e::::::::::::::ggZgggggggg:gggggggg###ggggg",
-  "ggggg###ggggggggg:gggggggg::ggag:::::::::hgg::gggggggg::gggggggg###ggggg",
-  "ggggg###ggggggggg:gggggg::ggFggbgh::::agbggggg::ggggg::ggggggggg###ggggg",
-  "ggggg###ggggggggg::ggg::gggggggggggf:egFgggggggg::ggg::gggggggRg###ggggg",
-  "ggggg###ggggggggg:::::ggggggggggggg::ggggggggQgggg::::gggggggggg###ggggg",
-  "ggggg###ggggggggFg::ggggggggggggggg::gggggggggggggg::ggggggggggg###ggggg",
-  "ggggg###gggggggNgg::ggggggggggggggg::gggggggggTgggg::gFggggggggg###ggggg",
-  "ggggg###gggggggggXg:ggggggggggggggg::ggggggggggggg::gggggggggggg###ggPgg",
-  "ggggg#k#ggggggggggg::gggggggggggggg::gggggggggTgg:::gggggggggggg#k#ggggg",
-  "gggggg###gggggggggMg:::gggggggggggg::ggggggggggg:::gggggggggggg###gggggg",
-  "ggggggg###gggggggggggg:::ggggMggggg::ggEEgggEEg:::gggggggggggg###ggggggg",
-  "gggggggg###ggggggggggggg::ggggggggg::gLgggggig:::ggVdOggggggg###gggggggg",
-  "ggggggggg###ggggggggggggg:::ggggggg::ggKggggg:::ggggddgggggg###ggggggggg",
-  "gggggggggg###gggZgggggggYgg::ggggTg::ggggggg:::gNgggddggggg###gggggggggg",
+  "::::::::::::::::::::::::::::::X:::::T:::::I:::::::::::::::::::::::::::::",
+  "gggggg#gggggggg:::gggggggggg:::Y:::::::U::::gggggggggg:::gggggggg#gggggg",
+  "ggggg###FNgggHgg:gggggggggggg:::::::::::::hggXggggggggg:gggggggk###dgggg",
+  "ggggg###gggggggg::ggggggHggg:f::::::::::::::ggagggggggg:gggggggF###ggggg",
+  "ggggg###ggggggggg:gggggggg::ggbg:::::::::igg::gggggggg::gggggggg###ggggg",
+  "ggggg###ggggggggg:gggggg::ggHggegi::::bgeggggg::ggggg::ggggggggg###ggggg",
+  "ggggg###ggggggggg::ggg::gggggggggggh:fgHgggggggg::ggg::gggggggSg###ggggg",
+  "ggggg###ggggggggg:::::ggggggggggggg::ggggggggRgggg::::gggggggggg###ggggg",
+  "ggggg###ggggggggHg::ggggggggggggggg::gggggggggggggg::ggggggggggg###ggggg",
+  "ggggg###gggggggOgg::ggggggggggggggg::gggggggggUgggg::gHggggggggg###ggggg",
+  "ggggg###gggggggggYg:ggggggggggggggg::ggggggggggggg::gggggggggggg###ggQgg",
+  "ggggg#l#ggggggggggg::gggggggggggggg::gggggggggUgg:::gggggggggggg#l#ggggg",
+  "gggggg###gggggggggNg:::gggggggggggg::ggggggggggg:::gggggggggggg###gggggg",
+  "ggggggg###gggggggggggg:::ggggNggggg::ggEEgggEEg:::gggggggggggg###ggggggg",
+  "gggggggg###ggggggggggggg::ggggggggg::gMgggggjg:::ggXdPggggggg###gggggggg",
+  "ggggggggg###ggggggggggggg:::ggggggg::ggLggggg:::ggggddgggggg###ggggggggg",
+  "gggggggggg###gggagggggggZgg::ggggUg::ggggggg:::gOgggddggggg###gggggggggg",
   "ggggggggggg###gggggggggggggg:::ggg:::gggggg:::ggggggdggggg###ggggggggggg",
-  "gggggggggggg###ggggggggggggFggg:::::::gg::::ggggggggggggg###gggggggggggg",
-  "ggggggggggggg###gggggggggggggFgggg::::gggggggggggggggggg###ggggggggggggg",
-  "gggggggggggKg####gggggggggggggggggg::gggggggggggggggggg####ggggggggggggg",
-  "ggggggggggggggg###ggggggggggggggggg::ggggggggggggggggg###gggVggggggggJgg",
-  "ggggggLgggKggggg###gggggggggggggggg::gggggggggggggggg###gggggggggggggggg",
-  "ggggggggggggggggg###ggggggggggggggg::ggNgggggggggggg###ggggggggggLgggIgg",
-  "ggggggIggggggggggg################g::g################ggggggggggggIggggg",
+  "gggggggggggg###ggggggggggggHggg:::::::gg::::ggggggggggggg###gggggggggggg",
+  "ggggggggggggg###gggggggggggggHgggg::::gggggggggggggggggg###ggggggggggggg",
+  "gggggggggggLg####gggggggggggggggggg::gggggggggggggggggg####ggggggggggggg",
+  "ggggggggggggggg###ggggggggggggggggg::ggggggggggggggggg###gggXggggggggKgg",
+  "ggggggMgggLggggg###gggggggggggggggg::gggggggggggggggg###gggggggggggggggg",
+  "ggggggggggggggggg###gggggggggggggFg::gFOgggggggggggg###ggggggggggMgggJgg",
+  "ggggggJggggggggggg################g::g################ggggggggggggJggggg",
   "ggggggggggggggggggg################::################ggggggggggggggggggg",
-  "gggggggggggggggggggg#k############g::g#############kggggggggggggMgXggggg",
-  "gigggggggggggggggMggggggggggggggggg::gggggggggggggggggggggggIgggggXggggg",
+  "gggggggggggggggggggg#l############g::g#############lggggggggggggNgYggggg",
+  "gjgggggggggggggggNggggggggggggggggg::gggggggggggggggggggggggJgggggYggggg",
   "ggggggggggggggggggggggggggggggggggg::ggggggggggggggggggggggggggggggggggg",
   "ggggggggggggggggggggggggggggggggggg::ggggggggggggggggggggggggggggggggggg",
-  "ggggggggggggggggggggggggggggggggggg::ggggggggggggggggggggggggggggggggPgg",
-  "ggggggggggggggggggggggggggggggggggg::gdggggggXgggggggggggggggggggggggggg",
-  "ggggggggZgggggggggggggggggggggggggg::gdggggggggggggggggggLgggggggggggggg",
-  "ggggggggggggggggggggggLgggggggggggg::gggggggPggggggggggggJgggggggggggggg",
-  "gggggggggggXggggggggggggggggZgggggg::gggKgggggggggggMgggggXggggggggVgggg",
+  "ggggggggggggggggggggggggggggggggggg::ggggggggggggggggggggggggggggggggQgg",
+  "ggggggggggggggggggggggggggggggggggg::gdggggggYgggggggggggggggggggggggggg",
+  "ggggggggagggggggggggggggggggggggggg::gdggggggggggggggggggMgggggggggggggg",
+  "ggggggggggggggggggggggMgggggggggggg::gggggggQggggggggggggKgggggggggggggg",
+  "gggggggggggYggggggggggggggggagggggg::gggLgggggggggggNgggggYggggggggXgggg",
   "ggggggggggggggggggggggggggggggggggg::ggggggggggggggggggggggggggggggggggg"
  ],
  "note": "0.3.11 generated by tools/world/build_highfen_v4.py from the designer's Highfen set (art_handoff/towns/highfen, copied to assets/sprites/towns/highfen)"

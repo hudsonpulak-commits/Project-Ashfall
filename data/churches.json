@@ -40,27 +40,6 @@
      "object": "pew",
      "at": [
       41,
-      36
-     ]
-    },
-    {
-     "object": "pew",
-     "at": [
-      42,
-      36
-     ]
-    },
-    {
-     "object": "pew",
-     "at": [
-      44,
-      36
-     ]
-    },
-    {
-     "object": "pew",
-     "at": [
-      42,
       37
      ]
     },
@@ -74,7 +53,7 @@
     {
      "object": "pew",
      "at": [
-      44,
+      42,
       38
      ]
     }
@@ -88,11 +67,11 @@
    "keeper": "Father Aldric",
    "altar": [
     43,
-    34
+    35
    ],
    "keeper_at": [
     42,
-    34
+    35
    ],
    "stand": [
     43,

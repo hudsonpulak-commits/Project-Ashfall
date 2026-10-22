@@ -12,6 +12,6 @@
 - v3_quay_end_w/e have no slot. Saltmere's quay is only 2 tiles deep: the top row abuts land (corner_nw/ne) and the front row is corner_sw/se. The end tiles are copied in but unused until the quay is deepened or the designer says where they go.
 
 ## Highfen v4
-- The v4 smithy has no Highfen smithing role (it is a house with an anvil). A keeper sprite and a decision on whether Highfen should sell or smith are open.
-- v4_banner_wall (facade banner) is copied in but not placed. It needs per-design facade anchor points.
+- Resolved: the v4 smithy (Highfen Forge) now has the smithing role, with a furnace and an anvil. It has no shop counter, and the keeper still uses the generic villager sprite.
+- Resolved: v4_banner_wall hangs on the inner face of the city wall, beside each gate (8 placed). It is still not on building facades, because that needs per-design anchor points.
 - The building debug image draws hf4_* props as placeholders (debug only).

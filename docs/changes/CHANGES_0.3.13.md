@@ -64,10 +64,14 @@ Fenhollow is rebuilt as a marsh town from the designer's Fenhollow v1 set (art_h
 
 ## Highfen v4 (tools/world/build_highfen_v4.py)
 - Street plan per preview_v4: outer ring road dropped; the 60/120-degree spokes replaced by inner spokes at 30/150/210/330.
-- v4 guild, cookhouse (Hob's bakery), player shop, smithy (new: Highfen Forge, anvil only; smithing stays in Fenhollow) and general store, replacing guild_knights, v3_cookhouse, shop_smith and shop_general per manifest_v4.
-- v4 knight statue on the plaza, banners flanking civic doors, v4 lamp posts on road verges, v4 trees for fill.
+- v4 guild, cookhouse (Hob's bakery), player shop, smithy (new: Highfen Forge, a working forge with a furnace and anvil) and general store, replacing guild_knights, v3_cookhouse, shop_smith and shop_general per manifest_v4.
+- v4 knight statue on the plaza, banners flanking civic doors, wall banners on the inner city wall beside each gate, v4 lamp posts on road verges, v4 trees for fill.
 - Player-house yard stations now placed on a checkerboard so none is boxed in.
 - Wall ring QA: 1496 samples, 0 gaps, 4 gates. Reachability: 0 fails.
 - Test change: patch0311 "relocated inside the city wall" radius widened from 17 to 26 tiles. The larger v4 buildings fill the band freed by the dropped ring road; 26 is still inside the wall.
 
 Selftest: 939/939 (also fixed 3 latent SCRIPT ERRORs the release gate rejects: no-counter shop tap, gate-standing Fenhollow guards, no-keeper first house).
+
+## QA fixes (0.3.13)
+- Fenhollow buildings: a tile now counts as walk-in floor only when at least 160 of its 256 px are drawn floor (it was 24). Before this, the top row of the forge hall, which is mostly outside the drawn floor, could be walked on. The furnace, anvil and keeper stood above the back wall, and the wall drew over the player's head.
+- QA bot: the walk and gear legs now run on a properly clear patch. The old search found no clear patch within radius 70 of the dense Fenhollow spawn, so the legs ran through crates and racks.
