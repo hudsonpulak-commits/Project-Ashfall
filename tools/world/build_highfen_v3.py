@@ -116,7 +116,12 @@ VY, VX = np.mgrid[:N + 1, :N + 1].astype(float)
 _ang = np.degrees(np.arctan2((VY - CYt) / RY, (VX - CXt) / RX)) % 360
 _wob = 1 + .03 * np.sin(np.radians(_ang) * 5 + 1) + .015 * np.sin(np.radians(_ang) * 11)
 def vell(rx, ry): return np.hypot((VX - CXt) / rx, (VY - CYt) / ry) / _wob <= 1
-WV = vell(RX + 1, RY + 1) & ~vell(RX - 1, RY - 1)
+# 0.3.11 v3.1b one continuous OCTAGONAL ring (straights + true 45-degree runs only, so the corner autotile
+# never steps or saddles): |dx| <= RX, |dy| <= RY, |dx|+|dy| <= S on the vertex grid; 2 tiles thick
+S_OCT = 40
+_dX, _dY = np.abs(VX - CXt), np.abs(VY - CYt)
+def voct(k, kd): return (_dX <= RX + k) & (_dY <= RY + k) & (_dX + _dY <= S_OCT + kd)
+WV = voct(1, 2) & ~voct(-1, -1)
 def vring(s, hw, sy=None): sy = sy or s; return vell(s * RX + hw, sy * RY + hw) & ~vell(s * RX - hw, sy * RY - hw)
 PR = .24                                         # plaza radius (fraction of RX/RY)
 RV = vring(.9, .8) | vring(.66, .95, .75) | vell(PR * RX * 1.15, PR * RY)
@@ -128,22 +133,23 @@ for nm_, a0, hw in [('east_track', 0, 1.05), ('gate_road', 90, 1.05), ('west_tra
     RV |= dg.line_mask(VY.shape, p, hw)
     LANES[nm_] = [(T * (p[0][0] + (p[1][0] - p[0][0]) * t / 80), T * (p[0][1] + (p[1][1] - p[0][1]) * t / 80)) for t in range(81)]
 # gates: straight wall runs (>= 5 tiles each side) + the passage cut; N back, S front, E/W side profile
-GATE = []; GATE_LINE = {}; GATE_TILES = {}; ROOF_TILES = {}
+JOINS = []; GATE = []; GATE_LINE = {}; GATE_TILES = {}; ROOF_TILES = {}
 for g, view, side in [(270, 'back', 'north'), (90, 'front', 'south'), (0, 'side', 'east'), (180, 'side', 'west')]:
     if view == 'side':
-        c = int(round(CXt + math.cos(math.radians(g)) * RX)); c = c - 1 if g == 0 else c; cy = CYt
-        WV[cy - 7:cy + 8, c - 3:c + 5] = False; WV[cy - 7:cy + 8, c:c + 2] = True; WV[cy - 1:cy + 2, c - 1:c + 3] = False
+        c = CXt + RX if g == 0 else CXt - RX - 1; cy = CYt          # the 2 vertex columns of the straight run: c, c+1
+        WV[cy - 1:cy + 2, c - 1:c + 3] = False
         GATE.append(('v31_gate_side', int((c + .5) * T) - 24, cy * T - 57, g))
         GATE_TILES[side] = [[x, y] for x in (c - 1, c, c + 1) for y in (cy - 1, cy)]
         GATE_LINE[side] = [[c, cy - 1], [c, cy]]
         ROOF_TILES[side] = [[x, y] for x in range(c - 2, c + 3) for y in (cy - 1, cy)]
     else:
-        r = int(round(CYt + math.sin(math.radians(g)) * RY)); r = r - 1 if g == 90 else r; cx = CXt
-        WV[r - 3:r + 5, cx - 7:cx + 8] = False; WV[r:r + 2, cx - 7:cx + 8] = True; WV[r - 1:r + 3, cx - 1:cx + 2] = False
+        r = CYt - RY - 1 if g == 270 else CYt + RY; cx = CXt     # the 2 vertex rows of the straight run: r, r+1
+        WV[r - 1:r + 3, cx - 1:cx + 2] = False
         GATE.append((f'v31_gate_{view}', cx * T - 32, int((r + .5) * T) - 16, g))
         GATE_TILES[side] = [[x, y] for x in (cx - 1, cx) for y in (r - 1, r, r + 1)]
         GATE_LINE[side] = [[cx - 1, r], [cx, r]]
         ROOF_TILES[side] = [[x, y] for x in (cx - 1, cx) for y in range(r - 2, r + 4)]
+        JOINS.append(('v31_wall_gate_join_w', (cx - 2) * T, r * T)); JOINS.append(('v31_wall_gate_join_e', (cx + 1) * T, r * T))
 RV &= ~WV
 for n_, x0, y0, g in GATE:   # the road continues through every passage
     if 'side' in n_: RV |= dg.line_mask(VY.shape, [((x0 - 8) / T, (y0 + 57) / T), ((x0 + 56) / T, (y0 + 57) / T)], 1.0)
@@ -154,9 +160,17 @@ bits = lambda f: bin(int(f)).count('1')
 CNT_R = np.vectorize(bits)(RF); CNT_W = np.vectorize(bits)(WF)
 # road decal (cobble autotile + v3 cobble fills) and the wall rows (16x28 frames, 12 px face hangs into the row below)
 _rr = random.Random(int(os.environ.get('HF_ROAD_SEED', 23)))
-L31 = lambda n: Image.open(os.path.join(SRC, 'tiles_v31', n + '.png')).convert('RGBA')
+L31 = lambda n: Image.open(os.path.join(DST, 'v31', n + '.png')).convert('RGBA')
+# 0.3.11 v3.1b the plaza / road cobble (and the gate passage floors) lifted with the ground textures
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from ground_grade import grade_file
+grade_file(os.path.join(SRC, 'tiles_v31', 'v31_diag_cobble.png'), os.path.join(DST, 'v31', 'v31_diag_cobble.png'))
+for _g in ('back', 'front', 'side'):
+    grade_file(os.path.join(SRC, 'tiles_v31', f'v31_gate_{_g}_floor.png'), os.path.join(DST, 'v31', f'v31_gate_{_g}_floor.png'))
+for _n in ('plain', 'worn', 'cracked', 'mossy', 'puddle'):
+    grade_file(os.path.join(SRC, 'tiles_v3', f'v3_cobble_{_n}.png'), os.path.join(DST, 'v31', f'v3_cobble_{_n}.png'))
 CB = np.array(L31('v31_diag_cobble'))
-fills = [np.array(Image.open(os.path.join(SRC, 'tiles_v3', f'v3_cobble_{n}.png')).convert('RGBA')) for n in ['plain', 'plain', 'plain', 'worn', 'cracked', 'mossy', 'puddle']]
+fills = [np.array(L31(f'v3_cobble_{n}')) for n in ['plain', 'plain', 'plain', 'worn', 'cracked', 'mossy', 'puddle']]
 dec = np.zeros((SH, SW, 4), np.uint8)
 for y in range(N):
     for x in range(N):
@@ -185,24 +199,71 @@ for n_, x0, y0, g in GATE:
     FADES.append(dict(path=f'{RES}/v31/{n_}_roof.png', pos=[x0, y0], tiles=ROOF_TILES[side]))
     wallpx[max(0, y0):y0 + h, x0:x0 + GM[n_]['size_px'][0]] |= np.array(L31(n_ + '_walls'))[:SH - max(0, y0), :, 3] > 0
 decal.save(os.path.join(DST, 'ground_decal.png'))
-# round towers on the wall, never near a gate
+# 0.3.11 v3.1b towers: a round tower on each of the 8 octagon turns (objects), and the designer's
+# diagonal tower fits (v31_wall_tower_fit_diag_ne/nw) at the middle of the 4 diagonal runs, snapped
+# to the pixel offset where the fit's wall stubs best match the wall rows (so the run stays unbroken)
 wp = lambda a_, r=1.0: ((CXt + RX * r * math.cos(math.radians(a_))) * T, (CYt + RY * r * math.sin(math.radians(a_))) * T)
 TOWER_T = []
-for a_ in range(18, 360, 36):
-    if min(abs(((a_ - g + 180) % 360) - 180) for g in (0, 90, 180, 270)) < 14: continue
-    x, y = wp(a_); TOWER_T.append((int(x // T), int((y + 16) // T)))
-    wallpx[max(0, int(y) - 44):int(y) + 20, int(x) - 24:int(x) + 24] = True
-# tiles: wall = >= 2 wall corners (and every tower base), road = >= 3 cobble corners; gates = the passage tiles
+_tc = S_OCT - RY, S_OCT - RX
+for sx in (-1, 1):
+    for sy in (-1, 1):
+        for (vx, vy) in ((_tc[0], RY + .5), (RX + .5, _tc[1])):
+            x, y = (CXt + sx * vx) * T, (CYt + sy * vy) * T
+            TOWER_T.append((int(x // T), int((y + 8) // T)))
+for (tx, ty) in TOWER_T:
+    x, y = tx * T + 8, ty * T + 16
+    wallpx[max(0, y - 64):y, x - 24:x + 24] |= np.array(L31('v3_wall_tower_round'))[64 - (y - max(0, y - 64)):, :, 3] > 0
+FITS = []
+_wall0 = wallpx.copy()
+for sx in (-1, 1):
+    for sy in (-1, 1):
+        m = (S_OCT + .5) / 2; cx, cy = (CXt + sx * m) * T, (CYt + sy * m) * T
+        best = None
+        for nm_ in ('v31_wall_tower_fit_diag_ne', 'v31_wall_tower_fit_diag_nw'):
+            al = np.array(L31(nm_))[..., 3] > 0; h, w = al.shape
+            for oy in range(-24, 25):
+                for ox in range(-24, 25):
+                    x0, y0 = int(cx - w / 2 + ox), int(cy - h / 2 + oy)
+                    win = _wall0[y0:y0 + h, x0:x0 + w]
+                    sc_ = (win & al).sum() - 2 * (al & ~win).sum()
+                    if best is None or sc_ > best[0]: best = (sc_, nm_, x0, y0)
+        _, nm_, x0, y0 = best
+        FITS.append((nm_, x0, y0))
+        YSORT.append(dict(path=f'{RES}/v31/{nm_}.png', pos=[x0, y0], base=70))
+        wallpx[y0:y0 + 92, x0:x0 + 80] |= np.array(L31(nm_))[..., 3] > 0
+for (nm_, x0, y0) in JOINS:
+    YSORT.append(dict(path=f'{RES}/v31/{nm_}.png', pos=[x0, y0], base=T))
+    wallpx[y0:y0 + 28, x0:x0 + 16] |= np.array(L31(nm_))[..., 3] > 0
+print('tower fits', FITS)
+# tiles: wall = >= 2 wall corners, road = >= 3 cobble corners; gates = the passage tiles
 wall_t = CNT_W >= 2
+for (nm_, x0, y0) in FITS:      # the fit's round tower body blocks
+    for ty in range((y0 + 40) // T, (y0 + 72) // T):
+        for tx in range((x0 + 20) // T, (x0 + 60) // T + 1): wall_t[ty, tx] = True
 for (tx, ty) in TOWER_T: wall_t[ty, tx] = False
 roadT = np.where(CNT_R >= 3, 2, 0).astype(np.uint8)
 GATES_RING = GATE_LINE   # the passage tiles on the wall line (gate torches either side)
 for v in GATE_TILES.values():
     for (x, y) in v: wall_t[y, x] = False; roadT[y, x] = 2
+# 0.3.11 v3.1b the cliff diagonal rule: where two wall tiles touch only at a corner, the open corner cell
+# with more wall in it (ties: the inner one) becomes wall too - no diagonal slip-throughs
+_gate_set = {tuple(p) for v in GATE_TILES.values() for p in v}
+_tow = set(TOWER_T)
+blk = lambda x, y: wall_t[y, x] or (x, y) in _tow
+for _ in range(3):
+    for y in range(N - 1):
+        for x in range(N - 1):
+            a, b, c, d = blk(x, y), blk(x + 1, y), blk(x, y + 1), blk(x + 1, y + 1)
+            for (p1, p2, o1, o2) in (((x, y), (x + 1, y + 1), (x + 1, y), (x, y + 1)), ((x + 1, y), (x, y + 1), (x, y), (x + 1, y + 1))):
+                if blk(*p1) and blk(*p2) and not blk(*o1) and not blk(*o2):
+                    cand = [o for o in (o1, o2) if o not in _gate_set]
+                    if not cand: continue
+                    o = max(cand, key=lambda q: (CNT_W[q[1], q[0]], -abs(q[0] - CXt) - abs(q[1] - CYt)))
+                    wall_t[o[1], o[0]] = True
 inner = vell(RX - 1, RY - 1)[:-1, :-1] & vell(RX - 1, RY - 1)[1:, 1:]
 print('wall tiles', int(wall_t.sum()), 'gates', {k: len(v) for k, v in GATES_RING.items()})
 INNER_PX = np.kron(vell(RX - 1.6, RY - 1.6)[:-1, :-1] & vell(RX - 1.6, RY - 1.6)[1:, 1:], np.ones((T, T), bool))
-OUTER_KEEP = np.kron(vell(RX + 2.4, RY + 2.4)[:-1, :-1], np.ones((T, T), bool))
+OUTER_KEEP = np.kron(voct(3, 4)[:-1, :-1], np.ones((T, T), bool))
 ringA = wallpx
 PLAZA = (CXt * T, CYt * T, int(PR * RX * 1.15 * T), int(PR * RY * T))
 plaza = ((X - PLAZA[0]) / PLAZA[2]) ** 2 + ((Y - PLAZA[1]) / PLAZA[3]) ** 2 <= 1
@@ -586,6 +647,28 @@ for o, ch in OBJ_CH.items():
     objects[ch] = {'object': o, 'ground': 'capital_wall' if o == 'hf_wall_tower' else ('cobble' if xs and all(roadT[p[1], p[0]] for p in xs) else 'grass')}
 town_art = dict(note='0.3.11 per-design tile plans for the layered town buildings (tools/world/build_highfen_v3.py). plan: # wall, o floor, D door, . outside',
                 buildings=ART)
+# 0.3.11 v3.1b ring QA (visual): walk the octagon centreline (L1 = S+.5, 2 px steps) over the composited
+# wall art alpha (rows + gatehouses + joins + fits + towers); every sample must hit wall pixels except
+# inside the 4 gate passages
+_ring_px = wallpx.copy()
+_cl = []
+_m = S_OCT + .5
+_pts = [(RX + .5, -(_m - RX - .5)), (RX + .5, _m - RX - .5), (_m - RY - .5, RY + .5), (-(_m - RY - .5), RY + .5),
+        (-RX - .5, _m - RX - .5), (-RX - .5, -(_m - RX - .5)), (-(_m - RY - .5), -RY - .5), (_m - RY - .5, -RY - .5)]
+_gaps = []; _gate_hits = set(); _n = 0
+for i in range(8):
+    (ax, ay), (bx, by) = _pts[i], _pts[(i + 1) % 8]
+    _L = int(math.hypot(bx - ax, by - ay) * T / 2) + 1
+    for k in range(_L):
+        vx = CXt + ax + (bx - ax) * k / _L; vy = CYt + ay + (by - ay) * k / _L
+        px, py = int(vx * T), int(vy * T) + 4     # +4: the wall top sits just above the vertex line
+        _n += 1
+        gt = [g for g, v in GATE_TILES.items() if any(abs(vx - (x + .5)) <= 1.6 and abs(vy - (y + .5)) <= 1.6 for x, y in v)]
+        if gt: _gate_hits.add(gt[0]); continue
+        if not _ring_px[max(0, py - 6):py + 6, px - 2:px + 3].any(): _gaps.append((round(vx, 1), round(vy, 1)))
+RING_QA = dict(samples=_n, gaps=_gaps[:20], gap_count=len(_gaps), gates=sorted(_gate_hits))
+print('ring QA', RING_QA)
+assert not _gaps and len(_gate_hits) == 4, RING_QA
 json.dump(town_art, open(os.path.join(REPO, 'data/town_art.json'), 'w'), indent=1)
 old = json.load(open(os.path.join(REPO, 'data/towns/highfen.json')))
 spawn = [PLAZA[0] // T, PLAZA[1] // T + 3]
@@ -596,6 +679,7 @@ town = dict(id='highfen', name='Highfen', kind='capital', origin=old['origin'], 
             tagline='The walled capital at the heart of the realm: a round city of soot-dark stone, the palace at its centre, the Guild of Knights, a market by the gate and houses ringing the wall.',
             theme='highfen', gates=gates,
             gate_walls=GATES_RING,
+            gate_tiles=GATE_TILES, ring_qa=RING_QA,
             art=dict(market=[list(p) for p in MARKET], plaza_px=list(PLAZA[:2]), ground_decal=f'{RES}/ground_decal.png', ysort=YSORT, fades=FADES),
             buildings=out_b, rows=rows,
             note="0.3.11 generated by tools/world/build_highfen_v3.py from the designer's Highfen set (art_handoff/towns/highfen, copied to assets/sprites/towns/highfen)")

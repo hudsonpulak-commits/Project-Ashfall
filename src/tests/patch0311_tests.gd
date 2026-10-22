@@ -149,6 +149,44 @@ static func run(main, world, p) -> void:
 		if bv.gate_roof_alpha(i) == 0.0:
 			faded += 1
 	check(gr_n == 4 and faded == 1, "Highfen's 4 gatehouse roofs: standing in the S passage fades only that roof (%d/%d)" % [faded, gr_n])
+	# 0.3.11 v3.1b the wall ring walked in collision: an 8-connected flood from the plaza (diagonal steps
+	# allowed unless both orthogonal tiles block, like Pathfinder.diag_ok) is sealed with all 4 gates
+	# closed, and gets outside through each gate on its own; the visual walk is the generator's ring_qa
+	var org := Vector2i(int(hf["origin"][0]), int(hf["origin"][1]))
+	var gts: Dictionary = hf.get("gate_tiles", {})
+	var sealed := _ring_flood(world, hc, org, gts, "")
+	var opens := 0
+	for g in gts.keys():
+		if _ring_flood(world, hc, org, gts, g):
+			opens += 1
+	var rq: Dictionary = hf.get("ring_qa", {})
+	check(gts.size() == 4 and not sealed and opens == 4, "Highfen's wall ring has no collision holes or diagonal slip-throughs: sealed with the gates shut, open through each of the 4 gates (%d/4)" % opens)
+	check(int(rq.get("samples", 0)) > 1000 and int(rq.get("gap_count", -1)) == 0 and (rq.get("gates", []) as Array).size() == 4, "Highfen's wall ring reads as one continuous wall: %d centreline samples, %d gaps, openings only at the 4 gates" % [int(rq.get("samples", 0)), int(rq.get("gap_count", -1))])
+
+
+static func _ring_flood(world, start: Vector2i, org: Vector2i, gts: Dictionary, open_gate: String) -> bool:
+	var shut := {}
+	for g in gts.keys():
+		if g != open_gate:
+			for t in gts[g]:
+				shut[org + Vector2i(int(t[0]), int(t[1]))] = true
+	var blk := func(q: Vector2i) -> bool: return shut.has(q) or (world.is_blocked(q) and q != start)
+	var seen := {start: true}
+	var q := [start]
+	while not q.is_empty():
+		var c: Vector2i = q.pop_back()
+		if absi(c.x - start.x) > 36 or absi(c.y - start.y) > 32:
+			return true
+		for dy in [-1, 0, 1]:
+			for dx in [-1, 0, 1]:
+				var n := c + Vector2i(dx, dy)
+				if (dx == 0 and dy == 0) or seen.has(n) or blk.call(n):
+					continue
+				if dx != 0 and dy != 0 and blk.call(c + Vector2i(dx, 0)) and blk.call(c + Vector2i(0, dy)):
+					continue
+				seen[n] = true
+				q.append(n)
+	return false
 
 
 class _FakeWorld:

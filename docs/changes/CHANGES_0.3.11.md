@@ -31,3 +31,10 @@
   v3_town_hall = new Town Hall (hall), v3_player_house = player house, v3_cookhouse = Hob's bakery, shop_tavern = cookhouse
   (v3_cookhouse has only 2 floor tiles: no room for keeper + oven + stand), v3_house_01..18 + narrow_tall + longhouse, max 3 uses each.
 - Props: animated 4-frame v3 fountain (hf_fountain), v3 stalls (5 colours), trees, hedges, garden beds, veg patches, crates, barrels, wells, carts, benches.
+
+## v3.1b — continuous wall ring, brighter roads (Hudson feedback)
+- Wall ring rebuilt as a true octagon (straight runs + clean 45° runs) so the corner autotile never steps or touches only at a corner; gate rewrites that jogged the band removed (passage cuts only).
+- Designer pieces now used: `v31_wall_tower_fit_diag_ne/nw` at the middle of each diagonal run (pixel-fit to the wall), `v31_wall_gate_join_w/e` flanking the N/S gatehouses; round towers on the 8 octagon turns.
+- Collision: cliff diagonal-gap rule applied to the wall tiles; fit tower bodies block.
+- QA: generator walks the ring centreline over the composited wall art (asserts 0 gaps, openings only at the 4 gates, stored as `ring_qa`); selftest floods from the plaza — sealed with gates shut, open through each gate alone.
+- Roads: road_stone, cobble, cobble_dark (+ transitions), plaza/road cobble fills, diag cobble and gate floors graded ×1.13 value + small lift, hue/saturation kept (`tools/world/ground_grade.py`, always from the art_handoff originals). Minimap colours updated.
