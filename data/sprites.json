@@ -1686,7 +1686,7 @@
    ],
    "frames": 1,
    "anchor": "bottom",
-   "note": "0.3.12 designer Saltmere prop (art_handoff/towns/saltmere)"
+   "note": "0.3.12/0.3.13 designer Saltmere prop (art_handoff/towns/saltmere)"
   },
   "sm_banana": {
    "path": "res://assets/sprites/towns/saltmere/props/v2_banana.png",
@@ -1696,7 +1696,7 @@
    ],
    "frames": 1,
    "anchor": "bottom",
-   "note": "0.3.12 designer Saltmere prop (art_handoff/towns/saltmere)"
+   "note": "0.3.12/0.3.13 designer Saltmere prop (art_handoff/towns/saltmere)"
   },
   "sm_barrels": {
    "path": "res://assets/sprites/towns/saltmere/props/v2_barrels.png",
@@ -1706,7 +1706,7 @@
    ],
    "frames": 1,
    "anchor": "bottom",
-   "note": "0.3.12 designer Saltmere prop (art_handoff/towns/saltmere)"
+   "note": "0.3.12/0.3.13 designer Saltmere prop (art_handoff/towns/saltmere)"
   },
   "sm_cart": {
    "path": "res://assets/sprites/towns/saltmere/props/v2_cart.png",
@@ -1716,7 +1716,7 @@
    ],
    "frames": 1,
    "anchor": "bottom",
-   "note": "0.3.12 designer Saltmere prop (art_handoff/towns/saltmere)"
+   "note": "0.3.12/0.3.13 designer Saltmere prop (art_handoff/towns/saltmere)"
   },
   "sm_crate_pile": {
    "path": "res://assets/sprites/towns/saltmere/props/v2_crate_pile.png",
@@ -1726,7 +1726,7 @@
    ],
    "frames": 1,
    "anchor": "bottom",
-   "note": "0.3.12 designer Saltmere prop (art_handoff/towns/saltmere)"
+   "note": "0.3.12/0.3.13 designer Saltmere prop (art_handoff/towns/saltmere)"
   },
   "sm_fern": {
    "path": "res://assets/sprites/towns/saltmere/props/v2_fern.png",
@@ -1736,7 +1736,7 @@
    ],
    "frames": 1,
    "anchor": "bottom",
-   "note": "0.3.12 designer Saltmere prop (art_handoff/towns/saltmere)"
+   "note": "0.3.12/0.3.13 designer Saltmere prop (art_handoff/towns/saltmere)"
   },
   "sm_flowerbed": {
    "path": "res://assets/sprites/towns/saltmere/props/v2_flowerbed.png",
@@ -1746,7 +1746,7 @@
    ],
    "frames": 1,
    "anchor": "bottom",
-   "note": "0.3.12 designer Saltmere prop (art_handoff/towns/saltmere)"
+   "note": "0.3.12/0.3.13 designer Saltmere prop (art_handoff/towns/saltmere)"
   },
   "sm_hibiscus": {
    "path": "res://assets/sprites/towns/saltmere/props/v2_hibiscus.png",
@@ -1756,7 +1756,7 @@
    ],
    "frames": 1,
    "anchor": "bottom",
-   "note": "0.3.12 designer Saltmere prop (art_handoff/towns/saltmere)"
+   "note": "0.3.12/0.3.13 designer Saltmere prop (art_handoff/towns/saltmere)"
   },
   "sm_palm_cluster": {
    "path": "res://assets/sprites/towns/saltmere/props/v2_palm_cluster.png",
@@ -1766,7 +1766,7 @@
    ],
    "frames": 1,
    "anchor": "bottom",
-   "note": "0.3.12 designer Saltmere prop (art_handoff/towns/saltmere)"
+   "note": "0.3.12/0.3.13 designer Saltmere prop (art_handoff/towns/saltmere)"
   },
   "sm_palm_lean": {
    "path": "res://assets/sprites/towns/saltmere/props/v2_palm_lean.png",
@@ -1776,7 +1776,7 @@
    ],
    "frames": 1,
    "anchor": "bottom",
-   "note": "0.3.12 designer Saltmere prop (art_handoff/towns/saltmere)"
+   "note": "0.3.12/0.3.13 designer Saltmere prop (art_handoff/towns/saltmere)"
   },
   "sm_palm_short": {
    "path": "res://assets/sprites/towns/saltmere/props/v2_palm_short.png",
@@ -1786,7 +1786,7 @@
    ],
    "frames": 1,
    "anchor": "bottom",
-   "note": "0.3.12 designer Saltmere prop (art_handoff/towns/saltmere)"
+   "note": "0.3.12/0.3.13 designer Saltmere prop (art_handoff/towns/saltmere)"
   },
   "sm_palm_tall": {
    "path": "res://assets/sprites/towns/saltmere/props/v2_palm_tall.png",
@@ -1796,7 +1796,7 @@
    ],
    "frames": 1,
    "anchor": "bottom",
-   "note": "0.3.12 designer Saltmere prop (art_handoff/towns/saltmere)"
+   "note": "0.3.12/0.3.13 designer Saltmere prop (art_handoff/towns/saltmere)"
   },
   "sm_stall_cloth": {
    "path": "res://assets/sprites/towns/saltmere/props/v2_stall_cloth.png",
@@ -1806,7 +1806,7 @@
    ],
    "frames": 1,
    "anchor": "bottom",
-   "note": "0.3.12 designer Saltmere prop (art_handoff/towns/saltmere)"
+   "note": "0.3.12/0.3.13 designer Saltmere prop (art_handoff/towns/saltmere)"
   },
   "sm_stall_coconut": {
    "path": "res://assets/sprites/towns/saltmere/props/v2_stall_coconut.png",
@@ -1816,7 +1816,7 @@
    ],
    "frames": 1,
    "anchor": "bottom",
-   "note": "0.3.12 designer Saltmere prop (art_handoff/towns/saltmere)"
+   "note": "0.3.12/0.3.13 designer Saltmere prop (art_handoff/towns/saltmere)"
   },
   "sm_stall_fish": {
    "path": "res://assets/sprites/towns/saltmere/props/v2_stall_fish.png",
@@ -1826,7 +1826,7 @@
    ],
    "frames": 1,
    "anchor": "bottom",
-   "note": "0.3.12 designer Saltmere prop (art_handoff/towns/saltmere)"
+   "note": "0.3.12/0.3.13 designer Saltmere prop (art_handoff/towns/saltmere)"
   },
   "sm_stall_fruit": {
    "path": "res://assets/sprites/towns/saltmere/props/v2_stall_fruit.png",
@@ -1836,7 +1836,7 @@
    ],
    "frames": 1,
    "anchor": "bottom",
-   "note": "0.3.12 designer Saltmere prop (art_handoff/towns/saltmere)"
+   "note": "0.3.12/0.3.13 designer Saltmere prop (art_handoff/towns/saltmere)"
   },
   "sm_stall_pottery": {
    "path": "res://assets/sprites/towns/saltmere/props/v2_stall_pottery.png",
@@ -1846,7 +1846,7 @@
    ],
    "frames": 1,
    "anchor": "bottom",
-   "note": "0.3.12 designer Saltmere prop (art_handoff/towns/saltmere)"
+   "note": "0.3.12/0.3.13 designer Saltmere prop (art_handoff/towns/saltmere)"
   },
   "sm_stall_rope_tackle": {
    "path": "res://assets/sprites/towns/saltmere/props/v2_stall_rope_tackle.png",
@@ -1856,7 +1856,7 @@
    ],
    "frames": 1,
    "anchor": "bottom",
-   "note": "0.3.12 designer Saltmere prop (art_handoff/towns/saltmere)"
+   "note": "0.3.12/0.3.13 designer Saltmere prop (art_handoff/towns/saltmere)"
   },
   "sm_stall_rum": {
    "path": "res://assets/sprites/towns/saltmere/props/v2_stall_rum.png",
@@ -1866,7 +1866,7 @@
    ],
    "frames": 1,
    "anchor": "bottom",
-   "note": "0.3.12 designer Saltmere prop (art_handoff/towns/saltmere)"
+   "note": "0.3.12/0.3.13 designer Saltmere prop (art_handoff/towns/saltmere)"
   },
   "sm_stall_shell": {
    "path": "res://assets/sprites/towns/saltmere/props/v2_stall_shell.png",
@@ -1876,7 +1876,7 @@
    ],
    "frames": 1,
    "anchor": "bottom",
-   "note": "0.3.12 designer Saltmere prop (art_handoff/towns/saltmere)"
+   "note": "0.3.12/0.3.13 designer Saltmere prop (art_handoff/towns/saltmere)"
   },
   "sm_stall_spice": {
    "path": "res://assets/sprites/towns/saltmere/props/v2_stall_spice.png",
@@ -1886,7 +1886,7 @@
    ],
    "frames": 1,
    "anchor": "bottom",
-   "note": "0.3.12 designer Saltmere prop (art_handoff/towns/saltmere)"
+   "note": "0.3.12/0.3.13 designer Saltmere prop (art_handoff/towns/saltmere)"
   },
   "sm_well": {
    "path": "res://assets/sprites/towns/saltmere/props/v2_well.png",
@@ -1896,7 +1896,7 @@
    ],
    "frames": 1,
    "anchor": "bottom",
-   "note": "0.3.12 designer Saltmere prop (art_handoff/towns/saltmere)"
+   "note": "0.3.12/0.3.13 designer Saltmere prop (art_handoff/towns/saltmere)"
   },
   "sm1_anchor": {
    "path": "res://assets/sprites/towns/saltmere/props_v1/anchor.png",
@@ -1906,7 +1906,7 @@
    ],
    "frames": 1,
    "anchor": "bottom",
-   "note": "0.3.12 designer Saltmere prop (art_handoff/towns/saltmere)"
+   "note": "0.3.12/0.3.13 designer Saltmere prop (art_handoff/towns/saltmere)"
   },
   "sm1_barrel": {
    "path": "res://assets/sprites/towns/saltmere/props_v1/barrel.png",
@@ -1916,7 +1916,7 @@
    ],
    "frames": 1,
    "anchor": "bottom",
-   "note": "0.3.12 designer Saltmere prop (art_handoff/towns/saltmere)"
+   "note": "0.3.12/0.3.13 designer Saltmere prop (art_handoff/towns/saltmere)"
   },
   "sm1_barrel_stack": {
    "path": "res://assets/sprites/towns/saltmere/props_v1/barrel_stack.png",
@@ -1926,7 +1926,7 @@
    ],
    "frames": 1,
    "anchor": "bottom",
-   "note": "0.3.12 designer Saltmere prop (art_handoff/towns/saltmere)"
+   "note": "0.3.12/0.3.13 designer Saltmere prop (art_handoff/towns/saltmere)"
   },
   "sm1_bench": {
    "path": "res://assets/sprites/towns/saltmere/props_v1/bench.png",
@@ -1936,7 +1936,7 @@
    ],
    "frames": 1,
    "anchor": "bottom",
-   "note": "0.3.12 designer Saltmere prop (art_handoff/towns/saltmere)"
+   "note": "0.3.12/0.3.13 designer Saltmere prop (art_handoff/towns/saltmere)"
   },
   "sm1_crate": {
    "path": "res://assets/sprites/towns/saltmere/props_v1/crate.png",
@@ -1946,7 +1946,7 @@
    ],
    "frames": 1,
    "anchor": "bottom",
-   "note": "0.3.12 designer Saltmere prop (art_handoff/towns/saltmere)"
+   "note": "0.3.12/0.3.13 designer Saltmere prop (art_handoff/towns/saltmere)"
   },
   "sm1_crate_broken": {
    "path": "res://assets/sprites/towns/saltmere/props_v1/crate_broken.png",
@@ -1956,7 +1956,7 @@
    ],
    "frames": 1,
    "anchor": "bottom",
-   "note": "0.3.12 designer Saltmere prop (art_handoff/towns/saltmere)"
+   "note": "0.3.12/0.3.13 designer Saltmere prop (art_handoff/towns/saltmere)"
   },
   "sm1_crate_stack": {
    "path": "res://assets/sprites/towns/saltmere/props_v1/crate_stack.png",
@@ -1966,7 +1966,7 @@
    ],
    "frames": 1,
    "anchor": "bottom",
-   "note": "0.3.12 designer Saltmere prop (art_handoff/towns/saltmere)"
+   "note": "0.3.12/0.3.13 designer Saltmere prop (art_handoff/towns/saltmere)"
   },
   "sm1_fish_rack": {
    "path": "res://assets/sprites/towns/saltmere/props_v1/fish_rack.png",
@@ -1976,7 +1976,7 @@
    ],
    "frames": 1,
    "anchor": "bottom",
-   "note": "0.3.12 designer Saltmere prop (art_handoff/towns/saltmere)"
+   "note": "0.3.12/0.3.13 designer Saltmere prop (art_handoff/towns/saltmere)"
   },
   "sm1_lamp_post": {
    "path": "res://assets/sprites/towns/saltmere/props_v1/lamp_post.png",
@@ -1986,7 +1986,7 @@
    ],
    "frames": 1,
    "anchor": "bottom",
-   "note": "0.3.12 designer Saltmere prop (art_handoff/towns/saltmere)"
+   "note": "0.3.12/0.3.13 designer Saltmere prop (art_handoff/towns/saltmere)"
   },
   "sm1_net_hanging": {
    "path": "res://assets/sprites/towns/saltmere/props_v1/net_hanging.png",
@@ -1996,7 +1996,7 @@
    ],
    "frames": 1,
    "anchor": "bottom",
-   "note": "0.3.12 designer Saltmere prop (art_handoff/towns/saltmere)"
+   "note": "0.3.12/0.3.13 designer Saltmere prop (art_handoff/towns/saltmere)"
   },
   "sm1_rope_coil": {
    "path": "res://assets/sprites/towns/saltmere/props_v1/rope_coil.png",
@@ -2006,7 +2006,7 @@
    ],
    "frames": 1,
    "anchor": "bottom",
-   "note": "0.3.12 designer Saltmere prop (art_handoff/towns/saltmere)"
+   "note": "0.3.12/0.3.13 designer Saltmere prop (art_handoff/towns/saltmere)"
   },
   "sm_mooring_post": {
    "path": "res://assets/sprites/towns/saltmere/docks/mooring_post.png",
@@ -2016,7 +2016,7 @@
    ],
    "frames": 1,
    "anchor": "bottom",
-   "note": "0.3.12 designer Saltmere prop (art_handoff/towns/saltmere)"
+   "note": "0.3.12/0.3.13 designer Saltmere prop (art_handoff/towns/saltmere)"
   },
   "fh_barrel": {
    "path": "res://assets/sprites/towns/fenhollow/props/fh_barrel.png",
@@ -2197,6 +2197,156 @@
    "frames": 1,
    "anchor": "bottom",
    "note": "0.3.13 designer Fenhollow v1 prop (art_handoff/towns/fenhollow)"
+  },
+  "sm3_bollard_rope": {
+   "path": "res://assets/sprites/towns/saltmere/props_v3/v3_bollard_rope.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.3.12/0.3.13 designer Saltmere prop (art_handoff/towns/saltmere)"
+  },
+  "sm3_buoys": {
+   "path": "res://assets/sprites/towns/saltmere/props_v3/v3_buoys.png",
+   "frame_size": [
+    18,
+    16
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.3.12/0.3.13 designer Saltmere prop (art_handoff/towns/saltmere)"
+  },
+  "sm3_cargo_hoist": {
+   "path": "res://assets/sprites/towns/saltmere/props_v3/v3_cargo_hoist.png",
+   "frame_size": [
+    32,
+    48
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.3.12/0.3.13 designer Saltmere prop (art_handoff/towns/saltmere)"
+  },
+  "sm3_dock_lantern": {
+   "path": "res://assets/sprites/towns/saltmere/props_v3/v3_dock_lantern.png",
+   "frame_size": [
+    14,
+    32
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.3.12/0.3.13 designer Saltmere prop (art_handoff/towns/saltmere)"
+  },
+  "sm3_fish_basket": {
+   "path": "res://assets/sprites/towns/saltmere/props_v3/v3_fish_basket.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.3.12/0.3.13 designer Saltmere prop (art_handoff/towns/saltmere)"
+  },
+  "sm3_fish_crate": {
+   "path": "res://assets/sprites/towns/saltmere/props_v3/v3_fish_crate.png",
+   "frame_size": [
+    16,
+    18
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.3.12/0.3.13 designer Saltmere prop (art_handoff/towns/saltmere)"
+  },
+  "sm3_gulls": {
+   "path": "res://assets/sprites/towns/saltmere/props_v3/v3_gulls.png",
+   "frame_size": [
+    18,
+    16
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.3.12/0.3.13 designer Saltmere prop (art_handoff/towns/saltmere)"
+  },
+  "sm3_keg_stack": {
+   "path": "res://assets/sprites/towns/saltmere/props_v3/v3_keg_stack.png",
+   "frame_size": [
+    24,
+    24
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.3.12/0.3.13 designer Saltmere prop (art_handoff/towns/saltmere)"
+  },
+  "sm3_lobster_pots": {
+   "path": "res://assets/sprites/towns/saltmere/props_v3/v3_lobster_pots.png",
+   "frame_size": [
+    22,
+    18
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.3.12/0.3.13 designer Saltmere prop (art_handoff/towns/saltmere)"
+  },
+  "sm3_net_pile": {
+   "path": "res://assets/sprites/towns/saltmere/props_v3/v3_net_pile.png",
+   "frame_size": [
+    24,
+    16
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.3.12/0.3.13 designer Saltmere prop (art_handoff/towns/saltmere)"
+  },
+  "sm3_oars": {
+   "path": "res://assets/sprites/towns/saltmere/props_v3/v3_oars.png",
+   "frame_size": [
+    20,
+    32
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.3.12/0.3.13 designer Saltmere prop (art_handoff/towns/saltmere)"
+  },
+  "sm3_rope_spool": {
+   "path": "res://assets/sprites/towns/saltmere/props_v3/v3_rope_spool.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.3.12/0.3.13 designer Saltmere prop (art_handoff/towns/saltmere)"
+  },
+  "sm3_sacks": {
+   "path": "res://assets/sprites/towns/saltmere/props_v3/v3_sacks.png",
+   "frame_size": [
+    18,
+    16
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.3.12/0.3.13 designer Saltmere prop (art_handoff/towns/saltmere)"
+  },
+  "sm3_tarp_cargo": {
+   "path": "res://assets/sprites/towns/saltmere/props_v3/v3_tarp_cargo.png",
+   "frame_size": [
+    32,
+    24
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.3.12/0.3.13 designer Saltmere prop (art_handoff/towns/saltmere)"
+  },
+  "sm3_town_sign": {
+   "path": "res://assets/sprites/towns/saltmere/props_v3/v3_town_sign.png",
+   "frame_size": [
+    48,
+    40
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.3.12/0.3.13 designer Saltmere prop (art_handoff/towns/saltmere)"
   }
  },
  "actors": {

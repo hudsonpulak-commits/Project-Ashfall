@@ -15,7 +15,8 @@
   ":": "cobble",
   "-": "path",
   "~": "water",
-  "=": "planks"
+  "=": "planks",
+  "P": "art_wall"
  },
  "objects": {
   "A": {
@@ -27,138 +28,170 @@
    "ground": "water"
   },
   "C": {
-   "object": "sm1_anchor",
-   "ground": "planks"
-  },
-  "E": {
-   "object": "sm1_barrel",
-   "ground": "planks"
-  },
-  "F": {
    "object": "sm1_bench",
    "ground": "sand"
   },
-  "H": {
-   "object": "sm1_crate",
-   "ground": "planks"
-  },
-  "I": {
-   "object": "sm1_crate_stack",
-   "ground": "planks"
-  },
-  "J": {
-   "object": "sm1_fish_rack",
-   "ground": "planks"
-  },
-  "K": {
+  "E": {
    "object": "sm1_lamp_post",
    "ground": "grass_tropic"
   },
+  "F": {
+   "object": "sm3_bollard_rope",
+   "ground": "planks"
+  },
+  "H": {
+   "object": "sm3_buoys",
+   "ground": "planks"
+  },
+  "I": {
+   "object": "sm3_cargo_hoist",
+   "ground": "planks"
+  },
+  "J": {
+   "object": "sm3_dock_lantern",
+   "ground": "planks"
+  },
+  "K": {
+   "object": "sm3_fish_basket",
+   "ground": "planks"
+  },
   "L": {
-   "object": "sm1_net_hanging",
+   "object": "sm3_fish_crate",
    "ground": "planks"
   },
   "M": {
-   "object": "sm1_rope_coil",
+   "object": "sm3_gulls",
    "ground": "planks"
   },
   "N": {
+   "object": "sm3_keg_stack",
+   "ground": "planks"
+  },
+  "O": {
+   "object": "sm3_lobster_pots",
+   "ground": "planks"
+  },
+  "Q": {
+   "object": "sm3_net_pile",
+   "ground": "planks"
+  },
+  "R": {
+   "object": "sm3_oars",
+   "ground": "planks"
+  },
+  "S": {
+   "object": "sm3_rope_spool",
+   "ground": "planks"
+  },
+  "T": {
+   "object": "sm3_sacks",
+   "ground": "planks"
+  },
+  "U": {
+   "object": "sm3_tarp_cargo",
+   "ground": "planks"
+  },
+  "V": {
+   "object": "sm3_town_sign",
+   "ground": "grass_tropic"
+  },
+  "W": {
    "object": "sm_agave",
    "ground": "sand"
   },
-  "O": {
+  "X": {
    "object": "sm_banana",
    "ground": "grass_tropic"
   },
-  "P": {
+  "Y": {
    "object": "sm_barrels",
    "ground": "grass_tropic"
   },
-  "Q": {
+  "Z": {
    "object": "sm_cart",
    "ground": "grass_tropic"
   },
-  "R": {
+  "a": {
    "object": "sm_crate_pile",
    "ground": "grass_tropic"
   },
-  "S": {
+  "b": {
    "object": "sm_fern",
    "ground": "grass_tropic"
   },
-  "T": {
+  "c": {
    "object": "sm_flowerbed",
    "ground": "grass_tropic"
   },
-  "U": {
+  "d": {
    "object": "sm_hibiscus",
    "ground": "grass_tropic"
   },
-  "V": {
+  "e": {
    "object": "sm_mooring_post",
    "ground": "cobble"
   },
-  "W": {
+  "f": {
    "object": "sm_palm_cluster",
    "ground": "sand"
   },
-  "X": {
+  "h": {
    "object": "sm_palm_lean",
    "ground": "sand"
   },
-  "Y": {
+  "i": {
    "object": "sm_palm_short",
    "ground": "sand"
   },
-  "Z": {
+  "j": {
    "object": "sm_palm_tall",
    "ground": "sand"
   },
-  "a": {
+  "k": {
    "object": "sm_stall_cloth",
    "ground": "cobble"
   },
-  "b": {
+  "l": {
    "object": "sm_stall_coconut",
    "ground": "cobble"
   },
-  "c": {
+  "m": {
    "object": "sm_stall_fish",
    "ground": "cobble"
   },
-  "d": {
+  "n": {
    "object": "sm_stall_fruit",
    "ground": "cobble"
   },
-  "e": {
+  "o": {
    "object": "sm_stall_pottery",
    "ground": "cobble"
   },
-  "f": {
+  "p": {
    "object": "sm_stall_rope_tackle",
    "ground": "cobble"
   },
-  "h": {
+  "q": {
    "object": "sm_stall_rum",
    "ground": "cobble"
   },
-  "i": {
+  "r": {
    "object": "sm_stall_shell",
    "ground": "cobble"
   },
-  "j": {
+  "t": {
    "object": "sm_stall_spice",
    "ground": "cobble"
   },
-  "k": {
+  "u": {
    "object": "sm_well",
    "ground": "cobble"
   },
-  "l": {
+  "v": {
    "object": "training_dummy",
    "ground": "cobble"
   },
-  "m": {
+  "w": {
    "object": "workbench",
    "ground": "cobble"
   }
@@ -275,19 +308,6 @@
   "channel_min_width": 6,
   "open_to_sea": true
  },
- "reserved": {
-  "elijah_tomb": {
-   "at": [
-    272,
-    160
-   ],
-   "size": [
-    3,
-    3
-   ],
-   "note": "0.3.12 reserved outside the town (west) for Elijah's tomb; nothing placed yet"
-  }
- },
  "art": {
   "market": [
    [
@@ -338,55 +358,228 @@
   "ground_decal": "res://assets/sprites/towns/saltmere/ground_decal.png",
   "ysort": [
    {
-    "path": "res://assets/sprites/towns/saltmere/ships/ship_galleon.png",
+    "path": "res://assets/sprites/towns/saltmere/ships/v3_ship_galleon.png",
     "pos": [
-     600,
-     532
+     788,
+     488
     ],
-    "base": 108
+    "base": 148
    },
    {
-    "path": "res://assets/sprites/towns/saltmere/ships/ship_sloop.png",
+    "path": "res://assets/sprites/towns/saltmere/ships/v3_ship_sloop.png",
     "pos": [
-     1200,
-     60
+     1168,
+     20
     ],
-    "base": 72
+    "base": 100
    },
    {
-    "path": "res://assets/sprites/towns/saltmere/ships/ship_sloop.png",
+    "path": "res://assets/sprites/towns/saltmere/ships/v3_ship_sloop.png",
     "pos": [
-     408,
-     564
+     404,
+     548
     ],
-    "base": 72
+    "base": 100
    },
    {
-    "path": "res://assets/sprites/towns/saltmere/ships/rowboat_1.png",
+    "path": "res://assets/sprites/towns/saltmere/ships/v3_rowboat_1.png",
     "pos": [
      894,
      540
     ],
-    "base": 12
+    "base": 20
    },
    {
-    "path": "res://assets/sprites/towns/saltmere/ships/rowboat_2.png",
+    "path": "res://assets/sprites/towns/saltmere/ships/v3_rowboat_2.png",
     "pos": [
      496,
      544
     ],
-    "base": 12
+    "base": 20
    },
    {
-    "path": "res://assets/sprites/towns/saltmere/ships/rowboat_3.png",
+    "path": "res://assets/sprites/towns/saltmere/ships/v3_rowboat_3.png",
     "pos": [
      602,
      544
     ],
-    "base": 12
+    "base": 20
+   },
+   {
+    "path": "res://assets/sprites/towns/saltmere/buildings/v3_harbour_entrance_floor.png",
+    "pos": [
+     672,
+     8
+    ],
+    "base": 72
+   },
+   {
+    "path": "res://assets/sprites/towns/saltmere/buildings/v3_harbour_entrance_walls.png",
+    "pos": [
+     672,
+     8
+    ],
+    "base": 72
    }
   ],
-  "fades": []
+  "fades": [
+   {
+    "path": "res://assets/sprites/towns/saltmere/buildings/v3_harbour_entrance_roof.png",
+    "pos": [
+     672,
+     8
+    ],
+    "tiles": [
+     [
+      43,
+      0
+     ],
+     [
+      43,
+      1
+     ],
+     [
+      43,
+      2
+     ],
+     [
+      43,
+      3
+     ],
+     [
+      43,
+      4
+     ],
+     [
+      44,
+      0
+     ],
+     [
+      44,
+      1
+     ],
+     [
+      44,
+      2
+     ],
+     [
+      44,
+      3
+     ],
+     [
+      44,
+      4
+     ],
+     [
+      45,
+      0
+     ],
+     [
+      45,
+      1
+     ],
+     [
+      45,
+      2
+     ],
+     [
+      45,
+      3
+     ],
+     [
+      45,
+      4
+     ]
+    ]
+   }
+  ]
+ },
+ "harbour_entrance": {
+  "at": [
+   672,
+   8
+  ],
+  "passage": [
+   [
+    43,
+    0
+   ],
+   [
+    43,
+    1
+   ],
+   [
+    43,
+    2
+   ],
+   [
+    43,
+    3
+   ],
+   [
+    43,
+    4
+   ],
+   [
+    44,
+    0
+   ],
+   [
+    44,
+    1
+   ],
+   [
+    44,
+    2
+   ],
+   [
+    44,
+    3
+   ],
+   [
+    44,
+    4
+   ],
+   [
+    45,
+    0
+   ],
+   [
+    45,
+    1
+   ],
+   [
+    45,
+    2
+   ],
+   [
+    45,
+    3
+   ],
+   [
+    45,
+    4
+   ]
+  ],
+  "pillars": [
+   [
+    42,
+    3
+   ],
+   [
+    46,
+    3
+   ],
+   [
+    42,
+    4
+   ],
+   [
+    46,
+    4
+   ]
+  ],
+  "note": "0.3.13 designer v3_harbour_entrance over the north road"
  },
  "buildings": [
   {
@@ -565,28 +758,28 @@
    ]
   },
   {
-   "art": "v2_warehouse_a",
+   "art": "v3_smithy_large",
    "flip": false,
    "at": [
     48,
-    22
+    21
    ],
    "door": [
     [
-     51,
+     50,
      25
     ]
    ],
    "sign": [
-    52,
+    51,
     25
    ],
    "props": [
     {
      "object": "furnace",
      "at": [
-      49,
-      23
+      52,
+      22
      ]
     },
     {
@@ -606,14 +799,14 @@
    "name": "Blacksmith",
    "keeper": "Smith",
    "keeper_at": [
-    51,
-    23
+    50,
+    22
    ],
    "stand": [
-    51,
+    50,
     24
    ],
-   "note": "0.3.12 the harbour forge in the dockside warehouse (designer v2_warehouse_a; v2_smithy interior is only 2 tiles); furnace + anvil under the roof"
+   "note": "0.3.13 the harbour forge (designer v3_smithy_large); furnace + anvil under the roof"
   },
   {
    "art": "v2_rum_house",
@@ -653,21 +846,21 @@
    ]
   },
   {
-   "art": "v2_smithy",
+   "art": "v2_warehouse_a",
    "flip": false,
    "at": [
-    7,
-    22
+    3,
+    10
    ],
    "door": [
     [
-     8,
-     24
+     6,
+     13
     ]
    ],
    "sign": [
-    9,
-    24
+    7,
+    13
    ],
    "props": [],
    "counter": [],
@@ -681,13 +874,52 @@
    "keeper_sprite": "villager",
    "sign_sprite": "sign_house",
    "keeper_at": [
-    9,
-    23
+    8,
+    12
    ],
    "stand": [
-    8,
-    23
+    6,
+    12
    ]
+  },
+  {
+   "art": "v3_elijah_tomb",
+   "flip": false,
+   "at": [
+    4,
+    4
+   ],
+   "door": [
+    [
+     6,
+     7
+    ]
+   ],
+   "sign": [
+    7,
+    7
+   ],
+   "props": [],
+   "counter": [],
+   "style": "stone",
+   "roof": "#6a6a72",
+   "id": "saltmere_elijah_tomb",
+   "kind": "house",
+   "shop": "",
+   "name": "Elijah's Tomb",
+   "keeper": "",
+   "keeper_sprite": "villager",
+   "sign_sprite": "sign_house",
+   "no_keeper": true,
+   "keeper_at": [
+    6,
+    7
+   ],
+   "stand": [
+    6,
+    7
+   ],
+   "note": "0.3.13 Elijah's tomb (designer v3_elijah_tomb), walk-in, no keeper"
   },
   {
    "art": "v2_house_10",
@@ -918,6 +1150,83 @@
    "art": "v2_house_19",
    "flip": false,
    "at": [
+    7,
+    19
+   ],
+   "door": [
+    [
+     7,
+     21
+    ]
+   ],
+   "sign": [
+    8,
+    21
+   ],
+   "props": [],
+   "counter": [],
+   "style": "plaster",
+   "roof": "#2a6a9a",
+   "id": "saltmere_home_7",
+   "kind": "house",
+   "shop": "",
+   "name": "Pascoe's house",
+   "keeper": "Davey Pascoe",
+   "keeper_sprite": "villager",
+   "sign_sprite": "sign_house",
+   "no_keeper": true,
+   "keeper_at": [
+    7,
+    22
+   ],
+   "stand": [
+    7,
+    22
+   ],
+   "closed": true
+  },
+  {
+   "art": "v2_house_01",
+   "flip": false,
+   "at": [
+    8,
+    23
+   ],
+   "door": [
+    [
+     9,
+     25
+    ]
+   ],
+   "sign": [
+    10,
+    25
+   ],
+   "props": [],
+   "counter": [],
+   "style": "plaster",
+   "roof": "#2a6a9a",
+   "id": "saltmere_home_8",
+   "kind": "house",
+   "shop": "",
+   "name": "The Treloars' house",
+   "keeper": "Loveday Treloar",
+   "keeper_sprite": "villager",
+   "sign_sprite": "sign_house",
+   "no_keeper": true,
+   "keeper_at": [
+    9,
+    25
+   ],
+   "stand": [
+    9,
+    25
+   ]
+  },
+  {
+   "art": "v2_house_09",
+   "flip": false,
+   "at": [
     31,
     21
    ],
@@ -935,11 +1244,11 @@
    "counter": [],
    "style": "plaster",
    "roof": "#2a6a9a",
-   "id": "saltmere_home_7",
+   "id": "saltmere_home_9",
    "kind": "house",
    "shop": "",
-   "name": "Pascoe's house",
-   "keeper": "Davey Pascoe",
+   "name": "Polglaze's house",
+   "keeper": "Kerra Polglaze",
    "keeper_sprite": "villager",
    "sign_sprite": "sign_house",
    "no_keeper": true,
@@ -954,46 +1263,86 @@
    "closed": true
   },
   {
-   "art": "v2_house_01",
-   "flip": false,
+   "art": "v2_house_11",
+   "flip": true,
    "at": [
-    10,
+    21,
+    12
+   ],
+   "door": [
+    [
+     22,
+     13
+    ]
+   ],
+   "sign": [
+    23,
+    13
+   ],
+   "props": [],
+   "counter": [],
+   "style": "plaster",
+   "roof": "#2a6a9a",
+   "id": "saltmere_home_10",
+   "kind": "house",
+   "shop": "",
+   "name": "The Rowes' house",
+   "keeper": "Zennor Rowe",
+   "keeper_sprite": "villager",
+   "sign_sprite": "sign_house",
+   "no_keeper": true,
+   "keeper_at": [
+    22,
+    14
+   ],
+   "stand": [
+    22,
+    14
+   ],
+   "closed": true
+  },
+  {
+   "art": "v2_house_19",
+   "flip": true,
+   "at": [
+    11,
     8
    ],
    "door": [
     [
-     11,
+     12,
      10
     ]
    ],
    "sign": [
-    12,
+    11,
     10
    ],
    "props": [],
    "counter": [],
    "style": "plaster",
    "roof": "#2a6a9a",
-   "id": "saltmere_home_8",
+   "id": "saltmere_home_11",
    "kind": "house",
    "shop": "",
-   "name": "The Treloars' house",
-   "keeper": "Loveday Treloar",
+   "name": "Trevail's house",
+   "keeper": "Pedrek Trevail",
    "keeper_sprite": "villager",
    "sign_sprite": "sign_house",
    "no_keeper": true,
    "keeper_at": [
-    11,
-    10
+    12,
+    11
    ],
    "stand": [
-    11,
-    10
-   ]
+    12,
+    11
+   ],
+   "closed": true
   },
   {
-   "art": "v2_house_06",
-   "flip": false,
+   "art": "v2_house_01",
+   "flip": true,
    "at": [
     2,
     33
@@ -1012,11 +1361,11 @@
    "counter": [],
    "style": "plaster",
    "roof": "#2a6a9a",
-   "id": "saltmere_home_9",
+   "id": "saltmere_home_12",
    "kind": "house",
    "shop": "",
-   "name": "Polglaze's house",
-   "keeper": "Kerra Polglaze",
+   "name": "Bosanko's house",
+   "keeper": "Elowen Bosanko",
    "keeper_sprite": "villager",
    "sign_sprite": "sign_house",
    "no_keeper": true,
@@ -1031,79 +1380,79 @@
   },
   {
    "art": "v2_house_09",
-   "flip": false,
+   "flip": true,
    "at": [
     23,
     8
    ],
    "door": [
     [
-     23,
+     24,
      10
     ]
    ],
    "sign": [
-    24,
+    23,
     10
    ],
    "props": [],
    "counter": [],
    "style": "plaster",
    "roof": "#2a6a9a",
-   "id": "saltmere_home_10",
+   "id": "saltmere_home_13",
    "kind": "house",
    "shop": "",
-   "name": "The Rowes' house",
-   "keeper": "Zennor Rowe",
+   "name": "The Jagos' house",
+   "keeper": "Ruan Jago",
    "keeper_sprite": "villager",
    "sign_sprite": "sign_house",
    "no_keeper": true,
    "keeper_at": [
-    23,
+    24,
     11
    ],
    "stand": [
-    23,
+    24,
     11
    ],
    "closed": true
   },
   {
    "art": "v2_house_11",
-   "flip": true,
+   "flip": false,
    "at": [
     12,
-    4
+    3
    ],
    "door": [
     [
      13,
-     5
+     4
     ]
    ],
    "sign": [
     14,
-    5
+    4
    ],
    "props": [],
    "counter": [],
    "style": "plaster",
    "roof": "#2a6a9a",
-   "id": "saltmere_home_11",
+   "id": "saltmere_home_14",
    "kind": "house",
    "shop": "",
-   "name": "Trevail's house",
-   "keeper": "Pedrek Trevail",
+   "name": "Chegwidden's house",
+   "keeper": "Lowdy Chegwidden",
    "keeper_sprite": "villager",
    "sign_sprite": "sign_house",
    "no_keeper": true,
    "keeper_at": [
     13,
-    6
+    5
    ],
    "stand": [
     13,
-    6
+    5
    ],
    "closed": true
   },
@@ -1128,11 +1477,11 @@
    "counter": [],
    "style": "plaster",
    "roof": "#2a6a9a",
-   "id": "saltmere_home_12",
+   "id": "saltmere_home_15",
    "kind": "house",
    "shop": "",
-   "name": "Bosanko's house",
-   "keeper": "Elowen Bosanko",
+   "name": "Pengelly's house",
+   "keeper": "Talan Pengelly",
    "keeper_sprite": "villager",
    "sign_sprite": "sign_house",
    "keeper_at": [
@@ -1165,11 +1514,11 @@
    "counter": [],
    "style": "plaster",
    "roof": "#2a6a9a",
-   "id": "saltmere_home_13",
+   "id": "saltmere_home_16",
    "kind": "house",
    "shop": "",
-   "name": "The Jagos' house",
-   "keeper": "Ruan Jago",
+   "name": "Saltcote",
+   "keeper": "Demelza Hocking",
    "keeper_sprite": "villager",
    "sign_sprite": "sign_house",
    "keeper_at": [
@@ -1183,46 +1532,46 @@
   },
   {
    "art": "v2_house_19",
-   "flip": true,
+   "flip": false,
    "at": [
     27,
     4
    ],
    "door": [
     [
-     28,
+     27,
      6
     ]
    ],
    "sign": [
-    27,
+    28,
     6
    ],
    "props": [],
    "counter": [],
    "style": "plaster",
    "roof": "#2a6a9a",
-   "id": "saltmere_home_14",
+   "id": "saltmere_home_17",
    "kind": "house",
    "shop": "",
-   "name": "Chegwidden's house",
-   "keeper": "Lowdy Chegwidden",
+   "name": "The Carnes' house",
+   "keeper": "Senara Carne",
    "keeper_sprite": "villager",
    "sign_sprite": "sign_house",
    "no_keeper": true,
    "keeper_at": [
-    28,
+    27,
     7
    ],
    "stand": [
-    28,
+    27,
     7
    ],
    "closed": true
   },
   {
    "art": "v2_house_01",
-   "flip": true,
+   "flip": false,
    "at": [
     50,
     11
@@ -1241,11 +1590,11 @@
    "counter": [],
    "style": "plaster",
    "roof": "#2a6a9a",
-   "id": "saltmere_home_15",
+   "id": "saltmere_home_18",
    "kind": "house",
    "shop": "",
-   "name": "Pengelly's house",
-   "keeper": "Talan Pengelly",
+   "name": "Penrose's house",
+   "keeper": "Bryok Penrose",
    "keeper_sprite": "villager",
    "sign_sprite": "sign_house",
    "no_keeper": true,
@@ -1259,46 +1608,7 @@
    ]
   },
   {
-   "art": "v2_house_11",
-   "flip": false,
-   "at": [
-    14,
-    26
-   ],
-   "door": [
-    [
-     15,
-     27
-    ]
-   ],
-   "sign": [
-    16,
-    27
-   ],
-   "props": [],
-   "counter": [],
-   "style": "plaster",
-   "roof": "#2a6a9a",
-   "id": "saltmere_home_16",
-   "kind": "house",
-   "shop": "",
-   "name": "Saltcote",
-   "keeper": "Demelza Hocking",
-   "keeper_sprite": "villager",
-   "sign_sprite": "sign_house",
-   "no_keeper": true,
-   "keeper_at": [
-    15,
-    28
-   ],
-   "stand": [
-    15,
-    28
-   ],
-   "closed": true
-  },
-  {
-   "art": "v2_house_19",
+   "art": "v2_house_09",
    "flip": false,
    "at": [
     28,
@@ -1318,11 +1628,11 @@
    "counter": [],
    "style": "plaster",
    "roof": "#2a6a9a",
-   "id": "saltmere_home_17",
+   "id": "saltmere_home_19",
    "kind": "house",
    "shop": "",
-   "name": "The Carnes' house",
-   "keeper": "Senara Carne",
+   "name": "Tregenza's house",
+   "keeper": "Jenna Tregenza",
    "keeper_sprite": "villager",
    "sign_sprite": "sign_house",
    "no_keeper": true,
@@ -1337,7 +1647,7 @@
    "closed": true
   },
   {
-   "art": "v2_house_01",
+   "art": "v2_house_14",
    "flip": false,
    "at": [
     4,
@@ -1346,28 +1656,27 @@
    "door": [
     [
      5,
-     39
+     40
     ]
    ],
    "sign": [
     6,
-    39
+    40
    ],
    "props": [],
    "counter": [],
    "style": "plaster",
    "roof": "#2a6a9a",
-   "id": "saltmere_home_18",
+   "id": "saltmere_home_20",
    "kind": "house",
    "shop": "",
-   "name": "Penrose's house",
-   "keeper": "Bryok Penrose",
+   "name": "Quay Cottage",
+   "keeper": "Ned Trewin",
    "keeper_sprite": "villager",
    "sign_sprite": "sign_house",
-   "no_keeper": true,
    "keeper_at": [
     5,
-    39
+    38
    ],
    "stand": [
     5,
@@ -1375,11 +1684,11 @@
    ]
   },
   {
-   "art": "v2_house_06",
-   "flip": true,
+   "art": "v2_house_16",
+   "flip": false,
    "at": [
     39,
-    2
+    1
    ],
    "door": [
     [
@@ -1395,83 +1704,6 @@
    "counter": [],
    "style": "plaster",
    "roof": "#2a6a9a",
-   "id": "saltmere_home_19",
-   "kind": "house",
-   "shop": "",
-   "name": "Tregenza's house",
-   "keeper": "Jenna Tregenza",
-   "keeper_sprite": "villager",
-   "sign_sprite": "sign_house",
-   "no_keeper": true,
-   "keeper_at": [
-    40,
-    4
-   ],
-   "stand": [
-    40,
-    4
-   ]
-  },
-  {
-   "art": "v2_house_09",
-   "flip": true,
-   "at": [
-    13,
-    19
-   ],
-   "door": [
-    [
-     14,
-     21
-    ]
-   ],
-   "sign": [
-    13,
-    21
-   ],
-   "props": [],
-   "counter": [],
-   "style": "plaster",
-   "roof": "#2a6a9a",
-   "id": "saltmere_home_20",
-   "kind": "house",
-   "shop": "",
-   "name": "Quay Cottage",
-   "keeper": "Ned Trewin",
-   "keeper_sprite": "villager",
-   "sign_sprite": "sign_house",
-   "no_keeper": true,
-   "keeper_at": [
-    14,
-    22
-   ],
-   "stand": [
-    14,
-    22
-   ],
-   "closed": true
-  },
-  {
-   "art": "v2_house_14",
-   "flip": false,
-   "at": [
-    9,
-    32
-   ],
-   "door": [
-    [
-     10,
-     35
-    ]
-   ],
-   "sign": [
-    11,
-    35
-   ],
-   "props": [],
-   "counter": [],
-   "style": "plaster",
-   "roof": "#2a6a9a",
    "id": "saltmere_home_21",
    "kind": "house",
    "shop": "",
@@ -1480,95 +1712,19 @@
    "keeper_sprite": "villager",
    "sign_sprite": "sign_house",
    "keeper_at": [
-    10,
-    33
+    40,
+    2
    ],
    "stand": [
-    10,
-    34
+    40,
+    3
    ]
   },
   {
-   "art": "v2_house_16",
+   "art": "v2_house_17",
    "flip": false,
    "at": [
-    22,
-    24
-   ],
-   "door": [
-    [
-     23,
-     27
-    ]
-   ],
-   "sign": [
-    24,
-    27
-   ],
-   "props": [],
-   "counter": [],
-   "style": "plaster",
-   "roof": "#2a6a9a",
-   "id": "saltmere_home_22",
-   "kind": "house",
-   "shop": "",
-   "name": "Angove's house",
-   "keeper": "Cador Angove",
-   "keeper_sprite": "villager",
-   "sign_sprite": "sign_house",
-   "keeper_at": [
-    23,
-    25
-   ],
-   "stand": [
-    23,
-    26
-   ]
-  },
-  {
-   "art": "v2_house_03",
-   "flip": false,
-   "at": [
-    2,
-    10
-   ],
-   "door": [
-    [
-     5,
-     12
-    ]
-   ],
-   "sign": [
-    6,
-    12
-   ],
-   "props": [],
-   "counter": [],
-   "style": "plaster",
-   "roof": "#2a6a9a",
-   "id": "saltmere_home_23",
-   "kind": "house",
-   "shop": "",
-   "name": "Shell House",
-   "keeper": "Ia Penhaligon",
-   "keeper_sprite": "villager",
-   "sign_sprite": "sign_house",
-   "no_keeper": true,
-   "keeper_at": [
-    5,
-    13
-   ],
-   "stand": [
-    5,
-    13
-   ],
-   "closed": true
-  },
-  {
-   "art": "v2_house_06",
-   "flip": false,
-   "at": [
-    44,
+    43,
     24
    ],
    "door": [
@@ -1585,6 +1741,81 @@
    "counter": [],
    "style": "plaster",
    "roof": "#2a6a9a",
+   "id": "saltmere_home_22",
+   "kind": "house",
+   "shop": "",
+   "name": "Angove's house",
+   "keeper": "Cador Angove",
+   "keeper_sprite": "villager",
+   "sign_sprite": "sign_house",
+   "keeper_at": [
+    44,
+    25
+   ],
+   "stand": [
+    45,
+    25
+   ]
+  },
+  {
+   "art": "v2_house_06",
+   "flip": false,
+   "at": [
+    22,
+    25
+   ],
+   "door": [
+    [
+     23,
+     27
+    ]
+   ],
+   "sign": [
+    24,
+    27
+   ],
+   "props": [],
+   "counter": [],
+   "style": "plaster",
+   "roof": "#2a6a9a",
+   "id": "saltmere_home_23",
+   "kind": "house",
+   "shop": "",
+   "name": "Shell House",
+   "keeper": "Ia Penhaligon",
+   "keeper_sprite": "villager",
+   "sign_sprite": "sign_house",
+   "no_keeper": true,
+   "keeper_at": [
+    23,
+    27
+   ],
+   "stand": [
+    23,
+    27
+   ]
+  },
+  {
+   "art": "v2_house_08",
+   "flip": false,
+   "at": [
+    57,
+    15
+   ],
+   "door": [
+    [
+     58,
+     17
+    ]
+   ],
+   "sign": [
+    59,
+    17
+   ],
+   "props": [],
+   "counter": [],
+   "style": "plaster",
+   "roof": "#2a6a9a",
    "id": "saltmere_home_24",
    "kind": "house",
    "shop": "",
@@ -1594,30 +1825,30 @@
    "sign_sprite": "sign_house",
    "no_keeper": true,
    "keeper_at": [
-    45,
-    26
+    58,
+    17
    ],
    "stand": [
-    45,
-    26
+    58,
+    17
    ]
   },
   {
-   "art": "v2_house_09",
-   "flip": false,
+   "art": "v2_house_17",
+   "flip": true,
    "at": [
-    36,
-    8
+    9,
+    33
    ],
    "door": [
     [
-     36,
-     10
+     10,
+     35
     ]
    ],
    "sign": [
-    37,
-    10
+    11,
+    35
    ],
    "props": [],
    "counter": [],
@@ -1630,33 +1861,31 @@
    "keeper": "Mawgan Vosper",
    "keeper_sprite": "villager",
    "sign_sprite": "sign_house",
-   "no_keeper": true,
    "keeper_at": [
-    36,
-    11
+    11,
+    34
    ],
    "stand": [
-    36,
-    11
-   ],
-   "closed": true
+    10,
+    34
+   ]
   },
   {
-   "art": "v2_house_22",
-   "flip": false,
+   "art": "v2_house_06",
+   "flip": true,
    "at": [
-    38,
-    19
+    36,
+    7
    ],
    "door": [
     [
-     40,
-     21
+     37,
+     9
     ]
    ],
    "sign": [
-    41,
-    21
+    38,
+    9
    ],
    "props": [],
    "counter": [],
@@ -1669,31 +1898,32 @@
    "keeper": "Piran Lanyon",
    "keeper_sprite": "villager",
    "sign_sprite": "sign_house",
+   "no_keeper": true,
    "keeper_at": [
-    39,
-    20
+    37,
+    9
    ],
    "stand": [
-    40,
-    20
+    37,
+    9
    ]
   },
   {
-   "art": "v2_house_03",
+   "art": "v2_house_08",
    "flip": true,
    "at": [
-    21,
-    18
+    41,
+    20
    ],
    "door": [
     [
-     22,
-     20
+     42,
+     22
     ]
    ],
    "sign": [
-    23,
-    20
+    43,
+    22
    ],
    "props": [],
    "counter": [],
@@ -1708,31 +1938,30 @@
    "sign_sprite": "sign_house",
    "no_keeper": true,
    "keeper_at": [
-    22,
-    21
+    42,
+    22
    ],
    "stand": [
-    22,
-    21
-   ],
-   "closed": true
+    42,
+    22
+   ]
   },
   {
-   "art": "v2_house_08",
+   "art": "v2_house_17",
    "flip": false,
    "at": [
-    8,
-    43
+    22,
+    19
    ],
    "door": [
     [
-     9,
-     45
+     24,
+     21
     ]
    ],
    "sign": [
-    10,
-    45
+    25,
+    21
    ],
    "props": [],
    "counter": [],
@@ -1745,32 +1974,31 @@
    "keeper": "Austol Keverne",
    "keeper_sprite": "villager",
    "sign_sprite": "sign_house",
-   "no_keeper": true,
    "keeper_at": [
-    9,
-    45
+    23,
+    20
    ],
    "stand": [
-    9,
-    45
+    24,
+    20
    ]
   },
   {
-   "art": "v2_house_17",
+   "art": "v2_house_22",
    "flip": false,
    "at": [
-    57,
-    15
+    66,
+    29
    ],
    "door": [
     [
-     59,
-     17
+     68,
+     31
     ]
    ],
    "sign": [
-    60,
-    17
+    69,
+    31
    ],
    "props": [],
    "counter": [],
@@ -1784,64 +2012,64 @@
    "keeper_sprite": "villager",
    "sign_sprite": "sign_house",
    "keeper_at": [
-    58,
-    16
+    67,
+    30
    ],
    "stand": [
-    59,
-    16
+    68,
+    30
    ]
   }
  ],
  "rows": [
   "ssggggggggggggg-ggggggggggggggggggggggggggg:::gggggggggggggggggggsssss~~~~~~~~~~",
   "ssggggggggggggg-ggggggggggggggggggggggggggg::ggggggggggggggggggggssss~~~~~~~~~~~",
-  "sgggggggggggggg--ggggggggggggSggggggggggggg::gggggUggggggggggggggssss~~~~~~~~~~~",
-  "gggggggggggUgggg-ggggggg-ggggYggggggggNgggg::gggYgggggggggggggg--ssss~~~~~~~~~~~",
-  "gggggggggSgggggg-ggggggg--gggggggggggggggggg::gggggggggggggggg---ssYW~~~~~~~~~~~",
-  "ggggUgZgggSOgggg-gggggggg-gggggggggggggggggg::gggggggggggUgggg--gssss~~~~~~~~~~~",
-  "gggggSggTgggggg--gggggggg-ggggggggggggggggg:::ggggggggggggggg--ggssss~~~~~~~~~~~",
-  "gggggggggggOgg--gPggggggg-gggggggggSgggggg::::gggggggggggggg--gggsYss~~~~~~~~~~~",
-  "ggggggggTggggg--gggggggggg-gggggggggggggg::::ggggggggggggg---ggNgssss~~~~~B~~~~~",
-  "gggggSgggggggg-ggggggggggg-ggggggggggggg::::ggggggggggggg---gKgggssssK~~~~~~~~~~",
-  "gggggggggggggg--gggggggggg-gggggggggggg::::gggZggggggTgg---ggggggsssss~~~~~~~~~~",
-  "ggggggggggggggg-ggggYgggg--ggggggggggg:::ggPggggggggggg---gggggggsss-s~~~~~~~~~~",
-  "ggggggggggggggg-ggggggggg-ggggg::::g::::ggTggggggggggg--gggggOggggs--sF~~~~~~~~~",
-  "ggggggggggggggggggggggggg-gg::lc::j:m::gZggggggggggggg-gRRggggggsss-sss~~~~~~~~~",
-  ":::gggggggggg::::::gssssggg:::::::::a:ggggggggggggggg--ggTggggggsWs-ssYs~~~~~~~~",
-  ":::::::::::::::::::::::::::::d:::k:::::gggYggggggggg--ggggggggggss--ssss~~~~~~~~",
-  ":ggggg:::::::gggggsss:::::g::i:::::::h:::ggggggggggggggggggggggsss-sssss~~~~~~~~",
-  "ggggg-gggg::ggggggWZssssgggg::A:::::e:g:::::gggg::::::gggggggggsss-sYZs~~~~~~~~~",
-  "ggggg-gggg::ggggggssssssgggggggf::bgggggggg::::::gggg::::ggggggsss-ssZs~~~~~~~~~",
-  "gggg--gQgg:gggggggUsNsgggggggOggg::gggggggOgggggggOgggg::::ggggsss-ssss~~~~~~~~~",
-  "gggg-ggggg::sssYggggggggggggggNggg:gKgggggggggggggggggggg::gggggss-ssss~~~~B~~~~",
-  "gggg-ggUgg::ssssgggggggggggggggggg::gSgggggggggggggggggggg:gggTggg-sss~~~~~~~~~~",
-  "gggg-gSgggg::ssssggggggggYgggggggg::ggggggggggggggggggggg::gQggggg-sss~~~~~~~~~~",
-  "gggg--gggggs:ssssggggggggggggggggg:gUNggggZgggggggggggggg:ssgggggg-sss~~~~~~~~~~",
-  "ggggg-gggggs:ssssgggggggggggggggg::gggggggTggggggggggggss:sssggggg-sZZ~~~~~~~~~~",
-  "ggOgg-ggggSs:sYssgggOgggggggggggg:gggggggggggggTgggggggss::ssggggg-sss~~~~~~~~~~",
-  "ggggg-gggggg:gggggggggggggggggggg:gNgggggggggggggggggggsss:gggggg--sss~~~~~~~~~~",
-  "ggggg--gTgg::gsssssssssssssssgggg::gssssssggggggsNssssssss::gg:::ggssss~~~~~~~~~",
-  "gggggggggg::::ssssssssssss::::sss:::ssssss::::sssssssssss:::::::gggssNs~~~~~~~~~",
-  "ggggg:::::::::::::::::::::::::::::::::::::::::::::::::::::::ssggPggsssZ~~~~~~~~~",
-  "ggggggggggsssssss:::V:::V:::V:::V:::V:::V:::V:::V:::V::::sssssKssssssss~~~~~B~~~",
-  "ggggg-ggggssssssY~======================================~YssssssXssXssss~~~~~~~~",
-  "ggggg--gggsYsss~~~=L=====H==I==E=====M==J==L=====H==C===~~~sssYssssXZsss~~~~~~~~",
-  "gggggg-gggssss~~~~~~~~~==~~~~~~~~~~==~~~~~~~~~~==~~~~~~~~~~~sXs~~~~~ZYsY~~~~~~~~",
-  "gggggg--ggssss~~~~~~~~~==~~~~~~~~~~==~~~~~~~~~~==~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~",
+  "sgggggggggggggg--ggggggggggggbggggggggggggg::gggggdggggggggggggggssss~~~~~~~~~~~",
+  "gggggggggggdgggg-ggggggg-ggggiggggggggWgggP::gPgigggggggggggggg--ssss~~~~~~~~~~~",
+  "gggggggggbgggggg-ggggggg--ggggggggggggggggPg::Pggggggggggggggg---ssif~~~~~~~~~~~",
+  "ggggggggggbXgggg-gggggggg-gggggggggggggggggg::gggggggggggdgggg--gssss~~~~~~~~~~~",
+  "ggggggggcgggggg--gggggggg-ggggggggggggggggg:::ggggggggggggggg--ggssss~~~~~~~~~~~",
+  "gggggggggggXgg--gYggggggg-gggggggggbgggggg::::gggggggggggggg--gggsiss~~~~~~~~~~~",
+  "ggggggggcggggg--gggggggggg-gggggggggggggg::::ggggggggggggg---ggWgssss~~~~~B~~~~~",
+  "gggggggggggggg-ggggggggggg-ggggggggggggg::::ggggggggggggg---gEgggssssE~~~~~~~~~~",
+  "gggggggggggggg--gggggggggg-gggggggggggg::::gggjggggggcgg---ggggggsssss~~~~~~~~~~",
+  "ggggggggggcgggg-ggggigbgg--ggggggggggg:::ggYggggggggggg---gggggggsss-s~~~~~~~~~~",
+  "ggggggggggggggg-ggggggggg-ggggg::::g::::ggcggggggggggg--gggggXggggs--sC~~~~~~~~~",
+  "ggggggggggggggggggggggggg-gg::vm::t:w::gjggggggggggggg-gaaggggggsss-sss~~~~~~~~~",
+  ":::gggggggggg::::::gssssggg:::::::::k:ggggggggggggggg--ggcggggggsfs-ssis~~~~~~~~",
+  ":::::::::::::::::::::::::::::n:::u:::::gggiggggggggg--ggggggggggss--ssss~~~~~~~~",
+  ":ggggg:::::::gggggsss:::::g::r:::::::q:::ggggggggggggggggggggggsss-sssss~~~~~~~~",
+  "gggVg-gggg::ggggggfjssssgggg::A:::::o:g:::::gggg::::::gggggggggsss-sijs~~~~~~~~~",
+  "ggggg-gggg::ggggggssssssjggggggp::lgggggggg::::::gggg::::ggggggsss-ssjs~~~~~~~~~",
+  "gggg--gggg:gggggggdsWsgggggggXggg::gggggggXgggggggXgggg::::ggggsss-ssss~~~~~~~~~",
+  "gggg-ggggg::ssWiggggggggggggggWggg:gEgggggggggggggggggggg::gggggss-ssss~~~~B~~~~",
+  "gggg-ggggg::sfsfgggggggggggggggggg::gbgggggggggggggggggggg:gggcggg-sss~~~~~~~~~~",
+  "gggg-gggggg::ssjsggggggggggggggggg::ggggggggggggggggggggg::gZggggg-sss~~~~~~~~~~",
+  "gggg--gggggs:sshsggggggggggggggggg:gdWggggggggggggggggggg:ssgggggg-sss~~~~~~~~~~",
+  "ggggg-gggggs:ssssgggggggggggggggg::ggggggggggggggggggggss:sssggggg-sjj~~~~~~~~~~",
+  "ggXgg-gEgggs:sissgggXgggggggggggg:gggggggggggggcgggggggss::ssggggg-sss~~~~~~~~~~",
+  "ggggg-gggggg:gggggggggggggggggggg:gWgggggggggggggggggggsss:gggggg--sss~~~~~~~~~~",
+  "ggggg--gggg::gsisssssssssssssgggg::gssssssggggggssssssssss::gg:::ggssss~~~~~~~~~",
+  "gggggggggg::::ssssssssssss::::sss:::ssssss::::sssssssssss:::::::gggssWs~~~~~~~~~",
+  "ggggg:::::::::::::::::::::::::::::::::::::::::::::::::::::::ssggYggsssj~~~~~~~~~",
+  "ggggggggggsssssss:::e:::e:::e:::e:::e:::e:::e:::e:::e::::sssssEssssssss~~~~~B~~~",
+  "ggggg-ggggssssssi~======================================~isssssshsssssss~~~~~~~~",
+  "ggggg--gggsisss~~~=O=====Q=T=L=R=====H=U=F=N=====J=K=S==~~~sssisssssssss~~~~~~~~",
+  "gggggg-gggssss~~~~~~~~~==~~~~~~~~~~==~~~~~~~~~~==~~~~~~~~~~~shs~~~~~sssi~~~~~~~~",
+  "gggggg--ggssss~~~~~~~~~=M~~~~~~~~~~=O~~~~~~~~~~=T~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~",
   "gggggg--ggssss~~~~~~~~~==~~~B~~~~~~==~~~~B~~~~~==~~~B~~~~~~~~~~~~~~~~~~~~~~~~~~~",
-  "ggggggg--gssNs~~~~~~~~~==~~~~~~~~~~==~~~~~~~~~~==~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~",
-  "gggggggg-gssYs~~~~~~~~~==~~~~~~~~~~==~~~~~~~~~~==~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~",
+  "ggggggg--gssWs~~~~~~~~~=I~~~~~~~~~~=Q~~~~~~~~~~=L~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~",
+  "ggggggig-gssis~~~~~~~~~==~~~~~~~~~~==~~~~~~~~~~==~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~",
   "gggggggg--sssss~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~",
-  "ggggggggg--sssWs~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ssZss~~~~~~~~~~~~",
-  "gggggggUg---ssssss~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~sssssssZsssssssss~~~~~~~",
-  "gggggggggg---sssXsssssNsssssWYssYsssssZssssssWsYssssssYsssssssssssYsssNss~~~~~~~",
-  "ggggggggOgg---ssssssssssssssssssssssssssssssssssssssssss-----sssssWsNYsss~~~~~~~",
-  "gggggggggggg-----------s----------------------sss--------ssss---gggssssss~~~~~~~",
-  "ggZggggggggggggggssgggggggsssssgggssssssssssss----ssssssssggggggggggWssX~~~~~~~~",
-  "ggTgggggggggggKggUgggggggggOSgggggggggggggggggggggggggggggggTgNgggggYsss~~~~~~~~",
-  "gggggggUggggggggggggTggggggggYgNggggggOgSgggggggggggOggggggggggggggsNssN~~~~~~~~",
+  "ggggggggg--sssfs~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ssjss~~~~~~~~~~~~",
+  "gggggggdg---ssssss~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~sssssssjsssssssss~~~~~~~",
+  "gggggggggg---ssshsssssWsssssfississsssjssssssfsissssssisssssssssssisssWss~~~~~~~",
+  "ggggggggXgg---ssssssssssssssssssssssssssssssssssssssssss-----sssssfsWisss~~~~~~~",
+  "ggggggggjggg-----------s----------------------sss--------ssss---gggssssss~~~~~~~",
+  "ggjggggggggggggggssgggggggsssssgggssssssssssss----ssssssssggggggggggfssh~~~~~~~~",
+  "ggcgggggggggggEggdgggggggggXbgggggggggggggggggggggggggggggggcgWgggggisss~~~~~~~~",
+  "gggggggdggggggggggggcggggggggigWggggggXgbgggggggggggXggggggggggggggsWssW~~~~~~~~",
   "gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggsssss~~~~~~~~"
  ],
- "note": "0.3.12 generated by tools/world/build_saltmere_v2.py from the designer's Saltmere v2 set; no walls, no fort (Hudson)"
+ "note": "0.3.13 generated by tools/world/build_saltmere_v3.py from the designer's Saltmere v2 set + v3 add-on; no walls, no fort (Hudson)"
 }

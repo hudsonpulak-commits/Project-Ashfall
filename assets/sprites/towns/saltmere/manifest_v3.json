@@ -1,0 +1,490 @@
+{
+ "version": "saltmere v3 (add-on to v2; v2 tiles/houses/civic set still used)",
+ "quay_tiles": {
+  "sizes": {
+   "v3_quay_end_w": [
+    16,
+    20
+   ],
+   "v3_quay_end_e": [
+    16,
+    20
+   ],
+   "v3_quay_corner_sw": [
+    16,
+    20
+   ],
+   "v3_quay_corner_se": [
+    16,
+    20
+   ],
+   "v3_quay_corner_nw": [
+    16,
+    20
+   ],
+   "v3_quay_corner_ne": [
+    16,
+    20
+   ],
+   "v3_quay_inner_sw": [
+    16,
+    20
+   ],
+   "v3_quay_inner_se": [
+    16,
+    20
+   ],
+   "v3_pier_end_s": [
+    16,
+    20
+   ]
+  },
+  "note": "16x20 like docks/dock_planks_autotile (bottom 4px = bulkhead face, hangs over water). end_w/e = exposed quay end; corner_sw/se = front+end outer corners with corner pile; corner_nw/ne = end against land (stone abutment); inner_sw/se = quay front where a pier finger leaves it (knee brace); pier_end_s = finger tip with ladder."
+ },
+ "dock_clutter": [
+  "v3_lobster_pots",
+  "v3_net_pile",
+  "v3_sacks",
+  "v3_fish_crate",
+  "v3_oars",
+  "v3_buoys",
+  "v3_tarp_cargo",
+  "v3_bollard_rope",
+  "v3_keg_stack",
+  "v3_dock_lantern",
+  "v3_fish_basket",
+  "v3_rope_spool",
+  "v3_gulls",
+  "v3_cargo_hoist"
+ ],
+ "props": [
+  [
+   "v3_lobster_pots",
+   [
+    22,
+    18
+   ]
+  ],
+  [
+   "v3_net_pile",
+   [
+    24,
+    16
+   ]
+  ],
+  [
+   "v3_sacks",
+   [
+    18,
+    16
+   ]
+  ],
+  [
+   "v3_fish_crate",
+   [
+    16,
+    18
+   ]
+  ],
+  [
+   "v3_oars",
+   [
+    20,
+    32
+   ]
+  ],
+  [
+   "v3_buoys",
+   [
+    18,
+    16
+   ]
+  ],
+  [
+   "v3_tarp_cargo",
+   [
+    32,
+    24
+   ]
+  ],
+  [
+   "v3_bollard_rope",
+   [
+    16,
+    16
+   ]
+  ],
+  [
+   "v3_keg_stack",
+   [
+    24,
+    24
+   ]
+  ],
+  [
+   "v3_dock_lantern",
+   [
+    14,
+    32
+   ]
+  ],
+  [
+   "v3_fish_basket",
+   [
+    16,
+    16
+   ]
+  ],
+  [
+   "v3_rope_spool",
+   [
+    16,
+    16
+   ]
+  ],
+  [
+   "v3_gulls",
+   [
+    18,
+    16
+   ]
+  ],
+  [
+   "v3_cargo_hoist",
+   [
+    32,
+    48
+   ]
+  ],
+  [
+   "v3_town_sign",
+   [
+    48,
+    40
+   ]
+  ]
+ ],
+ "buildings": [
+  {
+   "name": "v3_harbour_entrance",
+   "px": [
+    80,
+    72
+   ],
+   "layers": [
+    "v3_harbour_entrance_floor.png",
+    "v3_harbour_entrance_walls.png",
+    "v3_harbour_entrance_roof.png"
+   ],
+   "fade_group": [
+    "v3_harbour_entrance_roof.png"
+   ],
+   "passage_px": [
+    16,
+    0,
+    48,
+    72
+   ],
+   "roof_tiles": [
+    [
+     0,
+     0
+    ],
+    [
+     1,
+     0
+    ],
+    [
+     2,
+     0
+    ],
+    [
+     3,
+     0
+    ],
+    [
+     4,
+     0
+    ],
+    [
+     0,
+     1
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     2,
+     1
+    ],
+    [
+     3,
+     1
+    ],
+    [
+     4,
+     1
+    ]
+   ],
+   "note": "Straddles a 2-tile N-S road: passage x16..64 is walkable, pillars block. Roof (lintel + lanterns) fades when the player stands in rows 0-1 of the passage. Base line y=72."
+  },
+  {
+   "name": "v3_elijah_tomb",
+   "tiles": [
+    4,
+    4
+   ],
+   "px": [
+    64,
+    64
+   ],
+   "storeys": 1,
+   "footprint_origin_px": [
+    0,
+    0
+   ],
+   "layers": [
+    "v3_elijah_tomb_floor.png",
+    "v3_elijah_tomb_walls.png",
+    "v3_elijah_tomb_roof.png"
+   ],
+   "fade_group": [
+    "v3_elijah_tomb_roof.png"
+   ],
+   "door_px": [
+    32,
+    50
+   ],
+   "door_tile": [
+    2,
+    3
+   ],
+   "roof_tiles": [
+    [
+     1,
+     0
+    ],
+    [
+     2,
+     0
+    ],
+    [
+     0,
+     1
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     2,
+     1
+    ],
+    [
+     3,
+     1
+    ],
+    [
+     0,
+     2
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     2,
+     2
+    ],
+    [
+     3,
+     2
+    ],
+    [
+     0,
+     3
+    ],
+    [
+     1,
+     3
+    ],
+    [
+     2,
+     3
+    ],
+    [
+     3,
+     3
+    ]
+   ]
+  },
+  {
+   "name": "v3_smithy_large",
+   "tiles": [
+    7,
+    5
+   ],
+   "px": [
+    112,
+    80
+   ],
+   "storeys": 1,
+   "footprint_origin_px": [
+    0,
+    0
+   ],
+   "layers": [
+    "v3_smithy_large_floor.png",
+    "v3_smithy_large_walls.png",
+    "v3_smithy_large_roof.png"
+   ],
+   "fade_group": [
+    "v3_smithy_large_roof.png"
+   ],
+   "door_px": [
+    40,
+    66
+   ],
+   "door_tile": [
+    2,
+    4
+   ],
+   "roof_tiles": [
+    [
+     0,
+     1
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     2,
+     1
+    ],
+    [
+     3,
+     1
+    ],
+    [
+     4,
+     1
+    ],
+    [
+     0,
+     2
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     2,
+     2
+    ],
+    [
+     3,
+     2
+    ],
+    [
+     4,
+     2
+    ],
+    [
+     5,
+     2
+    ],
+    [
+     6,
+     2
+    ],
+    [
+     0,
+     3
+    ],
+    [
+     1,
+     3
+    ],
+    [
+     2,
+     3
+    ],
+    [
+     3,
+     3
+    ],
+    [
+     4,
+     3
+    ],
+    [
+     5,
+     3
+    ],
+    [
+     6,
+     3
+    ],
+    [
+     0,
+     4
+    ],
+    [
+     1,
+     4
+    ],
+    [
+     2,
+     4
+    ],
+    [
+     3,
+     4
+    ],
+    [
+     4,
+     4
+    ],
+    [
+     5,
+     4
+    ],
+    [
+     6,
+     4
+    ]
+   ]
+  }
+ ],
+ "ships": {
+  "v3_rowboat_1": [
+   40,
+   20
+  ],
+  "v3_rowboat_2": [
+   40,
+   20
+  ],
+  "v3_rowboat_3": [
+   40,
+   20
+  ],
+  "v3_ship_galleon": [
+   184,
+   148
+  ],
+  "v3_ship_sloop": [
+   112,
+   100
+  ]
+ },
+ "rules": {
+  "layered": "floor -> walls (door gap) -> upper storeys -> roof; fade_group hides when the player is inside / under (roof cutaway).",
+  "door_clearance": ">=44px dry ground in front of every door, no building within +-8px, connected to a road over dry land",
+  "spurs": "every door gets a narrow sand-path spur (v2_diag_sand_path 45deg corner autotile, half-width .62 tile) to the nearest road, drawn after the building clearance check",
+  "props": "no props on road/path/spur pixels except stalls/well on the plaza and clutter on docks",
+  "ships": "v3 ships/rowboats are >=10px clear of land/quay; rowboats 40x20 (was 24x12)"
+ }
+}
