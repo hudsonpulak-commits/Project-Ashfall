@@ -669,7 +669,11 @@ for i in range(8):
 RING_QA = dict(samples=_n, gaps=_gaps[:20], gap_count=len(_gaps), gates=sorted(_gate_hits))
 print('ring QA', RING_QA)
 assert not _gaps and len(_gate_hits) == 4, RING_QA
-json.dump(town_art, open(os.path.join(REPO, 'data/town_art.json'), 'w'), indent=1)
+_ta_p = os.path.join(REPO, 'data/town_art.json')   # 0.3.12 merge: other towns (Saltmere v2) share this file
+_ta = json.load(open(_ta_p)) if os.path.exists(_ta_p) else dict(buildings={})
+_ta['buildings'] = {k: v for k, v in _ta.get('buildings', {}).items() if k not in ART}; _ta['buildings'].update(ART)
+_ta['note'] = town_art['note']
+json.dump(_ta, open(_ta_p, 'w'), indent=1)
 old = json.load(open(os.path.join(REPO, 'data/towns/highfen.json')))
 spawn = [PLAZA[0] // T, PLAZA[1] // T + 3]
 while not walk(*spawn) or tuple(spawn) not in seen: spawn[1] += 1

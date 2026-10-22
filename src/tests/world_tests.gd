@@ -50,6 +50,7 @@ static func run(main, world: World, p: Player) -> void:
 	Patch0396Tests.run(main, world, p)   # 0.3.9.6
 	Patch0310Tests.run(main, world, p)   # 0.3.10 lore regions
 	Patch0311Tests.run(main, world, p)   # 0.3.11 Highfen + cliff fixes
+	Patch0312Tests.run(main, world, p)   # 0.3.12 Saltmere v2 open harbour town
 	Patch0396VideoTests.run(main, world, p)   # 0.3.9.6 title video
 	p.place_at(world.gen.town_spawn("fenhollow"))
 	world.set_focus(p.tile, true)
@@ -1007,7 +1008,7 @@ static func _village_tests(world: World, p: Player) -> void:
 static func _walled_city_tests(world: World, p: Player) -> void:
 	print("  -- 0.3.1 walled cities")
 	var gen := world.gen
-	for tid in ["fenhollow", "cinderholt", "saltmere"]:
+	for tid in ["fenhollow", "cinderholt"]:   # 0.3.12 Saltmere is an open harbour town (no walls): patch0312_tests
 		var tdef: Dictionary = gen.towns[tid]
 		var gates: Dictionary = tdef.get("gates", {})
 		check(gates.size() == 4, "%s has N/S/E/W gates" % tid)
@@ -1084,8 +1085,6 @@ static func _walled_city_tests(world: World, p: Player) -> void:
 				check(sample == WorldGen.TileType.PALISADE or sample in WorldGen.GATE_TILES, "fenhollow uses palisade walls")
 			"cinderholt":
 				check(sample == WorldGen.TileType.BASALT_WALL or sample in WorldGen.GATE_TILES, "cinderholt uses basalt walls")
-			"saltmere":
-				check(sample == WorldGen.TileType.SANDSTONE_WALL or sample in WorldGen.GATE_TILES, "saltmere uses sandstone walls")
 	# gate guards: 2 stationary per gate, non-aggressive
 	var gate_guards: int = 0
 	var aggro := false
@@ -1223,6 +1222,7 @@ static func _walled_integration_tests(world: World, p: Player) -> void:
 		var via := false
 		for q in path:
 			via = via or gen.tile_at(q.x, q.y) in WorldGen.GATE_TILES
+		via = via or str(gen.towns[k.split("|")[0]].get("walls", "")) == "none"   # 0.3.12 open towns: no gate to pass
 		walk_ok = walk_ok and not path.is_empty() and via
 	check(walk_ok, "from each city square, the walk to its road goes out through a gate")
 	# villages still sit outside the walls, beside their road
@@ -1255,7 +1255,7 @@ static func _walled_integration_tests(world: World, p: Player) -> void:
 			for d in [Vector2i(0, 1), Vector2i(0, -1), Vector2i(1, 0), Vector2i(-1, 0)]:
 				if gen.tile_at(q.x + d.x, q.y + d.y) in WorldGen.GATE_TILES:
 					g = q + d
-			safe_ok = safe_ok and (gen.safe_at(g) or tid == gen.capital)   # 0.3.8 Highfen's gates are bridge ends on the rect edge
+			safe_ok = safe_ok and (gen.safe_at(g) or tid == gen.capital or str(gen.towns[tid].get("walls", "")) == "none")   # 0.3.12 open towns; 0.3.8 Highfen's gates are bridge ends on the rect edge
 	check(safe_ok, "walled cities are safe zones (whole interior and the gates)")
 	# a rat just outside a gate never starts on a weak player standing in the gateway
 	var tid0 := "fenhollow"
@@ -1329,8 +1329,10 @@ static func _walled_integration_tests(world: World, p: Player) -> void:
 	var gt: Array = DayNight.gate_torch_tiles(world)
 	var gt_want := 0
 	for tid in gen.town_order:
+		if str(gen.towns[tid].get("walls", "")) == "none":
+			continue   # 0.3.12 Saltmere: open harbour town, no gate walls to torch
 		gt_want += 2 * (gen.towns[tid].get("gate_walls", gen.towns[tid].get("gates", {})) as Dictionary).size()
-	var gt_ok := gt.size() == gt_want and gt_want >= 2 * gen.town_order.size()
+	var gt_ok := gt.size() == gt_want and gt_want >= 2 * (gen.town_order.size() - 1)
 	for q in gt:
 		gt_ok = gt_ok and gen.tile_at(q.x, q.y) in WorldGen.BLOCKING_TILES
 	check(gt_ok, "a torch on the wall each side of every city gate (%d)" % gt.size())

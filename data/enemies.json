@@ -230,19 +230,21 @@
    "enemy": "chicken",
    "at": [
     318,
-    142
+    127
    ],
    "count": 4,
-   "spread": 2
+   "spread": 2,
+   "note": "0.3.12 moved north of the harbour town (Saltmere v2 rect)"
   },
   {
    "enemy": "chicken",
    "at": [
     330,
-    146
+    130
    ],
    "count": 4,
-   "spread": 2
+   "spread": 2,
+   "note": "0.3.12 moved north of the harbour town (Saltmere v2 rect)"
   },
   {
    "enemy": "giant_rat",
