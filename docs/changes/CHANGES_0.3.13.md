@@ -52,3 +52,22 @@ Fenhollow is rebuilt as a marsh town from the designer's Fenhollow v1 set (art_h
   - the hatchet test uses an ash tree;
   - the furnace and hearth tests allow 80 ticks for the longer walks.
 - Selftest result: 907/907.
+
+## Saltmere v3 (tools/world/build_saltmere_v3.py)
+- Designer Saltmere v3 swapped in (copied to assets/sprites/towns/saltmere; art_handoff untouched).
+- Quay corner pieces (nw/ne/sw/se), knee-brace inner pieces where piers leave the quay, ladder pier tips.
+- 14 sm3_* dock props on the quay and pier fingers; v3 town sign by the west road.
+- Harbour entrance arch over the north road (walk-through passage, pillars block, roof fades).
+- Elijah's tomb (saltmere_elijah_tomb).
+- The smith moves out of the warehouse into v3_smithy_large (furnace + anvil fully indoors). The warehouse is now just the Salt Warehouse.
+- v3 galleon, sloops and the larger 40x20 rowboats.
+
+## Highfen v4 (tools/world/build_highfen_v4.py)
+- Street plan per preview_v4: outer ring road dropped; the 60/120-degree spokes replaced by inner spokes at 30/150/210/330.
+- v4 guild, cookhouse (Hob's bakery), player shop, smithy (new: Highfen Forge, anvil only; smithing stays in Fenhollow) and general store, replacing guild_knights, v3_cookhouse, shop_smith and shop_general per manifest_v4.
+- v4 knight statue on the plaza, banners flanking civic doors, v4 lamp posts on road verges, v4 trees for fill.
+- Player-house yard stations now placed on a checkerboard so none is boxed in.
+- Wall ring QA: 1496 samples, 0 gaps, 4 gates. Reachability: 0 fails.
+- Test change: patch0311 "relocated inside the city wall" radius widened from 17 to 26 tiles. The larger v4 buildings fill the band freed by the dropped ring road; 26 is still inside the wall.
+
+Selftest: 927/927.

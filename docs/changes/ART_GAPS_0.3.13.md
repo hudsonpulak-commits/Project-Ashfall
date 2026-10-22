@@ -7,3 +7,11 @@
 5. **fh_house_03's door is not on the bottom row.** The row below its door is drawn as a porch over the ground and is not floor.
 6. **Unused designs.** fh_house_06, 07, 09 and 11 did not fit the 74x60 layout around the creek, pools and civic buildings.
 7. **No palisade corner or end pieces.** The ring is assembled from per-run sprites, and the straight runs into the side gates meet the curve with connectors.
+
+## Saltmere v3
+- v3_quay_end_w/e have no slot. Saltmere's quay is only 2 tiles deep: the top row abuts land (corner_nw/ne) and the front row is corner_sw/se. The end tiles are copied in but unused until the quay is deepened or the designer says where they go.
+
+## Highfen v4
+- The v4 smithy has no Highfen smithing role (it is a house with an anvil). A keeper sprite and a decision on whether Highfen should sell or smith are open.
+- v4_banner_wall (facade banner) is copied in but not placed. It needs per-design facade anchor points.
+- The building debug image draws hf4_* props as placeholders (debug only).
