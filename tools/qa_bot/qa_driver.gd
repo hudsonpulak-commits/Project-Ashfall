@@ -352,9 +352,35 @@ func _run() -> void:
 ## Right, turn left mid-walk, 45-degree diagonals both ways, then sprint (via a
 ## real tap on the Energy bar) for a shallow diagonal and a straight run; the
 ## Pack tab is tapped open and closed (single-tap toggles).
+## 0.3.13 Fenhollow v1 is a dense marsh town: the walk/gear legs need a clear 18x13 patch, so find the
+## nearest one to the spawn (checked in collision) instead of assuming open ground beside it.
+func _walk_origin() -> Vector2i:
+	var w: World = main.world
+	var c0: Vector2i = w.gen.town_spawn("fenhollow")
+	for r in range(0, 70):
+		for dy in range(-r, r + 1):
+			for dx in range(-r, r + 1):
+				if maxi(absi(dx), absi(dy)) != r:
+					continue
+				var c := c0 + Vector2i(dx, dy)
+				var ok := true
+				for yy in range(-6, 7):
+					for xx in range(-10, 10):
+						var q := c + Vector2i(xx, yy)
+						w.get_chunk(w.chunk_of(q))
+						if w.is_blocked(q) or w.object_at(q) != null:
+							ok = false
+							break
+					if not ok:
+						break
+				if ok:
+					return c
+	return c0
+
+
 func _walk() -> void:
 	var p: Player = main.player
-	var c: Vector2i = main.world.gen.town_spawn("fenhollow")
+	var c: Vector2i = _walk_origin()
 	p.place_at(c + Vector2i(-7, 2))
 	p.sprint = false
 	p.energy = p.max_energy()
@@ -1307,15 +1333,15 @@ func _city() -> void:
 		res["cities"][tid] = c
 	# the road gate of Fenhollow (towards Cinderholt)
 	main._set_zoom(2)
-	var tid0 := "fenhollow"
-	var go: Vector2i = w.gen.gate_outside(tid0, w.gen.towns["cinderholt"]["center"])
+	var tid0 := "cinderholt"   # 0.3.13: Fenhollow's palisade gates are unguarded and unlit; Cinderholt keeps the walled-gate setup
+	var go: Vector2i = w.gen.gate_outside(tid0, w.gen.towns["fenhollow"]["center"])
 	var gt := _gate_tile(go)
 	var step: Vector2i = go - gt
 	var guards: Array = []
 	for e in w.enemies.enemies:
 		if e.kind == "town_guard" and not e.dead and e.cheb(e.tile, gt) <= 4:
 			guards.append(e)
-	var road: Array = w.gen.road_between(tid0, "cinderholt")
+	var road: Array = w.gen.road_between(tid0, "fenhollow")
 	p.place_at(gt - step * 5)
 	w.set_focus(p.tile, true)
 	await frames(20)
@@ -1681,7 +1707,7 @@ func _slot_of(id: String) -> int:
 ## right then left, for the side-by-side still v031_gear_player.png.
 func _gear() -> void:
 	var p: Player = main.player
-	var c: Vector2i = main.world.gen.town_spawn("fenhollow")
+	var c: Vector2i = _walk_origin()
 	for sk in p.skills.xp.keys():
 		p.skills.set_level(sk, 60)       # every tier wearable (level requirements)
 	p.equipment.clear()
@@ -2140,7 +2166,7 @@ func _v036() -> void:
 	# no tool: gathering blocked
 	p.inventory.clear()
 	p.equipment.erase("weapon")
-	var tree: WorldObject = w.find_nearest_object(w.gen.town_spawn("fenhollow") + Vector2i(0, 40), ["ash_tree", "alder_tree"], 60)
+	var tree: WorldObject = w.find_nearest_object(w.gen.town_spawn("fenhollow") + Vector2i(0, 40), ["ash_tree"], 60)   # 0.3.13 alders need Forestry 15 (different message)
 	p.place_at(w.find_free_tile_near(tree.pos + Vector2i(0, 2), 2))
 	w.set_focus(p.tile, true)
 	await frames(15)
