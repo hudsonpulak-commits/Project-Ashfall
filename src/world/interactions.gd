@@ -110,6 +110,11 @@ static func _gather(actor: Actor, world, obj: WorldObject, d: Dictionary, t: int
 		actor.action["cooldown"] = cd - 1
 		return
 	actor.action["cooldown"] = int(d.get("attempt_ticks", 3)) - 1
+	if actor is Player:   # 0.3.13 sfx: every swing / chop
+		if skill == "mining":
+			Sfx.play("pickaxe_swing")
+		elif skill == "forestry":
+			Sfx.play("axe_chop")
 	if actor.rng.randf() >= gather_chance(actor, d):
 		return
 	var alt: Dictionary = d.get("alt_yield", {})
@@ -117,6 +122,8 @@ static func _gather(actor: Actor, world, obj: WorldObject, d: Dictionary, t: int
 		item_id = alt["item"]
 		xp = int(alt.get("xp", xp))
 	actor.inventory.add(item_id, 1)
+	if actor is Player and skill == "mining":
+		Sfx.play("ore_obtained")   # 0.3.13 sfx
 	actor.skills.add_xp(skill, xp)
 	actor.say("You get: %s." % GameData.item_name(item_id))
 	var ti := actor.inventory.best_tool_index(skill)
@@ -221,6 +228,11 @@ static func _station(actor: Actor, obj: WorldObject, d: Dictionary) -> void:
 	var out_id: String = recipe["out"].keys()[0]
 	actor.set_status("Making %s..." % GameData.item_name(out_id).to_lower())
 	actor.action["progress"] = int(actor.action.get("progress", 0)) + 1
+	if actor is Player:   # 0.3.13 sfx: anvil strike each tick, furnace loop while smelting
+		if station == "anvil":
+			Sfx.play("anvil_strike")
+		elif station == "furnace":
+			Sfx.furnace_tick()
 	if int(actor.action["progress"]) < int(recipe.get("ticks", 3)):
 		return
 	actor.action["progress"] = 0

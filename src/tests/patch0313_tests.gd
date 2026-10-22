@@ -10,6 +10,7 @@ static func check(cond: bool, what: String) -> void:
 
 static func run(main, world, p) -> void:
 	var gen: WorldGen = world.gen
+	_sfx(p)
 	var t: Dictionary = gen.towns["fenhollow"]
 	var org := Vector2i(int(t["origin"][0]), int(t["origin"][1]))
 	check(str(t.get("walls", "")) == "palisade" and (t.get("gates", {}) as Dictionary).size() == 4,
@@ -130,3 +131,21 @@ static func _highfen_v4(world, gen: WorldGen) -> void:
 		check(objs.contains(o), "Highfen places the v4 %s" % o)
 	var rq: Dictionary = t.get("ring_qa", {})
 	check(int(rq.get("gap_count", -1)) == 0 and (rq.get("gates", []) as Array).size() == 4, "Highfen's wall ring stays continuous after the v4 street plan")
+
+
+## 0.3.13 sound effects: own bus, the six approved files, NPC-hit hooks are safe no-ops.
+static func _sfx(p) -> void:
+	check(AudioServer.get_bus_index("SFX") >= 0, "SFX audio bus exists (separate from Music)")
+	for ev in ["pickaxe_swing", "ore_obtained", "axe_chop", "player_damaged", "anvil_strike", "furnace_smelting"]:
+		check(Sfx.has_sound(ev), "sfx file present: " + ev)
+	check(not Sfx.npc_hit(true) and not Sfx.npc_hit(false), "NPC-hit sfx hooks are no-ops until files exist")
+	var n0 := int(Sfx.counts.get("player_damaged", 0))
+	if p != null and not p.dead:
+		var hp0: int = p.hp
+		p.take_hit(0, null, 0)
+		check(int(Sfx.counts.get("player_damaged", 0)) == n0, "a miss (0 dmg) plays no damage sfx")
+		p.take_hit(1, null, 0)
+		check(int(Sfx.counts.get("player_damaged", 0)) == n0 + 1, "taking damage plays damage_hit")
+		p.hp = hp0
+		Events.player_hp_changed.emit(p.hp, p.max_hp())
+	check(Music.player.bus == "Master" or Music.player.bus == &"Master", "music stays on its own (Master) path")
