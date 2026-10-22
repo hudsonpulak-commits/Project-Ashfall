@@ -303,146 +303,58 @@
    ]
   },
   "saltmere": {
+   "art": "v2_church",
+   "flip": false,
+   "at": [
+    31,
+    5
+   ],
+   "door": [
+    [
+     33,
+     10
+    ]
+   ],
+   "sign": [
+    34,
+    10
+   ],
+   "props": [
+    {
+     "object": "pew",
+     "at": [
+      32,
+      8
+     ]
+    },
+    {
+     "object": "pew",
+     "at": [
+      32,
+      9
+     ]
+    }
+   ],
+   "counter": [],
+   "style": "stone",
+   "roof": "#2a6a9a",
    "id": "saltmere_church",
    "kind": "church",
    "name": "Saltmere Chapel",
    "keeper": "Sister Mare",
-   "style": "stone",
-   "rect": [
-    24,
-    2,
-    9,
-    8
-   ],
-   "door": [
-    [
-     28,
-     9
-    ]
+   "altar": [
+    33,
+    6
    ],
    "keeper_at": [
-    31,
-    3
+    32,
+    6
    ],
    "stand": [
-    31,
-    4
+    33,
+    7
    ],
-   "sign": [
-    29,
-    9
-   ],
-   "altar": [
-    28,
-    3
-   ],
-   "props": [
-    {
-     "object": "candle_stand",
-     "at": [
-      25,
-      3
-     ]
-    },
-    {
-     "object": "candle_stand",
-     "at": [
-      27,
-      3
-     ]
-    },
-    {
-     "object": "candle_stand",
-     "at": [
-      29,
-      3
-     ]
-    },
-    {
-     "object": "pew",
-     "at": [
-      25,
-      6
-     ]
-    },
-    {
-     "object": "pew",
-     "at": [
-      26,
-      6
-     ]
-    },
-    {
-     "object": "pew",
-     "at": [
-      27,
-      6
-     ]
-    },
-    {
-     "object": "pew",
-     "at": [
-      29,
-      6
-     ]
-    },
-    {
-     "object": "pew",
-     "at": [
-      30,
-      6
-     ]
-    },
-    {
-     "object": "pew",
-     "at": [
-      31,
-      6
-     ]
-    },
-    {
-     "object": "pew",
-     "at": [
-      25,
-      8
-     ]
-    },
-    {
-     "object": "pew",
-     "at": [
-      26,
-      8
-     ]
-    },
-    {
-     "object": "pew",
-     "at": [
-      27,
-      8
-     ]
-    },
-    {
-     "object": "pew",
-     "at": [
-      29,
-      8
-     ]
-    },
-    {
-     "object": "pew",
-     "at": [
-      30,
-      8
-     ]
-    },
-    {
-     "object": "pew",
-     "at": [
-      31,
-      8
-     ]
-    }
-   ]
+   "note": "0.3.12 the chapel (designer v2_church)"
   }
  }
 }

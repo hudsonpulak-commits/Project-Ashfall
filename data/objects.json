@@ -945,6 +945,210 @@
    "sprite": "hf_v3_well_round",
    "blocks": true,
    "type": "prop"
+  },
+  "sm_agave": {
+   "name": "Agave",
+   "sprite": "sm_agave",
+   "blocks": true,
+   "type": "prop"
+  },
+  "sm_banana": {
+   "name": "Banana plant",
+   "sprite": "sm_banana",
+   "blocks": true,
+   "type": "prop"
+  },
+  "sm_barrels": {
+   "name": "Barrels",
+   "sprite": "sm_barrels",
+   "blocks": true,
+   "type": "prop"
+  },
+  "sm_cart": {
+   "name": "Cart",
+   "sprite": "sm_cart",
+   "blocks": true,
+   "type": "prop"
+  },
+  "sm_crate_pile": {
+   "name": "Crates",
+   "sprite": "sm_crate_pile",
+   "blocks": true,
+   "type": "prop"
+  },
+  "sm_fern": {
+   "name": "Fern",
+   "sprite": "sm_fern",
+   "blocks": false,
+   "type": "prop"
+  },
+  "sm_flowerbed": {
+   "name": "Flowerbed",
+   "sprite": "sm_flowerbed",
+   "blocks": false,
+   "type": "prop"
+  },
+  "sm_hibiscus": {
+   "name": "Hibiscus",
+   "sprite": "sm_hibiscus",
+   "blocks": true,
+   "type": "prop"
+  },
+  "sm_palm_cluster": {
+   "name": "Palms",
+   "sprite": "sm_palm_cluster",
+   "blocks": true,
+   "type": "prop"
+  },
+  "sm_palm_lean": {
+   "name": "Palm",
+   "sprite": "sm_palm_lean",
+   "blocks": true,
+   "type": "prop"
+  },
+  "sm_palm_short": {
+   "name": "Palm",
+   "sprite": "sm_palm_short",
+   "blocks": true,
+   "type": "prop"
+  },
+  "sm_palm_tall": {
+   "name": "Palm",
+   "sprite": "sm_palm_tall",
+   "blocks": true,
+   "type": "prop"
+  },
+  "sm_stall_cloth": {
+   "name": "Market stall",
+   "sprite": "sm_stall_cloth",
+   "blocks": true,
+   "type": "prop"
+  },
+  "sm_stall_coconut": {
+   "name": "Market stall",
+   "sprite": "sm_stall_coconut",
+   "blocks": true,
+   "type": "prop"
+  },
+  "sm_stall_fish": {
+   "name": "Market stall",
+   "sprite": "sm_stall_fish",
+   "blocks": true,
+   "type": "prop"
+  },
+  "sm_stall_fruit": {
+   "name": "Market stall",
+   "sprite": "sm_stall_fruit",
+   "blocks": true,
+   "type": "prop"
+  },
+  "sm_stall_pottery": {
+   "name": "Market stall",
+   "sprite": "sm_stall_pottery",
+   "blocks": true,
+   "type": "prop"
+  },
+  "sm_stall_rope_tackle": {
+   "name": "Market stall",
+   "sprite": "sm_stall_rope_tackle",
+   "blocks": true,
+   "type": "prop"
+  },
+  "sm_stall_rum": {
+   "name": "Market stall",
+   "sprite": "sm_stall_rum",
+   "blocks": true,
+   "type": "prop"
+  },
+  "sm_stall_shell": {
+   "name": "Market stall",
+   "sprite": "sm_stall_shell",
+   "blocks": true,
+   "type": "prop"
+  },
+  "sm_stall_spice": {
+   "name": "Market stall",
+   "sprite": "sm_stall_spice",
+   "blocks": true,
+   "type": "prop"
+  },
+  "sm_well": {
+   "name": "Well",
+   "sprite": "sm_well",
+   "blocks": true,
+   "type": "prop"
+  },
+  "sm1_anchor": {
+   "name": "Anchor",
+   "sprite": "sm1_anchor",
+   "blocks": true,
+   "type": "prop"
+  },
+  "sm1_barrel": {
+   "name": "Barrel",
+   "sprite": "sm1_barrel",
+   "blocks": true,
+   "type": "prop"
+  },
+  "sm1_barrel_stack": {
+   "name": "Barrels",
+   "sprite": "sm1_barrel_stack",
+   "blocks": true,
+   "type": "prop"
+  },
+  "sm1_bench": {
+   "name": "Bench",
+   "sprite": "sm1_bench",
+   "blocks": true,
+   "type": "prop"
+  },
+  "sm1_crate": {
+   "name": "Crate",
+   "sprite": "sm1_crate",
+   "blocks": true,
+   "type": "prop"
+  },
+  "sm1_crate_broken": {
+   "name": "Crate broken",
+   "sprite": "sm1_crate_broken",
+   "blocks": true,
+   "type": "prop"
+  },
+  "sm1_crate_stack": {
+   "name": "Crates",
+   "sprite": "sm1_crate_stack",
+   "blocks": true,
+   "type": "prop"
+  },
+  "sm1_fish_rack": {
+   "name": "Fish drying rack",
+   "sprite": "sm1_fish_rack",
+   "blocks": true,
+   "type": "prop"
+  },
+  "sm1_lamp_post": {
+   "name": "Lamp post",
+   "sprite": "sm1_lamp_post",
+   "blocks": true,
+   "type": "prop"
+  },
+  "sm1_net_hanging": {
+   "name": "Fishing nets",
+   "sprite": "sm1_net_hanging",
+   "blocks": true,
+   "type": "prop"
+  },
+  "sm1_rope_coil": {
+   "name": "Rope",
+   "sprite": "sm1_rope_coil",
+   "blocks": true,
+   "type": "prop"
+  },
+  "sm_mooring_post": {
+   "name": "Mooring post",
+   "sprite": "sm_mooring_post",
+   "blocks": true,
+   "type": "prop"
   }
  }
 }

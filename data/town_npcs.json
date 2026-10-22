@@ -267,33 +267,50 @@
      "enemy": "town_guard",
      "patrol": [
       [
-       28,
+       4,
+       15
+      ],
+      [
+       20,
+       15
+      ],
+      [
+       30,
+       15
+      ]
+     ]
+    },
+    {
+     "enemy": "town_guard",
+     "patrol": [
+      [
+       44,
+       2
+      ],
+      [
+       42,
        10
       ],
       [
-       28,
-       20
-      ],
-      [
-       14,
-       27
-      ],
+       35,
+       12
+      ]
+     ]
+    },
+    {
+     "enemy": "town_guard",
+     "patrol": [
       [
        8,
-       19
-      ]
-     ]
-    },
-    {
-     "enemy": "town_guard",
-     "patrol": [
-      [
-       20,
-       17
+       29
       ],
       [
-       10,
-       17
+       24,
+       29
+      ],
+      [
+       40,
+       29
       ]
      ]
     },
@@ -301,93 +318,121 @@
      "enemy": "town_guard",
      "patrol": [
       [
-       22,
-       1
+       40,
+       29
+      ],
+      [
+       56,
+       29
+      ],
+      [
+       63,
+       27
       ]
-     ],
-     "gate": "north"
+     ]
     },
     {
      "enemy": "town_guard",
      "patrol": [
       [
        24,
-       1
+       31
+      ],
+      [
+       24,
+       37
       ]
-     ],
-     "gate": "north"
+     ]
     },
     {
      "enemy": "town_guard",
      "patrol": [
       [
-       23,
+       36,
+       31
+      ],
+      [
+       36,
+       37
+      ]
+     ]
+    },
+    {
+     "enemy": "town_guard",
+     "patrol": [
+      [
+       48,
+       31
+      ],
+      [
+       48,
+       37
+      ]
+     ]
+    },
+    {
+     "enemy": "town_guard",
+     "patrol": [
+      [
+       12,
+       18
+      ],
+      [
+       11,
+       27
+      ]
+     ]
+    },
+    {
+     "enemy": "town_guard",
+     "patrol": [
+      [
+       39,
+       16
+      ],
+      [
+       52,
+       17
+      ],
+      [
+       58,
+       25
+      ]
+     ]
+    },
+    {
+     "enemy": "town_guard",
+     "patrol": [
+      [
+       8,
        36
-      ]
-     ],
-     "gate": "south"
-    },
-    {
-     "enemy": "town_guard",
-     "patrol": [
+      ],
       [
-       23,
-       19
-      ]
-     ],
-     "gate": "south"
-    },
-    {
-     "enemy": "town_guard",
-     "patrol": [
+       24,
+       43
+      ],
       [
-       1,
-       18
-      ]
-     ],
-     "gate": "west"
-    },
-    {
-     "enemy": "town_guard",
-     "patrol": [
+       48,
+       43
+      ],
       [
-       1,
-       20
+       62,
+       43
       ]
-     ],
-     "gate": "west"
-    },
-    {
-     "enemy": "town_guard",
-     "patrol": [
-      [
-       44,
-       18
-      ]
-     ],
-     "gate": "east"
-    },
-    {
-     "enemy": "town_guard",
-     "patrol": [
-      [
-       44,
-       20
-      ]
-     ],
-     "gate": "east"
+     ]
     }
    ],
    "citizens": {
     "enemy": "citizen",
     "count": 5,
     "area": [
-     16,
-     16,
-     10,
-     7
+     26,
+     11,
+     15,
+     15
     ]
-   }
+   },
+   "note": "0.3.12 Saltmere has no walls or gates to guard: all 10 guards (2 patrols + the 8 former gate guards) walk town beats"
   },
   "highfen": {
    "guards": [
