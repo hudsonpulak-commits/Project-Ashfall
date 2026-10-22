@@ -1231,47 +1231,6 @@
    "note": "0.3.11 the palace and throne room at the heart of Highfen (designer art palace)"
   },
   {
-   "art": "v3_town_hall",
-   "flip": false,
-   "at": [
-    27,
-    45
-   ],
-   "door": [
-    [
-     30,
-     49
-    ]
-   ],
-   "sign": [
-    31,
-    49
-   ],
-   "props": [],
-   "counter": [],
-   "id": "highfen_townhall",
-   "kind": "hall",
-   "shop": "",
-   "name": "Highfen Town Hall",
-   "keeper": "Reeve Margery Holt",
-   "keeper_sprite": "keeper_general",
-   "sign_sprite": "sign_general",
-   "roof": "#6a5a4a",
-   "keeper_at": [
-    30,
-    46
-   ],
-   "stand": [
-    30,
-    47
-   ],
-   "greet": [
-    "Deeds, tithes and petitions. Take a number; there are no numbers.",
-    "The Reeve keeps the city's ledgers. All of them. Mostly."
-   ],
-   "note": "0.3.11 v3.1 the town hall (designer v3_town_hall)"
-  },
-  {
    "art": "v3_temple",
    "flip": false,
    "at": [
@@ -1309,28 +1268,69 @@
    "note": "0.3.11 Highfen gets a church (designer church art)"
   },
   {
+   "art": "v3_town_hall",
+   "flip": false,
+   "at": [
+    42,
+    24
+   ],
+   "door": [
+    [
+     45,
+     28
+    ]
+   ],
+   "sign": [
+    46,
+    28
+   ],
+   "props": [],
+   "counter": [],
+   "id": "highfen_townhall",
+   "kind": "hall",
+   "shop": "",
+   "name": "Highfen Town Hall",
+   "keeper": "Reeve Margery Holt",
+   "keeper_sprite": "keeper_general",
+   "sign_sprite": "sign_general",
+   "roof": "#6a5a4a",
+   "keeper_at": [
+    45,
+    25
+   ],
+   "stand": [
+    45,
+    26
+   ],
+   "greet": [
+    "Deeds, tithes and petitions. Take a number; there are no numbers.",
+    "The Reeve keeps the city's ledgers. All of them. Mostly."
+   ],
+   "note": "0.3.11 v3.1 the town hall (designer v3_town_hall)"
+  },
+  {
    "art": "v4_guild",
    "flip": false,
    "at": [
     38,
-    44
+    43
    ],
    "door": [
     [
      42,
-     49
+     48
     ]
    ],
    "sign": [
     43,
-    49
+    48
    ],
    "props": [
     {
      "object": "weapon_rack",
      "at": [
       41,
-      45
+      44
      ]
     }
    ],
@@ -1345,11 +1345,11 @@
    "roof": "#5a5f6a",
    "keeper_at": [
     42,
-    45
+    44
    ],
    "stand": [
     42,
-    46
+    45
    ],
    "greet": [
     "The Guild of Knights. We keep the roads between the cities.",
@@ -1362,25 +1362,25 @@
    "art": "v3_bank",
    "flip": false,
    "at": [
-    43,
-    25
+    56,
+    30
    ],
    "door": [
     [
-     45,
-     28
+     58,
+     33
     ]
    ],
    "sign": [
-    46,
-    28
+    59,
+    33
    ],
    "props": [
     {
      "object": "bank_chest",
      "at": [
-      44,
-      26
+      57,
+      31
      ]
     }
    ],
@@ -1394,37 +1394,37 @@
    "sign_sprite": "sign_bank",
    "roof": "#8a8f9a",
    "keeper_at": [
-    45,
-    26
+    58,
+    31
    ],
    "stand": [
-    45,
-    27
+    58,
+    32
    ]
   },
   {
    "art": "shop_tavern",
    "flip": false,
    "at": [
-    10,
-    41
+    23,
+    44
    ],
    "door": [
     [
-     11,
-     44
+     24,
+     47
     ]
    ],
    "sign": [
-    12,
-    44
+    25,
+    47
    ],
    "props": [
     {
      "object": "oven",
      "at": [
-      13,
-      42
+      26,
+      45
      ]
     }
    ],
@@ -1436,98 +1436,30 @@
    "keeper": "Maud Fairweather",
    "roof": "#b8a888",
    "keeper_at": [
-    14,
-    42
+    27,
+    45
    ],
    "stand": [
-    14,
-    43
-   ]
-  },
-  {
-   "art": "v4_player_shop",
-   "flip": false,
-   "at": [
-    57,
-    39
-   ],
-   "door": [
-    [
-     59,
-     42
-    ]
-   ],
-   "sign": [
-    60,
-    42
-   ],
-   "props": [],
-   "counter": [],
-   "id": "highfen_player",
-   "kind": "player",
-   "shop": "player",
-   "name": "For sale",
-   "keeper_at": [
-    58,
-    40
-   ],
-   "stand": [
-    59,
-    41
-   ],
-   "roof": "#b8a888",
-   "note": "0.3.8 the realm's ONLY player shop; 0.3.11 its 8 display stands line the market plaza in front of it",
-   "displays": [
-    [
-     45,
-     36
-    ],
-    [
-     44,
-     38
-    ],
-    [
-     45,
-     35
-    ],
-    [
-     44,
-     37
-    ],
-    [
-     43,
-     40
-    ],
-    [
-     43,
-     39
-    ],
-    [
-     44,
-     35
-    ],
-    [
-     44,
-     34
-    ]
+    27,
+    46
    ]
   },
   {
    "art": "v4_general_store",
    "flip": false,
    "at": [
-    56,
-    30
+    10,
+    41
    ],
    "door": [
     [
-     59,
-     33
+     13,
+     44
     ]
    ],
    "sign": [
-    60,
-    33
+    14,
+    44
    ],
    "props": [],
    "counter": [],
@@ -1538,30 +1470,178 @@
    "keeper": "Perrin Vale",
    "roof": "#b8a888",
    "keeper_at": [
-    57,
-    31
+    11,
+    42
    ],
    "stand": [
-    59,
-    32
+    13,
+    43
    ]
+  },
+  {
+   "art": "v4_player_shop",
+   "flip": false,
+   "at": [
+    11,
+    29
+   ],
+   "door": [
+    [
+     13,
+     32
+    ]
+   ],
+   "sign": [
+    14,
+    32
+   ],
+   "props": [],
+   "counter": [],
+   "id": "highfen_player",
+   "kind": "player",
+   "shop": "player",
+   "name": "For sale",
+   "keeper_at": [
+    12,
+    30
+   ],
+   "stand": [
+    13,
+    31
+   ],
+   "roof": "#b8a888",
+   "note": "0.3.8 the realm's ONLY player shop; 0.3.11 its 8 display stands line the market plaza in front of it",
+   "displays": [
+    [
+     26,
+     35
+    ],
+    [
+     26,
+     36
+    ],
+    [
+     27,
+     33
+    ],
+    [
+     27,
+     34
+    ],
+    [
+     27,
+     36
+    ],
+    [
+     27,
+     37
+    ],
+    [
+     28,
+     32
+    ],
+    [
+     28,
+     31
+    ]
+   ]
+  },
+  {
+   "art": "v3_player_house",
+   "flip": false,
+   "at": [
+    30,
+    48
+   ],
+   "door": [
+    [
+     31,
+     51
+    ]
+   ],
+   "sign": [
+    32,
+    51
+   ],
+   "props": [
+    {
+     "object": "hearth",
+     "at": [
+      30,
+      46
+     ]
+    },
+    {
+     "object": "furnace",
+     "at": [
+      28,
+      48
+     ]
+    },
+    {
+     "object": "anvil",
+     "at": [
+      29,
+      45
+     ]
+    },
+    {
+     "object": "workbench",
+     "at": [
+      28,
+      50
+     ]
+    },
+    {
+     "object": "quern",
+     "at": [
+      27,
+      49
+     ]
+    },
+    {
+     "object": "bank_chest",
+     "at": [
+      26,
+      48
+     ]
+    }
+   ],
+   "counter": [],
+   "id": "highfen_house",
+   "kind": "player_house",
+   "shop": "",
+   "name": "Townhouse (for sale)",
+   "keeper": "Estate clerk",
+   "keeper_sprite": "keeper_general",
+   "sign_sprite": "sign_house",
+   "roof": "#8a5a3a",
+   "keeper_at": [
+    32,
+    49
+   ],
+   "stand": [
+    31,
+    50
+   ],
+   "note": "0.3.8 player house; 0.3.11 a walk-in townhouse with a walled work yard behind it (stations + bank chest work for the owner only)"
   },
   {
    "art": "v4_cookhouse",
    "flip": false,
    "at": [
-    14,
-    48
+    57,
+    38
    ],
    "door": [
     [
-     16,
-     51
+     59,
+     41
     ]
    ],
    "sign": [
-    17,
-    51
+    60,
+    41
    ],
    "props": [],
    "counter": [],
@@ -1574,12 +1654,12 @@
    "sign_sprite": "sign_house",
    "roof": "#8a7050",
    "keeper_at": [
-    18,
-    50
+    61,
+    40
    ],
    "stand": [
-    16,
-    50
+    59,
+    40
    ]
   },
   {
@@ -1628,91 +1708,40 @@
    "note": "0.3.13 Highfen v4 smithy (art only; smithing stays in Fenhollow)"
   },
   {
-   "art": "v3_player_house",
+   "art": "v3_house_09",
    "flip": false,
    "at": [
-    12,
-    26
+    30,
+    42
    ],
    "door": [
     [
-     13,
-     29
+     32,
+     45
     ]
    ],
    "sign": [
-    14,
-    29
+    33,
+    45
    ],
-   "props": [
-    {
-     "object": "hearth",
-     "at": [
-      14,
-      24
-     ]
-    },
-    {
-     "object": "furnace",
-     "at": [
-      14,
-      22
-     ]
-    },
-    {
-     "object": "anvil",
-     "at": [
-      13,
-      23
-     ]
-    },
-    {
-     "object": "workbench",
-     "at": [
-      12,
-      24
-     ]
-    },
-    {
-     "object": "quern",
-     "at": [
-      10,
-      26
-     ]
-    },
-    {
-     "object": "bank_chest",
-     "at": [
-      12,
-      22
-     ]
-    },
-    {
-     "object": "oven",
-     "at": [
-      16,
-      22
-     ]
-    }
-   ],
+   "props": [],
    "counter": [],
-   "id": "highfen_house",
-   "kind": "player_house",
+   "id": "highfen_home_2",
+   "kind": "house",
    "shop": "",
-   "name": "Townhouse (for sale)",
-   "keeper": "Estate clerk",
-   "keeper_sprite": "keeper_general",
+   "name": "The Wrights' house",
+   "keeper": "Edric Wright",
+   "keeper_sprite": "villager",
    "sign_sprite": "sign_house",
-   "roof": "#8a5a3a",
+   "roof": "#8a7050",
    "keeper_at": [
-    14,
-    27
+    31,
+    44
    ],
    "stand": [
-    13,
-    28
-   ],
-   "note": "0.3.8 player house; 0.3.11 a walk-in townhouse with a walled work yard behind it (stations + bank chest work for the owner only)"
+    32,
+    44
+   ]
   },
   {
    "art": "v3_house_05",
@@ -1733,11 +1762,11 @@
    ],
    "props": [],
    "counter": [],
-   "id": "highfen_home_2",
+   "id": "highfen_home_3",
    "kind": "house",
    "shop": "",
-   "name": "The Wrights' house",
-   "keeper": "Edric Wright",
+   "name": "Old Nell's",
+   "keeper": "Nell Ashby",
    "keeper_sprite": "villager",
    "sign_sprite": "sign_house",
    "roof": "#8a7050",
@@ -1771,11 +1800,11 @@
    ],
    "props": [],
    "counter": [],
-   "id": "highfen_home_3",
+   "id": "highfen_home_4",
    "kind": "house",
    "shop": "",
-   "name": "Old Nell's",
-   "keeper": "Nell Ashby",
+   "name": "Fletcher's house",
+   "keeper": "Osric Fletcher",
    "keeper_sprite": "villager",
    "sign_sprite": "sign_house",
    "roof": "#8a7050",
@@ -1809,11 +1838,11 @@
    ],
    "props": [],
    "counter": [],
-   "id": "highfen_home_4",
+   "id": "highfen_home_5",
    "kind": "house",
    "shop": "",
-   "name": "Fletcher's house",
-   "keeper": "Osric Fletcher",
+   "name": "The Moores' house",
+   "keeper": "Bryn Moore",
    "keeper_sprite": "villager",
    "sign_sprite": "sign_house",
    "roof": "#8a7050",
@@ -1847,44 +1876,6 @@
    ],
    "props": [],
    "counter": [],
-   "id": "highfen_home_5",
-   "kind": "house",
-   "shop": "",
-   "name": "The Moores' house",
-   "keeper": "Bryn Moore",
-   "keeper_sprite": "villager",
-   "sign_sprite": "sign_house",
-   "roof": "#8a7050",
-   "no_keeper": true,
-   "keeper_at": [
-    48,
-    41
-   ],
-   "stand": [
-    48,
-    41
-   ],
-   "closed": true
-  },
-  {
-   "art": "v3_house_16",
-   "flip": false,
-   "at": [
-    24,
-    44
-   ],
-   "door": [
-    [
-     25,
-     47
-    ]
-   ],
-   "sign": [
-    24,
-    47
-   ],
-   "props": [],
-   "counter": [],
    "id": "highfen_home_6",
    "kind": "house",
    "shop": "",
@@ -1895,21 +1886,21 @@
    "roof": "#8a7050",
    "no_keeper": true,
    "keeper_at": [
-    25,
-    48
+    48,
+    41
    ],
    "stand": [
-    25,
-    48
+    48,
+    41
    ],
    "closed": true
   },
   {
-   "art": "v3_house_10",
+   "art": "v3_house_12",
    "flip": false,
    "at": [
     50,
-    32
+    31
    ],
    "door": [
     [
@@ -1934,16 +1925,15 @@
    "no_keeper": true,
    "keeper_at": [
     51,
-    34
+    33
    ],
    "stand": [
     51,
-    34
-   ],
-   "closed": true
+    33
+   ]
   },
   {
-   "art": "v3_house_12",
+   "art": "v3_house_13",
    "flip": false,
    "at": [
     19,
@@ -2018,21 +2008,21 @@
    "closed": true
   },
   {
-   "art": "v3_house_07",
+   "art": "v3_house_05",
    "flip": false,
    "at": [
-    41,
-    22
+    47,
+    44
    ],
    "door": [
     [
-     42,
-     23
+     48,
+     45
     ]
    ],
    "sign": [
-    43,
-    23
+    49,
+    45
    ],
    "props": [],
    "counter": [],
@@ -2046,31 +2036,31 @@
    "roof": "#8a7050",
    "no_keeper": true,
    "keeper_at": [
-    42,
-    24
+    48,
+    46
    ],
    "stand": [
-    42,
-    24
+    48,
+    46
    ],
    "closed": true
   },
   {
-   "art": "v3_house_08",
+   "art": "v3_house_04",
    "flip": false,
    "at": [
-    47,
-    44
+    40,
+    50
    ],
    "door": [
     [
-     48,
-     46
+     41,
+     52
     ]
    ],
    "sign": [
-    47,
-    46
+    42,
+    52
    ],
    "props": [],
    "counter": [],
@@ -2084,31 +2074,30 @@
    "roof": "#8a7050",
    "no_keeper": true,
    "keeper_at": [
-    48,
-    47
+    41,
+    52
    ],
    "stand": [
-    48,
-    47
-   ],
-   "closed": true
+    41,
+    52
+   ]
   },
   {
    "art": "v3_house_01",
    "flip": false,
    "at": [
-    31,
-    51
+    15,
+    47
    ],
    "door": [
     [
-     32,
-     52
+     16,
+     48
     ]
    ],
    "sign": [
-    33,
-    52
+    17,
+    48
    ],
    "props": [],
    "counter": [],
@@ -2122,55 +2111,17 @@
    "roof": "#8a7050",
    "no_keeper": true,
    "keeper_at": [
-    32,
-    53
+    16,
+    49
    ],
    "stand": [
-    32,
-    53
+    16,
+    49
    ],
    "closed": true
   },
   {
-   "art": "v3_house_10",
-   "flip": true,
-   "at": [
-    38,
-    51
-   ],
-   "door": [
-    [
-     39,
-     52
-    ]
-   ],
-   "sign": [
-    40,
-    52
-   ],
-   "props": [],
-   "counter": [],
-   "id": "highfen_home_13",
-   "kind": "house",
-   "shop": "",
-   "name": "Sexton's house",
-   "keeper": "Odo Sexton",
-   "keeper_sprite": "villager",
-   "sign_sprite": "sign_house",
-   "roof": "#8a7050",
-   "no_keeper": true,
-   "keeper_at": [
-    39,
-    53
-   ],
-   "stand": [
-    39,
-    53
-   ],
-   "closed": true
-  },
-  {
-   "art": "v3_house_narrow_tall",
+   "art": "v3_house_06",
    "flip": false,
    "at": [
     54,
@@ -2183,36 +2134,34 @@
     ]
    ],
    "sign": [
-    54,
+    56,
     49
    ],
    "props": [],
    "counter": [],
-   "id": "highfen_home_14",
+   "id": "highfen_home_13",
    "kind": "house",
    "shop": "",
-   "name": "The Lanes' house",
-   "keeper": "Rosa Lane",
+   "name": "Sexton's house",
+   "keeper": "Odo Sexton",
    "keeper_sprite": "villager",
    "sign_sprite": "sign_house",
    "roof": "#8a7050",
-   "no_keeper": true,
    "keeper_at": [
     55,
-    50
+    47
    ],
    "stand": [
     55,
-    50
-   ],
-   "closed": true
+    48
+   ]
   },
   {
-   "art": "v3_house_12",
-   "flip": true,
+   "art": "v3_house_longhouse",
+   "flip": false,
    "at": [
-    22,
-    52
+    21,
+    53
    ],
    "door": [
     [
@@ -2226,6 +2175,44 @@
    ],
    "props": [],
    "counter": [],
+   "id": "highfen_home_14",
+   "kind": "house",
+   "shop": "",
+   "name": "The Lanes' house",
+   "keeper": "Rosa Lane",
+   "keeper_sprite": "villager",
+   "sign_sprite": "sign_house",
+   "roof": "#8a7050",
+   "no_keeper": true,
+   "keeper_at": [
+    23,
+    55
+   ],
+   "stand": [
+    23,
+    55
+   ],
+   "closed": true
+  },
+  {
+   "art": "v3_house_07",
+   "flip": false,
+   "at": [
+    56,
+    43
+   ],
+   "door": [
+    [
+     57,
+     44
+    ]
+   ],
+   "sign": [
+    58,
+    44
+   ],
+   "props": [],
+   "counter": [],
    "id": "highfen_home_15",
    "kind": "house",
    "shop": "",
@@ -2236,20 +2223,21 @@
    "roof": "#8a7050",
    "no_keeper": true,
    "keeper_at": [
-    23,
-    54
+    57,
+    45
    ],
    "stand": [
-    23,
-    54
-   ]
+    57,
+    45
+   ],
+   "closed": true
   },
   {
-   "art": "v3_house_05",
-   "flip": false,
+   "art": "v3_house_12",
+   "flip": true,
    "at": [
     27,
-    16
+    15
    ],
    "door": [
     [
@@ -2274,30 +2262,29 @@
    "no_keeper": true,
    "keeper_at": [
     28,
-    18
+    17
    ],
    "stand": [
     28,
-    18
-   ],
-   "closed": true
+    17
+   ]
   },
   {
-   "art": "v3_house_10",
+   "art": "v3_house_17",
    "flip": false,
    "at": [
-    50,
-    51
+    15,
+    22
    ],
    "door": [
     [
-     51,
-     52
+     16,
+     25
     ]
    ],
    "sign": [
-    52,
-    52
+    17,
+    25
    ],
    "props": [],
    "counter": [],
@@ -2309,61 +2296,21 @@
    "keeper_sprite": "villager",
    "sign_sprite": "sign_house",
    "roof": "#8a7050",
-   "no_keeper": true,
    "keeper_at": [
-    51,
-    53
-   ],
-   "stand": [
-    51,
-    53
-   ],
-   "closed": true
-  },
-  {
-   "art": "v3_house_07",
-   "flip": true,
-   "at": [
-    15,
+    16,
     23
    ],
-   "door": [
-    [
-     16,
-     24
-    ]
-   ],
-   "sign": [
-    17,
-    24
-   ],
-   "props": [],
-   "counter": [],
-   "id": "highfen_home_18",
-   "kind": "house",
-   "shop": "",
-   "name": "Mason's house",
-   "keeper": "Wynn Mason",
-   "keeper_sprite": "villager",
-   "sign_sprite": "sign_house",
-   "roof": "#8a7050",
-   "no_keeper": true,
-   "keeper_at": [
-    16,
-    25
-   ],
    "stand": [
     16,
-    25
-   ],
-   "closed": true
+    24
+   ]
   },
   {
-   "art": "v3_house_11",
-   "flip": false,
+   "art": "v3_house_01",
+   "flip": true,
    "at": [
     51,
-    20
+    21
    ],
    "door": [
     [
@@ -2377,6 +2324,44 @@
    ],
    "props": [],
    "counter": [],
+   "id": "highfen_home_18",
+   "kind": "house",
+   "shop": "",
+   "name": "Mason's house",
+   "keeper": "Wynn Mason",
+   "keeper_sprite": "villager",
+   "sign_sprite": "sign_house",
+   "roof": "#8a7050",
+   "no_keeper": true,
+   "keeper_at": [
+    52,
+    23
+   ],
+   "stand": [
+    52,
+    23
+   ],
+   "closed": true
+  },
+  {
+   "art": "v3_house_07",
+   "flip": true,
+   "at": [
+    17,
+    50
+   ],
+   "door": [
+    [
+     18,
+     51
+    ]
+   ],
+   "sign": [
+    19,
+    51
+   ],
+   "props": [],
+   "counter": [],
    "id": "highfen_home_19",
    "kind": "house",
    "shop": "",
@@ -2385,31 +2370,33 @@
    "keeper_sprite": "villager",
    "sign_sprite": "sign_house",
    "roof": "#8a7050",
+   "no_keeper": true,
    "keeper_at": [
-    53,
-    21
+    18,
+    52
    ],
    "stand": [
-    52,
-    21
-   ]
+    18,
+    52
+   ],
+   "closed": true
   },
   {
-   "art": "v3_house_04",
+   "art": "v3_house_01",
    "flip": false,
    "at": [
-    13,
-    31
+    49,
+    52
    ],
    "door": [
     [
-     14,
-     33
+     50,
+     53
     ]
    ],
    "sign": [
-    15,
-    33
+    51,
+    53
    ],
    "props": [],
    "counter": [],
@@ -2423,167 +2410,18 @@
    "roof": "#8a7050",
    "no_keeper": true,
    "keeper_at": [
-    14,
-    33
-   ],
-   "stand": [
-    14,
-    33
-   ]
-  },
-  {
-   "art": "v3_house_08",
-   "flip": true,
-   "at": [
-    47,
-    53
-   ],
-   "door": [
-    [
-     47,
-     55
-    ]
-   ],
-   "sign": [
-    48,
-    55
-   ],
-   "props": [],
-   "counter": [],
-   "id": "highfen_home_21",
-   "kind": "house",
-   "shop": "",
-   "name": "The Ashes' house",
-   "keeper": "Pell Ash",
-   "keeper_sprite": "villager",
-   "sign_sprite": "sign_house",
-   "roof": "#8a7050",
-   "no_keeper": true,
-   "keeper_at": [
-    47,
-    56
-   ],
-   "stand": [
-    47,
-    56
-   ],
-   "closed": true
-  },
-  {
-   "art": "v3_house_12",
-   "flip": false,
-   "at": [
-    29,
-    55
-   ],
-   "door": [
-    [
-     30,
-     57
-    ]
-   ],
-   "sign": [
-    31,
-    57
-   ],
-   "props": [],
-   "counter": [],
-   "id": "highfen_home_22",
-   "kind": "house",
-   "shop": "",
-   "name": "Dyer's house",
-   "keeper": "Joan Dyer",
-   "keeper_sprite": "villager",
-   "sign_sprite": "sign_house",
-   "roof": "#8a7050",
-   "no_keeper": true,
-   "keeper_at": [
-    30,
-    57
-   ],
-   "stand": [
-    30,
-    57
-   ]
-  },
-  {
-   "art": "v3_house_08",
-   "flip": false,
-   "at": [
-    26,
+    50,
     54
    ],
-   "door": [
-    [
-     27,
-     56
-    ]
-   ],
-   "sign": [
-    26,
-    56
-   ],
-   "props": [],
-   "counter": [],
-   "id": "highfen_home_23",
-   "kind": "house",
-   "shop": "",
-   "name": "Carter's house",
-   "keeper": "Royce Carter",
-   "keeper_sprite": "villager",
-   "sign_sprite": "sign_house",
-   "roof": "#8a7050",
-   "no_keeper": true,
-   "keeper_at": [
-    27,
-    57
-   ],
    "stand": [
-    27,
-    57
+    50,
+    54
    ],
    "closed": true
   },
   {
-   "art": "v3_house_13",
+   "art": "v3_house_10",
    "flip": false,
-   "at": [
-    18,
-    19
-   ],
-   "door": [
-    [
-     19,
-     21
-    ]
-   ],
-   "sign": [
-    20,
-    21
-   ],
-   "props": [],
-   "counter": [],
-   "id": "highfen_home_24",
-   "kind": "house",
-   "shop": "",
-   "name": "Shepherd's house",
-   "keeper": "Lark Shepherd",
-   "keeper_sprite": "villager",
-   "sign_sprite": "sign_house",
-   "roof": "#8a7050",
-   "no_keeper": true,
-   "keeper_at": [
-    19,
-    21
-   ],
-   "stand": [
-    19,
-    21
-   ]
-  },
-  {
-   "art": "v3_house_01",
-   "flip": true,
    "at": [
     22,
     17
@@ -2600,11 +2438,11 @@
    ],
    "props": [],
    "counter": [],
-   "id": "highfen_home_25",
+   "id": "highfen_home_21",
    "kind": "house",
    "shop": "",
-   "name": "Miller's house",
-   "keeper": "Una Miller",
+   "name": "The Ashes' house",
+   "keeper": "Pell Ash",
    "keeper_sprite": "villager",
    "sign_sprite": "sign_house",
    "roof": "#8a7050",
@@ -2620,20 +2458,172 @@
    "closed": true
   },
   {
+   "art": "v3_house_07",
+   "flip": false,
+   "at": [
+    46,
+    16
+   ],
+   "door": [
+    [
+     47,
+     17
+    ]
+   ],
+   "sign": [
+    48,
+    17
+   ],
+   "props": [],
+   "counter": [],
+   "id": "highfen_home_22",
+   "kind": "house",
+   "shop": "",
+   "name": "Dyer's house",
+   "keeper": "Joan Dyer",
+   "keeper_sprite": "villager",
+   "sign_sprite": "sign_house",
+   "roof": "#8a7050",
+   "no_keeper": true,
+   "keeper_at": [
+    47,
+    18
+   ],
+   "stand": [
+    47,
+    18
+   ],
+   "closed": true
+  },
+  {
+   "art": "v3_house_longhouse",
+   "flip": true,
+   "at": [
+    40,
+    56
+   ],
+   "door": [
+    [
+     43,
+     57
+    ]
+   ],
+   "sign": [
+    44,
+    57
+   ],
+   "props": [],
+   "counter": [],
+   "id": "highfen_home_23",
+   "kind": "house",
+   "shop": "",
+   "name": "Carter's house",
+   "keeper": "Royce Carter",
+   "keeper_sprite": "villager",
+   "sign_sprite": "sign_house",
+   "roof": "#8a7050",
+   "no_keeper": true,
+   "keeper_at": [
+    43,
+    58
+   ],
+   "stand": [
+    43,
+    58
+   ],
+   "closed": true
+  },
+  {
    "art": "v3_house_longhouse",
    "flip": false,
    "at": [
-    43,
+    28,
+    56
+   ],
+   "door": [
+    [
+     30,
+     57
+    ]
+   ],
+   "sign": [
+    31,
+    57
+   ],
+   "props": [],
+   "counter": [],
+   "id": "highfen_home_24",
+   "kind": "house",
+   "shop": "",
+   "name": "Shepherd's house",
+   "keeper": "Lark Shepherd",
+   "keeper_sprite": "villager",
+   "sign_sprite": "sign_house",
+   "roof": "#8a7050",
+   "no_keeper": true,
+   "keeper_at": [
+    30,
+    58
+   ],
+   "stand": [
+    30,
+    58
+   ],
+   "closed": true
+  },
+  {
+   "art": "v3_house_08",
+   "flip": false,
+   "at": [
+    19,
+    19
+   ],
+   "door": [
+    [
+     20,
+     21
+    ]
+   ],
+   "sign": [
+    19,
+    21
+   ],
+   "props": [],
+   "counter": [],
+   "id": "highfen_home_25",
+   "kind": "house",
+   "shop": "",
+   "name": "Miller's house",
+   "keeper": "Una Miller",
+   "keeper_sprite": "villager",
+   "sign_sprite": "sign_house",
+   "roof": "#8a7050",
+   "no_keeper": true,
+   "keeper_at": [
+    20,
+    22
+   ],
+   "stand": [
+    20,
+    22
+   ],
+   "closed": true
+  },
+  {
+   "art": "v3_house_10",
+   "flip": true,
+   "at": [
+    42,
     15
    ],
    "door": [
     [
-     45,
+     43,
      16
     ]
    ],
    "sign": [
-    46,
+    44,
     16
    ],
    "props": [],
@@ -2648,31 +2638,31 @@
    "roof": "#8a7050",
    "no_keeper": true,
    "keeper_at": [
-    45,
+    43,
     17
    ],
    "stand": [
-    45,
+    43,
     17
    ],
    "closed": true
   },
   {
-   "art": "v3_house_longhouse",
-   "flip": true,
+   "art": "v3_house_12",
+   "flip": false,
    "at": [
     38,
-    56
+    13
    ],
    "door": [
     [
-     41,
-     57
+     39,
+     15
     ]
    ],
    "sign": [
-    42,
-    57
+    40,
+    15
    ],
    "props": [],
    "counter": [],
@@ -2686,49 +2676,12 @@
    "roof": "#8a7050",
    "no_keeper": true,
    "keeper_at": [
-    41,
-    58
-   ],
-   "stand": [
-    41,
-    58
-   ],
-   "closed": true
-  },
-  {
-   "art": "v3_house_11",
-   "flip": true,
-   "at": [
-    38,
-    13
-   ],
-   "door": [
-    [
-     40,
-     15
-    ]
-   ],
-   "sign": [
-    41,
+    39,
     15
    ],
-   "props": [],
-   "counter": [],
-   "id": "highfen_home_28",
-   "kind": "house",
-   "shop": "",
-   "name": "Gage's house",
-   "keeper": "Mott Gage",
-   "keeper_sprite": "villager",
-   "sign_sprite": "sign_house",
-   "roof": "#8a7050",
-   "keeper_at": [
-    39,
-    14
-   ],
    "stand": [
-    40,
-    14
+    39,
+    15
    ]
   },
   {
@@ -2750,11 +2703,11 @@
    ],
    "props": [],
    "counter": [],
-   "id": "highfen_home_29",
+   "id": "highfen_home_28",
    "kind": "house",
    "shop": "",
-   "name": "Fenwick's house",
-   "keeper": "Dora Fenwick",
+   "name": "Gage's house",
+   "keeper": "Mott Gage",
    "keeper_sprite": "villager",
    "sign_sprite": "sign_house",
    "roof": "#8a7050",
@@ -2788,11 +2741,11 @@
    ],
    "props": [],
    "counter": [],
-   "id": "highfen_home_30",
+   "id": "highfen_home_29",
    "kind": "house",
    "shop": "",
-   "name": "Ewer's house",
-   "keeper": "Silas Ewer",
+   "name": "Fenwick's house",
+   "keeper": "Dora Fenwick",
    "keeper_sprite": "villager",
    "sign_sprite": "sign_house",
    "roof": "#8a7050",
@@ -2826,11 +2779,11 @@
    ],
    "props": [],
    "counter": [],
-   "id": "highfen_home_31",
+   "id": "highfen_home_30",
    "kind": "house",
    "shop": "",
-   "name": "Lowe's house",
-   "keeper": "Merry Lowe",
+   "name": "Ewer's house",
+   "keeper": "Silas Ewer",
    "keeper_sprite": "villager",
    "sign_sprite": "sign_house",
    "roof": "#8a7050",
@@ -2862,11 +2815,11 @@
    ],
    "props": [],
    "counter": [],
-   "id": "highfen_home_32",
+   "id": "highfen_home_31",
    "kind": "house",
    "shop": "",
-   "name": "Rook's house",
-   "keeper": "Jory Rook",
+   "name": "Lowe's house",
+   "keeper": "Merry Lowe",
    "keeper_sprite": "villager",
    "sign_sprite": "sign_house",
    "roof": "#8a7050",
@@ -2900,11 +2853,11 @@
    ],
    "props": [],
    "counter": [],
-   "id": "highfen_home_33",
+   "id": "highfen_home_32",
    "kind": "house",
    "shop": "",
-   "name": "Cobb's house",
-   "keeper": "Tamsin Cobb",
+   "name": "Rook's house",
+   "keeper": "Jory Rook",
    "keeper_sprite": "villager",
    "sign_sprite": "sign_house",
    "roof": "#8a7050",
@@ -2938,11 +2891,11 @@
    ],
    "props": [],
    "counter": [],
-   "id": "highfen_home_34",
+   "id": "highfen_home_33",
    "kind": "house",
    "shop": "",
-   "name": "The Wrights' house",
-   "keeper": "Edric Wright",
+   "name": "Cobb's house",
+   "keeper": "Tamsin Cobb",
    "keeper_sprite": "villager",
    "sign_sprite": "sign_house",
    "roof": "#8a7050",
@@ -2974,11 +2927,11 @@
    ],
    "props": [],
    "counter": [],
-   "id": "highfen_home_35",
+   "id": "highfen_home_34",
    "kind": "house",
    "shop": "",
-   "name": "Old Nell's",
-   "keeper": "Nell Ashby",
+   "name": "The Wrights' house",
+   "keeper": "Edric Wright",
    "keeper_sprite": "villager",
    "sign_sprite": "sign_house",
    "roof": "#8a7050",
@@ -3011,11 +2964,11 @@
    ],
    "props": [],
    "counter": [],
-   "id": "highfen_home_36",
+   "id": "highfen_home_35",
    "kind": "house",
    "shop": "",
-   "name": "Fletcher's house",
-   "keeper": "Osric Fletcher",
+   "name": "Old Nell's",
+   "keeper": "Nell Ashby",
    "keeper_sprite": "villager",
    "sign_sprite": "sign_house",
    "roof": "#8a7050",
@@ -3047,11 +3000,11 @@
    ],
    "props": [],
    "counter": [],
-   "id": "highfen_home_37",
+   "id": "highfen_home_36",
    "kind": "house",
    "shop": "",
-   "name": "The Moores' house",
-   "keeper": "Bryn Moore",
+   "name": "Fletcher's house",
+   "keeper": "Osric Fletcher",
    "keeper_sprite": "villager",
    "sign_sprite": "sign_house",
    "roof": "#8a7050",
@@ -3085,11 +3038,11 @@
    ],
    "props": [],
    "counter": [],
-   "id": "highfen_home_38",
+   "id": "highfen_home_37",
    "kind": "house",
    "shop": "",
-   "name": "Hale's house",
-   "keeper": "Agnes Hale",
+   "name": "The Moores' house",
+   "keeper": "Bryn Moore",
    "keeper_sprite": "villager",
    "sign_sprite": "sign_house",
    "roof": "#8a7050",
@@ -3122,11 +3075,11 @@
    ],
    "props": [],
    "counter": [],
-   "id": "highfen_home_39",
+   "id": "highfen_home_38",
    "kind": "house",
    "shop": "",
-   "name": "Thatcher's house",
-   "keeper": "Wat Thatcher",
+   "name": "Hale's house",
+   "keeper": "Agnes Hale",
    "keeper_sprite": "villager",
    "sign_sprite": "sign_house",
    "roof": "#8a7050",
@@ -3160,11 +3113,11 @@
    ],
    "props": [],
    "counter": [],
-   "id": "highfen_home_40",
+   "id": "highfen_home_39",
    "kind": "house",
    "shop": "",
-   "name": "The Pikes' house",
-   "keeper": "Hedda Pike",
+   "name": "Thatcher's house",
+   "keeper": "Wat Thatcher",
    "keeper_sprite": "villager",
    "sign_sprite": "sign_house",
    "roof": "#8a7050",
@@ -3196,11 +3149,11 @@
    ],
    "props": [],
    "counter": [],
-   "id": "highfen_home_41",
+   "id": "highfen_home_40",
    "kind": "house",
    "shop": "",
-   "name": "Marsh's house",
-   "keeper": "Colm Marsh",
+   "name": "The Pikes' house",
+   "keeper": "Hedda Pike",
    "keeper_sprite": "villager",
    "sign_sprite": "sign_house",
    "roof": "#8a7050",
@@ -3233,11 +3186,11 @@
    ],
    "props": [],
    "counter": [],
-   "id": "highfen_home_42",
+   "id": "highfen_home_41",
    "kind": "house",
    "shop": "",
-   "name": "Reed's house",
-   "keeper": "Ida Reed",
+   "name": "Marsh's house",
+   "keeper": "Colm Marsh",
    "keeper_sprite": "villager",
    "sign_sprite": "sign_house",
    "roof": "#8a7050",
@@ -3271,11 +3224,11 @@
    ],
    "props": [],
    "counter": [],
-   "id": "highfen_home_43",
+   "id": "highfen_home_42",
    "kind": "house",
    "shop": "",
-   "name": "The Crofts' house",
-   "keeper": "Lew Croft",
+   "name": "Reed's house",
+   "keeper": "Ida Reed",
    "keeper_sprite": "villager",
    "sign_sprite": "sign_house",
    "roof": "#8a7050",
@@ -3309,11 +3262,11 @@
    ],
    "props": [],
    "counter": [],
-   "id": "highfen_home_44",
+   "id": "highfen_home_43",
    "kind": "house",
    "shop": "",
-   "name": "Brewer's house",
-   "keeper": "Mabel Brewer",
+   "name": "The Crofts' house",
+   "keeper": "Lew Croft",
    "keeper_sprite": "villager",
    "sign_sprite": "sign_house",
    "roof": "#8a7050",
@@ -3346,11 +3299,11 @@
    ],
    "props": [],
    "counter": [],
-   "id": "highfen_home_45",
+   "id": "highfen_home_44",
    "kind": "house",
    "shop": "",
-   "name": "Sexton's house",
-   "keeper": "Odo Sexton",
+   "name": "Brewer's house",
+   "keeper": "Mabel Brewer",
    "keeper_sprite": "villager",
    "sign_sprite": "sign_house",
    "roof": "#8a7050",
@@ -3384,11 +3337,11 @@
    ],
    "props": [],
    "counter": [],
-   "id": "highfen_home_46",
+   "id": "highfen_home_45",
    "kind": "house",
    "shop": "",
-   "name": "The Lanes' house",
-   "keeper": "Rosa Lane",
+   "name": "Sexton's house",
+   "keeper": "Odo Sexton",
    "keeper_sprite": "villager",
    "sign_sprite": "sign_house",
    "roof": "#8a7050",
@@ -3422,11 +3375,11 @@
    ],
    "props": [],
    "counter": [],
-   "id": "highfen_home_47",
+   "id": "highfen_home_46",
    "kind": "house",
    "shop": "",
-   "name": "Tanner's house",
-   "keeper": "Giles Tanner",
+   "name": "The Lanes' house",
+   "keeper": "Rosa Lane",
    "keeper_sprite": "villager",
    "sign_sprite": "sign_house",
    "roof": "#8a7050",
@@ -3460,11 +3413,11 @@
    ],
    "props": [],
    "counter": [],
-   "id": "highfen_home_48",
+   "id": "highfen_home_47",
    "kind": "house",
    "shop": "",
-   "name": "Webb's house",
-   "keeper": "Elsie Webb",
+   "name": "Tanner's house",
+   "keeper": "Giles Tanner",
    "keeper_sprite": "villager",
    "sign_sprite": "sign_house",
    "roof": "#8a7050",
@@ -3498,11 +3451,11 @@
    ],
    "props": [],
    "counter": [],
-   "id": "highfen_home_49",
+   "id": "highfen_home_48",
    "kind": "house",
    "shop": "",
-   "name": "The Coopers' house",
-   "keeper": "Hugh Cooper",
+   "name": "Webb's house",
+   "keeper": "Elsie Webb",
    "keeper_sprite": "villager",
    "sign_sprite": "sign_house",
    "roof": "#8a7050",
@@ -3536,11 +3489,11 @@
    ],
    "props": [],
    "counter": [],
-   "id": "highfen_home_50",
+   "id": "highfen_home_49",
    "kind": "house",
    "shop": "",
-   "name": "Mason's house",
-   "keeper": "Wynn Mason",
+   "name": "The Coopers' house",
+   "keeper": "Hugh Cooper",
    "keeper_sprite": "villager",
    "sign_sprite": "sign_house",
    "roof": "#8a7050",
@@ -3572,11 +3525,11 @@
    ],
    "props": [],
    "counter": [],
-   "id": "highfen_home_51",
+   "id": "highfen_home_50",
    "kind": "house",
    "shop": "",
-   "name": "Baxter's house",
-   "keeper": "Ada Baxter",
+   "name": "Mason's house",
+   "keeper": "Wynn Mason",
    "keeper_sprite": "villager",
    "sign_sprite": "sign_house",
    "roof": "#8a7050",
@@ -3609,11 +3562,11 @@
    ],
    "props": [],
    "counter": [],
-   "id": "highfen_home_52",
+   "id": "highfen_home_51",
    "kind": "house",
    "shop": "",
-   "name": "Chandler's house",
-   "keeper": "Ned Chandler",
+   "name": "Baxter's house",
+   "keeper": "Ada Baxter",
    "keeper_sprite": "villager",
    "sign_sprite": "sign_house",
    "roof": "#8a7050",
@@ -3645,11 +3598,11 @@
    ],
    "props": [],
    "counter": [],
-   "id": "highfen_home_53",
+   "id": "highfen_home_52",
    "kind": "house",
    "shop": "",
-   "name": "The Ashes' house",
-   "keeper": "Pell Ash",
+   "name": "Chandler's house",
+   "keeper": "Ned Chandler",
    "keeper_sprite": "villager",
    "sign_sprite": "sign_house",
    "roof": "#8a7050",
@@ -3681,11 +3634,11 @@
    ],
    "props": [],
    "counter": [],
-   "id": "highfen_home_54",
+   "id": "highfen_home_53",
    "kind": "house",
    "shop": "",
-   "name": "Dyer's house",
-   "keeper": "Joan Dyer",
+   "name": "The Ashes' house",
+   "keeper": "Pell Ash",
    "keeper_sprite": "villager",
    "sign_sprite": "sign_house",
    "roof": "#8a7050",
@@ -3719,11 +3672,11 @@
    ],
    "props": [],
    "counter": [],
-   "id": "highfen_home_55",
+   "id": "highfen_home_54",
    "kind": "house",
    "shop": "",
-   "name": "Carter's house",
-   "keeper": "Royce Carter",
+   "name": "Dyer's house",
+   "keeper": "Joan Dyer",
    "keeper_sprite": "villager",
    "sign_sprite": "sign_house",
    "roof": "#8a7050",
@@ -3756,11 +3709,11 @@
    ],
    "props": [],
    "counter": [],
-   "id": "highfen_home_56",
+   "id": "highfen_home_55",
    "kind": "house",
    "shop": "",
-   "name": "Shepherd's house",
-   "keeper": "Lark Shepherd",
+   "name": "Carter's house",
+   "keeper": "Royce Carter",
    "keeper_sprite": "villager",
    "sign_sprite": "sign_house",
    "roof": "#8a7050",
@@ -3794,11 +3747,11 @@
    ],
    "props": [],
    "counter": [],
-   "id": "highfen_home_57",
+   "id": "highfen_home_56",
    "kind": "house",
    "shop": "",
-   "name": "Miller's house",
-   "keeper": "Una Miller",
+   "name": "Shepherd's house",
+   "keeper": "Lark Shepherd",
    "keeper_sprite": "villager",
    "sign_sprite": "sign_house",
    "roof": "#8a7050",
@@ -3830,11 +3783,11 @@
    ],
    "props": [],
    "counter": [],
-   "id": "highfen_home_58",
+   "id": "highfen_home_57",
    "kind": "house",
    "shop": "",
-   "name": "The Holts' house",
-   "keeper": "Abel Holt",
+   "name": "Miller's house",
+   "keeper": "Una Miller",
    "keeper_sprite": "villager",
    "sign_sprite": "sign_house",
    "roof": "#8a7050",
@@ -3867,11 +3820,11 @@
    ],
    "props": [],
    "counter": [],
-   "id": "highfen_home_59",
+   "id": "highfen_home_58",
    "kind": "house",
    "shop": "",
-   "name": "Weaver's house",
-   "keeper": "Kit Weaver",
+   "name": "The Holts' house",
+   "keeper": "Abel Holt",
    "keeper_sprite": "villager",
    "sign_sprite": "sign_house",
    "roof": "#8a7050",
@@ -3905,11 +3858,11 @@
    ],
    "props": [],
    "counter": [],
-   "id": "highfen_home_60",
+   "id": "highfen_home_59",
    "kind": "house",
    "shop": "",
-   "name": "Gage's house",
-   "keeper": "Mott Gage",
+   "name": "Weaver's house",
+   "keeper": "Kit Weaver",
    "keeper_sprite": "villager",
    "sign_sprite": "sign_house",
    "roof": "#8a7050",
@@ -3943,11 +3896,11 @@
    ],
    "props": [],
    "counter": [],
-   "id": "highfen_home_61",
+   "id": "highfen_home_60",
    "kind": "house",
    "shop": "",
-   "name": "Fenwick's house",
-   "keeper": "Dora Fenwick",
+   "name": "Gage's house",
+   "keeper": "Mott Gage",
    "keeper_sprite": "villager",
    "sign_sprite": "sign_house",
    "roof": "#8a7050",
@@ -3980,11 +3933,11 @@
    ],
    "props": [],
    "counter": [],
-   "id": "highfen_home_62",
+   "id": "highfen_home_61",
    "kind": "house",
    "shop": "",
-   "name": "Ewer's house",
-   "keeper": "Silas Ewer",
+   "name": "Fenwick's house",
+   "keeper": "Dora Fenwick",
    "keeper_sprite": "villager",
    "sign_sprite": "sign_house",
    "roof": "#8a7050",
@@ -4018,11 +3971,11 @@
    ],
    "props": [],
    "counter": [],
-   "id": "highfen_home_63",
+   "id": "highfen_home_62",
    "kind": "house",
    "shop": "",
-   "name": "Lowe's house",
-   "keeper": "Merry Lowe",
+   "name": "Ewer's house",
+   "keeper": "Silas Ewer",
    "keeper_sprite": "villager",
    "sign_sprite": "sign_house",
    "roof": "#8a7050",
@@ -4056,11 +4009,11 @@
    ],
    "props": [],
    "counter": [],
-   "id": "highfen_home_64",
+   "id": "highfen_home_63",
    "kind": "house",
    "shop": "",
-   "name": "Rook's house",
-   "keeper": "Jory Rook",
+   "name": "Lowe's house",
+   "keeper": "Merry Lowe",
    "keeper_sprite": "villager",
    "sign_sprite": "sign_house",
    "roof": "#8a7050",
@@ -4094,11 +4047,11 @@
    ],
    "props": [],
    "counter": [],
-   "id": "highfen_home_65",
+   "id": "highfen_home_64",
    "kind": "house",
    "shop": "",
-   "name": "Cobb's house",
-   "keeper": "Tamsin Cobb",
+   "name": "Rook's house",
+   "keeper": "Jory Rook",
    "keeper_sprite": "villager",
    "sign_sprite": "sign_house",
    "roof": "#8a7050",
@@ -4132,11 +4085,11 @@
    ],
    "props": [],
    "counter": [],
-   "id": "highfen_home_66",
+   "id": "highfen_home_65",
    "kind": "house",
    "shop": "",
-   "name": "The Wrights' house",
-   "keeper": "Edric Wright",
+   "name": "Cobb's house",
+   "keeper": "Tamsin Cobb",
    "keeper_sprite": "villager",
    "sign_sprite": "sign_house",
    "roof": "#8a7050",
@@ -4168,49 +4121,49 @@
   "ggIgggggggggggggg###ggggggggggggggg::ggggggggggggggg###ggggggggggggggVVg",
   "ggggggggVggggggg###gggggggggggggOgg::gggggggggggggggg###gggggggggggggggg",
   "gggggJgVggggggg###ggggggggggggOgggg::ggggggggggggggggg###ggggggggggggggg",
-  "gggggVgXgggggg####ggggggYgggggggRgg::ggggggggggggggggg####gggggggggggggg",
-  "gggggggggggig###gggggggggPggggggFg::::gggggggggggggggggg###ggggggggggggg",
+  "gggggVgXgggggg####ggggggYgggggggRgg::gggggggggggLggggg####gggggggggggggg",
+  "gggggggggggig###gggggggggPggggggFg::::gggggggigggggggggg###ggggggggggggg",
   "gggggggggggg###gggggVggggFggggggg:::::::::ggggggggggggggg###ggggggggggKg",
   "ggggggggggg###gggggggggggggggg:::gggggggg:::::gggggggggggg###ggggggggKgg",
   "gggggggggg###gggggggggggg:::::ggggggggFgggggg:::gKggggKgggg###ggggggVggg",
   "ggggggggg###ggggggggggg:::gggggFggggggggggggggg::ggggggggggg###ggggggggg",
-  "gggggggg###ggggggIgggg::gggggggggggQgggggggggXgg::gggggiggggg###gggggggg",
-  "ggggggg###ggggggggggg::gggggggggggggMggZgggggggg::gggggggggggg###ggggggg",
+  "gggggggg###gggQggIgggg::gggggggggggQgggggggggXgg::gggggiggggg###gggggggg",
+  "ggggggg###ggggggggggg::gggggggggggggMggZgYgggggg::gggggggggggg###ggggggg",
   "gggggg###ggggggggggg::gggggggggggggggggggggggggKg::gggigggggggg###gggggg",
   "ggggg###ggggggggggg:::ggggggggggggggggggggggggggFg:ggggggggggggg###ggggg",
-  "ggggg#k#ggggggggggg::ggggggggggXgggggggggggggggggg::gggggggggggg#k#ggggg",
-  "ggggg###gggggggggg::ggggggggggggggggggggggYgggggggg::ggggggggggg###ggggg",
-  "ggggg###gggggggggg::ggggggggggggNggggggZgMggggggggg::ggggggggKgg###ggggg",
-  "ggggg###ggggggggg::g::gggggggggggggggggggggggggggg::::gggggggggg###ggggg",
-  "ggggg###gggLggggg:gigg::ggggCCgFggggggggFgBBgggg::ggg:gggggggggg###ggggg",
-  "gdggg###gggggggFg:gggggg::ggggggggggggggggFggg::gggFg::ggggggggg###ggggg",
-  "gdggg###ggggggggg:gggggggg::ggg::::::::::ggg::ggggOggg:ggggggggg###ggggg",
+  "ggggg#k#ggggggggggg::ggggggggggXgggggggggigggggggg::gggggggggggg#k#ggggg",
+  "ggggg###gggTggiggg::ggggggggggggggggggggggggggggggg::ggggggggggg###ggggg",
+  "ggggg###ggggKggggg::ggggggggggggNggggggZgMggggggggg::ggggggggKgg###ggggg",
+  "ggggg###gggggggTg::g::gggggggggggggggggggggggggggg::::gggggggggg###ggggg",
+  "ggggg###ggggggggg:gigg::ggggCCgFggggggggFgBBgggg::ggg:gggggggggg###ggggg",
+  "gdggg###ggggggggg:gggggg::ggggggggggggggggFggg::gggFg::ggggggYgg###ggggg",
+  "gdggg###ggggggggg:gggggggg::ggg::::::::::ggg::gggggggg:ggggggggg###ggggg",
   "ggggg###ggggggggg:ggggPggggg::::::::::::::::gggggggggg:ggggggggg###ggggg",
-  "ggdgg###gggOFgggg:ggggggggggg:::U:::::U::::ggggggggggg:ggggggggg###ggggg",
+  "ggdgg###gggOggggg:ggggggggggg:::U:::::U::::gNggggggggg:ggggggggg###ggggg",
   "gggggg#ggggggggg:::ggggggggg:::j::::::::A:::ggggggggg:::ggggggggg#gggggg",
   "::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::",
   "::::::::::::::::::::::::::::::V:::::S:::::H:::::::::::::::::::::::::::::",
   "gggggg#gggggggg:::gggggggggg:::X:::::::T::::gggggggggg:::gggggggg#gggggg",
-  "ggggg###gMgggFgg:gggggggggggg:::::::::::::fgggggggggggg:ggFggggj###dgggg",
+  "ggggg###gMgggFgg:gggggggggggg:::::::::::::fggVggggggggg:gggggggj###dgggg",
   "ggggg###gggggggg::ggggggFggg:e::::::::::::::ggZgggggggg:gggggggg###ggggg",
   "ggggg###ggggggggg:gggggggg::ggag:::::::::hgg::gggggggg::gggggggg###ggggg",
   "ggggg###ggggggggg:gggggg::ggFggbgh::::agbggggg::ggggg::ggggggggg###ggggg",
   "ggggg###ggggggggg::ggg::gggggggggggf:egFgggggggg::ggg::gggggggRg###ggggg",
   "ggggg###ggggggggg:::::ggggggggggggg::ggggggggQgggg::::gggggggggg###ggggg",
-  "ggggg###ggggggggFg::ggggggggggggggg::ggggggggggggNg::ggggggggggg###ggggg",
-  "ggggg###gggggggNgg::gggZgggggggggig::gggggggggTggOg::gFggggggggg###ggggg",
+  "ggggg###ggggggggFg::ggggggggggggggg::gggggggggggggg::ggggggggggg###ggggg",
+  "ggggg###gggggggNgg::ggggggggggggggg::gggggggggTgggg::gFggggggggg###ggggg",
   "ggggg###gggggggggXg:ggggggggggggggg::ggggggggggggg::gggggggggggg###ggPgg",
-  "ggggg#k#ggggggggjgg::ggggggggggggXg::gggggggggTgg:::gggggggggggg#k#ggggg",
-  "gggggg###ggggggggggg:::ggggggggggFg::ggggggggggg:::gggggIgggggg###gggggg",
-  "ggggggg###gggggggggggg:::gggggggggg::gggggggggg:::gggggggggggg###ggggggg",
-  "gggggggg###ggggggggggggg::ggBgggBBg::gLEEgggig:::ggVdOggggggg###gggggggg",
-  "ggggggggg###ggggggggggggg:::ggggggg::gggggggg:::gggggdgggggg###ggggggggg",
-  "gggggggggg###gggggggggggggg::gggggg::ggggFgg:::gNggggdggggg###gggggggggg",
-  "ggggggggggg###ggggMggggggFgg:::ggg:::gggggg:::ggggggdggggg###ggggggggggg",
-  "gggggggggggg###ggggggTgggIggggg:::::::gg::::ggggggggggggg###gggggggggggg",
-  "ggggggggggggg###gggggggggggggggggg::::gggggggggggggggggg###ggggggggggggg",
+  "ggggg#k#ggggggggggg::gggggggggggggg::gggggggggTgg:::gggggggggggg#k#ggggg",
+  "gggggg###gggggggggMg:::gggggggggggg::ggggggggggg:::gggggggggggg###gggggg",
+  "ggggggg###gggggggggggg:::ggggMggggg::ggEEgggEEg:::gggggggggggg###ggggggg",
+  "gggggggg###ggggggggggggg::ggggggggg::gLgggggig:::ggVdOggggggg###gggggggg",
+  "ggggggggg###ggggggggggggg:::ggggggg::ggKggggg:::ggggddgggggg###ggggggggg",
+  "gggggggggg###gggZgggggggYgg::ggggTg::ggggggg:::gNgggddggggg###gggggggggg",
+  "ggggggggggg###gggggggggggggg:::ggg:::gggggg:::ggggggdggggg###ggggggggggg",
+  "gggggggggggg###ggggggggggggFggg:::::::gg::::ggggggggggggg###gggggggggggg",
+  "ggggggggggggg###gggggggggggggFgggg::::gggggggggggggggggg###ggggggggggggg",
   "gggggggggggKg####gggggggggggggggggg::gggggggggggggggggg####ggggggggggggg",
-  "ggggggggggggggg###ggggggggggggggRFg::ggggggggggggggggg###gggVggggggggJgg",
+  "ggggggggggggggg###ggggggggggggggggg::ggggggggggggggggg###gggVggggggggJgg",
   "ggggggLgggKggggg###gggggggggggggggg::gggggggggggggggg###gggggggggggggggg",
   "ggggggggggggggggg###ggggggggggggggg::ggNgggggggggggg###ggggggggggLgggIgg",
   "ggggggIggggggggggg################g::g################ggggggggggggIggggg",

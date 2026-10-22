@@ -381,10 +381,13 @@ for b in blds:
         top = sorted([p for p in inn if p[1] == k[1] and p != k], key=lambda p: -abs(p[0] - door[0]))
         if top: base['props'].append(dict(object='oven', at=rel(top[0])))
     elif role == 'smithy':
+        def _inb(b_, x_, y_):   # 0.3.13 stations only where all 8 neighbours are building tiles (no reach-in through a diagonal)
+            lx_, ly_ = x_ - b_['at'][0], y_ - b_['at'][1]
+            return 0 <= ly_ < len(b_['rows']) and 0 <= lx_ < len(b_['rows'][0]) and b_['rows'][ly_][lx_] != '.'
         k = keep()
         base.update(from_old('saltmere_maces', keeper_at=rel(k), stand=rel(ad if ad != k else door), style='stone', roof='#5a6070',
                              note='0.3.13 the harbour forge (designer v3_smithy_large); furnace + anvil under the roof'))
-        sp = sorted([p for p in inn if p not in (k, ad, tuple(door)) and abs(p[0] - door[0]) >= 2], key=lambda p: (p[1], -abs(p[0] - door[0])))
+        sp = sorted([p for p in inn if p not in (k, ad, tuple(door)) and abs(p[0] - door[0]) >= 2 and all(_inb(b, p[0] + a_, p[1] + c_) for a_ in (-1, 0, 1) for c_ in (-1, 0, 1))], key=lambda p: (p[1], -abs(p[0] - door[0])))
         base['props'] = [dict(object=o, at=rel(p)) for o, p in zip(['furnace', 'anvil'], sp[:2])]
     elif role == 'player_house':
         k = keep()

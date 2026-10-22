@@ -72,3 +72,48 @@ static func run(main, world, p) -> void:
 		for q in gts[g]:
 			gsafe = gsafe and gen.safe_at(org + Vector2i(int(q[0]), int(q[1])))
 	check(gsafe, "Fenhollow's 4 gate passages are inside the safe zone")
+	_saltmere_v3(world, gen)
+	_highfen_v4(world, gen)
+
+
+## 0.3.13 Saltmere v3: large smithy (smith out of the warehouse), Elijah's tomb, harbour entrance, v3 ships/props
+static func _saltmere_v3(world, gen: WorldGen) -> void:
+	var t: Dictionary = gen.towns["saltmere"]
+	var org := Vector2i(int(t["origin"][0]), int(t["origin"][1]))
+	var arts := {}
+	for id in gen.building_order:
+		var b: Dictionary = gen.buildings[id]
+		if b["town"] == "saltmere":
+			arts[str(id)] = str(b.get("art", ""))
+	check(arts.get("saltmere_maces", "") == "v3_smithy_large", "Saltmere's smith works in the v3 large smithy, not the warehouse (%s)" % arts.get("saltmere_maces", "?"))
+	check(arts.get("saltmere_elijah_tomb", "") == "v3_elijah_tomb", "Elijah's tomb stands in Saltmere")
+	var he: Dictionary = t.get("harbour_entrance", {})
+	var pass_ok := not (he.get("passage", []) as Array).is_empty()
+	for q in he.get("passage", []):
+		pass_ok = pass_ok and not world.is_blocked(org + Vector2i(int(q[0]), int(q[1])))
+	check(pass_ok, "the Saltmere harbour entrance arch can be walked through")
+	var s := JSON.stringify(t.get("art", {}))
+	check(s.contains("v3_ship_galleon") and s.contains("v3_ship_sloop") and s.contains("v3_rowboat_") and ResourceLoader.exists("res://assets/sprites/towns/saltmere/tiles/v3_quay_corner_nw.png"),
+		"Saltmere uses the v3 galleon, sloop, rowboats and quay corner tiles")
+	check(JSON.stringify(t.get("objects", {})).contains("sm3_town_sign"), "Saltmere has the v3 town sign")
+
+
+## 0.3.13 Highfen v4: new civic buildings + props; single ring road (outer ring, 60/120 spokes dropped)
+static func _highfen_v4(world, gen: WorldGen) -> void:
+	var t: Dictionary = gen.towns["highfen"]
+	var arts := {}
+	for id in gen.building_order:
+		var b: Dictionary = gen.buildings[id]
+		if b["town"] == "highfen":
+			arts[str(b.get("art", ""))] = str(id)
+	for a in ["v4_guild", "v4_cookhouse", "v4_player_shop", "v4_smithy", "v4_general_store"]:
+		check(arts.has(a), "Highfen has the v4 %s" % a)
+	for a in ["guild_knights", "shop_smith", "shop_general", "v3_cookhouse"]:
+		check(not arts.has(a), "Highfen's replaced %s is gone" % a)
+	check(arts.get("v4_player_shop", "") == "highfen_player" and arts.get("v4_guild", "") == "highfen_guild" and arts.get("v4_general_store", "") == "highfen_general",
+		"the v4 player shop, guild and general store keep their roles")
+	var objs := JSON.stringify(t.get("objects", {}))
+	for o in ["hf4_statue_knight", "hf4_lamp_post", "hf4_banner_", "hf4_tree_oak"]:
+		check(objs.contains(o), "Highfen places the v4 %s" % o)
+	var rq: Dictionary = t.get("ring_qa", {})
+	check(int(rq.get("gap_count", -1)) == 0 and (rq.get("gates", []) as Array).size() == 4, "Highfen's wall ring stays continuous after the v4 street plan")

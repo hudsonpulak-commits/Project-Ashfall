@@ -334,19 +334,21 @@ def place(n, tx, ty, inside, flip=False, role=None, reach=320, extra=None, quiet
 CX, CY = CXt * T, CYt * T
 pr = PR * RY * T
 place('v3_keep', CX, CY - pr - 95, True, role='palace')
-def place_any(n, spots, role):
+def place_any(n, spots, role, reach=48):
     for i, (a_, r_) in enumerate(spots):
-        if place(n, *wp(a_, r_), True, role=role, quiet=i < len(spots) - 1): return
-place_any('v3_town_hall', [(118, .45), (100, .45), (135, .47), (60, .45), (240, .45), (280, .47), (300, .45), (250, .5), (115, .52)], 'townhall')
-place('v3_temple', *wp(160, .42), True, role='church')
-place('v4_guild', *wp(20, .42), True, role='guild')
-place('v3_bank', *wp(322, .45), True, role='bank')
-place('shop_tavern', *wp(218, .45), True, role='cook')
-place('v4_player_shop', *wp(62, .4), True, role='player_shop')
-place_any('v4_general_store', [(100, .8), (80, .8), (120, .8), (60, .82), (250, .8), (290, .8), (140, .78), (40, .8), (320, .8), (230, .78), (100, .72), (75, .75)], 'general')
-place_any('v4_cookhouse', [(20, .8), (35, .8), (5, .8), (340, .8), (60, .8), (125, .8), (300, .8)], 'baker')
-place_any('v4_smithy', [(160, .8), (145, .8), (175, .8), (240, .8), (270, .82), (320, .8), (55, .8), (85, .8)], 'smithy')
-place('v3_player_house', *wp(207, .8), True, role='player_house')
+        if place(n, *wp(a_, r_), True, role=role, reach=reach, quiet=True): return
+    for a_ in range(0, 360, 30):     # last resort: wide search from the outer band
+        if place(n, *wp(a_, .75), True, role=role, reach=200, quiet=a_ < 330): return
+# 0.3.13 v4 layout (designer preview_v4): v3.1 civic core round the plaza; the larger v4 buildings take the room
+# freed by the dropped outer ring road (guild, general store, smithy in the outer band; player shop + cookhouse mid-ring)
+RING = lambda a0, r0: [(a0, r0)] + [((a0 + d) % 360, r_) for d in (8, -8, 16, -16, 24, -24, 36, -36, 50, -50, 70, -70, 90, -90) for r_ in (r0, r0 + .05, r0 - .05)]
+place_any('v3_temple', RING(232, .56), 'church', reach=60)
+place_any('v3_town_hall', RING(308, .56), 'townhall', reach=60)
+place_any('v4_guild', RING(20, .42), 'guild', reach=60)
+for n_, a_, r_, role_ in [('v3_bank', 345, .56, 'bank'), ('shop_tavern', 135, .56, 'cook'), ('v4_general_store', 110, .56, 'general'),
+                          ('v4_player_shop', 150, .56, 'player_shop'), ('v3_player_house', 75, .56, 'player_house'),
+                          ('v4_cookhouse', 195, .56, 'baker'), ('v4_smithy', 20, .8, 'smithy')]:
+    place_any(n_, RING(a_, r_), role_, reach=90)
 POOL = M3['houses'] + ['v3_house_narrow_tall', 'v3_house_longhouse']
 use = {}; pi = 0; fill = 0
 cands = [(r_, a_) for r_ in (.3, .36, .42, .47, .52, .58, .78, .82) for a_ in range(0, 360, 3)]
