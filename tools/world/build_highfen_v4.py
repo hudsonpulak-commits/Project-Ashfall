@@ -516,12 +516,19 @@ for b in blds:
                     sign_sprite='sign_house', roof='#8a5a3a', keeper_at=rel(k), stand=rel(ad if ad != k else inn[0]),
                     note='0.3.8 player house; 0.3.11 a walk-in townhouse with a walled work yard behind it (stations + bank chest work for the owner only)')
         base['_yard'] = True
-    elif role == 'smithy':
+    elif role == 'smithy':   # 0.3.13 a working forge: furnace + anvil under the roof (stations only where all 8 neighbours are building tiles)
+        def _inb(b_, x_, y_):
+            lx_, ly_ = x_ - b_['at'][0], y_ - b_['at'][1]
+            return 0 <= ly_ < len(b_['rows']) and 0 <= lx_ < len(b_['rows'][0]) and b_['rows'][ly_][lx_] != '.'
         cand = [p for p in inn if p != ad]; k = cand[-1] if cand else door
-        base.update(id='highfen_smithy', kind='house', shop='', name='Highfen Forge', keeper='Bram Ironside', keeper_sprite='villager', sign_sprite='sign_house',
-                    roof='#8a7050', keeper_at=rel(k), stand=rel(ad if ad != k else door), note='0.3.13 Highfen v4 smithy (art only; smithing stays in Fenhollow)')
-        top = sorted([p for p in inn if p != k and p != ad and p[1] < door[1] - 1], key=lambda p: -abs(p[0] - door[0]))
-        if top and len(inn) > 3: base['props'].append(dict(object='anvil', at=rel(top[0])))
+        base.update(id='highfen_smithy', kind='smithy', shop='', name='Highfen Forge', keeper='Bram Ironside', keeper_sprite='villager',
+                    roof='#8a7050', keeper_at=rel(k), stand=rel(ad if ad != k else door), note='0.3.13 Highfen v4 forge (designer v4_smithy): furnace + anvil, smithing role')
+        base['sign_sprite'] = 'sign_smithy'
+        sp = sorted([p for p in inn if p not in (k, ad, tuple(door)) and all(_inb(b, p[0] + a_, p[1] + c_) for a_ in (-1, 0, 1) for c_ in (-1, 0, 1))], key=lambda p: (p[1], -abs(p[0] - door[0])))
+        if len(sp) < 2:
+            sp = sorted([p for p in inn if p not in (k, ad, tuple(door))], key=lambda p: (p[1], -abs(p[0] - door[0])))
+        print('highfen forge stations', sp[:2])
+        base['props'] = [dict(object=o, at=rel(p)) for o, p in zip(['furnace', 'anvil'], sp[:2])]
     elif role in ('baker', 'home'):
         nm, kp = NAMES_HOME[hi % len(NAMES_HOME)]; hi += 1
         if role == 'baker': nm, kp = ("Hob's bakery", 'Hob Larder')
