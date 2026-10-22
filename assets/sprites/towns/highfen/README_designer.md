@@ -82,3 +82,14 @@ Towers rise one extra drum height above the roof.
 - `props_v3/`: large and small fountains (4 animation frames each), 5 market stalls, trees, hedge, garden bed, veg patch, crates, barrels, round well, cart, bench.
 - `buildings_v3/`: 18 house designs (v3_house_01..18) plus richer narrow_tall and longhouse, bank, cookhouse, player house, temple, town hall and keep. Every building has floor (with furniture), walls (with a doorway gap), upper storeys and a roof; the upper storeys and roof form the fade group.
 - Data for all of the above is in `manifest_v3.json`. The v2 files are unchanged.
+
+## v3.1 (45° diagonals + layered gates)
+Run `src/gen_highfen_v31.py` to build the tiles (it also adds a `v31` block to manifest_v3.json), then `src/preview_v31.py` to build `preview_highfen_v31_scene_3x.png` and `contact_sheet_v31_3x.png`.
+- **45° corner autotiles** in `tiles_v31/`: `v31_diag_cobble` (16x16 frames) and `v31_diag_wall_dark` (16x28 frames). They follow the same corner rule as Saltmere v2 (NW1|NE2|SE4|SW8 on the vertex grid; see `src/diagtiles.py`). Named frames are in `tiles_v31/named/`.
+- **Walls:** diagonal tower fits `v31_wall_tower_fit_diag_ne/nw` and join stubs `v31_wall_gate_join_w/e`.
+- **Layered gates** `v31_gate_front/back/side`, each with `_floor`, `_walls` and `_roof`. The roof is the fade group, and the passage tiles are listed as `roof_tiles`. Use back for the N gate, front for the S gate and side for the E/W gates. The wall runs straight for at least 5 tiles either side of a gate and ends flush under the gate towers.
+- **Preview:** the S gate is shown with its roof faded and the player standing in the passage. The town hall is shown cut away.
+- The v3 tiles and the flat `v3_wall_gatehouse` are kept for reference. v3.1 supersedes them.
+
+## Ground textures v3 (ground_textures_v3/)
+These are drop-in replacements for road_stone, cobble and cobble_dark, in both tiles/ (64x16, 4 variants) and transitions/ (256x256, alpha kept). They are muted grey-brown, with about 62% of the old contrast, darker, and have grime in the mortar, dirt specks, moss in the cracks and a few worn stones. The plaza uses cobble; there is no separate plaza sprite. See before_after_3x.png. To regenerate, run src/gen_ground_v3.py.

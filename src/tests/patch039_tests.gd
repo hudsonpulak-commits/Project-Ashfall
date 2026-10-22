@@ -53,10 +53,12 @@ static func run(main, world: World, p: Player) -> void:
 		if c[0] == 2: moat_piece = c[2].x
 		if c[0] == 3: join = c[2].x
 	check(moat_piece == (Autotile.E | Autotile.S | Autotile.W) and join == 16 + 3, "moat: bank on the north (T piece) + a bridge join on the west (%s)" % [cells])
-	var wl := {o: "capital_wall", Vector2i(1, 0): "capital_wall", Vector2i(0, 1): "capital_wall"}
+	# 0.3.11 v3.1 Highfen's capital_wall is drawn by the designer's 45-degree wall art: no tile caps
+	check(world.overlay_cells(o, nmf.call({o: "capital_wall", Vector2i(1, 0): "capital_wall"})).filter(func(c): return c[0] == 2).is_empty(), "walls: capital_wall gets no tile caps (art-drawn)")
+	var wl := {o: "stone_wall", Vector2i(1, 0): "stone_wall", Vector2i(0, 1): "stone_wall"}
 	cells = world.overlay_cells(o, nmf.call(wl))
 	check(cells.size() == 1 and cells[0][0] == 2 and cells[0][2] == Vector2i(Autotile.E | Autotile.S, 0), "walls: a city wall corner gets the corner cap (%s)" % [cells])
-	cells = world.overlay_cells(o, nmf.call({o: "capital_wall", Vector2i(1, -1): "capital_wall", Vector2i(-1, 1): "capital_wall"}))
+	cells = world.overlay_cells(o, nmf.call({o: "stone_wall", Vector2i(1, -1): "stone_wall", Vector2i(-1, 1): "stone_wall"}))
 	check(cells.size() == 1 and cells[0][2] == Vector2i(Autotile.DIAG_SLASH, 0), "walls: a 45-degree wall run gets the diagonal cap")
 	# 0.3.11b Highfen's wall is tiled again (capital_wall, autotiled) with round towers along it
 	var hc := gen.town_center(gen.capital)

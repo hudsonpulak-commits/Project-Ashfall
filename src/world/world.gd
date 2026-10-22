@@ -121,7 +121,7 @@ func overlay_cells(p: Vector2i, nm: Callable) -> Array:
 		if not s.is_empty():
 			var f := Autotile.transition_frame(ov[i], nb)
 			out.append([i, s[0], Vector2i(f % int(s[1]), f / int(s[1]))])
-	if Autotile.WALL_FAMILIES.has(here):
+	if Autotile.WALL_FAMILIES.has(here) and not Autotile.ART_WALLS.has(here):
 		var s: Array = _overlay_src.get("autotile/" + str(Autotile.WALL_FAMILIES[here]), [])
 		if not s.is_empty():
 			var f := Autotile.piece_at(p, func(q): var t: String = nm.call(q); return t == here or t in Autotile.WALL_JOIN_ALSO)

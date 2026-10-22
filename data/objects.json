@@ -849,6 +849,102 @@
    "sprite": "hf_wall_tower",
    "blocks": true,
    "type": "prop"
+  },
+  "hf_v3_barrels": {
+   "name": "Barrels",
+   "sprite": "hf_v3_barrels",
+   "blocks": true,
+   "type": "prop"
+  },
+  "hf_v3_bench": {
+   "name": "Bench",
+   "sprite": "hf_v3_bench",
+   "blocks": false,
+   "type": "prop"
+  },
+  "hf_v3_cart": {
+   "name": "Cart",
+   "sprite": "hf_v3_cart",
+   "blocks": true,
+   "type": "prop"
+  },
+  "hf_v3_crate_pile": {
+   "name": "Crates",
+   "sprite": "hf_v3_crate_pile",
+   "blocks": true,
+   "type": "prop"
+  },
+  "hf_v3_fountain_small_4f": {
+   "name": "Fountain",
+   "sprite": "hf_v3_fountain_small_4f",
+   "blocks": true,
+   "type": "prop"
+  },
+  "hf_v3_garden_bed": {
+   "name": "Garden bed",
+   "sprite": "hf_v3_garden_bed",
+   "blocks": false,
+   "type": "prop"
+  },
+  "hf_v3_hedge": {
+   "name": "Hedge",
+   "sprite": "hf_v3_hedge",
+   "blocks": true,
+   "type": "prop"
+  },
+  "hf_v3_stall_blue": {
+   "name": "Market stall",
+   "sprite": "hf_v3_stall_blue",
+   "blocks": true,
+   "type": "prop"
+  },
+  "hf_v3_stall_green": {
+   "name": "Market stall",
+   "sprite": "hf_v3_stall_green",
+   "blocks": true,
+   "type": "prop"
+  },
+  "hf_v3_stall_orange": {
+   "name": "Market stall",
+   "sprite": "hf_v3_stall_orange",
+   "blocks": true,
+   "type": "prop"
+  },
+  "hf_v3_stall_purple": {
+   "name": "Market stall",
+   "sprite": "hf_v3_stall_purple",
+   "blocks": true,
+   "type": "prop"
+  },
+  "hf_v3_stall_red": {
+   "name": "Market stall",
+   "sprite": "hf_v3_stall_red",
+   "blocks": true,
+   "type": "prop"
+  },
+  "hf_v3_tree_round": {
+   "name": "Tree",
+   "sprite": "hf_v3_tree_round",
+   "blocks": true,
+   "type": "prop"
+  },
+  "hf_v3_tree_tall": {
+   "name": "Tall tree",
+   "sprite": "hf_v3_tree_tall",
+   "blocks": true,
+   "type": "prop"
+  },
+  "hf_v3_veg_patch": {
+   "name": "Vegetable patch",
+   "sprite": "hf_v3_veg_patch",
+   "blocks": false,
+   "type": "prop"
+  },
+  "hf_v3_well_round": {
+   "name": "Well",
+   "sprite": "hf_v3_well_round",
+   "blocks": true,
+   "type": "prop"
   }
  }
 }

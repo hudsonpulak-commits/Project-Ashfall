@@ -70,6 +70,33 @@ func _setup_town_art(w) -> void:
 			g.position = org
 			g.z_index = 2
 			w.ground_layer.add_child(g)
+		# 0.3.11 v3.1: free y-sorted art (wall rows, round towers, gatehouse walls) and
+		# fade sprites (gatehouse roofs) that fade while the player stands in their tiles
+		for it in a.get("ysort", []):
+			var yt = load(str(it["path"]))
+			if yt == null:
+				continue
+			var ys := Sprite2D.new()
+			ys.centered = false
+			ys.texture = yt
+			var base := float(it.get("base", yt.get_height()))
+			ys.position = org + Vector2(float(it["pos"][0]), float(it["pos"][1]) + base - 1.0)
+			ys.offset = Vector2(0, -base + 1.0)
+			w.entity_layer.add_child(ys)
+		for it in a.get("fades", []):
+			var ft = load(str(it["path"]))
+			if ft == null:
+				continue
+			var fs := Sprite2D.new()
+			fs.name = "GateRoof_%s_%d" % [tid, _gate_roofs.size()]
+			fs.centered = false
+			fs.texture = ft
+			fs.position = org + Vector2(float(it["pos"][0]), float(it["pos"][1]))
+			var tl := {}
+			for q in it.get("tiles", []):
+				tl[Vector2i(int(t["origin"][0]) + int(q[0]), int(t["origin"][1]) + int(q[1]))] = true
+			_gate_roofs.append([fs, tl])
+			add_child(fs)
 		var ro: Array = a.get("ring_origin_px", [])
 		if ro.size() == 2:
 			var segs: Dictionary = ring_def.get("segments", {})
@@ -216,9 +243,21 @@ func hides(p: Vector2i) -> bool:
 
 
 ## Advance the roof fades by dt seconds (also called directly by tests).
+## 0.3.11 v3.1 gatehouse roofs: [Sprite2D, {tile: true}] - faded while the player is in the passage
+var _gate_roofs: Array = []
+
+
+func gate_roof_alpha(i: int) -> float:
+	return (_gate_roofs[i][0] as Sprite2D).modulate.a
+
+
 func step(dt: float) -> void:
 	var inside := player_building()
 	var rate := dt / maxf(0.01, roof_fade_s())
+	var pt = player.tile if player != null and "tile" in player else Vector2i(-99999, -99999)
+	for gr in _gate_roofs:
+		var gs: Sprite2D = gr[0]
+		gs.modulate.a = move_toward(gs.modulate.a, 0.0 if (gr[1] as Dictionary).has(pt) else 1.0, rate)
 	for id in alpha.keys():
 		var target := 0.0 if id == inside else 1.0
 		alpha[id] = move_toward(float(alpha[id]), target, rate)

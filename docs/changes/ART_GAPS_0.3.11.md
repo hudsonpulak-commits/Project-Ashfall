@@ -1,11 +1,7 @@
-# Art gaps (0.3.11)
-- There is no art for the bank, cookhouse or player house. They reuse house_tower_corner, shop_tavern and house_twin_gable.
-- The 24 houses outside the wall reuse the designer house set, mirrored. There are no unique outer-house designs.
-- narrow_tall and longhouse have no interior plan or floor, so they are closed (no_keeper).
-- The townhouse interior is too small for the 7 stations, so they are in a yard. Interior art with room for stations is needed.
-- The shop_smith interior has only 2 floor tiles, so the player-shop stands are on the plaza.
-- The designer stairs exist only for south faces. There are no N/E/W stairs.
-- There is no tile for a 1-tile-wide cliff strip.
-- Cinder close-up: some faces render without a lip, and the plateau top isn't drawn with cliff_top.
-- There is no designer fountain or round wall tower. Both are placeholders (props/fountain.png and props/wall_tower.png), drawn by tools/world/register_highfen_art.py.
-- The designer's smooth ring wall art and the ground decal are no longer used (Hudson's revision).
+# Art gaps after the 0.3.11 v3.1 pass
+- Guild of Knights still uses the older guild_knights layered art (no v3 guild design).
+- Cookhouse: v3_cookhouse floor is too small for keeper + oven + customer stand; the cook uses shop_tavern (v2 art). A 5x3+ v3 cookhouse would fix it.
+- No v3 player-shop / general-store / smithy designs: shop_smith (player shop) and shop_general are v2 art.
+- Tower fits (v31_wall_tower_fit_diag_ne/nw) and gate join stubs (v31_wall_gate_join_w/e) are copied but unused: towers sit on the diagonal wall as plain round towers, gates join flush.
+- v3_fountain_small_4f copied but unused.
+- Lamp posts, statue, banners, signposts, bushes and pine/oak trees outside the wall are still v2 Highfen props.

@@ -89,7 +89,7 @@ static func run(main, world, p) -> void:
 	var fnt: WorldObject = null
 	world.set_focus(hc, true)
 	fnt = world.find_nearest_object(hc, ["hf_fountain"], 6)
-	check(not pal.is_empty() and absi(pc.x - hc.x) <= 3 and pc.y < hc.y and pal.get("art", "") == "palace" and fnt != null,
+	check(not pal.is_empty() and absi(pc.x - hc.x) <= 3 and pc.y < hc.y and pal.get("art", "") == "v3_keep" and fnt != null,
 		"Highfen: the palace (throne room) stands on the north side of the central plaza, the fountain at its centre")
 	var guild: Dictionary = gen.buildings.get("highfen_guild", {})
 	var gin := Vector2i(1 << 30, 0)
@@ -139,7 +139,16 @@ static func run(main, world, p) -> void:
 		for x in range(-30, 31):
 			if gen.tile_at(hc.x + x, hc.y + y) in [WorldGen.TileType.COBBLE, WorldGen.TileType.ROAD_STONE]:
 				cob += 1
-	check(not hf.get("art", {}).has("ground_decal") and cob > 400, "Highfen's roads, rings and plaza are cobble / road tiles (%d), no painted decal" % cob)
+	check(str(hf.get("art", {}).get("ground_decal", "")).ends_with("ground_decal.png") and cob > 400, "Highfen's roads, rings and plaza are cobble tiles (%d) under the designer's 45-degree cobble autotile" % cob)
+	var gr_n: int = bv._gate_roofs.size()
+	var sg: Array = hf["gate_walls"]["south"]
+	p.place_at(Vector2i(int(hf["origin"][0]) + int(sg[0][0]), int(hf["origin"][1]) + int(sg[0][1])))
+	bv.step(5.0)
+	var faded := 0
+	for i in gr_n:
+		if bv.gate_roof_alpha(i) == 0.0:
+			faded += 1
+	check(gr_n == 4 and faded == 1, "Highfen's 4 gatehouse roofs: standing in the S passage fades only that roof (%d/%d)" % [faded, gr_n])
 
 
 class _FakeWorld:

@@ -54,7 +54,7 @@
     16,
     16
    ],
-   "minimap_color": "#8e8382",
+   "minimap_color": "#514b45",
    "_order": 5
   },
   "planks": {
@@ -261,7 +261,7 @@
     16,
     16
    ],
-   "minimap_color": "#3f363a",
+   "minimap_color": "#322e2a",
    "_order": 28
   },
   "plaster": {
@@ -297,7 +297,7 @@
     16,
     16
    ],
-   "minimap_color": "#857d7d",
+   "minimap_color": "#56504a",
    "_order": 32,
    "note": "0.3.8 placeholder"
   },
@@ -1497,24 +1497,186 @@
    "note": "0.3.11 designer cliff prop (cinder)"
   },
   "hf_fountain": {
-   "path": "res://assets/sprites/towns/highfen/props/fountain.png",
+   "path": "res://assets/sprites/towns/highfen/props_v3/v3_fountain_large_4f.png",
    "frame_size": [
-    40,
-    34
+    48,
+    40
    ],
-   "frames": 1,
+   "frames": 4,
    "anchor": "bottom",
-   "note": "0.3.11 designer Highfen prop (art_handoff/towns/highfen)"
+   "note": "0.3.11 v3.1 designer Highfen prop (props_v3)",
+   "fps": 4
   },
   "hf_wall_tower": {
-   "path": "res://assets/sprites/towns/highfen/props/wall_tower.png",
+   "path": "res://assets/sprites/towns/highfen/v31/v3_wall_tower_round.png",
    "frame_size": [
-    24,
-    44
+    48,
+    64
    ],
    "frames": 1,
    "anchor": "bottom",
-   "note": "0.3.11 designer Highfen prop (art_handoff/towns/highfen)"
+   "note": "0.3.11 v3.1 designer round wall tower"
+  },
+  "hf_v3_barrels": {
+   "path": "res://assets/sprites/towns/highfen/props_v3/v3_barrels.png",
+   "frame_size": [
+    24,
+    16
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.3.11 v3.1 designer Highfen prop (props_v3)"
+  },
+  "hf_v3_bench": {
+   "path": "res://assets/sprites/towns/highfen/props_v3/v3_bench.png",
+   "frame_size": [
+    16,
+    10
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.3.11 v3.1 designer Highfen prop (props_v3)"
+  },
+  "hf_v3_cart": {
+   "path": "res://assets/sprites/towns/highfen/props_v3/v3_cart.png",
+   "frame_size": [
+    32,
+    20
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.3.11 v3.1 designer Highfen prop (props_v3)"
+  },
+  "hf_v3_crate_pile": {
+   "path": "res://assets/sprites/towns/highfen/props_v3/v3_crate_pile.png",
+   "frame_size": [
+    24,
+    24
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.3.11 v3.1 designer Highfen prop (props_v3)"
+  },
+  "hf_v3_fountain_small_4f": {
+   "path": "res://assets/sprites/towns/highfen/props_v3/v3_fountain_small_4f.png",
+   "frame_size": [
+    24,
+    24
+   ],
+   "frames": 4,
+   "anchor": "bottom",
+   "note": "0.3.11 v3.1 designer Highfen prop (props_v3)",
+   "fps": 4
+  },
+  "hf_v3_garden_bed": {
+   "path": "res://assets/sprites/towns/highfen/props_v3/v3_garden_bed.png",
+   "frame_size": [
+    32,
+    16
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.3.11 v3.1 designer Highfen prop (props_v3)"
+  },
+  "hf_v3_hedge": {
+   "path": "res://assets/sprites/towns/highfen/props_v3/v3_hedge.png",
+   "frame_size": [
+    32,
+    16
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.3.11 v3.1 designer Highfen prop (props_v3)"
+  },
+  "hf_v3_stall_blue": {
+   "path": "res://assets/sprites/towns/highfen/props_v3/v3_stall_blue.png",
+   "frame_size": [
+    32,
+    24
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.3.11 v3.1 designer Highfen prop (props_v3)"
+  },
+  "hf_v3_stall_green": {
+   "path": "res://assets/sprites/towns/highfen/props_v3/v3_stall_green.png",
+   "frame_size": [
+    32,
+    24
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.3.11 v3.1 designer Highfen prop (props_v3)"
+  },
+  "hf_v3_stall_orange": {
+   "path": "res://assets/sprites/towns/highfen/props_v3/v3_stall_orange.png",
+   "frame_size": [
+    32,
+    24
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.3.11 v3.1 designer Highfen prop (props_v3)"
+  },
+  "hf_v3_stall_purple": {
+   "path": "res://assets/sprites/towns/highfen/props_v3/v3_stall_purple.png",
+   "frame_size": [
+    32,
+    24
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.3.11 v3.1 designer Highfen prop (props_v3)"
+  },
+  "hf_v3_stall_red": {
+   "path": "res://assets/sprites/towns/highfen/props_v3/v3_stall_red.png",
+   "frame_size": [
+    32,
+    24
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.3.11 v3.1 designer Highfen prop (props_v3)"
+  },
+  "hf_v3_tree_round": {
+   "path": "res://assets/sprites/towns/highfen/props_v3/v3_tree_round.png",
+   "frame_size": [
+    24,
+    32
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.3.11 v3.1 designer Highfen prop (props_v3)"
+  },
+  "hf_v3_tree_tall": {
+   "path": "res://assets/sprites/towns/highfen/props_v3/v3_tree_tall.png",
+   "frame_size": [
+    24,
+    32
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.3.11 v3.1 designer Highfen prop (props_v3)"
+  },
+  "hf_v3_veg_patch": {
+   "path": "res://assets/sprites/towns/highfen/props_v3/v3_veg_patch.png",
+   "frame_size": [
+    32,
+    16
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.3.11 v3.1 designer Highfen prop (props_v3)"
+  },
+  "hf_v3_well_round": {
+   "path": "res://assets/sprites/towns/highfen/props_v3/v3_well_round.png",
+   "frame_size": [
+    24,
+    24
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.3.11 v3.1 designer Highfen prop (props_v3)"
   }
  },
  "actors": {

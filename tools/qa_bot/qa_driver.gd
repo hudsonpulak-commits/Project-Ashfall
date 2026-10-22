@@ -2757,11 +2757,14 @@ func _autotile039() -> void:
 	res["moat_corner"] = [mc.x, mc.y]
 	var mk := {}
 	for side in [["N", Vector2i(0, -1)], ["E", Vector2i(1, 0)], ["S", Vector2i(0, 1)], ["W", Vector2i(-1, 0)], ["NW", Vector2i(-1, -1)]]:
-		for r in range(5, 70):
-			var q3: Vector2i = hc + (side[1] as Vector2i) * r
-			if g.tile_at(q3.x, q3.y) == WorldGen.TileType.CAPITAL_WALL:
-				mk[side[0]] = true
-				break
+		var sd: Vector2i = side[1]
+		for off in [0, 4, -4]:   # 0.3.11 v3.1 the straight ray runs through the gate passage
+			var q0: Vector2i = hc + Vector2i(sd.y, sd.x) * off
+			for r in range(5, 70):
+				var q3: Vector2i = q0 + sd * r
+				if g.tile_at(q3.x, q3.y) == WorldGen.TileType.CAPITAL_WALL:
+					mk[side[0]] = true
+					break
 	res["moat_pieces"] = mk.keys()
 	if mc.x != 1 << 30:
 		p.place_at(w.find_free_tile_near(mc + Vector2i(4, 4), 6))

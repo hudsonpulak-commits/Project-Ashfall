@@ -1,5 +1,5 @@
 {
- "note": "0.3.11 per-design tile plans for the layered town buildings (tools/world/build_highfen_v2.py). plan: # wall, o floor, D door, . outside",
+ "note": "0.3.11 per-design tile plans for the layered town buildings (tools/world/build_highfen_v3.py). plan: # wall, o floor, D door, . outside",
  "buildings": {
   "house_cottage_round": {
    "tiles": [
@@ -415,6 +415,717 @@
     ".#oooooo#.",
     "#oooooooo#",
     "#####D####"
+   ]
+  },
+  "v3_house_01": {
+   "tiles": [
+    3,
+    2
+   ],
+   "px": [
+    48,
+    46
+   ],
+   "origin_y": 14,
+   "door_tile": [
+    1,
+    1
+   ],
+   "storeys": 2,
+   "floor": "res://assets/sprites/towns/highfen/buildings/v3_house_01_floor.png",
+   "walls": "res://assets/sprites/towns/highfen/buildings/v3_house_01_walls.png",
+   "fade": [
+    "res://assets/sprites/towns/highfen/buildings/v3_house_01_upper1.png",
+    "res://assets/sprites/towns/highfen/buildings/v3_house_01_roof.png"
+   ],
+   "plan": [
+    "###",
+    "#D#"
+   ]
+  },
+  "v3_house_02": {
+   "tiles": [
+    2,
+    3
+   ],
+   "px": [
+    32,
+    62
+   ],
+   "origin_y": 14,
+   "door_tile": [
+    1,
+    2
+   ],
+   "storeys": 2,
+   "floor": "res://assets/sprites/towns/highfen/buildings/v3_house_02_floor.png",
+   "walls": "res://assets/sprites/towns/highfen/buildings/v3_house_02_walls.png",
+   "fade": [
+    "res://assets/sprites/towns/highfen/buildings/v3_house_02_upper1.png",
+    "res://assets/sprites/towns/highfen/buildings/v3_house_02_roof.png"
+   ],
+   "plan": [
+    "##",
+    "##",
+    "#D"
+   ]
+  },
+  "v3_house_03": {
+   "tiles": [
+    4,
+    4
+   ],
+   "px": [
+    64,
+    78
+   ],
+   "origin_y": 14,
+   "door_tile": [
+    2,
+    3
+   ],
+   "storeys": 2,
+   "floor": "res://assets/sprites/towns/highfen/buildings/v3_house_03_floor.png",
+   "walls": "res://assets/sprites/towns/highfen/buildings/v3_house_03_walls.png",
+   "fade": [
+    "res://assets/sprites/towns/highfen/buildings/v3_house_03_upper1.png",
+    "res://assets/sprites/towns/highfen/buildings/v3_house_03_roof.png"
+   ],
+   "plan": [
+    "####",
+    "#oo#",
+    "#oo#",
+    "##D#"
+   ]
+  },
+  "v3_house_04": {
+   "tiles": [
+    3,
+    3
+   ],
+   "px": [
+    48,
+    62
+   ],
+   "origin_y": 14,
+   "door_tile": [
+    1,
+    2
+   ],
+   "storeys": 2,
+   "floor": "res://assets/sprites/towns/highfen/buildings/v3_house_04_floor.png",
+   "walls": "res://assets/sprites/towns/highfen/buildings/v3_house_04_walls.png",
+   "fade": [
+    "res://assets/sprites/towns/highfen/buildings/v3_house_04_upper1.png",
+    "res://assets/sprites/towns/highfen/buildings/v3_house_04_roof.png"
+   ],
+   "plan": [
+    "###",
+    "#o#",
+    "#D#"
+   ]
+  },
+  "v3_house_05": {
+   "tiles": [
+    3,
+    2
+   ],
+   "px": [
+    48,
+    46
+   ],
+   "origin_y": 14,
+   "door_tile": [
+    1,
+    1
+   ],
+   "storeys": 2,
+   "floor": "res://assets/sprites/towns/highfen/buildings/v3_house_05_floor.png",
+   "walls": "res://assets/sprites/towns/highfen/buildings/v3_house_05_walls.png",
+   "fade": [
+    "res://assets/sprites/towns/highfen/buildings/v3_house_05_upper1.png",
+    "res://assets/sprites/towns/highfen/buildings/v3_house_05_roof.png"
+   ],
+   "plan": [
+    "###",
+    "#D#"
+   ]
+  },
+  "v3_house_06": {
+   "tiles": [
+    3,
+    4
+   ],
+   "px": [
+    48,
+    78
+   ],
+   "origin_y": 14,
+   "door_tile": [
+    1,
+    3
+   ],
+   "storeys": 2,
+   "floor": "res://assets/sprites/towns/highfen/buildings/v3_house_06_floor.png",
+   "walls": "res://assets/sprites/towns/highfen/buildings/v3_house_06_walls.png",
+   "fade": [
+    "res://assets/sprites/towns/highfen/buildings/v3_house_06_upper1.png",
+    "res://assets/sprites/towns/highfen/buildings/v3_house_06_roof.png"
+   ],
+   "plan": [
+    "##.",
+    "#o#",
+    "#o#",
+    "#D#"
+   ]
+  },
+  "v3_house_07": {
+   "tiles": [
+    3,
+    2
+   ],
+   "px": [
+    48,
+    46
+   ],
+   "origin_y": 14,
+   "door_tile": [
+    1,
+    1
+   ],
+   "storeys": 2,
+   "floor": "res://assets/sprites/towns/highfen/buildings/v3_house_07_floor.png",
+   "walls": "res://assets/sprites/towns/highfen/buildings/v3_house_07_walls.png",
+   "fade": [
+    "res://assets/sprites/towns/highfen/buildings/v3_house_07_upper1.png",
+    "res://assets/sprites/towns/highfen/buildings/v3_house_07_roof.png"
+   ],
+   "plan": [
+    "###",
+    "#D#"
+   ]
+  },
+  "v3_house_08": {
+   "tiles": [
+    2,
+    3
+   ],
+   "px": [
+    32,
+    62
+   ],
+   "origin_y": 14,
+   "door_tile": [
+    1,
+    2
+   ],
+   "storeys": 2,
+   "floor": "res://assets/sprites/towns/highfen/buildings/v3_house_08_floor.png",
+   "walls": "res://assets/sprites/towns/highfen/buildings/v3_house_08_walls.png",
+   "fade": [
+    "res://assets/sprites/towns/highfen/buildings/v3_house_08_upper1.png",
+    "res://assets/sprites/towns/highfen/buildings/v3_house_08_roof.png"
+   ],
+   "plan": [
+    "##",
+    "##",
+    "#D"
+   ]
+  },
+  "v3_house_09": {
+   "tiles": [
+    4,
+    4
+   ],
+   "px": [
+    64,
+    64
+   ],
+   "origin_y": 0,
+   "door_tile": [
+    2,
+    3
+   ],
+   "storeys": 1,
+   "floor": "res://assets/sprites/towns/highfen/buildings/v3_house_09_floor.png",
+   "walls": "res://assets/sprites/towns/highfen/buildings/v3_house_09_walls.png",
+   "fade": [
+    "res://assets/sprites/towns/highfen/buildings/v3_house_09_roof.png"
+   ],
+   "plan": [
+    "###.",
+    "#oo#",
+    "#oo#",
+    "##D#"
+   ]
+  },
+  "v3_house_10": {
+   "tiles": [
+    3,
+    2
+   ],
+   "px": [
+    48,
+    46
+   ],
+   "origin_y": 14,
+   "door_tile": [
+    1,
+    1
+   ],
+   "storeys": 2,
+   "floor": "res://assets/sprites/towns/highfen/buildings/v3_house_10_floor.png",
+   "walls": "res://assets/sprites/towns/highfen/buildings/v3_house_10_walls.png",
+   "fade": [
+    "res://assets/sprites/towns/highfen/buildings/v3_house_10_upper1.png",
+    "res://assets/sprites/towns/highfen/buildings/v3_house_10_roof.png"
+   ],
+   "plan": [
+    "###",
+    "#D#"
+   ]
+  },
+  "v3_house_11": {
+   "tiles": [
+    4,
+    3
+   ],
+   "px": [
+    64,
+    48
+   ],
+   "origin_y": 0,
+   "door_tile": [
+    1,
+    2
+   ],
+   "storeys": 1,
+   "floor": "res://assets/sprites/towns/highfen/buildings/v3_house_11_floor.png",
+   "walls": "res://assets/sprites/towns/highfen/buildings/v3_house_11_walls.png",
+   "fade": [
+    "res://assets/sprites/towns/highfen/buildings/v3_house_11_roof.png"
+   ],
+   "plan": [
+    "####",
+    "#oo#",
+    "#D##"
+   ]
+  },
+  "v3_house_12": {
+   "tiles": [
+    3,
+    3
+   ],
+   "px": [
+    48,
+    48
+   ],
+   "origin_y": 0,
+   "door_tile": [
+    1,
+    2
+   ],
+   "storeys": 1,
+   "floor": "res://assets/sprites/towns/highfen/buildings/v3_house_12_floor.png",
+   "walls": "res://assets/sprites/towns/highfen/buildings/v3_house_12_walls.png",
+   "fade": [
+    "res://assets/sprites/towns/highfen/buildings/v3_house_12_roof.png"
+   ],
+   "plan": [
+    "###",
+    "#o#",
+    "#D#"
+   ]
+  },
+  "v3_house_13": {
+   "tiles": [
+    3,
+    3
+   ],
+   "px": [
+    48,
+    62
+   ],
+   "origin_y": 14,
+   "door_tile": [
+    1,
+    2
+   ],
+   "storeys": 2,
+   "floor": "res://assets/sprites/towns/highfen/buildings/v3_house_13_floor.png",
+   "walls": "res://assets/sprites/towns/highfen/buildings/v3_house_13_walls.png",
+   "fade": [
+    "res://assets/sprites/towns/highfen/buildings/v3_house_13_upper1.png",
+    "res://assets/sprites/towns/highfen/buildings/v3_house_13_roof.png"
+   ],
+   "plan": [
+    "###",
+    "#o#",
+    "#D#"
+   ]
+  },
+  "v3_house_14": {
+   "tiles": [
+    3,
+    3
+   ],
+   "px": [
+    48,
+    62
+   ],
+   "origin_y": 14,
+   "door_tile": [
+    1,
+    2
+   ],
+   "storeys": 2,
+   "floor": "res://assets/sprites/towns/highfen/buildings/v3_house_14_floor.png",
+   "walls": "res://assets/sprites/towns/highfen/buildings/v3_house_14_walls.png",
+   "fade": [
+    "res://assets/sprites/towns/highfen/buildings/v3_house_14_upper1.png",
+    "res://assets/sprites/towns/highfen/buildings/v3_house_14_roof.png"
+   ],
+   "plan": [
+    "###",
+    "#o#",
+    "#D#"
+   ]
+  },
+  "v3_house_15": {
+   "tiles": [
+    4,
+    2
+   ],
+   "px": [
+    64,
+    46
+   ],
+   "origin_y": 14,
+   "door_tile": [
+    2,
+    1
+   ],
+   "storeys": 2,
+   "floor": "res://assets/sprites/towns/highfen/buildings/v3_house_15_floor.png",
+   "walls": "res://assets/sprites/towns/highfen/buildings/v3_house_15_walls.png",
+   "fade": [
+    "res://assets/sprites/towns/highfen/buildings/v3_house_15_upper1.png",
+    "res://assets/sprites/towns/highfen/buildings/v3_house_15_roof.png"
+   ],
+   "plan": [
+    "####",
+    "##D#"
+   ]
+  },
+  "v3_house_16": {
+   "tiles": [
+    2,
+    4
+   ],
+   "px": [
+    32,
+    78
+   ],
+   "origin_y": 14,
+   "door_tile": [
+    1,
+    3
+   ],
+   "storeys": 2,
+   "floor": "res://assets/sprites/towns/highfen/buildings/v3_house_16_floor.png",
+   "walls": "res://assets/sprites/towns/highfen/buildings/v3_house_16_walls.png",
+   "fade": [
+    "res://assets/sprites/towns/highfen/buildings/v3_house_16_upper1.png",
+    "res://assets/sprites/towns/highfen/buildings/v3_house_16_roof.png"
+   ],
+   "plan": [
+    "##",
+    "##",
+    "##",
+    "#D"
+   ]
+  },
+  "v3_house_17": {
+   "tiles": [
+    3,
+    4
+   ],
+   "px": [
+    48,
+    78
+   ],
+   "origin_y": 14,
+   "door_tile": [
+    1,
+    3
+   ],
+   "storeys": 2,
+   "floor": "res://assets/sprites/towns/highfen/buildings/v3_house_17_floor.png",
+   "walls": "res://assets/sprites/towns/highfen/buildings/v3_house_17_walls.png",
+   "fade": [
+    "res://assets/sprites/towns/highfen/buildings/v3_house_17_upper1.png",
+    "res://assets/sprites/towns/highfen/buildings/v3_house_17_roof.png"
+   ],
+   "plan": [
+    "###",
+    "#o#",
+    "#o#",
+    "#D#"
+   ]
+  },
+  "v3_house_18": {
+   "tiles": [
+    3,
+    4
+   ],
+   "px": [
+    48,
+    64
+   ],
+   "origin_y": 0,
+   "door_tile": [
+    1,
+    3
+   ],
+   "storeys": 1,
+   "floor": "res://assets/sprites/towns/highfen/buildings/v3_house_18_floor.png",
+   "walls": "res://assets/sprites/towns/highfen/buildings/v3_house_18_walls.png",
+   "fade": [
+    "res://assets/sprites/towns/highfen/buildings/v3_house_18_roof.png"
+   ],
+   "plan": [
+    "##.",
+    "#o#",
+    "#o#",
+    "#D#"
+   ]
+  },
+  "v3_bank": {
+   "tiles": [
+    5,
+    4
+   ],
+   "px": [
+    80,
+    78
+   ],
+   "origin_y": 14,
+   "door_tile": [
+    2,
+    3
+   ],
+   "storeys": 2,
+   "floor": "res://assets/sprites/towns/highfen/buildings/v3_bank_floor.png",
+   "walls": "res://assets/sprites/towns/highfen/buildings/v3_bank_walls.png",
+   "fade": [
+    "res://assets/sprites/towns/highfen/buildings/v3_bank_upper1.png",
+    "res://assets/sprites/towns/highfen/buildings/v3_bank_roof.png"
+   ],
+   "plan": [
+    "#####",
+    "#ooo#",
+    "#ooo#",
+    "##D##"
+   ]
+  },
+  "v3_cookhouse": {
+   "tiles": [
+    4,
+    3
+   ],
+   "px": [
+    64,
+    48
+   ],
+   "origin_y": 0,
+   "door_tile": [
+    1,
+    2
+   ],
+   "storeys": 1,
+   "floor": "res://assets/sprites/towns/highfen/buildings/v3_cookhouse_floor.png",
+   "walls": "res://assets/sprites/towns/highfen/buildings/v3_cookhouse_walls.png",
+   "fade": [
+    "res://assets/sprites/towns/highfen/buildings/v3_cookhouse_roof.png"
+   ],
+   "plan": [
+    "####",
+    "#oo#",
+    "#D##"
+   ]
+  },
+  "v3_player_house": {
+   "tiles": [
+    4,
+    4
+   ],
+   "px": [
+    64,
+    78
+   ],
+   "origin_y": 14,
+   "door_tile": [
+    1,
+    3
+   ],
+   "storeys": 2,
+   "floor": "res://assets/sprites/towns/highfen/buildings/v3_player_house_floor.png",
+   "walls": "res://assets/sprites/towns/highfen/buildings/v3_player_house_walls.png",
+   "fade": [
+    "res://assets/sprites/towns/highfen/buildings/v3_player_house_upper1.png",
+    "res://assets/sprites/towns/highfen/buildings/v3_player_house_roof.png"
+   ],
+   "plan": [
+    "####",
+    "#oo#",
+    "#oo#",
+    "#D##"
+   ]
+  },
+  "v3_temple": {
+   "tiles": [
+    6,
+    6
+   ],
+   "px": [
+    96,
+    130
+   ],
+   "origin_y": 34,
+   "door_tile": [
+    3,
+    5
+   ],
+   "storeys": 2,
+   "floor": "res://assets/sprites/towns/highfen/buildings/v3_temple_floor.png",
+   "walls": "res://assets/sprites/towns/highfen/buildings/v3_temple_walls.png",
+   "fade": [
+    "res://assets/sprites/towns/highfen/buildings/v3_temple_upper1.png",
+    "res://assets/sprites/towns/highfen/buildings/v3_temple_roof.png"
+   ],
+   "plan": [
+    "######",
+    "#oooo#",
+    "#oooo#",
+    "#oooo#",
+    "#oooo#",
+    ".##D#."
+   ]
+  },
+  "v3_town_hall": {
+   "tiles": [
+    6,
+    5
+   ],
+   "px": [
+    96,
+    128
+   ],
+   "origin_y": 48,
+   "door_tile": [
+    3,
+    4
+   ],
+   "storeys": 3,
+   "floor": "res://assets/sprites/towns/highfen/buildings/v3_town_hall_floor.png",
+   "walls": "res://assets/sprites/towns/highfen/buildings/v3_town_hall_walls.png",
+   "fade": [
+    "res://assets/sprites/towns/highfen/buildings/v3_town_hall_upper1.png",
+    "res://assets/sprites/towns/highfen/buildings/v3_town_hall_upper2.png",
+    "res://assets/sprites/towns/highfen/buildings/v3_town_hall_roof.png"
+   ],
+   "plan": [
+    "######",
+    "#oooo#",
+    "#oooo#",
+    "#oooo#",
+    "###D##"
+   ]
+  },
+  "v3_keep": {
+   "tiles": [
+    8,
+    7
+   ],
+   "px": [
+    128,
+    174
+   ],
+   "origin_y": 62,
+   "door_tile": [
+    4,
+    6
+   ],
+   "storeys": 4,
+   "floor": "res://assets/sprites/towns/highfen/buildings/v3_keep_floor.png",
+   "walls": "res://assets/sprites/towns/highfen/buildings/v3_keep_walls.png",
+   "fade": [
+    "res://assets/sprites/towns/highfen/buildings/v3_keep_upper1.png",
+    "res://assets/sprites/towns/highfen/buildings/v3_keep_upper2.png",
+    "res://assets/sprites/towns/highfen/buildings/v3_keep_upper3.png",
+    "res://assets/sprites/towns/highfen/buildings/v3_keep_roof.png"
+   ],
+   "plan": [
+    "##....##",
+    "#o####o#",
+    "#oooooo#",
+    ".#oooo#.",
+    ".#oooo#.",
+    ".#ooooo#",
+    "####D###"
+   ]
+  },
+  "v3_house_narrow_tall": {
+   "tiles": [
+    2,
+    4
+   ],
+   "px": [
+    32,
+    78
+   ],
+   "origin_y": 14,
+   "door_tile": [
+    1,
+    3
+   ],
+   "storeys": 2,
+   "floor": "res://assets/sprites/towns/highfen/buildings/v3_house_narrow_tall_floor.png",
+   "walls": "res://assets/sprites/towns/highfen/buildings/v3_house_narrow_tall_walls.png",
+   "fade": [
+    "res://assets/sprites/towns/highfen/buildings/v3_house_narrow_tall_upper1.png",
+    "res://assets/sprites/towns/highfen/buildings/v3_house_narrow_tall_roof.png"
+   ],
+   "plan": [
+    "##",
+    "##",
+    "##",
+    "#D"
+   ]
+  },
+  "v3_house_longhouse": {
+   "tiles": [
+    6,
+    2
+   ],
+   "px": [
+    96,
+    32
+   ],
+   "origin_y": 0,
+   "door_tile": [
+    2,
+    1
+   ],
+   "storeys": 1,
+   "floor": "res://assets/sprites/towns/highfen/buildings/v3_house_longhouse_floor.png",
+   "walls": "res://assets/sprites/towns/highfen/buildings/v3_house_longhouse_walls.png",
+   "fade": [
+    "res://assets/sprites/towns/highfen/buildings/v3_house_longhouse_roof.png"
+   ],
+   "plan": [
+    "######",
+    "##D###"
    ]
   }
  }

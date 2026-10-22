@@ -19,3 +19,15 @@
 
 ## QA bot
 - The moat checks are now city-wall checks. The townhouse stations are found through object meta (the yard). The _outside() helper never places an actor on another building's floor. An AI customer at a plaza stand counts as a customer (shop_spot accepts stand-adjacent street tiles for the player shop).
+
+## 0.3.11 v3.1 art pass (designer Highfen v3.1)
+- Ground: darker road_stone / cobble / cobble_dark tiles + transitions (ground_textures_v3) replace the bright ones globally.
+- Highfen rebuilt by `tools/world/build_highfen_v3.py` with the designer's v3.1 method: wall and cobble rings sampled on the vertex grid,
+  45-degree corner autotiles (v31_diag_wall_dark 16x28 with hanging face, v31_diag_cobble), oval dark-stone wall with 8 round towers
+  (v3_wall_tower_round), layered gatehouses (N back, S front, E/W side) on straight wall runs (>= 7 tiles each side); the gatehouse
+  roofs fade while the player stands in the passage (`art.fades`, buildings_view). Wall rows / gate walls are y-sorted art (`art.ysort`).
+- capital_wall tiles stay as the (blocking) collision under the art; their tile caps are off (Autotile.ART_WALLS).
+- Buildings: v3_keep = palace (north of the fountain plaza), v3_temple = church, guild_knights = guild, v3_bank = treasury,
+  v3_town_hall = new Town Hall (hall), v3_player_house = player house, v3_cookhouse = Hob's bakery, shop_tavern = cookhouse
+  (v3_cookhouse has only 2 floor tiles: no room for keeper + oven + stand), v3_house_01..18 + narrow_tall + longhouse, max 3 uses each.
+- Props: animated 4-frame v3 fountain (hf_fountain), v3 stalls (5 colours), trees, hedges, garden beds, veg patches, crates, barrels, wells, carts, benches.
