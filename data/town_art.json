@@ -1,5 +1,5 @@
 {
- "note": "0.3.11 per-design tile plans for the layered town buildings (tools/world/build_highfen_v3.py). plan: # wall, o floor, D door, . outside",
+ "note": "0.3.11 per-design tile plans for the layered town buildings (tools/world/build_highfen_v4.py). plan: # wall, o floor, D door, . outside",
  "buildings": {
   "fh_house_01": {
    "tiles": [
@@ -2683,6 +2683,147 @@
    "plan": [
     "######",
     "##D###"
+   ]
+  },
+  "v4_guild": {
+   "tiles": [
+    8,
+    6
+   ],
+   "px": [
+    128,
+    144
+   ],
+   "origin_y": 48,
+   "door_tile": [
+    4,
+    5
+   ],
+   "storeys": 3,
+   "floor": "res://assets/sprites/towns/highfen/buildings/v4_guild_floor.png",
+   "walls": "res://assets/sprites/towns/highfen/buildings/v4_guild_walls.png",
+   "fade": [
+    "res://assets/sprites/towns/highfen/buildings/v4_guild_upper1.png",
+    "res://assets/sprites/towns/highfen/buildings/v4_guild_upper2.png",
+    "res://assets/sprites/towns/highfen/buildings/v4_guild_roof.png"
+   ],
+   "plan": [
+    "...##...",
+    "###oo###",
+    "#oooooo#",
+    "#oooooo#",
+    "#oooooo#",
+    "####D###"
+   ]
+  },
+  "v4_cookhouse": {
+   "tiles": [
+    6,
+    4
+   ],
+   "px": [
+    96,
+    64
+   ],
+   "origin_y": 0,
+   "door_tile": [
+    2,
+    3
+   ],
+   "storeys": 1,
+   "floor": "res://assets/sprites/towns/highfen/buildings/v4_cookhouse_floor.png",
+   "walls": "res://assets/sprites/towns/highfen/buildings/v4_cookhouse_walls.png",
+   "fade": [
+    "res://assets/sprites/towns/highfen/buildings/v4_cookhouse_roof.png"
+   ],
+   "plan": [
+    "#####.",
+    "#oooo#",
+    "#oooo#",
+    "##D###"
+   ]
+  },
+  "v4_player_shop": {
+   "tiles": [
+    5,
+    4
+   ],
+   "px": [
+    80,
+    78
+   ],
+   "origin_y": 14,
+   "door_tile": [
+    2,
+    3
+   ],
+   "storeys": 2,
+   "floor": "res://assets/sprites/towns/highfen/buildings/v4_player_shop_floor.png",
+   "walls": "res://assets/sprites/towns/highfen/buildings/v4_player_shop_walls.png",
+   "fade": [
+    "res://assets/sprites/towns/highfen/buildings/v4_player_shop_upper1.png",
+    "res://assets/sprites/towns/highfen/buildings/v4_player_shop_roof.png"
+   ],
+   "plan": [
+    "#####",
+    "#ooo#",
+    "#ooo#",
+    "##D##"
+   ]
+  },
+  "v4_smithy": {
+   "tiles": [
+    6,
+    4
+   ],
+   "px": [
+    96,
+    64
+   ],
+   "origin_y": 0,
+   "door_tile": [
+    2,
+    3
+   ],
+   "storeys": 1,
+   "floor": "res://assets/sprites/towns/highfen/buildings/v4_smithy_floor.png",
+   "walls": "res://assets/sprites/towns/highfen/buildings/v4_smithy_walls.png",
+   "fade": [
+    "res://assets/sprites/towns/highfen/buildings/v4_smithy_roof.png"
+   ],
+   "plan": [
+    "####..",
+    "#ooo##",
+    "#oooo#",
+    "##D###"
+   ]
+  },
+  "v4_general_store": {
+   "tiles": [
+    6,
+    4
+   ],
+   "px": [
+    96,
+    78
+   ],
+   "origin_y": 14,
+   "door_tile": [
+    3,
+    3
+   ],
+   "storeys": 2,
+   "floor": "res://assets/sprites/towns/highfen/buildings/v4_general_store_floor.png",
+   "walls": "res://assets/sprites/towns/highfen/buildings/v4_general_store_walls.png",
+   "fade": [
+    "res://assets/sprites/towns/highfen/buildings/v4_general_store_upper1.png",
+    "res://assets/sprites/towns/highfen/buildings/v4_general_store_roof.png"
+   ],
+   "plan": [
+    "######",
+    "#oooo#",
+    "#oooo#",
+    "###D##"
    ]
   }
  }

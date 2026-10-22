@@ -1347,6 +1347,84 @@
    "sprite": "sm3_town_sign",
    "blocks": true,
    "type": "prop"
+  },
+  "hf4_banner_blue": {
+   "name": "Banner",
+   "sprite": "hf4_banner_blue",
+   "blocks": true,
+   "type": "prop"
+  },
+  "hf4_banner_gold": {
+   "name": "Banner",
+   "sprite": "hf4_banner_gold",
+   "blocks": true,
+   "type": "prop"
+  },
+  "hf4_banner_red": {
+   "name": "Banner",
+   "sprite": "hf4_banner_red",
+   "blocks": true,
+   "type": "prop"
+  },
+  "hf4_banner_wall": {
+   "name": "Banner",
+   "sprite": "hf4_banner_wall",
+   "blocks": true,
+   "type": "prop"
+  },
+  "hf4_lamp_post": {
+   "name": "Lamp post",
+   "sprite": "hf4_lamp_post",
+   "blocks": true,
+   "type": "prop"
+  },
+  "hf4_lamp_post_double": {
+   "name": "Lamp post",
+   "sprite": "hf4_lamp_post_double",
+   "blocks": true,
+   "type": "prop"
+  },
+  "hf4_statue_knight": {
+   "name": "Statue of a knight",
+   "sprite": "hf4_statue_knight",
+   "blocks": true,
+   "type": "prop"
+  },
+  "hf4_tree_birch": {
+   "name": "Tree",
+   "sprite": "hf4_tree_birch",
+   "blocks": true,
+   "type": "prop"
+  },
+  "hf4_tree_dead": {
+   "name": "Dead tree",
+   "sprite": "hf4_tree_dead",
+   "blocks": true,
+   "type": "prop"
+  },
+  "hf4_tree_elm": {
+   "name": "Tree",
+   "sprite": "hf4_tree_elm",
+   "blocks": true,
+   "type": "prop"
+  },
+  "hf4_tree_oak": {
+   "name": "Tree",
+   "sprite": "hf4_tree_oak",
+   "blocks": true,
+   "type": "prop"
+  },
+  "hf4_tree_pine": {
+   "name": "Tree",
+   "sprite": "hf4_tree_pine",
+   "blocks": true,
+   "type": "prop"
+  },
+  "hf4_tree_young": {
+   "name": "Tree",
+   "sprite": "hf4_tree_young",
+   "blocks": true,
+   "type": "prop"
   }
  }
 }

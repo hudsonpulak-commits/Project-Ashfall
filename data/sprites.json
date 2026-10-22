@@ -2347,6 +2347,136 @@
    "frames": 1,
    "anchor": "bottom",
    "note": "0.3.12/0.3.13 designer Saltmere prop (art_handoff/towns/saltmere)"
+  },
+  "hf4_banner_blue": {
+   "path": "res://assets/sprites/towns/highfen/props_v4/v4_banner_blue.png",
+   "frame_size": [
+    18,
+    44
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.3.13 designer Highfen v4 prop (art_handoff/towns/highfen/v4)"
+  },
+  "hf4_banner_gold": {
+   "path": "res://assets/sprites/towns/highfen/props_v4/v4_banner_gold.png",
+   "frame_size": [
+    18,
+    44
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.3.13 designer Highfen v4 prop (art_handoff/towns/highfen/v4)"
+  },
+  "hf4_banner_red": {
+   "path": "res://assets/sprites/towns/highfen/props_v4/v4_banner_red.png",
+   "frame_size": [
+    18,
+    44
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.3.13 designer Highfen v4 prop (art_handoff/towns/highfen/v4)"
+  },
+  "hf4_banner_wall": {
+   "path": "res://assets/sprites/towns/highfen/props_v4/v4_banner_wall.png",
+   "frame_size": [
+    12,
+    24
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.3.13 designer Highfen v4 prop (art_handoff/towns/highfen/v4)"
+  },
+  "hf4_lamp_post": {
+   "path": "res://assets/sprites/towns/highfen/props_v4/v4_lamp_post.png",
+   "frame_size": [
+    16,
+    40
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.3.13 designer Highfen v4 prop (art_handoff/towns/highfen/v4)"
+  },
+  "hf4_lamp_post_double": {
+   "path": "res://assets/sprites/towns/highfen/props_v4/v4_lamp_post_double.png",
+   "frame_size": [
+    24,
+    40
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.3.13 designer Highfen v4 prop (art_handoff/towns/highfen/v4)"
+  },
+  "hf4_statue_knight": {
+   "path": "res://assets/sprites/towns/highfen/props_v4/v4_statue_knight.png",
+   "frame_size": [
+    32,
+    48
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.3.13 designer Highfen v4 prop (art_handoff/towns/highfen/v4)"
+  },
+  "hf4_tree_birch": {
+   "path": "res://assets/sprites/towns/highfen/props_v4/v4_tree_birch.png",
+   "frame_size": [
+    24,
+    44
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.3.13 designer Highfen v4 prop (art_handoff/towns/highfen/v4)"
+  },
+  "hf4_tree_dead": {
+   "path": "res://assets/sprites/towns/highfen/props_v4/v4_tree_dead.png",
+   "frame_size": [
+    32,
+    44
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.3.13 designer Highfen v4 prop (art_handoff/towns/highfen/v4)"
+  },
+  "hf4_tree_elm": {
+   "path": "res://assets/sprites/towns/highfen/props_v4/v4_tree_elm.png",
+   "frame_size": [
+    30,
+    52
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.3.13 designer Highfen v4 prop (art_handoff/towns/highfen/v4)"
+  },
+  "hf4_tree_oak": {
+   "path": "res://assets/sprites/towns/highfen/props_v4/v4_tree_oak.png",
+   "frame_size": [
+    44,
+    52
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.3.13 designer Highfen v4 prop (art_handoff/towns/highfen/v4)"
+  },
+  "hf4_tree_pine": {
+   "path": "res://assets/sprites/towns/highfen/props_v4/v4_tree_pine.png",
+   "frame_size": [
+    24,
+    48
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.3.13 designer Highfen v4 prop (art_handoff/towns/highfen/v4)"
+  },
+  "hf4_tree_young": {
+   "path": "res://assets/sprites/towns/highfen/props_v4/v4_tree_young.png",
+   "frame_size": [
+    16,
+    28
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.3.13 designer Highfen v4 prop (art_handoff/towns/highfen/v4)"
   }
  },
  "actors": {
