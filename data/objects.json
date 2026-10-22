@@ -1257,6 +1257,174 @@
    "sprite": "fh_town_sign",
    "blocks": true,
    "type": "prop"
+  },
+  "sm3_bollard_rope": {
+   "name": "Bollard rope",
+   "sprite": "sm3_bollard_rope",
+   "blocks": false,
+   "type": "prop"
+  },
+  "sm3_buoys": {
+   "name": "Buoys",
+   "sprite": "sm3_buoys",
+   "blocks": false,
+   "type": "prop"
+  },
+  "sm3_cargo_hoist": {
+   "name": "Cargo hoist",
+   "sprite": "sm3_cargo_hoist",
+   "blocks": true,
+   "type": "prop"
+  },
+  "sm3_dock_lantern": {
+   "name": "Dock lantern",
+   "sprite": "sm3_dock_lantern",
+   "blocks": true,
+   "type": "prop"
+  },
+  "sm3_fish_basket": {
+   "name": "Fish basket",
+   "sprite": "sm3_fish_basket",
+   "blocks": false,
+   "type": "prop"
+  },
+  "sm3_fish_crate": {
+   "name": "Fish crate",
+   "sprite": "sm3_fish_crate",
+   "blocks": false,
+   "type": "prop"
+  },
+  "sm3_gulls": {
+   "name": "Gulls",
+   "sprite": "sm3_gulls",
+   "blocks": false,
+   "type": "prop"
+  },
+  "sm3_keg_stack": {
+   "name": "Keg stack",
+   "sprite": "sm3_keg_stack",
+   "blocks": true,
+   "type": "prop"
+  },
+  "sm3_lobster_pots": {
+   "name": "Lobster pots",
+   "sprite": "sm3_lobster_pots",
+   "blocks": false,
+   "type": "prop"
+  },
+  "sm3_net_pile": {
+   "name": "Net pile",
+   "sprite": "sm3_net_pile",
+   "blocks": false,
+   "type": "prop"
+  },
+  "sm3_oars": {
+   "name": "Oars",
+   "sprite": "sm3_oars",
+   "blocks": false,
+   "type": "prop"
+  },
+  "sm3_rope_spool": {
+   "name": "Rope spool",
+   "sprite": "sm3_rope_spool",
+   "blocks": false,
+   "type": "prop"
+  },
+  "sm3_sacks": {
+   "name": "Sacks",
+   "sprite": "sm3_sacks",
+   "blocks": false,
+   "type": "prop"
+  },
+  "sm3_tarp_cargo": {
+   "name": "Tarp cargo",
+   "sprite": "sm3_tarp_cargo",
+   "blocks": true,
+   "type": "prop"
+  },
+  "sm3_town_sign": {
+   "name": "Saltmere",
+   "sprite": "sm3_town_sign",
+   "blocks": true,
+   "type": "prop"
+  },
+  "hf4_banner_blue": {
+   "name": "Banner",
+   "sprite": "hf4_banner_blue",
+   "blocks": true,
+   "type": "prop"
+  },
+  "hf4_banner_gold": {
+   "name": "Banner",
+   "sprite": "hf4_banner_gold",
+   "blocks": true,
+   "type": "prop"
+  },
+  "hf4_banner_red": {
+   "name": "Banner",
+   "sprite": "hf4_banner_red",
+   "blocks": true,
+   "type": "prop"
+  },
+  "hf4_banner_wall": {
+   "name": "Banner",
+   "sprite": "hf4_banner_wall",
+   "blocks": true,
+   "type": "prop"
+  },
+  "hf4_lamp_post": {
+   "name": "Lamp post",
+   "sprite": "hf4_lamp_post",
+   "blocks": true,
+   "type": "prop"
+  },
+  "hf4_lamp_post_double": {
+   "name": "Lamp post",
+   "sprite": "hf4_lamp_post_double",
+   "blocks": true,
+   "type": "prop"
+  },
+  "hf4_statue_knight": {
+   "name": "Statue of a knight",
+   "sprite": "hf4_statue_knight",
+   "blocks": true,
+   "type": "prop"
+  },
+  "hf4_tree_birch": {
+   "name": "Tree",
+   "sprite": "hf4_tree_birch",
+   "blocks": true,
+   "type": "prop"
+  },
+  "hf4_tree_dead": {
+   "name": "Dead tree",
+   "sprite": "hf4_tree_dead",
+   "blocks": true,
+   "type": "prop"
+  },
+  "hf4_tree_elm": {
+   "name": "Tree",
+   "sprite": "hf4_tree_elm",
+   "blocks": true,
+   "type": "prop"
+  },
+  "hf4_tree_oak": {
+   "name": "Tree",
+   "sprite": "hf4_tree_oak",
+   "blocks": true,
+   "type": "prop"
+  },
+  "hf4_tree_pine": {
+   "name": "Tree",
+   "sprite": "hf4_tree_pine",
+   "blocks": true,
+   "type": "prop"
+  },
+  "hf4_tree_young": {
+   "name": "Tree",
+   "sprite": "hf4_tree_young",
+   "blocks": true,
+   "type": "prop"
   }
  }
 }

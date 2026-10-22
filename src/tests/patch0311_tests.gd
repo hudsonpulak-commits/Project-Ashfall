@@ -118,7 +118,8 @@ static func run(main, world, p) -> void:
 	check(arts >= 30 and outside_w >= 15, "Highfen: %d layered-art buildings, %d houses ring the outside of the wall (%d inside)" % [arts, outside_w, inside_w])
 	for id in ["highfen_bank", "highfen_cook", "highfen_general", "highfen_player", "highfen_house", "highfen_church"]:
 		var b: Dictionary = gen.buildings.get(id, {})
-		check(not b.is_empty() and ((b["rect"] as Rect2i).get_center() - hc).length() < 17, "%s relocated inside the city wall" % id)
+		# 0.3.13 Highfen v4: the larger v4 buildings fill the band freed by the dropped outer ring road (< 26 = inside the wall)
+		check(not b.is_empty() and ((b["rect"] as Rect2i).get_center() - hc).length() < 26, "%s relocated inside the city wall" % id)
 	# walking in fades the uppers and roof together, no scene change
 	var bv: BuildingsView = world.buildings_view
 	var hb: Dictionary = gen.buildings["highfen_guild"]
