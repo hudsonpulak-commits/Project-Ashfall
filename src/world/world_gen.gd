@@ -1185,7 +1185,10 @@ func land_value(x: int, y: int) -> float:
 		return -1.0
 	var v := 1.0 - d / continent_radius + _coast.get_noise_2d(x, y) * 0.45
 	for id in towns.keys():
-		var dt := Vector2(Vector2i(x, y) - town_center(id)).length()
+		# 0.3.12 a town may pin its dry ring (Saltmere moved east onto the sea; the coast and cliffs stay put)
+		var dc: Array = towns[id].get("dry_center", [])
+		var cc: Vector2i = Vector2i(int(dc[0]), int(dc[1])) if dc.size() == 2 else town_center(id)
+		var dt := Vector2(Vector2i(x, y) - cc).length()
 		if dt < TOWN_DRY_RADIUS:
 			v += (TOWN_DRY_RADIUS - dt) / TOWN_DRY_RADIUS * 0.6
 	return v

@@ -1007,7 +1007,7 @@ static func _village_tests(world: World, p: Player) -> void:
 static func _walled_city_tests(world: World, p: Player) -> void:
 	print("  -- 0.3.1 walled cities")
 	var gen := world.gen
-	for tid in ["fenhollow", "cinderholt", "saltmere"]:
+	for tid in ["fenhollow", "cinderholt"]:   # 0.3.12 Saltmere is an open harbour town (no walls): patch0312_tests
 		var tdef: Dictionary = gen.towns[tid]
 		var gates: Dictionary = tdef.get("gates", {})
 		check(gates.size() == 4, "%s has N/S/E/W gates" % tid)
@@ -1084,8 +1084,6 @@ static func _walled_city_tests(world: World, p: Player) -> void:
 				check(sample == WorldGen.TileType.PALISADE or sample in WorldGen.GATE_TILES, "fenhollow uses palisade walls")
 			"cinderholt":
 				check(sample == WorldGen.TileType.BASALT_WALL or sample in WorldGen.GATE_TILES, "cinderholt uses basalt walls")
-			"saltmere":
-				check(sample == WorldGen.TileType.SANDSTONE_WALL or sample in WorldGen.GATE_TILES, "saltmere uses sandstone walls")
 	# gate guards: 2 stationary per gate, non-aggressive
 	var gate_guards: int = 0
 	var aggro := false
