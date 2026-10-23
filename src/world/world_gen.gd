@@ -1301,6 +1301,34 @@ func _beach_level(q: Vector2i) -> float:
 	return BEACH_LEVEL + region_map.field(q, "beach_bonus")
 
 
+## 0.3.15 any generated water (ocean or lake) within Chebyshev r of q. Cached per tile.
+const WATER_CLIFF_CLEAR := 4
+var _near_water_cache: Dictionary = {}
+
+
+func near_water(q: Vector2i, r: int) -> bool:
+	var key := Vector3i(q.x, q.y, r)
+	if _near_water_cache.has(key):
+		return _near_water_cache[key]
+	if _near_water_cache.size() > 400000:
+		_near_water_cache.clear()
+	var hit := false
+	for dy in range(-r, r + 1):
+		for dx in range(-r, r + 1):
+			if _terrain_at(q.x + dx, q.y + dy) == TileType.WATER:
+				hit = true
+				break
+		if hit:
+			break
+	_near_water_cache[key] = hit
+	return hit
+
+
+## 0.3.15 any cliff tile (blocking, stairs or shadow) at a world tile.
+func is_cliff(x: int, y: int) -> bool:
+	return tile_at(x, y) in [TileType.CLIFF_FACE, TileType.CLIFF_LIP, TileType.CLIFF_FOOT, TileType.CLIFF_STAIRS, TileType.CLIFF_SHADOW]
+
+
 ## No cliffs in or around towns, villages, fields, mines, the Scorch or water.
 func cliff_free(q: Vector2i) -> bool:
 	var tclr := town_at(q, _keep_clear)
@@ -1308,6 +1336,8 @@ func cliff_free(q: Vector2i) -> bool:
 		return true   # 0.3.12 a town may keep a smaller clear margin (Saltmere: the sea cliffs just south stay intact)
 	if village_at(q, _keep_clear) != "":
 		return true
+	if near_water(q, WATER_CLIFF_CLEAR):
+		return true   # 0.3.15 Hudson's rule: no cliff within 3 tiles of water (the edge keeps 4 so its foot + shadow do too)
 	if not mine_at(q, 3).is_empty() or not _biome_zone_at(q).is_empty():
 		return true
 	for r in _clear_rects:
@@ -1603,7 +1633,10 @@ func _terrain_at(x: int, y: int) -> int:
 	var v := land_value(x, y)
 	if v < OCEAN_LEVEL:
 		return TileType.WATER          # the ocean: impassable
-	if v < _beach_level(p):
+	# 0.3.15 ragged shore: the sand line wanders per tile (fine noise + a dither hash)
+	# so beaches blend into the grass instead of stepping in blocks
+	var j := (hash01(x, y, 77) - 0.5) * 0.035 + _detail.get_noise_2d(x * 3 + 500, y * 3 - 900) * 0.03
+	if v < _beach_level(p) + j:
 		return TileType.SAND
 	var h := _height.get_noise_2d(x, y)
 	# keep a dry ring around towns so they never flood
@@ -1613,7 +1646,7 @@ func _terrain_at(x: int, y: int) -> int:
 			h += (34.0 - dt) / 34.0 * 0.5
 	if h < -0.34:
 		return TileType.WATER          # inland lakes
-	if h < -0.27:
+	if h < -0.27 + j * 1.2:
 		return TileType.SAND
 	# 0.3.10 ground mix by lore region (data/regions.json), dithered at borders
 	var rb := region_map.blend_at(p)
