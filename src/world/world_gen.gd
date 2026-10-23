@@ -1440,12 +1440,26 @@ func _cliff_edge(p: Vector2i) -> int:
 ## becomes cliff too (the higher one, unless it sits by stairs / a road / a town).
 func _cliff_tile(p: Vector2i, t: int) -> int:
 	var r := _cliff_tile_raw(p, t)
+	if r in _CLIFF_BLOCK and _cliff_lone_diag(p):
+		return -1   # 0.3.16 Map Tester: a blocking cliff tile that joins the run only at a corner is dropped
 	if r >= 0 or t == TileType.WATER or t == TileType.ASH or t == TileType.ASH_EDGE:
 		return r
 	return TileType.CLIFF_LIP if cliff_gap_fill(p) else -1
 
 
 const _CLIFF_BLOCK := [TileType.CLIFF_FACE, TileType.CLIFF_LIP, TileType.CLIFF_FOOT]
+
+
+## 0.3.16 true when the blocking cliff at p has no blocking orthogonal neighbour
+## but does touch blocking cliff diagonally (a corner-only stub).
+func _cliff_lone_diag(p: Vector2i) -> bool:
+	for d in [Vector2i(1, 0), Vector2i(-1, 0), Vector2i(0, 1), Vector2i(0, -1)]:
+		if _raw_at(p + d) in _CLIFF_BLOCK:
+			return false
+	var n := 0
+	for d in [Vector2i(1, 1), Vector2i(-1, 1), Vector2i(1, -1), Vector2i(-1, -1)]:
+		n += int(_raw_at(p + d) in _CLIFF_BLOCK)
+	return n == 1   # a stub; diagonal runs (2 corners) keep their diagonal pieces
 
 
 func _raw_at(q: Vector2i) -> int:

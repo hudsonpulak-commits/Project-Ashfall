@@ -233,7 +233,7 @@ func refresh_all() -> void:
 		_roofs[id].set("label_text", label_for(b))
 		_roofs[id].queue_redraw()
 		_signs[id].texture = GameData.texture("buildings", sign_sprite(b))
-		var k = world.object_at(b["keeper_at"])
+		var k = world.object_at_loaded(b["keeper_at"])
 		if k and k.view and is_instance_valid(k.view):
 			world.apply_keeper_sprite(k.view, keeper_sprite(b))
 	_shop_version = -1
@@ -324,7 +324,7 @@ func _apply_hiding() -> void:
 		var b: Dictionary = world.gen.buildings[id]
 		var show: bool = roof_alpha(id) <= 0.5
 		for p in _interior_objects(b):
-			var o = world.object_at(p)
+			var o = world.object_at_loaded(p)   # 0.3.16 far buildings: don't generate chunks to hide nothing
 			if o and o.view and is_instance_valid(o.view):
 				o.view.visible = show and (o.sprite_id(world.tick) != "" or bool(o.def().get("keeper", false)))
 
@@ -350,7 +350,7 @@ func _update_keepers() -> void:
 		if roof_alpha(id) > 0.5:
 			continue
 		var b: Dictionary = world.gen.buildings[id]
-		var k = world.object_at(b["keeper_at"])
+		var k = world.object_at_loaded(b["keeper_at"])
 		if k == null or k.view == null or not is_instance_valid(k.view):
 			continue
 		var f: Facing = _keeper_facing[id]
@@ -374,7 +374,7 @@ func _update_displays() -> void:
 			continue
 		var ps = Market.player_shop(b["town"])
 		for i in b["displays"].size():
-			var o = world.object_at(b["displays"][i])
+			var o = world.object_at_loaded(b["displays"][i])
 			if o == null or o.view == null or not is_instance_valid(o.view):
 				_shop_version = -1        # view not built yet: try again next frame
 				continue

@@ -145,8 +145,11 @@ static func giver_marker(p, gid: String) -> String:
 
 
 static func giver_tile(world, gid: String) -> Vector2i:
-	if _giver_tiles.has(gid) and world.object_at(_giver_tiles[gid]) != null:
-		return _giver_tiles[gid]
+	if _giver_tiles.has(gid):
+		var gt: Vector2i = _giver_tiles[gid]
+		# 0.3.16 a cached giver in an unloaded chunk is trusted (checking would generate it)
+		if (world.has_method("object_at_loaded") and world.chunks.get(World.chunk_of(gt)) == null) or world.object_at(gt) != null:
+			return gt
 	var g: Dictionary = cfg().get("givers", {}).get(gid, {})
 	if g.has("near") and world.get("gen") != null:     # 0.3.15 placed by WorldGen._place_quest_givers
 		var sp: Vector2i = world.gen.giver_spot(gid)

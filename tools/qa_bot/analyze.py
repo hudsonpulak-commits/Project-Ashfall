@@ -1225,6 +1225,21 @@ def check_millbrook(ctx):
     ]
 
 
+def check_perf(ctx):
+    """0.3.16 streaming: no hitches while sprinting across chunks and towns."""
+    if "perf" not in ctx.expected:
+        return []
+    run = ctx.runs.get("perf")
+    if not run:
+        return [Result("C36 perf", "perf run present", False, "no capture")]
+    a = run.res.get("perf", {})
+    info = "worst %.1f ms, 1%% low %.1f ms (process); frame worst %.1f, 1%% low %.1f, median %.1f; %s frames, %s/%s tiles, %s chunks, spikes %s %s parts %s" % (
+        a.get("worst_process_ms", 0), a.get("p1_low_process_ms", 0), a.get("worst_frame_ms", 0), a.get("p1_low_frame_ms", 0), a.get("median_frame_ms", 0),
+        a.get("frames"), a.get("walked"), a.get("route"), a.get("chunks"), a.get("spike_count"), a.get("spikes", [])[:6], a.get("parts"))
+    return [Result("C36 perf", "long sprint through towns: no frame spikes above 33 ms",
+                   int(a.get("walked") or 0) >= 300 and int(a.get("chunks") or 0) >= 15 and float(a.get("worst_frame_ms", 99)) <= 33.0, info)]
+
+
 def check_xp(ctx):
     """0.3.7 XP feedback lines + Skills panel session tracker."""
     if "xp" not in ctx.expected:
@@ -1313,7 +1328,7 @@ def check_capital(ctx):
     ]
 
 
-CHECKS = [check_runtime, check_diagonal, check_facing, check_ghost, check_jitter, check_taps, check_bubbles, check_roof, check_shop, check_smithy, check_markers, check_daynight, check_world, check_church, check_aggro, check_farm, check_city, check_cookhouse, check_pk, check_gear, check_archery, check_bank, check_v036, check_quest, check_xp, check_capital, check_autotile, check_gfx, check_sidequests, check_sidequests2, check_millbrook]
+CHECKS = [check_runtime, check_diagonal, check_facing, check_ghost, check_jitter, check_taps, check_bubbles, check_roof, check_shop, check_smithy, check_markers, check_daynight, check_world, check_church, check_aggro, check_farm, check_city, check_cookhouse, check_pk, check_gear, check_archery, check_bank, check_v036, check_quest, check_xp, check_capital, check_autotile, check_gfx, check_sidequests, check_sidequests2, check_millbrook, check_perf]
 SCENARIOS = ["walk", "combat", "shop", "pshop", "smithy", "markers", "daynight", "world", "church", "aggro", "farm", "city", "cookhouse", "pk", "gear", "archery"]
 
 

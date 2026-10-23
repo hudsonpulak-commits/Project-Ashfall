@@ -431,17 +431,28 @@ func _catch_up_report(away_seconds: int, rep: Dictionary, snap: Dictionary, t0: 
 
 # -------------------------------------------------------------------- tick --
 func _on_tick(t: int) -> void:
+	var _tick_t0 := Time.get_ticks_usec()
 	play_seconds += Tick.TICK_SECONDS
 	world.on_tick(t)
+	world.perf_log.append(["t:world_on_tick", (Time.get_ticks_usec() - _tick_t0) / 1000.0])
 	player.on_tick(t, world)
+	world.perf_log.append(["t:player_on_tick", (Time.get_ticks_usec() - _tick_t0) / 1000.0])
 	# 0.3.4 music: combat cuts in at once; area = the town you're in, else ambient
 	Music.set_combat(not player.dead and (player.in_combat(t) or player.action.get("kind", "") == "fight"))
+	world.perf_log.append(["t:Music_set_combat", (Time.get_ticks_usec() - _tick_t0) / 1000.0])
 	Music.set_area(music_area(player.tile), DayNight.is_night())
+	world.perf_log.append(["t:Music_set_area", (Time.get_ticks_usec() - _tick_t0) / 1000.0])
 	AIDirector.on_tick(t, world, player.tile)
+	world.perf_log.append(["t:AIDirector_on_tick", (Time.get_ticks_usec() - _tick_t0) / 1000.0])
 	player.flush_xp()   # 0.3.7 one XP line per tick
+	world.perf_log.append(["t:player_flush_xp", (Time.get_ticks_usec() - _tick_t0) / 1000.0])
 	world.enemies.on_tick(t, [player] + AIDirector.agents, player.tile)
+	world.perf_log.append(["t:world_enemies_on_tick", (Time.get_ticks_usec() - _tick_t0) / 1000.0])
 	world.ground.on_tick(t)
+	world.perf_log.append(["t:world_ground_on_tick", (Time.get_ticks_usec() - _tick_t0) / 1000.0])
 	Market.on_tick(t)
+	world.perf_log.append(["t:Market_on_tick", (Time.get_ticks_usec() - _tick_t0) / 1000.0])
+	world.perf_log.append(["tick", (Time.get_ticks_usec() - _tick_t0) / 1000.0])
 	world.set_focus(player.tile)
 	if t % AUTOSAVE_TICKS == 0 and not (args.has("selftest") or args.has("screenshot") or args.has("soak") or args.has("qa")):
 		save_game()

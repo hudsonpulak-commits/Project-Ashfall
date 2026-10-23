@@ -348,6 +348,8 @@ func _run() -> void:
 			await _sidequests0316()
 		"millbrook":
 			await _millbrook0316()
+		"perf":
+			await _perf0316()
 		_:
 			push_error("unknown QA scenario " + scenario)
 			await _finish(false)
@@ -3420,3 +3422,94 @@ func _millbrook0316() -> void:
 			cam.zoom = z0
 	label = ""
 	_notes["millbrook"] = res
+
+
+# ------------------------------------------------ 0.3.16 streaming perf --
+## Sprint a long route across chunk and town boundaries (Fenhollow -> Highfen ->
+## Millbrook -> Oxley) and record every frame: wall frame time and the
+## engine's process time. Hitches are frames whose process time is > 33 ms.
+func _top_spikes(sp: Array) -> Array:
+	var c := sp.duplicate()
+	c.sort_custom(func(a, b): return a[0] > b[0])
+	return c.slice(0, 20)
+
+
+func _perf0316() -> void:
+	var p: Player = main.player
+	var w: World = main.world
+	var stops: Array = [w.gen.town_spawn("fenhollow"), w.gen.town_spawn("highfen"), w.gen.town_spawn("millbrook"), w.gen.town_spawn("highfen"), w.gen.town_spawn("oxley")]
+	var route: Array = []
+	var cur: Vector2i = stops[0]
+	for i in range(1, stops.size()):
+		var leg: Array = []
+		var at := cur
+		for k in 40:   # long legs in hops the pathfinder handles
+			if at == stops[i]:
+				break
+			var dv: Vector2i = stops[i] - at
+			var hop: Vector2i = at + Vector2i(clampi(dv.x, -30, 30), clampi(dv.y, -30, 30))
+			hop = w.find_free_tile_near(hop, 8, true)
+			var seg: Array = Pathfinder.find_path(w, at, [hop], hop, 30000)
+			if seg.is_empty():
+				break
+			leg.append_array(seg)
+			at = seg[-1]
+		route.append_array(leg)
+		cur = at
+	p.place_at(stops[0])
+	p.stop()
+	w.set_focus(p.tile, true)
+	await frames(30)
+	w.perf_log.clear()
+	var ft: Array = []
+	var pt: Array = []
+	var spikes: Array = []
+	var t_prev := Time.get_ticks_usec()
+	var i0 := 0
+	label = "perf_walk"
+	var t_end := Time.get_ticks_msec() + 420000
+	var chunks_seen := {}
+	var pl_prev := 0
+	while i0 < route.size() and Time.get_ticks_msec() < t_end:
+		if p.path.is_empty():
+			var seg2: Array = route.slice(i0, mini(i0 + 24, route.size()))
+			i0 += seg2.size()
+			p.energy = 100.0
+			p.sprint = true
+			p.set_path(w, seg2)
+		await get_tree().process_frame
+		var now := Time.get_ticks_usec()
+		var f_ms := (now - t_prev) / 1000.0
+		t_prev = now
+		var p_ms := Performance.get_monitor(Performance.TIME_PROCESS) * 1000.0
+		ft.append(f_ms)
+		pt.append(p_ms)
+		chunks_seen[World.chunk_of(p.tile)] = true
+		if f_ms > 33.0:
+			var tags: Array = []
+			for e in w.perf_log.slice(pl_prev):
+				if e[1] > 5.0:
+					tags.append("%s=%.0f" % [e[0], e[1]])
+			spikes.append([snappedf(f_ms, 0.1), p.tile.x, p.tile.y, ft.size(), ",".join(tags)])
+		pl_prev = w.perf_log.size()
+	label = ""
+	var srt := pt.duplicate()
+	srt.sort()
+	var srf := ft.duplicate()
+	srf.sort()
+	var n := maxi(1, srt.size())
+	var one := maxi(1, n / 100)
+	var low_p := 0.0
+	var low_f := 0.0
+	for k in one:
+		low_p += srt[n - 1 - k]
+		low_f += srf[n - 1 - k]
+	var agg := {}
+	for e in w.perf_log:
+		var a0: Array = agg.get(e[0], [0, 0.0, 0.0])
+		agg[e[0]] = [a0[0] + 1, a0[1] + e[1], maxf(a0[2], e[1])]
+	w.perf_log.clear()
+	_notes["perf"] = {"parts": agg, "frames": pt.size(), "route": route.size(), "walked": i0, "chunks": chunks_seen.size(),
+		"worst_process_ms": srt[-1] if not srt.is_empty() else 0.0, "p1_low_process_ms": low_p / one,
+		"worst_frame_ms": srf[-1] if not srf.is_empty() else 0.0, "p1_low_frame_ms": low_f / one,
+		"median_frame_ms": srf[n / 2] if not srf.is_empty() else 0.0, "spikes": _top_spikes(spikes), "spike_count": spikes.size()}

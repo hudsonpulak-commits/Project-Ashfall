@@ -29,7 +29,8 @@ func _process(_d: float) -> void:
 		return
 	for gid in QuestSystem.cfg().get("givers", {}).keys():
 		var t := QuestSystem.giver_tile(world, gid)
-		var o: WorldObject = world.object_at(t) if t.x > -99999 else null
+		# 0.3.16 only loaded chunks can carry a label: never generate one per frame
+		var o: WorldObject = (world.object_at_loaded(t) if world.has_method("object_at_loaded") else world.object_at(t)) if t.x > -99999 else null
 		var e: Array = _labels.get(gid, [])
 		if o != null and o.view != null and is_instance_valid(o.view) and (e.is_empty() or not is_instance_valid(e[0]) or e[1] != o.view):
 			var l := Overhead.make(Color("#ffe030"))

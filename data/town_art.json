@@ -1048,7 +1048,8 @@
     "#oo#",
     "##D#"
    ],
-   "night": ""
+   "night": "res://assets/sprites/towns/saltmere/buildings/v3_elijah_tomb_night.png",
+   "note": "approved exception: 4x4 tomb (Hudson, 0.3.16)"
   },
   "v3_smithy_large": {
    "tiles": [
@@ -1077,7 +1078,7 @@
     "#ooooo#",
     "##D####"
    ],
-   "night": ""
+   "night": "res://assets/sprites/towns/saltmere/buildings/v3_smithy_large_night.png"
   },
   "fh_house_01": {
    "tiles": [

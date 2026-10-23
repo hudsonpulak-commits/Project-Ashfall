@@ -284,7 +284,10 @@ static func place(agent: AIAgent) -> bool:
 		return true
 	var p := Vector2i(int(a[key][0]), int(a[key][1]))
 	if world != null:
-		p = world.find_free_tile_near(p + Vector2i(agent.rng.randi_range(-3, 3), agent.rng.randi_range(-3, 3)), 6)
+		var q := p + Vector2i(agent.rng.randi_range(-3, 3), agent.rng.randi_range(-3, 3))
+		# 0.3.16 off-screen camps: don't generate chunk data just to pick a free tile
+		if not ("chunks" in world) or world.chunks.has(World.chunk_of(q)):
+			p = world.find_free_tile_near(q, 6)
 	agent.pos = p
 	return true
 

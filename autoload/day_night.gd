@@ -191,27 +191,7 @@ static func window_tiles(world, b: Dictionary, n_win: int) -> Array:
 		for x in range(r.position.x, r.end.x):
 			if world.gen.object_id_at(Vector2i(x, fy)) == "stained_glass":
 				out.append(Vector2i(x, fy))
-	if not out.is_empty():
-		return out
-	var free: Array = []
-	var drawn: Array = []   # timber facade tiles whose art shows a window or a lantern
-	var nv: int = world.variants_for(WorldGen.TileType.WALL_FRONT) if world.has_method("variants_for") else 1
-	for x in range(r.position.x + 1, r.end.x - 1):
-		var t := Vector2i(x, fy)
-		if t in b["doors"] or t == b.get("sign", Vector2i(1 << 20, 0)):
-			continue
-		free.append(t)
-		if nv >= 4 and world.gen.tile_at(t.x, t.y) == WorldGen.TileType.WALL_FRONT:
-			var v := int(world.gen.hash01(t.x, t.y, 7) * nv) % nv
-			if v == 1 or v == 3:
-				drawn.append(t)
-	if drawn.size() >= mini(2, n_win):
-		return drawn   # 0.3.1 glow where the facade art has a window / lantern
-	if free.is_empty():
-		return out
-	for i in n_win:
-		out.append(free[int(round(float(i + 0.5) * free.size() / n_win - 0.5))])
-	return out
+	return out   # 0.3.16 Hudson: the legacy orange window overlay is never drawn (only stained glass lights up)
 
 
 func _add_light(world, tile: Vector2i, kind: String, col: Color, glow_scale: float) -> void:
