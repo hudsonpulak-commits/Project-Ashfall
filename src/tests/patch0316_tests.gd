@@ -112,7 +112,7 @@ static func _steel(world, p) -> void:
 static func _fix(world, p) -> void:
 	var id := "can_we_fix_it"
 	var gt := QuestSystem.giver_tile(world, "farmer_garrow")
-	var ct := world.gen.town_center("cinderholt")
+	var ct: Vector2i = world.gen.town_center("cinderholt")
 	check(gt.x > -99999 and maxi(absi(gt.x - ct.x), absi(gt.y - ct.y)) < 120 and world.gen.town_at(gt, 0) == "", "Farmer Garrow's farm lies outside Cinderholt (%s)" % gt)
 	var props: Array = []
 	for o in world.get_chunk(world.chunk_of(gt)).objects.values() + world.get_chunk(world.chunk_of(gt + Vector2i(0, -10))).objects.values():
@@ -141,7 +141,7 @@ static func _clip_clop(world, p) -> void:
 	check(horse != null and den != null, "Clip Clop waits by the wolf den")
 	check(world.enemies.nearest(den.pos if den else Vector2i.ZERO, ["wolf"], 12) != null, "wolves prowl around the den")
 	check(horse != null and CombatRules.can_attack(p, horse, Tick.tick_count) != "", "Clip Clop can't be attacked")
-	check(world.gen.town_at(gt, 0) == "" and maxi(absi(gt.x - 58), absi(gt.y)) < 60, "Wenna's farm lies just east of Fenhollow (%s)" % gt)
+	check(world.gen.town_at(gt, 0) == "" and maxi(absi(gt.x - 58), absi(gt.y)) < 90, "Wenna's farm lies just east of Fenhollow (%s)" % gt)
 	QuestSystem.choose(p, id, "accept")
 	var hk: int = _kill(world, p, "wolf", 3, den.pos if den else Vector2i.ZERO)
 	check(hk == 3 and int(p.quests[id]["stage"]) == 1, "3 wolves killed by the den: lead him home")

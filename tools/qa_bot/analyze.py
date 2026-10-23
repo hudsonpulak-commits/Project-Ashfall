@@ -1145,6 +1145,58 @@ def check_sidequests(ctx):
     return out
 
 
+def check_sidequests2(ctx):
+    """0.3.16 We Need Steel!, Can We Fix It?, Finding Clip Clop, A Dead Rat is a Good Rat."""
+    if "sidequests2" not in ctx.expected:
+        return []
+    run = ctx.runs.get("sidequests2")
+    if not run:
+        return [Result("C34 sidequests2", "sidequests2 run present", False, "no capture")]
+    a = run.res.get("sidequests2", {})
+    snaps = {e.get("name"): e.get("path") for e in run.events if e.get("type") == "snap"}
+    sp = lambda *n: [snaps[k] for k in n if k in snaps]
+    node = lambda d: (d or {}).get("node", "")
+    R = lambda what, ok, info, *sn: Result("C34 sidequests2", what, bool(ok), info, sp(*sn))
+    s, f, c, r = (a.get(k, {}) for k in ("we_need_steel", "can_we_fix_it", "finding_clip_clop", "a_dead_rat"))
+    out = [
+        R("we_need_steel: '?' over Brannoc, offer mentions the redirected mines, Accept starts it",
+          s.get("mark_start") == "?" and node(s.get("dialog_offer")) == "offer" and "redirected" in str((s.get("dialog_offer") or {}).get("text", "")) and s.get("state_after_accept") == "in_progress",
+          "%r %r %s" % (s.get("mark_start"), node(s.get("dialog_offer")), s.get("state_after_accept")), "sq2_steel_giver", "sq2_steel_offer"),
+        R("we_need_steel: ore + coal -> '!', Brannoc takes them and hands over the steel; '!' moves to Voss, guidance to the camp",
+          s.get("mark_ready") == "!" and s.get("bundle") == 1 and s.get("ore_left") == 0 and s.get("mark_smith_after") == "" and s.get("mark_voss") == "!" and s.get("objective_voss"),
+          "ready %r bundle %s left %s smith %r voss %r obj %s %r" % (s.get("mark_ready"), s.get("bundle"), s.get("ore_left"), s.get("mark_smith_after"), s.get("mark_voss"), s.get("objective_voss"), s.get("journal_deliver")),
+          "sq2_steel_handin", "sq2_journal_deliver", "sq2_steel_voss_marker"),
+        R("we_need_steel: delivered to Sergeant Voss: +5 Influence, marks, Smithing XP",
+          node(s.get("dialog_voss")) == "stage_1" and s.get("state_final") == "completed" and s.get("influence") == 5 and int(s.get("marks") or 0) > 0 and int(s.get("smithing_xp") or 0) >= 1000 and s.get("bundle_final") == 0 and s.get("mark_final") == "",
+          "%r %s inf %s marks %s xp %s" % (node(s.get("dialog_voss")), s.get("state_final"), s.get("influence"), s.get("marks"), s.get("smithing_xp")), "sq2_steel_voss"),
+        R("can_we_fix_it: Garrow's farm shows broken fences and a damaged wall, offer, Accept",
+          f.get("mark_start") == "?" and int(f.get("props") or 0) >= 6 and int(f.get("broken_before") or 0) >= 6 and node(f.get("dialog_offer")) == "offer" and f.get("state_after_accept") == "in_progress",
+          "%r props %s broken %s" % (f.get("mark_start"), f.get("props"), f.get("broken_before")), "sq2_fix_before", "sq2_fix_offer"),
+        R("can_we_fix_it: 8 planks handed in: +5 Influence, marks, every fence and wall visibly mended",
+          f.get("mark_ready") == "!" and f.get("state_final") == "completed" and f.get("planks_left") == 0 and f.get("influence") == 5 and int(f.get("marks") or 0) > 0 and f.get("broken_after") == 0,
+          "%r %s left %s inf %s broken after %s" % (f.get("mark_ready"), f.get("state_final"), f.get("planks_left"), f.get("influence"), f.get("broken_after")), "sq2_fix_turnin", "sq2_fix_after"),
+        R("finding_clip_clop: Wenna's offer; Clip Clop waits by the wolf den and can't be attacked",
+          c.get("mark_start") == "?" and node(c.get("dialog_offer")) == "offer" and c.get("horse_at_den") and c.get("horse_attack_refused"),
+          "%r %r den %s refused %s" % (c.get("mark_start"), node(c.get("dialog_offer")), c.get("horse_at_den"), c.get("horse_attack_refused")), "sq2_clip_offer", "sq2_clip_den_fight"),
+        R("finding_clip_clop: 3 wolves killed at the den; Clip Clop follows you home (stays within 3 tiles)",
+          int(c.get("kills") or 0) >= 3 and c.get("stage_after_kills") == 1 and int(c.get("legs") or 0) >= 2 and int(c.get("max_gap") or 99) <= 3 and int(c.get("horse_gap_home") or 99) <= 4,
+          "kills %s legs %s max gap %s home gap %s" % (c.get("kills"), c.get("legs"), c.get("max_gap"), c.get("horse_gap_home")), "sq2_clip_following", "sq2_clip_home"),
+        R("finding_clip_clop: '!' over Wenna, handed back: +5 Influence, marks, he stays in the paddock",
+          c.get("state_ready") == "ready" and c.get("mark_ready") == "!" and c.get("state_final") == "completed" and c.get("influence") == 5 and c.get("horse_in_paddock"),
+          "%s %r %s inf %s paddock %s" % (c.get("state_ready"), c.get("mark_ready"), c.get("state_final"), c.get("influence"), c.get("horse_in_paddock")), "sq2_clip_turnin"),
+        R("a_dead_rat: Old Mabel in Millbrook, offer, 6 real giant-rat kills counted in the journal",
+          r.get("village") == "millbrook" and r.get("mark_start") == "?" and node(r.get("dialog_offer")) == "offer" and int(r.get("rat_kills") or 0) >= 6 and r.get("color_mid") == "f0d040" and "/6" in str(r.get("progress_mid", "")),
+          "%s %r kills %s %r" % (r.get("village"), r.get("mark_start"), r.get("rat_kills"), r.get("progress_mid")), "sq2_rat_giver", "sq2_rat_offer", "sq2_rat_journal"),
+        R("a_dead_rat: back to Mabel ('!'), then the big Rat Mother killed",
+          r.get("mark_mid") == "!" and node(r.get("dialog_mid")) == "stage_1" and float(r.get("mother_scale") or 1) > 1.4 and r.get("mother_killed") and r.get("state_ready") == "ready",
+          "%r %r scale %s killed %s" % (r.get("mark_mid"), node(r.get("dialog_mid")), r.get("mother_scale"), r.get("mother_killed")), "sq2_rat_mother_ask", "sq2_rat_mother"),
+        R("a_dead_rat: turned in: +5 Influence, marks, journal green",
+          r.get("mark_ready") == "!" and node(r.get("dialog_turnin")) == "stage_3" and r.get("state_final") == "completed" and r.get("influence") == 5 and int(r.get("marks") or 0) > 0 and r.get("color_final") == "60c060",
+          "%r %s inf %s marks %s" % (r.get("mark_ready"), r.get("state_final"), r.get("influence"), r.get("marks")), "sq2_rat_turnin", "sq2_journal_completed"),
+    ]
+    return out
+
+
 def check_xp(ctx):
     """0.3.7 XP feedback lines + Skills panel session tracker."""
     if "xp" not in ctx.expected:
@@ -1233,7 +1285,7 @@ def check_capital(ctx):
     ]
 
 
-CHECKS = [check_runtime, check_diagonal, check_facing, check_ghost, check_jitter, check_taps, check_bubbles, check_roof, check_shop, check_smithy, check_markers, check_daynight, check_world, check_church, check_aggro, check_farm, check_city, check_cookhouse, check_pk, check_gear, check_archery, check_bank, check_v036, check_quest, check_xp, check_capital, check_autotile, check_gfx, check_sidequests]
+CHECKS = [check_runtime, check_diagonal, check_facing, check_ghost, check_jitter, check_taps, check_bubbles, check_roof, check_shop, check_smithy, check_markers, check_daynight, check_world, check_church, check_aggro, check_farm, check_city, check_cookhouse, check_pk, check_gear, check_archery, check_bank, check_v036, check_quest, check_xp, check_capital, check_autotile, check_gfx, check_sidequests, check_sidequests2]
 SCENARIOS = ["walk", "combat", "shop", "pshop", "smithy", "markers", "daynight", "world", "church", "aggro", "farm", "city", "cookhouse", "pk", "gear", "archery"]
 
 
