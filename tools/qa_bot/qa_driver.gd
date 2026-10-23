@@ -231,7 +231,7 @@ func walk_leg(name: String, dest: Vector2i, max_s := 15.0) -> void:
 ## Leave a building like a player would: with a panel covering the lower
 ## screen, first tap a visible floor tile beside you (walking off closes the
 ## panel), then tap outside the door.
-func walk_out(b: Dictionary) -> void:
+func walk_out(b: Dictionary, n := 3) -> void:
 	var p: Player = main.player
 	if main.hud.current_panel != "":
 		for side in [Vector2i(-2, 0), Vector2i(2, 0), Vector2i(-1, 0), Vector2i(1, 0)]:
@@ -243,7 +243,7 @@ func walk_out(b: Dictionary) -> void:
 	if main.hud.current_panel != "":
 		await tap_control(main.hud.close_button, "panel close button")
 		await frames(6)
-	await tap_tile(_outside(b, 3), "outside")
+	await tap_tile(_outside(b, n), "outside")
 	await until(arrived, 12.0)
 
 
@@ -426,7 +426,7 @@ func _combat() -> void:
 	var p: Player = main.player
 	var w: World = main.world
 	var c: Vector2i = w.gen.town_spawn("fenhollow")
-	var dummy: WorldObject = w.find_nearest_object(c, ["training_dummy"], 20)
+	var dummy: WorldObject = w.find_nearest_object(c, ["training_dummy"], 45)
 	p.place_at(w.find_free_tile_near(dummy.pos + Vector2i(-2, 1), 3, true))
 	await frames(15)
 	label = "dummy"
@@ -460,7 +460,7 @@ func _shop() -> void:
 	_notes["rect"] = [b["rect"].position.x, b["rect"].position.y, b["rect"].size.x, b["rect"].size.y]
 	_notes["doors"] = b["doors"].map(func(d): return [d.x, d.y])
 	_notes["keeper"] = b["keeper"]
-	p.place_at(_outside(b, 4))
+	p.place_at(_outside(b, 1))   # 0.3.14: further out lands under the next row's roof overhang in the bigger sets
 	await frames(10)
 	var ai = await _pick_ai("fenhollow")
 	if ai != null:
@@ -485,8 +485,8 @@ func _shop() -> void:
 	_notes["store_opened"] = opened
 	_notes["store_shop"] = main.hud.store_panel.shop
 	label = "walk_out"
-	await walk_out(b)
-	await frames(30)
+	await walk_out(b, 1)
+	await frames(120)
 	label = ""
 
 
@@ -576,8 +576,8 @@ func _pshop() -> void:
 		ai.place_at(w.find_free_tile_near(_outside(b, 3) + Vector2i(1, 0), 3, true))
 		ai.visit_shop("player")
 		_notes["ai_visit_action"] = str(ai.action.get("kind", ""))
-		await until(func(): return w.gen.is_inside(ai.tile, b) or (not ai.action.is_empty() and ai.path.is_empty()), 12.0)
-		await until(func(): return ai.path.is_empty(), 8.0)
+		await until(func(): return w.gen.is_inside(ai.tile, b) or (not ai.action.is_empty() and ai.path.is_empty()), 25.0)
+		await until(func(): return ai.path.is_empty(), 12.0)
 		await frames(10)
 		await shot("v030_player_shop_stocked")
 		await frames(50)
