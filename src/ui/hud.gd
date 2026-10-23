@@ -397,6 +397,8 @@ static func _fmt_mult(m: float) -> String:
 
 
 func _refresh_pack_actions() -> void:
+	for k in inv_slots.size():   # 0.3.17 gold frame on the picked-up item
+		inv_slots[k].set_selected(k == _sel_slot and player.inventory.slots[k] != null)
 	if pack_actions == null:
 		return
 	UIKit.clear(pack_actions)

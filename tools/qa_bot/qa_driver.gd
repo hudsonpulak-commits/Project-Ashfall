@@ -3569,6 +3569,7 @@ func _organize0317(res: Dictionary) -> void:
 	p.bank_tabs = []
 	p.bank_tab_of = {}
 	hud.bank_tab = BankTabs.ALL
+	hud.show_panel("bank")
 	hud._refresh_bank()
 	await frames(5)
 	await tap_control(hud.bank_arrange_btn, "Arrange")
