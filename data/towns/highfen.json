@@ -1714,8 +1714,22 @@
     {
      "object": "quern",
      "at": [
+      49,
+      59
+     ]
+    },
+    {
+     "object": "bank_chest",
+     "at": [
       48,
       60
+     ]
+    },
+    {
+     "object": "oven",
+     "at": [
+      57,
+      63
      ]
     }
    ],
@@ -1729,7 +1743,7 @@
    "sign_sprite": "sign_house",
    "roof": "#8a5a3a",
    "keeper_at": [
-    48,
+    50,
     65
    ],
    "stand": [
@@ -2898,7 +2912,7 @@
    "sign_sprite": "sign_house",
    "roof": "#8a7050",
    "keeper_at": [
-    64,
+    63,
     10
    ],
    "stand": [
@@ -3187,7 +3201,7 @@
   "ggggggggggggggZggg###ggg::gQggggggggggggggggg::ggggggggggggggggg:::gggg###gggggggggggggNgYgg",
   "ggggggggggggggXgggP###gHg::gggggggggggggggggg::gggggggggggggggg:::gOgg###ggQgggggggggggggggg",
   "gggggggggggggggggggg###ggg:::gggPggggggggggHg::ggggggggggggggg:::gggg###gJgggggggggggggggggg",
-  "gjgggggggggggggPgZggg###gggg:::gggMggggggggQg::gggggEEgggEEgg::ggggg###gggggNggggggggggggggg",
+  "gjgggggggggggggPgZggg###gggg:::gggMggggggggQg::gggggEEggggggg::ggggg###gggggNggggggggggggggg",
   "ggMggggggggggggggggggg###ggRgg:::gggggggggggg::ggggggggggggg::ggggg###ggggggXggggggggggggggg",
   "gggggggggggggjggjgggggg###gggggg:::gggggggggg::gggggggggggg::ggggg###ggggggggggggggggggQgggg",
   "ggggggggggggggggNgggggg####gggggg:::gggggBBgg::ggggggggggg::ggggg####Ngggggggggggggggggggggg",

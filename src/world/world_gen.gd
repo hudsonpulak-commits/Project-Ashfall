@@ -397,6 +397,8 @@ func _ensure_gate_approaches(town: Dictionary, origin: Vector2i) -> void:
 				# Planks only over water (harbour pier); path on land so road
 				# tiles that share the approach stay PATH for the roads selftest.
 				var ground: int = TileType.PLANKS if ter == TileType.WATER else TileType.PATH
+				if ter == TileType.WATER and str(town["id"]) != "saltmere":
+					ground = TileType.BRIDGE   # 0.3.14 a bigger town's gate approach over a creek is a bridge, not a pier
 				_town_tiles[q] = ground
 				_town_objects[q] = ""   # suppress wilderness trees/rocks on the approach
 

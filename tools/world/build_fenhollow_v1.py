@@ -86,7 +86,7 @@ def plan_of_v2(b):
         for x in range(W):
             cx, cy = x * T + 8, E + y * T + 8
             if (x, y) == d: r += 'D'
-            elif y < H - 1 and (inr(b['clear_area_px'], cx, cy) or inr(b['door_lane_px'], cx, cy)): r += 'o'
+            elif 0 < x < W - 1 and 0 < y < H - 1 and (inr(b['clear_area_px'], cx, cy) or inr(b['door_lane_px'], cx, cy)): r += 'o'
             else: r += '#'
         rows.append(r)
     return rows
@@ -364,6 +364,7 @@ def place(n, tx, ty, flip=False, role=None, reach=80, quiet=False):
             if bad: continue
             dx_, dy_ = ox + dl[0], oy + dl[1]
             front = [(dx_, dy_ + k) for k in (1, 2, 3)]
+            if tile_used[front[1][1], front[1][0]] or front[0] in reserved or front[1] in reserved: continue   # 0.3.14 two free tiles in front of every door
             if tile_used[front[0][1], front[0][0]] or grid[front[0][1]][front[0][0]] not in 'g:' or grid[front[1][1]][front[1][0]] not in 'g:=' or (role == 'church' and grid[front[2][1]][front[2][0]] not in 'g:='): continue
             for (lx, ly) in tiles: tile_used[oy + ly, ox + lx] = True
             route = spur_route(dx_, dy_ + 1)
@@ -373,6 +374,7 @@ def place(n, tx, ty, flip=False, role=None, reach=80, quiet=False):
             occ[y0:y0 + h, x0:x0 + w] |= al
             for (lx, ly) in tiles: reserved.add((ox + lx, oy + ly))   # the invisible rim already spaces neighbours
             for q in route: reserved.add(q)
+            reserved.add(front[0]); reserved.add(front[1])
             d = dict(art=n, flip=flip, at=[ox, oy], role=role, px=[x0, y0], rows=rows, door=[dx_, dy_], route=route)
             blds.append(d); return d
     if not quiet: print('no room for', n, role)

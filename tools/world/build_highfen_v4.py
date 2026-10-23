@@ -105,7 +105,7 @@ def plan_of_v2(b):
     # 0.3.14 v5 art: walls on the footprint edge; walkable = designer clear area + door lane + door
     E = b['footprint_origin_px'][1]; W, H = b['tiles']; d = tuple(b['door_tile']); H = d[1] + 1
     def inr(r, cx, cy): return r[0] <= cx < r[0] + r[2] and r[1] <= cy < r[1] + r[3]
-    return [''.join('D' if (x, y) == d else 'o' if y < H - 1 and (inr(b['clear_area_px'], x * T + 8, E + y * T + 8) or inr(b['door_lane_px'], x * T + 8, E + y * T + 8)) else '#'
+    return [''.join('D' if (x, y) == d else 'o' if 0 < x < W - 1 and 0 < y < H - 1 and (inr(b['clear_area_px'], x * T + 8, E + y * T + 8) or inr(b['door_lane_px'], x * T + 8, E + y * T + 8)) else '#'
                     for x in range(W)) for y in range(H)]
 ART = {}
 for b in M['buildings']:
@@ -574,7 +574,7 @@ for base in out_b:
         ox, oy = base['at']; W, H = ART[base['art']]['tiles']
         stations = ['hearth', 'furnace', 'anvil', 'workbench', 'quern', 'bank_chest', 'oven']
         # yard: the row(s) behind the house (north), fenced by the house's own back wall and the yard edge
-        cells = sorted([(x, y) for x in range(ox - 4, ox + W + 4) for y in range(oy - 4, oy + H)
+        cells = sorted([(x, y) for x in range(ox - 6, ox + W + 6) for y in range(oy - 6, oy + H)
                         if not (ox - 1 <= x <= ox + W and oy - 1 <= y <= oy + H)],
                        key=lambda c: (abs(c[0] - (ox + W / 2)) + abs(c[1] - oy) * 0.8))
         put = 0

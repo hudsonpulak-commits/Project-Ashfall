@@ -1,1475 +1,6 @@
 {
  "note": "0.3.11 per-design tile plans for the layered town buildings (tools/world/build_highfen_v4.py). plan: # wall, o floor, D door, . outside",
  "buildings": {
-  "fh_house_01": {
-   "tiles": [
-    5,
-    5
-   ],
-   "px": [
-    80,
-    94
-   ],
-   "origin_y": 14,
-   "inset_x": 0,
-   "door_tile": [
-    3,
-    4
-   ],
-   "storeys": 2,
-   "floor": "res://assets/sprites/towns/fenhollow/buildings/fh_house_01_floor.png",
-   "walls": "res://assets/sprites/towns/fenhollow/buildings/fh_house_01_walls.png",
-   "fade": [
-    "res://assets/sprites/towns/fenhollow/buildings/fh_house_01_upper1.png",
-    "res://assets/sprites/towns/fenhollow/buildings/fh_house_01_roof.png"
-   ],
-   "night": "res://assets/sprites/towns/fenhollow/buildings/fh_house_01_night.png",
-   "plan": [
-    "#####",
-    "#ooo#",
-    "#ooo#",
-    "#ooo#",
-    "###D#"
-   ],
-   "note": "0.3.13 Fenhollow v1: plan has a 1-tile invisible collision rim (top/left/right)"
-  },
-  "fh_house_02": {
-   "tiles": [
-    6,
-    6
-   ],
-   "px": [
-    96,
-    110
-   ],
-   "origin_y": 14,
-   "inset_x": 0,
-   "door_tile": [
-    2,
-    5
-   ],
-   "storeys": 2,
-   "floor": "res://assets/sprites/towns/fenhollow/buildings/fh_house_02_floor.png",
-   "walls": "res://assets/sprites/towns/fenhollow/buildings/fh_house_02_walls.png",
-   "fade": [
-    "res://assets/sprites/towns/fenhollow/buildings/fh_house_02_upper1.png",
-    "res://assets/sprites/towns/fenhollow/buildings/fh_house_02_roof.png"
-   ],
-   "night": "res://assets/sprites/towns/fenhollow/buildings/fh_house_02_night.png",
-   "plan": [
-    "######",
-    "######",
-    "#ooo##",
-    "#ooo##",
-    "#ooo##",
-    "##D###"
-   ],
-   "note": "0.3.13 Fenhollow v1: plan has a 1-tile invisible collision rim (top/left/right)"
-  },
-  "fh_house_03": {
-   "tiles": [
-    6,
-    6
-   ],
-   "px": [
-    96,
-    110
-   ],
-   "origin_y": 14,
-   "inset_x": 0,
-   "door_tile": [
-    2,
-    5
-   ],
-   "storeys": 2,
-   "floor": "res://assets/sprites/towns/fenhollow/buildings/fh_house_03_floor.png",
-   "walls": "res://assets/sprites/towns/fenhollow/buildings/fh_house_03_walls.png",
-   "fade": [
-    "res://assets/sprites/towns/fenhollow/buildings/fh_house_03_upper1.png",
-    "res://assets/sprites/towns/fenhollow/buildings/fh_house_03_roof.png"
-   ],
-   "night": "res://assets/sprites/towns/fenhollow/buildings/fh_house_03_night.png",
-   "plan": [
-    "######",
-    "######",
-    "#ooo##",
-    "#ooo##",
-    "#ooo##",
-    "##D###"
-   ],
-   "note": "0.3.13 Fenhollow v1: plan has a 1-tile invisible collision rim (top/left/right)"
-  },
-  "fh_house_04": {
-   "tiles": [
-    6,
-    6
-   ],
-   "px": [
-    96,
-    110
-   ],
-   "origin_y": 14,
-   "inset_x": 0,
-   "door_tile": [
-    2,
-    5
-   ],
-   "storeys": 2,
-   "floor": "res://assets/sprites/towns/fenhollow/buildings/fh_house_04_floor.png",
-   "walls": "res://assets/sprites/towns/fenhollow/buildings/fh_house_04_walls.png",
-   "fade": [
-    "res://assets/sprites/towns/fenhollow/buildings/fh_house_04_upper1.png",
-    "res://assets/sprites/towns/fenhollow/buildings/fh_house_04_roof.png"
-   ],
-   "night": "res://assets/sprites/towns/fenhollow/buildings/fh_house_04_night.png",
-   "plan": [
-    "######",
-    "######",
-    "#ooo##",
-    "#ooo##",
-    "#ooo##",
-    "##D###"
-   ],
-   "note": "0.3.13 Fenhollow v1: plan has a 1-tile invisible collision rim (top/left/right)"
-  },
-  "fh_house_05": {
-   "tiles": [
-    6,
-    6
-   ],
-   "px": [
-    96,
-    110
-   ],
-   "origin_y": 14,
-   "inset_x": 0,
-   "door_tile": [
-    2,
-    5
-   ],
-   "storeys": 2,
-   "floor": "res://assets/sprites/towns/fenhollow/buildings/fh_house_05_floor.png",
-   "walls": "res://assets/sprites/towns/fenhollow/buildings/fh_house_05_walls.png",
-   "fade": [
-    "res://assets/sprites/towns/fenhollow/buildings/fh_house_05_upper1.png",
-    "res://assets/sprites/towns/fenhollow/buildings/fh_house_05_roof.png"
-   ],
-   "night": "res://assets/sprites/towns/fenhollow/buildings/fh_house_05_night.png",
-   "plan": [
-    "######",
-    "######",
-    "#ooo##",
-    "#ooo##",
-    "#ooo##",
-    "##D###"
-   ],
-   "note": "0.3.13 Fenhollow v1: plan has a 1-tile invisible collision rim (top/left/right)"
-  },
-  "fh_house_06": {
-   "tiles": [
-    6,
-    6
-   ],
-   "px": [
-    96,
-    96
-   ],
-   "origin_y": 0,
-   "inset_x": 0,
-   "door_tile": [
-    3,
-    5
-   ],
-   "storeys": 1,
-   "floor": "res://assets/sprites/towns/fenhollow/buildings/fh_house_06_floor.png",
-   "walls": "res://assets/sprites/towns/fenhollow/buildings/fh_house_06_walls.png",
-   "fade": [
-    "res://assets/sprites/towns/fenhollow/buildings/fh_house_06_roof.png"
-   ],
-   "night": "res://assets/sprites/towns/fenhollow/buildings/fh_house_06_night.png",
-   "plan": [
-    "######",
-    "######",
-    "##ooo#",
-    "##ooo#",
-    "##ooo#",
-    "###D##"
-   ],
-   "note": "0.3.13 Fenhollow v1: plan has a 1-tile invisible collision rim (top/left/right)"
-  },
-  "fh_house_07": {
-   "tiles": [
-    5,
-    5
-   ],
-   "px": [
-    80,
-    94
-   ],
-   "origin_y": 14,
-   "inset_x": 0,
-   "door_tile": [
-    2,
-    4
-   ],
-   "storeys": 2,
-   "floor": "res://assets/sprites/towns/fenhollow/buildings/fh_house_07_floor.png",
-   "walls": "res://assets/sprites/towns/fenhollow/buildings/fh_house_07_walls.png",
-   "fade": [
-    "res://assets/sprites/towns/fenhollow/buildings/fh_house_07_upper1.png",
-    "res://assets/sprites/towns/fenhollow/buildings/fh_house_07_roof.png"
-   ],
-   "night": "res://assets/sprites/towns/fenhollow/buildings/fh_house_07_night.png",
-   "plan": [
-    "#####",
-    "#ooo#",
-    "#ooo#",
-    "#ooo#",
-    "##D##"
-   ],
-   "note": "0.3.13 Fenhollow v1: plan has a 1-tile invisible collision rim (top/left/right)"
-  },
-  "fh_house_08": {
-   "tiles": [
-    6,
-    6
-   ],
-   "px": [
-    96,
-    110
-   ],
-   "origin_y": 14,
-   "inset_x": 0,
-   "door_tile": [
-    3,
-    5
-   ],
-   "storeys": 2,
-   "floor": "res://assets/sprites/towns/fenhollow/buildings/fh_house_08_floor.png",
-   "walls": "res://assets/sprites/towns/fenhollow/buildings/fh_house_08_walls.png",
-   "fade": [
-    "res://assets/sprites/towns/fenhollow/buildings/fh_house_08_upper1.png",
-    "res://assets/sprites/towns/fenhollow/buildings/fh_house_08_roof.png"
-   ],
-   "night": "res://assets/sprites/towns/fenhollow/buildings/fh_house_08_night.png",
-   "plan": [
-    "######",
-    "######",
-    "##ooo#",
-    "##ooo#",
-    "##ooo#",
-    "###D##"
-   ],
-   "note": "0.3.13 Fenhollow v1: plan has a 1-tile invisible collision rim (top/left/right)"
-  },
-  "fh_house_09": {
-   "tiles": [
-    6,
-    6
-   ],
-   "px": [
-    96,
-    96
-   ],
-   "origin_y": 0,
-   "inset_x": 0,
-   "door_tile": [
-    2,
-    5
-   ],
-   "storeys": 1,
-   "floor": "res://assets/sprites/towns/fenhollow/buildings/fh_house_09_floor.png",
-   "walls": "res://assets/sprites/towns/fenhollow/buildings/fh_house_09_walls.png",
-   "fade": [
-    "res://assets/sprites/towns/fenhollow/buildings/fh_house_09_roof.png"
-   ],
-   "night": "res://assets/sprites/towns/fenhollow/buildings/fh_house_09_night.png",
-   "plan": [
-    "######",
-    "######",
-    "#ooo##",
-    "#ooo##",
-    "#ooo##",
-    "##D###"
-   ],
-   "note": "0.3.13 Fenhollow v1: plan has a 1-tile invisible collision rim (top/left/right)"
-  },
-  "fh_house_10": {
-   "tiles": [
-    6,
-    6
-   ],
-   "px": [
-    96,
-    96
-   ],
-   "origin_y": 0,
-   "inset_x": 0,
-   "door_tile": [
-    2,
-    5
-   ],
-   "storeys": 1,
-   "floor": "res://assets/sprites/towns/fenhollow/buildings/fh_house_10_floor.png",
-   "walls": "res://assets/sprites/towns/fenhollow/buildings/fh_house_10_walls.png",
-   "fade": [
-    "res://assets/sprites/towns/fenhollow/buildings/fh_house_10_roof.png"
-   ],
-   "night": "res://assets/sprites/towns/fenhollow/buildings/fh_house_10_night.png",
-   "plan": [
-    "######",
-    "######",
-    "#ooo##",
-    "#ooo##",
-    "#ooo##",
-    "##D###"
-   ],
-   "note": "0.3.13 Fenhollow v1: plan has a 1-tile invisible collision rim (top/left/right)"
-  },
-  "fh_house_11": {
-   "tiles": [
-    6,
-    6
-   ],
-   "px": [
-    96,
-    96
-   ],
-   "origin_y": 0,
-   "inset_x": 0,
-   "door_tile": [
-    2,
-    5
-   ],
-   "storeys": 1,
-   "floor": "res://assets/sprites/towns/fenhollow/buildings/fh_house_11_floor.png",
-   "walls": "res://assets/sprites/towns/fenhollow/buildings/fh_house_11_walls.png",
-   "fade": [
-    "res://assets/sprites/towns/fenhollow/buildings/fh_house_11_roof.png"
-   ],
-   "night": "res://assets/sprites/towns/fenhollow/buildings/fh_house_11_night.png",
-   "plan": [
-    "######",
-    "######",
-    "#ooo##",
-    "#ooo##",
-    "#ooo##",
-    "##D###"
-   ],
-   "note": "0.3.13 Fenhollow v1: plan has a 1-tile invisible collision rim (top/left/right)"
-  },
-  "fh_house_12": {
-   "tiles": [
-    6,
-    6
-   ],
-   "px": [
-    96,
-    96
-   ],
-   "origin_y": 0,
-   "inset_x": 0,
-   "door_tile": [
-    2,
-    5
-   ],
-   "storeys": 1,
-   "floor": "res://assets/sprites/towns/fenhollow/buildings/fh_house_12_floor.png",
-   "walls": "res://assets/sprites/towns/fenhollow/buildings/fh_house_12_walls.png",
-   "fade": [
-    "res://assets/sprites/towns/fenhollow/buildings/fh_house_12_roof.png"
-   ],
-   "night": "res://assets/sprites/towns/fenhollow/buildings/fh_house_12_night.png",
-   "plan": [
-    "######",
-    "######",
-    "#ooo##",
-    "#ooo##",
-    "#ooo##",
-    "##D###"
-   ],
-   "note": "0.3.13 Fenhollow v1: plan has a 1-tile invisible collision rim (top/left/right)"
-  },
-  "fh_church": {
-   "tiles": [
-    7,
-    9
-   ],
-   "px": [
-    112,
-    178
-   ],
-   "origin_y": 34,
-   "inset_x": 0,
-   "door_tile": [
-    3,
-    8
-   ],
-   "storeys": 2,
-   "floor": "res://assets/sprites/towns/fenhollow/buildings/fh_church_floor.png",
-   "walls": "res://assets/sprites/towns/fenhollow/buildings/fh_church_walls.png",
-   "fade": [
-    "res://assets/sprites/towns/fenhollow/buildings/fh_church_upper1.png",
-    "res://assets/sprites/towns/fenhollow/buildings/fh_church_roof.png"
-   ],
-   "night": "res://assets/sprites/towns/fenhollow/buildings/fh_church_night.png",
-   "plan": [
-    "#######",
-    "#######",
-    "#######",
-    "#######",
-    "#######",
-    "##ooo##",
-    "##ooo##",
-    "##ooo##",
-    "###D###"
-   ],
-   "note": "0.3.13 Fenhollow v1: plan has a 1-tile invisible collision rim (top/left/right)"
-  },
-  "fh_bank": {
-   "tiles": [
-    7,
-    6
-   ],
-   "px": [
-    112,
-    110
-   ],
-   "origin_y": 14,
-   "inset_x": 0,
-   "door_tile": [
-    3,
-    5
-   ],
-   "storeys": 2,
-   "floor": "res://assets/sprites/towns/fenhollow/buildings/fh_bank_floor.png",
-   "walls": "res://assets/sprites/towns/fenhollow/buildings/fh_bank_walls.png",
-   "fade": [
-    "res://assets/sprites/towns/fenhollow/buildings/fh_bank_upper1.png",
-    "res://assets/sprites/towns/fenhollow/buildings/fh_bank_roof.png"
-   ],
-   "night": "res://assets/sprites/towns/fenhollow/buildings/fh_bank_night.png",
-   "plan": [
-    "#######",
-    "#######",
-    "##ooo##",
-    "##ooo##",
-    "##ooo##",
-    "###D###"
-   ],
-   "note": "0.3.13 Fenhollow v1: plan has a 1-tile invisible collision rim (top/left/right)"
-  },
-  "fh_general_store": {
-   "tiles": [
-    6,
-    6
-   ],
-   "px": [
-    96,
-    110
-   ],
-   "origin_y": 14,
-   "inset_x": 0,
-   "door_tile": [
-    2,
-    5
-   ],
-   "storeys": 2,
-   "floor": "res://assets/sprites/towns/fenhollow/buildings/fh_general_store_floor.png",
-   "walls": "res://assets/sprites/towns/fenhollow/buildings/fh_general_store_walls.png",
-   "fade": [
-    "res://assets/sprites/towns/fenhollow/buildings/fh_general_store_upper1.png",
-    "res://assets/sprites/towns/fenhollow/buildings/fh_general_store_roof.png"
-   ],
-   "night": "res://assets/sprites/towns/fenhollow/buildings/fh_general_store_night.png",
-   "plan": [
-    "######",
-    "######",
-    "#ooo##",
-    "#ooo##",
-    "#ooo##",
-    "##D###"
-   ],
-   "note": "0.3.13 Fenhollow v1: plan has a 1-tile invisible collision rim (top/left/right)"
-  },
-  "fh_smithy": {
-   "tiles": [
-    6,
-    6
-   ],
-   "px": [
-    96,
-    96
-   ],
-   "origin_y": 0,
-   "inset_x": 0,
-   "door_tile": [
-    1,
-    5
-   ],
-   "storeys": 1,
-   "floor": "res://assets/sprites/towns/fenhollow/buildings/fh_smithy_floor.png",
-   "walls": "res://assets/sprites/towns/fenhollow/buildings/fh_smithy_walls.png",
-   "fade": [
-    "res://assets/sprites/towns/fenhollow/buildings/fh_smithy_roof.png"
-   ],
-   "night": "res://assets/sprites/towns/fenhollow/buildings/fh_smithy_night.png",
-   "plan": [
-    "######",
-    "######",
-    "ooo###",
-    "ooo###",
-    "ooo###",
-    "#D####"
-   ],
-   "note": "0.3.13 Fenhollow v1: plan has a 1-tile invisible collision rim (top/left/right)"
-  },
-  "fh_cookhouse": {
-   "tiles": [
-    6,
-    6
-   ],
-   "px": [
-    96,
-    96
-   ],
-   "origin_y": 0,
-   "inset_x": 0,
-   "door_tile": [
-    2,
-    5
-   ],
-   "storeys": 1,
-   "floor": "res://assets/sprites/towns/fenhollow/buildings/fh_cookhouse_floor.png",
-   "walls": "res://assets/sprites/towns/fenhollow/buildings/fh_cookhouse_walls.png",
-   "fade": [
-    "res://assets/sprites/towns/fenhollow/buildings/fh_cookhouse_roof.png"
-   ],
-   "night": "res://assets/sprites/towns/fenhollow/buildings/fh_cookhouse_night.png",
-   "plan": [
-    "######",
-    "######",
-    "#ooo##",
-    "#ooo##",
-    "#ooo##",
-    "##D###"
-   ],
-   "note": "0.3.13 Fenhollow v1: plan has a 1-tile invisible collision rim (top/left/right)"
-  },
-  "fh_player_shop": {
-   "tiles": [
-    6,
-    6
-   ],
-   "px": [
-    96,
-    110
-   ],
-   "origin_y": 14,
-   "inset_x": 0,
-   "door_tile": [
-    2,
-    5
-   ],
-   "storeys": 2,
-   "floor": "res://assets/sprites/towns/fenhollow/buildings/fh_player_shop_floor.png",
-   "walls": "res://assets/sprites/towns/fenhollow/buildings/fh_player_shop_walls.png",
-   "fade": [
-    "res://assets/sprites/towns/fenhollow/buildings/fh_player_shop_upper1.png",
-    "res://assets/sprites/towns/fenhollow/buildings/fh_player_shop_roof.png"
-   ],
-   "night": "res://assets/sprites/towns/fenhollow/buildings/fh_player_shop_night.png",
-   "plan": [
-    "######",
-    "######",
-    "#ooo##",
-    "#ooo##",
-    "#ooo##",
-    "##D###"
-   ],
-   "note": "0.3.13 Fenhollow v1: plan has a 1-tile invisible collision rim (top/left/right)"
-  },
-  "fh_kell_lodge": {
-   "tiles": [
-    8,
-    6
-   ],
-   "px": [
-    128,
-    110
-   ],
-   "origin_y": 14,
-   "inset_x": 0,
-   "door_tile": [
-    2,
-    5
-   ],
-   "storeys": 2,
-   "floor": "res://assets/sprites/towns/fenhollow/buildings/fh_kell_lodge_floor.png",
-   "walls": "res://assets/sprites/towns/fenhollow/buildings/fh_kell_lodge_walls.png",
-   "fade": [
-    "res://assets/sprites/towns/fenhollow/buildings/fh_kell_lodge_upper1.png",
-    "res://assets/sprites/towns/fenhollow/buildings/fh_kell_lodge_roof.png"
-   ],
-   "night": "res://assets/sprites/towns/fenhollow/buildings/fh_kell_lodge_night.png",
-   "plan": [
-    "########",
-    "########",
-    "#ooo####",
-    "#ooo####",
-    "#ooo####",
-    "##D#####"
-   ],
-   "note": "0.3.13 Fenhollow v1: plan has a 1-tile invisible collision rim (top/left/right)"
-  },
-  "fh_guard_post": {
-   "tiles": [
-    6,
-    6
-   ],
-   "px": [
-    96,
-    130
-   ],
-   "origin_y": 34,
-   "inset_x": 0,
-   "door_tile": [
-    2,
-    5
-   ],
-   "storeys": 2,
-   "floor": "res://assets/sprites/towns/fenhollow/buildings/fh_guard_post_floor.png",
-   "walls": "res://assets/sprites/towns/fenhollow/buildings/fh_guard_post_walls.png",
-   "fade": [
-    "res://assets/sprites/towns/fenhollow/buildings/fh_guard_post_upper1.png",
-    "res://assets/sprites/towns/fenhollow/buildings/fh_guard_post_roof.png"
-   ],
-   "night": "res://assets/sprites/towns/fenhollow/buildings/fh_guard_post_night.png",
-   "plan": [
-    "######",
-    "######",
-    "#ooo##",
-    "#ooo##",
-    "#ooo##",
-    "##D###"
-   ],
-   "note": "0.3.13 Fenhollow v1: plan has a 1-tile invisible collision rim (top/left/right)"
-  },
-  "ch_house_01": {
-   "tiles": [
-    6,
-    6
-   ],
-   "px": [
-    96,
-    110
-   ],
-   "origin_y": 14,
-   "inset_x": 0,
-   "door_tile": [
-    2,
-    5
-   ],
-   "storeys": 2,
-   "floor": "res://assets/sprites/towns/cinderholt/buildings/ch_house_01_floor.png",
-   "walls": "res://assets/sprites/towns/cinderholt/buildings/ch_house_01_walls.png",
-   "fade": [
-    "res://assets/sprites/towns/cinderholt/buildings/ch_house_01_upper1.png",
-    "res://assets/sprites/towns/cinderholt/buildings/ch_house_01_roof.png"
-   ],
-   "night": "res://assets/sprites/towns/cinderholt/buildings/ch_house_01_night.png",
-   "plan": [
-    "######",
-    "######",
-    "#ooo##",
-    "#ooo##",
-    "#ooo##",
-    "##D###"
-   ],
-   "note": "0.3.14 Cinderholt v1: plan has a 1-tile invisible collision rim (top/left/right)"
-  },
-  "ch_house_02": {
-   "tiles": [
-    6,
-    6
-   ],
-   "px": [
-    96,
-    110
-   ],
-   "origin_y": 14,
-   "inset_x": 0,
-   "door_tile": [
-    3,
-    5
-   ],
-   "storeys": 2,
-   "floor": "res://assets/sprites/towns/cinderholt/buildings/ch_house_02_floor.png",
-   "walls": "res://assets/sprites/towns/cinderholt/buildings/ch_house_02_walls.png",
-   "fade": [
-    "res://assets/sprites/towns/cinderholt/buildings/ch_house_02_upper1.png",
-    "res://assets/sprites/towns/cinderholt/buildings/ch_house_02_roof.png"
-   ],
-   "night": "res://assets/sprites/towns/cinderholt/buildings/ch_house_02_night.png",
-   "plan": [
-    "######",
-    "######",
-    "##ooo#",
-    "##ooo#",
-    "##ooo#",
-    "###D##"
-   ],
-   "note": "0.3.14 Cinderholt v1: plan has a 1-tile invisible collision rim (top/left/right)"
-  },
-  "ch_house_03": {
-   "tiles": [
-    6,
-    6
-   ],
-   "px": [
-    96,
-    96
-   ],
-   "origin_y": 0,
-   "inset_x": 0,
-   "door_tile": [
-    3,
-    5
-   ],
-   "storeys": 1,
-   "floor": "res://assets/sprites/towns/cinderholt/buildings/ch_house_03_floor.png",
-   "walls": "res://assets/sprites/towns/cinderholt/buildings/ch_house_03_walls.png",
-   "fade": [
-    "res://assets/sprites/towns/cinderholt/buildings/ch_house_03_roof.png"
-   ],
-   "night": "res://assets/sprites/towns/cinderholt/buildings/ch_house_03_night.png",
-   "plan": [
-    "######",
-    "######",
-    "##ooo#",
-    "##ooo#",
-    "##ooo#",
-    "###D##"
-   ],
-   "note": "0.3.14 Cinderholt v1: plan has a 1-tile invisible collision rim (top/left/right)"
-  },
-  "ch_house_04": {
-   "tiles": [
-    6,
-    6
-   ],
-   "px": [
-    96,
-    110
-   ],
-   "origin_y": 14,
-   "inset_x": 0,
-   "door_tile": [
-    2,
-    5
-   ],
-   "storeys": 2,
-   "floor": "res://assets/sprites/towns/cinderholt/buildings/ch_house_04_floor.png",
-   "walls": "res://assets/sprites/towns/cinderholt/buildings/ch_house_04_walls.png",
-   "fade": [
-    "res://assets/sprites/towns/cinderholt/buildings/ch_house_04_upper1.png",
-    "res://assets/sprites/towns/cinderholt/buildings/ch_house_04_roof.png"
-   ],
-   "night": "res://assets/sprites/towns/cinderholt/buildings/ch_house_04_night.png",
-   "plan": [
-    "######",
-    "######",
-    "#ooo##",
-    "#ooo##",
-    "#ooo##",
-    "##D###"
-   ],
-   "note": "0.3.14 Cinderholt v1: plan has a 1-tile invisible collision rim (top/left/right)"
-  },
-  "ch_house_05": {
-   "tiles": [
-    6,
-    6
-   ],
-   "px": [
-    96,
-    96
-   ],
-   "origin_y": 0,
-   "inset_x": 0,
-   "door_tile": [
-    3,
-    5
-   ],
-   "storeys": 1,
-   "floor": "res://assets/sprites/towns/cinderholt/buildings/ch_house_05_floor.png",
-   "walls": "res://assets/sprites/towns/cinderholt/buildings/ch_house_05_walls.png",
-   "fade": [
-    "res://assets/sprites/towns/cinderholt/buildings/ch_house_05_roof.png"
-   ],
-   "night": "res://assets/sprites/towns/cinderholt/buildings/ch_house_05_night.png",
-   "plan": [
-    "######",
-    "######",
-    "##ooo#",
-    "##ooo#",
-    "##ooo#",
-    "###D##"
-   ],
-   "note": "0.3.14 Cinderholt v1: plan has a 1-tile invisible collision rim (top/left/right)"
-  },
-  "ch_house_06": {
-   "tiles": [
-    5,
-    5
-   ],
-   "px": [
-    80,
-    94
-   ],
-   "origin_y": 14,
-   "inset_x": 0,
-   "door_tile": [
-    2,
-    4
-   ],
-   "storeys": 2,
-   "floor": "res://assets/sprites/towns/cinderholt/buildings/ch_house_06_floor.png",
-   "walls": "res://assets/sprites/towns/cinderholt/buildings/ch_house_06_walls.png",
-   "fade": [
-    "res://assets/sprites/towns/cinderholt/buildings/ch_house_06_upper1.png",
-    "res://assets/sprites/towns/cinderholt/buildings/ch_house_06_roof.png"
-   ],
-   "night": "res://assets/sprites/towns/cinderholt/buildings/ch_house_06_night.png",
-   "plan": [
-    "#####",
-    "#ooo#",
-    "#ooo#",
-    "#ooo#",
-    "##D##"
-   ],
-   "note": "0.3.14 Cinderholt v1: plan has a 1-tile invisible collision rim (top/left/right)"
-  },
-  "ch_house_07": {
-   "tiles": [
-    7,
-    7
-   ],
-   "px": [
-    112,
-    112
-   ],
-   "origin_y": 0,
-   "inset_x": 0,
-   "door_tile": [
-    4,
-    6
-   ],
-   "storeys": 1,
-   "floor": "res://assets/sprites/towns/cinderholt/buildings/ch_house_07_floor.png",
-   "walls": "res://assets/sprites/towns/cinderholt/buildings/ch_house_07_walls.png",
-   "fade": [
-    "res://assets/sprites/towns/cinderholt/buildings/ch_house_07_roof.png"
-   ],
-   "night": "res://assets/sprites/towns/cinderholt/buildings/ch_house_07_night.png",
-   "plan": [
-    "#######",
-    "#######",
-    "#######",
-    "###ooo#",
-    "###ooo#",
-    "###ooo#",
-    "####D##"
-   ],
-   "note": "0.3.14 Cinderholt v1: plan has a 1-tile invisible collision rim (top/left/right)"
-  },
-  "ch_house_08": {
-   "tiles": [
-    6,
-    6
-   ],
-   "px": [
-    96,
-    96
-   ],
-   "origin_y": 0,
-   "inset_x": 0,
-   "door_tile": [
-    3,
-    5
-   ],
-   "storeys": 1,
-   "floor": "res://assets/sprites/towns/cinderholt/buildings/ch_house_08_floor.png",
-   "walls": "res://assets/sprites/towns/cinderholt/buildings/ch_house_08_walls.png",
-   "fade": [
-    "res://assets/sprites/towns/cinderholt/buildings/ch_house_08_roof.png"
-   ],
-   "night": "res://assets/sprites/towns/cinderholt/buildings/ch_house_08_night.png",
-   "plan": [
-    "######",
-    "######",
-    "##ooo#",
-    "##ooo#",
-    "##ooo#",
-    "###D##"
-   ],
-   "note": "0.3.14 Cinderholt v1: plan has a 1-tile invisible collision rim (top/left/right)"
-  },
-  "ch_house_09": {
-   "tiles": [
-    6,
-    6
-   ],
-   "px": [
-    96,
-    110
-   ],
-   "origin_y": 14,
-   "inset_x": 0,
-   "door_tile": [
-    2,
-    5
-   ],
-   "storeys": 2,
-   "floor": "res://assets/sprites/towns/cinderholt/buildings/ch_house_09_floor.png",
-   "walls": "res://assets/sprites/towns/cinderholt/buildings/ch_house_09_walls.png",
-   "fade": [
-    "res://assets/sprites/towns/cinderholt/buildings/ch_house_09_upper1.png",
-    "res://assets/sprites/towns/cinderholt/buildings/ch_house_09_roof.png"
-   ],
-   "night": "res://assets/sprites/towns/cinderholt/buildings/ch_house_09_night.png",
-   "plan": [
-    "######",
-    "######",
-    "#ooo##",
-    "#ooo##",
-    "#ooo##",
-    "##D###"
-   ],
-   "note": "0.3.14 Cinderholt v1: plan has a 1-tile invisible collision rim (top/left/right)"
-  },
-  "ch_house_10": {
-   "tiles": [
-    7,
-    7
-   ],
-   "px": [
-    112,
-    126
-   ],
-   "origin_y": 14,
-   "inset_x": 0,
-   "door_tile": [
-    4,
-    6
-   ],
-   "storeys": 2,
-   "floor": "res://assets/sprites/towns/cinderholt/buildings/ch_house_10_floor.png",
-   "walls": "res://assets/sprites/towns/cinderholt/buildings/ch_house_10_walls.png",
-   "fade": [
-    "res://assets/sprites/towns/cinderholt/buildings/ch_house_10_upper1.png",
-    "res://assets/sprites/towns/cinderholt/buildings/ch_house_10_roof.png"
-   ],
-   "night": "res://assets/sprites/towns/cinderholt/buildings/ch_house_10_night.png",
-   "plan": [
-    "#######",
-    "#######",
-    "#######",
-    "##ooo##",
-    "##ooo##",
-    "##ooo##",
-    "####D##"
-   ],
-   "note": "0.3.14 Cinderholt v1: plan has a 1-tile invisible collision rim (top/left/right)"
-  },
-  "ch_house_11": {
-   "tiles": [
-    6,
-    6
-   ],
-   "px": [
-    96,
-    110
-   ],
-   "origin_y": 14,
-   "inset_x": 0,
-   "door_tile": [
-    2,
-    5
-   ],
-   "storeys": 2,
-   "floor": "res://assets/sprites/towns/cinderholt/buildings/ch_house_11_floor.png",
-   "walls": "res://assets/sprites/towns/cinderholt/buildings/ch_house_11_walls.png",
-   "fade": [
-    "res://assets/sprites/towns/cinderholt/buildings/ch_house_11_upper1.png",
-    "res://assets/sprites/towns/cinderholt/buildings/ch_house_11_roof.png"
-   ],
-   "night": "res://assets/sprites/towns/cinderholt/buildings/ch_house_11_night.png",
-   "plan": [
-    "######",
-    "######",
-    "#ooo##",
-    "#ooo##",
-    "#ooo##",
-    "##D###"
-   ],
-   "note": "0.3.14 Cinderholt v1: plan has a 1-tile invisible collision rim (top/left/right)"
-  },
-  "ch_house_12": {
-   "tiles": [
-    5,
-    5
-   ],
-   "px": [
-    80,
-    94
-   ],
-   "origin_y": 14,
-   "inset_x": 0,
-   "door_tile": [
-    3,
-    4
-   ],
-   "storeys": 2,
-   "floor": "res://assets/sprites/towns/cinderholt/buildings/ch_house_12_floor.png",
-   "walls": "res://assets/sprites/towns/cinderholt/buildings/ch_house_12_walls.png",
-   "fade": [
-    "res://assets/sprites/towns/cinderholt/buildings/ch_house_12_upper1.png",
-    "res://assets/sprites/towns/cinderholt/buildings/ch_house_12_roof.png"
-   ],
-   "night": "res://assets/sprites/towns/cinderholt/buildings/ch_house_12_night.png",
-   "plan": [
-    "#####",
-    "##ooo",
-    "##ooo",
-    "##ooo",
-    "###D#"
-   ],
-   "note": "0.3.14 Cinderholt v1: plan has a 1-tile invisible collision rim (top/left/right)"
-  },
-  "ch_church": {
-   "tiles": [
-    6,
-    8
-   ],
-   "px": [
-    96,
-    162
-   ],
-   "origin_y": 34,
-   "inset_x": 0,
-   "door_tile": [
-    3,
-    7
-   ],
-   "storeys": 2,
-   "floor": "res://assets/sprites/towns/cinderholt/buildings/ch_church_floor.png",
-   "walls": "res://assets/sprites/towns/cinderholt/buildings/ch_church_walls.png",
-   "fade": [
-    "res://assets/sprites/towns/cinderholt/buildings/ch_church_upper1.png",
-    "res://assets/sprites/towns/cinderholt/buildings/ch_church_roof.png"
-   ],
-   "night": "res://assets/sprites/towns/cinderholt/buildings/ch_church_night.png",
-   "plan": [
-    "######",
-    "######",
-    "######",
-    "######",
-    "#ooo##",
-    "#ooo##",
-    "#ooo##",
-    "###D##"
-   ],
-   "note": "0.3.14 Cinderholt v1: plan has a 1-tile invisible collision rim (top/left/right)"
-  },
-  "ch_bank": {
-   "tiles": [
-    7,
-    6
-   ],
-   "px": [
-    112,
-    110
-   ],
-   "origin_y": 14,
-   "inset_x": 0,
-   "door_tile": [
-    3,
-    5
-   ],
-   "storeys": 2,
-   "floor": "res://assets/sprites/towns/cinderholt/buildings/ch_bank_floor.png",
-   "walls": "res://assets/sprites/towns/cinderholt/buildings/ch_bank_walls.png",
-   "fade": [
-    "res://assets/sprites/towns/cinderholt/buildings/ch_bank_upper1.png",
-    "res://assets/sprites/towns/cinderholt/buildings/ch_bank_roof.png"
-   ],
-   "night": "res://assets/sprites/towns/cinderholt/buildings/ch_bank_night.png",
-   "plan": [
-    "#######",
-    "#######",
-    "##ooo##",
-    "##ooo##",
-    "##ooo##",
-    "###D###"
-   ],
-   "note": "0.3.14 Cinderholt v1: plan has a 1-tile invisible collision rim (top/left/right)"
-  },
-  "ch_general_store": {
-   "tiles": [
-    6,
-    6
-   ],
-   "px": [
-    96,
-    110
-   ],
-   "origin_y": 14,
-   "inset_x": 0,
-   "door_tile": [
-    2,
-    5
-   ],
-   "storeys": 2,
-   "floor": "res://assets/sprites/towns/cinderholt/buildings/ch_general_store_floor.png",
-   "walls": "res://assets/sprites/towns/cinderholt/buildings/ch_general_store_walls.png",
-   "fade": [
-    "res://assets/sprites/towns/cinderholt/buildings/ch_general_store_upper1.png",
-    "res://assets/sprites/towns/cinderholt/buildings/ch_general_store_roof.png"
-   ],
-   "night": "res://assets/sprites/towns/cinderholt/buildings/ch_general_store_night.png",
-   "plan": [
-    "######",
-    "######",
-    "#ooo##",
-    "#ooo##",
-    "#ooo##",
-    "##D###"
-   ],
-   "note": "0.3.14 Cinderholt v1: plan has a 1-tile invisible collision rim (top/left/right)"
-  },
-  "ch_smithy": {
-   "tiles": [
-    7,
-    6
-   ],
-   "px": [
-    112,
-    96
-   ],
-   "origin_y": 0,
-   "inset_x": 0,
-   "door_tile": [
-    2,
-    5
-   ],
-   "storeys": 1,
-   "floor": "res://assets/sprites/towns/cinderholt/buildings/ch_smithy_floor.png",
-   "walls": "res://assets/sprites/towns/cinderholt/buildings/ch_smithy_walls.png",
-   "fade": [
-    "res://assets/sprites/towns/cinderholt/buildings/ch_smithy_roof.png"
-   ],
-   "night": "res://assets/sprites/towns/cinderholt/buildings/ch_smithy_night.png",
-   "plan": [
-    "#######",
-    "#######",
-    "ooo####",
-    "ooo####",
-    "ooo####",
-    "##D####"
-   ],
-   "note": "0.3.14 Cinderholt v1: plan has a 1-tile invisible collision rim (top/left/right)"
-  },
-  "ch_cookhouse": {
-   "tiles": [
-    6,
-    6
-   ],
-   "px": [
-    96,
-    96
-   ],
-   "origin_y": 0,
-   "inset_x": 0,
-   "door_tile": [
-    2,
-    5
-   ],
-   "storeys": 1,
-   "floor": "res://assets/sprites/towns/cinderholt/buildings/ch_cookhouse_floor.png",
-   "walls": "res://assets/sprites/towns/cinderholt/buildings/ch_cookhouse_walls.png",
-   "fade": [
-    "res://assets/sprites/towns/cinderholt/buildings/ch_cookhouse_roof.png"
-   ],
-   "night": "res://assets/sprites/towns/cinderholt/buildings/ch_cookhouse_night.png",
-   "plan": [
-    "######",
-    "######",
-    "#ooo##",
-    "#ooo##",
-    "#ooo##",
-    "##D###"
-   ],
-   "note": "0.3.14 Cinderholt v1: plan has a 1-tile invisible collision rim (top/left/right)"
-  },
-  "ch_player_shop": {
-   "tiles": [
-    6,
-    6
-   ],
-   "px": [
-    96,
-    110
-   ],
-   "origin_y": 14,
-   "inset_x": 0,
-   "door_tile": [
-    2,
-    5
-   ],
-   "storeys": 2,
-   "floor": "res://assets/sprites/towns/cinderholt/buildings/ch_player_shop_floor.png",
-   "walls": "res://assets/sprites/towns/cinderholt/buildings/ch_player_shop_walls.png",
-   "fade": [
-    "res://assets/sprites/towns/cinderholt/buildings/ch_player_shop_upper1.png",
-    "res://assets/sprites/towns/cinderholt/buildings/ch_player_shop_roof.png"
-   ],
-   "night": "res://assets/sprites/towns/cinderholt/buildings/ch_player_shop_night.png",
-   "plan": [
-    "######",
-    "######",
-    "#ooo##",
-    "#ooo##",
-    "#ooo##",
-    "##D###"
-   ],
-   "note": "0.3.14 Cinderholt v1: plan has a 1-tile invisible collision rim (top/left/right)"
-  },
-  "ch_guard_post": {
-   "tiles": [
-    6,
-    6
-   ],
-   "px": [
-    96,
-    110
-   ],
-   "origin_y": 14,
-   "inset_x": 0,
-   "door_tile": [
-    2,
-    5
-   ],
-   "storeys": 2,
-   "floor": "res://assets/sprites/towns/cinderholt/buildings/ch_guard_post_floor.png",
-   "walls": "res://assets/sprites/towns/cinderholt/buildings/ch_guard_post_walls.png",
-   "fade": [
-    "res://assets/sprites/towns/cinderholt/buildings/ch_guard_post_upper1.png",
-    "res://assets/sprites/towns/cinderholt/buildings/ch_guard_post_roof.png"
-   ],
-   "night": "res://assets/sprites/towns/cinderholt/buildings/ch_guard_post_night.png",
-   "plan": [
-    "######",
-    "######",
-    "#ooo##",
-    "#ooo##",
-    "#ooo##",
-    "##D###"
-   ],
-   "note": "0.3.14 Cinderholt v1: plan has a 1-tile invisible collision rim (top/left/right)"
-  },
-  "ng_tent_01": {
-   "tiles": [
-    6,
-    6
-   ],
-   "px": [
-    96,
-    96
-   ],
-   "origin_y": 0,
-   "inset_x": 0,
-   "door_tile": [
-    3,
-    5
-   ],
-   "storeys": 1,
-   "floor": "res://assets/sprites/towns/cinderholt/buildings/ng_tent_01_floor.png",
-   "walls": "res://assets/sprites/towns/cinderholt/buildings/ng_tent_01_walls.png",
-   "fade": [
-    "res://assets/sprites/towns/cinderholt/buildings/ng_tent_01_roof.png"
-   ],
-   "night": "res://assets/sprites/towns/cinderholt/buildings/ng_tent_01_night.png",
-   "plan": [
-    "######",
-    "######",
-    "#ooo##",
-    "#ooo##",
-    "#ooo##",
-    "###D##"
-   ],
-   "note": "0.3.14 Cinderholt v1: plan has a 1-tile invisible collision rim (top/left/right)"
-  },
-  "ng_tent_02": {
-   "tiles": [
-    6,
-    6
-   ],
-   "px": [
-    96,
-    96
-   ],
-   "origin_y": 0,
-   "inset_x": 0,
-   "door_tile": [
-    3,
-    5
-   ],
-   "storeys": 1,
-   "floor": "res://assets/sprites/towns/cinderholt/buildings/ng_tent_02_floor.png",
-   "walls": "res://assets/sprites/towns/cinderholt/buildings/ng_tent_02_walls.png",
-   "fade": [
-    "res://assets/sprites/towns/cinderholt/buildings/ng_tent_02_roof.png"
-   ],
-   "night": "res://assets/sprites/towns/cinderholt/buildings/ng_tent_02_night.png",
-   "plan": [
-    "######",
-    "######",
-    "#ooo##",
-    "#ooo##",
-    "#ooo##",
-    "###D##"
-   ],
-   "note": "0.3.14 Cinderholt v1: plan has a 1-tile invisible collision rim (top/left/right)"
-  },
-  "ng_tent_03": {
-   "tiles": [
-    5,
-    5
-   ],
-   "px": [
-    80,
-    80
-   ],
-   "origin_y": 0,
-   "inset_x": 0,
-   "door_tile": [
-    2,
-    4
-   ],
-   "storeys": 1,
-   "floor": "res://assets/sprites/towns/cinderholt/buildings/ng_tent_03_floor.png",
-   "walls": "res://assets/sprites/towns/cinderholt/buildings/ng_tent_03_walls.png",
-   "fade": [
-    "res://assets/sprites/towns/cinderholt/buildings/ng_tent_03_roof.png"
-   ],
-   "night": "res://assets/sprites/towns/cinderholt/buildings/ng_tent_03_night.png",
-   "plan": [
-    "#####",
-    "#ooo#",
-    "#ooo#",
-    "#ooo#",
-    "##D##"
-   ],
-   "note": "0.3.14 Cinderholt v1: plan has a 1-tile invisible collision rim (top/left/right)"
-  },
-  "ng_tent_04": {
-   "tiles": [
-    6,
-    6
-   ],
-   "px": [
-    96,
-    96
-   ],
-   "origin_y": 0,
-   "inset_x": 0,
-   "door_tile": [
-    3,
-    5
-   ],
-   "storeys": 1,
-   "floor": "res://assets/sprites/towns/cinderholt/buildings/ng_tent_04_floor.png",
-   "walls": "res://assets/sprites/towns/cinderholt/buildings/ng_tent_04_walls.png",
-   "fade": [
-    "res://assets/sprites/towns/cinderholt/buildings/ng_tent_04_roof.png"
-   ],
-   "night": "res://assets/sprites/towns/cinderholt/buildings/ng_tent_04_night.png",
-   "plan": [
-    "######",
-    "######",
-    "#ooo##",
-    "#ooo##",
-    "#ooo##",
-    "###D##"
-   ],
-   "note": "0.3.14 Cinderholt v1: plan has a 1-tile invisible collision rim (top/left/right)"
-  },
-  "ng_command_tent": {
-   "tiles": [
-    8,
-    7
-   ],
-   "px": [
-    128,
-    112
-   ],
-   "origin_y": 0,
-   "inset_x": 0,
-   "door_tile": [
-    4,
-    6
-   ],
-   "storeys": 1,
-   "floor": "res://assets/sprites/towns/cinderholt/buildings/ng_command_tent_floor.png",
-   "walls": "res://assets/sprites/towns/cinderholt/buildings/ng_command_tent_walls.png",
-   "fade": [
-    "res://assets/sprites/towns/cinderholt/buildings/ng_command_tent_roof.png"
-   ],
-   "night": "res://assets/sprites/towns/cinderholt/buildings/ng_command_tent_night.png",
-   "plan": [
-    "########",
-    "########",
-    "########",
-    "##ooo###",
-    "##ooo###",
-    "##ooo###",
-    "####D###"
-   ],
-   "note": "0.3.14 Cinderholt v1: plan has a 1-tile invisible collision rim (top/left/right)"
-  },
-  "ng_barracks_hut": {
-   "tiles": [
-    6,
-    6
-   ],
-   "px": [
-    96,
-    96
-   ],
-   "origin_y": 0,
-   "inset_x": 0,
-   "door_tile": [
-    3,
-    5
-   ],
-   "storeys": 1,
-   "floor": "res://assets/sprites/towns/cinderholt/buildings/ng_barracks_hut_floor.png",
-   "walls": "res://assets/sprites/towns/cinderholt/buildings/ng_barracks_hut_walls.png",
-   "fade": [
-    "res://assets/sprites/towns/cinderholt/buildings/ng_barracks_hut_roof.png"
-   ],
-   "night": "res://assets/sprites/towns/cinderholt/buildings/ng_barracks_hut_night.png",
-   "plan": [
-    "######",
-    "######",
-    "#ooo##",
-    "#ooo##",
-    "#ooo##",
-    "###D##"
-   ],
-   "note": "0.3.14 Cinderholt v1: plan has a 1-tile invisible collision rim (top/left/right)"
-  },
   "v2_house_01": {
    "tiles": [
     6,
@@ -2548,6 +1079,1475 @@
    ],
    "night": ""
   },
+  "fh_house_01": {
+   "tiles": [
+    5,
+    5
+   ],
+   "px": [
+    80,
+    94
+   ],
+   "origin_y": 14,
+   "inset_x": 0,
+   "door_tile": [
+    3,
+    4
+   ],
+   "storeys": 2,
+   "floor": "res://assets/sprites/towns/fenhollow/buildings/fh_house_01_floor.png",
+   "walls": "res://assets/sprites/towns/fenhollow/buildings/fh_house_01_walls.png",
+   "fade": [
+    "res://assets/sprites/towns/fenhollow/buildings/fh_house_01_upper1.png",
+    "res://assets/sprites/towns/fenhollow/buildings/fh_house_01_roof.png"
+   ],
+   "night": "res://assets/sprites/towns/fenhollow/buildings/fh_house_01_night.png",
+   "plan": [
+    "#####",
+    "#ooo#",
+    "#ooo#",
+    "#ooo#",
+    "###D#"
+   ],
+   "note": "0.3.13 Fenhollow v1: plan has a 1-tile invisible collision rim (top/left/right)"
+  },
+  "fh_house_02": {
+   "tiles": [
+    6,
+    6
+   ],
+   "px": [
+    96,
+    110
+   ],
+   "origin_y": 14,
+   "inset_x": 0,
+   "door_tile": [
+    2,
+    5
+   ],
+   "storeys": 2,
+   "floor": "res://assets/sprites/towns/fenhollow/buildings/fh_house_02_floor.png",
+   "walls": "res://assets/sprites/towns/fenhollow/buildings/fh_house_02_walls.png",
+   "fade": [
+    "res://assets/sprites/towns/fenhollow/buildings/fh_house_02_upper1.png",
+    "res://assets/sprites/towns/fenhollow/buildings/fh_house_02_roof.png"
+   ],
+   "night": "res://assets/sprites/towns/fenhollow/buildings/fh_house_02_night.png",
+   "plan": [
+    "######",
+    "######",
+    "#ooo##",
+    "#ooo##",
+    "#ooo##",
+    "##D###"
+   ],
+   "note": "0.3.13 Fenhollow v1: plan has a 1-tile invisible collision rim (top/left/right)"
+  },
+  "fh_house_03": {
+   "tiles": [
+    6,
+    6
+   ],
+   "px": [
+    96,
+    110
+   ],
+   "origin_y": 14,
+   "inset_x": 0,
+   "door_tile": [
+    2,
+    5
+   ],
+   "storeys": 2,
+   "floor": "res://assets/sprites/towns/fenhollow/buildings/fh_house_03_floor.png",
+   "walls": "res://assets/sprites/towns/fenhollow/buildings/fh_house_03_walls.png",
+   "fade": [
+    "res://assets/sprites/towns/fenhollow/buildings/fh_house_03_upper1.png",
+    "res://assets/sprites/towns/fenhollow/buildings/fh_house_03_roof.png"
+   ],
+   "night": "res://assets/sprites/towns/fenhollow/buildings/fh_house_03_night.png",
+   "plan": [
+    "######",
+    "######",
+    "#ooo##",
+    "#ooo##",
+    "#ooo##",
+    "##D###"
+   ],
+   "note": "0.3.13 Fenhollow v1: plan has a 1-tile invisible collision rim (top/left/right)"
+  },
+  "fh_house_04": {
+   "tiles": [
+    6,
+    6
+   ],
+   "px": [
+    96,
+    110
+   ],
+   "origin_y": 14,
+   "inset_x": 0,
+   "door_tile": [
+    2,
+    5
+   ],
+   "storeys": 2,
+   "floor": "res://assets/sprites/towns/fenhollow/buildings/fh_house_04_floor.png",
+   "walls": "res://assets/sprites/towns/fenhollow/buildings/fh_house_04_walls.png",
+   "fade": [
+    "res://assets/sprites/towns/fenhollow/buildings/fh_house_04_upper1.png",
+    "res://assets/sprites/towns/fenhollow/buildings/fh_house_04_roof.png"
+   ],
+   "night": "res://assets/sprites/towns/fenhollow/buildings/fh_house_04_night.png",
+   "plan": [
+    "######",
+    "######",
+    "#ooo##",
+    "#ooo##",
+    "#ooo##",
+    "##D###"
+   ],
+   "note": "0.3.13 Fenhollow v1: plan has a 1-tile invisible collision rim (top/left/right)"
+  },
+  "fh_house_05": {
+   "tiles": [
+    6,
+    6
+   ],
+   "px": [
+    96,
+    110
+   ],
+   "origin_y": 14,
+   "inset_x": 0,
+   "door_tile": [
+    2,
+    5
+   ],
+   "storeys": 2,
+   "floor": "res://assets/sprites/towns/fenhollow/buildings/fh_house_05_floor.png",
+   "walls": "res://assets/sprites/towns/fenhollow/buildings/fh_house_05_walls.png",
+   "fade": [
+    "res://assets/sprites/towns/fenhollow/buildings/fh_house_05_upper1.png",
+    "res://assets/sprites/towns/fenhollow/buildings/fh_house_05_roof.png"
+   ],
+   "night": "res://assets/sprites/towns/fenhollow/buildings/fh_house_05_night.png",
+   "plan": [
+    "######",
+    "######",
+    "#ooo##",
+    "#ooo##",
+    "#ooo##",
+    "##D###"
+   ],
+   "note": "0.3.13 Fenhollow v1: plan has a 1-tile invisible collision rim (top/left/right)"
+  },
+  "fh_house_06": {
+   "tiles": [
+    6,
+    6
+   ],
+   "px": [
+    96,
+    96
+   ],
+   "origin_y": 0,
+   "inset_x": 0,
+   "door_tile": [
+    3,
+    5
+   ],
+   "storeys": 1,
+   "floor": "res://assets/sprites/towns/fenhollow/buildings/fh_house_06_floor.png",
+   "walls": "res://assets/sprites/towns/fenhollow/buildings/fh_house_06_walls.png",
+   "fade": [
+    "res://assets/sprites/towns/fenhollow/buildings/fh_house_06_roof.png"
+   ],
+   "night": "res://assets/sprites/towns/fenhollow/buildings/fh_house_06_night.png",
+   "plan": [
+    "######",
+    "######",
+    "##ooo#",
+    "##ooo#",
+    "##ooo#",
+    "###D##"
+   ],
+   "note": "0.3.13 Fenhollow v1: plan has a 1-tile invisible collision rim (top/left/right)"
+  },
+  "fh_house_07": {
+   "tiles": [
+    5,
+    5
+   ],
+   "px": [
+    80,
+    94
+   ],
+   "origin_y": 14,
+   "inset_x": 0,
+   "door_tile": [
+    2,
+    4
+   ],
+   "storeys": 2,
+   "floor": "res://assets/sprites/towns/fenhollow/buildings/fh_house_07_floor.png",
+   "walls": "res://assets/sprites/towns/fenhollow/buildings/fh_house_07_walls.png",
+   "fade": [
+    "res://assets/sprites/towns/fenhollow/buildings/fh_house_07_upper1.png",
+    "res://assets/sprites/towns/fenhollow/buildings/fh_house_07_roof.png"
+   ],
+   "night": "res://assets/sprites/towns/fenhollow/buildings/fh_house_07_night.png",
+   "plan": [
+    "#####",
+    "#ooo#",
+    "#ooo#",
+    "#ooo#",
+    "##D##"
+   ],
+   "note": "0.3.13 Fenhollow v1: plan has a 1-tile invisible collision rim (top/left/right)"
+  },
+  "fh_house_08": {
+   "tiles": [
+    6,
+    6
+   ],
+   "px": [
+    96,
+    110
+   ],
+   "origin_y": 14,
+   "inset_x": 0,
+   "door_tile": [
+    3,
+    5
+   ],
+   "storeys": 2,
+   "floor": "res://assets/sprites/towns/fenhollow/buildings/fh_house_08_floor.png",
+   "walls": "res://assets/sprites/towns/fenhollow/buildings/fh_house_08_walls.png",
+   "fade": [
+    "res://assets/sprites/towns/fenhollow/buildings/fh_house_08_upper1.png",
+    "res://assets/sprites/towns/fenhollow/buildings/fh_house_08_roof.png"
+   ],
+   "night": "res://assets/sprites/towns/fenhollow/buildings/fh_house_08_night.png",
+   "plan": [
+    "######",
+    "######",
+    "##ooo#",
+    "##ooo#",
+    "##ooo#",
+    "###D##"
+   ],
+   "note": "0.3.13 Fenhollow v1: plan has a 1-tile invisible collision rim (top/left/right)"
+  },
+  "fh_house_09": {
+   "tiles": [
+    6,
+    6
+   ],
+   "px": [
+    96,
+    96
+   ],
+   "origin_y": 0,
+   "inset_x": 0,
+   "door_tile": [
+    2,
+    5
+   ],
+   "storeys": 1,
+   "floor": "res://assets/sprites/towns/fenhollow/buildings/fh_house_09_floor.png",
+   "walls": "res://assets/sprites/towns/fenhollow/buildings/fh_house_09_walls.png",
+   "fade": [
+    "res://assets/sprites/towns/fenhollow/buildings/fh_house_09_roof.png"
+   ],
+   "night": "res://assets/sprites/towns/fenhollow/buildings/fh_house_09_night.png",
+   "plan": [
+    "######",
+    "######",
+    "#ooo##",
+    "#ooo##",
+    "#ooo##",
+    "##D###"
+   ],
+   "note": "0.3.13 Fenhollow v1: plan has a 1-tile invisible collision rim (top/left/right)"
+  },
+  "fh_house_10": {
+   "tiles": [
+    6,
+    6
+   ],
+   "px": [
+    96,
+    96
+   ],
+   "origin_y": 0,
+   "inset_x": 0,
+   "door_tile": [
+    2,
+    5
+   ],
+   "storeys": 1,
+   "floor": "res://assets/sprites/towns/fenhollow/buildings/fh_house_10_floor.png",
+   "walls": "res://assets/sprites/towns/fenhollow/buildings/fh_house_10_walls.png",
+   "fade": [
+    "res://assets/sprites/towns/fenhollow/buildings/fh_house_10_roof.png"
+   ],
+   "night": "res://assets/sprites/towns/fenhollow/buildings/fh_house_10_night.png",
+   "plan": [
+    "######",
+    "######",
+    "#ooo##",
+    "#ooo##",
+    "#ooo##",
+    "##D###"
+   ],
+   "note": "0.3.13 Fenhollow v1: plan has a 1-tile invisible collision rim (top/left/right)"
+  },
+  "fh_house_11": {
+   "tiles": [
+    6,
+    6
+   ],
+   "px": [
+    96,
+    96
+   ],
+   "origin_y": 0,
+   "inset_x": 0,
+   "door_tile": [
+    2,
+    5
+   ],
+   "storeys": 1,
+   "floor": "res://assets/sprites/towns/fenhollow/buildings/fh_house_11_floor.png",
+   "walls": "res://assets/sprites/towns/fenhollow/buildings/fh_house_11_walls.png",
+   "fade": [
+    "res://assets/sprites/towns/fenhollow/buildings/fh_house_11_roof.png"
+   ],
+   "night": "res://assets/sprites/towns/fenhollow/buildings/fh_house_11_night.png",
+   "plan": [
+    "######",
+    "######",
+    "#ooo##",
+    "#ooo##",
+    "#ooo##",
+    "##D###"
+   ],
+   "note": "0.3.13 Fenhollow v1: plan has a 1-tile invisible collision rim (top/left/right)"
+  },
+  "fh_house_12": {
+   "tiles": [
+    6,
+    6
+   ],
+   "px": [
+    96,
+    96
+   ],
+   "origin_y": 0,
+   "inset_x": 0,
+   "door_tile": [
+    2,
+    5
+   ],
+   "storeys": 1,
+   "floor": "res://assets/sprites/towns/fenhollow/buildings/fh_house_12_floor.png",
+   "walls": "res://assets/sprites/towns/fenhollow/buildings/fh_house_12_walls.png",
+   "fade": [
+    "res://assets/sprites/towns/fenhollow/buildings/fh_house_12_roof.png"
+   ],
+   "night": "res://assets/sprites/towns/fenhollow/buildings/fh_house_12_night.png",
+   "plan": [
+    "######",
+    "######",
+    "#ooo##",
+    "#ooo##",
+    "#ooo##",
+    "##D###"
+   ],
+   "note": "0.3.13 Fenhollow v1: plan has a 1-tile invisible collision rim (top/left/right)"
+  },
+  "fh_church": {
+   "tiles": [
+    7,
+    9
+   ],
+   "px": [
+    112,
+    178
+   ],
+   "origin_y": 34,
+   "inset_x": 0,
+   "door_tile": [
+    3,
+    8
+   ],
+   "storeys": 2,
+   "floor": "res://assets/sprites/towns/fenhollow/buildings/fh_church_floor.png",
+   "walls": "res://assets/sprites/towns/fenhollow/buildings/fh_church_walls.png",
+   "fade": [
+    "res://assets/sprites/towns/fenhollow/buildings/fh_church_upper1.png",
+    "res://assets/sprites/towns/fenhollow/buildings/fh_church_roof.png"
+   ],
+   "night": "res://assets/sprites/towns/fenhollow/buildings/fh_church_night.png",
+   "plan": [
+    "#######",
+    "#######",
+    "#######",
+    "#######",
+    "#######",
+    "##ooo##",
+    "##ooo##",
+    "##ooo##",
+    "###D###"
+   ],
+   "note": "0.3.13 Fenhollow v1: plan has a 1-tile invisible collision rim (top/left/right)"
+  },
+  "fh_bank": {
+   "tiles": [
+    7,
+    6
+   ],
+   "px": [
+    112,
+    110
+   ],
+   "origin_y": 14,
+   "inset_x": 0,
+   "door_tile": [
+    3,
+    5
+   ],
+   "storeys": 2,
+   "floor": "res://assets/sprites/towns/fenhollow/buildings/fh_bank_floor.png",
+   "walls": "res://assets/sprites/towns/fenhollow/buildings/fh_bank_walls.png",
+   "fade": [
+    "res://assets/sprites/towns/fenhollow/buildings/fh_bank_upper1.png",
+    "res://assets/sprites/towns/fenhollow/buildings/fh_bank_roof.png"
+   ],
+   "night": "res://assets/sprites/towns/fenhollow/buildings/fh_bank_night.png",
+   "plan": [
+    "#######",
+    "#######",
+    "##ooo##",
+    "##ooo##",
+    "##ooo##",
+    "###D###"
+   ],
+   "note": "0.3.13 Fenhollow v1: plan has a 1-tile invisible collision rim (top/left/right)"
+  },
+  "fh_general_store": {
+   "tiles": [
+    6,
+    6
+   ],
+   "px": [
+    96,
+    110
+   ],
+   "origin_y": 14,
+   "inset_x": 0,
+   "door_tile": [
+    2,
+    5
+   ],
+   "storeys": 2,
+   "floor": "res://assets/sprites/towns/fenhollow/buildings/fh_general_store_floor.png",
+   "walls": "res://assets/sprites/towns/fenhollow/buildings/fh_general_store_walls.png",
+   "fade": [
+    "res://assets/sprites/towns/fenhollow/buildings/fh_general_store_upper1.png",
+    "res://assets/sprites/towns/fenhollow/buildings/fh_general_store_roof.png"
+   ],
+   "night": "res://assets/sprites/towns/fenhollow/buildings/fh_general_store_night.png",
+   "plan": [
+    "######",
+    "######",
+    "#ooo##",
+    "#ooo##",
+    "#ooo##",
+    "##D###"
+   ],
+   "note": "0.3.13 Fenhollow v1: plan has a 1-tile invisible collision rim (top/left/right)"
+  },
+  "fh_smithy": {
+   "tiles": [
+    6,
+    6
+   ],
+   "px": [
+    96,
+    96
+   ],
+   "origin_y": 0,
+   "inset_x": 0,
+   "door_tile": [
+    1,
+    5
+   ],
+   "storeys": 1,
+   "floor": "res://assets/sprites/towns/fenhollow/buildings/fh_smithy_floor.png",
+   "walls": "res://assets/sprites/towns/fenhollow/buildings/fh_smithy_walls.png",
+   "fade": [
+    "res://assets/sprites/towns/fenhollow/buildings/fh_smithy_roof.png"
+   ],
+   "night": "res://assets/sprites/towns/fenhollow/buildings/fh_smithy_night.png",
+   "plan": [
+    "######",
+    "######",
+    "#oo###",
+    "#oo###",
+    "#oo###",
+    "#D####"
+   ],
+   "note": "0.3.13 Fenhollow v1: plan has a 1-tile invisible collision rim (top/left/right)"
+  },
+  "fh_cookhouse": {
+   "tiles": [
+    6,
+    6
+   ],
+   "px": [
+    96,
+    96
+   ],
+   "origin_y": 0,
+   "inset_x": 0,
+   "door_tile": [
+    2,
+    5
+   ],
+   "storeys": 1,
+   "floor": "res://assets/sprites/towns/fenhollow/buildings/fh_cookhouse_floor.png",
+   "walls": "res://assets/sprites/towns/fenhollow/buildings/fh_cookhouse_walls.png",
+   "fade": [
+    "res://assets/sprites/towns/fenhollow/buildings/fh_cookhouse_roof.png"
+   ],
+   "night": "res://assets/sprites/towns/fenhollow/buildings/fh_cookhouse_night.png",
+   "plan": [
+    "######",
+    "######",
+    "#ooo##",
+    "#ooo##",
+    "#ooo##",
+    "##D###"
+   ],
+   "note": "0.3.13 Fenhollow v1: plan has a 1-tile invisible collision rim (top/left/right)"
+  },
+  "fh_player_shop": {
+   "tiles": [
+    6,
+    6
+   ],
+   "px": [
+    96,
+    110
+   ],
+   "origin_y": 14,
+   "inset_x": 0,
+   "door_tile": [
+    2,
+    5
+   ],
+   "storeys": 2,
+   "floor": "res://assets/sprites/towns/fenhollow/buildings/fh_player_shop_floor.png",
+   "walls": "res://assets/sprites/towns/fenhollow/buildings/fh_player_shop_walls.png",
+   "fade": [
+    "res://assets/sprites/towns/fenhollow/buildings/fh_player_shop_upper1.png",
+    "res://assets/sprites/towns/fenhollow/buildings/fh_player_shop_roof.png"
+   ],
+   "night": "res://assets/sprites/towns/fenhollow/buildings/fh_player_shop_night.png",
+   "plan": [
+    "######",
+    "######",
+    "#ooo##",
+    "#ooo##",
+    "#ooo##",
+    "##D###"
+   ],
+   "note": "0.3.13 Fenhollow v1: plan has a 1-tile invisible collision rim (top/left/right)"
+  },
+  "fh_kell_lodge": {
+   "tiles": [
+    8,
+    6
+   ],
+   "px": [
+    128,
+    110
+   ],
+   "origin_y": 14,
+   "inset_x": 0,
+   "door_tile": [
+    2,
+    5
+   ],
+   "storeys": 2,
+   "floor": "res://assets/sprites/towns/fenhollow/buildings/fh_kell_lodge_floor.png",
+   "walls": "res://assets/sprites/towns/fenhollow/buildings/fh_kell_lodge_walls.png",
+   "fade": [
+    "res://assets/sprites/towns/fenhollow/buildings/fh_kell_lodge_upper1.png",
+    "res://assets/sprites/towns/fenhollow/buildings/fh_kell_lodge_roof.png"
+   ],
+   "night": "res://assets/sprites/towns/fenhollow/buildings/fh_kell_lodge_night.png",
+   "plan": [
+    "########",
+    "########",
+    "#ooo####",
+    "#ooo####",
+    "#ooo####",
+    "##D#####"
+   ],
+   "note": "0.3.13 Fenhollow v1: plan has a 1-tile invisible collision rim (top/left/right)"
+  },
+  "fh_guard_post": {
+   "tiles": [
+    6,
+    6
+   ],
+   "px": [
+    96,
+    130
+   ],
+   "origin_y": 34,
+   "inset_x": 0,
+   "door_tile": [
+    2,
+    5
+   ],
+   "storeys": 2,
+   "floor": "res://assets/sprites/towns/fenhollow/buildings/fh_guard_post_floor.png",
+   "walls": "res://assets/sprites/towns/fenhollow/buildings/fh_guard_post_walls.png",
+   "fade": [
+    "res://assets/sprites/towns/fenhollow/buildings/fh_guard_post_upper1.png",
+    "res://assets/sprites/towns/fenhollow/buildings/fh_guard_post_roof.png"
+   ],
+   "night": "res://assets/sprites/towns/fenhollow/buildings/fh_guard_post_night.png",
+   "plan": [
+    "######",
+    "######",
+    "#ooo##",
+    "#ooo##",
+    "#ooo##",
+    "##D###"
+   ],
+   "note": "0.3.13 Fenhollow v1: plan has a 1-tile invisible collision rim (top/left/right)"
+  },
+  "ch_house_01": {
+   "tiles": [
+    6,
+    6
+   ],
+   "px": [
+    96,
+    110
+   ],
+   "origin_y": 14,
+   "inset_x": 0,
+   "door_tile": [
+    2,
+    5
+   ],
+   "storeys": 2,
+   "floor": "res://assets/sprites/towns/cinderholt/buildings/ch_house_01_floor.png",
+   "walls": "res://assets/sprites/towns/cinderholt/buildings/ch_house_01_walls.png",
+   "fade": [
+    "res://assets/sprites/towns/cinderholt/buildings/ch_house_01_upper1.png",
+    "res://assets/sprites/towns/cinderholt/buildings/ch_house_01_roof.png"
+   ],
+   "night": "res://assets/sprites/towns/cinderholt/buildings/ch_house_01_night.png",
+   "plan": [
+    "######",
+    "######",
+    "#ooo##",
+    "#ooo##",
+    "#ooo##",
+    "##D###"
+   ],
+   "note": "0.3.14 Cinderholt v1: plan has a 1-tile invisible collision rim (top/left/right)"
+  },
+  "ch_house_02": {
+   "tiles": [
+    6,
+    6
+   ],
+   "px": [
+    96,
+    110
+   ],
+   "origin_y": 14,
+   "inset_x": 0,
+   "door_tile": [
+    3,
+    5
+   ],
+   "storeys": 2,
+   "floor": "res://assets/sprites/towns/cinderholt/buildings/ch_house_02_floor.png",
+   "walls": "res://assets/sprites/towns/cinderholt/buildings/ch_house_02_walls.png",
+   "fade": [
+    "res://assets/sprites/towns/cinderholt/buildings/ch_house_02_upper1.png",
+    "res://assets/sprites/towns/cinderholt/buildings/ch_house_02_roof.png"
+   ],
+   "night": "res://assets/sprites/towns/cinderholt/buildings/ch_house_02_night.png",
+   "plan": [
+    "######",
+    "######",
+    "##ooo#",
+    "##ooo#",
+    "##ooo#",
+    "###D##"
+   ],
+   "note": "0.3.14 Cinderholt v1: plan has a 1-tile invisible collision rim (top/left/right)"
+  },
+  "ch_house_03": {
+   "tiles": [
+    6,
+    6
+   ],
+   "px": [
+    96,
+    96
+   ],
+   "origin_y": 0,
+   "inset_x": 0,
+   "door_tile": [
+    3,
+    5
+   ],
+   "storeys": 1,
+   "floor": "res://assets/sprites/towns/cinderholt/buildings/ch_house_03_floor.png",
+   "walls": "res://assets/sprites/towns/cinderholt/buildings/ch_house_03_walls.png",
+   "fade": [
+    "res://assets/sprites/towns/cinderholt/buildings/ch_house_03_roof.png"
+   ],
+   "night": "res://assets/sprites/towns/cinderholt/buildings/ch_house_03_night.png",
+   "plan": [
+    "######",
+    "######",
+    "##ooo#",
+    "##ooo#",
+    "##ooo#",
+    "###D##"
+   ],
+   "note": "0.3.14 Cinderholt v1: plan has a 1-tile invisible collision rim (top/left/right)"
+  },
+  "ch_house_04": {
+   "tiles": [
+    6,
+    6
+   ],
+   "px": [
+    96,
+    110
+   ],
+   "origin_y": 14,
+   "inset_x": 0,
+   "door_tile": [
+    2,
+    5
+   ],
+   "storeys": 2,
+   "floor": "res://assets/sprites/towns/cinderholt/buildings/ch_house_04_floor.png",
+   "walls": "res://assets/sprites/towns/cinderholt/buildings/ch_house_04_walls.png",
+   "fade": [
+    "res://assets/sprites/towns/cinderholt/buildings/ch_house_04_upper1.png",
+    "res://assets/sprites/towns/cinderholt/buildings/ch_house_04_roof.png"
+   ],
+   "night": "res://assets/sprites/towns/cinderholt/buildings/ch_house_04_night.png",
+   "plan": [
+    "######",
+    "######",
+    "#ooo##",
+    "#ooo##",
+    "#ooo##",
+    "##D###"
+   ],
+   "note": "0.3.14 Cinderholt v1: plan has a 1-tile invisible collision rim (top/left/right)"
+  },
+  "ch_house_05": {
+   "tiles": [
+    6,
+    6
+   ],
+   "px": [
+    96,
+    96
+   ],
+   "origin_y": 0,
+   "inset_x": 0,
+   "door_tile": [
+    3,
+    5
+   ],
+   "storeys": 1,
+   "floor": "res://assets/sprites/towns/cinderholt/buildings/ch_house_05_floor.png",
+   "walls": "res://assets/sprites/towns/cinderholt/buildings/ch_house_05_walls.png",
+   "fade": [
+    "res://assets/sprites/towns/cinderholt/buildings/ch_house_05_roof.png"
+   ],
+   "night": "res://assets/sprites/towns/cinderholt/buildings/ch_house_05_night.png",
+   "plan": [
+    "######",
+    "######",
+    "##ooo#",
+    "##ooo#",
+    "##ooo#",
+    "###D##"
+   ],
+   "note": "0.3.14 Cinderholt v1: plan has a 1-tile invisible collision rim (top/left/right)"
+  },
+  "ch_house_06": {
+   "tiles": [
+    5,
+    5
+   ],
+   "px": [
+    80,
+    94
+   ],
+   "origin_y": 14,
+   "inset_x": 0,
+   "door_tile": [
+    2,
+    4
+   ],
+   "storeys": 2,
+   "floor": "res://assets/sprites/towns/cinderholt/buildings/ch_house_06_floor.png",
+   "walls": "res://assets/sprites/towns/cinderholt/buildings/ch_house_06_walls.png",
+   "fade": [
+    "res://assets/sprites/towns/cinderholt/buildings/ch_house_06_upper1.png",
+    "res://assets/sprites/towns/cinderholt/buildings/ch_house_06_roof.png"
+   ],
+   "night": "res://assets/sprites/towns/cinderholt/buildings/ch_house_06_night.png",
+   "plan": [
+    "#####",
+    "#ooo#",
+    "#ooo#",
+    "#ooo#",
+    "##D##"
+   ],
+   "note": "0.3.14 Cinderholt v1: plan has a 1-tile invisible collision rim (top/left/right)"
+  },
+  "ch_house_07": {
+   "tiles": [
+    7,
+    7
+   ],
+   "px": [
+    112,
+    112
+   ],
+   "origin_y": 0,
+   "inset_x": 0,
+   "door_tile": [
+    4,
+    6
+   ],
+   "storeys": 1,
+   "floor": "res://assets/sprites/towns/cinderholt/buildings/ch_house_07_floor.png",
+   "walls": "res://assets/sprites/towns/cinderholt/buildings/ch_house_07_walls.png",
+   "fade": [
+    "res://assets/sprites/towns/cinderholt/buildings/ch_house_07_roof.png"
+   ],
+   "night": "res://assets/sprites/towns/cinderholt/buildings/ch_house_07_night.png",
+   "plan": [
+    "#######",
+    "#######",
+    "#######",
+    "###ooo#",
+    "###ooo#",
+    "###ooo#",
+    "####D##"
+   ],
+   "note": "0.3.14 Cinderholt v1: plan has a 1-tile invisible collision rim (top/left/right)"
+  },
+  "ch_house_08": {
+   "tiles": [
+    6,
+    6
+   ],
+   "px": [
+    96,
+    96
+   ],
+   "origin_y": 0,
+   "inset_x": 0,
+   "door_tile": [
+    3,
+    5
+   ],
+   "storeys": 1,
+   "floor": "res://assets/sprites/towns/cinderholt/buildings/ch_house_08_floor.png",
+   "walls": "res://assets/sprites/towns/cinderholt/buildings/ch_house_08_walls.png",
+   "fade": [
+    "res://assets/sprites/towns/cinderholt/buildings/ch_house_08_roof.png"
+   ],
+   "night": "res://assets/sprites/towns/cinderholt/buildings/ch_house_08_night.png",
+   "plan": [
+    "######",
+    "######",
+    "##ooo#",
+    "##ooo#",
+    "##ooo#",
+    "###D##"
+   ],
+   "note": "0.3.14 Cinderholt v1: plan has a 1-tile invisible collision rim (top/left/right)"
+  },
+  "ch_house_09": {
+   "tiles": [
+    6,
+    6
+   ],
+   "px": [
+    96,
+    110
+   ],
+   "origin_y": 14,
+   "inset_x": 0,
+   "door_tile": [
+    2,
+    5
+   ],
+   "storeys": 2,
+   "floor": "res://assets/sprites/towns/cinderholt/buildings/ch_house_09_floor.png",
+   "walls": "res://assets/sprites/towns/cinderholt/buildings/ch_house_09_walls.png",
+   "fade": [
+    "res://assets/sprites/towns/cinderholt/buildings/ch_house_09_upper1.png",
+    "res://assets/sprites/towns/cinderholt/buildings/ch_house_09_roof.png"
+   ],
+   "night": "res://assets/sprites/towns/cinderholt/buildings/ch_house_09_night.png",
+   "plan": [
+    "######",
+    "######",
+    "#ooo##",
+    "#ooo##",
+    "#ooo##",
+    "##D###"
+   ],
+   "note": "0.3.14 Cinderholt v1: plan has a 1-tile invisible collision rim (top/left/right)"
+  },
+  "ch_house_10": {
+   "tiles": [
+    7,
+    7
+   ],
+   "px": [
+    112,
+    126
+   ],
+   "origin_y": 14,
+   "inset_x": 0,
+   "door_tile": [
+    4,
+    6
+   ],
+   "storeys": 2,
+   "floor": "res://assets/sprites/towns/cinderholt/buildings/ch_house_10_floor.png",
+   "walls": "res://assets/sprites/towns/cinderholt/buildings/ch_house_10_walls.png",
+   "fade": [
+    "res://assets/sprites/towns/cinderholt/buildings/ch_house_10_upper1.png",
+    "res://assets/sprites/towns/cinderholt/buildings/ch_house_10_roof.png"
+   ],
+   "night": "res://assets/sprites/towns/cinderholt/buildings/ch_house_10_night.png",
+   "plan": [
+    "#######",
+    "#######",
+    "#######",
+    "##ooo##",
+    "##ooo##",
+    "##ooo##",
+    "####D##"
+   ],
+   "note": "0.3.14 Cinderholt v1: plan has a 1-tile invisible collision rim (top/left/right)"
+  },
+  "ch_house_11": {
+   "tiles": [
+    6,
+    6
+   ],
+   "px": [
+    96,
+    110
+   ],
+   "origin_y": 14,
+   "inset_x": 0,
+   "door_tile": [
+    2,
+    5
+   ],
+   "storeys": 2,
+   "floor": "res://assets/sprites/towns/cinderholt/buildings/ch_house_11_floor.png",
+   "walls": "res://assets/sprites/towns/cinderholt/buildings/ch_house_11_walls.png",
+   "fade": [
+    "res://assets/sprites/towns/cinderholt/buildings/ch_house_11_upper1.png",
+    "res://assets/sprites/towns/cinderholt/buildings/ch_house_11_roof.png"
+   ],
+   "night": "res://assets/sprites/towns/cinderholt/buildings/ch_house_11_night.png",
+   "plan": [
+    "######",
+    "######",
+    "#ooo##",
+    "#ooo##",
+    "#ooo##",
+    "##D###"
+   ],
+   "note": "0.3.14 Cinderholt v1: plan has a 1-tile invisible collision rim (top/left/right)"
+  },
+  "ch_house_12": {
+   "tiles": [
+    5,
+    5
+   ],
+   "px": [
+    80,
+    94
+   ],
+   "origin_y": 14,
+   "inset_x": 0,
+   "door_tile": [
+    3,
+    4
+   ],
+   "storeys": 2,
+   "floor": "res://assets/sprites/towns/cinderholt/buildings/ch_house_12_floor.png",
+   "walls": "res://assets/sprites/towns/cinderholt/buildings/ch_house_12_walls.png",
+   "fade": [
+    "res://assets/sprites/towns/cinderholt/buildings/ch_house_12_upper1.png",
+    "res://assets/sprites/towns/cinderholt/buildings/ch_house_12_roof.png"
+   ],
+   "night": "res://assets/sprites/towns/cinderholt/buildings/ch_house_12_night.png",
+   "plan": [
+    "#####",
+    "##oo#",
+    "##oo#",
+    "##oo#",
+    "###D#"
+   ],
+   "note": "0.3.14 Cinderholt v1: plan has a 1-tile invisible collision rim (top/left/right)"
+  },
+  "ch_church": {
+   "tiles": [
+    6,
+    8
+   ],
+   "px": [
+    96,
+    162
+   ],
+   "origin_y": 34,
+   "inset_x": 0,
+   "door_tile": [
+    3,
+    7
+   ],
+   "storeys": 2,
+   "floor": "res://assets/sprites/towns/cinderholt/buildings/ch_church_floor.png",
+   "walls": "res://assets/sprites/towns/cinderholt/buildings/ch_church_walls.png",
+   "fade": [
+    "res://assets/sprites/towns/cinderholt/buildings/ch_church_upper1.png",
+    "res://assets/sprites/towns/cinderholt/buildings/ch_church_roof.png"
+   ],
+   "night": "res://assets/sprites/towns/cinderholt/buildings/ch_church_night.png",
+   "plan": [
+    "######",
+    "######",
+    "######",
+    "######",
+    "#ooo##",
+    "#ooo##",
+    "#ooo##",
+    "###D##"
+   ],
+   "note": "0.3.14 Cinderholt v1: plan has a 1-tile invisible collision rim (top/left/right)"
+  },
+  "ch_bank": {
+   "tiles": [
+    7,
+    6
+   ],
+   "px": [
+    112,
+    110
+   ],
+   "origin_y": 14,
+   "inset_x": 0,
+   "door_tile": [
+    3,
+    5
+   ],
+   "storeys": 2,
+   "floor": "res://assets/sprites/towns/cinderholt/buildings/ch_bank_floor.png",
+   "walls": "res://assets/sprites/towns/cinderholt/buildings/ch_bank_walls.png",
+   "fade": [
+    "res://assets/sprites/towns/cinderholt/buildings/ch_bank_upper1.png",
+    "res://assets/sprites/towns/cinderholt/buildings/ch_bank_roof.png"
+   ],
+   "night": "res://assets/sprites/towns/cinderholt/buildings/ch_bank_night.png",
+   "plan": [
+    "#######",
+    "#######",
+    "##ooo##",
+    "##ooo##",
+    "##ooo##",
+    "###D###"
+   ],
+   "note": "0.3.14 Cinderholt v1: plan has a 1-tile invisible collision rim (top/left/right)"
+  },
+  "ch_general_store": {
+   "tiles": [
+    6,
+    6
+   ],
+   "px": [
+    96,
+    110
+   ],
+   "origin_y": 14,
+   "inset_x": 0,
+   "door_tile": [
+    2,
+    5
+   ],
+   "storeys": 2,
+   "floor": "res://assets/sprites/towns/cinderholt/buildings/ch_general_store_floor.png",
+   "walls": "res://assets/sprites/towns/cinderholt/buildings/ch_general_store_walls.png",
+   "fade": [
+    "res://assets/sprites/towns/cinderholt/buildings/ch_general_store_upper1.png",
+    "res://assets/sprites/towns/cinderholt/buildings/ch_general_store_roof.png"
+   ],
+   "night": "res://assets/sprites/towns/cinderholt/buildings/ch_general_store_night.png",
+   "plan": [
+    "######",
+    "######",
+    "#ooo##",
+    "#ooo##",
+    "#ooo##",
+    "##D###"
+   ],
+   "note": "0.3.14 Cinderholt v1: plan has a 1-tile invisible collision rim (top/left/right)"
+  },
+  "ch_smithy": {
+   "tiles": [
+    7,
+    6
+   ],
+   "px": [
+    112,
+    96
+   ],
+   "origin_y": 0,
+   "inset_x": 0,
+   "door_tile": [
+    2,
+    5
+   ],
+   "storeys": 1,
+   "floor": "res://assets/sprites/towns/cinderholt/buildings/ch_smithy_floor.png",
+   "walls": "res://assets/sprites/towns/cinderholt/buildings/ch_smithy_walls.png",
+   "fade": [
+    "res://assets/sprites/towns/cinderholt/buildings/ch_smithy_roof.png"
+   ],
+   "night": "res://assets/sprites/towns/cinderholt/buildings/ch_smithy_night.png",
+   "plan": [
+    "#######",
+    "#######",
+    "#oo####",
+    "#oo####",
+    "#oo####",
+    "##D####"
+   ],
+   "note": "0.3.14 Cinderholt v1: plan has a 1-tile invisible collision rim (top/left/right)"
+  },
+  "ch_cookhouse": {
+   "tiles": [
+    6,
+    6
+   ],
+   "px": [
+    96,
+    96
+   ],
+   "origin_y": 0,
+   "inset_x": 0,
+   "door_tile": [
+    2,
+    5
+   ],
+   "storeys": 1,
+   "floor": "res://assets/sprites/towns/cinderholt/buildings/ch_cookhouse_floor.png",
+   "walls": "res://assets/sprites/towns/cinderholt/buildings/ch_cookhouse_walls.png",
+   "fade": [
+    "res://assets/sprites/towns/cinderholt/buildings/ch_cookhouse_roof.png"
+   ],
+   "night": "res://assets/sprites/towns/cinderholt/buildings/ch_cookhouse_night.png",
+   "plan": [
+    "######",
+    "######",
+    "#ooo##",
+    "#ooo##",
+    "#ooo##",
+    "##D###"
+   ],
+   "note": "0.3.14 Cinderholt v1: plan has a 1-tile invisible collision rim (top/left/right)"
+  },
+  "ch_player_shop": {
+   "tiles": [
+    6,
+    6
+   ],
+   "px": [
+    96,
+    110
+   ],
+   "origin_y": 14,
+   "inset_x": 0,
+   "door_tile": [
+    2,
+    5
+   ],
+   "storeys": 2,
+   "floor": "res://assets/sprites/towns/cinderholt/buildings/ch_player_shop_floor.png",
+   "walls": "res://assets/sprites/towns/cinderholt/buildings/ch_player_shop_walls.png",
+   "fade": [
+    "res://assets/sprites/towns/cinderholt/buildings/ch_player_shop_upper1.png",
+    "res://assets/sprites/towns/cinderholt/buildings/ch_player_shop_roof.png"
+   ],
+   "night": "res://assets/sprites/towns/cinderholt/buildings/ch_player_shop_night.png",
+   "plan": [
+    "######",
+    "######",
+    "#ooo##",
+    "#ooo##",
+    "#ooo##",
+    "##D###"
+   ],
+   "note": "0.3.14 Cinderholt v1: plan has a 1-tile invisible collision rim (top/left/right)"
+  },
+  "ch_guard_post": {
+   "tiles": [
+    6,
+    6
+   ],
+   "px": [
+    96,
+    110
+   ],
+   "origin_y": 14,
+   "inset_x": 0,
+   "door_tile": [
+    2,
+    5
+   ],
+   "storeys": 2,
+   "floor": "res://assets/sprites/towns/cinderholt/buildings/ch_guard_post_floor.png",
+   "walls": "res://assets/sprites/towns/cinderholt/buildings/ch_guard_post_walls.png",
+   "fade": [
+    "res://assets/sprites/towns/cinderholt/buildings/ch_guard_post_upper1.png",
+    "res://assets/sprites/towns/cinderholt/buildings/ch_guard_post_roof.png"
+   ],
+   "night": "res://assets/sprites/towns/cinderholt/buildings/ch_guard_post_night.png",
+   "plan": [
+    "######",
+    "######",
+    "#ooo##",
+    "#ooo##",
+    "#ooo##",
+    "##D###"
+   ],
+   "note": "0.3.14 Cinderholt v1: plan has a 1-tile invisible collision rim (top/left/right)"
+  },
+  "ng_tent_01": {
+   "tiles": [
+    6,
+    6
+   ],
+   "px": [
+    96,
+    96
+   ],
+   "origin_y": 0,
+   "inset_x": 0,
+   "door_tile": [
+    3,
+    5
+   ],
+   "storeys": 1,
+   "floor": "res://assets/sprites/towns/cinderholt/buildings/ng_tent_01_floor.png",
+   "walls": "res://assets/sprites/towns/cinderholt/buildings/ng_tent_01_walls.png",
+   "fade": [
+    "res://assets/sprites/towns/cinderholt/buildings/ng_tent_01_roof.png"
+   ],
+   "night": "res://assets/sprites/towns/cinderholt/buildings/ng_tent_01_night.png",
+   "plan": [
+    "######",
+    "######",
+    "#ooo##",
+    "#ooo##",
+    "#ooo##",
+    "###D##"
+   ],
+   "note": "0.3.14 Cinderholt v1: plan has a 1-tile invisible collision rim (top/left/right)"
+  },
+  "ng_tent_02": {
+   "tiles": [
+    6,
+    6
+   ],
+   "px": [
+    96,
+    96
+   ],
+   "origin_y": 0,
+   "inset_x": 0,
+   "door_tile": [
+    3,
+    5
+   ],
+   "storeys": 1,
+   "floor": "res://assets/sprites/towns/cinderholt/buildings/ng_tent_02_floor.png",
+   "walls": "res://assets/sprites/towns/cinderholt/buildings/ng_tent_02_walls.png",
+   "fade": [
+    "res://assets/sprites/towns/cinderholt/buildings/ng_tent_02_roof.png"
+   ],
+   "night": "res://assets/sprites/towns/cinderholt/buildings/ng_tent_02_night.png",
+   "plan": [
+    "######",
+    "######",
+    "#ooo##",
+    "#ooo##",
+    "#ooo##",
+    "###D##"
+   ],
+   "note": "0.3.14 Cinderholt v1: plan has a 1-tile invisible collision rim (top/left/right)"
+  },
+  "ng_tent_03": {
+   "tiles": [
+    5,
+    5
+   ],
+   "px": [
+    80,
+    80
+   ],
+   "origin_y": 0,
+   "inset_x": 0,
+   "door_tile": [
+    2,
+    4
+   ],
+   "storeys": 1,
+   "floor": "res://assets/sprites/towns/cinderholt/buildings/ng_tent_03_floor.png",
+   "walls": "res://assets/sprites/towns/cinderholt/buildings/ng_tent_03_walls.png",
+   "fade": [
+    "res://assets/sprites/towns/cinderholt/buildings/ng_tent_03_roof.png"
+   ],
+   "night": "res://assets/sprites/towns/cinderholt/buildings/ng_tent_03_night.png",
+   "plan": [
+    "#####",
+    "#ooo#",
+    "#ooo#",
+    "#ooo#",
+    "##D##"
+   ],
+   "note": "0.3.14 Cinderholt v1: plan has a 1-tile invisible collision rim (top/left/right)"
+  },
+  "ng_tent_04": {
+   "tiles": [
+    6,
+    6
+   ],
+   "px": [
+    96,
+    96
+   ],
+   "origin_y": 0,
+   "inset_x": 0,
+   "door_tile": [
+    3,
+    5
+   ],
+   "storeys": 1,
+   "floor": "res://assets/sprites/towns/cinderholt/buildings/ng_tent_04_floor.png",
+   "walls": "res://assets/sprites/towns/cinderholt/buildings/ng_tent_04_walls.png",
+   "fade": [
+    "res://assets/sprites/towns/cinderholt/buildings/ng_tent_04_roof.png"
+   ],
+   "night": "res://assets/sprites/towns/cinderholt/buildings/ng_tent_04_night.png",
+   "plan": [
+    "######",
+    "######",
+    "#ooo##",
+    "#ooo##",
+    "#ooo##",
+    "###D##"
+   ],
+   "note": "0.3.14 Cinderholt v1: plan has a 1-tile invisible collision rim (top/left/right)"
+  },
+  "ng_command_tent": {
+   "tiles": [
+    8,
+    7
+   ],
+   "px": [
+    128,
+    112
+   ],
+   "origin_y": 0,
+   "inset_x": 0,
+   "door_tile": [
+    4,
+    6
+   ],
+   "storeys": 1,
+   "floor": "res://assets/sprites/towns/cinderholt/buildings/ng_command_tent_floor.png",
+   "walls": "res://assets/sprites/towns/cinderholt/buildings/ng_command_tent_walls.png",
+   "fade": [
+    "res://assets/sprites/towns/cinderholt/buildings/ng_command_tent_roof.png"
+   ],
+   "night": "res://assets/sprites/towns/cinderholt/buildings/ng_command_tent_night.png",
+   "plan": [
+    "########",
+    "########",
+    "########",
+    "##ooo###",
+    "##ooo###",
+    "##ooo###",
+    "####D###"
+   ],
+   "note": "0.3.14 Cinderholt v1: plan has a 1-tile invisible collision rim (top/left/right)"
+  },
+  "ng_barracks_hut": {
+   "tiles": [
+    6,
+    6
+   ],
+   "px": [
+    96,
+    96
+   ],
+   "origin_y": 0,
+   "inset_x": 0,
+   "door_tile": [
+    3,
+    5
+   ],
+   "storeys": 1,
+   "floor": "res://assets/sprites/towns/cinderholt/buildings/ng_barracks_hut_floor.png",
+   "walls": "res://assets/sprites/towns/cinderholt/buildings/ng_barracks_hut_walls.png",
+   "fade": [
+    "res://assets/sprites/towns/cinderholt/buildings/ng_barracks_hut_roof.png"
+   ],
+   "night": "res://assets/sprites/towns/cinderholt/buildings/ng_barracks_hut_night.png",
+   "plan": [
+    "######",
+    "######",
+    "#ooo##",
+    "#ooo##",
+    "#ooo##",
+    "###D##"
+   ],
+   "note": "0.3.14 Cinderholt v1: plan has a 1-tile invisible collision rim (top/left/right)"
+  },
   "house_cottage_round": {
    "tiles": [
     6,
@@ -2603,9 +2603,9 @@
    "plan": [
     "######",
     "######",
-    "ooo###",
-    "ooo###",
-    "ooo###",
+    "#oo###",
+    "#oo###",
+    "#oo###",
     "#D####"
    ]
   },
@@ -2664,9 +2664,9 @@
    "plan": [
     "######",
     "######",
-    "###ooo",
-    "###ooo",
-    "###ooo",
+    "###oo#",
+    "###oo#",
+    "###oo#",
     "####D#"
    ]
   },
@@ -2725,9 +2725,9 @@
    "plan": [
     "######",
     "######",
-    "ooo###",
-    "ooo###",
-    "ooo###",
+    "#oo###",
+    "#oo###",
+    "#oo###",
     "##D###"
    ]
   },
@@ -2815,9 +2815,9 @@
    "plan": [
     "######",
     "######",
-    "ooo###",
-    "ooo###",
-    "ooo###",
+    "#oo###",
+    "#oo###",
+    "#oo###",
     "#D####"
    ]
   },
@@ -3229,9 +3229,9 @@
    "plan": [
     "######",
     "######",
-    "ooo###",
-    "ooo###",
-    "ooo###",
+    "#oo###",
+    "#oo###",
+    "#oo###",
     "##D###"
    ]
   },
@@ -3623,9 +3623,9 @@
    "night": "res://assets/sprites/towns/highfen/buildings/v3_cookhouse_night.png",
    "plan": [
     "#####",
-    "ooo##",
-    "ooo##",
-    "ooo##",
+    "#oo##",
+    "#oo##",
+    "#oo##",
     "##D##"
    ]
   },
@@ -3653,9 +3653,9 @@
    "night": "res://assets/sprites/towns/highfen/buildings/v3_player_house_night.png",
    "plan": [
     "#####",
-    "ooo##",
-    "ooo##",
-    "ooo##",
+    "#oo##",
+    "#oo##",
+    "#oo##",
     "#D###"
    ]
   },

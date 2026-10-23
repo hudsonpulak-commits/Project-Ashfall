@@ -374,6 +374,30 @@
     "base": 100
    },
    {
+    "path": "res://assets/sprites/towns/saltmere/ships/v3_rowboat_1.png",
+    "pos": [
+     506,
+     688
+    ],
+    "base": 20
+   },
+   {
+    "path": "res://assets/sprites/towns/saltmere/ships/v3_rowboat_2.png",
+    "pos": [
+     1140,
+     684
+    ],
+    "base": 20
+   },
+   {
+    "path": "res://assets/sprites/towns/saltmere/ships/v3_rowboat_3.png",
+    "pos": [
+     766,
+     688
+    ],
+    "base": 20
+   },
+   {
     "path": "res://assets/sprites/towns/saltmere/buildings/v3_harbour_entrance_floor.png",
     "pos": [
      880,

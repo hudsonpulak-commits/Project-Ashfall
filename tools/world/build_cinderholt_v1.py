@@ -97,7 +97,7 @@ def plan_of_v2(b):
         for x in range(W):
             cx, cy = x * T + 8, E + y * T + 8
             if (x, y) == d: r += 'D'
-            elif y < H - 1 and b.get('clear_area_px') and (inr(b['clear_area_px'], cx, cy) or inr(b['door_lane_px'], cx, cy)): r += 'o'
+            elif 0 < x < W - 1 and 0 < y < H - 1 and b.get('clear_area_px') and (inr(b['clear_area_px'], cx, cy) or inr(b['door_lane_px'], cx, cy)): r += 'o'
             else: r += '#'
         rows.append(r)
     return rows

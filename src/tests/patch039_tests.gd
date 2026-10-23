@@ -64,8 +64,8 @@ static func run(main, world: World, p: Player) -> void:
 	var hc := gen.town_center(gen.capital)
 	var ring_n := 0
 	var towers := 0
-	for y in range(-36, 37):
-		for x in range(-36, 37):
+	for y in range(-46, 47):
+		for x in range(-46, 47):
 			if gen.tile_at(hc.x + x, hc.y + y) == WorldGen.TileType.CAPITAL_WALL:
 				ring_n += 1
 			if str(gen._town_objects.get(hc + Vector2i(x, y), "")) == "hf_wall_tower":

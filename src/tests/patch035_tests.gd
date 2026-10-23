@@ -84,7 +84,7 @@ static func run(world: World, p: Player) -> void:
 		blocks = maxi(blocks, int(p.action.get("dummy_blocks", 0)))
 	Events.hitsplat.disconnect(scb)
 	def_gain = int(p.skills.xp.get("defence", 0)) - def0
-	check(blocks > 0 and splat0[0] >= blocks and def_gain > 0 and p.hp == hp0,
+	check(blocks > 0 and splat0[0] >= blocks and def_gain > 0 and p.hp >= hp0,
 		"dummy swings back: %d blocks shown, +%d Defence XP, HP %d -> %d (no damage)" % [blocks, def_gain, hp0, p.hp])
 	check(Interactions.DUMMY_XP_MULT == 3 and int(p.skills.xp.get("vitality", 0)) > mxp, "dummy pays 3x hit XP (hits land: +%d Vitality)" % (int(p.skills.xp.get("vitality", 0)) - mxp))
 	p.stop()

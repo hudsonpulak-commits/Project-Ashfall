@@ -243,8 +243,8 @@
   {
    "enemy": "chicken",
    "at": [
-    -46,
-    6
+    -63,
+    9
    ],
    "count": 4,
    "spread": 2
@@ -252,7 +252,7 @@
   {
    "enemy": "chicken",
    "at": [
-    45,
+    62,
     2
    ],
    "count": 4,
@@ -260,21 +260,27 @@
   },
   {
    "enemy": "chicken",
-   "at": [380, -196],
-   "count": 4,
-   "spread": 2
-  },
-  {
-   "enemy": "chicken",
-   "at": [282, -186],
+   "at": [
+    380,
+    -196
+   ],
    "count": 4,
    "spread": 2
   },
   {
    "enemy": "chicken",
    "at": [
-    318,
-    127
+    282,
+    -186
+   ],
+   "count": 4,
+   "spread": 2
+  },
+  {
+   "enemy": "chicken",
+   "at": [
+    316,
+    118
    ],
    "count": 4,
    "spread": 2,
@@ -283,8 +289,8 @@
   {
    "enemy": "chicken",
    "at": [
-    330,
-    130
+    328,
+    118
    ],
    "count": 4,
    "spread": 2,
@@ -293,8 +299,8 @@
   {
    "enemy": "giant_rat",
    "at": [
-    16,
-    -50
+    14,
+    -61
    ],
    "count": 4,
    "spread": 3
@@ -302,8 +308,8 @@
   {
    "enemy": "giant_rat",
    "at": [
-    36,
-    -48
+    34,
+    -61
    ],
    "count": 4,
    "spread": 3
@@ -311,8 +317,8 @@
   {
    "enemy": "giant_rat",
    "at": [
-    276,
-    -226
+    275,
+    -225
    ],
    "count": 4,
    "spread": 3
@@ -320,8 +326,8 @@
   {
    "enemy": "giant_rat",
    "at": [
-    276,
-    -174
+    275,
+    -173
    ],
    "count": 4,
    "spread": 3
@@ -347,8 +353,8 @@
   {
    "enemy": "wolf",
    "at": [
-    82,
-    16
+    97,
+    56
    ],
    "count": 3,
    "spread": 2
@@ -356,29 +362,35 @@
   {
    "enemy": "wolf",
    "at": [
-    46,
-    -74
+    44,
+    -87
    ],
    "count": 3,
    "spread": 2
   },
   {
    "enemy": "wolf",
-   "at": [402, -118],
-   "count": 3,
-   "spread": 2
-  },
-  {
-   "enemy": "wolf",
-   "at": [280, -118],
+   "at": [
+    402,
+    -118
+   ],
    "count": 3,
    "spread": 2
   },
   {
    "enemy": "wolf",
    "at": [
-    332,
-    92
+    279,
+    -111
+   ],
+   "count": 3,
+   "spread": 2
+  },
+  {
+   "enemy": "wolf",
+   "at": [
+    330,
+    83
    ],
    "count": 3,
    "spread": 2
@@ -395,8 +407,8 @@
   {
    "enemy": "goblin",
    "at": [
-    348,
-    -88
+    350,
+    -78
    ],
    "count": 4,
    "spread": 3
@@ -413,8 +425,8 @@
   {
    "enemy": "goblin",
    "at": [
-    290,
-    60
+    295,
+    51
    ],
    "count": 4,
    "spread": 3
@@ -422,8 +434,8 @@
   {
    "enemy": "goblin",
    "at": [
-    58,
-    106
+    60,
+    118
    ],
    "count": 4,
    "spread": 3
@@ -431,8 +443,8 @@
   {
    "enemy": "goblin",
    "at": [
-    10,
-    -114
+    8,
+    -119
    ],
    "count": 4,
    "spread": 3
@@ -440,8 +452,8 @@
   {
    "enemy": "goblin",
    "at": [
-    200,
-    100
+    186,
+    108
    ],
    "count": 4,
    "spread": 3
@@ -494,8 +506,8 @@
   {
    "enemy": "slime",
    "at": [
-    -44,
-    -37
+    -4,
+    -52
    ],
    "count": 3,
    "spread": 3
@@ -503,21 +515,27 @@
   {
    "enemy": "slime",
    "at": [
-    43,
-    36
+    17,
+    51
    ],
    "count": 3,
    "spread": 3
   },
   {
    "enemy": "slime",
-   "at": [282, -205],
+   "at": [
+    282,
+    -205
+   ],
    "count": 3,
    "spread": 3
   },
   {
    "enemy": "slime",
-   "at": [380, -222],
+   "at": [
+    380,
+    -222
+   ],
    "count": 3,
    "spread": 3
   },
@@ -525,7 +543,7 @@
    "enemy": "slime",
    "at": [
     270,
-    144
+    118
    ],
    "count": 3,
    "spread": 3
@@ -542,8 +560,8 @@
   {
    "enemy": "slime",
    "at": [
-    137,
-    -53
+    121,
+    -51
    ],
    "count": 3,
    "spread": 3
@@ -551,8 +569,8 @@
   {
    "enemy": "slime",
    "at": [
-    222,
-    32
+    203,
+    39
    ],
    "count": 3,
    "spread": 3
