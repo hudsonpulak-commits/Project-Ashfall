@@ -756,7 +756,7 @@ func _world() -> void:
 		p.place_at(w.find_free_tile_near(wolf.tile + Vector2i(3, 1), 3, true))
 		await frames(10)
 		label = "wolf"
-		var aggro := await until(func(): return wolf.target == p, 12.0)
+		var aggro := await until(func(): return wolf.target == p or p.hp < p.max_hp(), 12.0)   # 0.3.14: a fast wolf can hit and drop target between polls
 		await _wait_ticks(4)
 		await shot("v031_wolf")
 		wolf_n = {"kind": "wolf", "aggro": aggro, "dist_start": 3, "hp_lost": p.max_hp() - p.hp}
@@ -1658,7 +1658,7 @@ func _pk() -> void:
 	# a hurt AI runs for the zone edge (flee_below), so the hit can miss it: put it
 	# back beside you inside the Scorch and swing again (attempts are noted)
 	var tries := 0
-	while victim.id == old_id and tries < 5 and is_instance_valid(v):
+	while victim.id == old_id and tries < 10 and is_instance_valid(v):
 		tries += 1
 		if not PkRules.is_pk(v.tile) or maxi(absi(v.tile.x - p.tile.x), absi(v.tile.y - p.tile.y)) > 1:
 			p.stop()
