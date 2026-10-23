@@ -291,6 +291,9 @@ func _pf_start() -> void:
 	_pf_thread.start(_pf_loop)
 
 
+var _pf_ramps: Dictionary = {}
+
+
 func _pf_loop() -> void:
 	var wg := WorldGen.new(_pf_seed)
 	while true:
@@ -304,8 +307,17 @@ func _pf_loop() -> void:
 		if c == null:
 			continue
 		var ch: ChunkData = wg.generate_chunk(c)
+		# 0.3.16 hand over the cliff-ramp cell analyses (expensive; the view build needs them too)
+		var cr := c * CHUNK / wg._ramp_period
+		var ramps := {}
+		for yy in range(cr.y - 1, cr.y + CHUNK / wg._ramp_period + 2):
+			for xx in range(cr.x - 1, cr.x + CHUNK / wg._ramp_period + 2):
+				var cc := Vector2i(xx, yy)
+				wg._cell_hit(cc, Vector2i.ZERO)
+				ramps[cc] = wg._cell_ramps.get(cc, {})
 		_pf_mutex.lock()
 		_pf_done.append(ch)
+		_pf_ramps.merge(ramps, true)
 		_pf_mutex.unlock()
 
 
@@ -353,7 +365,13 @@ func _pf_adopt() -> void:
 	_pf_mutex.lock()
 	var done := _pf_done
 	_pf_done = []
+	var ramps := _pf_ramps
+	_pf_ramps = {}
 	_pf_mutex.unlock()
+	if not ramps.is_empty():
+		if gen._cell_ramps.size() > 3000:
+			gen._cell_ramps.clear()
+		gen._cell_ramps.merge(ramps, false)
 	for ch in done:
 		if chunks.has(ch.coord):
 			continue
@@ -745,7 +763,7 @@ func _job_stage(j: Dictionary, c: Vector2i, ch: ChunkData, base: Vector2i) -> vo
 						(ovl2[cell[0]] as TileMapLayer).set_cell(Vector2i(lx, ly3), cell[1], cell[2])
 					var _dc := (Time.get_ticks_usec() - _tc) / 1000.0
 					if _dc > 5.0:
-						perf_log.append(["ovcell", _dc])
+						perf_log.append(["ovcell@%d,%d" % [base.x + lx, ly3 + base.y], _dc])
 				j["col"] = x0 + 8
 				if int(j["col"]) >= CHUNK:
 					j["col"] = 0
