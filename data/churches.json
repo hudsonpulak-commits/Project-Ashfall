@@ -22,39 +22,39 @@
    "art": "fh_church",
    "flip": false,
    "at": [
-    40,
-    33
+    49,
+    24
    ],
    "door": [
     [
-     43,
-     39
+     52,
+     32
     ]
    ],
    "sign": [
-    44,
-    39
+    53,
+    32
    ],
    "props": [
     {
-     "object": "pew",
+     "object": "candle_stand",
      "at": [
-      41,
-      37
+      53,
+      29
      ]
     },
     {
      "object": "pew",
      "at": [
-      44,
-      37
+      51,
+      31
      ]
     },
     {
      "object": "pew",
      "at": [
-      42,
-      38
+      53,
+      31
      ]
     }
    ],
@@ -66,16 +66,16 @@
    "name": "Fenhollow Church",
    "keeper": "Father Aldric",
    "altar": [
-    43,
-    35
+    52,
+    29
    ],
    "keeper_at": [
-    42,
-    35
+    51,
+    29
    ],
    "stand": [
-    43,
-    38
+    52,
+    31
    ],
    "note": "0.3.13 Fenhollow v1 (designer fh_church)"
   },
@@ -83,39 +83,39 @@
    "art": "ch_church",
    "flip": false,
    "at": [
-    42,
-    67
+    35,
+    56
    ],
    "door": [
     [
-     45,
-     73
+     38,
+     63
     ]
    ],
    "sign": [
-    46,
-    73
+    39,
+    63
    ],
    "props": [
     {
-     "object": "pew",
+     "object": "candle_stand",
      "at": [
-      43,
-      71
+      36,
+      60
      ]
     },
     {
      "object": "pew",
      "at": [
-      46,
-      71
+      36,
+      62
      ]
     },
     {
      "object": "pew",
      "at": [
-      44,
-      72
+      37,
+      62
      ]
     }
    ],
@@ -127,16 +127,16 @@
    "name": "Cinderholt Chapel",
    "keeper": "Brother Varr",
    "altar": [
-    45,
-    69
+    38,
+    60
    ],
    "keeper_at": [
-    44,
-    69
+    37,
+    60
    ],
    "stand": [
-    45,
-    72
+    38,
+    62
    ],
    "note": "0.3.14 Cinderholt v1 (designer ch_church)"
   },
@@ -144,32 +144,60 @@
    "art": "v2_church",
    "flip": false,
    "at": [
-    31,
-    5
+    39,
+    6
    ],
    "door": [
     [
-     33,
-     10
+     42,
+     14
     ]
    ],
    "sign": [
-    34,
-    10
+    43,
+    14
    ],
    "props": [
     {
      "object": "pew",
      "at": [
-      32,
-      8
+      40,
+      9
      ]
     },
     {
      "object": "pew",
      "at": [
-      32,
+      41,
       9
+     ]
+    },
+    {
+     "object": "pew",
+     "at": [
+      43,
+      9
+     ]
+    },
+    {
+     "object": "pew",
+     "at": [
+      44,
+      9
+     ]
+    },
+    {
+     "object": "pew",
+     "at": [
+      40,
+      10
+     ]
+    },
+    {
+     "object": "pew",
+     "at": [
+      41,
+      10
      ]
     }
    ],
@@ -181,16 +209,16 @@
    "name": "Saltmere Chapel",
    "keeper": "Sister Mare",
    "altar": [
-    33,
-    6
+    42,
+    7
    ],
    "keeper_at": [
-    32,
-    6
+    40,
+    7
    ],
    "stand": [
-    33,
-    7
+    42,
+    8
    ],
    "note": "0.3.12 the chapel (designer v2_church)"
   }

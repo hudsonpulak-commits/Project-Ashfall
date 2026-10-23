@@ -16,7 +16,7 @@ static func run(main, world, p) -> void:
 	var gts: Dictionary = t.get("gate_tiles", {})
 	check(str(t.get("walls", "")) == "basalt" and gts.size() == 4, "Cinderholt sits behind a basalt wall with 4 gates (front, back, 2 sides)")
 	var spawn: Vector2i = gen.town_spawn("cinderholt")
-	var hc: Vector2i = world.find_free_tile_near(org + Vector2i(42, 62), 4)
+	var hc: Vector2i = world.find_free_tile_near(org + Vector2i(42, 70), 4)
 	var sealed := not Patch0311Tests._ring_flood(world, hc, org, gts, "")
 	var opens := 0
 	for g in gts.keys():

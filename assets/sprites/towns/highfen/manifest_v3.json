@@ -1,15 +1,16 @@
 {
- "version": "v3",
+ "version": "highfen v5 (v3 set redrawn to size rules)",
  "buildings": [
   {
    "name": "v3_house_01",
+   "night_layer": "v3_house_01_night.png",
    "tiles": [
-    3,
-    2
+    6,
+    6
    ],
    "px": [
-    48,
-    46
+    96,
+    110
    ],
    "storeys": 2,
    "footprint_origin_px": [
@@ -27,1491 +28,17 @@
     "v3_house_01_roof.png"
    ],
    "door_px": [
-    20,
-    32
-   ],
-   "door_tile": [
-    1,
-    1
-   ],
-   "roof_tiles": [
-    [
-     0,
-     0
-    ],
-    [
-     1,
-     0
-    ],
-    [
-     2,
-     0
-    ],
-    [
-     0,
-     1
-    ],
-    [
-     1,
-     1
-    ],
-    [
-     2,
-     1
-    ]
-   ]
-  },
-  {
-   "name": "v3_house_02",
-   "tiles": [
-    2,
-    3
-   ],
-   "px": [
-    32,
-    62
-   ],
-   "storeys": 2,
-   "footprint_origin_px": [
-    0,
-    14
-   ],
-   "layers": [
-    "v3_house_02_floor.png",
-    "v3_house_02_walls.png",
-    "v3_house_02_upper1.png",
-    "v3_house_02_roof.png"
-   ],
-   "fade_group": [
-    "v3_house_02_upper1.png",
-    "v3_house_02_roof.png"
-   ],
-   "door_px": [
-    21,
-    48
-   ],
-   "door_tile": [
-    1,
-    2
-   ],
-   "roof_tiles": [
-    [
-     0,
-     1
-    ],
-    [
-     1,
-     1
-    ],
-    [
-     0,
-     2
-    ],
-    [
-     1,
-     2
-    ]
-   ]
-  },
-  {
-   "name": "v3_house_03",
-   "tiles": [
-    4,
-    4
-   ],
-   "px": [
-    64,
-    78
-   ],
-   "storeys": 2,
-   "footprint_origin_px": [
-    0,
-    14
-   ],
-   "layers": [
-    "v3_house_03_floor.png",
-    "v3_house_03_walls.png",
-    "v3_house_03_upper1.png",
-    "v3_house_03_roof.png"
-   ],
-   "fade_group": [
-    "v3_house_03_upper1.png",
-    "v3_house_03_roof.png"
-   ],
-   "door_px": [
-    34,
-    64
-   ],
-   "door_tile": [
-    2,
-    3
-   ],
-   "roof_tiles": [
-    [
-     0,
-     0
-    ],
-    [
-     1,
-     0
-    ],
-    [
-     0,
-     1
-    ],
-    [
-     1,
-     1
-    ],
-    [
-     2,
-     1
-    ],
-    [
-     3,
-     1
-    ],
-    [
-     0,
-     2
-    ],
-    [
-     1,
-     2
-    ],
-    [
-     2,
-     2
-    ],
-    [
-     3,
-     2
-    ],
-    [
-     0,
-     3
-    ],
-    [
-     1,
-     3
-    ],
-    [
-     2,
-     3
-    ],
-    [
-     3,
-     3
-    ]
-   ]
-  },
-  {
-   "name": "v3_house_04",
-   "tiles": [
-    3,
-    3
-   ],
-   "px": [
-    48,
-    62
-   ],
-   "storeys": 2,
-   "footprint_origin_px": [
-    0,
-    14
-   ],
-   "layers": [
-    "v3_house_04_floor.png",
-    "v3_house_04_walls.png",
-    "v3_house_04_upper1.png",
-    "v3_house_04_roof.png"
-   ],
-   "fade_group": [
-    "v3_house_04_upper1.png",
-    "v3_house_04_roof.png"
-   ],
-   "door_px": [
-    26,
-    48
-   ],
-   "door_tile": [
-    1,
-    2
-   ],
-   "roof_tiles": [
-    [
-     1,
-     0
-    ],
-    [
-     2,
-     0
-    ],
-    [
-     0,
-     1
-    ],
-    [
-     1,
-     1
-    ],
-    [
-     2,
-     1
-    ],
-    [
-     0,
-     2
-    ],
-    [
-     1,
-     2
-    ],
-    [
-     2,
-     2
-    ]
-   ]
-  },
-  {
-   "name": "v3_house_05",
-   "tiles": [
-    3,
-    2
-   ],
-   "px": [
-    48,
-    46
-   ],
-   "storeys": 2,
-   "footprint_origin_px": [
-    0,
-    14
-   ],
-   "layers": [
-    "v3_house_05_floor.png",
-    "v3_house_05_walls.png",
-    "v3_house_05_upper1.png",
-    "v3_house_05_roof.png"
-   ],
-   "fade_group": [
-    "v3_house_05_upper1.png",
-    "v3_house_05_roof.png"
-   ],
-   "door_px": [
-    26,
-    32
-   ],
-   "door_tile": [
-    1,
-    1
-   ],
-   "roof_tiles": [
-    [
-     0,
-     1
-    ],
-    [
-     1,
-     1
-    ],
-    [
-     2,
-     1
-    ]
-   ]
-  },
-  {
-   "name": "v3_house_06",
-   "tiles": [
-    3,
-    4
-   ],
-   "px": [
-    48,
-    78
-   ],
-   "storeys": 2,
-   "footprint_origin_px": [
-    0,
-    14
-   ],
-   "layers": [
-    "v3_house_06_floor.png",
-    "v3_house_06_walls.png",
-    "v3_house_06_upper1.png",
-    "v3_house_06_roof.png"
-   ],
-   "fade_group": [
-    "v3_house_06_upper1.png",
-    "v3_house_06_roof.png"
-   ],
-   "door_px": [
-    19,
-    64
-   ],
-   "door_tile": [
-    1,
-    3
-   ],
-   "roof_tiles": [
-    [
-     0,
-     1
-    ],
-    [
-     1,
-     1
-    ],
-    [
-     2,
-     1
-    ],
-    [
-     0,
-     2
-    ],
-    [
-     1,
-     2
-    ],
-    [
-     2,
-     2
-    ],
-    [
-     0,
-     3
-    ],
-    [
-     1,
-     3
-    ],
-    [
-     2,
-     3
-    ]
-   ]
-  },
-  {
-   "name": "v3_house_07",
-   "tiles": [
-    3,
-    2
-   ],
-   "px": [
-    48,
-    46
-   ],
-   "storeys": 2,
-   "footprint_origin_px": [
-    0,
-    14
-   ],
-   "layers": [
-    "v3_house_07_floor.png",
-    "v3_house_07_walls.png",
-    "v3_house_07_upper1.png",
-    "v3_house_07_roof.png"
-   ],
-   "fade_group": [
-    "v3_house_07_upper1.png",
-    "v3_house_07_roof.png"
-   ],
-   "door_px": [
-    16,
-    32
-   ],
-   "door_tile": [
-    1,
-    1
-   ],
-   "roof_tiles": [
-    [
-     0,
-     0
-    ],
-    [
-     1,
-     0
-    ],
-    [
-     2,
-     0
-    ],
-    [
-     0,
-     1
-    ],
-    [
-     1,
-     1
-    ],
-    [
-     2,
-     1
-    ]
-   ]
-  },
-  {
-   "name": "v3_house_08",
-   "tiles": [
-    2,
-    3
-   ],
-   "px": [
-    32,
-    62
-   ],
-   "storeys": 2,
-   "footprint_origin_px": [
-    0,
-    14
-   ],
-   "layers": [
-    "v3_house_08_floor.png",
-    "v3_house_08_walls.png",
-    "v3_house_08_upper1.png",
-    "v3_house_08_roof.png"
-   ],
-   "fade_group": [
-    "v3_house_08_upper1.png",
-    "v3_house_08_roof.png"
-   ],
-   "door_px": [
-    20,
-    48
-   ],
-   "door_tile": [
-    1,
-    2
-   ],
-   "roof_tiles": [
-    [
-     0,
-     0
-    ],
-    [
-     1,
-     0
-    ],
-    [
-     0,
-     1
-    ],
-    [
-     1,
-     1
-    ],
-    [
-     0,
-     2
-    ],
-    [
-     1,
-     2
-    ]
-   ]
-  },
-  {
-   "name": "v3_house_09",
-   "tiles": [
-    4,
-    4
-   ],
-   "px": [
-    64,
-    64
-   ],
-   "storeys": 1,
-   "footprint_origin_px": [
-    0,
-    0
-   ],
-   "layers": [
-    "v3_house_09_floor.png",
-    "v3_house_09_walls.png",
-    "v3_house_09_roof.png"
-   ],
-   "fade_group": [
-    "v3_house_09_roof.png"
-   ],
-   "door_px": [
-    42,
-    50
-   ],
-   "door_tile": [
-    2,
-    3
-   ],
-   "roof_tiles": [
-    [
-     0,
-     0
-    ],
-    [
-     1,
-     0
-    ],
-    [
-     0,
-     1
-    ],
-    [
-     1,
-     1
-    ],
-    [
-     2,
-     1
-    ],
-    [
-     3,
-     1
-    ],
-    [
-     0,
-     2
-    ],
-    [
-     1,
-     2
-    ],
-    [
-     2,
-     2
-    ],
-    [
-     3,
-     2
-    ],
-    [
-     0,
-     3
-    ],
-    [
-     1,
-     3
-    ],
-    [
-     2,
-     3
-    ],
-    [
-     3,
-     3
-    ]
-   ]
-  },
-  {
-   "name": "v3_house_10",
-   "tiles": [
-    3,
-    2
-   ],
-   "px": [
-    48,
-    46
-   ],
-   "storeys": 2,
-   "footprint_origin_px": [
-    0,
-    14
-   ],
-   "layers": [
-    "v3_house_10_floor.png",
-    "v3_house_10_walls.png",
-    "v3_house_10_upper1.png",
-    "v3_house_10_roof.png"
-   ],
-   "fade_group": [
-    "v3_house_10_upper1.png",
-    "v3_house_10_roof.png"
-   ],
-   "door_px": [
-    23,
-    32
-   ],
-   "door_tile": [
-    1,
-    1
-   ],
-   "roof_tiles": [
-    [
-     0,
-     0
-    ],
-    [
-     1,
-     0
-    ],
-    [
-     0,
-     1
-    ],
-    [
-     1,
-     1
-    ],
-    [
-     2,
-     1
-    ]
-   ]
-  },
-  {
-   "name": "v3_house_11",
-   "tiles": [
-    4,
-    3
-   ],
-   "px": [
-    64,
-    48
-   ],
-   "storeys": 1,
-   "footprint_origin_px": [
-    0,
-    0
-   ],
-   "layers": [
-    "v3_house_11_floor.png",
-    "v3_house_11_walls.png",
-    "v3_house_11_roof.png"
-   ],
-   "fade_group": [
-    "v3_house_11_roof.png"
-   ],
-   "door_px": [
-    27,
-    34
-   ],
-   "door_tile": [
-    1,
-    2
-   ],
-   "roof_tiles": [
-    [
-     0,
-     1
-    ],
-    [
-     1,
-     1
-    ],
-    [
-     2,
-     1
-    ],
-    [
-     3,
-     1
-    ],
-    [
-     0,
-     2
-    ],
-    [
-     1,
-     2
-    ],
-    [
-     2,
-     2
-    ],
-    [
-     3,
-     2
-    ]
-   ]
-  },
-  {
-   "name": "v3_house_12",
-   "tiles": [
-    3,
-    3
-   ],
-   "px": [
-    48,
-    48
-   ],
-   "storeys": 1,
-   "footprint_origin_px": [
-    0,
-    0
-   ],
-   "layers": [
-    "v3_house_12_floor.png",
-    "v3_house_12_walls.png",
-    "v3_house_12_roof.png"
-   ],
-   "fade_group": [
-    "v3_house_12_roof.png"
-   ],
-   "door_px": [
-    24,
-    34
-   ],
-   "door_tile": [
-    1,
-    2
-   ],
-   "roof_tiles": [
-    [
-     0,
-     0
-    ],
-    [
-     1,
-     0
-    ],
-    [
-     0,
-     1
-    ],
-    [
-     1,
-     1
-    ],
-    [
-     2,
-     1
-    ],
-    [
-     0,
-     2
-    ],
-    [
-     1,
-     2
-    ],
-    [
-     2,
-     2
-    ]
-   ]
-  },
-  {
-   "name": "v3_house_13",
-   "tiles": [
-    3,
-    3
-   ],
-   "px": [
-    48,
-    62
-   ],
-   "storeys": 2,
-   "footprint_origin_px": [
-    0,
-    14
-   ],
-   "layers": [
-    "v3_house_13_floor.png",
-    "v3_house_13_walls.png",
-    "v3_house_13_upper1.png",
-    "v3_house_13_roof.png"
-   ],
-   "fade_group": [
-    "v3_house_13_upper1.png",
-    "v3_house_13_roof.png"
-   ],
-   "door_px": [
-    29,
-    48
-   ],
-   "door_tile": [
-    1,
-    2
-   ],
-   "roof_tiles": [
-    [
-     0,
-     0
-    ],
-    [
-     1,
-     0
-    ],
-    [
-     2,
-     0
-    ],
-    [
-     0,
-     1
-    ],
-    [
-     1,
-     1
-    ],
-    [
-     2,
-     1
-    ],
-    [
-     0,
-     2
-    ],
-    [
-     1,
-     2
-    ],
-    [
-     2,
-     2
-    ]
-   ]
-  },
-  {
-   "name": "v3_house_14",
-   "tiles": [
-    3,
-    3
-   ],
-   "px": [
-    48,
-    62
-   ],
-   "storeys": 2,
-   "footprint_origin_px": [
-    0,
-    14
-   ],
-   "layers": [
-    "v3_house_14_floor.png",
-    "v3_house_14_walls.png",
-    "v3_house_14_upper1.png",
-    "v3_house_14_roof.png"
-   ],
-   "fade_group": [
-    "v3_house_14_upper1.png",
-    "v3_house_14_roof.png"
-   ],
-   "door_px": [
-    28,
-    48
-   ],
-   "door_tile": [
-    1,
-    2
-   ],
-   "roof_tiles": [
-    [
-     0,
-     1
-    ],
-    [
-     1,
-     1
-    ],
-    [
-     2,
-     1
-    ],
-    [
-     0,
-     2
-    ],
-    [
-     1,
-     2
-    ],
-    [
-     2,
-     2
-    ]
-   ]
-  },
-  {
-   "name": "v3_house_15",
-   "tiles": [
-    4,
-    2
-   ],
-   "px": [
-    64,
-    46
-   ],
-   "storeys": 2,
-   "footprint_origin_px": [
-    0,
-    14
-   ],
-   "layers": [
-    "v3_house_15_floor.png",
-    "v3_house_15_walls.png",
-    "v3_house_15_upper1.png",
-    "v3_house_15_roof.png"
-   ],
-   "fade_group": [
-    "v3_house_15_upper1.png",
-    "v3_house_15_roof.png"
-   ],
-   "door_px": [
-    35,
-    32
-   ],
-   "door_tile": [
-    2,
-    1
-   ],
-   "roof_tiles": [
-    [
-     0,
-     0
-    ],
-    [
-     1,
-     0
-    ],
-    [
-     0,
-     1
-    ],
-    [
-     1,
-     1
-    ],
-    [
-     2,
-     1
-    ],
-    [
-     3,
-     1
-    ]
-   ]
-  },
-  {
-   "name": "v3_house_16",
-   "tiles": [
-    2,
-    4
-   ],
-   "px": [
-    32,
-    78
-   ],
-   "storeys": 2,
-   "footprint_origin_px": [
-    0,
-    14
-   ],
-   "layers": [
-    "v3_house_16_floor.png",
-    "v3_house_16_walls.png",
-    "v3_house_16_upper1.png",
-    "v3_house_16_roof.png"
-   ],
-   "fade_group": [
-    "v3_house_16_upper1.png",
-    "v3_house_16_roof.png"
-   ],
-   "door_px": [
-    16,
-    64
-   ],
-   "door_tile": [
-    1,
-    3
-   ],
-   "roof_tiles": [
-    [
-     1,
-     0
-    ],
-    [
-     0,
-     1
-    ],
-    [
-     1,
-     1
-    ],
-    [
-     0,
-     2
-    ],
-    [
-     1,
-     2
-    ],
-    [
-     0,
-     3
-    ],
-    [
-     1,
-     3
-    ]
-   ]
-  },
-  {
-   "name": "v3_house_17",
-   "tiles": [
-    3,
-    4
-   ],
-   "px": [
-    48,
-    78
-   ],
-   "storeys": 2,
-   "footprint_origin_px": [
-    0,
-    14
-   ],
-   "layers": [
-    "v3_house_17_floor.png",
-    "v3_house_17_walls.png",
-    "v3_house_17_upper1.png",
-    "v3_house_17_roof.png"
-   ],
-   "fade_group": [
-    "v3_house_17_upper1.png",
-    "v3_house_17_roof.png"
-   ],
-   "door_px": [
-    31,
-    64
-   ],
-   "door_tile": [
-    1,
-    3
-   ],
-   "roof_tiles": [
-    [
-     0,
-     1
-    ],
-    [
-     1,
-     1
-    ],
-    [
-     2,
-     1
-    ],
-    [
-     0,
-     2
-    ],
-    [
-     1,
-     2
-    ],
-    [
-     2,
-     2
-    ],
-    [
-     0,
-     3
-    ],
-    [
-     1,
-     3
-    ]
-   ]
-  },
-  {
-   "name": "v3_house_18",
-   "tiles": [
-    3,
-    4
-   ],
-   "px": [
-    48,
-    64
-   ],
-   "storeys": 1,
-   "footprint_origin_px": [
-    0,
-    0
-   ],
-   "layers": [
-    "v3_house_18_floor.png",
-    "v3_house_18_walls.png",
-    "v3_house_18_roof.png"
-   ],
-   "fade_group": [
-    "v3_house_18_roof.png"
-   ],
-   "door_px": [
-    25,
-    50
-   ],
-   "door_tile": [
-    1,
-    3
-   ],
-   "roof_tiles": [
-    [
-     0,
-     0
-    ],
-    [
-     1,
-     0
-    ],
-    [
-     0,
-     1
-    ],
-    [
-     1,
-     1
-    ],
-    [
-     2,
-     1
-    ],
-    [
-     0,
-     2
-    ],
-    [
-     1,
-     2
-    ],
-    [
-     2,
-     2
-    ],
-    [
-     0,
-     3
-    ],
-    [
-     1,
-     3
-    ],
-    [
-     2,
-     3
-    ]
-   ]
-  },
-  {
-   "name": "v3_bank",
-   "tiles": [
-    5,
-    4
-   ],
-   "px": [
-    80,
-    78
-   ],
-   "storeys": 2,
-   "footprint_origin_px": [
-    0,
-    14
-   ],
-   "layers": [
-    "v3_bank_floor.png",
-    "v3_bank_walls.png",
-    "v3_bank_upper1.png",
-    "v3_bank_roof.png"
-   ],
-   "fade_group": [
-    "v3_bank_upper1.png",
-    "v3_bank_roof.png"
-   ],
-   "door_px": [
     40,
-    64
+    96
    ],
    "door_tile": [
     2,
-    3
-   ],
-   "roof_tiles": [
-    [
-     1,
-     0
-    ],
-    [
-     2,
-     0
-    ],
-    [
-     3,
-     0
-    ],
-    [
-     0,
-     1
-    ],
-    [
-     1,
-     1
-    ],
-    [
-     2,
-     1
-    ],
-    [
-     3,
-     1
-    ],
-    [
-     4,
-     1
-    ],
-    [
-     0,
-     2
-    ],
-    [
-     1,
-     2
-    ],
-    [
-     2,
-     2
-    ],
-    [
-     3,
-     2
-    ],
-    [
-     4,
-     2
-    ],
-    [
-     0,
-     3
-    ],
-    [
-     1,
-     3
-    ],
-    [
-     2,
-     3
-    ],
-    [
-     3,
-     3
-    ],
-    [
-     4,
-     3
-    ]
-   ]
-  },
-  {
-   "name": "v3_cookhouse",
-   "tiles": [
-    4,
-    3
-   ],
-   "px": [
-    64,
-    48
-   ],
-   "storeys": 1,
-   "footprint_origin_px": [
-    0,
-    0
-   ],
-   "layers": [
-    "v3_cookhouse_floor.png",
-    "v3_cookhouse_walls.png",
-    "v3_cookhouse_roof.png"
-   ],
-   "fade_group": [
-    "v3_cookhouse_roof.png"
-   ],
-   "door_px": [
-    26,
-    34
-   ],
-   "door_tile": [
-    1,
-    2
-   ],
-   "roof_tiles": [
-    [
-     0,
-     0
-    ],
-    [
-     1,
-     0
-    ],
-    [
-     2,
-     0
-    ],
-    [
-     0,
-     1
-    ],
-    [
-     1,
-     1
-    ],
-    [
-     2,
-     1
-    ],
-    [
-     3,
-     1
-    ],
-    [
-     0,
-     2
-    ],
-    [
-     1,
-     2
-    ],
-    [
-     2,
-     2
-    ],
-    [
-     3,
-     2
-    ]
-   ]
-  },
-  {
-   "name": "v3_player_house",
-   "tiles": [
-    4,
-    4
-   ],
-   "px": [
-    64,
-    78
-   ],
-   "storeys": 2,
-   "footprint_origin_px": [
-    0,
-    14
-   ],
-   "layers": [
-    "v3_player_house_floor.png",
-    "v3_player_house_walls.png",
-    "v3_player_house_upper1.png",
-    "v3_player_house_roof.png"
-   ],
-   "fade_group": [
-    "v3_player_house_upper1.png",
-    "v3_player_house_roof.png"
-   ],
-   "door_px": [
-    24,
-    64
-   ],
-   "door_tile": [
-    1,
-    3
-   ],
-   "roof_tiles": [
-    [
-     2,
-     0
-    ],
-    [
-     3,
-     0
-    ],
-    [
-     0,
-     1
-    ],
-    [
-     1,
-     1
-    ],
-    [
-     2,
-     1
-    ],
-    [
-     3,
-     1
-    ],
-    [
-     0,
-     2
-    ],
-    [
-     1,
-     2
-    ],
-    [
-     2,
-     2
-    ],
-    [
-     3,
-     2
-    ],
-    [
-     0,
-     3
-    ],
-    [
-     1,
-     3
-    ],
-    [
-     2,
-     3
-    ],
-    [
-     3,
-     3
-    ]
-   ]
-  },
-  {
-   "name": "v3_temple",
-   "tiles": [
-    6,
-    6
-   ],
-   "px": [
-    96,
-    130
-   ],
-   "storeys": 2,
-   "footprint_origin_px": [
-    0,
-    34
-   ],
-   "layers": [
-    "v3_temple_floor.png",
-    "v3_temple_walls.png",
-    "v3_temple_upper1.png",
-    "v3_temple_roof.png"
-   ],
-   "fade_group": [
-    "v3_temple_upper1.png",
-    "v3_temple_roof.png"
-   ],
-   "door_px": [
-    48,
-    116
-   ],
-   "door_tile": [
-    3,
     5
    ],
    "roof_tiles": [
     [
-     2,
-     0
-    ],
-    [
-     3,
-     0
+     0,
+     1
     ],
     [
      1,
@@ -1530,6 +57,14 @@
      1
     ],
     [
+     5,
+     1
+    ],
+    [
+     0,
+     2
+    ],
+    [
      1,
      2
     ],
@@ -1543,6 +78,10 @@
     ],
     [
      4,
+     2
+    ],
+    [
+     5,
      2
     ],
     [
@@ -1570,6 +109,10 @@
      3
     ],
     [
+     0,
+     4
+    ],
+    [
      1,
      4
     ],
@@ -1586,6 +129,14 @@
      4
     ],
     [
+     5,
+     4
+    ],
+    [
+     0,
+     5
+    ],
+    [
      1,
      5
     ],
@@ -1599,19 +150,3663 @@
     ],
     [
      4,
+     5
+    ],
+    [
+     5,
      5
     ]
+   ],
+   "clear_area_px": [
+    16,
+    44,
+    48,
+    48
+   ],
+   "door_lane_px": [
+    32,
+    68,
+    16,
+    42
+   ],
+   "old_tiles": [
+    3,
+    2
+   ]
+  },
+  {
+   "name": "v3_house_02",
+   "night_layer": "v3_house_02_night.png",
+   "tiles": [
+    6,
+    6
+   ],
+   "px": [
+    96,
+    110
+   ],
+   "storeys": 2,
+   "footprint_origin_px": [
+    0,
+    14
+   ],
+   "layers": [
+    "v3_house_02_floor.png",
+    "v3_house_02_walls.png",
+    "v3_house_02_upper1.png",
+    "v3_house_02_roof.png"
+   ],
+   "fade_group": [
+    "v3_house_02_upper1.png",
+    "v3_house_02_roof.png"
+   ],
+   "door_px": [
+    63,
+    96
+   ],
+   "door_tile": [
+    3,
+    5
+   ],
+   "roof_tiles": [
+    [
+     0,
+     1
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     2,
+     1
+    ],
+    [
+     3,
+     1
+    ],
+    [
+     4,
+     1
+    ],
+    [
+     5,
+     1
+    ],
+    [
+     0,
+     2
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     2,
+     2
+    ],
+    [
+     3,
+     2
+    ],
+    [
+     4,
+     2
+    ],
+    [
+     5,
+     2
+    ],
+    [
+     0,
+     3
+    ],
+    [
+     1,
+     3
+    ],
+    [
+     2,
+     3
+    ],
+    [
+     3,
+     3
+    ],
+    [
+     4,
+     3
+    ],
+    [
+     5,
+     3
+    ],
+    [
+     0,
+     4
+    ],
+    [
+     1,
+     4
+    ],
+    [
+     2,
+     4
+    ],
+    [
+     3,
+     4
+    ],
+    [
+     4,
+     4
+    ],
+    [
+     5,
+     4
+    ],
+    [
+     0,
+     5
+    ],
+    [
+     1,
+     5
+    ],
+    [
+     2,
+     5
+    ],
+    [
+     3,
+     5
+    ],
+    [
+     4,
+     5
+    ],
+    [
+     5,
+     5
+    ]
+   ],
+   "clear_area_px": [
+    38,
+    44,
+    48,
+    48
+   ],
+   "door_lane_px": [
+    55,
+    68,
+    16,
+    42
+   ],
+   "old_tiles": [
+    2,
+    3
+   ]
+  },
+  {
+   "name": "v3_house_03",
+   "night_layer": "v3_house_03_night.png",
+   "tiles": [
+    6,
+    6
+   ],
+   "px": [
+    96,
+    110
+   ],
+   "storeys": 2,
+   "footprint_origin_px": [
+    0,
+    14
+   ],
+   "layers": [
+    "v3_house_03_floor.png",
+    "v3_house_03_walls.png",
+    "v3_house_03_upper1.png",
+    "v3_house_03_roof.png"
+   ],
+   "fade_group": [
+    "v3_house_03_upper1.png",
+    "v3_house_03_roof.png"
+   ],
+   "door_px": [
+    51,
+    96
+   ],
+   "door_tile": [
+    3,
+    5
+   ],
+   "roof_tiles": [
+    [
+     0,
+     1
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     2,
+     1
+    ],
+    [
+     3,
+     1
+    ],
+    [
+     4,
+     1
+    ],
+    [
+     5,
+     1
+    ],
+    [
+     0,
+     2
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     2,
+     2
+    ],
+    [
+     3,
+     2
+    ],
+    [
+     4,
+     2
+    ],
+    [
+     5,
+     2
+    ],
+    [
+     0,
+     3
+    ],
+    [
+     1,
+     3
+    ],
+    [
+     2,
+     3
+    ],
+    [
+     3,
+     3
+    ],
+    [
+     4,
+     3
+    ],
+    [
+     5,
+     3
+    ],
+    [
+     0,
+     4
+    ],
+    [
+     1,
+     4
+    ],
+    [
+     2,
+     4
+    ],
+    [
+     3,
+     4
+    ],
+    [
+     4,
+     4
+    ],
+    [
+     5,
+     4
+    ],
+    [
+     0,
+     5
+    ],
+    [
+     1,
+     5
+    ],
+    [
+     2,
+     5
+    ],
+    [
+     3,
+     5
+    ],
+    [
+     4,
+     5
+    ],
+    [
+     5,
+     5
+    ]
+   ],
+   "clear_area_px": [
+    26,
+    44,
+    48,
+    48
+   ],
+   "door_lane_px": [
+    43,
+    68,
+    16,
+    42
+   ],
+   "old_tiles": [
+    4,
+    4
+   ]
+  },
+  {
+   "name": "v3_house_04",
+   "night_layer": "v3_house_04_night.png",
+   "tiles": [
+    6,
+    6
+   ],
+   "px": [
+    96,
+    110
+   ],
+   "storeys": 2,
+   "footprint_origin_px": [
+    0,
+    14
+   ],
+   "layers": [
+    "v3_house_04_floor.png",
+    "v3_house_04_walls.png",
+    "v3_house_04_upper1.png",
+    "v3_house_04_roof.png"
+   ],
+   "fade_group": [
+    "v3_house_04_upper1.png",
+    "v3_house_04_roof.png"
+   ],
+   "door_px": [
+    52,
+    96
+   ],
+   "door_tile": [
+    3,
+    5
+   ],
+   "roof_tiles": [
+    [
+     0,
+     0
+    ],
+    [
+     1,
+     0
+    ],
+    [
+     2,
+     0
+    ],
+    [
+     3,
+     0
+    ],
+    [
+     4,
+     0
+    ],
+    [
+     5,
+     0
+    ],
+    [
+     0,
+     1
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     2,
+     1
+    ],
+    [
+     3,
+     1
+    ],
+    [
+     4,
+     1
+    ],
+    [
+     5,
+     1
+    ],
+    [
+     0,
+     2
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     2,
+     2
+    ],
+    [
+     3,
+     2
+    ],
+    [
+     4,
+     2
+    ],
+    [
+     5,
+     2
+    ],
+    [
+     0,
+     3
+    ],
+    [
+     1,
+     3
+    ],
+    [
+     2,
+     3
+    ],
+    [
+     3,
+     3
+    ],
+    [
+     4,
+     3
+    ],
+    [
+     5,
+     3
+    ],
+    [
+     0,
+     4
+    ],
+    [
+     1,
+     4
+    ],
+    [
+     2,
+     4
+    ],
+    [
+     3,
+     4
+    ],
+    [
+     4,
+     4
+    ],
+    [
+     5,
+     4
+    ],
+    [
+     0,
+     5
+    ],
+    [
+     1,
+     5
+    ],
+    [
+     2,
+     5
+    ],
+    [
+     3,
+     5
+    ],
+    [
+     4,
+     5
+    ],
+    [
+     5,
+     5
+    ]
+   ],
+   "clear_area_px": [
+    28,
+    44,
+    48,
+    48
+   ],
+   "door_lane_px": [
+    44,
+    68,
+    16,
+    42
+   ],
+   "old_tiles": [
+    3,
+    3
+   ]
+  },
+  {
+   "name": "v3_house_05",
+   "night_layer": "v3_house_05_night.png",
+   "tiles": [
+    7,
+    7
+   ],
+   "px": [
+    112,
+    126
+   ],
+   "storeys": 2,
+   "footprint_origin_px": [
+    0,
+    14
+   ],
+   "layers": [
+    "v3_house_05_floor.png",
+    "v3_house_05_walls.png",
+    "v3_house_05_upper1.png",
+    "v3_house_05_roof.png"
+   ],
+   "fade_group": [
+    "v3_house_05_upper1.png",
+    "v3_house_05_roof.png"
+   ],
+   "door_px": [
+    61,
+    112
+   ],
+   "door_tile": [
+    3,
+    6
+   ],
+   "roof_tiles": [
+    [
+     0,
+     2
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     2,
+     2
+    ],
+    [
+     3,
+     2
+    ],
+    [
+     4,
+     2
+    ],
+    [
+     5,
+     2
+    ],
+    [
+     6,
+     2
+    ],
+    [
+     0,
+     3
+    ],
+    [
+     1,
+     3
+    ],
+    [
+     2,
+     3
+    ],
+    [
+     3,
+     3
+    ],
+    [
+     4,
+     3
+    ],
+    [
+     5,
+     3
+    ],
+    [
+     6,
+     3
+    ],
+    [
+     0,
+     4
+    ],
+    [
+     1,
+     4
+    ],
+    [
+     2,
+     4
+    ],
+    [
+     3,
+     4
+    ],
+    [
+     4,
+     4
+    ],
+    [
+     5,
+     4
+    ],
+    [
+     6,
+     4
+    ],
+    [
+     0,
+     5
+    ],
+    [
+     1,
+     5
+    ],
+    [
+     2,
+     5
+    ],
+    [
+     3,
+     5
+    ],
+    [
+     4,
+     5
+    ],
+    [
+     5,
+     5
+    ],
+    [
+     6,
+     5
+    ],
+    [
+     0,
+     6
+    ],
+    [
+     1,
+     6
+    ],
+    [
+     2,
+     6
+    ],
+    [
+     3,
+     6
+    ],
+    [
+     4,
+     6
+    ],
+    [
+     5,
+     6
+    ],
+    [
+     6,
+     6
+    ]
+   ],
+   "clear_area_px": [
+    36,
+    60,
+    48,
+    48
+   ],
+   "door_lane_px": [
+    53,
+    84,
+    16,
+    42
+   ],
+   "old_tiles": [
+    3,
+    2
+   ]
+  },
+  {
+   "name": "v3_house_06",
+   "night_layer": "v3_house_06_night.png",
+   "tiles": [
+    6,
+    6
+   ],
+   "px": [
+    96,
+    110
+   ],
+   "storeys": 2,
+   "footprint_origin_px": [
+    0,
+    14
+   ],
+   "layers": [
+    "v3_house_06_floor.png",
+    "v3_house_06_walls.png",
+    "v3_house_06_upper1.png",
+    "v3_house_06_roof.png"
+   ],
+   "fade_group": [
+    "v3_house_06_upper1.png",
+    "v3_house_06_roof.png"
+   ],
+   "door_px": [
+    38,
+    96
+   ],
+   "door_tile": [
+    2,
+    5
+   ],
+   "roof_tiles": [
+    [
+     0,
+     1
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     2,
+     1
+    ],
+    [
+     3,
+     1
+    ],
+    [
+     4,
+     1
+    ],
+    [
+     5,
+     1
+    ],
+    [
+     0,
+     2
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     2,
+     2
+    ],
+    [
+     3,
+     2
+    ],
+    [
+     4,
+     2
+    ],
+    [
+     5,
+     2
+    ],
+    [
+     0,
+     3
+    ],
+    [
+     1,
+     3
+    ],
+    [
+     2,
+     3
+    ],
+    [
+     3,
+     3
+    ],
+    [
+     4,
+     3
+    ],
+    [
+     5,
+     3
+    ],
+    [
+     0,
+     4
+    ],
+    [
+     1,
+     4
+    ],
+    [
+     2,
+     4
+    ],
+    [
+     3,
+     4
+    ],
+    [
+     4,
+     4
+    ],
+    [
+     5,
+     4
+    ],
+    [
+     0,
+     5
+    ],
+    [
+     1,
+     5
+    ],
+    [
+     2,
+     5
+    ],
+    [
+     3,
+     5
+    ],
+    [
+     4,
+     5
+    ],
+    [
+     5,
+     5
+    ]
+   ],
+   "clear_area_px": [
+    14,
+    44,
+    48,
+    48
+   ],
+   "door_lane_px": [
+    30,
+    68,
+    16,
+    42
+   ],
+   "old_tiles": [
+    3,
+    4
+   ]
+  },
+  {
+   "name": "v3_house_07",
+   "night_layer": "v3_house_07_night.png",
+   "tiles": [
+    6,
+    6
+   ],
+   "px": [
+    96,
+    110
+   ],
+   "storeys": 2,
+   "footprint_origin_px": [
+    0,
+    14
+   ],
+   "layers": [
+    "v3_house_07_floor.png",
+    "v3_house_07_walls.png",
+    "v3_house_07_upper1.png",
+    "v3_house_07_roof.png"
+   ],
+   "fade_group": [
+    "v3_house_07_upper1.png",
+    "v3_house_07_roof.png"
+   ],
+   "door_px": [
+    32,
+    96
+   ],
+   "door_tile": [
+    2,
+    5
+   ],
+   "roof_tiles": [
+    [
+     0,
+     1
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     2,
+     1
+    ],
+    [
+     3,
+     1
+    ],
+    [
+     4,
+     1
+    ],
+    [
+     5,
+     1
+    ],
+    [
+     0,
+     2
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     2,
+     2
+    ],
+    [
+     3,
+     2
+    ],
+    [
+     4,
+     2
+    ],
+    [
+     5,
+     2
+    ],
+    [
+     0,
+     3
+    ],
+    [
+     1,
+     3
+    ],
+    [
+     2,
+     3
+    ],
+    [
+     3,
+     3
+    ],
+    [
+     4,
+     3
+    ],
+    [
+     5,
+     3
+    ],
+    [
+     0,
+     4
+    ],
+    [
+     1,
+     4
+    ],
+    [
+     2,
+     4
+    ],
+    [
+     3,
+     4
+    ],
+    [
+     4,
+     4
+    ],
+    [
+     5,
+     4
+    ],
+    [
+     0,
+     5
+    ],
+    [
+     1,
+     5
+    ],
+    [
+     2,
+     5
+    ],
+    [
+     3,
+     5
+    ],
+    [
+     4,
+     5
+    ],
+    [
+     5,
+     5
+    ]
+   ],
+   "clear_area_px": [
+    8,
+    44,
+    48,
+    48
+   ],
+   "door_lane_px": [
+    24,
+    68,
+    16,
+    42
+   ],
+   "old_tiles": [
+    3,
+    2
+   ]
+  },
+  {
+   "name": "v3_house_08",
+   "night_layer": "v3_house_08_night.png",
+   "tiles": [
+    5,
+    5
+   ],
+   "px": [
+    80,
+    94
+   ],
+   "storeys": 2,
+   "footprint_origin_px": [
+    0,
+    14
+   ],
+   "layers": [
+    "v3_house_08_floor.png",
+    "v3_house_08_walls.png",
+    "v3_house_08_upper1.png",
+    "v3_house_08_roof.png"
+   ],
+   "fade_group": [
+    "v3_house_08_upper1.png",
+    "v3_house_08_roof.png"
+   ],
+   "door_px": [
+    50,
+    80
+   ],
+   "door_tile": [
+    3,
+    4
+   ],
+   "roof_tiles": [
+    [
+     0,
+     1
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     2,
+     1
+    ],
+    [
+     3,
+     1
+    ],
+    [
+     4,
+     1
+    ],
+    [
+     0,
+     2
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     2,
+     2
+    ],
+    [
+     3,
+     2
+    ],
+    [
+     4,
+     2
+    ],
+    [
+     0,
+     3
+    ],
+    [
+     1,
+     3
+    ],
+    [
+     2,
+     3
+    ],
+    [
+     3,
+     3
+    ],
+    [
+     4,
+     3
+    ],
+    [
+     0,
+     4
+    ],
+    [
+     1,
+     4
+    ],
+    [
+     2,
+     4
+    ],
+    [
+     3,
+     4
+    ],
+    [
+     4,
+     4
+    ]
+   ],
+   "clear_area_px": [
+    22,
+    28,
+    48,
+    48
+   ],
+   "door_lane_px": [
+    42,
+    52,
+    16,
+    42
+   ],
+   "old_tiles": [
+    2,
+    3
+   ]
+  },
+  {
+   "name": "v3_house_09",
+   "night_layer": "v3_house_09_night.png",
+   "tiles": [
+    6,
+    6
+   ],
+   "px": [
+    96,
+    96
+   ],
+   "storeys": 1,
+   "footprint_origin_px": [
+    0,
+    0
+   ],
+   "layers": [
+    "v3_house_09_floor.png",
+    "v3_house_09_walls.png",
+    "v3_house_09_roof.png"
+   ],
+   "fade_group": [
+    "v3_house_09_roof.png"
+   ],
+   "door_px": [
+    63,
+    82
+   ],
+   "door_tile": [
+    3,
+    5
+   ],
+   "roof_tiles": [
+    [
+     0,
+     1
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     2,
+     1
+    ],
+    [
+     3,
+     1
+    ],
+    [
+     4,
+     1
+    ],
+    [
+     5,
+     1
+    ],
+    [
+     0,
+     2
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     2,
+     2
+    ],
+    [
+     3,
+     2
+    ],
+    [
+     4,
+     2
+    ],
+    [
+     5,
+     2
+    ],
+    [
+     0,
+     3
+    ],
+    [
+     1,
+     3
+    ],
+    [
+     2,
+     3
+    ],
+    [
+     3,
+     3
+    ],
+    [
+     4,
+     3
+    ],
+    [
+     5,
+     3
+    ],
+    [
+     0,
+     4
+    ],
+    [
+     1,
+     4
+    ],
+    [
+     2,
+     4
+    ],
+    [
+     3,
+     4
+    ],
+    [
+     4,
+     4
+    ],
+    [
+     5,
+     4
+    ],
+    [
+     0,
+     5
+    ],
+    [
+     1,
+     5
+    ],
+    [
+     2,
+     5
+    ],
+    [
+     3,
+     5
+    ],
+    [
+     4,
+     5
+    ],
+    [
+     5,
+     5
+    ]
+   ],
+   "clear_area_px": [
+    38,
+    30,
+    48,
+    48
+   ],
+   "door_lane_px": [
+    55,
+    54,
+    16,
+    42
+   ],
+   "old_tiles": [
+    4,
+    4
+   ]
+  },
+  {
+   "name": "v3_house_10",
+   "night_layer": "v3_house_10_night.png",
+   "tiles": [
+    6,
+    6
+   ],
+   "px": [
+    96,
+    110
+   ],
+   "storeys": 2,
+   "footprint_origin_px": [
+    0,
+    14
+   ],
+   "layers": [
+    "v3_house_10_floor.png",
+    "v3_house_10_walls.png",
+    "v3_house_10_upper1.png",
+    "v3_house_10_roof.png"
+   ],
+   "fade_group": [
+    "v3_house_10_upper1.png",
+    "v3_house_10_roof.png"
+   ],
+   "door_px": [
+    46,
+    96
+   ],
+   "door_tile": [
+    2,
+    5
+   ],
+   "roof_tiles": [
+    [
+     0,
+     0
+    ],
+    [
+     1,
+     0
+    ],
+    [
+     2,
+     0
+    ],
+    [
+     3,
+     0
+    ],
+    [
+     4,
+     0
+    ],
+    [
+     5,
+     0
+    ],
+    [
+     0,
+     1
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     2,
+     1
+    ],
+    [
+     3,
+     1
+    ],
+    [
+     4,
+     1
+    ],
+    [
+     5,
+     1
+    ],
+    [
+     0,
+     2
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     2,
+     2
+    ],
+    [
+     3,
+     2
+    ],
+    [
+     4,
+     2
+    ],
+    [
+     5,
+     2
+    ],
+    [
+     0,
+     3
+    ],
+    [
+     1,
+     3
+    ],
+    [
+     2,
+     3
+    ],
+    [
+     3,
+     3
+    ],
+    [
+     4,
+     3
+    ],
+    [
+     5,
+     3
+    ],
+    [
+     0,
+     4
+    ],
+    [
+     1,
+     4
+    ],
+    [
+     2,
+     4
+    ],
+    [
+     3,
+     4
+    ],
+    [
+     4,
+     4
+    ],
+    [
+     5,
+     4
+    ],
+    [
+     0,
+     5
+    ],
+    [
+     1,
+     5
+    ],
+    [
+     2,
+     5
+    ],
+    [
+     3,
+     5
+    ],
+    [
+     4,
+     5
+    ],
+    [
+     5,
+     5
+    ]
+   ],
+   "clear_area_px": [
+    22,
+    44,
+    48,
+    48
+   ],
+   "door_lane_px": [
+    38,
+    68,
+    16,
+    42
+   ],
+   "old_tiles": [
+    3,
+    2
+   ]
+  },
+  {
+   "name": "v3_house_11",
+   "night_layer": "v3_house_11_night.png",
+   "tiles": [
+    6,
+    6
+   ],
+   "px": [
+    96,
+    96
+   ],
+   "storeys": 1,
+   "footprint_origin_px": [
+    0,
+    0
+   ],
+   "layers": [
+    "v3_house_11_floor.png",
+    "v3_house_11_walls.png",
+    "v3_house_11_roof.png"
+   ],
+   "fade_group": [
+    "v3_house_11_roof.png"
+   ],
+   "door_px": [
+    40,
+    82
+   ],
+   "door_tile": [
+    2,
+    5
+   ],
+   "roof_tiles": [
+    [
+     0,
+     1
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     2,
+     1
+    ],
+    [
+     3,
+     1
+    ],
+    [
+     4,
+     1
+    ],
+    [
+     5,
+     1
+    ],
+    [
+     0,
+     2
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     2,
+     2
+    ],
+    [
+     3,
+     2
+    ],
+    [
+     4,
+     2
+    ],
+    [
+     5,
+     2
+    ],
+    [
+     0,
+     3
+    ],
+    [
+     1,
+     3
+    ],
+    [
+     2,
+     3
+    ],
+    [
+     3,
+     3
+    ],
+    [
+     4,
+     3
+    ],
+    [
+     5,
+     3
+    ],
+    [
+     0,
+     4
+    ],
+    [
+     1,
+     4
+    ],
+    [
+     2,
+     4
+    ],
+    [
+     3,
+     4
+    ],
+    [
+     4,
+     4
+    ],
+    [
+     5,
+     4
+    ],
+    [
+     0,
+     5
+    ],
+    [
+     1,
+     5
+    ],
+    [
+     2,
+     5
+    ],
+    [
+     3,
+     5
+    ],
+    [
+     4,
+     5
+    ],
+    [
+     5,
+     5
+    ]
+   ],
+   "clear_area_px": [
+    16,
+    30,
+    48,
+    48
+   ],
+   "door_lane_px": [
+    32,
+    54,
+    16,
+    42
+   ],
+   "old_tiles": [
+    4,
+    3
+   ]
+  },
+  {
+   "name": "v3_house_12",
+   "night_layer": "v3_house_12_night.png",
+   "tiles": [
+    6,
+    6
+   ],
+   "px": [
+    96,
+    96
+   ],
+   "storeys": 1,
+   "footprint_origin_px": [
+    0,
+    0
+   ],
+   "layers": [
+    "v3_house_12_floor.png",
+    "v3_house_12_walls.png",
+    "v3_house_12_roof.png"
+   ],
+   "fade_group": [
+    "v3_house_12_roof.png"
+   ],
+   "door_px": [
+    48,
+    82
+   ],
+   "door_tile": [
+    3,
+    5
+   ],
+   "roof_tiles": [
+    [
+     0,
+     1
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     2,
+     1
+    ],
+    [
+     3,
+     1
+    ],
+    [
+     4,
+     1
+    ],
+    [
+     5,
+     1
+    ],
+    [
+     0,
+     2
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     2,
+     2
+    ],
+    [
+     3,
+     2
+    ],
+    [
+     4,
+     2
+    ],
+    [
+     5,
+     2
+    ],
+    [
+     0,
+     3
+    ],
+    [
+     1,
+     3
+    ],
+    [
+     2,
+     3
+    ],
+    [
+     3,
+     3
+    ],
+    [
+     4,
+     3
+    ],
+    [
+     5,
+     3
+    ],
+    [
+     0,
+     4
+    ],
+    [
+     1,
+     4
+    ],
+    [
+     2,
+     4
+    ],
+    [
+     3,
+     4
+    ],
+    [
+     4,
+     4
+    ],
+    [
+     5,
+     4
+    ],
+    [
+     0,
+     5
+    ],
+    [
+     1,
+     5
+    ],
+    [
+     2,
+     5
+    ],
+    [
+     3,
+     5
+    ],
+    [
+     4,
+     5
+    ],
+    [
+     5,
+     5
+    ]
+   ],
+   "clear_area_px": [
+    24,
+    30,
+    48,
+    48
+   ],
+   "door_lane_px": [
+    40,
+    54,
+    16,
+    42
+   ],
+   "old_tiles": [
+    3,
+    3
+   ]
+  },
+  {
+   "name": "v3_house_13",
+   "night_layer": "v3_house_13_night.png",
+   "tiles": [
+    5,
+    5
+   ],
+   "px": [
+    80,
+    94
+   ],
+   "storeys": 2,
+   "footprint_origin_px": [
+    0,
+    14
+   ],
+   "layers": [
+    "v3_house_13_floor.png",
+    "v3_house_13_walls.png",
+    "v3_house_13_upper1.png",
+    "v3_house_13_roof.png"
+   ],
+   "fade_group": [
+    "v3_house_13_upper1.png",
+    "v3_house_13_roof.png"
+   ],
+   "door_px": [
+    48,
+    80
+   ],
+   "door_tile": [
+    3,
+    4
+   ],
+   "roof_tiles": [
+    [
+     0,
+     1
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     2,
+     1
+    ],
+    [
+     3,
+     1
+    ],
+    [
+     4,
+     1
+    ],
+    [
+     0,
+     2
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     2,
+     2
+    ],
+    [
+     3,
+     2
+    ],
+    [
+     4,
+     2
+    ],
+    [
+     0,
+     3
+    ],
+    [
+     1,
+     3
+    ],
+    [
+     2,
+     3
+    ],
+    [
+     3,
+     3
+    ],
+    [
+     4,
+     3
+    ],
+    [
+     0,
+     4
+    ],
+    [
+     1,
+     4
+    ],
+    [
+     2,
+     4
+    ],
+    [
+     3,
+     4
+    ],
+    [
+     4,
+     4
+    ]
+   ],
+   "clear_area_px": [
+    24,
+    28,
+    48,
+    48
+   ],
+   "door_lane_px": [
+    40,
+    52,
+    16,
+    42
+   ],
+   "old_tiles": [
+    3,
+    3
+   ]
+  },
+  {
+   "name": "v3_house_14",
+   "night_layer": "v3_house_14_night.png",
+   "tiles": [
+    6,
+    6
+   ],
+   "px": [
+    96,
+    110
+   ],
+   "storeys": 2,
+   "footprint_origin_px": [
+    0,
+    14
+   ],
+   "layers": [
+    "v3_house_14_floor.png",
+    "v3_house_14_walls.png",
+    "v3_house_14_upper1.png",
+    "v3_house_14_roof.png"
+   ],
+   "fade_group": [
+    "v3_house_14_upper1.png",
+    "v3_house_14_roof.png"
+   ],
+   "door_px": [
+    56,
+    96
+   ],
+   "door_tile": [
+    3,
+    5
+   ],
+   "roof_tiles": [
+    [
+     0,
+     1
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     2,
+     1
+    ],
+    [
+     3,
+     1
+    ],
+    [
+     4,
+     1
+    ],
+    [
+     5,
+     1
+    ],
+    [
+     0,
+     2
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     2,
+     2
+    ],
+    [
+     3,
+     2
+    ],
+    [
+     4,
+     2
+    ],
+    [
+     5,
+     2
+    ],
+    [
+     0,
+     3
+    ],
+    [
+     1,
+     3
+    ],
+    [
+     2,
+     3
+    ],
+    [
+     3,
+     3
+    ],
+    [
+     4,
+     3
+    ],
+    [
+     5,
+     3
+    ],
+    [
+     0,
+     4
+    ],
+    [
+     1,
+     4
+    ],
+    [
+     2,
+     4
+    ],
+    [
+     3,
+     4
+    ],
+    [
+     4,
+     4
+    ],
+    [
+     5,
+     4
+    ],
+    [
+     0,
+     5
+    ],
+    [
+     1,
+     5
+    ],
+    [
+     2,
+     5
+    ],
+    [
+     3,
+     5
+    ],
+    [
+     4,
+     5
+    ],
+    [
+     5,
+     5
+    ]
+   ],
+   "clear_area_px": [
+    32,
+    44,
+    48,
+    48
+   ],
+   "door_lane_px": [
+    48,
+    68,
+    16,
+    42
+   ],
+   "old_tiles": [
+    3,
+    3
+   ]
+  },
+  {
+   "name": "v3_house_15",
+   "night_layer": "v3_house_15_night.png",
+   "tiles": [
+    6,
+    6
+   ],
+   "px": [
+    96,
+    110
+   ],
+   "storeys": 2,
+   "footprint_origin_px": [
+    0,
+    14
+   ],
+   "layers": [
+    "v3_house_15_floor.png",
+    "v3_house_15_walls.png",
+    "v3_house_15_upper1.png",
+    "v3_house_15_roof.png"
+   ],
+   "fade_group": [
+    "v3_house_15_upper1.png",
+    "v3_house_15_roof.png"
+   ],
+   "door_px": [
+    52,
+    96
+   ],
+   "door_tile": [
+    3,
+    5
+   ],
+   "roof_tiles": [
+    [
+     0,
+     1
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     2,
+     1
+    ],
+    [
+     3,
+     1
+    ],
+    [
+     4,
+     1
+    ],
+    [
+     5,
+     1
+    ],
+    [
+     0,
+     2
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     2,
+     2
+    ],
+    [
+     3,
+     2
+    ],
+    [
+     4,
+     2
+    ],
+    [
+     5,
+     2
+    ],
+    [
+     0,
+     3
+    ],
+    [
+     1,
+     3
+    ],
+    [
+     2,
+     3
+    ],
+    [
+     3,
+     3
+    ],
+    [
+     4,
+     3
+    ],
+    [
+     5,
+     3
+    ],
+    [
+     0,
+     4
+    ],
+    [
+     1,
+     4
+    ],
+    [
+     2,
+     4
+    ],
+    [
+     3,
+     4
+    ],
+    [
+     4,
+     4
+    ],
+    [
+     5,
+     4
+    ],
+    [
+     0,
+     5
+    ],
+    [
+     1,
+     5
+    ],
+    [
+     2,
+     5
+    ],
+    [
+     3,
+     5
+    ],
+    [
+     4,
+     5
+    ],
+    [
+     5,
+     5
+    ]
+   ],
+   "clear_area_px": [
+    28,
+    44,
+    48,
+    48
+   ],
+   "door_lane_px": [
+    44,
+    68,
+    16,
+    42
+   ],
+   "old_tiles": [
+    4,
+    2
+   ]
+  },
+  {
+   "name": "v3_house_16",
+   "night_layer": "v3_house_16_night.png",
+   "tiles": [
+    6,
+    6
+   ],
+   "px": [
+    96,
+    110
+   ],
+   "storeys": 2,
+   "footprint_origin_px": [
+    0,
+    14
+   ],
+   "layers": [
+    "v3_house_16_floor.png",
+    "v3_house_16_walls.png",
+    "v3_house_16_upper1.png",
+    "v3_house_16_roof.png"
+   ],
+   "fade_group": [
+    "v3_house_16_upper1.png",
+    "v3_house_16_roof.png"
+   ],
+   "door_px": [
+    48,
+    96
+   ],
+   "door_tile": [
+    3,
+    5
+   ],
+   "roof_tiles": [
+    [
+     0,
+     0
+    ],
+    [
+     1,
+     0
+    ],
+    [
+     2,
+     0
+    ],
+    [
+     3,
+     0
+    ],
+    [
+     4,
+     0
+    ],
+    [
+     5,
+     0
+    ],
+    [
+     0,
+     1
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     2,
+     1
+    ],
+    [
+     3,
+     1
+    ],
+    [
+     4,
+     1
+    ],
+    [
+     5,
+     1
+    ],
+    [
+     0,
+     2
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     2,
+     2
+    ],
+    [
+     3,
+     2
+    ],
+    [
+     4,
+     2
+    ],
+    [
+     5,
+     2
+    ],
+    [
+     0,
+     3
+    ],
+    [
+     1,
+     3
+    ],
+    [
+     2,
+     3
+    ],
+    [
+     3,
+     3
+    ],
+    [
+     4,
+     3
+    ],
+    [
+     5,
+     3
+    ],
+    [
+     0,
+     4
+    ],
+    [
+     1,
+     4
+    ],
+    [
+     2,
+     4
+    ],
+    [
+     3,
+     4
+    ],
+    [
+     4,
+     4
+    ],
+    [
+     5,
+     4
+    ],
+    [
+     0,
+     5
+    ],
+    [
+     1,
+     5
+    ],
+    [
+     2,
+     5
+    ],
+    [
+     3,
+     5
+    ],
+    [
+     4,
+     5
+    ],
+    [
+     5,
+     5
+    ]
+   ],
+   "clear_area_px": [
+    24,
+    44,
+    48,
+    48
+   ],
+   "door_lane_px": [
+    40,
+    68,
+    16,
+    42
+   ],
+   "old_tiles": [
+    2,
+    4
+   ]
+  },
+  {
+   "name": "v3_house_17",
+   "night_layer": "v3_house_17_night.png",
+   "tiles": [
+    5,
+    5
+   ],
+   "px": [
+    80,
+    94
+   ],
+   "storeys": 2,
+   "footprint_origin_px": [
+    0,
+    14
+   ],
+   "layers": [
+    "v3_house_17_floor.png",
+    "v3_house_17_walls.png",
+    "v3_house_17_upper1.png",
+    "v3_house_17_roof.png"
+   ],
+   "fade_group": [
+    "v3_house_17_upper1.png",
+    "v3_house_17_roof.png"
+   ],
+   "door_px": [
+    52,
+    80
+   ],
+   "door_tile": [
+    3,
+    4
+   ],
+   "roof_tiles": [
+    [
+     0,
+     1
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     2,
+     1
+    ],
+    [
+     3,
+     1
+    ],
+    [
+     4,
+     1
+    ],
+    [
+     0,
+     2
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     2,
+     2
+    ],
+    [
+     3,
+     2
+    ],
+    [
+     4,
+     2
+    ],
+    [
+     0,
+     3
+    ],
+    [
+     1,
+     3
+    ],
+    [
+     2,
+     3
+    ],
+    [
+     3,
+     3
+    ],
+    [
+     0,
+     4
+    ],
+    [
+     1,
+     4
+    ],
+    [
+     2,
+     4
+    ],
+    [
+     3,
+     4
+    ]
+   ],
+   "clear_area_px": [
+    14,
+    28,
+    48,
+    48
+   ],
+   "door_lane_px": [
+    44,
+    52,
+    16,
+    42
+   ],
+   "old_tiles": [
+    3,
+    4
+   ]
+  },
+  {
+   "name": "v3_house_18",
+   "night_layer": "v3_house_18_night.png",
+   "tiles": [
+    6,
+    6
+   ],
+   "px": [
+    96,
+    96
+   ],
+   "storeys": 1,
+   "footprint_origin_px": [
+    0,
+    0
+   ],
+   "layers": [
+    "v3_house_18_floor.png",
+    "v3_house_18_walls.png",
+    "v3_house_18_roof.png"
+   ],
+   "fade_group": [
+    "v3_house_18_roof.png"
+   ],
+   "door_px": [
+    50,
+    82
+   ],
+   "door_tile": [
+    3,
+    5
+   ],
+   "roof_tiles": [
+    [
+     0,
+     1
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     2,
+     1
+    ],
+    [
+     3,
+     1
+    ],
+    [
+     4,
+     1
+    ],
+    [
+     5,
+     1
+    ],
+    [
+     0,
+     2
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     2,
+     2
+    ],
+    [
+     3,
+     2
+    ],
+    [
+     4,
+     2
+    ],
+    [
+     5,
+     2
+    ],
+    [
+     0,
+     3
+    ],
+    [
+     1,
+     3
+    ],
+    [
+     2,
+     3
+    ],
+    [
+     3,
+     3
+    ],
+    [
+     4,
+     3
+    ],
+    [
+     5,
+     3
+    ],
+    [
+     0,
+     4
+    ],
+    [
+     1,
+     4
+    ],
+    [
+     2,
+     4
+    ],
+    [
+     3,
+     4
+    ],
+    [
+     4,
+     4
+    ],
+    [
+     5,
+     4
+    ],
+    [
+     0,
+     5
+    ],
+    [
+     1,
+     5
+    ],
+    [
+     2,
+     5
+    ],
+    [
+     3,
+     5
+    ],
+    [
+     4,
+     5
+    ],
+    [
+     5,
+     5
+    ]
+   ],
+   "clear_area_px": [
+    26,
+    30,
+    48,
+    48
+   ],
+   "door_lane_px": [
+    42,
+    54,
+    16,
+    42
+   ],
+   "old_tiles": [
+    3,
+    4
+   ]
+  },
+  {
+   "name": "v3_bank",
+   "night_layer": "v3_bank_night.png",
+   "tiles": [
+    7,
+    6
+   ],
+   "px": [
+    112,
+    110
+   ],
+   "storeys": 2,
+   "footprint_origin_px": [
+    0,
+    14
+   ],
+   "layers": [
+    "v3_bank_floor.png",
+    "v3_bank_walls.png",
+    "v3_bank_upper1.png",
+    "v3_bank_roof.png"
+   ],
+   "fade_group": [
+    "v3_bank_upper1.png",
+    "v3_bank_roof.png"
+   ],
+   "door_px": [
+    56,
+    96
+   ],
+   "door_tile": [
+    3,
+    5
+   ],
+   "roof_tiles": [
+    [
+     2,
+     0
+    ],
+    [
+     3,
+     0
+    ],
+    [
+     4,
+     0
+    ],
+    [
+     0,
+     1
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     2,
+     1
+    ],
+    [
+     3,
+     1
+    ],
+    [
+     4,
+     1
+    ],
+    [
+     5,
+     1
+    ],
+    [
+     6,
+     1
+    ],
+    [
+     0,
+     2
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     2,
+     2
+    ],
+    [
+     3,
+     2
+    ],
+    [
+     4,
+     2
+    ],
+    [
+     5,
+     2
+    ],
+    [
+     6,
+     2
+    ],
+    [
+     0,
+     3
+    ],
+    [
+     1,
+     3
+    ],
+    [
+     2,
+     3
+    ],
+    [
+     3,
+     3
+    ],
+    [
+     4,
+     3
+    ],
+    [
+     5,
+     3
+    ],
+    [
+     6,
+     3
+    ],
+    [
+     0,
+     4
+    ],
+    [
+     1,
+     4
+    ],
+    [
+     2,
+     4
+    ],
+    [
+     3,
+     4
+    ],
+    [
+     4,
+     4
+    ],
+    [
+     5,
+     4
+    ],
+    [
+     6,
+     4
+    ],
+    [
+     0,
+     5
+    ],
+    [
+     1,
+     5
+    ],
+    [
+     2,
+     5
+    ],
+    [
+     3,
+     5
+    ],
+    [
+     4,
+     5
+    ],
+    [
+     5,
+     5
+    ],
+    [
+     6,
+     5
+    ]
+   ],
+   "clear_area_px": [
+    32,
+    44,
+    48,
+    48
+   ],
+   "door_lane_px": [
+    48,
+    68,
+    16,
+    42
+   ],
+   "old_tiles": [
+    5,
+    4
+   ]
+  },
+  {
+   "name": "v3_cookhouse",
+   "night_layer": "v3_cookhouse_night.png",
+   "tiles": [
+    5,
+    5
+   ],
+   "px": [
+    80,
+    80
+   ],
+   "storeys": 1,
+   "footprint_origin_px": [
+    0,
+    0
+   ],
+   "layers": [
+    "v3_cookhouse_floor.png",
+    "v3_cookhouse_walls.png",
+    "v3_cookhouse_roof.png"
+   ],
+   "fade_group": [
+    "v3_cookhouse_roof.png"
+   ],
+   "door_px": [
+    32,
+    66
+   ],
+   "door_tile": [
+    2,
+    4
+   ],
+   "roof_tiles": [
+    [
+     0,
+     1
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     2,
+     1
+    ],
+    [
+     3,
+     1
+    ],
+    [
+     4,
+     1
+    ],
+    [
+     0,
+     2
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     2,
+     2
+    ],
+    [
+     3,
+     2
+    ],
+    [
+     4,
+     2
+    ],
+    [
+     0,
+     3
+    ],
+    [
+     1,
+     3
+    ],
+    [
+     2,
+     3
+    ],
+    [
+     3,
+     3
+    ],
+    [
+     4,
+     3
+    ],
+    [
+     0,
+     4
+    ],
+    [
+     1,
+     4
+    ],
+    [
+     2,
+     4
+    ],
+    [
+     3,
+     4
+    ],
+    [
+     4,
+     4
+    ]
+   ],
+   "clear_area_px": [
+    8,
+    14,
+    48,
+    48
+   ],
+   "door_lane_px": [
+    24,
+    38,
+    16,
+    42
+   ],
+   "old_tiles": [
+    4,
+    3
+   ]
+  },
+  {
+   "name": "v3_player_house",
+   "night_layer": "v3_player_house_night.png",
+   "tiles": [
+    5,
+    5
+   ],
+   "px": [
+    80,
+    94
+   ],
+   "storeys": 2,
+   "footprint_origin_px": [
+    0,
+    14
+   ],
+   "layers": [
+    "v3_player_house_floor.png",
+    "v3_player_house_walls.png",
+    "v3_player_house_upper1.png",
+    "v3_player_house_roof.png"
+   ],
+   "fade_group": [
+    "v3_player_house_upper1.png",
+    "v3_player_house_roof.png"
+   ],
+   "door_px": [
+    30,
+    80
+   ],
+   "door_tile": [
+    1,
+    4
+   ],
+   "roof_tiles": [
+    [
+     4,
+     0
+    ],
+    [
+     0,
+     1
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     2,
+     1
+    ],
+    [
+     3,
+     1
+    ],
+    [
+     4,
+     1
+    ],
+    [
+     0,
+     2
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     2,
+     2
+    ],
+    [
+     3,
+     2
+    ],
+    [
+     4,
+     2
+    ],
+    [
+     0,
+     3
+    ],
+    [
+     1,
+     3
+    ],
+    [
+     2,
+     3
+    ],
+    [
+     3,
+     3
+    ],
+    [
+     4,
+     3
+    ],
+    [
+     0,
+     4
+    ],
+    [
+     1,
+     4
+    ],
+    [
+     2,
+     4
+    ],
+    [
+     3,
+     4
+    ],
+    [
+     4,
+     4
+    ]
+   ],
+   "clear_area_px": [
+    6,
+    28,
+    48,
+    48
+   ],
+   "door_lane_px": [
+    22,
+    52,
+    16,
+    42
+   ],
+   "old_tiles": [
+    4,
+    4
+   ]
+  },
+  {
+   "name": "v3_temple",
+   "night_layer": "v3_temple_night.png",
+   "tiles": [
+    8,
+    8
+   ],
+   "px": [
+    128,
+    162
+   ],
+   "storeys": 2,
+   "footprint_origin_px": [
+    0,
+    34
+   ],
+   "layers": [
+    "v3_temple_floor.png",
+    "v3_temple_walls.png",
+    "v3_temple_upper1.png",
+    "v3_temple_roof.png"
+   ],
+   "fade_group": [
+    "v3_temple_upper1.png",
+    "v3_temple_roof.png"
+   ],
+   "door_px": [
+    64,
+    148
+   ],
+   "door_tile": [
+    4,
+    7
+   ],
+   "roof_tiles": [
+    [
+     3,
+     0
+    ],
+    [
+     4,
+     0
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     2,
+     1
+    ],
+    [
+     3,
+     1
+    ],
+    [
+     4,
+     1
+    ],
+    [
+     5,
+     1
+    ],
+    [
+     6,
+     1
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     2,
+     2
+    ],
+    [
+     3,
+     2
+    ],
+    [
+     4,
+     2
+    ],
+    [
+     5,
+     2
+    ],
+    [
+     6,
+     2
+    ],
+    [
+     0,
+     3
+    ],
+    [
+     1,
+     3
+    ],
+    [
+     2,
+     3
+    ],
+    [
+     3,
+     3
+    ],
+    [
+     4,
+     3
+    ],
+    [
+     5,
+     3
+    ],
+    [
+     6,
+     3
+    ],
+    [
+     7,
+     3
+    ],
+    [
+     0,
+     4
+    ],
+    [
+     1,
+     4
+    ],
+    [
+     2,
+     4
+    ],
+    [
+     3,
+     4
+    ],
+    [
+     4,
+     4
+    ],
+    [
+     5,
+     4
+    ],
+    [
+     6,
+     4
+    ],
+    [
+     7,
+     4
+    ],
+    [
+     0,
+     5
+    ],
+    [
+     1,
+     5
+    ],
+    [
+     2,
+     5
+    ],
+    [
+     3,
+     5
+    ],
+    [
+     4,
+     5
+    ],
+    [
+     5,
+     5
+    ],
+    [
+     6,
+     5
+    ],
+    [
+     7,
+     5
+    ],
+    [
+     1,
+     6
+    ],
+    [
+     2,
+     6
+    ],
+    [
+     3,
+     6
+    ],
+    [
+     4,
+     6
+    ],
+    [
+     5,
+     6
+    ],
+    [
+     6,
+     6
+    ],
+    [
+     1,
+     7
+    ],
+    [
+     2,
+     7
+    ],
+    [
+     3,
+     7
+    ],
+    [
+     4,
+     7
+    ],
+    [
+     5,
+     7
+    ],
+    [
+     6,
+     7
+    ]
+   ],
+   "clear_area_px": [
+    40,
+    96,
+    48,
+    48
+   ],
+   "door_lane_px": [
+    56,
+    120,
+    16,
+    42
+   ],
+   "old_tiles": [
+    6,
+    6
    ]
   },
   {
    "name": "v3_town_hall",
+   "night_layer": "v3_town_hall_night.png",
    "tiles": [
-    6,
-    5
+    8,
+    7
    ],
    "px": [
-    96,
-    128
+    128,
+    160
    ],
    "storeys": 3,
    "footprint_origin_px": [
@@ -1631,23 +3826,23 @@
     "v3_town_hall_roof.png"
    ],
    "door_px": [
-    48,
-    114
+    64,
+    146
    ],
    "door_tile": [
-    3,
-    4
+    4,
+    6
    ],
    "roof_tiles": [
     [
-     2,
-     0
-    ],
-    [
      3,
      0
     ],
     [
+     4,
+     0
+    ],
+    [
      0,
      1
     ],
@@ -1672,6 +3867,14 @@
      1
     ],
     [
+     6,
+     1
+    ],
+    [
+     7,
+     1
+    ],
+    [
      0,
      2
     ],
@@ -1696,6 +3899,14 @@
      2
     ],
     [
+     6,
+     2
+    ],
+    [
+     7,
+     2
+    ],
+    [
      0,
      3
     ],
@@ -1720,6 +3931,14 @@
      3
     ],
     [
+     6,
+     3
+    ],
+    [
+     7,
+     3
+    ],
+    [
      0,
      4
     ],
@@ -1742,18 +3961,107 @@
     [
      5,
      4
+    ],
+    [
+     6,
+     4
+    ],
+    [
+     7,
+     4
+    ],
+    [
+     0,
+     5
+    ],
+    [
+     1,
+     5
+    ],
+    [
+     2,
+     5
+    ],
+    [
+     3,
+     5
+    ],
+    [
+     4,
+     5
+    ],
+    [
+     5,
+     5
+    ],
+    [
+     6,
+     5
+    ],
+    [
+     7,
+     5
+    ],
+    [
+     0,
+     6
+    ],
+    [
+     1,
+     6
+    ],
+    [
+     2,
+     6
+    ],
+    [
+     3,
+     6
+    ],
+    [
+     4,
+     6
+    ],
+    [
+     5,
+     6
+    ],
+    [
+     6,
+     6
+    ],
+    [
+     7,
+     6
     ]
+   ],
+   "clear_area_px": [
+    40,
+    94,
+    48,
+    48
+   ],
+   "door_lane_px": [
+    56,
+    118,
+    16,
+    42
+   ],
+   "old_tiles": [
+    6,
+    5
    ]
   },
   {
    "name": "v3_keep",
+   "night_layer": "v3_keep_night.png",
    "tiles": [
-    8,
-    7
+    11,
+    10
    ],
    "px": [
-    128,
-    174
+    176,
+    222
    ],
    "storeys": 4,
    "footprint_origin_px": [
@@ -1775,23 +4083,15 @@
     "v3_keep_roof.png"
    ],
    "door_px": [
-    64,
-    160
+    88,
+    208
    ],
    "door_tile": [
-    4,
-    6
+    5,
+    9
    ],
    "roof_tiles": [
     [
-     1,
-     0
-    ],
-    [
-     6,
-     0
-    ],
-    [
      0,
      1
     ],
@@ -1804,124 +4104,168 @@
      1
     ],
     [
-     3,
+     8,
      1
     ],
     [
-     4,
+     9,
      1
     ],
     [
-     5,
+     10,
      1
-    ],
-    [
-     6,
-     1
-    ],
-    [
-     7,
-     1
-    ],
-    [
-     1,
-     2
-    ],
-    [
-     2,
-     2
-    ],
-    [
-     3,
-     2
-    ],
-    [
-     4,
-     2
-    ],
-    [
-     5,
-     2
-    ],
-    [
-     6,
-     2
-    ],
-    [
-     1,
-     3
-    ],
-    [
-     2,
-     3
-    ],
-    [
-     3,
-     3
-    ],
-    [
-     4,
-     3
-    ],
-    [
-     5,
-     3
-    ],
-    [
-     6,
-     3
-    ],
-    [
-     1,
-     4
-    ],
-    [
-     2,
-     4
-    ],
-    [
-     3,
-     4
-    ],
-    [
-     4,
-     4
-    ],
-    [
-     5,
-     4
-    ],
-    [
-     6,
-     4
-    ],
-    [
-     1,
-     5
-    ],
-    [
-     2,
-     5
-    ],
-    [
-     3,
-     5
-    ],
-    [
-     4,
-     5
-    ],
-    [
-     5,
-     5
-    ],
-    [
-     6,
-     5
     ],
     [
      0,
-     6
+     2
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     2,
+     2
+    ],
+    [
+     3,
+     2
+    ],
+    [
+     4,
+     2
+    ],
+    [
+     5,
+     2
+    ],
+    [
+     6,
+     2
+    ],
+    [
+     7,
+     2
+    ],
+    [
+     8,
+     2
+    ],
+    [
+     9,
+     2
+    ],
+    [
+     10,
+     2
+    ],
+    [
+     1,
+     3
+    ],
+    [
+     2,
+     3
+    ],
+    [
+     3,
+     3
+    ],
+    [
+     4,
+     3
+    ],
+    [
+     5,
+     3
+    ],
+    [
+     6,
+     3
+    ],
+    [
+     7,
+     3
+    ],
+    [
+     8,
+     3
+    ],
+    [
+     9,
+     3
+    ],
+    [
+     1,
+     4
+    ],
+    [
+     2,
+     4
+    ],
+    [
+     3,
+     4
+    ],
+    [
+     4,
+     4
+    ],
+    [
+     5,
+     4
+    ],
+    [
+     6,
+     4
+    ],
+    [
+     7,
+     4
+    ],
+    [
+     8,
+     4
+    ],
+    [
+     9,
+     4
+    ],
+    [
+     1,
+     5
+    ],
+    [
+     2,
+     5
+    ],
+    [
+     3,
+     5
+    ],
+    [
+     4,
+     5
+    ],
+    [
+     5,
+     5
+    ],
+    [
+     6,
+     5
+    ],
+    [
+     7,
+     5
+    ],
+    [
+     8,
+     5
+    ],
+    [
+     9,
+     5
     ],
     [
      1,
@@ -1950,18 +4294,151 @@
     [
      7,
      6
+    ],
+    [
+     8,
+     6
+    ],
+    [
+     9,
+     6
+    ],
+    [
+     1,
+     7
+    ],
+    [
+     2,
+     7
+    ],
+    [
+     3,
+     7
+    ],
+    [
+     4,
+     7
+    ],
+    [
+     5,
+     7
+    ],
+    [
+     6,
+     7
+    ],
+    [
+     7,
+     7
+    ],
+    [
+     8,
+     7
+    ],
+    [
+     9,
+     7
+    ],
+    [
+     1,
+     8
+    ],
+    [
+     2,
+     8
+    ],
+    [
+     3,
+     8
+    ],
+    [
+     4,
+     8
+    ],
+    [
+     5,
+     8
+    ],
+    [
+     6,
+     8
+    ],
+    [
+     7,
+     8
+    ],
+    [
+     8,
+     8
+    ],
+    [
+     9,
+     8
+    ],
+    [
+     1,
+     9
+    ],
+    [
+     2,
+     9
+    ],
+    [
+     3,
+     9
+    ],
+    [
+     4,
+     9
+    ],
+    [
+     5,
+     9
+    ],
+    [
+     6,
+     9
+    ],
+    [
+     7,
+     9
+    ],
+    [
+     8,
+     9
+    ],
+    [
+     9,
+     9
     ]
+   ],
+   "clear_area_px": [
+    64,
+    156,
+    48,
+    48
+   ],
+   "door_lane_px": [
+    80,
+    180,
+    16,
+    42
+   ],
+   "old_tiles": [
+    8,
+    7
    ]
   },
   {
    "name": "v3_house_narrow_tall",
+   "night_layer": "v3_house_narrow_tall_night.png",
    "tiles": [
-    2,
-    4
+    5,
+    5
    ],
    "px": [
-    32,
-    78
+    80,
+    94
    ],
    "storeys": 2,
    "footprint_origin_px": [
@@ -1979,12 +4456,12 @@
     "v3_house_narrow_tall_roof.png"
    ],
    "door_px": [
-    16,
-    64
+    40,
+    80
    ],
    "door_tile": [
-    1,
-    3
+    2,
+    4
    ],
    "roof_tiles": [
     [
@@ -1996,11 +4473,35 @@
      0
     ],
     [
+     2,
+     0
+    ],
+    [
+     3,
+     0
+    ],
+    [
+     4,
+     0
+    ],
+    [
      0,
      1
     ],
     [
      1,
+     1
+    ],
+    [
+     2,
+     1
+    ],
+    [
+     3,
+     1
+    ],
+    [
+     4,
      1
     ],
     [
@@ -2012,24 +4513,85 @@
      2
     ],
     [
+     2,
+     2
+    ],
+    [
+     3,
+     2
+    ],
+    [
+     4,
+     2
+    ],
+    [
      0,
      3
     ],
     [
      1,
      3
+    ],
+    [
+     2,
+     3
+    ],
+    [
+     3,
+     3
+    ],
+    [
+     4,
+     3
+    ],
+    [
+     0,
+     4
+    ],
+    [
+     1,
+     4
+    ],
+    [
+     2,
+     4
+    ],
+    [
+     3,
+     4
+    ],
+    [
+     4,
+     4
     ]
+   ],
+   "clear_area_px": [
+    16,
+    28,
+    48,
+    48
+   ],
+   "door_lane_px": [
+    32,
+    52,
+    16,
+    42
+   ],
+   "old_tiles": [
+    2,
+    4
    ]
   },
   {
    "name": "v3_house_longhouse",
+   "night_layer": "v3_house_longhouse_night.png",
    "tiles": [
     6,
-    2
+    5
    ],
    "px": [
     96,
-    32
+    80
    ],
    "storeys": 1,
    "footprint_origin_px": [
@@ -2046,61 +4608,125 @@
    ],
    "door_px": [
     40,
-    18
+    66
    ],
    "door_tile": [
     2,
-    1
+    4
    ],
    "roof_tiles": [
     [
      0,
-     0
+     1
     ],
     [
      1,
-     0
+     1
     ],
     [
      2,
-     0
+     1
     ],
     [
      3,
-     0
+     1
     ],
     [
      4,
-     0
+     1
     ],
     [
      5,
-     0
+     1
     ],
     [
      0,
-     1
+     2
     ],
     [
      1,
-     1
+     2
     ],
     [
      2,
-     1
+     2
     ],
     [
      3,
-     1
+     2
     ],
     [
      4,
-     1
+     2
     ],
     [
      5,
-     1
+     2
+    ],
+    [
+     0,
+     3
+    ],
+    [
+     1,
+     3
+    ],
+    [
+     2,
+     3
+    ],
+    [
+     3,
+     3
+    ],
+    [
+     4,
+     3
+    ],
+    [
+     5,
+     3
+    ],
+    [
+     0,
+     4
+    ],
+    [
+     1,
+     4
+    ],
+    [
+     2,
+     4
+    ],
+    [
+     3,
+     4
+    ],
+    [
+     4,
+     4
+    ],
+    [
+     5,
+     4
     ]
+   ],
+   "clear_area_px": [
+    16,
+    14,
+    48,
+    48
+   ],
+   "door_lane_px": [
+    32,
+    38,
+    16,
+    42
+   ],
+   "old_tiles": [
+    6,
+    2
    ]
   }
  ],
@@ -2454,20 +5080,5 @@
   },
   "gate_use": "N gate = v31_gate_back (inner face seen from town), S gate = v31_gate_front, E/W gates = v31_gate_side. Wall runs are straight for >=5 tiles either side of a gate and end flush under the gate towers / v31_wall_gate_join_w|e.",
   "supersedes": "tiles_v3 wall autotile + cobble autotile (kept) and the flat v3_wall_gatehouse (kept for reference only)"
- },
- "ground_textures_v3": {
-  "dir": "ground_textures_v3",
-  "drop_in_for": "assets/sprites/tiles/*.png and assets/sprites/transitions/*.png (same names, sizes, layouts)",
-  "files": [
-   "tiles/road_stone.png",
-   "tiles/cobble.png",
-   "tiles/cobble_dark.png",
-   "transitions/road_stone.png",
-   "transitions/cobble.png",
-   "transitions/cobble_dark.png"
-  ],
-  "plaza": "no separate plaza sprite; highfen.json maps \":\" (plaza) to cobble",
-  "compare": "before_after_3x.png",
-  "generator": "src/gen_ground_v3.py"
  }
 }

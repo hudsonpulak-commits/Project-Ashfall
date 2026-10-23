@@ -26,19 +26,29 @@ SRC = '/workspace/art_handoff/towns/fenhollow'
 DST = os.path.join(REPO, 'assets/sprites/towns/fenhollow')
 RES = 'res://assets/sprites/towns/fenhollow'
 T = 16
-GW, GH = 74, 60
+S = 1.6   # 0.3.14 v2: the designer grew the map 1.6x for the bigger buildings
+GW, GH = int(74 * S), int(60 * S)
 SW, SH = GW * T, GH * T
-ORIGIN = [-37, -30]
-CXt, CYt, RX, RY = 37, 30, 29, 23
+ORIGIN = [-GW // 2, -GH // 2]
+CXt, CYt, RX, RY = int(37 * S), int(30 * S), 29 * S, 23 * S
+def _s(q): return (q[0] * S, q[1] * S)
 
 # ---------------------------------------------------------------- copy art (never write into art_handoff)
+# 0.3.14 sprite bot's v2 set (min 5x5, walk-in floors, *_night window layers) overlays v1;
+# the boardwalk blob47 sheet + masks come from the v1 tiles dir (boardwalk fix)
+SRC2 = os.path.join(SRC, 'v2')
 for sub in ('tiles', 'buildings', 'props'):
     os.makedirs(os.path.join(DST, sub), exist_ok=True)
-    for f in sorted(os.listdir(os.path.join(SRC, sub))):
-        if f.endswith('.png'): shutil.copyfile(os.path.join(SRC, sub, f), os.path.join(DST, sub, f))
-shutil.copyfile(os.path.join(SRC, 'manifest.json'), os.path.join(DST, 'manifest_designer.json'))
+    if sub == 'buildings':
+        for f in os.listdir(os.path.join(DST, sub)):
+            if f.endswith('.png') or f.endswith('.png.import'): os.remove(os.path.join(DST, sub, f))
+    for root in ((SRC2,) if sub == 'buildings' else (SRC, SRC2)):
+        for f in sorted(os.listdir(os.path.join(root, sub))):
+            if f.endswith('.png') or f.endswith('_masks.json'): shutil.copyfile(os.path.join(root, sub, f), os.path.join(DST, sub, f))
+shutil.copyfile(os.path.join(SRC2, 'manifest.json'), os.path.join(DST, 'manifest_designer.json'))
 shutil.copyfile(os.path.join(SRC, 'README.md'), os.path.join(DST, 'README_designer.md'))
-M = json.load(open(os.path.join(SRC, 'manifest.json')))
+M = json.load(open(os.path.join(SRC2, 'manifest.json')))
+BLOB = json.load(open(os.path.join(SRC, 'manifest.json')))['boardwalk_blob47']
 BM = {b['name']: b for b in M['buildings']}; GM = M['palisade']['gates']
 _LC = {}
 def L(sub, n):
@@ -66,14 +76,29 @@ def plan_of(b):
             else: r += '#'
         rows.append(r + '#')
     return rows
+def plan_of_v2(b):
+    # 0.3.14 v2 art: walls sit on the footprint edge; walkable = the designer's clear area + door lane + door
+    E = b['footprint_origin_px'][1]; W, H = b['tiles']; d = tuple(b['door_tile']); H = d[1] + 1
+    def inr(r, cx, cy): return r[0] <= cx < r[0] + r[2] and r[1] <= cy < r[1] + r[3]
+    rows = []
+    for y in range(H):
+        r = ''
+        for x in range(W):
+            cx, cy = x * T + 8, E + y * T + 8
+            if (x, y) == d: r += 'D'
+            elif y < H - 1 and (inr(b['clear_area_px'], cx, cy) or inr(b['door_lane_px'], cx, cy)): r += 'o'
+            else: r += '#'
+        rows.append(r)
+    return rows
+V2 = 'clear_area_px' in M['buildings'][0]; RIM = 0 if V2 else 1
 ART = {}
 for b in M['buildings']:
     lay = b['layers']
-    ART[b['name']] = dict(tiles=[b['tiles'][0], b['door_tile'][1] + 1], px=b['px'], origin_y=b['footprint_origin_px'][1] - T, inset_x=T, door_tile=b['door_tile'], storeys=b['storeys'],
+    ART[b['name']] = dict(tiles=[b['tiles'][0], b['door_tile'][1] + 1], px=b['px'], origin_y=b['footprint_origin_px'][1] - (0 if V2 else T), inset_x=(0 if V2 else T), door_tile=b['door_tile'], storeys=b['storeys'],
                           floor=f"{RES}/buildings/{lay[0][:-4] if lay[0].endswith('.png') else lay[0]}.png".replace('.png.png', '.png'),
                           walls=f"{RES}/buildings/{lay[1][:-4] if lay[1].endswith('.png') else lay[1]}.png".replace('.png.png', '.png'),
                           fade=[f"{RES}/buildings/{l}".replace('.png.png', '.png') if l.endswith('.png') else f"{RES}/buildings/{l}.png" for l in b['fade_group']],
-                          plan=plan_of(b), note='0.3.13 Fenhollow v1: plan has a 1-tile invisible collision rim (top/left/right)')
+                          night=(f"{RES}/buildings/{b['night_layer']}" if b.get('night_layer') else ''), plan=(plan_of_v2(b) if V2 else plan_of(b)), note='0.3.13 Fenhollow v1: plan has a 1-tile invisible collision rim (top/left/right)')
 def flip_plan(rows): return [r[::-1] for r in rows]
 def LB(l): return L('buildings', l[:-4] if l.endswith('.png') else l)
 
@@ -85,7 +110,7 @@ ang = np.degrees(np.arctan2((VY - CYt) / RY, (VX - CXt) / RX)) % 360
 wob = 1 + .035 * np.sin(np.radians(ang) * 4 + .7) + .02 * np.sin(np.radians(ang) * 9)
 def ell(rx, ry): return np.hypot((VX - CXt) / rx, (VY - CYt) / ry) / wob <= 1
 inside = ell(RX - 1, RY - 1)
-creek = dg.line_mask(VY.shape, [(0, 22), (10, 25), (19, 21), (28, 26), (38, 24), (47, 29), (56, 26), (64, 31), (74, 28)], 1.6)
+creek = dg.line_mask(VY.shape, [_s(q) for q in [(0, 22), (10, 25), (19, 21), (28, 26), (38, 24), (47, 29), (56, 26), (64, 31), (74, 28)]], 1.6 * S)
 WAT = (nz < .30) | creek | (~ell(RX + 3, RY + 3) & (nz < .55))
 WAT &= ~(ell(RX + 2.2, RY + 2.2) & ~ell(RX - 2.2, RY - 2.2))
 WAT[(np.abs(VX - CXt) < 4) & (VY > CYt + RY - 3)] = False; WAT[(np.abs(VX - CXt) < 4) & (VY < CYt - RY + 3)] = False
@@ -126,13 +151,16 @@ G = {g: (x0, y0) for n, x0, y0, g, _ in GATE}
 gw = ((G[180][0] - 8) / 16, (G[180][1] + 57) / 16); ge = ((G[0][0] + 56) / 16, (G[0][1] + 57) / 16)
 gn = ((G[270][0] + 32) / 16, G[270][1] / 16); gs = ((G[90][0] + 32) / 16, (G[90][1] + 72) / 16)
 # 0.3.13 the 4 gate roads run on to the town edge (the world roads join there)
-PATHS = [[(37, GH + 1), gs, (37, CYt + RY + 5), (36.5, 48), (39, 41), (35, 35), (37, 30)], [(37, -1), gn, (37, 4), (36, 12), (39, 19), (36, 25), (37, 30)],
-         [(-1, gw[1]), gw, (3, gw[1]), (13, gw[1] + 1), (20, 36), (29, 33), (37, 30)], [(GW + 1, ge[1]), ge, (71, ge[1]), (62, ge[1] - .5), (55, 26), (46, 31), (37, 30)],
-         [(36.5, 48), (27, 46), (19, 41), (15, 34)], [(39, 41), (48, 44), (56, 41), (61, 36)], [(36, 12), (28, 13), (19, 17)], [(39, 19), (49, 15), (57, 18)],
-         [(37, 30), (31, 28), (24, 27), (15, 26)]]
+_M = lambda l: [_s(q) for q in l]
+PATHS = [[(CXt, GH + 1), gs, (CXt, CYt + RY + 5)] + _M([(36.5, 48), (39, 41), (35, 35), (37, 30)]),
+         [(CXt, -1), gn, (CXt, 4 * S)] + _M([(36, 12), (39, 19), (36, 25), (37, 30)]),
+         [(-1, gw[1]), gw, (3 * S, gw[1]), (13 * S, gw[1] + S)] + _M([(20, 36), (29, 33), (37, 30)]),
+         [(GW + 1, ge[1]), ge, (GW - 3 * S, ge[1]), (62 * S, ge[1] - .5 * S)] + _M([(55, 26), (46, 31), (37, 30)]),
+         _M([(36.5, 48), (27, 46), (19, 41), (15, 34)]), _M([(39, 41), (48, 44), (56, 41), (61, 36)]), _M([(36, 12), (28, 13), (19, 17)]), _M([(39, 19), (49, 15), (57, 18)]),
+         _M([(37, 30), (31, 28), (24, 27), (15, 26)])]
 MV = np.zeros_like(LV)
 for i, p in enumerate(PATHS): MV |= dg.line_mask(VY.shape, p, 1.0 if i < 4 else .8)
-MV |= ((VX - 37) / 4.5) ** 2 + ((VY - 30) / 3.2) ** 2 <= 1
+MV |= ((VX - 37 * S) / (4.5 * S)) ** 2 + ((VY - 30 * S) / (3.2 * S)) ** 2 <= 1
 for n, x0, y0, g, _ in GATE:
     if 'side' in n: MV |= dg.line_mask(VY.shape, [((x0 - 8) / 16, (y0 + 57) / 16), ((x0 + 56) / 16, (y0 + 57) / 16)], 1.0)
     else: MV |= dg.line_mask(VY.shape, [((x0 + 32) / 16, (y0) / 16), ((x0 + 32) / 16, (y0 + 72) / 16)], .9)
@@ -153,7 +181,7 @@ fr = lambda V: dg.frames_of(V)
 landT = fr(LV) == 15; pathT = fr(MV) > 0
 BWt = pathT & ~landT
 BWt = ndi.binary_dilation(BWt, CR) & pathT & ~(fr(LV) == 15) | BWt
-for (x0, y0, dx, dy, n) in [(9, 25, 0, 1, 4), (52, 27, 0, 1, 3), (28, 27, 0, 1, 3), (46, 58, 0, -1, 4), (64, 8, 0, 1, 3)]:   # fishing jetties
+for (x0, y0, dx, dy, n) in [(int(a * S), int(b * S), c, d, e) for a, b, c, d, e in [(9, 25, 0, 1, 4), (52, 27, 0, 1, 3), (28, 27, 0, 1, 3), (46, 58, 0, -1, 4), (64, 8, 0, 1, 3)]]:   # fishing jetties
     for k in range(n):
         yy, xx = y0 + dy * k, x0 + dx * k
         if 0 <= yy < GH and 0 <= xx < GW and not landT[yy, xx]: BWt[yy, xx] = True
@@ -177,24 +205,23 @@ def render_ground(U):
                 if F[y, x] and not (n == 'fh_diag_mud_path' and BWt[y, x] and F[y, x] != 15): lay[y * 16:y * 16 + 16, x * 16:x * 16 + 16] = A[:, F[y, x] * 16:F[y, x] * 16 + 16]
         cover[n] = lay[..., 3] > 0; img.alpha_composite(Image.fromarray(lay))
     BW_FILLED.clear()
-    BA = strip('fh_boardwalk_autotile'); bwpx = np.zeros((SH, SW), bool)
-    def nb(m, y, x):
-        g = lambda yy, xx: 0 <= yy < GH and 0 <= xx < GW and m[yy, xx]
-        return (1 if g(y - 1, x) or (y > 0 and pathT[y - 1, x] and landT[y - 1, x]) else 0) | (2 if g(y, x + 1) or (x + 1 < GW and pathT[y, x + 1] and landT[y, x + 1]) else 0) | \
-               (4 if g(y + 1, x) or (y + 1 < GH and pathT[y + 1, x] and landT[y + 1, x]) else 0) | (8 if g(y, x - 1) or (x > 0 and pathT[y, x - 1] and landT[y, x - 1]) else 0)
+    # 0.3.14 blob47 boardwalk (8-neighbour mask N1 NE2 E4 SE8 S16 SW32 W64 NW128, diagonals only with
+    # both edge neighbours); replaces the 16-frame autotile + the old code corner patch
+    BA = strip('fh_boardwalk_blob47'); bwpx = np.zeros((SH, SW), bool); FOM = BLOB['frame_of_mask']
+    def on(yy, xx, edge):
+        if not (0 <= yy < GH and 0 <= xx < GW): return False
+        return bool(BWt[yy, xx]) or (edge and bool(pathT[yy, xx] and landT[yy, xx]))
     for y in range(GH):
         for x in range(GW):
             if BWt[y, x]:
-                m = nb(BWt, y, x); fa = BA[:, m * 16:m * 16 + 16].copy()
-                # 0.3.13 corner-hole fix: every frame has 2x2 transparent corners. Where both sides of a corner
-                # join AND the diagonal tile is boardwalk too (a 2+ wide deck), fill that 2x2 from the board
-                # 2 px inward so neighbouring tiles join with no hole. (L-bends keep their inner notch.)
-                bw = lambda yy, xx: 0 <= yy < GH and 0 <= xx < GW and BWt[yy, xx]
-                for (dy, dx, bv, bh, ys, xs, sy) in [(-1, 1, 1, 2, slice(0, 2), slice(14, 16), slice(2, 4)), (-1, -1, 1, 8, slice(0, 2), slice(0, 2), slice(2, 4)),
-                                                     (1, 1, 4, 2, slice(14, 16), slice(14, 16), slice(12, 14)), (1, -1, 4, 8, slice(14, 16), slice(0, 2), slice(12, 14))]:
-                    if m & bv and m & bh and bw(y + dy, x + dx) and bw(y + dy, x) and bw(y, x + dx):
-                        blk = fa[ys, xs]; hole = blk[..., 3] == 0; blk[hole] = fa[sy, xs][hole]; fa[ys, xs] = blk; BW_FILLED.append((x, y))
-                f = Image.fromarray(fa); img.alpha_composite(f, (x * 16, y * 16))
+                n_, e_, s_, w_ = on(y - 1, x, 1), on(y, x + 1, 1), on(y + 1, x, 1), on(y, x - 1, 1)
+                m = n_ * 1 | e_ * 4 | s_ * 16 | w_ * 64
+                if n_ and e_ and on(y - 1, x + 1, 0): m |= 2
+                if s_ and e_ and on(y + 1, x + 1, 0): m |= 8
+                if s_ and w_ and on(y + 1, x - 1, 0): m |= 32
+                if n_ and w_ and on(y - 1, x - 1, 0): m |= 128
+                k = FOM[str(m)]; fa = BA[:, k * 16:k * 16 + 16]
+                f = Image.fromarray(fa); img.alpha_composite(f, (x * 16, y * 16)) if y * 16 + 20 <= SH else img.alpha_composite(f.crop((0, 0, 16, SH - y * 16)), (x * 16, y * 16))
                 bwpx[y * 16:min(SH, y * 16 + 20), x * 16:x * 16 + 16] |= np.array(f)[:min(20, SH - y * 16), :, 3] > 0
     return img, cover['fh_diag_marsh_bank'], cover['fh_diag_mud_path'], bwpx
 img0, landpx, pathpx, bwpx = render_ground(MVl)
@@ -282,11 +309,11 @@ INNER_T = (inside[:-1, :-1] & inside[1:, 1:] & inside[:-1, 1:] & inside[1:, :-1]
 insidepx = np.kron(ell(RX - 1.6, RY - 1.6)[:-1, :-1], np.ones((16, 16), bool)).astype(bool)
 
 # ---------------------------------------------------------------- building placement (tile-snapped)
-occ = ndi.binary_dilation(pathpx | waterpx | bwpx | wallpx, iterations=2)
+occ = pathpx | waterpx | bwpx | ndi.binary_dilation(wallpx, iterations=2)   # 0.3.14 v2: art may meet the mud edge
 for n, x0, y0, g, _ in GATE: w_, h_ = GM[n]['size_px']; occ[max(0, y0 - 4):y0 + h_ + 4, max(0, x0 - 20):x0 + w_ + 20] = True
 for x, y in TOW: occ[max(0, y):y + 80, max(0, x):x + 48] = True
 tile_used = np.array([[grid[y][x] in '~=#' for x in range(GW)] for y in range(GH)])
-reserved = set()
+reserved = set(); RIM_T = set(); INNER_B = set()
 blds = []
 def drawn(n, flip):
     b = BM[n]; im = Image.new('RGBA', tuple(b['px']))
@@ -321,11 +348,12 @@ def spur_route(fx, fy, extra_block=()):
 def place(n, tx, ty, flip=False, role=None, reach=80, quiet=False):
     al = drawn(n, flip); h, w = al.shape; E = BM[n]['footprint_origin_px'][1]
     rows, tiles = plan_tiles(n, flip); dl = door_local(rows); PWt, PHt = len(rows[0]), len(rows)
+    rimloc = {(x, y) for (x, y) in tiles if y == 0 or x == 0 or x == PWt - 1}
     for r in range(0, reach, 2):
         for t in range(0, 360, 15 if r else 360):
             px = tx * T + r * math.cos(math.radians(t)) - w / 2; py = ty * T + r * math.sin(math.radians(t)) - h / 2
-            ox, oy = int(round(px / T)) - 1, int(round((py + E) / T)) - 1
-            x0, y0 = (ox + 1) * T, (oy + 1) * T - E
+            ox, oy = int(round(px / T)) - RIM, int(round((py + E) / T)) - RIM
+            x0, y0 = (ox + RIM) * T, (oy + RIM) * T - E
             if ox < 1 or oy < 1 or ox + PWt > GW - 1 or oy + PHt > GH - 4 or y0 < 0 or x0 + w > SW: continue
             if (occ[y0:y0 + h, x0:x0 + w] & al).any(): continue
             if not insidepx[y0:y0 + h, x0:x0 + w][al].all(): continue
@@ -342,7 +370,7 @@ def place(n, tx, ty, flip=False, role=None, reach=80, quiet=False):
             if route is None:
                 for (lx, ly) in tiles: tile_used[oy + ly, ox + lx] = False
                 continue
-            occ[y0:y0 + h, x0:x0 + w] |= ndi.binary_dilation(al, iterations=3)
+            occ[y0:y0 + h, x0:x0 + w] |= al
             for (lx, ly) in tiles: reserved.add((ox + lx, oy + ly))   # the invisible rim already spaces neighbours
             for q in route: reserved.add(q)
             d = dict(art=n, flip=flip, at=[ox, oy], role=role, px=[x0, y0], rows=rows, door=[dx_, dy_], route=route)
@@ -356,17 +384,25 @@ CIVIC = [('fh_church', (37, 14), 'church', False), ('fh_kell_lodge', (30, 46), '
          ('fh_cookhouse', (24, 36), 'cook', False), ('fh_player_shop', (46, 38), 'player', False),
          ('fh_smithy', (55, 20), 'helmets', False), ('fh_house_12', (20, 20), 'archery', False)]
 left = []
+LAYOUT = json.load(open(os.path.join(SRC2, 'layout', 'layout.json')))['buildings']
+_LP = {}
+for lb in LAYOUT: _LP.setdefault(lb['name'], []).append(((lb['x'] + lb['w'] / 2) / T, (lb['y'] + lb['h'] / 2) / T))
 for n, p, role, flip in CIVIC:
-    if not place(n, *p, flip=flip, role=role, reach=400): left.append((n, role))
+    p = _LP[n].pop(0) if _LP.get(n) else _s(p)
+    if not place(n, *p, flip=flip, role=role, reach=900): left.append((n, role))
 HOUSES = [h for h in M['houses'] if h != 'fh_house_12'] + ['fh_house_12']
 rr = random.Random(7)
 mud_d = ndi.distance_transform_edt(~(pathpx | bwpx))
 cands = [(x, y) for y in range(8, GH - 6, 2) for x in range(6, GW - 6, 2) if INNER_T[y, x] and landT[y, x]]
 rr.shuffle(cands); cands.sort(key=lambda c: mud_d[c[1] * 16, c[0] * 16])
 use = collections.Counter(); nh = 0
+# 0.3.14 first every house at (or next to) its slot in the designer's v2 layout, then the free-search passes
+for n in list(HOUSES):
+    for lp in _LP.get(n, []):
+        if place(n, lp[0], lp[1], role='home', reach=64, quiet=True): use[n] += 1; nh += 1
 for rnd_pass in range(2):
     for n in HOUSES:
-        if rnd_pass and use[n] >= 2: continue
+        if rnd_pass and use[n] >= 2 or not rnd_pass and use[n]: continue
         for c in cands:
             if place(n, c[0], c[1], flip=(use[n] % 2 == 1), role='home', reach=48, quiet=True):
                 use[n] += 1; nh += 1; break
@@ -572,7 +608,7 @@ for (ax, ay) in [(1, 1), (-1, 1), (1, 2), (-1, 2), (2, 1), (-2, 1)]:
         objs[q] = 'quest_giver'; KELL = q; break
 assert KELL, 'no tile for Kell'
 # village green: exchange board, workbench, training dummy (the old plaza kit)
-GREEN = (37, 30)
+GREEN = (int(37 * S), int(30 * S))
 for nm in ['exchange_board', 'workbench', 'training_dummy']:
     done = False
     for r_ in range(3, 10):
@@ -807,7 +843,7 @@ for gname, v in GATE_TILES.items():          # two guards just inside every gate
     else:
         ix = max(xs) + 2 if gname == 'west' else min(xs) - 2
         for gy in (min(ys) - 1, max(ys) + 1): guards.append(dict(enemy='town_guard', patrol=[near_walk(ix, gy)], gate=gname))
-for beat in [[(37, 30), (24, 27), (15, 26)], [(37, 30), (46, 31), (55, 26)], [(36, 12), (28, 13), (19, 17)], [(39, 41), (48, 44), (56, 41)]]:
+for beat in [[(int(x * S), int(y * S)) for x, y in bt] for bt in [[(37, 30), (24, 27), (15, 26)], [(37, 30), (46, 31), (55, 26)], [(36, 12), (28, 13), (19, 17)], [(39, 41), (48, 44), (56, 41)]]]:
     guards.append(dict(enemy='town_guard', patrol=[near_walk(int(x), int(y)) for x, y in beat]))
 npcs['towns']['fenhollow'] = dict(guards=guards, citizens=dict(enemy='citizen', count=6, area=[GREEN[0] - 8, GREEN[1] - 6, 17, 13]),
                                   note='0.3.13 two guards inside each of the 4 palisade gates + 4 lane patrols')

@@ -1288,9 +1288,9 @@ func _farm() -> void:
 
 # --------------------------------------------------- 0.3.1 walled cities --
 ## The gate cell in the middle of the gate whose outside tile is `go`.
-## 0.3.14 Cinderholt's basalt ring (build_cinderholt_v1.py: centre (42, 62), radii 28 x 22 tiles).
+## 0.3.14 Cinderholt v2 basalt ring (build_cinderholt_v1.py: centre (42, 70), radii 36.4 x 28.6 tiles).
 func _outside_ring(q: Vector2i) -> bool:
-	return pow((q.x - 42) / 28.0, 2) + pow((q.y - 62) / 22.0, 2) > 1.15
+	return pow((q.x - 42) / 36.4, 2) + pow((q.y - 70) / 28.6, 2) > 1.15
 
 
 func _gate_tile(go: Vector2i) -> Vector2i:

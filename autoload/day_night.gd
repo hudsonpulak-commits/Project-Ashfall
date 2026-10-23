@@ -292,6 +292,11 @@ func refresh() -> void:
 
 
 func _apply_lights() -> void:
+	# 0.3.14 art buildings light their own windows (*_night layers), no overlay
+	var tree := get_tree()
+	if tree:
+		for nl in tree.get_nodes_in_group("art_night_layer"):
+			nl.modulate.a = _lights_energy
 	if lights_root == null or not is_instance_valid(lights_root):
 		return
 	var e := _lights_energy * float(cfg().get("lights", {}).get("glow_energy_night", 0.9))

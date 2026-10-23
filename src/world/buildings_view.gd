@@ -147,6 +147,21 @@ func _setup_art_building(w, b: Dictionary) -> Node2D:
 	wl.offset = Vector2(0, -ph + 1.0)
 	w.entity_layer.add_child(wl)
 	_walls[b["id"]] = [wl, canvas.y + ph - 1.0, ph]
+	# 0.3.14 sprite-bot *_night window layer: drawn over the walls, faded in by DayNight at dusk
+	var np_: String = str(d.get("night", ""))
+	if np_ != "" and ResourceLoader.exists(np_):
+		var nl := Sprite2D.new()
+		nl.name = "Night_%s" % b["id"]
+		nl.centered = false
+		nl.texture = load(np_)
+		nl.flip_h = flip
+		nl.offset = wl.offset
+		var mat := CanvasItemMaterial.new()
+		mat.blend_mode = CanvasItemMaterial.BLEND_MODE_ADD
+		nl.material = mat
+		nl.modulate.a = DayNight.lights_energy()
+		nl.add_to_group("art_night_layer")
+		wl.add_child(nl)
 	var fg := _ArtRoof.new()
 	fg.b = b
 	fg.tile = tp
