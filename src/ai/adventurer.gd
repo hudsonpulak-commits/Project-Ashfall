@@ -211,6 +211,8 @@ static func rank_targets(agent: AIAgent, now: int = -1) -> Array:
 		if is_raider(r) and r.activity.get("type", "") == "raid":
 			raiders += 1
 	for kind in GameData.enemies.keys():
+		if bool(GameData.enemies[kind].get("no_attack", false)):
+			continue           # quest animals (Clip Clop) aren't prey
 		var ev := evaluate(agent, kind)
 		if ev.is_empty() or not bool(ev["safe"]):
 			continue

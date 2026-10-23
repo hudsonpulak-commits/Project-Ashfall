@@ -39,6 +39,16 @@
    "min": 3,
    "max": 160,
    "label": "Slimes (by towns and villages)"
+  },
+  "rat_mother": {
+   "min": 12,
+   "max": 50,
+   "label": "The Rat Mother (A Dead Rat is a Good Rat)"
+  },
+  "clip_clop": {
+   "min": 0,
+   "max": 85,
+   "label": "Clip Clop (Finding Clip Clop, quest horse)"
   }
  }
 }

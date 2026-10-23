@@ -254,7 +254,7 @@
    "xp": 0,
    "retaliate": false,
    "no_attack": true,
-   "drops": "",
+   "drops": "cow",
    "follow_quest": "finding_clip_clop",
    "follow_stage": 1,
    "home_giver": "wenna_tamsin",

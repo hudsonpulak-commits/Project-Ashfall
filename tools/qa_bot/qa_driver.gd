@@ -344,6 +344,8 @@ func _run() -> void:
 			await _gfx0391()
 		"sidequests":
 			await _sidequests0315()
+		"sidequests2":
+			await _sidequests0316()
 		_:
 			push_error("unknown QA scenario " + scenario)
 			await _finish(false)
@@ -3055,3 +3057,268 @@ func _sidequests0315() -> void:
 	p.inventory.slots = keep_slots
 	Events.inventory_changed.emit()
 	_notes["sidequests"] = res
+
+
+## 0.3.16 the last four side quests start to finish: real taps on the givers, real
+## kills (wolves at the den, giant rats, the Rat Mother), Clip Clop walked home
+## behind the player, the steel delivered to the Guard camp, the farm mended.
+## Ore, coal and planks are put in the pack (they're bought / mined goods, not drops).
+func _sidequests0316() -> void:
+	var p: Player = main.player
+	var w: World = main.world
+	var hud = main.hud
+	var res := {}
+	var keep_xp: Dictionary = p.skills.xp.duplicate()
+	var keep_slots: Array = p.inventory.slots.duplicate(true)
+	for sk in ["attack", "strength", "defence", "vitality"]:
+		p.skills.set_level(sk, 50)
+	for i in p.inventory.slots.size():
+		p.inventory.slots[i] = null
+	p.inventory.add("iron_sword")
+	Events.inventory_changed.emit()
+	p.world_ref = w
+	# --- We Need Steel! -------------------------------------------------------
+	var r := {}
+	var id := "we_need_steel"
+	var gt := QuestSystem.giver_tile(w, "smith_brannoc")
+	var vt := QuestSystem.giver_tile(w, "sgt_voss")
+	r["giver_tile"] = [gt.x, gt.y]
+	r["voss_tile"] = [vt.x, vt.y]
+	await _sq_goto(gt)
+	r["mark_start"] = _glabel("smith_brannoc")
+	await _snap("sq2_steel_giver")
+	r["dialog_offer"] = await _dialog_pick(gt, "Brannoc", "Accept", "sq2_steel_offer")
+	await until(func(): return QuestSystem.state(p, id) != QuestSystem.NOT_STARTED, 10.0)
+	r["state_after_accept"] = QuestSystem.state(p, id)
+	p.inventory.add("iron_ore", 5)
+	p.inventory.add("coal", 10)
+	Events.inventory_changed.emit()
+	await frames(10)
+	r["mark_ready"] = _glabel("smith_brannoc")
+	r["dialog_hand"] = await _dialog_pick(gt, "Brannoc", "Hand them over", "sq2_steel_handin")
+	await frames(10)
+	r["bundle"] = p.inventory.count("guard_steel_bundle")
+	r["ore_left"] = p.inventory.count("iron_ore") + p.inventory.count("coal")
+	r["mark_smith_after"] = _glabel("smith_brannoc")
+	r["objective_voss"] = QuestSystem.objective_tile(p, w) == vt
+	hud.show_panel("quests")
+	await frames(8)
+	await _snap("sq2_journal_deliver")
+	r["journal_deliver"] = QuestSystem.progress_text(p, id)
+	hud.show_panel("")
+	await _sq_goto(vt)
+	r["mark_voss"] = _glabel("sgt_voss")
+	await _snap("sq2_steel_voss_marker")
+	var m0 := p.inventory.count(GameData.currency)
+	var inf0 := p.influence
+	var x0 := int(p.skills.xp.get("smithing", 0))
+	r["dialog_voss"] = await _dialog_pick(vt, "Voss", "Hand over the steel", "sq2_steel_voss")
+	await until(func(): return QuestSystem.state(p, id) == QuestSystem.COMPLETED, 10.0)
+	r["state_final"] = QuestSystem.state(p, id)
+	r["marks"] = p.inventory.count(GameData.currency) - m0
+	r["influence"] = p.influence - inf0
+	r["smithing_xp"] = int(p.skills.xp.get("smithing", 0)) - x0
+	r["bundle_final"] = p.inventory.count("guard_steel_bundle")
+	r["mark_final"] = _glabel("sgt_voss") + _glabel("smith_brannoc")
+	res[id] = r
+	# --- Can We Fix It? -------------------------------------------------------
+	r = {}
+	id = "can_we_fix_it"
+	gt = QuestSystem.giver_tile(w, "farmer_garrow")
+	r["giver_tile"] = [gt.x, gt.y]
+	await _sq_goto(gt + Vector2i(0, -3))
+	var props := _repair_props(w, gt)
+	r["props"] = props.size()
+	r["broken_before"] = _broken_count(w, props)
+	r["mark_start"] = _glabel("farmer_garrow")
+	await _snap("sq2_fix_before")
+	r["dialog_offer"] = await _dialog_pick(gt, "Garrow", "Accept", "sq2_fix_offer")
+	await until(func(): return QuestSystem.state(p, id) != QuestSystem.NOT_STARTED, 10.0)
+	r["state_after_accept"] = QuestSystem.state(p, id)
+	p.inventory.add("plank", 8)
+	Events.inventory_changed.emit()
+	await frames(10)
+	r["mark_ready"] = _glabel("farmer_garrow")
+	m0 = p.inventory.count(GameData.currency)
+	inf0 = p.influence
+	r["dialog_turnin"] = await _dialog_pick(gt, "Garrow", "Hand them over", "sq2_fix_turnin")
+	await until(func(): return QuestSystem.state(p, id) == QuestSystem.COMPLETED, 10.0)
+	await frames(10)
+	r["state_final"] = QuestSystem.state(p, id)
+	r["planks_left"] = p.inventory.count("plank")
+	r["influence"] = p.influence - inf0
+	r["marks"] = p.inventory.count(GameData.currency) - m0
+	r["broken_after"] = _broken_count(w, props)
+	p.place_at(w.find_free_tile_near(gt + Vector2i(0, -3), 2, true))
+	w.set_focus(p.tile, true)
+	await frames(20)
+	await _snap("sq2_fix_after")
+	res[id] = r
+	# --- Finding Clip Clop ----------------------------------------------------
+	r = {}
+	id = "finding_clip_clop"
+	gt = QuestSystem.giver_tile(w, "wenna_tamsin")
+	r["giver_tile"] = [gt.x, gt.y]
+	await _sq_goto(gt)
+	r["mark_start"] = _glabel("wenna_tamsin")
+	r["dialog_offer"] = await _dialog_pick(gt, "Wenna", "Accept", "sq2_clip_offer")
+	await until(func(): return QuestSystem.state(p, id) != QuestSystem.NOT_STARTED, 10.0)
+	r["state_after_accept"] = QuestSystem.state(p, id)
+	var horse = QuestSystem.follower(w, "clip_clop")
+	var den = w.find_nearest_object(horse.tile, ["wolf_den"], 12) if horse else null
+	r["horse_at_den"] = horse != null and den != null
+	r["horse_attack_refused"] = horse != null and CombatRules.can_attack(p, horse, Tick.tick_count) != ""
+	var kills := 0
+	var t_end := Time.get_ticks_msec() + 180000
+	while QuestSystem.state(p, id) == QuestSystem.IN_PROGRESS and int(p.quests[id].get("stage", 0)) == 0 and kills < 12 and Time.get_ticks_msec() < t_end:
+		var e: Enemy = w.enemies.nearest(den.pos if den else p.tile, ["wolf"], 4000)
+		if e == null:
+			break
+		e.reset_far()
+		label = "sq2_clip_kill"
+		if await _kill(p, w, e, "wolf"):
+			kills += 1
+		_clear_foes(p, w)
+		if kills == 1:
+			await _snap("sq2_clip_den_fight")
+	r["kills"] = kills
+	r["stage_after_kills"] = int(p.quests[id].get("stage", 0))
+	# walk home with Clip Clop behind you (real walking, leg by leg)
+	_clear_foes(p, w)
+	p.place_at(w.find_free_tile_near(horse.tile + Vector2i(-1, 0), 2, true))
+	w.set_focus(p.tile, true)
+	await frames(20)
+	var max_gap := 0
+	var legs := 0
+	while p._cheb(p.tile, gt) > 3 and legs < 14:
+		var step := gt - p.tile
+		var dest := p.tile + Vector2i(clampi(step.x, -6, 6), clampi(step.y, -6, 6))
+		dest = w.find_free_tile_near(dest, 3, true)
+		await walk_leg("sq2_clip_walk", dest, 12.0)
+		_clear_foes(p, w)
+		await frames(10)
+		max_gap = maxi(max_gap, p._cheb(p.tile, horse.tile))
+		legs += 1
+		if legs == 2:
+			await _snap("sq2_clip_following")
+			r["gap_snap"] = p._cheb(p.tile, horse.tile)
+	await _wait_ticks(4)
+	r["legs"] = legs
+	r["max_gap"] = max_gap
+	r["horse_gap_home"] = p._cheb(horse.tile, gt)
+	r["state_ready"] = QuestSystem.state(p, id)
+	r["mark_ready"] = _glabel("wenna_tamsin")
+	await _snap("sq2_clip_home")
+	m0 = p.inventory.count(GameData.currency)
+	inf0 = p.influence
+	r["dialog_turnin"] = await _dialog_pick(gt, "Wenna", "Here he is", "sq2_clip_turnin")
+	await until(func(): return QuestSystem.state(p, id) == QuestSystem.COMPLETED, 10.0)
+	await _wait_ticks(3)
+	r["state_final"] = QuestSystem.state(p, id)
+	r["influence"] = p.influence - inf0
+	r["marks"] = p.inventory.count(GameData.currency) - m0
+	var pad: Vector2i = w.gen.site_point("tamsin_farm", "paddock")
+	r["horse_in_paddock"] = p._cheb(horse.home, pad) <= 3
+	res[id] = r
+	# --- A Dead Rat is a Good Rat ---------------------------------------------
+	r = {}
+	id = "a_dead_rat"
+	gt = QuestSystem.giver_tile(w, "old_mabel")
+	r["giver_tile"] = [gt.x, gt.y]
+	r["village"] = w.gen.village_at(gt, 0)
+	await _sq_goto(gt)
+	r["mark_start"] = _glabel("old_mabel")
+	await _snap("sq2_rat_giver")
+	r["dialog_offer"] = await _dialog_pick(gt, "Mabel", "Accept", "sq2_rat_offer")
+	await until(func(): return QuestSystem.state(p, id) != QuestSystem.NOT_STARTED, 10.0)
+	r["state_after_accept"] = QuestSystem.state(p, id)
+	kills = 0
+	var nest := Vector2i(146, -78)
+	t_end = Time.get_ticks_msec() + 240000
+	while int(p.quests[id].get("stage", 0)) == 0 and kills < 20 and Time.get_ticks_msec() < t_end:
+		var e2: Enemy = w.enemies.nearest(nest, ["giant_rat"], 4000)
+		if e2 == null:
+			break
+		e2.reset_far()
+		label = "sq2_rat_kill"
+		if await _kill(p, w, e2, "giant_rat"):
+			kills += 1
+		_clear_foes(p, w)
+		if kills == 3:
+			hud.show_panel("quests")
+			await frames(8)
+			r["progress_mid"] = QuestSystem.progress_text(p, id)
+			r["color_mid"] = _qcolor(id)
+			await _snap("sq2_rat_journal")
+			hud.show_panel("")
+	r["rat_kills"] = kills
+	await _sq_goto(gt)
+	r["mark_mid"] = _glabel("old_mabel")
+	r["dialog_mid"] = await _dialog_pick(gt, "Mabel", "I'll see to her", "sq2_rat_mother_ask")
+	await until(func(): return int(p.quests[id].get("stage", 0)) == 2, 10.0)
+	var mom: Enemy = w.enemies.nearest(nest, ["rat_mother"], 4000)
+	mom.reset_far()
+	r["mother_scale"] = float(mom.def.get("scale", 1))
+	p.place_at(w.find_free_tile_near(mom.tile + Vector2i(2, 1), 2, true))
+	w.set_focus(p.tile, true)
+	await frames(20)
+	await _snap("sq2_rat_mother")
+	r["mother_killed"] = await _kill(p, w, mom, "rat_mother")
+	_clear_foes(p, w)
+	r["state_ready"] = QuestSystem.state(p, id)
+	await _sq_goto(gt)
+	r["mark_ready"] = _glabel("old_mabel")
+	m0 = p.inventory.count(GameData.currency)
+	inf0 = p.influence
+	r["dialog_turnin"] = await _dialog_pick(gt, "Mabel", "Thank you, Mabel", "sq2_rat_turnin")
+	await until(func(): return QuestSystem.state(p, id) == QuestSystem.COMPLETED, 10.0)
+	await frames(10)
+	r["state_final"] = QuestSystem.state(p, id)
+	r["influence"] = p.influence - inf0
+	r["marks"] = p.inventory.count(GameData.currency) - m0
+	r["color_final"] = _qcolor(id)
+	hud.show_panel("quests")
+	await frames(8)
+	await _snap("sq2_journal_completed")
+	hud.show_panel("")
+	res[id] = r
+	p.skills.xp = keep_xp
+	p.inventory.slots = keep_slots
+	Events.inventory_changed.emit()
+	_notes["sidequests2"] = res
+
+
+func _sq_goto(t: Vector2i) -> void:
+	var p: Player = main.player
+	var w: World = main.world
+	p.place_at(w.find_free_tile_near(t + Vector2i(0, 3), 2, true))
+	w.set_focus(p.tile, true)
+	p.stop()
+	_clear_foes(p, w)
+	await frames(30)
+
+
+func _glabel(gid: String) -> String:
+	var gl = main.hud.quest_ui.giver_label(gid)
+	return gl.text if gl else ""
+
+
+func _repair_props(w: World, near: Vector2i) -> Array:
+	var out: Array = []
+	for dy in range(-16, 17):
+		for dx in range(-16, 17):
+			var o = w.object_at(near + Vector2i(dx, dy))
+			if o != null and o.def().has("repair_quest"):
+				out.append(o)
+	return out
+
+
+## Broken fence pieces (autotile broken row) + damaged wall sprites, as drawn.
+func _broken_count(w: World, props: Array) -> int:
+	var n := 0
+	for o in props:
+		if o.view and o.view.has_meta("autotile"):
+			n += int(o.view.frame_coords.y == 1)
+		elif o.view:
+			n += int(o.sprite_id(w.tick) == str(o.def().get("sprite", "")) and o.def().has("repaired_sprite"))
+	return n

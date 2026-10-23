@@ -685,6 +685,16 @@
       }
      ]
     }
+   },
+   "encounter": {
+    "rat_mother": {
+     "site": "rat_den",
+     "at": [
+      2,
+      2
+     ],
+     "plane": "surface"
+    }
    }
   }
  ],
@@ -764,6 +774,23 @@
     ".D..",
     "...."
    ]
+  },
+  "rat_den": {
+   "name": "Rat den (entrance)",
+   "origin": [
+    151,
+    -76
+   ],
+   "legend": {
+    "D": "rat_den_entrance"
+   },
+   "rows": [
+    "....",
+    ".D..",
+    "....",
+    "...."
+   ],
+   "note": "0.3.16: the Rat Mother waits on the surface by this entrance. Placement is data: quest a_dead_rat 'encounter' names site + point; 0.3.17 moves it underground by a data edit."
   }
  }
 }
