@@ -151,7 +151,15 @@ static func _sfx(p) -> void:
 	check(AudioServer.get_bus_index("SFX") >= 0, "SFX audio bus exists (separate from Music)")
 	for ev in ["pickaxe_swing", "ore_obtained", "axe_chop", "player_damaged", "anvil_strike", "furnace_smelting"]:
 		check(Sfx.has_sound(ev), "sfx file present: " + ev)
-	check(not Sfx.npc_hit(true) and not Sfx.npc_hit(false), "NPC-hit sfx hooks are no-ops until files exist")
+	check(Sfx.has_sound("npc_hit_humanoid") and Sfx.has_sound("npc_hit_creature"), "NPC-hit sfx files present (npc_ehh_deeper / npc_eee_animal)")
+	Sfx.npc_hit(true)
+	check(Sfx.last_event == "npc_hit_humanoid", "humanoid NPC hit plays npc_ehh_deeper")
+	Sfx.npc_hit(false)
+	check(Sfx.last_event == "npc_hit_creature", "creature hit plays npc_eee_animal")
+	for eid in ["goblin", "town_guard", "citizen", "cinder_brute", "goblin_warlord"]:
+		check(bool(GameData.enemies.get(eid, {}).get("humanoid", false)), "%s counts as humanoid" % eid)
+	for eid in ["giant_rat", "wolf", "chicken", "cow", "slime"]:
+		check(GameData.enemies.has(eid) and not bool(GameData.enemies[eid].get("humanoid", false)), "%s counts as a creature" % eid)
 	var n0 := int(Sfx.counts.get("player_damaged", 0))
 	if p != null and not p.dead:
 		var hp0: int = p.hp

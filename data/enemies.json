@@ -17,7 +17,7 @@
    "xp": 6,
    "drops": "giant_rat"
   },
-  "goblin": {
+  "goblin": { "humanoid": true,
    "name": "Goblin",
    "sprite": "goblin",
    "level": 8,
@@ -70,7 +70,7 @@
    "drops": "wolf",
    "note": "0.3.1: aggressive, quick (chases 2 tiles per tick), packs of 3-4 mid-distance from towns"
   },
-  "town_guard": {
+  "town_guard": { "humanoid": true,
    "name": "Town guard",
    "sprite": "town_guard",
    "level": 30,
@@ -88,7 +88,7 @@
    "drops": "town_guard",
    "note": "0.3.1: patrols its town (data/town_npcs.json); never starts a fight, fights back when attacked; tougher than a wolf, easier than a goblin camp"
   },
-  "citizen": {
+  "citizen": { "humanoid": true,
    "name": "Citizen",
    "sprite": "citizen",
    "level": 1,
@@ -119,7 +119,7 @@
    "note": "0.3.1: wanders the town plaza; never starts a fight, swings back weakly",
    "show_level": false
   },
-  "cinder_brute": {
+  "cinder_brute": { "humanoid": true,
    "name": "Cinder brute",
    "sprite": "cinder_brute",
    "level": 14,
@@ -154,7 +154,7 @@
    "drops": "cow",
    "note": "0.3.1 village pastures (towns/<village>.json pastures): passive, kicks back weakly when hit, respawns"
   },
-  "goblin_warlord": {
+  "goblin_warlord": { "humanoid": true,
    "name": "Goblin Warlord",
    "sprite": "goblin_warlord",
    "level": 12,

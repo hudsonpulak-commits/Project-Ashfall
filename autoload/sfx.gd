@@ -2,14 +2,13 @@ extends Node
 ## 0.3.13 sound effects (autoload "Sfx"). Own "SFX" audio bus + its own volume
 ## setting (user://settings.cfg [audio] sfx), separate from Music: the music
 ## player and its fades are untouched. Files: res://assets/audio/sfx/<id>.ogg.
-## Every hook is a no-op when its file is missing (so the NPC-hit hooks are
-## safe until those sounds are delivered).
+## Every hook is a no-op when its file is missing.
 
 const DIR := "res://assets/audio/sfx/"
 const BUS := "SFX"
 const SETTINGS := "user://settings.cfg"
 const VOICES := 6
-## event -> file id. npc_hit_* are hooks for future files (no file yet).
+## event -> file id.
 const MAP := {
 	"pickaxe_swing": "mining_tick",
 	"ore_obtained": "mining_ting_rock",
@@ -17,8 +16,8 @@ const MAP := {
 	"player_damaged": "damage_hit",
 	"anvil_strike": "anvil_ting_high",
 	"furnace_smelting": "furnace_low",
-	"npc_hit_humanoid": "npc_hit_humanoid",
-	"npc_hit_creature": "npc_hit_creature",
+	"npc_hit_humanoid": "npc_ehh_deeper",
+	"npc_hit_creature": "npc_eee_animal",
 }
 const FURNACE_HOLD := 1.5   # s without a smelting tick before the loop stops
 
@@ -106,7 +105,7 @@ func furnace_playing() -> bool:
 	return _furnace.playing
 
 
-## Future: an NPC/enemy got hit. humanoid -> npc_hit_humanoid, else npc_hit_creature.
+## An NPC/enemy was hit by the player (dmg > 0). humanoid -> npc_hit_humanoid, else npc_hit_creature.
 func npc_hit(humanoid: bool) -> bool:
 	return play("npc_hit_humanoid" if humanoid else "npc_hit_creature")
 
