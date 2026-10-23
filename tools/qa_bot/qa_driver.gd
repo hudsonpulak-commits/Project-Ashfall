@@ -1381,8 +1381,8 @@ func _city() -> void:
 		"road_start": [road[0].x, road[0].y], "road_gap": maxi(absi(road[0].x - go_edge.x), absi(road[0].y - go_edge.y))}
 	# a spot just outside the wall, 9 tiles along from the gate: the walk goes round through a gate
 	var along := Vector2i(step.y, step.x)
-	var spot: Vector2i = w.find_free_tile_near(go + along * 9 + step, 1, true)
-	p.place_at(gt - step * 3 + along * 9)
+	var spot: Vector2i = w.find_free_tile_near(go + along * 6 + step, 1, true)   # 0.3.14 the v2 Cinderholt W wall has the cliff 9 tiles along
+	p.place_at(gt - step * 3 + along * 2)   # 0.3.14 start by the gate inside (the v2 buildings box in the wall foot further along)
 	p.place_at(w.find_free_tile_near(p.tile, 2, true))
 	w.set_focus(p.tile, true)
 	await frames(20)

@@ -17,7 +17,8 @@ static func _h(a: Vector2i, b: Vector2i) -> float:
 
 ## Path from start to any tile in `goals` (excluding start). Returns [] if none.
 ## `aim` is used for the heuristic (e.g. the object's tile when goals are its neighbours).
-static func find_path(world, start: Vector2i, goals: Array, aim: Vector2i, max_nodes: int = 4000) -> Array:
+static func find_path(world, start: Vector2i, goals: Array, aim: Vector2i, max_nodes: int = 12000) -> Array:
+	# 0.3.14 12000 (was 4000): the bigger v2 towns need more search round a wall to the nearest gate
 	var goal_set := {}
 	for g in goals:
 		if not world.is_blocked(g):
