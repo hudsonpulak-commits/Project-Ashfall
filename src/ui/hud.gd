@@ -53,6 +53,12 @@ var set_label: Label               # full armour set -> Defence XP bonus line
 var style_buttons: Dictionary = {}  # "accurate"/"aggressive" -> Button
 var style_hint: Label
 var _sel_slot := -1
+var bank_tab := BankTabs.ALL     # 0.3.17 bank tab shown (-1 All, 0 main, 1..8 custom)
+var bank_arrange := false        # 0.3.17 Arrange mode: taps select / move / swap / file into tabs
+var _bank_sel := -1              # container index of the picked bank item
+var bank_tab_row: HBoxContainer
+var bank_edit_row: HBoxContainer
+var bank_arrange_btn: Button
 var prayer_row: HBoxContainer
 var multi_row: HBoxContainer
 var multi_icon: TextureRect
@@ -337,7 +343,7 @@ func _grid(cols: int, n: int, store: Array, on_tap: Callable) -> GridContainer:
 
 func _build_pack_panel() -> Control:
 	var v := VBoxContainer.new()
-	v.add_child(_header("Pack  (tap an item for actions)"))
+	v.add_child(_header("Pack  (tap: pick up + actions · tap a slot: move/swap)"))
 	var g := _grid(6, 24, inv_slots, _on_pack_tap)
 	g.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
 	v.add_child(g)
@@ -571,6 +577,22 @@ func _build_bank_panel() -> Control:
 		var n := player.deposit_all(false)
 		Events.say("You deposit %d item%s." % [n, "" if n == 1 else "s"]))
 	hdr.add_child(dep)
+	bank_arrange_btn = Button.new()
+	bank_arrange_btn.text = "Arrange"
+	bank_arrange_btn.name = "BankArrange"
+	bank_arrange_btn.toggle_mode = true
+	bank_arrange_btn.focus_mode = Control.FOCUS_NONE
+	bank_arrange_btn.pressed.connect(func():
+		bank_arrange = bank_arrange_btn.button_pressed
+		_bank_sel = -1
+		_refresh_bank())
+	hdr.add_child(bank_arrange_btn)
+	bank_tab_row = HBoxContainer.new()     # 0.3.17 All / Main / custom tabs / +
+	bank_tab_row.add_theme_constant_override("separation", 2)
+	v.add_child(bank_tab_row)
+	bank_edit_row = HBoxContainer.new()
+	bank_edit_row.add_theme_constant_override("separation", 2)
+	v.add_child(bank_edit_row)
 	var scroll := ScrollContainer.new()
 	scroll.custom_minimum_size = Vector2(0, 76)
 	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
@@ -770,6 +792,7 @@ func _refresh_inventory() -> void:
 		_refresh_pack_actions()
 	for i in inv_slots.size():
 		inv_slots[i].set_item(player.inventory.slots[i])
+		inv_slots[i].set_selected(i == _sel_slot and player.inventory.slots[i] != null)
 		bank_pack_slots[i].set_item(player.inventory.slots[i])
 
 
@@ -785,14 +808,86 @@ func _refresh_bank() -> void:
 		s.pressed.connect(func(): _on_bank_tap(idx))
 		bank_grid.add_child(s)
 		bank_slots.append(s)
-	# bank slots map to container indices of non-empty entries, in order
-	var map := []
-	for i in player.bank.slots.size():
-		if player.bank.slots[i] != null:
-			map.append(i)
+	# bank slots map to container indices of non-empty entries on this tab, in order
+	if bank_tab > player.bank_tabs.size():
+		bank_tab = BankTabs.ALL
+	var map := BankTabs.indices(player, player.bank, bank_tab)
 	bank_grid.set_meta("map", map)
 	for i in bank_slots.size():
 		bank_slots[i].set_item(player.bank.slots[map[i]] if i < map.size() else null)
+		bank_slots[i].set_selected(i < map.size() and map[i] == _bank_sel)
+	_refresh_bank_tabs()
+
+
+## 0.3.17 the tab row (All, Main, up to 8 custom, +) and, in Arrange on a custom tab,
+## rename / icon-from-picked-item / delete.
+func _refresh_bank_tabs() -> void:
+	if bank_tab_row == null:
+		return
+	UIKit.clear(bank_tab_row)
+	var entries := [[BankTabs.ALL, "All", ""], [0, "Main", ""]]
+	for k in player.bank_tabs.size():
+		entries.append([k + 1, str(player.bank_tabs[k]["name"]), str(player.bank_tabs[k]["icon"])])
+	for e in entries:
+		var tab: int = e[0]
+		var b := UIKit.button(str(e[1]).left(7), func(): _on_bank_tab(tab), 0, 22)
+		b.name = "BankTab_%d" % (tab + 1)
+		b.toggle_mode = true
+		b.button_pressed = tab == bank_tab
+		b.add_theme_font_size_override("font_size", 8)
+		if str(e[2]) != "":
+			b.icon = GameData.icon(str(e[2]))
+			b.expand_icon = false
+		bank_tab_row.add_child(b)
+	if player.bank_tabs.size() < BankTabs.MAX:
+		var add := UIKit.button("+", func():
+			var t := BankTabs.add(player)
+			if t > 0:
+				bank_tab = t
+				Events.say("New bank tab. Arrange: rename it, or pick an item and tap Icon.")
+			_refresh_bank(), 22, 22)
+		add.name = "BankTabAdd"
+		bank_tab_row.add_child(add)
+	UIKit.clear(bank_edit_row)
+	bank_edit_row.visible = bank_arrange
+	if not bank_arrange:
+		return
+	if bank_tab < 1:
+		bank_edit_row.add_child(UIKit.label("Arrange: tap an item, then a slot (move/swap) or a tab (file it).", 7, UIStyle.TEXT_DIM))
+		return
+	var ed := LineEdit.new()
+	ed.name = "BankTabName"
+	ed.text = str(player.bank_tabs[bank_tab - 1]["name"])
+	ed.max_length = 12
+	ed.custom_minimum_size = Vector2(90, 20)
+	var tab_now := bank_tab
+	ed.text_submitted.connect(func(t):
+		BankTabs.rename(player, tab_now, t)
+		_refresh_bank())
+	bank_edit_row.add_child(ed)
+	bank_edit_row.add_child(UIKit.button("Icon", func():
+		if _bank_sel >= 0 and player.bank.slots[_bank_sel] != null:
+			BankTabs.set_icon(player, tab_now, str(player.bank.slots[_bank_sel]["id"]))
+			_bank_sel = -1
+		else:
+			Events.say("Pick an item first: its picture becomes the tab's icon.")
+		_refresh_bank(), 34, 20))
+	bank_edit_row.add_child(UIKit.button("Delete tab", func():
+		BankTabs.remove(player, tab_now)
+		bank_tab = 0
+		Events.say("Tab deleted: its items are back on the main tab.")
+		_refresh_bank(), 60, 20))
+
+
+func _on_bank_tab(tab: int) -> void:
+	if bank_arrange and _bank_sel >= 0 and player.bank.slots[_bank_sel] != null and tab != BankTabs.ALL:
+		var id: String = player.bank.slots[_bank_sel]["id"]
+		BankTabs.assign(player, id, tab)
+		Events.say("%s filed under %s." % [GameData.item_name(id), "Main" if tab == 0 else str(player.bank_tabs[tab - 1]["name"])])
+		_bank_sel = -1
+	else:
+		bank_tab = tab
+	_refresh_bank()
 
 
 ## 0.3.7 "+120 xp this session · 85 to Lv 6"
@@ -904,6 +999,20 @@ func _refresh_skills() -> void:
 # ------------------------------------------------------------------- taps --
 func _on_pack_tap(i: int) -> void:
 	var s = player.inventory.slots[i]
+	# 0.3.17 organizing: with an item picked, tap it again to put it down, an empty
+	# slot to move it there, another item to swap the two
+	if _sel_slot >= 0 and player.inventory.slots[_sel_slot] != null:
+		if _sel_slot == i:
+			_sel_slot = -1
+			_refresh_pack_actions()
+			return
+		var was_empty: bool = s == null
+		player.inventory.move_slot(_sel_slot, i)
+		Events.say("Moved." if was_empty else "Swapped.")
+		_sel_slot = -1
+		_refresh_pack_actions()
+		Events.inventory_changed.emit()
+		return
 	_sel_slot = i if s != null else -1
 	_refresh_pack_actions()
 	if s == null:
@@ -939,6 +1048,20 @@ func _on_bank_tap(i: int) -> void:
 	if not _bank_in_reach():
 		return
 	var map: Array = bank_grid.get_meta("map", [])
+	if bank_arrange:   # 0.3.17 pick up / put down / move / swap
+		var tgt: int = map[i] if i < map.size() else -1
+		if _bank_sel < 0:
+			_bank_sel = tgt
+		elif tgt == _bank_sel:
+			_bank_sel = -1
+		else:
+			if tgt < 0:   # an empty cell: after the last item shown on this tab
+				tgt = player.bank.slots.find(null, (map[-1] + 1) if not map.is_empty() else 0)
+			if tgt >= 0:
+				player.bank.move_slot(_bank_sel, tgt)
+			_bank_sel = -1
+		_refresh_bank()
+		return
 	if i >= map.size():
 		return
 	var q := withdraw_qty if withdraw_qty > 0 else 1 << 30

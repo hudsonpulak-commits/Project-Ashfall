@@ -368,6 +368,8 @@ func house_clerk() -> String:
 
 ## Each town's bank chest opens that town's own vault (goods don't teleport).
 var vaults: Dictionary = {}       # town id -> ItemContainer
+var bank_tabs: Array = []         # 0.3.17 [{"name", "icon"}] (BankTabs)
+var bank_tab_of: Dictionary = {}  # 0.3.17 item id -> tab 1..8
 var current_town: String = ""
 
 
@@ -570,6 +572,7 @@ func to_save() -> Dictionary:
 	d["map_markers"] = map_markers.to_save()
 	d["skull_until"] = skull_until
 	d["pk_warned"] = pk_warned
+	d["bank_tabs"] = BankTabs.to_save(self)
 	return d
 
 
@@ -598,6 +601,7 @@ func from_save(d: Dictionary) -> void:
 	map_markers.from_save(d.get("map_markers", {}))
 	skull_until = int(d.get("skull_until", -1))
 	pk_warned = bool(d.get("pk_warned", false))
+	BankTabs.from_save(self, d.get("bank_tabs", {}))
 	_was_pk = PkRules.is_pk(tile)
 
 

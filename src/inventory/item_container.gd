@@ -124,6 +124,17 @@ func remove_at(index: int) -> Variant:
 	return s
 
 
+## 0.3.17 organizing: move slot a onto b (empty b = move, item in b = swap).
+func move_slot(a: int, b: int) -> bool:
+	if a == b or a < 0 or b < 0 or a >= slots.size() or b >= slots.size() or slots[a] == null:
+		return false
+	var t = slots[b]
+	slots[b] = slots[a]
+	slots[a] = t
+	changed.emit()
+	return true
+
+
 func has_all(req: Dictionary) -> bool:
 	for id in req.keys():
 		if count(id) < int(req[id]):

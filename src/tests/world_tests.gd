@@ -55,6 +55,7 @@ static func run(main, world: World, p: Player) -> void:
 	Patch0314Tests.run(main, world, p)   # 0.3.14 Cinderholt forge city + Northern Guard camp
 	Patch0315Tests.run(main, world, p)   # 0.3.15 side quests + cliff/water rule
 	Patch0316Tests.run(main, world, p)   # 0.3.16 four more side quests
+	Patch0317Tests.run(main, world, p)   # 0.3.17 organizing + bank tabs
 	Patch0396VideoTests.run(main, world, p)   # 0.3.9.6 title video
 	p.place_at(world.gen.town_spawn("fenhollow"))
 	world.set_focus(p.tile, true)

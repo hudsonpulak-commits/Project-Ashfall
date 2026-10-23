@@ -8,6 +8,7 @@ var icon_rect: TextureRect
 var qty_label: Label
 var dur_bar: ColorRect
 var item_id: String = ""
+var selected := false
 
 
 func _init() -> void:
@@ -39,6 +40,14 @@ func _init() -> void:
 	dur_bar.size = Vector2(SIZE - 6, 2)
 	dur_bar.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(dur_bar)
+
+
+## 0.3.17 organizing: the picked-up item gets a gold frame.
+func set_selected(on: bool) -> void:
+	if on == selected:
+		return
+	selected = on
+	add_theme_stylebox_override("normal", UIStyle.box(Color("#3a3020") if on else UIStyle.SLOT, UIStyle.ACCENT if on else UIStyle.BORDER, 2 if on else 1, 0))
 
 
 func set_item(slot) -> void:
