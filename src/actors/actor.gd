@@ -374,6 +374,8 @@ func take_hit(dmg: int, attacker, t: int) -> void:
 	last_combat_tick = t
 	if dmg > 0 and attacker is Player and not (self is Player):   # 0.3.13 sfx: AI players are humanoid
 		Sfx.npc_hit(true)
+	elif dmg == 0 and attacker != null and (attacker is Player or self is Player):   # 0.3.14 block/miss on the player or an AI player: armour clang
+		Sfx.armour_clang()
 	if attacker != null:
 		last_attacker = attacker
 		combat_foe = attacker

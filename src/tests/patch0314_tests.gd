@@ -83,3 +83,18 @@ static func run(main, world, p) -> void:
 	var objs := JSON.stringify(t.get("objects", {})) + JSON.stringify(t.get("art", {}))
 	for o in ["ng_campfire", "ng_supply", "ng_banner", "ch_anvil", "ch_brazier", "ng_watchtower"]:
 		check(objs.contains(o), "Cinderholt/camp places %s" % o)
+	_clang(p)
+
+
+## 0.3.14: every 0-damage hit on the player or an NPC calls the armour_clang hook (silent until the file lands)
+static func _clang(p) -> void:
+	var n0: int = Sfx.clang_calls
+	var c0 := int(Sfx.counts.get("player_damaged", 0))
+	if p != null and not p.dead:
+		var hp0: int = p.hp
+		p.take_hit(0, p, 0)
+		p.hp = hp0
+	check(Sfx.clang_calls == n0 + 1 and int(Sfx.counts.get("player_damaged", 0)) == c0, "a 0-damage hit on the player calls the armour_clang hook (no damage sfx)")
+	check(Sfx.has_sound("armour_clang") and Sfx.last_event == "armour_clang", "the armour_clang hook plays sword_ting (armour_clang.ogg)")
+	var src := FileAccess.get_file_as_string("res://src/actors/enemy.gd")
+	check(src.contains("Sfx.armour_clang()"), "a 0-damage hit on an NPC calls the armour_clang hook")

@@ -5,3 +5,4 @@
 - Wall-ring QA for town + camp (ray walk, flood sealed/open per gate, diag gaps); patch0314_tests.
 - Night: the legacy glowing window overlay is no longer drawn on any layered-art building (Highfen, Saltmere, Fenhollow, Cinderholt, camp); only the art's own windows.
 - Screenshot flag --night.
+- SFX: armour_clang hook on every 0-damage hit (block/miss) involving the player (player hit, or player/AI-player hitting an NPC), playing Hudson's sword_ting (assets/audio/sfx/armour_clang.ogg).

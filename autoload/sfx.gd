@@ -18,6 +18,7 @@ const MAP := {
 	"furnace_smelting": "furnace_low",
 	"npc_hit_humanoid": "npc_ehh_deeper",
 	"npc_hit_creature": "npc_eee_animal",
+	"armour_clang": "armour_clang",   # 0.3.14 sword on armour (0-damage hit): Hudson's sword_ting.mp3 -> ogg
 }
 const FURNACE_HOLD := 1.5   # s without a smelting tick before the loop stops
 
@@ -115,3 +116,11 @@ func _process(dt: float) -> void:
 		_furnace_left -= dt
 		if _furnace_left <= 0.0:
 			_furnace.stop()
+
+
+## 0.3.14: a 0-damage hit (block or miss) on the player or an NPC: sword-on-armour clang.
+## File: assets/audio/sfx/armour_clang.ogg (Hudson's sword_ting).
+var clang_calls := 0   # tests: the hook fired
+func armour_clang() -> bool:
+	clang_calls += 1
+	return play("armour_clang")
