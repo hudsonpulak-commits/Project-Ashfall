@@ -3459,7 +3459,7 @@ func _perf0316() -> void:
 	p.place_at(stops[0])
 	p.stop()
 	w.set_focus(p.tile, true)
-	await frames(30)
+	await frames(150)   # 0.3.16 let the spawn town's AI views settle (a teleport, not a walk)
 	w.perf_log.clear()
 	var ft: Array = []
 	var pt: Array = []
@@ -3470,6 +3470,7 @@ func _perf0316() -> void:
 	var t_end := Time.get_ticks_msec() + 420000
 	var chunks_seen := {}
 	var pl_prev := 0
+	var gt: Array = []
 	while i0 < route.size() and Time.get_ticks_msec() < t_end:
 		if p.path.is_empty():
 			var seg2: Array = route.slice(i0, mini(i0 + 24, route.size()))
@@ -3485,7 +3486,12 @@ func _perf0316() -> void:
 		ft.append(f_ms)
 		pt.append(p_ms)
 		chunks_seen[World.chunk_of(p.tile)] = true
-		if f_ms > 33.0:
+		var g_ms := 0.0   # 0.3.16 game work this frame (tick, chunk build/adopt/focus): renderer-independent
+		for e in w.perf_log.slice(pl_prev):
+			if e[0] in ["tick", "build", "adopt", "focus"]:
+				g_ms += e[1]
+		gt.append(g_ms)
+		if f_ms > 33.0 or g_ms > 33.0:
 			var tags: Array = []
 			for e in w.perf_log.slice(pl_prev):
 				if e[1] > 5.0:
@@ -3509,7 +3515,12 @@ func _perf0316() -> void:
 		var a0: Array = agg.get(e[0], [0, 0.0, 0.0])
 		agg[e[0]] = [a0[0] + 1, a0[1] + e[1], maxf(a0[2], e[1])]
 	w.perf_log.clear()
-	_notes["perf"] = {"parts": agg, "frames": pt.size(), "route": route.size(), "walked": i0, "chunks": chunks_seen.size(),
+	var sg := gt.duplicate()
+	sg.sort()
+	var low_g := 0.0
+	for k in one:
+		low_g += sg[sg.size() - 1 - k] if sg.size() > k else 0.0
+	_notes["perf"] = {"worst_game_ms": sg[-1] if not sg.is_empty() else 0.0, "p1_low_game_ms": low_g / one, "parts": agg, "frames": pt.size(), "route": route.size(), "walked": i0, "chunks": chunks_seen.size(),
 		"worst_process_ms": srt[-1] if not srt.is_empty() else 0.0, "p1_low_process_ms": low_p / one,
 		"worst_frame_ms": srf[-1] if not srf.is_empty() else 0.0, "p1_low_frame_ms": low_f / one,
 		"median_frame_ms": srf[n / 2] if not srf.is_empty() else 0.0, "spikes": _top_spikes(spikes), "spike_count": spikes.size()}
