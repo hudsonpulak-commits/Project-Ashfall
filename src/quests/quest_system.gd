@@ -219,10 +219,12 @@ static func _reward(p, id: String) -> void:
 
 
 ## A kill by the player (only the quest holder's own kills count).
-static func on_kill(p, kind: String) -> void:
+static func on_kill(p, kind: String, at: Vector2i = Vector2i(1 << 20, 0)) -> void:
 	for id in p.quests.keys():
 		var st := current_stage(p, id)
 		if str(st.get("type", "")) != "kill" or str(st.get("enemy", "")) != kind:
+			continue
+		if not kill_in_area(p, st, at):
 			continue
 		var s: Dictionary = p.quests[id]
 		s["count"] = mini(int(s.get("count", 0)) + 1, int(st.get("count", 1)))
@@ -231,6 +233,16 @@ static func on_kill(p, kind: String) -> void:
 			_advance(p, id)
 		else:
 			_changed()
+
+
+## 0.3.17 a kill stage with "near" (object id) + "radius" only counts kills close to it.
+static func kill_in_area(p, st: Dictionary, at: Vector2i) -> bool:
+	if not st.has("near"):
+		return true
+	var w = p.get("world_ref") if p != null else null
+	if w == null or at.x >= (1 << 20):
+		return false
+	return w.find_nearest_object(at, [str(st["near"])], int(st.get("radius", 15))) != null
 
 
 ## 0.3.7.1 the current objective, ALWAYS during an active quest:

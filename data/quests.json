@@ -528,6 +528,8 @@
      "type": "kill",
      "enemy": "wolf",
      "count": 3,
+     "near": "wolf_den",
+     "radius": 15,
      "label": "Wolves",
      "text": "Drive off the wolves around Clip Clop at the den east of the farm"
     },

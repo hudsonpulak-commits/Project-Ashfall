@@ -12,7 +12,7 @@ static func check(cond: bool, what: String) -> void:
 
 static func run(main, world, p) -> void:
 	print("  -- 0.3.16 side quests")
-	check(str(ProjectSettings.get_setting("application/config/version")) == "0.3.16", "version is 0.3.16")
+	check(str(ProjectSettings.get_setting("application/config/version")).begins_with("0.3.1"), "version is 0.3.1x")
 	var keep_inv: Array = p.inventory.slots.duplicate(true)
 	var keep_q: Dictionary = p.quests.duplicate(true)
 	var keep_inf: int = p.influence
@@ -26,6 +26,7 @@ static func run(main, world, p) -> void:
 	_clip_clop(world, p)
 	_rats(world, p)
 	_map_tester(world)
+	_bite(world, p)
 	check(p.influence - keep_inf == 20, "four side quests: +5 Influence each (%d)" % (p.influence - keep_inf))
 	var q := Player.new()
 	q.from_save(p.to_save())
@@ -144,7 +145,13 @@ static func _clip_clop(world, p) -> void:
 	check(horse != null and CombatRules.can_attack(p, horse, Tick.tick_count) != "", "Clip Clop can't be attacked")
 	check(world.gen.town_at(gt, 0) == "" and maxi(absi(gt.x - 58), absi(gt.y)) < 90, "Wenna's farm lies just east of Fenhollow (%s)" % gt)
 	QuestSystem.choose(p, id, "accept")
-	var hk: int = _kill(world, p, "wolf", 3, den.pos if den else Vector2i.ZERO)
+	# 0.3.17 only wolves killed by the den (15 tiles) count
+	var dp: Vector2i = den.pos if den else Vector2i.ZERO
+	QuestSystem.on_kill(p, "wolf", dp + Vector2i(40, 0))
+	QuestSystem.on_kill(p, "wolf")
+	check(int(p.quests[id].get("count", 0)) == 0, "0.3.17 wolves killed far from the den (or nowhere) don't count for Clip Clop")
+	check(QuestSystem.kill_in_area(p, QuestSystem.current_stage(p, id), dp + Vector2i(14, 3)) and not QuestSystem.kill_in_area(p, QuestSystem.current_stage(p, id), dp + Vector2i(16, 0)), "0.3.17 the den area is 15 tiles")
+	var hk: int = _kill(world, p, "wolf", 3, dp)
 	check(hk == 3 and int(p.quests[id]["stage"]) == 1, "3 wolves killed by the den: lead him home")
 	p.place_at(world.find_free_tile_near(horse.tile + Vector2i(1, 0), 2))
 	world.set_focus(p.tile, true)
@@ -252,3 +259,24 @@ static func _map_tester(world) -> void:
 			if diag == 1 and not orth:   # a corner-only stub (diagonal runs are drawn with diagonal pieces and stay)
 				lone.append(q)
 	check(n > 100 and lone.is_empty() and not blk.call(Vector2i(360, 41)), "no blocking cliff stub (face, lip or foot) hangs off a run by one corner (%d scanned, lone %s)" % [n, str(lone.slice(0, 5))])
+
+
+## 0.3.17 the Rat Mother plays her 2-frame bite strip on each attack, then walks again.
+static func _bite(world, p) -> void:
+	var rm = world.enemies.nearest(p.tile, ["rat_mother"], 4000)
+	if rm == null:
+		check(false, "0.3.17 a Rat Mother to test the bite")
+		return
+	var keep_hp: int = p.hp
+	rm.target = p
+	rm._attack(Tick.tick_count)
+	p.hp = keep_hp
+	check(rm.is_biting(), "0.3.17 a Rat Mother attack starts the bite animation")
+	rm._process(0.01)
+	var sp: Sprite2D = rm._sprite
+	check(sp.hframes == 2 and sp.texture != null and sp.texture.get_width() == 96 and sp.frame == 0, "0.3.17 bite: wind-up frame of the 96x48 strip (%d frames, frame %d)" % [sp.hframes, sp.frame])
+	rm._process(0.2)
+	check(rm.is_biting() and sp.frame == 1, "0.3.17 bite: lunge frame next")
+	rm._process(0.2)
+	check(not rm.is_biting() and sp.hframes == 4 and sp.texture.get_width() == 192, "0.3.17 bite ends: back on the 4-frame walk sheet")
+	rm.target = null

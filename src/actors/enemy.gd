@@ -31,6 +31,8 @@ var tint := Color.WHITE             # 0.3.1 colour variant (enemies.json "tints"
 
 var _sprite: Sprite2D
 var _anim_t := 0.0
+var _bite_t := -1.0          # 0.3.17 seconds into a bite animation (-1 = none)
+var _bite_dir := ""
 var _shown_dir := "side"
 var facing := Facing.new()            # 0.2.5: hysteresis facing (see src/actors/facing.gd)
 var _tick_now := 0
@@ -317,9 +319,15 @@ func _step_toward(world, goal: Vector2i) -> Vector2i:
 	return best
 
 
+func is_biting() -> bool:
+	return _bite_t >= 0.0
+
+
 func _attack(t: int) -> void:
 	next_attack = t + int(def.get("attack_ticks", Combat.ATTACK_TICKS))
 	last_combat_tick = t
+	if _sprite and GameData.sprite_def("actors", def.get("sprite", kind)).has("bite_paths"):
+		_bite_t = 0.0   # 0.3.17 play the wind-up + lunge bite strip
 	var acc := Combat.enemy_accuracy(def, target.combat_def(), target.skills.level("defence")) * Prayer.mult(target.prayer, "def")
 	var dmg := Combat.swing(acc, int(def.get("max_hit", 1)), rng)
 	target.take_hit(dmg, self, t)
@@ -395,12 +403,30 @@ func _process(delta: float) -> void:
 	if _sprite:
 		_anim_t += delta
 		var sd := GameData.sprite_def("actors", def.get("sprite", kind))
-		if _sprite.hframes > 1:
-			var moving := _tick_now - _last_move_t <= int(Facing.cfg().get("anim_grace_ticks", 2))
-			_sprite.frame = Facing.anim_frame(_anim_t, float(sd.get("fps", 4)), _sprite.hframes) if (moving or is_engaged()) else 0
-		if facing.dir != _shown_dir:   # 0.3.9 front / back / side sheets
-			_shown_dir = facing.dir
-			_sprite.texture = GameData.actor_texture(def.get("sprite", kind), facing.dir)
+		if _bite_t >= 0.0:
+			_bite_t += delta
+			var bn := int(sd.get("bite_frames", 2))
+			var bf := int(_bite_t * float(sd.get("bite_fps", 6)))
+			var bp: String = str(sd.get("bite_paths", {}).get(facing.dir, ""))
+			if bf >= bn or bp == "":
+				_bite_t = -1.0
+				_shown_dir = ""   # restore the walk sheet below
+				_sprite.hframes = maxi(1, GameData.frame_count("actors", def.get("sprite", kind)))
+			else:
+				if _bite_dir != facing.dir:
+					_bite_dir = facing.dir
+					_sprite.texture = GameData._tex(bp)
+					_sprite.hframes = bn
+				_shown_dir = "bite"
+				_sprite.frame = clampi(bf, 0, bn - 1)
+		if _bite_t < 0.0:
+			_bite_dir = ""
+			if _sprite.hframes > 1:
+				var moving := _tick_now - _last_move_t <= int(Facing.cfg().get("anim_grace_ticks", 2))
+				_sprite.frame = Facing.anim_frame(_anim_t, float(sd.get("fps", 4)), _sprite.hframes) if (moving or is_engaged()) else 0
+			if facing.dir != _shown_dir:   # 0.3.9 front / back / side sheets
+				_shown_dir = facing.dir
+				_sprite.texture = GameData.actor_texture(def.get("sprite", kind), facing.dir)
 		_sprite.flip_h = facing.left and bool(sd.get("flip", true)) and facing.dir == "side"
 
 

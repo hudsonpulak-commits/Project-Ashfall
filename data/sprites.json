@@ -4427,6 +4427,13 @@
     "down": "res://assets/sprites/actors/rat_mother_front.png",
     "up": "res://assets/sprites/actors/rat_mother_back.png"
    },
+   "bite_paths": {
+    "down": "res://assets/sprites/actors/rat_mother_down_bite.png",
+    "up": "res://assets/sprites/actors/rat_mother_up_bite.png",
+    "side": "res://assets/sprites/actors/rat_mother_right_bite.png"
+   },
+   "bite_frames": 2,
+   "bite_fps": 6,
    "note": "0.3.16 sprite bot underground v1.1 Rat Mother (walk, 4 facings; fungal glow layer composited in). Bite strips exported as rat_mother_<dir>_bite.png for later."
   }
  },
