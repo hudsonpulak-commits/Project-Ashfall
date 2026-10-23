@@ -608,6 +608,14 @@ static func _migration_tests(main, world: World, p: Player) -> void:
 	# v7 load step: a player saved on an old Fenhollow street that is now a wall goes to the square
 	var fr: Rect2i = gen._town_rects["fenhollow"]
 	var wall_t := Vector2i(fr.position.x, fr.position.y + 3)
+	# 0.3.14 the outer shore is now land: use the first blocked (water/wall) tile of the town
+	for _ty in range(fr.position.y, fr.end.y):
+		if world.is_blocked(wall_t):
+			break
+		for _tx in range(fr.position.x, fr.end.x):
+			if world.is_blocked(Vector2i(_tx, _ty)):
+				wall_t = Vector2i(_tx, _ty)
+				break
 	p.place_at(wall_t)
 	var rel: bool = main.apply_city_relayout(world, p)
 	check(rel and p.tile == gen.town_spawn("fenhollow") and not world.is_blocked(p.tile), "v7 load: a player saved inside Fenhollow is put on its square %s" % str(p.tile))

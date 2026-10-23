@@ -89,6 +89,12 @@ creek = dg.line_mask(VY.shape, [(0, 22), (10, 25), (19, 21), (28, 26), (38, 24),
 WAT = (nz < .30) | creek | (~ell(RX + 3, RY + 3) & (nz < .55))
 WAT &= ~(ell(RX + 2.2, RY + 2.2) & ~ell(RX - 2.2, RY - 2.2))
 WAT[(np.abs(VX - CXt) < 4) & (VY > CYt + RY - 3)] = False; WAT[(np.abs(VX - CXt) < 4) & (VY < CYt - RY + 3)] = False
+# 0.3.14 organic outer shore: no water within a noisy 2.5-6.5 tile band of the rect edge, so the
+# marsh-bank autotile (grass/mud/shallows) makes a wobbly shoreline inside the town instead of
+# straight decal water meeting world grass at the rect boundary
+EDG = np.minimum(np.minimum(VX, GW - VX), np.minimum(VY, GH - VY))
+_n2 = ndi.gaussian_filter(np.random.RandomState(11).rand(GH + 1, GW + 1), 1.6); _n2 = (_n2 - _n2.min()) / (_n2.max() - _n2.min())
+WAT &= ~(EDG < 2.5 + 4 * _n2)
 LV = ~WAT
 CR = np.array([[0, 1, 0], [1, 1, 1], [0, 1, 0]], bool)
 _E = ell(RX, RY); _B = _E & ~ndi.binary_erosion(_E, CR); PV = _B | (ndi.binary_dilation(_B, CR) & ~_E); GATE = []
@@ -378,6 +384,19 @@ for b in blds:
         if grid[q[1]][q[0]] == 'g': grid[q[1]][q[0]] = ':'
 SPUR &= LV
 U = MVl | SPUR
+# 0.3.14 mud landings where a boardwalk meets land: a ragged mud apron (posts placed later)
+LANDINGS = []
+for y in range(1, GH - 1):
+    for x in range(1, GW - 1):
+        if BWt[y, x]:
+            for a_, b_ in ((1, 0), (-1, 0), (0, 1), (0, -1)):
+                q = (x + a_, y + b_)
+                if landT[q[1], q[0]] and not BWt[q[1], q[0]]: LANDINGS.append((q, (a_, b_)))
+_rl = np.random.RandomState(13)
+for (qx, qy), _d in LANDINGS:
+    r = 1.3 + _rl.rand() * .9
+    U |= (((VX - qx - .5 - _d[0] * .8) / (r + .4 * _rl.rand())) ** 2 + ((VY - qy - .5 - _d[1] * .8) / (r + .4 * _rl.rand())) ** 2 <= 1) & LV
+print('mud landings', len(LANDINGS))
 BT = set()
 for b in blds:
     for y, r in enumerate(b['rows']):
@@ -393,10 +412,21 @@ for n, x0, y0, g, _ in GATE: img.alpha_composite(L('tiles', n + '_floor'), (x0, 
 waterpx = ~landpx & ~bwpx
 # land/mud/water fade over the last 2 tiles of every edge into the world terrain
 dec = np.array(img)
-ex = np.minimum(np.arange(SW), SW - 1 - np.arange(SW))[None, :] / (2 * T)
-ey = np.minimum(np.arange(SH), SH - 1 - np.arange(SH))[:, None] / (2 * T)
-fx = np.clip(np.minimum(ex, ey), 0, 1)
-dec[..., 3] = (dec[..., 3] * (.2 + .8 * fx)).astype(np.uint8)
+# 0.3.14 grass thins into mud near the palisade: dithered mud-fill clumps, densest at the wall
+_rp = np.random.RandomState(17)
+_pal = ndi.distance_transform_edt(~np.kron(PV[:GH, :GW], np.ones((T, T), bool)))
+_cl = ndi.gaussian_filter(_rp.rand(SH, SW), 3.0); _cl = (_cl - _cl.min()) / (_cl.max() - _cl.min())
+_mf = np.array(L('tiles', 'fh_mud_fill').convert('RGBA'))[:16, :16]; _mft = np.tile(_mf, (GH, GW, 1))
+_mud = landpx & ~pathpx & ~bwpx & (_cl > .35 + .5 * np.clip(_pal / (4.5 * T), 0, 1)) & (_mft[..., 3] > 0)
+dec[_mud] = _mft[_mud]
+# organic edge: binary, noise-dithered fade (pixel clumps, no straight runs) over the last 1-4.5 tiles
+ex = np.minimum(np.arange(SW), SW - 1 - np.arange(SW))[None, :] / T
+ey = np.minimum(np.arange(SH), SH - 1 - np.arange(SH))[:, None] / T
+_ed = np.minimum(ex, ey)
+_c1 = ndi.gaussian_filter(_rp.rand(SH, SW), 7.0); _c1 = (_c1 - _c1.min()) / (_c1.max() - _c1.min())
+_c2 = _rp.rand(SH, SW)
+_keep = _ed > (.6 + 3.2 * _c1 + .9 * (_c2 - .5))
+dec[..., 3] = np.where(_keep, dec[..., 3], 0).astype(np.uint8)
 Image.fromarray(dec).save(os.path.join(DST, 'ground_decal.png'))
 CNT_U = bits(fr(U))
 for y in range(GH):
@@ -581,7 +611,7 @@ for k in range(5000):
         nm = rn.choice(PROPS_W)
         if nm == 'fh_rowboat' and cnt[nm] >= 6: continue
         if addo(nm, x, y, water=True): cnt[nm] += 1
-    elif c == 'g' and near_w and rn.random() < .35:
+    elif c == 'g' and near_w and rn.random() < .5:
         nm = rn.choice(PROPS_BANK)
         if addo(nm, x, y): cnt[nm] += 1
     elif c == '=' and rn.random() < .04 and not any(grid[y + b][x + a] in ':' for a in (-1, 0, 1) for b in (-1, 0, 1)):
@@ -608,6 +638,15 @@ for b in out_b:
             objs[q] = s; nsign += 1; break
 sgx = GATE_LINE['south'][0][0]; sgy = GATE_LINE['south'][0][1]
 tsign = any(addo('fh_town_sign', sgx + dx, sgy + dy) for dx, dy in ((-3, 3), (4, 3), (-4, 4), (5, 4), (-3, 5), (4, 5), (-5, 6), (6, 6)))
+npost = 0
+for (qx, qy), (a_, b_) in LANDINGS:
+    for sx, sy in ((b_, a_), (-b_, -a_)):
+        px_, py_ = qx + 2 * sx + a_, qy + 2 * sy + b_
+        if 1 < px_ < GW - 1 and 1 < py_ < GH - 1 and grid[py_][px_] in 'g~' and (px_, py_) not in BT and addo('fh_stilts', px_, py_, water=grid[py_][px_] == '~'): npost += 1
+    for k in range(3):
+        rx_, ry_ = qx + rn.randint(-3, 3), qy + rn.randint(-3, 3)
+        if 1 < rx_ < GW - 1 and 1 < ry_ < GH - 1 and grid[ry_][rx_] == 'g' and addo(rn.choice(PROPS_BANK), rx_, ry_): cnt['landing_reeds'] += 1
+print('landing posts', npost)
 print('props', dict(cnt), 'signs', nsign, 'town sign', tsign, 'reeds', nreed, 'fishing', fs, 'trees', nt)
 
 # ---------------------------------------------------------------- reachability

@@ -6,3 +6,4 @@
 - Night: the legacy glowing window overlay is no longer drawn on any layered-art building (Highfen, Saltmere, Fenhollow, Cinderholt, camp); only the art's own windows.
 - Screenshot flag --night.
 - SFX: armour_clang hook on every 0-damage hit (block/miss) involving the player (player hit, or player/AI-player hitting an NPC), playing Hudson's sword_ting (assets/audio/sfx/armour_clang.ogg).
+- Fenhollow: organic shoreline all round the town (no water at the rect edge, noisy marsh bank), dithered fade into world grass, mud landings with posts and reeds at boardwalk ends, grass thinning to mud by the palisade.

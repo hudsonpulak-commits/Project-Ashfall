@@ -89,3 +89,14 @@
 - v4_general_store 6x4 x1 (highfen_general)
 - v4_player_shop 5x4 x1 (highfen_player)
 - v4_smithy 6x4 x1 (highfen_smithy)
+
+## Fenhollow shoreline / transition (0.3.14 steering)
+Done with existing art: noisy inland shoreline via fh_diag_marsh_bank, dithered pixel fade into world grass,
+ragged mud-landing aprons (fh_diag_mud_path) at all 76 boardwalk/land joins, fh_stilts as landing posts,
+denser fh_reeds_a/b/c on banks, fh_mud_fill clumps thinning grass toward the palisade.
+Missing for sprite bot:
+- cattail prop (reeds_a/b/c stand in)
+- mooring post / stake props (fh_stilts stands in)
+- grass<->mud ragged edge autotile (currently pixel-dithered mud fill)
+- world-grass<->marsh blend tiles for the town rect edge (currently dithered alpha)
+- world road-end blend: the world-side 3-wide path stub outside the west gate is a world tile and stays square
