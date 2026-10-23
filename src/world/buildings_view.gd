@@ -19,6 +19,12 @@ var _bubbles: Dictionary = {}         # building id -> [Label, expires_at_ms]
 var _keeper_facing: Dictionary = {}   # building id -> Facing
 var _shop_version := -1
 var _roof_tex: Texture2D
+## 0.3.13 art-building wall sprites: id -> [Sprite2D, bottom sort y, art height].
+## The walls sprite y-sorts at its bottom edge, so with the player in the first
+## floor rows the FRONT wall art covered everything but the head (QA C2 smithy /
+## shop). While the player is inside a building its walls sort at the top edge
+## instead: the player (and the room's stations) draw over the front wall.
+var _walls: Dictionary = {}
 
 
 func setup(w) -> void:
@@ -140,6 +146,7 @@ func _setup_art_building(w, b: Dictionary) -> Node2D:
 	wl.position = Vector2(canvas.x, canvas.y + ph - 1.0)
 	wl.offset = Vector2(0, -ph + 1.0)
 	w.entity_layer.add_child(wl)
+	_walls[b["id"]] = [wl, canvas.y + ph - 1.0, ph]
 	var fg := _ArtRoof.new()
 	fg.b = b
 	fg.tile = tp
@@ -259,6 +266,13 @@ func step(dt: float) -> void:
 	for gr in _gate_roofs:
 		var gs: Sprite2D = gr[0]
 		gs.modulate.a = move_toward(gs.modulate.a, 0.0 if (gr[1] as Dictionary).has(pt) else 1.0, rate)
+	for wid in _walls:
+		var wv: Array = _walls[wid]
+		var ws: Sprite2D = wv[0]
+		var y0: float = float(wv[1]) - (float(wv[2]) - 2.0 if wid == inside else 0.0)
+		if ws.position.y != y0:
+			ws.offset.y += ws.position.y - y0
+			ws.position.y = y0
 	for id in alpha.keys():
 		var target := 0.0 if id == inside else 1.0
 		alpha[id] = move_toward(float(alpha[id]), target, rate)
@@ -455,3 +469,8 @@ class _ArtRoof extends Node2D:
 		var cy := (r.position.y + 0.5) * tile + 3
 		draw_rect(Rect2(cx - wd / 2 - 3, cy - 8, wd + 6, 11), Color(0.12, 0.09, 0.06, 0.75))
 		draw_string(f, Vector2(cx - wd / 2, cy), label_text, HORIZONTAL_ALIGNMENT_LEFT, -1, fs, Color("#f8ecc8"))
+
+
+## 0.3.13 tests: the y the building's wall sprite sorts at right now (or NAN).
+func walls_sort_y(id: String) -> float:
+	return float((_walls[id][0] as Sprite2D).position.y) if _walls.has(id) else NAN
