@@ -2996,6 +2996,8 @@ func _sidequests0315() -> void:
 							if str(pile["id"]) in need:
 								looted[pile["id"]] = int(looted.get(pile["id"], 0)) + int(pile["qty"])
 						w.ground.pick_up(p, dt + Vector2i(dx, dy))
+				for junk in ["bones"]:      # bury the bones so 10 single-slot chickens fit
+					p.inventory.remove(junk, p.inventory.count(junk))
 				Events.inventory_changed.emit()
 			_clear_foes(p, w)
 			if kills == 2:
@@ -3019,6 +3021,9 @@ func _sidequests0315() -> void:
 		r["state_ready"] = QuestSystem.state(p, id)
 		var m0 := p.inventory.count(GameData.currency)
 		var inf0 := p.influence
+		var before := {}
+		for it in need.keys():
+			before[it] = p.inventory.count(it)
 		p.place_at(w.find_free_tile_near(gt + Vector2i(0, 3), 2, true))
 		w.set_focus(p.tile, true)
 		p.stop()
@@ -3034,10 +3039,10 @@ func _sidequests0315() -> void:
 		r["state_final"] = QuestSystem.state(p, id)
 		r["influence"] = p.influence - inf0
 		r["marks"] = p.inventory.count(GameData.currency) - m0
-		var left := 0
+		var wrong := 0    # items taken must equal exactly what was asked (extras stay)
 		for it in need.keys():
-			left += p.inventory.count(it)
-		r["items_left"] = left
+			wrong += absi(int(before[it]) - p.inventory.count(it) - int(need[it]))
+		r["items_left"] = wrong
 		gl = hud.quest_ui.giver_label(gid)
 		r["mark_final"] = gl.text if gl else ""
 		r["color_final"] = _qcolor(id)

@@ -1138,7 +1138,7 @@ def check_sidequests(ctx):
             Result("C33 sidequests", "%s: all items -> '!' over %s, turn-in dialog" % (qid, giver),
                    r.get("state_ready") == "ready" and r.get("mark_ready") == "!" and str((r.get("dialog_turnin") or {}).get("node", "")).startswith("stage_"),
                    "%s %r %r" % (r.get("state_ready"), r.get("mark_ready"), (r.get("dialog_turnin") or {}).get("node")), sp(tag + "_marker_turnin", tag + "_dialog_turnin")),
-            Result("C33 sidequests", "%s: handed in: items taken, +5 Influence, marks, marker gone, journal green" % qid,
+            Result("C33 sidequests", "%s: handed in: exactly the asked items taken, +5 Influence, marks, marker gone, journal green" % qid,
                    r.get("state_final") == "completed" and r.get("items_left") == 0 and r.get("influence") == 5 and int(r.get("marks") or 0) > 0 and r.get("mark_final") == "" and r.get("color_final") == "60c060",
                    "%s left %s inf %s marks %s mark %r %s" % (r.get("state_final"), r.get("items_left"), r.get("influence"), r.get("marks"), r.get("mark_final"), r.get("influence_text")), sp(tag + "_journal_completed")),
         ]
