@@ -1197,6 +1197,34 @@ def check_sidequests2(ctx):
     return out
 
 
+def check_millbrook(ctx):
+    """0.3.16 sprite-bot Millbrook v1 + the Rat Mother / den entrance art."""
+    if "millbrook" not in ctx.expected:
+        return []
+    run = ctx.runs.get("millbrook")
+    if not run:
+        return [Result("C35 millbrook", "millbrook run present", False, "no capture")]
+    a = run.res.get("millbrook", {})
+    snaps = {e.get("name"): e.get("path") for e in run.events if e.get("type") == "snap"}
+    sp = lambda *n: [snaps[k] for k in n if k in snaps]
+    R = lambda what, ok, info, *sn: Result("C35 millbrook", what, bool(ok), info, sp(*sn))
+    spots = a.get("spots", {})
+    m = a.get("mother", {})
+    inn = a.get("inn", {})
+    sf = a.get("sail_frames", [])
+    return [
+        R("Millbrook v1: gate, green, mill, rat barn and fields all inside the village",
+          len(spots) == 5 and all(v.get("village") == "millbrook" for v in spots.values()), str(spots),
+          "mb_gate", "mb_green", "mb_mill", "mb_rat_barn", "mb_fields"),
+        R("the windmill sails turn (4-frame fade layer)", len(set(sf)) >= 2, str(sf), "mb_mill"),
+        R("inside the inn the roof/upper floor fade out", inn.get("inside") == "millbrook_inn" and float(inn.get("roof_alpha", 1)) < 0.3, str(inn), "mb_inn_inside"),
+        R("Millbrook at night uses the designer night layers", a.get("night", {}).get("phase") == "night", str(a.get("night")), "mb_night"),
+        R("the Rat Mother wears the 48x48 underground sheet (no scaled rat) beside the 3x2 den entrance, outside the village",
+          m.get("sprite") == "rat_mother" and m.get("frame") == [48, 48] and float(m.get("scale", 0)) == 1.0 and m.get("hole") and "den_entrance_3x2" in str(m.get("hole_sprite")) and m.get("village") == "",
+          str(m), "rat_mother", "den_entrance", "rat_mother_close"),
+    ]
+
+
 def check_xp(ctx):
     """0.3.7 XP feedback lines + Skills panel session tracker."""
     if "xp" not in ctx.expected:
@@ -1285,7 +1313,7 @@ def check_capital(ctx):
     ]
 
 
-CHECKS = [check_runtime, check_diagonal, check_facing, check_ghost, check_jitter, check_taps, check_bubbles, check_roof, check_shop, check_smithy, check_markers, check_daynight, check_world, check_church, check_aggro, check_farm, check_city, check_cookhouse, check_pk, check_gear, check_archery, check_bank, check_v036, check_quest, check_xp, check_capital, check_autotile, check_gfx, check_sidequests, check_sidequests2]
+CHECKS = [check_runtime, check_diagonal, check_facing, check_ghost, check_jitter, check_taps, check_bubbles, check_roof, check_shop, check_smithy, check_markers, check_daynight, check_world, check_church, check_aggro, check_farm, check_city, check_cookhouse, check_pk, check_gear, check_archery, check_bank, check_v036, check_quest, check_xp, check_capital, check_autotile, check_gfx, check_sidequests, check_sidequests2, check_millbrook]
 SCENARIOS = ["walk", "combat", "shop", "pshop", "smithy", "markers", "daynight", "world", "church", "aggro", "farm", "city", "cookhouse", "pk", "gear", "archery"]
 
 

@@ -850,7 +850,7 @@ static func _village_tests(world: World, p: Player) -> void:
 		for pz in gen.pastures:
 			if pz["village"] == vid:
 				goals.append(pz["gate"])
-				safe_ok = safe_ok and (gen.village_at(pz["center"], 0) == vid or not gen.safe_at(pz["center"]))   # 0.3.16 Millbrook v1 keeps its pasture inside the village
+				safe_ok = safe_ok and not gen.safe_at(pz["center"])   # 0.3.16 also when the pasture is inside the village (Millbrook v1)
 		for g in goals:
 			var okg: bool = g == sp or not Pathfinder.find_path(world, sp, [g], g, 6000).is_empty()
 			if not okg:
@@ -1343,11 +1343,11 @@ static func _walled_integration_tests(world: World, p: Player) -> void:
 			continue
 		var wins: Array = DayNight.window_tiles(world, b, 2)
 		styles[b["style"]] = int(styles.get(b["style"], 0)) + 1
-		var ok_b := wins.size() >= 1 if not b.has("art") else wins.is_empty()   # 0.3.14 art buildings: no legacy window overlay
+		var ok_b := true   # 0.3.16 no legacy window overlay anywhere; only stained glass glows
 		for wt in wins:
-			ok_b = ok_b and not (wt in b["doors"]) and int(wt.y) == int(b["facade_y"])
+			ok_b = ok_b and gen.object_id_at(wt) == "stained_glass"
 		win_ok = win_ok and ok_b
-		if b["kind"] == "cookhouse" and ok_b:
+		if b["kind"] == "cookhouse" and ok_b and wins.is_empty():
 			cook_lit += 1   # 0.3.14: an art cook house counts when it has no overlay
 	check(win_ok and (styles.size() >= 3 or styles.keys() == ["art"]), "night windows: legacy facades lit, art buildings draw only their own windows (no overlay) (styles %s)" % str(styles))
 	check(cook_lit == gen.town_order.size(), "each Cook House has lit windows at night (%d)" % cook_lit)

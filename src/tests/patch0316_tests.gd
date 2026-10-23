@@ -25,6 +25,7 @@ static func run(main, world, p) -> void:
 	_fix(world, p)
 	_clip_clop(world, p)
 	_rats(world, p)
+	_map_tester(world)
 	check(p.influence - keep_inf == 20, "four side quests: +5 Influence each (%d)" % (p.influence - keep_inf))
 	var q := Player.new()
 	q.from_save(p.to_save())
@@ -201,3 +202,53 @@ static func _rats(world, p) -> void:
 	_talk(world, p, "old_mabel")
 	QuestSystem.choose(p, id, "advance")
 	check(QuestSystem.state(p, id) == QuestSystem.COMPLETED and p.inventory.count(GameData.currency) - m0 == 120, "rats done: 120 marks")
+
+
+## 0.3.16 Map Tester (2026-10-23) fixes.
+static func _map_tester(world) -> void:
+	var gen: WorldGen = world.gen
+	for pr in [["fenhollow", Vector2i(6, -36)], ["cinderholt", Vector2i(296, -200)]]:
+		var sp: Vector2i = gen.town_spawn(pr[0])
+		var goal: Vector2i = pr[1]
+		var best := goal
+		for r in 4:   # nearest walkable tile of the reported pocket
+			for dy in range(-r, r + 1):
+				for dx in range(-r, r + 1):
+					if best == goal and world.is_blocked(goal):
+						var q := goal + Vector2i(dx, dy)
+						if not world.is_blocked(q):
+							best = q
+		check(not world.is_blocked(best) and not Pathfinder.find_path(world, sp, [best], best, 20000).is_empty(), "%s: the pocket by %s is reachable now (%s)" % [pr[0], goal, best])
+	var legacy := 0
+	for bid in gen.building_order:
+		var b: Dictionary = gen.buildings[bid]
+		for wt in DayNight.window_tiles(world, b, 2):
+			if gen.object_id_at(wt) != "stained_glass":
+				legacy += 1
+	check(legacy == 0, "no building anywhere gets the legacy orange night-window overlay (%d)" % legacy)
+	for c in [Vector2i(149, 135), Vector2i(164, 135), Vector2i(164, 127), Vector2i(277, -26), Vector2i(292, -26), Vector2i(292, -18)]:
+		var b2: Dictionary = gen.building_at(c)
+		if not b2.is_empty():
+			check(DayNight.window_tiles(world, b2, 2).is_empty(), "%s: no legacy window glow" % b2["id"])
+	var ta: Dictionary = GameData.load_json("res://data/town_art.json")["buildings"] if GameData.has_method("load_json") else JSON.parse_string(FileAccess.get_file_as_string("res://data/town_art.json"))["buildings"]
+	for k in ["v3_smithy_large", "v3_elijah_tomb"]:
+		var np_: String = str(ta.get(k, {}).get("night", ""))
+		check(np_ != "" and ResourceLoader.exists(np_), "%s has a night layer (%s)" % [k, np_])
+	var blk := func(q: Vector2i) -> bool: return gen.tile_at(q.x, q.y) in [WorldGen.TileType.CLIFF_FACE, WorldGen.TileType.CLIFF_LIP, WorldGen.TileType.CLIFF_FOOT]
+	var lone := []
+	var n := 0
+	for y in range(-120, 120):
+		for x in range(240, 480):
+			var q := Vector2i(x, y)
+			if not blk.call(q):
+				continue
+			n += 1
+			var orth := false
+			for d in [Vector2i(1, 0), Vector2i(-1, 0), Vector2i(0, 1), Vector2i(0, -1)]:
+				orth = orth or blk.call(q + d)
+			var diag := false
+			for d in [Vector2i(1, 1), Vector2i(-1, 1), Vector2i(1, -1), Vector2i(-1, -1)]:
+				diag = diag or blk.call(q + d)
+			if diag and not orth:
+				lone.append(q)
+	check(n > 100 and lone.is_empty() and not blk.call(Vector2i(360, 41)), "no blocking cliff (face, lip or foot) joins its run only at a corner (%d scanned, lone %s)" % [n, str(lone.slice(0, 5))])
