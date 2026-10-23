@@ -588,7 +588,10 @@ func _build_bank_panel() -> Control:
 		bank_arrange = bank_arrange_btn.button_pressed
 		_bank_sel = -1
 		_refresh_bank())
-	hdr.add_child(bank_arrange_btn)
+	var arow := HBoxContainer.new()   # 0.3.17 own row: the header is full on a phone
+	arow.add_child(bank_arrange_btn)
+	arow.add_child(UIKit.label("  on: tap an item, then a slot to move / swap", 8, UIStyle.TEXT_DIM))
+	v.add_child(arow)
 	bank_tab_row = HBoxContainer.new()     # 0.3.17 All / Main / custom tabs / +
 	bank_tab_row.add_theme_constant_override("separation", 2)
 	v.add_child(bank_tab_row)
