@@ -10,7 +10,7 @@ static func check(cond: bool, what: String) -> void:
 
 static func run(main, world, p) -> void:
 	var gen: WorldGen = world.gen
-	check(str(ProjectSettings.get_setting("application/config/version")) == "0.3.14", "version is 0.3.14")
+	check(str(ProjectSettings.get_setting("application/config/version")) >= "0.3.14", "version is 0.3.14 or later")
 	_min_5x5(gen)
 	var t: Dictionary = gen.towns["cinderholt"]
 	var org := Vector2i(int(t["origin"][0]), int(t["origin"][1]))

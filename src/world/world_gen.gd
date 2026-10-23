@@ -363,6 +363,54 @@ func _load_town(town: Dictionary) -> void:
 				_town_tiles[p] = region_grass(p)
 	_load_buildings(town, origin)
 	_ensure_gate_approaches(town, origin)
+	_place_quest_givers(town, origin)
+
+
+## 0.3.15 quest givers from data/quests.json "givers" with "town" + "near" (town-local
+## [x, y]): stand on the nearest open street tile (5x5 clear of buildings, walls, water
+## and other objects; 2 extra rows south kept clear of roof overhangs). Data-driven,
+## so a town rebuild does not need to know about givers.
+func _place_quest_givers(town: Dictionary, origin: Vector2i) -> void:
+	var tid := str(town["id"])
+	var givers: Dictionary = QuestSystem.cfg().get("givers", {})
+	for gid in givers.keys():
+		var g: Dictionary = givers[gid]
+		if str(g.get("town", "")) != tid or not g.has("near"):
+			continue
+		var want := origin + Vector2i(int(g["near"][0]), int(g["near"][1]))
+		var spot := _giver_spot(want, 14)
+		if spot.x > -99999:
+			_town_objects[spot] = str(g.get("object", "quest_giver"))
+			_giver_spots[gid] = spot
+
+
+var _giver_spots: Dictionary = {}    # 0.3.15 giver id -> tile
+
+
+func giver_spot(gid: String) -> Vector2i:
+	return _giver_spots.get(gid, Vector2i(-99999, -99999))
+
+
+func _giver_spot(want: Vector2i, max_r: int) -> Vector2i:
+	for r in max_r + 1:
+		for dy in range(-r, r + 1):
+			for dx in range(-r, r + 1):
+				if maxi(absi(dx), absi(dy)) != r:
+					continue
+				var q := want + Vector2i(dx, dy)
+				var ok := true
+				for oy in range(-2, 5):
+					for ox in range(-2, 3):
+						var c := q + Vector2i(ox, oy)
+						if not _town_tiles.has(c) or int(_town_tiles[c]) in BLOCKING_TILES or _building_tiles.has(c) \
+								or (str(_town_objects.get(c, "")) != "" and absi(ox) <= 1 and oy <= 1 and oy >= -1):
+							ok = false
+							break
+					if not ok:
+						break
+				if ok:
+					return q
+	return Vector2i(-99999, -99999)
 
 
 ## Stamp a short clear approach just outside every gate (pier over water,

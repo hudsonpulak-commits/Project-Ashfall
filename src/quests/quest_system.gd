@@ -37,7 +37,29 @@ static func state(p, id: String) -> String:
 	if bool(s.get("done", false)):
 		return COMPLETED
 	var st := stage(id, int(s.get("stage", 0)))
-	return READY if str(st.get("type", "")) == "talk" else IN_PROGRESS
+	match str(st.get("type", "")):
+		"talk":
+			return READY
+		"gather":      # 0.3.15 ready to hand in once the pack holds every item
+			return READY if has_items(p, st) else IN_PROGRESS
+	return IN_PROGRESS
+
+
+## 0.3.15 "gather" stage: {"items": {id: n}, "labels": {id: "Wolf pelts"}, "source": [enemy kinds]}.
+## Counts what is in the pack (not the bank); handing in removes it.
+static func has_items(p, st: Dictionary) -> bool:
+	for it in st.get("items", {}).keys():
+		if p.inventory.count(it) < int(st["items"][it]):
+			return false
+	return true
+
+
+static func gather_text(p, st: Dictionary) -> String:
+	var bits := []
+	for it in st.get("items", {}).keys():
+		var lbl := str(st.get("labels", {}).get(it, GameData.item_name(it)))
+		bits.append("%s %d/%d" % [lbl, mini(p.inventory.count(it), int(st["items"][it])), int(st["items"][it])])
+	return ", ".join(bits)
 
 
 static func stage(id: String, i: int) -> Dictionary:
@@ -62,6 +84,8 @@ static func progress_text(p, id: String) -> String:
 	var st := current_stage(p, id)
 	if str(st.get("type", "")) == "kill":
 		return "%s: %s %d/%d" % [str(st.get("text", "")), str(st.get("label", st.get("enemy", ""))), int(p.quests[id].get("count", 0)), int(st.get("count", 1))]
+	if str(st.get("type", "")) == "gather":
+		return "%s: %s" % [str(st.get("text", "")), gather_text(p, st)]
 	return str(st.get("text", ""))
 
 
@@ -87,6 +111,11 @@ static func giver_tile(world, gid: String) -> Vector2i:
 	if _giver_tiles.has(gid) and world.object_at(_giver_tiles[gid]) != null:
 		return _giver_tiles[gid]
 	var g: Dictionary = cfg().get("givers", {}).get(gid, {})
+	if g.has("near"):     # 0.3.15 placed by WorldGen._place_quest_givers
+		var sp: Vector2i = world.gen.giver_spot(gid)
+		if sp.x > -99999:
+			_giver_tiles[gid] = sp
+		return sp
 	var o = world.find_nearest_object(world.gen.town_center(str(g.get("town", ""))), [str(g.get("object", "quest_giver"))], 40)
 	if o == null:
 		return Vector2i(-99999, -99999)
@@ -103,6 +132,13 @@ static func talk(p, obj) -> void:
 
 static func _advance(p, id: String) -> void:
 	var s: Dictionary = p.quests[id]
+	var cur := stage(id, int(s["stage"]))
+	if str(cur.get("type", "")) == "gather":
+		if not has_items(p, cur):
+			return
+		for it in cur.get("items", {}).keys():
+			p.inventory.remove(it, int(cur["items"][it]))
+		Events.inventory_changed.emit()
 	s["stage"] = int(s["stage"]) + 1
 	s["count"] = 0
 	if stage(id, int(s["stage"])).is_empty():
@@ -126,6 +162,9 @@ static func _reward(p, id: String) -> void:
 		elif p.get("world_ref") != null and p.world_ref.get("ground") != null:
 			p.world_ref.ground.add(p.tile, it, n, Tick.tick_count, -1, p.actor_id)
 		bits.append("%s x%d" % [GameData.item_name(it), n])
+	for sk in r.get("xp", {}).keys():      # 0.3.15
+		p.skills.add_xp(sk, int(r["xp"][sk]))
+		bits.append("%d %s XP" % [int(r["xp"][sk]), str(sk).capitalize()])
 	Events.say("Quest complete: %s! %s" % [quest(id)["name"], ", ".join(bits)], "level")
 	Events.inventory_changed.emit()
 
@@ -156,7 +195,7 @@ static func objective(p, world) -> Dictionary:
 			return {"tile": giver_tile(world, str(q.get("giver", ""))), "kind": "npc"}
 		if s != IN_PROGRESS:
 			continue
-		var kind := str(current_stage(p, id).get("enemy", ""))
+		var kind := _target_kind(current_stage(p, id))
 		var best = null
 		var bd := 1 << 30
 		for e in world.enemies.enemies:
@@ -211,8 +250,18 @@ static func objective_area(p, world) -> Variant:
 		var id: String = q["id"]
 		if state(p, id) != IN_PROGRESS:
 			continue
-		return spawn_area(str(current_stage(p, id).get("enemy", "")), p.tile)
+		var a = spawn_area(_target_kind(current_stage(p, id)), p.tile)
+		if a != null:
+			return a
 	return null
+
+
+## Kill stage: its enemy; gather stage: the first "source" enemy (0.3.15).
+static func _target_kind(st: Dictionary) -> String:
+	if st.has("enemy"):
+		return str(st["enemy"])
+	var src: Array = st.get("source", [])
+	return str(src[0]) if not src.is_empty() else ""
 
 
 # ---------------------------------------------------------------- dialog --
@@ -232,13 +281,23 @@ static func dialog(p, gid: String) -> Dictionary:
 			IN_PROGRESS: key = "in_progress"
 			READY: key = "stage_%d" % int(p.quests[id].get("stage", 0))
 			COMPLETED: key = "completed"
-		if state(p, id) == COMPLETED and q != quests()[-1]:
-			continue     # a later quest from the same giver may be on offer
+		if state(p, id) == COMPLETED and _later_from(gid, id):
+			continue     # a later quest from the same giver may be on offer (0.3.15: per giver)
 		var node: Dictionary = dl.get(key, {})
 		return {"quest": id, "name": giver_name(gid), "node": key,
 			"text": str(node.get("text", "")).replace("{progress}", progress_text(p, id)),
 			"choices": node.get("choices", [{"label": "Goodbye", "action": "close"}])}
 	return {"quest": "", "name": giver_name(gid), "node": "", "text": "Good day.", "choices": [{"label": "Goodbye", "action": "close"}]}
+
+
+static func _later_from(gid: String, id: String) -> bool:
+	var seen := false
+	for q in quests():
+		if q["id"] == id:
+			seen = true
+		elif seen and str(q.get("giver", "")) == gid:
+			return true
+	return false
 
 
 ## A dialog choice. Returns the reply line ("" = none). Never auto-starts.
@@ -258,6 +317,8 @@ static func choose(p, quest_id: String, action: String) -> String:
 		"advance":
 			if state(p, quest_id) == READY:
 				_advance(p, quest_id)
+			else:
+				reply = ""
 		_:
 			pass
 	if reply != "":

@@ -1,10 +1,29 @@
 {
- "note": "0.3.7 data-driven quests. Stage types: kill (enemy, count; only the quest holder's own kills count) and talk (back to the giver). Rewards: influence always, plus optional marks and items. 0.3.7.1: \"dialog\" nodes per quest (offer, in_progress, stage_<i> for talk stages, completed): text ({progress} is replaced) + choices [{label, action: accept|decline|advance|close, reply?}]. Talking never auto-starts a quest.",
+ "note": "0.3.7 data-driven quests. Stage types: kill (enemy, count; only the quest holder's own kills count) and talk (back to the giver). Rewards: influence always, plus optional marks and items. 0.3.7.1: \"dialog\" nodes per quest (offer, in_progress, stage_<i> for talk stages, completed): text ({progress} is replaced) + choices [{label, action: accept|decline|advance|close, reply?}]. Talking never auto-starts a quest. 0.3.15: \"gather\" stages {items {id: n}, labels?, source [enemy kinds], text}: ready when the pack holds them all, handing in (advance) removes them. Rewards may add xp {skill: n}. Givers with \"town\" + \"near\" (town-local [x,y]) are placed by WorldGen._place_quest_givers on an open street tile; their \"object\" is an objects.json def with type quest + giver.",
  "givers": {
   "kell": {
    "name": "Kell",
    "town": "fenhollow",
    "object": "quest_giver"
+  },
+  "hunter_odric": {
+   "name": "Odric the Hunter",
+   "town": "fenhollow",
+   "object": "quest_giver_hunter",
+   "near": [
+    38,
+    72
+   ]
+  },
+  "qm_hale": {
+   "name": "Quartermaster Hale",
+   "town": "fenhollow",
+   "object": "quest_giver_quartermaster",
+   "near": [
+    60,
+    70
+   ],
+   "note": "Northern Guard supply officer posted in Fenhollow, gathering provisions for the camp up north"
   }
  },
  "quests": [
@@ -93,6 +112,166 @@
     },
     "completed": {
      "text": "The roads are quieter thanks to you, friend.",
+     "choices": [
+      {
+       "label": "Goodbye",
+       "action": "close"
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "wolf_pelts",
+   "name": "Wolf Pelts",
+   "giver": "hunter_odric",
+   "desc": "Odric, a Fenhollow hunter, says wolves are terrorising a farm outside town. He wants proof they've been thinned out.",
+   "stages": [
+    {
+     "type": "gather",
+     "items": {
+      "wolf_pelt": 5
+     },
+     "labels": {
+      "wolf_pelt": "Wolf pelts"
+     },
+     "source": [
+      "wolf"
+     ],
+     "text": "Bring Odric 5 wolf pelts"
+    }
+   ],
+   "rewards": {
+    "influence": 5,
+    "marks": 120,
+    "xp": {
+     "archery": 300
+    },
+    "items": {
+     "bronze_arrows": 40
+    }
+   },
+   "dialog": {
+    "offer": {
+     "text": "Wolves have been at the Tamsin farm east of town every night this week. Took two sheep and near took the farmhand. Thin the pack out and bring me 5 pelts as proof, and I'll make it worth your while.",
+     "choices": [
+      {
+       "label": "Accept",
+       "action": "accept",
+       "reply": "Good. They run in packs, so don't let them surround you. Five pelts."
+      },
+      {
+       "label": "Decline",
+       "action": "decline",
+       "reply": "Suit yourself. The wolves won't wait."
+      }
+     ]
+    },
+    "in_progress": {
+     "text": "Any luck with the wolves? {progress}.",
+     "choices": [
+      {
+       "label": "I'm on it",
+       "action": "close"
+      }
+     ]
+    },
+    "stage_0": {
+     "text": "Five pelts! That pack won't trouble the Tamsins again for a while. Here, take these for your trouble.",
+     "choices": [
+      {
+       "label": "Hand them over",
+       "action": "advance"
+      },
+      {
+       "label": "Not yet",
+       "action": "close"
+      }
+     ]
+    },
+    "completed": {
+     "text": "The farm's been quiet since you went out. Good work.",
+     "choices": [
+      {
+       "label": "Goodbye",
+       "action": "close"
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "chicken_slayer",
+   "name": "Chicken Slayer",
+   "giver": "qm_hale",
+   "desc": "Quartermaster Hale of the Northern Guard is gathering supplies for the camp up north: meat for the cookpots and feathers for fletching.",
+   "stages": [
+    {
+     "type": "gather",
+     "items": {
+      "raw_chicken": 10,
+      "feather": 30
+     },
+     "labels": {
+      "raw_chicken": "Raw chicken",
+      "feather": "Feathers"
+     },
+     "source": [
+      "chicken"
+     ],
+     "text": "Bring Hale 10 raw chicken and 30 feathers"
+    }
+   ],
+   "rewards": {
+    "influence": 5,
+    "marks": 80,
+    "xp": {
+     "cooking": 200
+    },
+    "items": {
+     "cooked_chicken": 3
+    }
+   },
+   "dialog": {
+    "offer": {
+     "text": "The Guard up north is short of everything. Food runs low and the fletchers have no feathers left for arrows. Bring me 10 raw chicken and 30 feathers and I'll send them up with the next cart.",
+     "choices": [
+      {
+       "label": "Accept",
+       "action": "accept",
+       "reply": "The coops outside town are full of birds. Ten chickens, thirty feathers."
+      },
+      {
+       "label": "Decline",
+       "action": "decline",
+       "reply": "Then I'll find someone else. The north can't wait long."
+      }
+     ]
+    },
+    "in_progress": {
+     "text": "How's the gathering? {progress}.",
+     "choices": [
+      {
+       "label": "I'm on it",
+       "action": "close"
+      }
+     ]
+    },
+    "stage_0": {
+     "text": "That'll fill a few bellies and plenty of quivers at the camp. The Guard thanks you. Here, take something for the road.",
+     "choices": [
+      {
+       "label": "Hand them over",
+       "action": "advance"
+      },
+      {
+       "label": "Not yet",
+       "action": "close"
+      }
+     ]
+    },
+    "completed": {
+     "text": "The last cart went north full, thanks to you.",
      "choices": [
       {
        "label": "Goodbye",
