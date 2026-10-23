@@ -684,7 +684,12 @@ func say(text: String) -> void:
 	Events.say(text)
 
 
-func on_bank(_world, _obj) -> void:
+var bank_at := Vector2i(1 << 20, 0)   # 0.3.17 the chest / banker the bank was opened at
+
+
+func on_bank(_world, obj) -> void:
+	if obj != null:
+		bank_at = obj.tile
 	Events.bank_opened.emit()
 
 

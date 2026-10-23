@@ -705,7 +705,10 @@ func _refresh_title() -> void:
 
 func _bank_in_reach() -> bool:
 	var chest: WorldObject = world.find_nearest_object(player.tile, ["bank_chest"], 3, bool(player.get("house_owned")))
-	return chest != null
+	if chest != null:
+		return true
+	var ba: Vector2i = player.get("bank_at") if player.get("bank_at") != null else Vector2i(1 << 20, 0)
+	return maxi(absi(ba.x - player.tile.x), absi(ba.y - player.tile.y)) <= 3   # opened at a banker
 
 
 func _process(_dt: float) -> void:
