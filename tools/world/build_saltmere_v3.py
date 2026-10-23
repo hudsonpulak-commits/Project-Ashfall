@@ -30,9 +30,10 @@ SRC = '/workspace/art_handoff/towns/saltmere'
 DST = os.path.join(REPO, 'assets/sprites/towns/saltmere')
 RES = 'res://assets/sprites/towns/saltmere'
 T = 16
-GW, GH = 80, 48
+S = 1.3   # 0.3.14 v4: buildings ~2x area -> the whole town plan grown 1.3x (east coast and south edge kept)
+GW, GH = int(80 * S), int(48 * S)
 SW, SH = GW * T, GH * T
-ORIGIN = [280, 136]
+ORIGIN = [360 - GW, 184 - GH]
 OLD_CENTER = [300, 170]
 ELIJAH_TOMB = [272, 160]
 
@@ -40,11 +41,18 @@ ELIJAH_TOMB = [272, 160]
 V1_PROPS = ['barrel', 'barrel_stack', 'crate', 'crate_stack', 'crate_broken', 'net_hanging', 'rope_coil', 'anchor', 'fish_rack', 'lamp_post', 'bench']
 COPY = [('tiles_v2', 'tiles', None), ('buildings_v2', 'buildings', None), ('props_v2', 'props', None),
         ('docks', 'docks', None), ('ships', 'ships', None), ('props', 'props_v1', set(V1_PROPS))]
+# 0.3.14 sprite bot's v4 set (v2 redrawn to min 5x5 with *_night layers): buildings/tiles/props from v4.
+# Its generator borrows Highfen tiles_v3 only for the wall tower/gatehouse; Saltmere has no walls, so
+# every ground tile here is Saltmere's own v4/tiles_v2 (diag grass/sand/cobble/shore, water).
+SRC4 = os.path.join(SRC, 'v4')
+for f in os.listdir(os.path.join(DST, 'buildings')):
+    if f.startswith('v2_') and (f.endswith('.png') or f.endswith('.png.import')): os.remove(os.path.join(DST, 'buildings', f))
 for sub, dsub, only in COPY:
     os.makedirs(os.path.join(DST, dsub), exist_ok=True)
-    for f in sorted(os.listdir(os.path.join(SRC, sub))):
+    root = SRC4 if sub in ('tiles_v2', 'buildings_v2', 'props_v2') else SRC
+    for f in sorted(os.listdir(os.path.join(root, sub))):
         if f.endswith('.png') and (only is None or f[:-4] in only):
-            shutil.copyfile(os.path.join(SRC, sub, f), os.path.join(DST, dsub, f))
+            shutil.copyfile(os.path.join(root, sub, f), os.path.join(DST, dsub, f))
 V3 = os.path.join(SRC, 'v3')
 for sub in ('buildings', 'props', 'ships', 'tiles'):
     for f in sorted(os.listdir(os.path.join(V3, sub))):
@@ -53,9 +61,9 @@ for sub in ('buildings', 'props', 'ships', 'tiles'):
         shutil.copyfile(os.path.join(V3, sub, f), os.path.join(d_, f))
 shutil.copyfile(os.path.join(V3, 'manifest_v3.json'), os.path.join(DST, 'manifest_v3.json'))
 M3 = json.load(open(os.path.join(V3, 'manifest_v3.json')))
-shutil.copyfile(os.path.join(SRC, 'manifest_v2.json'), os.path.join(DST, 'manifest_v2.json'))
+shutil.copyfile(os.path.join(SRC4, 'manifest_v2.json'), os.path.join(DST, 'manifest_v2.json'))
 shutil.copyfile(os.path.join(SRC, 'README.md'), os.path.join(DST, 'README_designer.md'))
-M = json.load(open(os.path.join(SRC, 'manifest_v2.json')))
+M = json.load(open(os.path.join(SRC4, 'manifest_v2.json')))
 M['buildings'] += [b for b in M3['buildings'] if b['name'] != 'v3_harbour_entrance']
 BM = {b['name']: b for b in M['buildings']}
 HE = next(b for b in M3['buildings'] if b['name'] == 'v3_harbour_entrance')
@@ -84,7 +92,8 @@ for b in M['buildings']:
     lay = b['layers']
     ART[b['name']] = dict(tiles=b['tiles'], px=b['px'], origin_y=b['footprint_origin_px'][1], door_tile=b['door_tile'], storeys=b['storeys'],
                           floor=f"{RES}/buildings/{lay[0]}", walls=f"{RES}/buildings/{lay[1]}",
-                          fade=[f"{RES}/buildings/{l}" for l in b['fade_group']], plan=plan_of(b))
+                          fade=[f"{RES}/buildings/{l}" for l in b['fade_group']], plan=plan_of(b),
+                          night=(f"{RES}/buildings/{b['night_layer']}" if b.get('night_layer') else ''))
 def flip_plan(rows): return [r[::-1] for r in rows]
 
 # ---------------------------------------------------------------- terrain on the vertex grid
@@ -98,12 +107,12 @@ VY, VX = np.mgrid[:GH + 1, :GW + 1].astype(float)
 nr = np.random.RandomState(31)
 nz = ndi.gaussian_filter(nr.rand(GH + 1, GW + 1), 3); nz = (nz - nz.min()) / (nz.max() - nz.min())
 OCEAN_V = np.array([[world_ocean(min(x, GW - 1), min(y, GH - 1)) for x in range(GW + 1)] for y in range(GH + 1)])
-SEA = (VX >= 72 + 1.2 * np.sin(VY / 5.0) + (nz - .5) * 1.5) | OCEAN_V
-qx0, qx1, qy = 18, 56, 31
-yb = 40.6
-basin = (VY > qy) & (VY < yb) & ((((VX - 37) / 22.5) ** 4 + ((VY - 35.8) / 5.2) ** 4) <= 1)
-basin |= (VY > qy) & (VY <= 36) & (VX >= qx0) & (VX <= qx1)
-CH_PTS = [(56, 35.5), (61, 37.4), (65.5, 35.6), (69.5, 37.2), (75, 36.2), (GW + 1, 36.4)]
+SEA = (VX >= 72 * S + 1.2 * np.sin(VY / 5.0) + (nz - .5) * 1.5) | OCEAN_V
+qx0, qx1, qy = int(18 * S), int(56 * S), int(31 * S)
+yb = 40.6 * S
+basin = (VY > qy) & (VY < yb) & ((((VX - 37 * S) / (22.5 * S)) ** 4 + ((VY - 35.8 * S) / (5.2 * S)) ** 4) <= 1)
+basin |= (VY > qy) & (VY <= 36 * S) & (VX >= qx0) & (VX <= qx1)
+CH_PTS = [(x * S, y * S) for x, y in [(56, 35.5), (61, 37.4), (65.5, 35.6), (69.5, 37.2), (75, 36.2)]] + [(GW + 1, 36.4 * S)]
 chan = dg.line_mask(VY.shape, CH_PTS, 2.55)
 LV = ~(SEA | basin | chan)
 LV[:qy + 1, qx0:qx1 + 1] = True                       # quay line: land filled to vertex row qy across the dock span
@@ -111,37 +120,40 @@ LV[qy + 1:qy + 3, qx0:qx1 + 1] = False
 landT = LV[:-1, :-1] & LV[:-1, 1:] | LV[1:, 1:] & LV[1:, :-1] | LV[:-1, :-1] & LV[1:, 1:] | LV[:-1, 1:] & LV[1:, :-1]
 CNT_L = LV[:-1, :-1].astype(int) + LV[:-1, 1:] + LV[1:, 1:] + LV[1:, :-1]
 dock = np.zeros((GH, GW), bool); dock[qy:qy + 2, qx0:qx1] = True
-PIERS = (23, 35, 47)
+PIERS = tuple(int(p_ * S) for p_ in (23, 35, 47))
 for px_ in PIERS: dock[qy + 2:qy + 7, px_:px_ + 2] = True
 dw = ndi.distance_transform_edt(LV)
-GV = LV & (dw > 3.2 + 2.2 * nz) & ~((nz > .74) & (VY < 26))          # sand belt on every shore, sand clearings inland
+GV = LV & (dw > 3.2 + 2.2 * nz) & ~((nz > .74) & (VY < 26 * S))          # sand belt on every shore, sand clearings inland
 
 # ---------------------------------------------------------------- roads (tile-based winding streets, 45-degree corner autotiles)
-st = qy - 2
-PLAZA_C = (33, 15.5); PRX, PRY = 5.6, 3.7
-LINES_C = [([(-1, 15), (4, 15.2), (9, 16.4), (16, 14.6), (23, 16.2), (28, 15.5)], 1.15),           # main street from the west gate
-           ([(44, -1), (44, 3), (45.5, 6), (41.5, 10), (37.5, 13)], 1.1),                          # north road
-           ([(5, st + .5), (12, st), (20, st + .8), (28, st), (36, st + .8), (44, st), (52, st + .8), (59, st), (64, st - 1.2)], 1.1),  # harbour street
-           ([(33.5, 18.5), (35, 22), (33.5, 25.5), (34.5, st)], 1.0),                              # plaza -> harbour
-           ([(12, 15.5), (10.5, 20), (13, 24.5), (11.5, st)], 1.0),                                # west cross street
-           ([(38.5, 16.5), (45, 18.5), (52, 17.5), (58.5, 20), (57.5, 24.5), (59.5, st)], 1.0)]    # east cross street
+st = qy - 2; ST0 = 29   # st in the 0.3.13 (unscaled) plan
+PLAZA_C = (33 * S, 15.5 * S); PRX, PRY = 5.6 * S, 3.7 * S
+LINES_C0 = [([(-1, 15), (4, 15.2), (9, 16.4), (16, 14.6), (23, 16.2), (28, 15.5)], 1.15),           # main ST0reet from the weST0 gate
+           ([(44.25, -1), (44.25, 3), (45.5, 6), (41.5, 10), (37.5, 13)], 1.45),                          # north road
+           ([(5, ST0 + .5), (12, ST0), (20, ST0 + .8), (28, ST0), (36, ST0 + .8), (44, ST0), (52, ST0 + .8), (59, ST0), (64, ST0 - 1.2)], 1.1),  # harbour ST0reet
+           ([(33.5, 18.5), (35, 22), (33.5, 25.5), (34.5, ST0)], 1.0),                              # plaza -> harbour
+           ([(12, 15.5), (10.5, 20), (13, 24.5), (11.5, ST0)], 1.0),                                # weST0 cross ST0reet
+           ([(38.5, 16.5), (45, 18.5), (52, 17.5), (58.5, 20), (57.5, 24.5), (59.5, ST0)], 1.0)]    # eaST0 cross ST0reet
+def _sp(pts): return [(-1 if x == -1 else x * S, -1 if y == -1 else y * S) for x, y in pts]
+LINES_C = [(_sp(p_), hw * 1.1) for p_, hw in LINES_C0]
 CV = np.zeros(VY.shape, bool)
 for pts, hw in LINES_C: CV |= dg.line_mask(VY.shape, pts, hw)
 CV |= ((VX - PLAZA_C[0]) / PRX) ** 2 + ((VY - PLAZA_C[1]) / PRY) ** 2 <= 1
 APR = (VY >= st - .6) & (VY <= qy) & (VX >= qx0) & (VX <= qx1)
 CV |= APR
 CV &= LV
-LINES_S = [([(16, 14.6), (14.5, 9), (17, 4.5), (15, 0.5)], .95), ([(25, 15.8), (26.5, 9.5), (24.5, 3)], .9),
-           ([(52, 17.5), (55.5, 12), (61, 7.5), (65, 3)], .95), ([(6, 15.5), (4.5, 21), (6.5, st + .5)], .95),
-           ([(5, st + .5), (7, 35), (10, 40), (13.5, 43.5), (24, 44), (36, 43.2), (48, 44.2), (58, 42.8), (63.5, 43.2)], .95),   # round the bay to the lighthouse
-           ([(64, st - 1.2), (67, 26), (66, 18), (68.5, 11)], .9)]                                   # east coast lane
+LINES_S0 = [([(16, 14.6), (14.5, 9), (17, 4.5), (15, 0.5)], .95), ([(25, 15.8), (26.5, 9.5), (24.5, 3)], .9),
+           ([(52, 17.5), (55.5, 12), (61, 7.5), (65, 3)], .95), ([(6, 15.5), (4.5, 21), (6.5, ST0 + .5)], .95),
+           ([(5, ST0 + .5), (7, 35), (10, 40), (13.5, 43.5), (24, 44), (36, 43.2), (48, 44.2), (58, 42.8), (63.5, 43.2)], .95),   # round the bay to the lighthouse
+           ([(64, ST0 - 1.2), (67, 26), (66, 18), (68.5, 11)], .9)]                                   # eaST0 coaST0 lane
+LINES_S = [(_sp(p_), hw) for p_, hw in LINES_S0]
 SPV = np.zeros(VY.shape, bool)
 for pts, hw in LINES_S: SPV |= dg.line_mask(VY.shape, pts, hw)
 SPV &= LV & ~CV
 CF, SF, LF, GF = dg.frames_of(CV), dg.frames_of(SPV), dg.frames_of(LV), dg.frames_of(GV)
 bits = np.vectorize(lambda f: bin(int(f)).count('1'))
 CNT_C, CNT_S = bits(CF), bits(SF)
-GATES = dict(west=[[0, 14], [0, 15], [0, 16]], north=[[43, 0], [44, 0], [45, 0]])
+GATES = dict(west=[[0, y_] for y_ in (19, 20, 21)], north=[[x_, 0] for x_ in (56, 57, 58)])
 
 # ---------------------------------------------------------------- channel flood check: dock water reaches the open sea, >= 4 tiles wide
 waterT = (CNT_L < 3) & ~dock
@@ -151,8 +163,8 @@ dock_water = {lab[y + c, x + a] for y, x in zip(*np.nonzero(dock)) for a, c in (
 sea_lab = {lab[y, GW - 1] for y in range(GH) if lab[y, GW - 1]}
 CHANNEL_OK = bool(dock_water & sea_lab)
 chan_w = 99
-for x in range(52, 76):                                   # narrowest water run across the channel, column by column
-    col = waterT[30:47, x]; best = 0; run = 0
+for x in range(int(52 * S), int(76 * S)):                                   # narrowest water run across the channel, column by column
+    col = waterT[int(30 * S):GH - 1, x]; best = 0; run = 0
     for v in col:
         run = run + 1 if v else 0; best = max(best, run)
     chan_w = min(chan_w, best)
@@ -239,7 +251,9 @@ def plan_tiles(n, flip):
 def door_local(rows):
     for y, r in enumerate(rows):
         if 'D' in r: return (r.index('D'), y)
-def place(n, tx, ty, flip=False, role=None, reach=60, spit=False, quiet=False):
+V4_TIGHT = True   # 0.3.14 v4 buildings are ~2x the area: they may stand wall to wall (designer layout does too)
+def place(n, tx, ty, flip=False, role=None, reach=60, spit=False, quiet=False, raw=False):
+    if not raw: tx, ty = tx * S, ty * S
     al = drawn(n, flip); h, w = al.shape; E = ART[n]['origin_y']; W, H = ART[n]['tiles']
     rows, tiles = plan_tiles(n, flip); dl = door_local(rows)
     for r in range(0, reach, 2):
@@ -252,15 +266,15 @@ def place(n, tx, ty, flip=False, role=None, reach=60, spit=False, quiet=False):
             if not spit and (occ_w[y0:y0 + h, x0:x0 + w] & al).any(): continue
             bad = False
             for (lx, ly) in tiles:
-                for ax in (-1, 0, 1):
-                    for ay in (-1, 0, 1):
+                for ax in ((0,) if V4_TIGHT else (-1, 0, 1)):
+                    for ay in ((0,) if V4_TIGHT else (-1, 0, 1)):
                         q = (ox + lx + ax, oy + ly + ay)
                         if not (0 <= q[0] < GW and 0 <= q[1] < GH) or tile_used[q[1], q[0]]: bad = True
                 if grid[oy + ly][ox + lx] not in 'sg': bad = True
             fx_, fy_ = ox + dl[0], oy + dl[1] + 1
             if fy_ + 1 >= GH or tile_used[fy_, fx_] or tile_used[fy_ + 1, fx_] or grid[fy_][fx_] in '~=': bad = True
             if bad: continue
-            occ_r[y0:y0 + h, x0:x0 + w] |= ndi.binary_dilation(al, iterations=2)
+            occ_r[y0:y0 + h, x0:x0 + w] |= al if V4_TIGHT else ndi.binary_dilation(al, iterations=2)
             for (lx, ly) in tiles: tile_used[oy + ly, ox + lx] = True
             d = dict(art=n, flip=flip, at=[ox, oy], role=role, px=[x0, y0], rows=rows, door=[ox + dl[0], oy + dl[1]])
             blds.append(d); return d
@@ -268,17 +282,17 @@ def place(n, tx, ty, flip=False, role=None, reach=60, spit=False, quiet=False):
     return None
 
 place('v2_church', 33, 8.5, role='church')
-place('v2_governor', 54, 9, role='bank')
+place('v2_governor', 54, 9, role='bank', reach=200)
 place('v2_tavern', 37, 23.5, role='cook')
 place('v2_warehouse_b', 19, 23, role='general')
 place('v2_harbourmaster', 28, 23, role='harbourmaster')
 place('v3_smithy_large', 51, 23.5, role='smithy', reach=120)   # 0.3.13 the smith moves into the designer's large v3 smithy
 place('v2_rum_house', 64, 24, role='rum')
-place('v2_warehouse_a', 7, 21.5, role='warehouse', reach=160)   # 0.3.13 the warehouse is a warehouse again (Salt Warehouse)
+place('v2_warehouse_a', 7, 21.5, role="warehouse", reach=320)   # 0.3.13 the warehouse is a warehouse again (Salt Warehouse)
 place('v3_elijah_tomb', 6, 6, role='tomb', reach=160)
 place('v2_house_10', 46, 12, role='legs')
 place('v2_house_23', 19, 9, role='player_house')
-place('v2_lighthouse', 66, 42, role='lighthouse', spit=True, reach=80)
+place('v2_lighthouse', 66, 42, role='lighthouse', spit=True, reach=240)
 # white houses with blue roofs first (designer houses with a blue roof), the rest after
 def roof_blue(n):
     a = np.array(L('buildings', n + '_roof')).reshape(-1, 4); a = a[a[:, 3] > 0][:, :3].astype(int)
@@ -287,17 +301,17 @@ HOUSES = [h for h in M['houses'] if h not in ('v2_house_10', 'v2_house_23')]
 HOUSES = sorted(HOUSES, key=lambda h: (not roof_blue(h), h))
 NBLUE = sum(1 for h in HOUSES if roof_blue(h))
 rr = random.Random(7)
-cands = [(x, y) for y in range(3, 46) for x in range(4, 70) if CNT_L[min(y, GH - 1), min(x, GW - 1)] == 4]
+cands = [(x, y) for y in range(3, GH - 2) for x in range(4, int(70 * S)) if CNT_L[min(y, GH - 1), min(x, GW - 1)] == 4]
 rr.shuffle(cands)
 roadd = ndi.distance_transform_edt(~road)
 cands.sort(key=lambda c: roadd[min(SH - 1, c[1] * T + 8), min(SW - 1, c[0] * T)])
 use = collections.Counter(); nh = 0; pi = 0
 for c in cands:
-    if nh >= 26: break
+    if nh >= 30: break
     for k in range(6):
         n = HOUSES[(pi + k) % NBLUE]
         if use[n] >= (3 if roof_blue(n) else 0): continue      # Hudson: white houses with blue roofs
-        if place(n, c[0], c[1], flip=use[n] % 2 == 1, role='home', reach=6, quiet=True):
+        if place(n, c[0], c[1], flip=use[n] % 2 == 1, role='home', reach=6, quiet=True, raw=True):
             use[n] += 1; nh += 1; pi += k + 1; break
 print('houses', nh, 'blue-roof designs', sum(1 for h in HOUSES if roof_blue(h)))
 
@@ -445,14 +459,14 @@ for p_ in PIERS:                                             # a few on the pier
     for yy in (qy + 3, qy + 5):
         if addo(DCL[ndk % len(DCL)], p_ + 1, yy, on_dock=True): ndk += 1
 # the town sign by the west road into town
-for (x, y) in [(3, 13), (3, 17), (4, 13), (4, 17), (2, 12), (5, 12)]:
+for (x, y) in [(3, 18), (3, 22), (4, 18), (4, 22), (2, 17), (5, 17)]:
     if addo('sm3_town_sign', x, y): break
 for x in range(qx0 + 2, qx1 - 1, 4):
     if addo('sm_mooring_post', x, qy - 1, True): pass
 dock_objs = ndk
 # fishing spots in the basin and the sea (the old harbour had them)
 fs = 0
-for (x, y) in [(28, 35), (41, 35), (52, 35), (75, 20), (76, 30), (74, 8)]:
+for (x, y) in [(int(a * S), int(b * S)) for a, b in [(28, 35), (41, 35), (52, 35), (75, 20), (76, 30), (74, 8)]]:
     if 0 <= x < GW and grid[y][x] == '~' and (x, y) not in objs: objs[(x, y)] = 'fishing_spot'; fs += 1
 rnd = random.Random(11)
 SANDY = ['sm_palm_tall', 'sm_palm_lean', 'sm_palm_short', 'sm_palm_cluster', 'sm_agave']
@@ -479,8 +493,8 @@ def put_ship(n, tries, hull=1.0):
         if not (clear[y:y + h, x:x + w] & al).any():
             ships.append((n, x, y)); clear[y:y + h, x:x + w] |= ndi.binary_dilation(al, iterations=6); return True
     return False
-SHIP_TRIES_BASIN = [(x, y) for y in range(40 * T - 40, (qy + 1) * T - 160, -4) for x in range(qx0 * T, 60 * T, 4)]
-SHIP_TRIES_SEA = [(x, y) for y in range(20, SH - 60, 8) for x in range(SW - 80, 62 * T, -8)]
+SHIP_TRIES_BASIN = [(x, y) for y in range(int(40 * S) * T - 40, (qy + 1) * T - 160, -4) for x in range(qx0 * T, int(60 * S) * T, 4)]
+SHIP_TRIES_SEA = [(x, y) for y in range(20, SH - 60, 8) for x in range(SW - 80, int(62 * S) * T, -8)]
 def tries_for(n, base):
     w_, h_ = L('ships', n).size
     return [(x, y) for x, y in base if x + w_ <= SW and y + h_ <= SH]
@@ -498,14 +512,14 @@ YSORT = [dict(path=f'{RES}/ships/{n}.png', pos=[x, y], base=L('ships', n).height
 NB3 = {'gulls', 'oars', 'fish_basket', 'rope_spool', 'bollard_rope', 'buoys', 'sacks', 'net_pile', 'fish_crate', 'lobster_pots'}   # small dock clutter does not block the quay
 # ---------------------------------------------------------------- 0.3.13 harbour entrance over the north road (passage = gate tiles 43..45)
 HE_X0 = 42 * T + 8 - HE['passage_px'][0] + 8            # passage x16..64 centred on the 3 road tiles 43..45
-HE_X0 = 43 * T - HE['passage_px'][0]
+HE_X0 = 56 * T - HE['passage_px'][0]
 HE_ROW = 4                                                 # base line on the bottom of tile row 4
 HE_Y0 = (HE_ROW + 1) * T - HE['px'][1]
 HE_PILLARS = []
 for ty in (HE_ROW - 1, HE_ROW):
-    for tx in (42, 46):
+    for tx in (55, 59):
         HE_PILLARS.append((tx, ty)); objs.pop((tx, ty), None)
-HE_PASS = [[x, y] for x in (43, 44, 45) for y in range(max(0, HE_Y0 // T), HE_ROW + 1)]
+HE_PASS = [[x, y] for x in (56, 57, 58) for y in range(max(0, HE_Y0 // T), HE_ROW + 1)]
 print('harbour entrance', HE_X0, HE_Y0, 'pillars', HE_PILLARS, 'passage', [grid[y][x] for x, y in HE_PASS])
 for (tx, ty) in HE_PILLARS: grid[ty][tx] = 'P'
 
@@ -617,8 +631,9 @@ def near_walk(x, y):
         for dx in range(-r_, r_ + 1):
             for dy in range(-r_, r_ + 1):
                 if (x + dx, y + dy) in seen and grid[y + dy][x + dx] in ':-=sg': return [x + dx, y + dy]
-BEATS = [[(4, 15), (20, 15.5), (30, 15)], [(44, 2), (42, 10), (36, 13)], [(8, 29), (24, 29), (40, 29)], [(40, 29), (56, 29), (63, 27)],
+BEATS0 = [[(4, 15), (20, 15.5), (30, 15)], [(44, 2), (42, 10), (36, 13)], [(8, 29), (24, 29), (40, 29)], [(40, 29), (56, 29), (63, 27)],
          [(24, 31), (24, 37)], [(36, 31), (36, 37)], [(48, 31), (48, 37)], [(12, 18), (11, 27)], [(39, 16), (52, 17.5), (58, 25)], [(8, 36), (24, 43), (48, 43), (62, 43)]]
+BEATS = [[(int(x * S), int(y * S)) for x, y in b_] for b_ in BEATS0]
 guards = [dict(enemy='town_guard', patrol=[near_walk(int(x), int(y)) for x, y in b]) for b in BEATS]
 npcs['towns']['saltmere'] = dict(guards=guards,
                                  citizens=dict(enemy='citizen', count=5, area=[int(PLAZA_C[0] - 7), int(PLAZA_C[1] - 4), 15, 15]),

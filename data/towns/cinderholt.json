@@ -7,7 +7,7 @@
  ],
  "spawn": [
   330,
-  -187
+  -179
  ],
  "tiles": {
   "g": "dirt",
@@ -117,66 +117,62 @@
    "ground": "dirt"
   },
   "d": {
-   "object": "ch_town_sign",
-   "ground": "dirt"
-  },
-  "e": {
    "object": "embers",
    "ground": "dirt"
   },
-  "f": {
+  "e": {
    "object": "exchange_board",
    "ground": "dirt"
   },
-  "h": {
+  "f": {
    "object": "ng_archery_target",
    "ground": "dirt"
   },
-  "i": {
+  "h": {
    "object": "ng_armor_stand",
    "ground": "dirt"
   },
-  "j": {
+  "i": {
    "object": "ng_banner_north",
    "ground": "dirt"
   },
-  "k": {
+  "j": {
    "object": "ng_bedroll",
    "ground": "dirt"
   },
-  "l": {
+  "k": {
    "object": "ng_campfire",
    "ground": "dirt"
   },
-  "m": {
+  "l": {
    "object": "ng_cookpot",
    "ground": "dirt"
   },
-  "n": {
+  "m": {
    "object": "ng_shield_rack",
    "ground": "dirt"
   },
-  "p": {
+  "n": {
    "object": "ng_spear_rack",
    "ground": "dirt"
   },
-  "q": {
+  "p": {
    "object": "ng_supply_crates",
    "ground": "dirt"
   },
-  "r": {
+  "q": {
    "object": "ng_training_dummy",
    "ground": "dirt"
   },
-  "s": {
+  "r": {
    "object": "ng_weapon_rack",
    "ground": "dirt"
   },
-  "t": {
+  "s": {
    "object": "training_dummy",
    "ground": "dirt"
   },
-  "u": {
+  "t": {
    "object": "workbench",
    "ground": "dirt"
   }
@@ -224,43 +220,43 @@
   "south": [
    [
     41,
-    89
+    101
    ],
    [
     42,
-    89
+    101
    ],
    [
     43,
-    89
+    101
    ]
   ],
   "west": [
    [
     0,
-    61
+    69
    ],
    [
     0,
-    62
+    70
    ],
    [
     0,
-    63
+    71
    ]
   ],
   "east": [
    [
     83,
-    61
+    69
    ],
    [
     83,
-    62
+    70
    ],
    [
     83,
-    63
+    71
    ]
   ]
  },
@@ -268,41 +264,41 @@
   "north": [
    [
     41,
-    40
+    41
    ],
    [
     42,
-    40
+    41
    ]
   ],
   "south": [
    [
     41,
-    83
+    98
    ],
    [
     42,
-    83
+    98
    ]
   ],
   "east": [
    [
-    69,
-    61
+    77,
+    69
    ],
    [
-    69,
-    62
+    77,
+    70
    ]
   ],
   "west": [
    [
-    14,
-    61
+    6,
+    69
    ],
    [
-    14,
-    62
+    6,
+    70
    ]
   ]
  },
@@ -310,10 +306,6 @@
   "north": [
    [
     41,
-    39
-   ],
-   [
-    41,
     40
    ],
    [
@@ -321,8 +313,8 @@
     41
    ],
    [
-    42,
-    39
+    41,
+    42
    ],
    [
     42,
@@ -331,89 +323,93 @@
    [
     42,
     41
+   ],
+   [
+    42,
+    42
    ]
   ],
   "south": [
    [
     41,
-    82
+    97
    ],
    [
     41,
-    83
+    98
    ],
    [
     41,
-    84
+    99
    ],
    [
     42,
-    82
+    97
    ],
    [
     42,
-    83
+    98
    ],
    [
     42,
-    84
+    99
    ]
   ],
   "east": [
    [
-    68,
-    61
+    76,
+    69
    ],
    [
-    68,
-    62
+    76,
+    70
    ],
    [
-    69,
-    61
+    77,
+    69
    ],
    [
-    69,
-    62
+    77,
+    70
    ],
    [
-    70,
-    61
+    78,
+    69
    ],
    [
-    70,
-    62
+    78,
+    70
    ]
   ],
   "west": [
    [
-    13,
-    61
+    5,
+    69
    ],
    [
-    13,
-    62
+    5,
+    70
    ],
    [
-    14,
-    61
+    6,
+    69
    ],
    [
-    14,
-    62
+    6,
+    70
    ],
    [
-    15,
-    61
+    7,
+    69
    ],
    [
-    15,
-    62
+    7,
+    70
    ]
   ]
  },
  "ring_qa": {
-  "samples": 1452,
+  "samples": 1887,
   "gaps": [],
   "gap_count": 0,
   "gates": [
@@ -425,7 +421,7 @@
   "sealed": true,
   "opens": 4,
   "camp": {
-   "samples": 748,
+   "samples": 907,
    "gaps": [],
    "gap_count": 0,
    "gates": [
@@ -447,37 +443,37 @@
   ],
   "gate_tiles": [
    [
-    27,
+    24,
     16
    ],
    [
-    27,
+    24,
     17
    ],
    [
-    28,
+    25,
     16
    ],
    [
-    28,
+    25,
     17
    ],
    [
-    29,
+    26,
     16
    ],
    [
-    29,
+    26,
     17
    ]
   ],
   "gate_wall": [
    [
-    28,
+    25,
     16
    ],
    [
-    28,
+    25,
     17
    ]
   ],
@@ -497,40 +493,24 @@
  "art": {
   "market": [
    [
-    44,
-    57
+    40,
+    64
    ],
    [
-    38,
-    66
+    44,
+    64
    ]
   ],
   "plaza_px": [
    672,
-   992
+   1120
   ],
   "ground_decal": "res://assets/sprites/towns/cinderholt/ground_decal.png",
   "ysort": [
    {
-    "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_39_0.png",
-    "pos": [
-     560,
-     624
-    ],
-    "base": 16
-   },
-   {
-    "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_39_1.png",
-    "pos": [
-     688,
-     624
-    ],
-    "base": 16
-   },
-   {
     "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_40_0.png",
     "pos": [
-     528,
+     560,
      640
     ],
     "base": 16
@@ -538,7 +518,7 @@
    {
     "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_40_1.png",
     "pos": [
-     704,
+     688,
      640
     ],
     "base": 16
@@ -546,7 +526,7 @@
    {
     "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_41_0.png",
     "pos": [
-     448,
+     528,
      656
     ],
     "base": 16
@@ -562,7 +542,7 @@
    {
     "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_42_0.png",
     "pos": [
-     400,
+     480,
      672
     ],
     "base": 16
@@ -570,7 +550,7 @@
    {
     "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_42_1.png",
     "pos": [
-     816,
+     704,
      672
     ],
     "base": 16
@@ -578,7 +558,7 @@
    {
     "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_43_0.png",
     "pos": [
-     368,
+     416,
      688
     ],
     "base": 16
@@ -586,7 +566,7 @@
    {
     "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_43_1.png",
     "pos": [
-     864,
+     816,
      688
     ],
     "base": 16
@@ -602,7 +582,7 @@
    {
     "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_44_1.png",
     "pos": [
-     896,
+     880,
      704
     ],
     "base": 16
@@ -610,7 +590,7 @@
    {
     "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_45_0.png",
     "pos": [
-     336,
+     320,
      720
     ],
     "base": 16
@@ -618,7 +598,7 @@
    {
     "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_45_1.png",
     "pos": [
-     912,
+     928,
      720
     ],
     "base": 16
@@ -626,7 +606,7 @@
    {
     "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_46_0.png",
     "pos": [
-     304,
+     288,
      736
     ],
     "base": 16
@@ -634,7 +614,7 @@
    {
     "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_46_1.png",
     "pos": [
-     928,
+     960,
      736
     ],
     "base": 16
@@ -642,7 +622,7 @@
    {
     "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_47_0.png",
     "pos": [
-     288,
+     256,
      752
     ],
     "base": 16
@@ -650,7 +630,7 @@
    {
     "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_47_1.png",
     "pos": [
-     944,
+     976,
      752
     ],
     "base": 16
@@ -658,7 +638,7 @@
    {
     "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_48_0.png",
     "pos": [
-     272,
+     240,
      768
     ],
     "base": 16
@@ -666,7 +646,7 @@
    {
     "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_48_1.png",
     "pos": [
-     960,
+     1008,
      768
     ],
     "base": 16
@@ -674,7 +654,7 @@
    {
     "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_49_0.png",
     "pos": [
-     256,
+     224,
      784
     ],
     "base": 16
@@ -682,7 +662,7 @@
    {
     "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_49_1.png",
     "pos": [
-     976,
+     1024,
      784
     ],
     "base": 16
@@ -690,7 +670,7 @@
    {
     "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_50_0.png",
     "pos": [
-     240,
+     192,
      800
     ],
     "base": 16
@@ -698,7 +678,7 @@
    {
     "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_50_1.png",
     "pos": [
-     992,
+     1024,
      800
     ],
     "base": 16
@@ -706,7 +686,7 @@
    {
     "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_51_0.png",
     "pos": [
-     224,
+     176,
      816
     ],
     "base": 16
@@ -714,7 +694,7 @@
    {
     "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_51_1.png",
     "pos": [
-     1024,
+     1040,
      816
     ],
     "base": 16
@@ -722,7 +702,7 @@
    {
     "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_52_0.png",
     "pos": [
-     224,
+     160,
      832
     ],
     "base": 16
@@ -730,7 +710,7 @@
    {
     "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_52_1.png",
     "pos": [
-     1040,
+     1056,
      832
     ],
     "base": 16
@@ -738,7 +718,7 @@
    {
     "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_53_0.png",
     "pos": [
-     208,
+     144,
      848
     ],
     "base": 16
@@ -746,7 +726,7 @@
    {
     "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_53_1.png",
     "pos": [
-     1056,
+     1072,
      848
     ],
     "base": 16
@@ -754,7 +734,7 @@
    {
     "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_54_0.png",
     "pos": [
-     208,
+     128,
      864
     ],
     "base": 16
@@ -762,7 +742,7 @@
    {
     "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_54_1.png",
     "pos": [
-     1072,
+     1104,
      864
     ],
     "base": 16
@@ -770,7 +750,7 @@
    {
     "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_55_0.png",
     "pos": [
-     208,
+     112,
      880
     ],
     "base": 16
@@ -778,7 +758,7 @@
    {
     "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_55_1.png",
     "pos": [
-     1072,
+     1120,
      880
     ],
     "base": 16
@@ -786,7 +766,7 @@
    {
     "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_56_0.png",
     "pos": [
-     208,
+     96,
      896
     ],
     "base": 16
@@ -794,7 +774,7 @@
    {
     "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_56_1.png",
     "pos": [
-     1088,
+     1136,
      896
     ],
     "base": 16
@@ -802,7 +782,7 @@
    {
     "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_57_0.png",
     "pos": [
-     208,
+     96,
      912
     ],
     "base": 16
@@ -810,7 +790,7 @@
    {
     "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_57_1.png",
     "pos": [
-     1088,
+     1168,
      912
     ],
     "base": 16
@@ -818,7 +798,7 @@
    {
     "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_58_0.png",
     "pos": [
-     208,
+     96,
      928
     ],
     "base": 16
@@ -826,15 +806,95 @@
    {
     "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_58_1.png",
     "pos": [
-     1088,
+     1184,
      928
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_59_0.png",
+    "pos": [
+     80,
+     944
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_59_1.png",
+    "pos": [
+     1200,
+     944
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_60_0.png",
+    "pos": [
+     80,
+     960
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_60_1.png",
+    "pos": [
+     1200,
+     960
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_61_0.png",
+    "pos": [
+     80,
+     976
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_61_1.png",
+    "pos": [
+     1216,
+     976
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_62_0.png",
+    "pos": [
+     80,
+     992
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_62_1.png",
+    "pos": [
+     1216,
+     992
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_63_0.png",
+    "pos": [
+     80,
+     1008
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_63_1.png",
+    "pos": [
+     1216,
+     1008
     ],
     "base": 16
    },
    {
     "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_64_0.png",
     "pos": [
-     208,
+     80,
      1024
     ],
     "base": 16
@@ -842,7 +902,7 @@
    {
     "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_64_1.png",
     "pos": [
-     1088,
+     1216,
      1024
     ],
     "base": 16
@@ -850,7 +910,7 @@
    {
     "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_65_0.png",
     "pos": [
-     208,
+     80,
      1040
     ],
     "base": 16
@@ -858,7 +918,7 @@
    {
     "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_65_1.png",
     "pos": [
-     1088,
+     1216,
      1040
     ],
     "base": 16
@@ -866,7 +926,7 @@
    {
     "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_66_0.png",
     "pos": [
-     208,
+     80,
      1056
     ],
     "base": 16
@@ -874,95 +934,15 @@
    {
     "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_66_1.png",
     "pos": [
-     1088,
+     1216,
      1056
-    ],
-    "base": 16
-   },
-   {
-    "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_67_0.png",
-    "pos": [
-     208,
-     1072
-    ],
-    "base": 16
-   },
-   {
-    "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_67_1.png",
-    "pos": [
-     1088,
-     1072
-    ],
-    "base": 16
-   },
-   {
-    "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_68_0.png",
-    "pos": [
-     208,
-     1088
-    ],
-    "base": 16
-   },
-   {
-    "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_68_1.png",
-    "pos": [
-     1056,
-     1088
-    ],
-    "base": 16
-   },
-   {
-    "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_69_0.png",
-    "pos": [
-     224,
-     1104
-    ],
-    "base": 16
-   },
-   {
-    "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_69_1.png",
-    "pos": [
-     1040,
-     1104
-    ],
-    "base": 16
-   },
-   {
-    "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_70_0.png",
-    "pos": [
-     240,
-     1120
-    ],
-    "base": 16
-   },
-   {
-    "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_70_1.png",
-    "pos": [
-     1040,
-     1120
-    ],
-    "base": 16
-   },
-   {
-    "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_71_0.png",
-    "pos": [
-     240,
-     1136
-    ],
-    "base": 16
-   },
-   {
-    "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_71_1.png",
-    "pos": [
-     1024,
-     1136
     ],
     "base": 16
    },
    {
     "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_72_0.png",
     "pos": [
-     256,
+     80,
      1152
     ],
     "base": 16
@@ -970,7 +950,7 @@
    {
     "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_72_1.png",
     "pos": [
-     1024,
+     1216,
      1152
     ],
     "base": 16
@@ -978,7 +958,7 @@
    {
     "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_73_0.png",
     "pos": [
-     256,
+     80,
      1168
     ],
     "base": 16
@@ -986,7 +966,7 @@
    {
     "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_73_1.png",
     "pos": [
-     1008,
+     1216,
      1168
     ],
     "base": 16
@@ -994,7 +974,7 @@
    {
     "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_74_0.png",
     "pos": [
-     256,
+     80,
      1184
     ],
     "base": 16
@@ -1002,7 +982,7 @@
    {
     "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_74_1.png",
     "pos": [
-     992,
+     1216,
      1184
     ],
     "base": 16
@@ -1010,7 +990,7 @@
    {
     "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_75_0.png",
     "pos": [
-     272,
+     80,
      1200
     ],
     "base": 16
@@ -1018,7 +998,7 @@
    {
     "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_75_1.png",
     "pos": [
-     992,
+     1216,
      1200
     ],
     "base": 16
@@ -1026,7 +1006,7 @@
    {
     "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_76_0.png",
     "pos": [
-     272,
+     80,
      1216
     ],
     "base": 16
@@ -1034,7 +1014,7 @@
    {
     "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_76_1.png",
     "pos": [
-     960,
+     1216,
      1216
     ],
     "base": 16
@@ -1042,7 +1022,7 @@
    {
     "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_77_0.png",
     "pos": [
-     288,
+     96,
      1232
     ],
     "base": 16
@@ -1050,7 +1030,7 @@
    {
     "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_77_1.png",
     "pos": [
-     944,
+     1200,
      1232
     ],
     "base": 16
@@ -1058,7 +1038,7 @@
    {
     "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_78_0.png",
     "pos": [
-     304,
+     96,
      1248
     ],
     "base": 16
@@ -1066,7 +1046,7 @@
    {
     "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_78_1.png",
     "pos": [
-     912,
+     1184,
      1248
     ],
     "base": 16
@@ -1074,7 +1054,7 @@
    {
     "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_79_0.png",
     "pos": [
-     320,
+     112,
      1264
     ],
     "base": 16
@@ -1082,7 +1062,7 @@
    {
     "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_79_1.png",
     "pos": [
-     896,
+     1168,
      1264
     ],
     "base": 16
@@ -1090,7 +1070,7 @@
    {
     "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_80_0.png",
     "pos": [
-     368,
+     112,
      1280
     ],
     "base": 16
@@ -1098,7 +1078,7 @@
    {
     "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_80_1.png",
     "pos": [
-     864,
+     1152,
      1280
     ],
     "base": 16
@@ -1106,7 +1086,7 @@
    {
     "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_81_0.png",
     "pos": [
-     416,
+     112,
      1296
     ],
     "base": 16
@@ -1114,7 +1094,7 @@
    {
     "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_81_1.png",
     "pos": [
-     832,
+     1152,
      1296
     ],
     "base": 16
@@ -1122,7 +1102,7 @@
    {
     "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_82_0.png",
     "pos": [
-     448,
+     128,
      1312
     ],
     "base": 16
@@ -1130,7 +1110,7 @@
    {
     "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_82_1.png",
     "pos": [
-     688,
+     1136,
      1312
     ],
     "base": 16
@@ -1138,7 +1118,7 @@
    {
     "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_83_0.png",
     "pos": [
-     496,
+     128,
      1328
     ],
     "base": 16
@@ -1146,7 +1126,7 @@
    {
     "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_83_1.png",
     "pos": [
-     704,
+     1136,
      1328
     ],
     "base": 16
@@ -1154,7 +1134,7 @@
    {
     "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_84_0.png",
     "pos": [
-     560,
+     128,
      1344
     ],
     "base": 16
@@ -1162,7 +1142,7 @@
    {
     "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_84_1.png",
     "pos": [
-     704,
+     1120,
      1344
     ],
     "base": 16
@@ -1170,15 +1150,271 @@
    {
     "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_85_0.png",
     "pos": [
-     768,
+     144,
      1360
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_85_1.png",
+    "pos": [
+     1120,
+     1360
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_86_0.png",
+    "pos": [
+     144,
+     1376
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_86_1.png",
+    "pos": [
+     1104,
+     1376
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_87_0.png",
+    "pos": [
+     160,
+     1392
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_87_1.png",
+    "pos": [
+     1088,
+     1392
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_88_0.png",
+    "pos": [
+     160,
+     1408
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_88_1.png",
+    "pos": [
+     1072,
+     1408
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_89_0.png",
+    "pos": [
+     176,
+     1424
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_89_1.png",
+    "pos": [
+     1056,
+     1424
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_90_0.png",
+    "pos": [
+     192,
+     1440
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_90_1.png",
+    "pos": [
+     1024,
+     1440
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_91_0.png",
+    "pos": [
+     208,
+     1456
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_91_1.png",
+    "pos": [
+     1008,
+     1456
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_92_0.png",
+    "pos": [
+     240,
+     1472
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_92_1.png",
+    "pos": [
+     976,
+     1472
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_93_0.png",
+    "pos": [
+     272,
+     1488
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_93_1.png",
+    "pos": [
+     960,
+     1488
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_94_0.png",
+    "pos": [
+     320,
+     1504
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_94_1.png",
+    "pos": [
+     928,
+     1504
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_95_0.png",
+    "pos": [
+     368,
+     1520
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_95_1.png",
+    "pos": [
+     896,
+     1520
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_96_0.png",
+    "pos": [
+     400,
+     1536
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_96_1.png",
+    "pos": [
+     864,
+     1536
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_97_0.png",
+    "pos": [
+     448,
+     1552
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_97_1.png",
+    "pos": [
+     688,
+     1552
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_98_0.png",
+    "pos": [
+     496,
+     1568
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_98_1.png",
+    "pos": [
+     704,
+     1568
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_99_0.png",
+    "pos": [
+     560,
+     1584
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_99_1.png",
+    "pos": [
+     704,
+     1584
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/cinderholt/rows/pal_row_04_0.png",
+    "pos": [
+     480,
+     64
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/cinderholt/rows/pal_row_05_0.png",
+    "pos": [
+     464,
+     80
     ],
     "base": 16
    },
    {
     "path": "res://assets/sprites/towns/cinderholt/rows/pal_row_06_0.png",
     "pos": [
-     512,
+     448,
+     96
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/cinderholt/rows/pal_row_06_1.png",
+    "pos": [
+     832,
      96
     ],
     "base": 16
@@ -1186,7 +1422,15 @@
    {
     "path": "res://assets/sprites/towns/cinderholt/rows/pal_row_07_0.png",
     "pos": [
-     496,
+     432,
+     112
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/cinderholt/rows/pal_row_07_1.png",
+    "pos": [
+     848,
      112
     ],
     "base": 16
@@ -1194,7 +1438,7 @@
    {
     "path": "res://assets/sprites/towns/cinderholt/rows/pal_row_08_0.png",
     "pos": [
-     480,
+     416,
      128
     ],
     "base": 16
@@ -1202,7 +1446,7 @@
    {
     "path": "res://assets/sprites/towns/cinderholt/rows/pal_row_08_1.png",
     "pos": [
-     800,
+     864,
      128
     ],
     "base": 16
@@ -1210,7 +1454,7 @@
    {
     "path": "res://assets/sprites/towns/cinderholt/rows/pal_row_09_0.png",
     "pos": [
-     464,
+     400,
      144
     ],
     "base": 16
@@ -1218,7 +1462,7 @@
    {
     "path": "res://assets/sprites/towns/cinderholt/rows/pal_row_09_1.png",
     "pos": [
-     816,
+     880,
      144
     ],
     "base": 16
@@ -1226,7 +1470,7 @@
    {
     "path": "res://assets/sprites/towns/cinderholt/rows/pal_row_10_0.png",
     "pos": [
-     448,
+     384,
      160
     ],
     "base": 16
@@ -1234,7 +1478,7 @@
    {
     "path": "res://assets/sprites/towns/cinderholt/rows/pal_row_10_1.png",
     "pos": [
-     832,
+     896,
      160
     ],
     "base": 16
@@ -1242,7 +1486,7 @@
    {
     "path": "res://assets/sprites/towns/cinderholt/rows/pal_row_11_0.png",
     "pos": [
-     432,
+     384,
      176
     ],
     "base": 16
@@ -1250,7 +1494,7 @@
    {
     "path": "res://assets/sprites/towns/cinderholt/rows/pal_row_11_1.png",
     "pos": [
-     848,
+     912,
      176
     ],
     "base": 16
@@ -1258,7 +1502,7 @@
    {
     "path": "res://assets/sprites/towns/cinderholt/rows/pal_row_12_0.png",
     "pos": [
-     432,
+     384,
      192
     ],
     "base": 16
@@ -1266,7 +1510,7 @@
    {
     "path": "res://assets/sprites/towns/cinderholt/rows/pal_row_12_1.png",
     "pos": [
-     864,
+     928,
      192
     ],
     "base": 16
@@ -1274,7 +1518,7 @@
    {
     "path": "res://assets/sprites/towns/cinderholt/rows/pal_row_13_0.png",
     "pos": [
-     432,
+     384,
      208
     ],
     "base": 16
@@ -1282,7 +1526,7 @@
    {
     "path": "res://assets/sprites/towns/cinderholt/rows/pal_row_13_1.png",
     "pos": [
-     880,
+     928,
      208
     ],
     "base": 16
@@ -1290,7 +1534,7 @@
    {
     "path": "res://assets/sprites/towns/cinderholt/rows/pal_row_14_0.png",
     "pos": [
-     880,
+     928,
      224
     ],
     "base": 16
@@ -1298,7 +1542,7 @@
    {
     "path": "res://assets/sprites/towns/cinderholt/rows/pal_row_15_0.png",
     "pos": [
-     880,
+     928,
      240
     ],
     "base": 16
@@ -1306,7 +1550,7 @@
    {
     "path": "res://assets/sprites/towns/cinderholt/rows/pal_row_16_0.png",
     "pos": [
-     880,
+     928,
      256
     ],
     "base": 16
@@ -1314,7 +1558,7 @@
    {
     "path": "res://assets/sprites/towns/cinderholt/rows/pal_row_17_0.png",
     "pos": [
-     880,
+     928,
      272
     ],
     "base": 16
@@ -1322,7 +1566,7 @@
    {
     "path": "res://assets/sprites/towns/cinderholt/rows/pal_row_18_0.png",
     "pos": [
-     880,
+     928,
      288
     ],
     "base": 16
@@ -1330,7 +1574,7 @@
    {
     "path": "res://assets/sprites/towns/cinderholt/rows/pal_row_19_0.png",
     "pos": [
-     432,
+     384,
      304
     ],
     "base": 16
@@ -1338,7 +1582,7 @@
    {
     "path": "res://assets/sprites/towns/cinderholt/rows/pal_row_19_1.png",
     "pos": [
-     880,
+     928,
      304
     ],
     "base": 16
@@ -1346,7 +1590,7 @@
    {
     "path": "res://assets/sprites/towns/cinderholt/rows/pal_row_20_0.png",
     "pos": [
-     432,
+     384,
      320
     ],
     "base": 16
@@ -1354,7 +1598,7 @@
    {
     "path": "res://assets/sprites/towns/cinderholt/rows/pal_row_20_1.png",
     "pos": [
-     880,
+     928,
      320
     ],
     "base": 16
@@ -1362,7 +1606,7 @@
    {
     "path": "res://assets/sprites/towns/cinderholt/rows/pal_row_21_0.png",
     "pos": [
-     432,
+     384,
      336
     ],
     "base": 16
@@ -1370,7 +1614,7 @@
    {
     "path": "res://assets/sprites/towns/cinderholt/rows/pal_row_21_1.png",
     "pos": [
-     864,
+     928,
      336
     ],
     "base": 16
@@ -1378,7 +1622,7 @@
    {
     "path": "res://assets/sprites/towns/cinderholt/rows/pal_row_22_0.png",
     "pos": [
-     432,
+     384,
      352
     ],
     "base": 16
@@ -1386,7 +1630,7 @@
    {
     "path": "res://assets/sprites/towns/cinderholt/rows/pal_row_22_1.png",
     "pos": [
-     848,
+     912,
      352
     ],
     "base": 16
@@ -1394,7 +1638,7 @@
    {
     "path": "res://assets/sprites/towns/cinderholt/rows/pal_row_23_0.png",
     "pos": [
-     448,
+     384,
      368
     ],
     "base": 16
@@ -1402,7 +1646,7 @@
    {
     "path": "res://assets/sprites/towns/cinderholt/rows/pal_row_23_1.png",
     "pos": [
-     832,
+     896,
      368
     ],
     "base": 16
@@ -1410,7 +1654,7 @@
    {
     "path": "res://assets/sprites/towns/cinderholt/rows/pal_row_24_0.png",
     "pos": [
-     464,
+     400,
      384
     ],
     "base": 16
@@ -1418,7 +1662,7 @@
    {
     "path": "res://assets/sprites/towns/cinderholt/rows/pal_row_24_1.png",
     "pos": [
-     816,
+     880,
      384
     ],
     "base": 16
@@ -1426,7 +1670,7 @@
    {
     "path": "res://assets/sprites/towns/cinderholt/rows/pal_row_25_0.png",
     "pos": [
-     480,
+     416,
      400
     ],
     "base": 16
@@ -1434,7 +1678,7 @@
    {
     "path": "res://assets/sprites/towns/cinderholt/rows/pal_row_25_1.png",
     "pos": [
-     800,
+     864,
      400
     ],
     "base": 16
@@ -1442,7 +1686,15 @@
    {
     "path": "res://assets/sprites/towns/cinderholt/rows/pal_row_26_0.png",
     "pos": [
-     496,
+     432,
+     416
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/cinderholt/rows/pal_row_26_1.png",
+    "pos": [
+     848,
      416
     ],
     "base": 16
@@ -1450,23 +1702,39 @@
    {
     "path": "res://assets/sprites/towns/cinderholt/rows/pal_row_27_0.png",
     "pos": [
-     512,
+     448,
      432
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/cinderholt/rows/pal_row_27_1.png",
+    "pos": [
+     832,
+     432
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/cinderholt/rows/pal_row_28_0.png",
+    "pos": [
+     464,
+     448
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/cinderholt/rows/pal_row_29_0.png",
+    "pos": [
+     480,
+     464
     ],
     "base": 16
    },
    {
     "path": "res://assets/sprites/towns/cinderholt/tiles/ch_wall_tower.png",
     "pos": [
-     1056,
-     1058
-    ],
-    "base": 64
-   },
-   {
-    "path": "res://assets/sprites/towns/cinderholt/tiles/ch_wall_tower.png",
-    "pos": [
-     912,
+     1184,
      1218
     ],
     "base": 64
@@ -1474,7 +1742,23 @@
    {
     "path": "res://assets/sprites/towns/cinderholt/tiles/ch_wall_tower.png",
     "pos": [
-     384,
+     1008,
+     1426
+    ],
+    "base": 64
+   },
+   {
+    "path": "res://assets/sprites/towns/cinderholt/tiles/ch_wall_tower.png",
+    "pos": [
+     320,
+     1442
+    ],
+    "base": 64
+   },
+   {
+    "path": "res://assets/sprites/towns/cinderholt/tiles/ch_wall_tower.png",
+    "pos": [
+     112,
      1218
     ],
     "base": 64
@@ -1482,40 +1766,32 @@
    {
     "path": "res://assets/sprites/towns/cinderholt/tiles/ch_wall_tower.png",
     "pos": [
-     240,
-     1058
+     80,
+     930
     ],
     "base": 64
    },
    {
     "path": "res://assets/sprites/towns/cinderholt/tiles/ch_wall_tower.png",
     "pos": [
-     208,
-     834
+     320,
+     690
     ],
     "base": 64
    },
    {
     "path": "res://assets/sprites/towns/cinderholt/tiles/ch_wall_tower.png",
     "pos": [
-     384,
-     658
+     976,
+     690
     ],
     "base": 64
    },
    {
     "path": "res://assets/sprites/towns/cinderholt/tiles/ch_wall_tower.png",
     "pos": [
-     912,
-     658
-    ],
-    "base": 64
-   },
-   {
-    "path": "res://assets/sprites/towns/cinderholt/tiles/ch_wall_tower.png",
-    "pos": [
-     1088,
-     834
+     1216,
+     930
     ],
     "base": 64
    },
@@ -1531,7 +1807,7 @@
     "path": "res://assets/sprites/towns/cinderholt/tiles/ch_gate_back_walls.png",
     "pos": [
      640,
-     632
+     648
     ],
     "base": 64
    },
@@ -1539,30 +1815,30 @@
     "path": "res://assets/sprites/towns/cinderholt/tiles/ch_gate_front_walls.png",
     "pos": [
      640,
-     1320
+     1560
     ],
     "base": 64
    },
    {
     "path": "res://assets/sprites/towns/cinderholt/tiles/ch_gate_side_walls.png",
     "pos": [
-     1088,
-     935
+     1216,
+     1063
     ],
     "base": 112
    },
    {
     "path": "res://assets/sprites/towns/cinderholt/tiles/ch_gate_side_walls.png",
     "pos": [
-     208,
-     935
+     80,
+     1063
     ],
     "base": 112
    },
    {
     "path": "res://assets/sprites/towns/cinderholt/tiles/ng_gate_side_walls.png",
     "pos": [
-     432,
+     384,
      215
     ],
     "base": 112
@@ -1573,15 +1849,11 @@
     "path": "res://assets/sprites/towns/cinderholt/tiles/ch_gate_back_roof.png",
     "pos": [
      640,
-     632
+     648
     ],
     "tiles": [
      [
       41,
-      39
-     ],
-     [
-      41,
       40
      ],
      [
@@ -1593,8 +1865,8 @@
       42
      ],
      [
-      42,
-      39
+      41,
+      43
      ],
      [
       42,
@@ -1607,6 +1879,10 @@
      [
       42,
       42
+     ],
+     [
+      42,
+      43
      ]
     ]
    },
@@ -1614,138 +1890,138 @@
     "path": "res://assets/sprites/towns/cinderholt/tiles/ch_gate_front_roof.png",
     "pos": [
      640,
-     1320
+     1560
     ],
     "tiles": [
      [
       41,
-      82
+      97
      ],
      [
       41,
-      83
+      98
      ],
      [
       41,
-      84
+      99
      ],
      [
       41,
-      85
+      100
      ],
      [
       42,
-      82
+      97
      ],
      [
       42,
-      83
+      98
      ],
      [
       42,
-      84
+      99
      ],
      [
       42,
-      85
+      100
      ]
     ]
    },
    {
     "path": "res://assets/sprites/towns/cinderholt/tiles/ch_gate_side_roof.png",
     "pos": [
-     1088,
-     935
+     1216,
+     1063
     ],
     "tiles": [
      [
-      68,
-      61
+      76,
+      69
      ],
      [
-      68,
-      62
+      76,
+      70
      ],
      [
-      69,
-      61
+      77,
+      69
      ],
      [
-      69,
-      62
+      77,
+      70
      ],
      [
-      70,
-      61
+      78,
+      69
      ],
      [
-      70,
-      62
+      78,
+      70
      ]
     ]
    },
    {
     "path": "res://assets/sprites/towns/cinderholt/tiles/ch_gate_side_roof.png",
     "pos": [
-     208,
-     935
+     80,
+     1063
     ],
     "tiles": [
      [
-      13,
-      61
+      5,
+      69
      ],
      [
-      13,
-      62
+      5,
+      70
      ],
      [
-      14,
-      61
+      6,
+      69
      ],
      [
-      14,
-      62
+      6,
+      70
      ],
      [
-      15,
-      61
+      7,
+      69
      ],
      [
-      15,
-      62
+      7,
+      70
      ]
     ]
    },
    {
     "path": "res://assets/sprites/towns/cinderholt/tiles/ng_gate_side_roof.png",
     "pos": [
-     432,
+     384,
      215
     ],
     "tiles": [
      [
-      27,
+      24,
       16
      ],
      [
-      27,
+      24,
       17
      ],
      [
-      28,
+      25,
       16
      ],
      [
-      28,
+      25,
       17
      ],
      [
-      29,
+      26,
       16
      ],
      [
-      29,
+      26,
       17
      ]
     ]
@@ -1757,32 +2033,32 @@
    "art": "ch_smithy",
    "flip": false,
    "at": [
-    17,
-    56
+    15,
+    80
    ],
    "door": [
     [
-     19,
-     60
+     17,
+     85
     ]
    ],
    "sign": [
-    20,
-    60
+    18,
+    85
    ],
    "props": [
     {
      "object": "furnace",
      "at": [
-      18,
-      58
+      16,
+      82
      ]
     },
     {
      "object": "anvil",
      "at": [
-      20,
-      58
+      15,
+      82
      ]
     }
    ],
@@ -1795,12 +2071,12 @@
    "name": "Blacksmith",
    "keeper": "Smith",
    "keeper_at": [
-    19,
-    58
+    17,
+    82
    ],
    "stand": [
-    19,
-    59
+    17,
+    84
    ],
    "note": "0.3.14 Cinderholt v1 (designer ch_smithy); the forge (furnace + anvil)"
   },
@@ -1808,32 +2084,32 @@
    "art": "ch_bank",
    "flip": false,
    "at": [
-    43,
-    50
+    54,
+    62
    ],
    "door": [
     [
-     46,
-     54
+     57,
+     67
     ]
    ],
    "sign": [
-    47,
-    54
+    58,
+    67
    ],
    "props": [
     {
      "object": "bank_chest",
      "at": [
-      45,
-      52
+      56,
+      64
      ]
     },
     {
      "object": "bank_chest",
      "at": [
-      47,
-      52
+      58,
+      64
      ]
     }
    ],
@@ -1848,12 +2124,12 @@
    "keeper_sprite": "keeper_general",
    "sign_sprite": "sign_bank",
    "keeper_at": [
-    46,
-    51
+    57,
+    64
    ],
    "stand": [
-    46,
-    53
+    57,
+    66
    ],
    "note": "0.3.14 Cinderholt v1 (designer ch_bank)"
   },
@@ -1861,18 +2137,18 @@
    "art": "ch_general_store",
    "flip": false,
    "at": [
-    27,
-    56
+    23,
+    62
    ],
    "door": [
     [
-     29,
-     59
+     25,
+     67
     ]
    ],
    "sign": [
-    30,
-    59
+    26,
+    67
    ],
    "props": [],
    "counter": [],
@@ -1884,12 +2160,12 @@
    "name": "Cinderholt Supply",
    "keeper": "Osric Coalby",
    "keeper_at": [
-    31,
-    57
+    25,
+    64
    ],
    "stand": [
-    29,
-    58
+    25,
+    66
    ],
    "note": "0.3.14 Cinderholt v1 (designer ch_general_store)"
   },
@@ -1897,25 +2173,25 @@
    "art": "ch_cookhouse",
    "flip": false,
    "at": [
-    57,
-    68
+    62,
+    79
    ],
    "door": [
     [
-     59,
-     72
+     64,
+     84
     ]
    ],
    "sign": [
-    60,
-    72
+    65,
+    84
    ],
    "props": [
     {
      "object": "oven",
      "at": [
-      58,
-      70
+      63,
+      81
      ]
     }
    ],
@@ -1928,12 +2204,12 @@
    "name": "Ember Kitchen",
    "keeper": "Greta Ashpan",
    "keeper_at": [
-    59,
-    70
+    64,
+    81
    ],
    "stand": [
-    59,
-    71
+    64,
+    83
    ],
    "note": "0.3.14 Cinderholt v1 (designer ch_cookhouse)"
   },
@@ -1941,18 +2217,18 @@
    "art": "ch_player_shop",
    "flip": false,
    "at": [
-    35,
-    68
+    33,
+    89
    ],
    "door": [
     [
-     37,
-     72
+     35,
+     94
     ]
    ],
    "sign": [
-    38,
-    72
+    36,
+    94
    ],
    "props": [],
    "counter": [],
@@ -1966,12 +2242,12 @@
    "keeper_sprite": "villager",
    "sign_sprite": "sign_house",
    "keeper_at": [
-    37,
-    69
+    35,
+    91
    ],
    "stand": [
-    37,
-    71
+    35,
+    93
    ],
    "note": "0.3.14 Cinderholt v1 (designer ch_player_shop)"
   },
@@ -1979,18 +2255,18 @@
    "art": "ch_guard_post",
    "flip": false,
    "at": [
-    47,
-    76
+    50,
+    89
    ],
    "door": [
     [
-     49,
-     79
+     52,
+     94
     ]
    ],
    "sign": [
-    50,
-    79
+    53,
+    94
    ],
    "props": [],
    "counter": [],
@@ -2005,30 +2281,30 @@
    "sign_sprite": "sign_house",
    "note": "0.3.14 Cinderholt v1 (designer ch_guard_post)",
    "keeper_at": [
-    50,
-    77
+    52,
+    91
    ],
    "stand": [
-    49,
-    78
+    52,
+    93
    ]
   },
   {
    "art": "ch_house_12",
    "flip": false,
    "at": [
-    19,
-    64
+    14,
+    63
    ],
    "door": [
     [
-     22,
-     68
+     17,
+     67
     ]
    ],
    "sign": [
-    23,
-    68
+    18,
+    67
    ],
    "props": [],
    "counter": [],
@@ -2038,12 +2314,12 @@
    "kind": "shop",
    "shop": "body",
    "keeper_at": [
-    22,
-    65
+    17,
+    64
    ],
    "stand": [
-    22,
-    67
+    17,
+    66
    ],
    "note": "0.3.14 Cinderholt v1 (designer ch_house_12)"
   },
@@ -2051,18 +2327,18 @@
    "art": "ch_house_04",
    "flip": false,
    "at": [
-    60,
-    55
+    66,
+    62
    ],
    "door": [
     [
-     62,
-     59
+     68,
+     67
     ]
    ],
    "sign": [
-    63,
-    59
+    69,
+    67
    ],
    "props": [],
    "counter": [],
@@ -2072,12 +2348,12 @@
    "kind": "shop",
    "shop": "shields",
    "keeper_at": [
-    62,
-    57
+    68,
+    64
    ],
    "stand": [
-    62,
-    58
+    68,
+    66
    ],
    "note": "0.3.14 Cinderholt v1 (designer ch_house_04)"
   },
@@ -2085,18 +2361,18 @@
    "art": "ng_command_tent",
    "flip": false,
    "at": [
-    38,
-    9
+    39,
+    7
    ],
    "door": [
     [
-     42,
-     14
+     43,
+     13
     ]
    ],
    "sign": [
-    43,
-    14
+    44,
+    13
    ],
    "props": [],
    "counter": [],
@@ -2112,29 +2388,29 @@
    "note": "0.3.14 Cinderholt v1 (designer ng_command_tent)",
    "camp": "northern_guard",
    "keeper_at": [
-    42,
+    43,
     10
    ],
    "stand": [
-    42,
-    13
+    43,
+    12
    ]
   },
   {
    "art": "ng_barracks_hut",
    "flip": false,
    "at": [
-    46,
-    12
+    49,
+    10
    ],
    "door": [
     [
-     49,
+     52,
      15
     ]
    ],
    "sign": [
-    50,
+    53,
     15
    ],
    "props": [],
@@ -2151,11 +2427,11 @@
    "note": "0.3.14 Cinderholt v1 (designer ng_barracks_hut)",
    "camp": "northern_guard",
    "keeper_at": [
-    48,
-    14
+    52,
+    12
    ],
    "stand": [
-    49,
+    52,
     14
    ]
   },
@@ -2163,18 +2439,18 @@
    "art": "ng_tent_03",
    "flip": false,
    "at": [
-    31,
-    12
+    29,
+    10
    ],
    "door": [
     [
-     33,
-     15
+     31,
+     14
     ]
    ],
    "sign": [
-    34,
-    15
+    32,
+    14
    ],
    "props": [],
    "counter": [],
@@ -2191,30 +2467,30 @@
    "camp": "northern_guard",
    "no_keeper": true,
    "keeper_at": [
-    33,
-    15
+    31,
+    14
    ],
    "stand": [
-    33,
-    15
+    31,
+    14
    ]
   },
   {
-   "art": "ng_tent_04",
+   "art": "ng_tent_01",
    "flip": false,
    "at": [
-    35,
-    19
+    31,
+    20
    ],
    "door": [
     [
-     38,
-     22
+     34,
+     25
     ]
    ],
    "sign": [
-    39,
-    22
+    35,
+    25
    ],
    "props": [],
    "counter": [],
@@ -2227,34 +2503,34 @@
    "keeper": "Northern Guard",
    "keeper_sprite": "town_guard",
    "sign_sprite": "sign_house",
-   "note": "0.3.14 Cinderholt v1 (designer ng_tent_04)",
+   "note": "0.3.14 Cinderholt v1 (designer ng_tent_01)",
    "camp": "northern_guard",
    "no_keeper": true,
    "keeper_at": [
-    38,
-    22
+    34,
+    25
    ],
    "stand": [
-    38,
-    22
+    34,
+    25
    ]
   },
   {
    "art": "ng_tent_03",
    "flip": true,
    "at": [
-    31,
-    17
+    37,
+    21
    ],
    "door": [
     [
-     32,
-     20
+     39,
+     25
     ]
    ],
    "sign": [
-    33,
-    20
+    40,
+    25
    ],
    "props": [],
    "counter": [],
@@ -2271,30 +2547,30 @@
    "camp": "northern_guard",
    "no_keeper": true,
    "keeper_at": [
-    32,
-    20
+    39,
+    25
    ],
    "stand": [
-    32,
-    20
+    39,
+    25
    ]
   },
   {
    "art": "ch_house_01",
    "flip": false,
    "at": [
-    49,
-    62
+    34,
+    79
    ],
    "door": [
     [
-     51,
-     66
+     36,
+     84
     ]
    ],
    "sign": [
-    52,
-    66
+    37,
+    84
    ],
    "props": [],
    "counter": [],
@@ -2309,30 +2585,30 @@
    "sign_sprite": "sign_house",
    "note": "0.3.14 Cinderholt v1 (designer ch_house_01)",
    "keeper_at": [
-    51,
-    64
+    36,
+    81
    ],
    "stand": [
-    51,
-    65
+    36,
+    83
    ]
   },
   {
    "art": "ch_house_02",
    "flip": false,
    "at": [
-    53,
-    47
+    44,
+    56
    ],
    "door": [
     [
-     55,
-     50
+     47,
+     61
     ]
    ],
    "sign": [
-    56,
-    50
+    48,
+    61
    ],
    "props": [],
    "counter": [],
@@ -2347,30 +2623,30 @@
    "sign_sprite": "sign_house",
    "note": "0.3.14 Cinderholt v1 (designer ch_house_02)",
    "keeper_at": [
-    55,
-    48
+    47,
+    58
    ],
    "stand": [
-    55,
-    49
+    47,
+    60
    ]
   },
   {
    "art": "ch_house_03",
    "flip": false,
    "at": [
-    30,
-    45
+    44,
+    88
    ],
    "door": [
     [
-     33,
-     48
+     47,
+     93
     ]
    ],
    "sign": [
-    34,
-    48
+    48,
+    93
    ],
    "props": [],
    "counter": [],
@@ -2385,30 +2661,30 @@
    "sign_sprite": "sign_house",
    "note": "0.3.14 Cinderholt v1 (designer ch_house_03)",
    "keeper_at": [
-    32,
-    47
+    47,
+    90
    ],
    "stand": [
-    33,
-    47
+    47,
+    92
    ]
   },
   {
    "art": "ch_house_04",
    "flip": false,
    "at": [
-    36,
-    51
+    11,
+    72
    ],
    "door": [
     [
-     38,
-     55
+     13,
+     77
     ]
    ],
    "sign": [
-    39,
-    55
+    14,
+    77
    ],
    "props": [],
    "counter": [],
@@ -2423,30 +2699,30 @@
    "sign_sprite": "sign_house",
    "note": "0.3.14 Cinderholt v1 (designer ch_house_04)",
    "keeper_at": [
-    38,
-    53
+    13,
+    74
    ],
    "stand": [
-    38,
-    54
+    13,
+    76
    ]
   },
   {
    "art": "ch_house_05",
    "flip": false,
    "at": [
-    57,
-    51
+    46,
+    78
    ],
    "door": [
     [
-     59,
-     54
+     49,
+     83
     ]
    ],
    "sign": [
-    60,
-    54
+    50,
+    83
    ],
    "props": [],
    "counter": [],
@@ -2461,30 +2737,30 @@
    "sign_sprite": "sign_house",
    "note": "0.3.14 Cinderholt v1 (designer ch_house_05)",
    "keeper_at": [
-    58,
-    53
+    49,
+    80
    ],
    "stand": [
-    59,
-    53
+    49,
+    82
    ]
   },
   {
    "art": "ch_house_06",
    "flip": false,
    "at": [
-    30,
-    63
+    32,
+    47
    ],
    "door": [
     [
-     32,
-     66
+     34,
+     51
     ]
    ],
    "sign": [
-    33,
-    66
+    35,
+    51
    ],
    "props": [],
    "counter": [],
@@ -2499,30 +2775,30 @@
    "sign_sprite": "sign_house",
    "note": "0.3.14 Cinderholt v1 (designer ch_house_06)",
    "keeper_at": [
-    32,
-    64
+    34,
+    48
    ],
    "stand": [
-    32,
-    65
+    34,
+    50
    ]
   },
   {
    "art": "ch_house_07",
    "flip": false,
    "at": [
-    21,
-    52
+    23,
+    71
    ],
    "door": [
     [
-     23,
-     54
+     27,
+     77
     ]
    ],
    "sign": [
-    24,
-    54
+    28,
+    77
    ],
    "props": [],
    "counter": [],
@@ -2536,32 +2812,31 @@
    "keeper_sprite": "villager",
    "sign_sprite": "sign_house",
    "note": "0.3.14 Cinderholt v1 (designer ch_house_07)",
-   "no_keeper": true,
    "keeper_at": [
-    23,
-    54
+    27,
+    74
    ],
    "stand": [
-    23,
-    54
+    27,
+    76
    ]
   },
   {
    "art": "ch_house_08",
    "flip": false,
    "at": [
-    26,
-    47
+    50,
+    46
    ],
    "door": [
     [
-     28,
-     50
+     53,
+     51
     ]
    ],
    "sign": [
-    29,
-    50
+    54,
+    51
    ],
    "props": [],
    "counter": [],
@@ -2576,30 +2851,30 @@
    "sign_sprite": "sign_house",
    "note": "0.3.14 Cinderholt v1 (designer ch_house_08)",
    "keeper_at": [
-    27,
+    53,
     48
    ],
    "stand": [
-    28,
-    49
+    53,
+    50
    ]
   },
   {
    "art": "ch_house_09",
    "flip": false,
    "at": [
-    63,
-    63
+    54,
+    72
    ],
    "door": [
     [
-     64,
-     66
+     56,
+     77
     ]
    ],
    "sign": [
-    65,
-    66
+    57,
+    77
    ],
    "props": [],
    "counter": [],
@@ -2614,30 +2889,30 @@
    "sign_sprite": "sign_house",
    "note": "0.3.14 Cinderholt v1 (designer ch_house_09)",
    "keeper_at": [
-    64,
-    64
+    56,
+    74
    ],
    "stand": [
-    64,
-    65
+    56,
+    76
    ]
   },
   {
    "art": "ch_house_10",
    "flip": false,
    "at": [
-    51,
-    55
+    26,
+    86
    ],
    "door": [
     [
-     53,
-     57
+     30,
+     92
     ]
    ],
    "sign": [
-    54,
-    57
+    31,
+    92
    ],
    "props": [],
    "counter": [],
@@ -2651,32 +2926,31 @@
    "keeper_sprite": "villager",
    "sign_sprite": "sign_house",
    "note": "0.3.14 Cinderholt v1 (designer ch_house_10)",
-   "no_keeper": true,
    "keeper_at": [
-    53,
-    57
+    30,
+    89
    ],
    "stand": [
-    53,
-    57
+    30,
+    91
    ]
   },
   {
    "art": "ch_house_11",
    "flip": false,
    "at": [
-    25,
+    67,
     72
    ],
    "door": [
     [
-     26,
-     75
+     69,
+     77
     ]
    ],
    "sign": [
-    27,
-    75
+    70,
+    77
    ],
    "props": [],
    "counter": [],
@@ -2690,32 +2964,31 @@
    "keeper_sprite": "villager",
    "sign_sprite": "sign_house",
    "note": "0.3.14 Cinderholt v1 (designer ch_house_11)",
-   "no_keeper": true,
    "keeper_at": [
-    26,
-    75
+    69,
+    74
    ],
    "stand": [
-    26,
-    75
+    69,
+    76
    ]
   },
   {
    "art": "ch_house_12",
    "flip": false,
    "at": [
-    47,
-    43
+    57,
+    51
    ],
    "door": [
     [
-     50,
-     47
+     60,
+     55
     ]
    ],
    "sign": [
-    51,
-    47
+    61,
+    55
    ],
    "props": [],
    "counter": [],
@@ -2730,30 +3003,30 @@
    "sign_sprite": "sign_house",
    "note": "0.3.14 Cinderholt v1 (designer ch_house_12)",
    "keeper_at": [
-    50,
-    44
+    60,
+    52
    ],
    "stand": [
-    50,
-    46
+    60,
+    54
    ]
   },
   {
    "art": "ch_house_01",
    "flip": true,
    "at": [
-    33,
-    75
+    19,
+    51
    ],
    "door": [
     [
-     36,
-     79
+     22,
+     56
     ]
    ],
    "sign": [
-    37,
-    79
+    23,
+    56
    ],
    "props": [],
    "counter": [],
@@ -2768,30 +3041,30 @@
    "sign_sprite": "sign_house",
    "note": "0.3.14 Cinderholt v1 (designer ch_house_01, flipped)",
    "keeper_at": [
-    36,
-    77
+    22,
+    53
    ],
    "stand": [
-    36,
-    78
+    22,
+    55
    ]
   },
   {
    "art": "ch_house_02",
    "flip": true,
    "at": [
-    52,
-    74
+    56,
+    86
    ],
    "door": [
     [
-     54,
-     77
+     58,
+     91
     ]
    ],
    "sign": [
-    55,
-    77
+    59,
+    91
    ],
    "props": [],
    "counter": [],
@@ -2806,30 +3079,30 @@
    "sign_sprite": "sign_house",
    "note": "0.3.14 Cinderholt v1 (designer ch_house_02, flipped)",
    "keeper_at": [
-    54,
-    75
+    58,
+    88
    ],
    "stand": [
-    54,
-    76
+    58,
+    90
    ]
   },
   {
    "art": "ch_house_03",
    "flip": true,
    "at": [
-    19,
-    70
+    44,
+    44
    ],
    "door": [
     [
-     21,
-     73
+     46,
+     49
     ]
    ],
    "sign": [
-    22,
-    73
+    47,
+    49
    ],
    "props": [],
    "counter": [],
@@ -2844,30 +3117,30 @@
    "sign_sprite": "sign_house",
    "note": "0.3.14 Cinderholt v1 (designer ch_house_03, flipped)",
    "keeper_at": [
-    20,
-    72
+    46,
+    46
    ],
    "stand": [
-    21,
-    72
+    46,
+    48
    ]
   },
   {
-   "art": "ch_house_05",
+   "art": "ch_house_04",
    "flip": true,
    "at": [
-    36,
-    43
+    63,
+    55
    ],
    "door": [
     [
-     38,
-     46
+     66,
+     60
     ]
    ],
    "sign": [
-    39,
-    46
+    67,
+    60
    ],
    "props": [],
    "counter": [],
@@ -2880,32 +3153,32 @@
    "keeper": "Una Ash",
    "keeper_sprite": "villager",
    "sign_sprite": "sign_house",
-   "note": "0.3.14 Cinderholt v1 (designer ch_house_05, flipped)",
+   "note": "0.3.14 Cinderholt v1 (designer ch_house_04, flipped)",
    "keeper_at": [
-    37,
-    45
+    66,
+    57
    ],
    "stand": [
-    38,
-    45
+    66,
+    59
    ]
   },
   {
-   "art": "ch_house_07",
+   "art": "ch_house_05",
    "flip": true,
    "at": [
-    42,
-    43
+    26,
+    47
    ],
    "door": [
     [
-     44,
-     45
+     28,
+     52
     ]
    ],
    "sign": [
-    45,
-    45
+    29,
+    52
    ],
    "props": [],
    "counter": [],
@@ -2918,108 +3191,195 @@
    "keeper": "Cole Rivet",
    "keeper_sprite": "villager",
    "sign_sprite": "sign_house",
-   "note": "0.3.14 Cinderholt v1 (designer ch_house_07, flipped)",
-   "no_keeper": true,
+   "note": "0.3.14 Cinderholt v1 (designer ch_house_05, flipped)",
    "keeper_at": [
-    44,
-    45
+    28,
+    49
    ],
    "stand": [
-    44,
-    45
+    28,
+    51
+   ]
+  },
+  {
+   "art": "ch_house_06",
+   "flip": true,
+   "at": [
+    14,
+    57
+   ],
+   "door": [
+    [
+     16,
+     61
+    ]
+   ],
+   "sign": [
+    17,
+    61
+   ],
+   "props": [],
+   "counter": [],
+   "style": "basalt",
+   "roof": "#3a3e4c",
+   "id": "cinderholt_home_18",
+   "kind": "house",
+   "shop": "",
+   "name": "Forge View",
+   "keeper": "Saba Forge",
+   "keeper_sprite": "villager",
+   "sign_sprite": "sign_house",
+   "note": "0.3.14 Cinderholt v1 (designer ch_house_06, flipped)",
+   "keeper_at": [
+    16,
+    58
+   ],
+   "stand": [
+    16,
+    60
+   ]
+  },
+  {
+   "art": "ch_house_12",
+   "flip": true,
+   "at": [
+    9,
+    61
+   ],
+   "door": [
+    [
+     10,
+     65
+    ]
+   ],
+   "sign": [
+    11,
+    65
+   ],
+   "props": [],
+   "counter": [],
+   "style": "basalt",
+   "roof": "#3a3e4c",
+   "id": "cinderholt_home_19",
+   "kind": "house",
+   "shop": "",
+   "name": "Clinker House",
+   "keeper": "Jory Clink",
+   "keeper_sprite": "villager",
+   "sign_sprite": "sign_house",
+   "note": "0.3.14 Cinderholt v1 (designer ch_house_12, flipped)",
+   "keeper_at": [
+    10,
+    62
+   ],
+   "stand": [
+    10,
+    64
    ]
   }
  ],
  "rows": [
   "gggggggggg===ggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg",
   "gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg",
-  "gggggggggggggggggggggggggggggggggggTgggggggggggggggggggggggggggggggggggggggggggggggg",
-  "ggggggggggggggggggggggggggggggggggggCggggggggggggggggXggggggMgggggSggggggggggggggggg",
-  "gggUgggggggggggTgggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg",
-  "gggggggMggg=ggggggggggggggggggggggggggggggggggggggggggggUggggggggggggggggggggggggggg",
-  "ggggggggggg===gggggggggggggggggggPPPPPPPPPPPPPPPPPPggggggggggggggUgggggggggggggggggg",
-  "gggggMgSggggg====gggggggggggTgggPPPPPPPPPPPPPPPPPPPPgggggggggggggggggggggggggggggggg",
-  "ggggggggggggggg====gggggggggXggPPggggggggggggggggggPPggggXgggggggggUggggggggXggggggg",
-  "ggggggggggggggggg====gggggggggPPggggHgggggggggngPPggPPggggggggggUggggggggggggggggggg",
-  "gggggggggggggggggggg===ggggggPPgggqggggggggggggggggggPPggggggggggggggggUgggggggggggg",
-  "ggggggggggggggggggggE==gggggPPgggggggggggggggggggsggggPPggBgggggggggggggggggUggUMggg",
-  "gggggggggggUgggggggggg==gggPPggggggsgggggggggggggggggggPPggggggggggggggTgggggggggggg",
-  "ggggggggggggggggggggggg=ggIPPPgggggggJgggggggggggggggggPPgggggggBggggggggggggggggggg",
-  "gggggggggggggggggTggggC==ggPPPgggggqgggggggggggggggggkgPPgggggggggggggggggEggggggggg",
-  "gggggggggCgggggggggggggg=ggPPPggggggg=Hgj===jJgggggggggPPgggggggggggggEggggggggggggg",
-  "gggggggggggggggggggggggg==gQQQgg=======g==========gJgpgPPggggggggggggggggggUgggggggg",
-  "ggggggggggggggggggggBggg===QQQ=gggggggq===gggggggggggggPPgggggggggggXggggggggggggggg",
-  "ggTggggggggggggggggggggg==gPPP=ggggJgggg==lmkgRgggggglgPPggggggggggggggggggggggggggg",
-  "gggggggggggggUgggggUgggg==gPPP=gggggggggg=kkgggggigggggPPgggggggggggggggggggggggTggg",
-  "ggggggggggggggggTggggggg=gIPPg=gggggggggg==gggrggggrgLgPPgggggggggggggggggCggggggggg",
-  "ggggggggggggBgggggggggg==ggPPg===ggggggggp=ggggggrgggggPPggggggggggUgggSgggggXgggggg",
-  "gggggggggTggggggggggggg==gggPPggggkgggggg==gtgggggggrgPPgggggggggggggggggggggggggggg",
-  "ggggggggggggggggggggggg=gggggPPggggggg=====ggggghggggPPggggggggggggggggggggggggggggg",
-  "ggggggggggggggggggggggg=ggggggPPggggigggLggJgghggghgPPggggggggggUggggggggggggggggggg",
-  "ggggggggggggggggggTgggg==ggggggPPggggggggggggggggggPPggggUgggggggggggTgggggggggXgggg",
-  "gggggggggggggggggggggggg===gggggPPPPPPPPPPPPPPPPPPPPgggggggggggggggggggggggggggggggg",
-  "ggggggggEggggggggggggggggg===ggggPPPPPPPPPPPPPPPPPPggggggggggggggggggggggggggggggggg",
-  "gggggggggggUgggggggggggggggg===gggggggggggggggggggggggggggggggggggggggggBggggggggggg",
-  "gggggggggggggggggggggggggggggg====ggggggggggggggggggEggggggggggggggggggggggggggggggg",
-  "ggggggggggggggggggggggggggggggggg=======gggggggggXgggggggggggggggggggggggggggggggggg",
-  "ggggggggggggggggggggggggggggUgggMggUggg===UggggXgggggggggggggggggggggggggggBgggggggg",
-  "gggggMggSggggggggggSgggSggTggggggggTgggg=::gggggggXgggggUggTgggggTgggggMggXgggggUggg",
-  "gggggggggggggggUggggggggggggggggXXggggggg::ggggggggggggggggggggggggggggggggggggggggg",
+  "ggggggggggggggggggggggggggggggggggggggggggggggggggggggggggSggggggggggggggggggggggggg",
+  "ggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggSggggggggggggggggg",
+  "gggUgggggggggggTgggggggggggggggPPPPPPPPPPPPPPPPPPPPPPggBggggXggggggggggggggggggggggg",
+  "gggggggSggg=ggggggggggggggggggPPPPPPPPPPPPPPPPPPPPPPPPgggggggggggggggggggggggggXgggg",
+  "ggggggggggg==ggggggggggggggggPPggggggggggggggggggggggPPggggggggggUgggggggggggggggggg",
+  "gggggMgggggg===gggggggggggggPPggggpgggggggggggggggggggPPgggggggggggggggCgggggggggggg",
+  "gggggggggggggg===gBggggggggPPggggggggggggggggggggggggggPPggggggggggUgggggggggggggggg",
+  "ggggggggggggggg===ggggggggPPgggggggggggggggggggHPPggggggPPggggggUggggggggggggggggggg",
+  "ggggggggggggggggg===gggggPPggggggggggggggggggggggggggggggPPggggggggggggggggggggggggg",
+  "gggggggggggggggggg==EgggPPggggggggggggggggggggggggggggggggPPggggggggggggggggUgggMggg",
+  "ggggggggggggggggggg==gggPPggggggggggggggggggggggggggggggkgPPggggggggCggggggggggggggg",
+  "ggggggggggUggggggggg=ggIPPPggggggggggghgggggggggrgggggggggPPgggCgggggggggggggggggggg",
+  "gggggggggggggggggTgg==ggPPPgggggggpggggggig=giggggggggggggPPgggggBgggggggggggggggggg",
+  "gggggggggCggggggggggg=ggPPPgggg==gggggLgggg=gJggpgggggggggPPggggggggggEggggggggggggg",
+  "ggggggggggggggggggggg==gQQQggg======J==gLg===gggggg==gggggPPggggggggUggggggggggggggg",
+  "ggggggggggggggggggggB===QQQgggggggggggg==============gggggPPggXggggggggggggggggggggg",
+  "ggTgBgggggggggggggggg==gPPPggggggggghggj===gRgggggjggggnggPPgggggggggggggggggggggggg",
+  "ggggggggggggggUggggUg==gPPPggrggggggggjjk=ggggggjgggggggggPPggggggggggggggggggggTggg",
+  "ggggggggggggggggTgggg=gIPPggggggggggggggl==JggqggggqgggmggPPggggggggggggggCggggggggg",
+  "ggggggggggggBggggggg==ggPPgggggggggggggggg=ggggggqggggggggPPgggggggUgggSgggggXgggggg",
+  "gggggggggTgggggggggg==ggPPggggHggggggggggg=gsgggggggqgggggPPgggggggggggggggggggggggg",
+  "gggggggggggggggggggg=ggggPPggggggggggggggg=gggggfggggggggPPggggggggSgggggggggggggggg",
+  "gggggggggggggggggggg=gggggPPgggggggggggggg=nggfgggfgggggPPggggggUggggggggggggggggggg",
+  "ggggggggggggggggggTg==gggggPPggggggggggggg=ggggggggggggPPggggggggggggTgggggggggggggg",
+  "ggggggggggggggggggggg===UgggPPgggg=========gggggggggggPPggggggggggggggggggggggggEggg",
+  "gggggggggggggggggggUgMg===gggPPggggggggggggggggggggggPPggggggggggggggggggggggggggggg",
+  "gggggggggggUggggggggggggg===ggPPPPPPPPPPPPPPPPPPPPPPPPgggggggggggggggggggggggggggggg",
+  "gggggggggggggggggggggggggg===ggPPPPPPPPPPPPPPPPPPPPPPggggggggggggggggggggggggggggggg",
+  "ggggggggggggTggggggggggggggg===ggggggggggggggggggggggggggggggggggggggggggggggggggggg",
+  "gggggSggSggggggggTggggggggSggT============ggggggggggggggggggggMggggggggUgggggggggggg",
+  "ggggggggSggggggggggSgggggggggggggggggggg=::gggggggggggggUgggggggggggggggggggEgggUggg",
+  "gggggggggggggggggggggSggggggggggXXggggggg::ggggggggggggggggggggggggggggggggggggggggg",
   "^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^::::^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^",
   "^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^::::^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^",
-  "ggggggggggggggggggggggggggggggggggggggIgg::ggggggggggggggggggggggggggggUgggggggggggg",
-  "gggggggggggggggggggggggggggggggggCggggggg::ggIggggggggUggggggUgggggggggggggggggggggg",
-  "ggggggggggggggggggggggggggggggggggggggggg::ggggggggggggggggggggggggggggggggggggggggg",
-  "ggggggTgggggggggggggXggggUgggggggggg####gGGg#######gggggggggggggggggBggggggggggggggg",
-  "gggggggggggggggggggggggUgggggggggg#######GG###########ggggggggggggggggggggggggCggggg",
-  "ggggggggggggggggggggggggggggg############GG##############ggggggggggggggggggggggggggg",
-  "ggggggggggggggggggggTggggg#########gggggg:gggggggSgg######gggggggggggggXgggggggggggg",
-  "ggggggggTggggggggggggggg#########gggggggg:ggggggggggggg####ggggggggggggggggggggggggg",
-  "ggggggggggggggggggggggg#####ggggggggggggg:ggggggggggggggg###gggggggggggggggggggggggg",
-  "gggggggggggggggggggggg####ggggggggggggggg:ggggggggggggLggg###ggSgggggggCggggggMggggg",
-  "gggggBgggggggggggggg####ggggggggggggggggg::::gggggggggggggg###ggggMggggggggggggggggg",
-  "gggggggggggBggggggg####ggggggggggggggg::::::::gggggggggggggg###ggggggggggggggggggggg",
-  "gggggggggggggggggg###gggggggggggggggg:::::::::::g::gVgggggggg###gggggggggggggggMgggg",
-  "ggUgggggggggEgggg###gXgggggggggJ:::::::gg::ggHVg::::gggggggggg####ggggggggSggggggBgg",
-  "gggggMgggggggggg##ggggggggggggg::::gggggVg:ggggggg:::gggggIgggg####ggggggggggggggggg",
-  "ggggggggggggggg##ggggggggggg::::gggggggggg:gggggggg:::::ggggggggg###gggggggggggggggg",
-  "gggggggggggggg###ggggggggggg::::gggggggggg:ggggggggg::::gggggggggg###ggggggggggggggg",
-  "gggggggggEgggg###gggggggggg::g:::Mgggggggg:ggggggggg::::gggggggEggg###ggggggBggggggg",
-  "ggggggggggggg###gggWRggggg::gVgg::gRgggggg:ggggggg:::Mg::gggggggggg###gggggggggggggg",
-  "gggggBggggggg###BggOIVg::::gggggg::ggggggg:VgY:gN::ggggg::::gggggggg###ggggggggggggg",
-  "ggggggggggggg###ggggggggg:gggggggg::g::ggg:ggg::::ggggggg:::gggggggg###ggggggggggggg",
-  "ggBgggggggUgg###ggggggggg:Igggggggg::::gF:::fg:::ggggggggJ:ggggggggg###ggggggggggggg",
-  "ggggggggggggI###ggggggggg:gggggggggV::::::::::::ggggg:gggg::gggggggg###IgggggggggBgg",
-  "ggggXgggggggg###ggggggggg:ggggggggggg::::::::::HggJgg:ggggg:gggggggg###ggggggggggggg",
-  "ggggggggggggg###ggggggggg:AJc::Sgegg::::::::::::gggg:::ggg::::::gVgg###ggggggggggggg",
-  ":::::::gggg::GGG:b:::ggg:::g::::::::::::::::::::::::::::::::::::::::GGG:::::::ggg:::",
-  ":gggg::::::::GGG::::::::::::::::gg::::::::::::::gggggggO:::::::gggg:GGG:::::::::::::",
-  ":gggggggggggg###ggggggVO::Wgggggggggg::::::::::ggggggggggC:::ggggggg###gggggggggggg:",
-  "ggggggggggggg###ggggggggg:ggggggggggg::::::::::Vggggggggggg:gggggggg###ggggggggggggg",
-  "ggggggggUgggI###ggggggggg:ANCggggggg::::::::::::gggggggggg::ggJggggg###Igggggggggggg",
-  "ggggggggggggg###ggggggggg::gggggggg:::ug:::gggg::ggggggVO::BgggggggN###ggggggggggggg",
-  "ggggggggggggg###gggggggggV:gggLg::::gggJg:gggggg::::gEgg:::::::::ggg###ggggggggggTgg",
-  "gggggggggggEgg###gggggggg::ggggg:::gggggg:ggggggg:::gggg:gggggggggg###gggggggggggggg",
-  "ggggggggggggggg###ggVg::::::ggg:::ggggggg:gggggggg:::gg::ggggggggg###ggggggggggCgggg",
-  "ggggggggggggggg###gggggggg:::g::ggVgggggM:gggggggggg::::ggggggggg###ggggXggggggggggg",
-  "ggTggggggggggggg##ggggggggg::::Eggggggggg:gggggggBgVg:::ggggggggg##ggggggggggggggggg",
-  "ggggggggggggXggg###gggggggggg:::ggggggggg:gggggggggg:::::ggggggg###ggggggggBgggggggg",
-  "gggggggggggggggg###gggggggggg::::::g::ggg:gggggggg:::gg:::::aggg##gggggggggggggggggg",
-  "ggggggggEgggggggg##gg:gJggggg:gVgN:::::g:::V:::Z:::gggggg::gggg###gggggggggggXgggggg",
-  "ggggggggggggggggg###g::gggggg:egggggggg:::::::::::ggggggg:gggL###ggggggggggggggggggg",
-  "gggggggggggggggggg###:::::::::gggggggggg::::ggggggggggggg:gVg###gggggUgggggggggggggg",
-  "ggggggggggggggggggg####gRgggggIggggggggBg::gggggggggggggg:gg###ggggggggggggggggggggg",
-  "gggggggggggggggggggg######ggVggggggggggggg:ggggggggggg::::####gggggggggggggggggggggg",
-  "gggggggggggggggMggggg#######gggggggggggggg::ggggggggNgggg####ggggggggggggggggggggggg",
-  "ggMggggggggggggggggggggg#######gNggg::::::::::::::gJggg#####gggggggggEgggggggggggggg",
-  "ggggggggggggggggggggggggggg########gggVgg:::gJggggggg#####ggggggggggEgggggggggggTggg",
-  "gggggggggggggggggMggggggggggg###########gGGg####gg######gggggggggggggggggggggggggggg",
-  "ggggggggggggggCggggggggggggggggg#########GG############gggggggggggUggggggggggggggggg",
-  "ggggggggggggggggggggggggggBggggggggg#####GG##########gggggggggSgggggggggggEggggggggg",
-  "ggggggggggggggggggggggggggggggggggggggIgg::ggIggg#gggggBgggggggggggggggggggggggggBgg",
-  "ggggggggggggggggggggggggggMgggggggggggdgg::ggggggggggggggggggggggggggggggUgggggggggg",
-  "ggggggggggggggggTggggXggggggggggggggggggg::gggggBgBggggggggCggCggggggggggggggggggggg",
-  "ggggggggggggggggggggggggggggggggggggggggg::ggggggggggggggggggggggggggggggggggggggggg",
+  "gggggggggCggggggggggggggggggggggggggggggg::gggggggggggggggggggBggggggggggggggggggggg",
+  "gggggggggggggggggggggggggggggggggCggggIgg::IggggggggggggggggggggggggggggUggggggggggg",
+  "ggggggggggggggggggggggggggggggggggggggggg::ggggggggUgggggggggggggggggggggggggggggggg",
+  "gggggggggggggggggggggggggUggggggggggggggg::gggggggggggggggggggggggggBggggggggggggggg",
+  "ggggggTgggggggggggUggggggggggggggggg####gGGg#######gggggggggggggggggggggggggggCggggg",
+  "gggggggggggggggggggggggggggggggggg#######GG############ggggggggggggggggggggggggggggg",
+  "ggggggggggggggggggggTgggggggggg##########GG###############ggggggggggggXggggggggggggg",
+  "ggggggggTgggggggggggggggggg########ggggggg:ggggggggg#########ggggggggggggggggggggggg",
+  "ggggggggggggggggggggggg###########gggggggg:ggggggggggBgg######gggggggggggggggggggggg",
+  "gggggggggggggggBggggg#########ggRggCgggggg:gggggggggggggggg####ggggggggCgggEggMggggg",
+  "ggggggggggggggggggg######ggggggggggggggggH:gggggggggggggggggg###gggggggggggggggggggg",
+  "gggggggggggBggggg#####gggggggggggggggggggg:ggggggggggggggggggg###ggggggggggggggggggg",
+  "gggggggggggggggg####gggggggggggggggggggggV:ggggggggggggggggggggg##gggggggggggggggggg",
+  "ggUgggggggggggg####ggggggggggggggggggggggg:ggggggggggggggggggggg###ggggggggggggggggg",
+  "ggggggggggggg####ggRggXggggggggggggggggdg:::g::gggggggggggIgggggg###gggggggggggggggg",
+  "gggggggggggg####gggggggggggggggggggggggO::::::::Vggggggggggggggggg###ggggggggggggggg",
+  "ggggggggggg###gggggggggggggggggggg::C::::::gg:::::gg::ggggggggggggg###gggggggggggggg",
+  "gggggggggg###ggggggggggggggg:gggg:::::gg::ggggggg:::::gggggggggEgggg####ggggBggggggg",
+  "ggggggggg###gOgggggggggggggg::::::ggggHgg:gggggggggg:::gVggggggggggggg###ggggggggggg",
+  "gggggXgg##gggggggEggggggggV::::gggggggggg::gggggBggggg::ggggggggggggggg###gggggggggg",
+  "ggggggg###gggggggggggggggg:::gBgggggggggg::Jggggggggggg::ggg:ggggggggggg###ggggggggg",
+  "ggBggg###gNgOggggggCgg::g:::gggggggggggggg:ggggggggggggg::gg:gLggggggggggg##gggggggg",
+  "gggggg###ggggggggggggg::::::gEgggggggggggg:ggggggggggJg::::::ggggggggEggNgg##ggggggg",
+  "gggggg##gggggggggggggg:::gg:::ggIggggggggg:Lgggggggggg::gg:::gggggggggggggg###gggggg",
+  "ggggg###ggggggggggggJ::gggNgg::gJggggggggg:gggggggggg::gggg:::gggggggggggggg##gggggg",
+  "ggggg###gggggggggggg::ggIggggg::gggggggggg:gggggggg:::ggggggg::J:::ggggggNgg###ggggg",
+  "ggggg###ggggggJg:::::ggggggggIgg::gggggggg:gggg:gg:::ggggggggg::::gggggggggg###ggggg",
+  "ggggg###ggggggggggg::ggggggggggNg::ggggggg:gggg::::ggggggggggg:::ggggggggggg###ggggg",
+  "ggggg###gggggggggggg:ggggggggggggg::gZ::e:::tgg:::ggMgggggggggg:gggggggggggg###ggggg",
+  "ggggg###Rggggggggggg:gggggggggggHgg::::::::::::::ggggggggggggLgg:ggggggggggg###ggTgg",
+  "ggggI###gg:ggggggggg:ggggggggggggggV::::::::::::gggggggggggggggg:gggggggMggg###Igggg",
+  "ggggg###gg:ggggggggL:gggggggggLgggg:::::::::::::VggggEgggggggggg:ggggggggggg###ggggg",
+  "ggggg###gg::gggOg:gg:gggc:gggggggg:::::::::::::::ggggggY:::gggg:::g::ggggggg###ggggg",
+  ":::::GGG:::::::g::::::gg:::Jgg::::::::::::::::::::::::::::::::::::::::Jg::::GGG:::::",
+  ":::::GGG::::::::::::::::::::::::Lg::::::::::::::::gggggg:::::::g:::g::::::g:GGG:::::",
+  ":gggg###gggHggggggg::gggggggggggggg::::::::::::::ggggggggSSggVggH:gggggggggg###gggg:",
+  "ggggg###gggggggggggggJggggggggHggggg::::::::::::ggRggggggggggggg::gggggggggg###ggggg",
+  "ggggI###gggggggggggL:gggggggggRgggVg::::::::::::gggggggggggggggg:ggggggggggg###Igggg",
+  "ggggg###Iggggggggggg:gggggggggggXgg::F::::::::g::gggggggggggggg::gJggggggggg###ggggg",
+  "ggggg###gggggggggggg::gggggggggggg::gggg:::ggggg::gggggggggggg::gggggggggggg###ggggg",
+  "gggggg##ggggggggggggg:ggggggggggg::gggggg:ggggggg::ggVggggggg::ggggggggggggg###ggTgg",
+  "gggggg###gggggggggVg::ggggggggI:::OggggBg:gggggggg:::gggggggg::ggggggggggggg##gggggg",
+  "ggggggg##gggg::::::::::gggg:gg::gggggHggg:gggggggggg::gg:ggg::::::::::ggggg##ggggggg",
+  "ggggggg###gRgggXggggg::VSOg::::gggggggggg:ggggggggggg::::ggg::gggggggggggg###ggggggg",
+  "ggggggg###gggggggggggg::ggg:::ggCgggggggg:gRgggggggggg:::gE::Vggggggggggg###ggggCggg",
+  "gggggggg###Sggggggggggg::g:::gggggggggggJ:ggggggggggggg:::::ggggggggCggB###ggggggggg",
+  "gggggggg###ggIggggggggg:::::Vgggggggggggg:gBgggggggggggV:::ggggggggggggg##gggggggggg",
+  "gggggggg###gggggggggggg:::::ggggggggggggg::gggggggggggg:::ggggggggggggg###gggBgggUgg",
+  "ggggggggg###ggggggggggg:gggg:::gggggggggg::ggggJg::ggg::::Rgggggggggggg##ggggggggggg",
+  "ggggggggg###Aggggggggg::gggIgg:::gg::ggBgg:Cggdgg::::::Og::::::::aggLg###ggggggggBgg",
+  "gggggggggg##ANggb:::::::ggggggggg:::::ggg:::gggg:::::ggggggggggggggggg##gggggggggggg",
+  "gggggggggg###ggggggggIggggggggggggEgggJg:::::::::::gggggggggggVgggXgg###ggggggEggggg",
+  "ggggggggggg###gggggggWggOggggggggggMggggg:::ggggggVgHggggggggggggggg###ggggggggggggg",
+  "gggggggggggg###gNggggggggggggggggggggggggg:gggggggggggggggggggggggg###gggggggggggggg",
+  "ggggggggggggg####gOgggRggWgggggggggggggggg:gggggggggggggggggggggg####gggggggEggggggg",
+  "gggggggggggggg######gggggggggggggggggggggJ:ggggggggggggggggggggg####gggggggggggggggg",
+  "gggggggggggggggg#######ggggggggggggggggggg:ggggggggggggggg:gVg#####gggggggEggggggggg",
+  "ggggggggggggTggggg#######ggggg:gggggggggg:::ggggggggggggg::gg####ggggggggggggggggggg",
+  "ggggggggggggggggggggg#######gg::gggggggg:::::::::Lgggggg:::####ggggggSgggggggggggggg",
+  "gggggggggggggggggggggggg#######::::::::::::::::::::::::::#####gggggggggggggggggggggg",
+  "gggggggggggggggggggggggggg#########ggggg:::gggggggggggg#####ggggUggggBgggggggggggggg",
+  "ggggggggggggggggggggggggggggg###########gGGg###############ggggggggggggggggggggggggg",
+  "ggggggggggggggggggggggUggggggggg#########GG##############ggggggggggggggggggggggggggg",
+  "gggggggggggggggggggggggggggggggggggg#####GG############gggggSggTgggUggTggggggggggggg",
+  "ggggggggggggggggggggggggggggggggggggggIgg:ggggIggggggggggggggggggggggggggggggggggggg",
   "ggggggggggggggggggggggggggggggggggggggggg:::gggggggggggggggggggggggggggggggggggggggg"
  ],
  "note": "0.3.14 generated by tools/world/build_cinderholt_v1.py from the designer's Cinderholt v1 set (art_handoff/towns/cinderholt); camp north per the lore"

@@ -24,23 +24,31 @@ DST = os.path.join(REPO, 'assets/sprites/towns/cinderholt')
 RES = 'res://assets/sprites/towns/cinderholt'
 CLIFF = os.path.join(REPO, 'assets/sprites/cliffs/cinder')
 T = 16
-GW, GH = 84, 90
+S = 1.3   # 0.3.14 v2: ~30% bigger buildings -> town ring grown 1.3x, grid 12 rows deeper (camp unchanged)
+GW, GH = 84, 102
 SW, SH = GW * T, GH * T
-CXt, CYt, RX, RY = 42, 62, 28, 22
+CXt, CYt, RX, RY = 42, 70, 28 * S, 22 * S
+def _t(q): return (CXt + (q[0] - 42) * S, CYt + (q[1] - 62) * S)
 OLD_CENTER = (330, -200)
 # 0.3.14: shifted 12 tiles south so the camp plateau keeps clear of the Scorch border (rect top y=-250)
-ORIGIN = [OLD_CENTER[0] - CXt, OLD_CENTER[1] - CYt + 12]
+ORIGIN = [OLD_CENTER[0] - CXt, OLD_CENTER[1] - 62 + 12]
 RF = 34                       # ridge face rows RF, RF+1 (blocked); lip RF-1; shadow RF+2
 STAIRS = set(range(CXt - 2, CXt + 2))
-KX, KY, KA, KB, KC = 42, 17, 14, 10, 19
+KX, KY, KA, KB, KC = 42, 17, 17, 12, 23   # 0.3.14 camp grown ~1.2x for the bigger v2 tents
 os.makedirs('/tmp/ch', exist_ok=True)
 
 # ---------------------------------------------------------------- copy art (never write into art_handoff)
+# 0.3.14 sprite bot's v2 set (min 5x5, walk-in floors, *_night window layers) overlays v1
+SRC2 = os.path.join(SRC, 'v2')
 for sub in ('tiles', 'buildings', 'props'):
     os.makedirs(os.path.join(DST, sub), exist_ok=True)
-    for f in sorted(os.listdir(os.path.join(SRC, sub))):
-        if f.endswith('.png'): shutil.copyfile(os.path.join(SRC, sub, f), os.path.join(DST, sub, f))
-shutil.copyfile(os.path.join(SRC, 'manifest.json'), os.path.join(DST, 'manifest_designer.json'))
+    if sub == 'buildings':
+        for f in os.listdir(os.path.join(DST, sub)):
+            if f.endswith('.png') or f.endswith('.png.import'): os.remove(os.path.join(DST, sub, f))
+    for root in ((SRC2,) if sub == 'buildings' else (SRC, SRC2)):
+        for f in sorted(os.listdir(os.path.join(root, sub))):
+            if f.endswith('.png'): shutil.copyfile(os.path.join(root, sub, f), os.path.join(DST, sub, f))
+shutil.copyfile(os.path.join(SRC2, 'manifest.json'), os.path.join(DST, 'manifest_designer.json'))
 shutil.copyfile(os.path.join(SRC, 'README.md'), os.path.join(DST, 'README_designer.md'))
 # roads a shade or two brighter than the buildings (adjusted on the repo copy only)
 def _lum(a): m = a[..., 3] > 0; return float((a[..., :3][m] @ [.299, .587, .114]).mean())
@@ -53,7 +61,7 @@ for n, ratio in (('ch_diag_cobble_road', 1.42), ('ch_cobble_fill', 1.42), ('ch_d
     a = np.array(Image.open(p).convert('RGBA')).astype(float); l0 = _lum(a); k = max(1.0, _bl * ratio / l0)
     a[..., :3] = np.clip(a[..., :3] * k, 0, 255); Image.fromarray(a.astype(np.uint8)).save(p); BRIGHT[n] = [round(l0, 1), round(l0 * k, 1)]
 print('building lum %.1f; roads lum before/after' % _bl, BRIGHT)
-M = json.load(open(os.path.join(SRC, 'manifest.json')))
+M = json.load(open(os.path.join(SRC2, 'manifest.json')))
 ALLB = M['buildings'] + M['camp']['buildings']
 BM = {b['name']: b for b in ALLB}; GM = M['wall']['gates']
 _LC = {}
@@ -79,12 +87,27 @@ def plan_of(b):
             else: r += '#'
         rows.append(r + '#')
     return rows
+def plan_of_v2(b):
+    # 0.3.14 v2 art: walls on the footprint edge; walkable = designer clear area + door lane + door
+    E = b['footprint_origin_px'][1]; W, H = b['tiles']; d = tuple(b['door_tile']); H = d[1] + 1
+    def inr(r, cx, cy): return r[0] <= cx < r[0] + r[2] and r[1] <= cy < r[1] + r[3]
+    rows = []
+    for y in range(H):
+        r = ''
+        for x in range(W):
+            cx, cy = x * T + 8, E + y * T + 8
+            if (x, y) == d: r += 'D'
+            elif y < H - 1 and b.get('clear_area_px') and (inr(b['clear_area_px'], cx, cy) or inr(b['door_lane_px'], cx, cy)): r += 'o'
+            else: r += '#'
+        rows.append(r)
+    return rows
+V2 = True; RIM = 0
 ART = {}
 for b in ALLB:
-    ART[b['name']] = dict(tiles=[b['tiles'][0], b['door_tile'][1] + 1], px=b['px'], origin_y=b['footprint_origin_px'][1] - T, inset_x=T, door_tile=b['door_tile'], storeys=b['storeys'],
+    ART[b['name']] = dict(tiles=[b['tiles'][0], b['door_tile'][1] + 1], px=b['px'], origin_y=b['footprint_origin_px'][1], inset_x=0, door_tile=b['door_tile'], storeys=b['storeys'],
                           floor=f"{RES}/buildings/{b['layers'][0]}", walls=f"{RES}/buildings/{b['layers'][1]}",
                           fade=[f"{RES}/buildings/{l}" for l in b['fade_group']],
-                          plan=plan_of(b), note='0.3.14 Cinderholt v1: plan has a 1-tile invisible collision rim (top/left/right)')
+                          night=(f"{RES}/buildings/{b['night_layer']}" if b.get('night_layer') else ''), plan=plan_of_v2(b), note='0.3.14 Cinderholt v1: plan has a 1-tile invisible collision rim (top/left/right)')
 def flip_plan(rows): return [r[::-1] for r in rows]
 def LB(l): return L('buildings', l)
 
@@ -332,8 +355,8 @@ def place(n, tx, ty, flip=False, role=None, reach=80, quiet=False, zone='town'):
         for k in range(nst):
             t = 360.0 * k / nst
             px = tx * T + r * math.cos(math.radians(t)) - w / 2; py = ty * T + r * math.sin(math.radians(t)) - h / 2
-            ox, oy = int(round(px / T)) - 1, int(round((py + E) / T)) - 1
-            x0, y0 = (ox + 1) * T, (oy + 1) * T - E
+            ox, oy = int(round(px / T)) - RIM, int(round((py + E) / T)) - RIM
+            x0, y0 = (ox + RIM) * T, (oy + RIM) * T - E
             if ox < 1 or oy < 1 or ox + PWt > GW - 1 or oy + PHt > GH - 4 or y0 < 0 or x0 + w > SW: continue
             if (occ[y0:y0 + h, x0:x0 + w] & al).any(): continue
             if not ZONE_PX[zone][y0:y0 + h, x0:x0 + w][al].all(): continue
@@ -363,6 +386,7 @@ CIVIC = [('ch_smithy', (26, 70), 'smithy', False, 'town'), ('ch_church', (42, 50
          ('ng_command_tent', (38, 11), 'command', False, 'camp'), ('ng_barracks_hut', (50, 12), 'barracks', False, 'camp'),
          ('ng_tent_03', (33, 15), 'tent', False, 'camp'), ('ng_tent_04', (53, 21), 'tent', False, 'camp'), ('ng_tent_01', (35, 22), 'tent', False, 'camp'), ('ng_tent_02', (44, 25), 'tent', False, 'camp'),
          ('ng_tent_01', (47, 8), 'tent', True, 'camp'), ('ng_tent_03', (31, 19), 'tent', True, 'camp')]
+CIVIC = [(n, (_t(p) if z == 'town' else (KX + (p[0] - KX) * 1.2, KY + (p[1] - KY) * 1.2)), r, f, z) for n, p, r, f, z in CIVIC]
 left = []
 for n, p, role, flip, zone in CIVIC:
     if not place(n, *p, flip=flip, role=role, reach=400 if role != 'tent' else 260, zone=zone):
@@ -815,7 +839,7 @@ for gname in TG:
     else:
         ix = max(xs) + 2 if gname == 'west' else min(xs) - 2
         for gy in (min(ys) - 1, max(ys) + 1): guards.append(dict(enemy='town_guard', patrol=[near_walk(ix, gy)], gate=gname))
-for beat in [[(42, 62), (31, 58), (24, 66)], [(42, 62), (53, 58), (60, 66)], [(42, 48), (34, 52), (50, 52)], [(42, 75), (33, 72), (51, 72)]]:
+for beat in [[tuple(int(v) for v in _t(q)) for q in bt] for bt in [[(42, 62), (31, 58), (24, 66)], [(42, 62), (53, 58), (60, 66)], [(42, 48), (34, 52), (50, 52)], [(42, 75), (33, 72), (51, 72)]]]:
     guards.append(dict(enemy='town_guard', patrol=[near_walk(int(x), int(y)) for x, y in beat]))
 v = GATE_TILES['camp']; ix = max(p[0] for p in v) + 2
 for gy in (KY - 2, KY + 1): guards.append(dict(enemy='northern_guard', patrol=[near_walk(ix, gy)], camp='northern_guard'))

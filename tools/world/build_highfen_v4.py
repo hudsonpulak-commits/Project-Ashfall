@@ -16,11 +16,12 @@ from PIL import Image
 from scipy import ndimage as ndi
 
 REPO = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
-SRC = '/workspace/art_handoff/towns/highfen'
+SRC = '/workspace/art_handoff/towns/highfen/v5'   # 0.3.14 sprite bot's resized set (min 5x5, walk-in, *_night layers); read-only
 DST = os.path.join(REPO, 'assets/sprites/towns/highfen')
 RES = 'res://assets/sprites/towns/highfen'
 T = 16
-N = 72                     # town is N x N tiles
+N = 92  # 0.3.14 v5 art is ~1.4x the area: city grown 72 -> 92, recentred on the 0.3.13 centre
+#                   # town is N x N tiles
 SW = SH = N * T
 CX, CY = SW // 2, SH // 2  # ring centre (px)
 R = 28 * T                 # 0.3.11b city wall mean radius (px); oval: RX/RY below
@@ -33,7 +34,7 @@ for sub in ('buildings', 'props', 'walls'):
         if f.endswith('.png'):
             shutil.copyfile(os.path.join(SRC, sub, f), os.path.join(DST, sub, f))
 shutil.copyfile(os.path.join(SRC, 'manifest.json'), os.path.join(DST, 'manifest.json'))
-shutil.copyfile(os.path.join(SRC, 'README.md'), os.path.join(DST, 'README_designer.md'))
+shutil.copyfile(os.path.join(os.path.dirname(SRC), 'README.md'), os.path.join(DST, 'README_designer.md'))
 # 0.3.11 v3.1: the designer's v3 buildings + v3.1 wall/gate tiles + v3 props
 for sub, dsub in (('buildings_v3', 'buildings'), ('tiles_v31', 'v31'), ('props_v3', 'props_v3')):
     os.makedirs(os.path.join(DST, dsub), exist_ok=True)
@@ -100,12 +101,19 @@ def plan_of(b):
     inn = {t for t in S if t != d and t[1] < H - 1 and all((t[0] + a, t[1] + c) in S for a, c in ((1, 0), (-1, 0), (0, 1), (0, -1)))}
     rows = [''.join('D' if (x, y) == d else 'o' if (x, y) in inn else '#' if (x, y) in S else '.' for x in range(W)) for y in range(H)]
     return rows
+def plan_of_v2(b):
+    # 0.3.14 v5 art: walls on the footprint edge; walkable = designer clear area + door lane + door
+    E = b['footprint_origin_px'][1]; W, H = b['tiles']; d = tuple(b['door_tile']); H = d[1] + 1
+    def inr(r, cx, cy): return r[0] <= cx < r[0] + r[2] and r[1] <= cy < r[1] + r[3]
+    return [''.join('D' if (x, y) == d else 'o' if y < H - 1 and (inr(b['clear_area_px'], x * T + 8, E + y * T + 8) or inr(b['door_lane_px'], x * T + 8, E + y * T + 8)) else '#'
+                    for x in range(W)) for y in range(H)]
 ART = {}
 for b in M['buildings']:
     lay = b['layers']; fade = b['fade_group']
-    ART[b['name']] = dict(tiles=b['tiles'], px=b['px'], origin_y=b['footprint_origin_px'][1], door_tile=b['door_tile'], storeys=b['storeys'],
+    ART[b['name']] = dict(tiles=[b['tiles'][0], b['door_tile'][1] + 1] if 'clear_area_px' in b else b['tiles'], px=b['px'], origin_y=b['footprint_origin_px'][1], door_tile=b['door_tile'], storeys=b['storeys'],
                           floor=f"{RES}/buildings/{lay[0]}", walls=f"{RES}/buildings/{lay[1]}",
-                          fade=[f"{RES}/buildings/{l}" for l in fade], plan=plan_of(b))
+                          fade=[f"{RES}/buildings/{l}" for l in fade], night=(f"{RES}/buildings/{b['night_layer']}" if b.get('night_layer') else ''),
+                          plan=plan_of_v2(b) if 'clear_area_px' in b else plan_of(b))
 segs = {k: dict(path=f"{RES}/walls/{k}.png", offset=v['offset_from_ring_px'], size=v['size']) for k, v in M['wall_segments'].items()}
 PROPS = {p[0]: p[1] for p in M['props']}
 
@@ -117,7 +125,7 @@ sys.path.insert(0, os.path.join(SRC, 'src'))
 import diagtiles as dg
 M3 = json.load(open(os.path.join(SRC, 'manifest_v3.json'))); GM = M3['v31']['gates']
 CXt, CYt = N // 2, N // 2
-RX, RY = 29, 25
+RX, RY = 38, 32
 R = RY * T
 Y, X = np.mgrid[:SH, :SW]
 VY, VX = np.mgrid[:N + 1, :N + 1].astype(float)
@@ -338,17 +346,19 @@ def place_any(n, spots, role, reach=48):
     for i, (a_, r_) in enumerate(spots):
         if place(n, *wp(a_, r_), True, role=role, reach=reach, quiet=True): return
     for a_ in range(0, 360, 30):     # last resort: wide search from the outer band
-        if place(n, *wp(a_, .75), True, role=role, reach=200, quiet=a_ < 330): return
+        if place(n, *wp(a_, .75), True, role=role, reach=200, quiet=True): return
+    for a_ in range(0, 360, 15):     # 0.3.14 v5 art is bigger: outside the wall, by the ring road
+        if place(n, *wp(a_, 1.14), False, role=role, reach=120, quiet=a_ < 345): print('outside the wall:', n, role); return
 # 0.3.13 v4 layout (designer preview_v4): v3.1 civic core round the plaza; the larger v4 buildings take the room
 # freed by the dropped outer ring road (guild, general store, smithy in the outer band; player shop + cookhouse mid-ring)
 RING = lambda a0, r0: [(a0, r0)] + [((a0 + d) % 360, r_) for d in (8, -8, 16, -16, 24, -24, 36, -36, 50, -50, 70, -70, 90, -90) for r_ in (r0, r0 + .05, r0 - .05)]
 place_any('v3_temple', RING(232, .56), 'church', reach=60)
 place_any('v3_town_hall', RING(308, .56), 'townhall', reach=60)
 place_any('v4_guild', RING(20, .42), 'guild', reach=60)
-for n_, a_, r_, role_ in [('v3_bank', 345, .56, 'bank'), ('shop_tavern', 135, .56, 'cook'), ('v4_general_store', 110, .56, 'general'),
-                          ('v4_player_shop', 150, .56, 'player_shop'), ('v3_player_house', 75, .56, 'player_house'),
-                          ('v4_cookhouse', 195, .56, 'baker'), ('v4_smithy', 20, .8, 'smithy')]:
-    place_any(n_, RING(a_, r_), role_, reach=90)
+for n_, a_, r_, role_ in [('v3_bank', 345, .50, 'bank'), ('shop_tavern', 135, .74, 'cook'), ('v4_general_store', 100, .74, 'general'),
+                          ('v4_player_shop', 165, .74, 'player_shop'), ('v3_player_house', 75, .50, 'player_house'),
+                          ('v4_cookhouse', 195, .50, 'baker'), ('v4_smithy', 20, .8, 'smithy')]:
+    place_any(n_, RING(a_, r_), role_, reach=150)
 POOL = M3['houses'] + ['v3_house_narrow_tall', 'v3_house_longhouse']
 use = {}; pi = 0; fill = 0
 cands = [(r_, a_) for r_ in (.3, .36, .42, .47, .52, .58, .78, .82) for a_ in range(0, 360, 3)]
@@ -750,9 +760,10 @@ _ta['buildings'] = {k: v for k, v in _ta.get('buildings', {}).items() if k not i
 _ta['note'] = town_art['note']
 json.dump(_ta, open(_ta_p, 'w'), indent=1)
 old = json.load(open(os.path.join(REPO, 'data/towns/highfen.json')))
+HF_ORIGIN = [144 - (N - 72) // 2, -46 - (N - 72) // 2]   # 0.3.13 origin, same centre
 spawn = [PLAZA[0] // T, PLAZA[1] // T + 3]
 while not walk(*spawn) or tuple(spawn) not in seen: spawn[1] += 1
-town = dict(id='highfen', name='Highfen', kind='capital', origin=old['origin'], spawn=[old['origin'][0] + spawn[0], old['origin'][1] + spawn[1]],
+town = dict(id='highfen', name='Highfen', kind='capital', origin=HF_ORIGIN, spawn=[HF_ORIGIN[0] + spawn[0], HF_ORIGIN[1] + spawn[1]],
             tiles={'g': 'grass', 'd': 'dirt', '#': 'capital_wall', '=': 'road_stone', ':': 'cobble', 'G': 'gate_capital'}, objects=objects, roof='#b8a888', building_style='capital',
             specialists=old['specialists'], price_bias=old['price_bias'],
             tagline='The walled capital at the heart of the realm: a round city of soot-dark stone, the palace at its centre, the Guild of Knights, a market by the gate and houses ringing the wall.',

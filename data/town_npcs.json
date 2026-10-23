@@ -7,8 +7,8 @@
      "enemy": "town_guard",
      "patrol": [
       [
-       35,
-       11
+       57,
+       14
       ]
      ],
      "gate": "north"
@@ -17,8 +17,8 @@
      "enemy": "town_guard",
      "patrol": [
       [
-       36,
-       8
+       59,
+       14
       ]
      ],
      "gate": "north"
@@ -27,8 +27,8 @@
      "enemy": "town_guard",
      "patrol": [
       [
-       35,
-       48
+       57,
+       81
       ]
      ],
      "gate": "south"
@@ -36,118 +36,118 @@
     {
      "enemy": "town_guard",
      "patrol": [
+      [
+       58,
+       79
+      ]
+     ],
+     "gate": "south"
+    },
+    {
+     "enemy": "town_guard",
+     "patrol": [
+      [
+       101,
+       43
+      ]
+     ],
+     "gate": "east"
+    },
+    {
+     "enemy": "town_guard",
+     "patrol": [
+      [
+       100,
+       45
+      ]
+     ],
+     "gate": "east"
+    },
+    {
+     "enemy": "town_guard",
+     "patrol": [
+      [
+       15,
+       51
+      ]
+     ],
+     "gate": "west"
+    },
+    {
+     "enemy": "town_guard",
+     "patrol": [
+      [
+       16,
+       53
+      ]
+     ],
+     "gate": "west"
+    },
+    {
+     "enemy": "town_guard",
+     "patrol": [
+      [
+       59,
+       48
+      ],
       [
        38,
-       49
+       43
+      ],
+      [
+       24,
+       41
       ]
-     ],
-     "gate": "south"
+     ]
+    },
+    {
+     "enemy": "town_guard",
+     "patrol": [
+      [
+       59,
+       48
+      ],
+      [
+       73,
+       49
+      ],
+      [
+       88,
+       41
+      ]
+     ]
+    },
+    {
+     "enemy": "town_guard",
+     "patrol": [
+      [
+       57,
+       19
+      ],
+      [
+       44,
+       20
+      ],
+      [
+       31,
+       26
+      ]
+     ]
     },
     {
      "enemy": "town_guard",
      "patrol": [
       [
        62,
-       25
-      ]
-     ],
-     "gate": "east"
-    },
-    {
-     "enemy": "town_guard",
-     "patrol": [
-      [
-       61,
-       27
-      ]
-     ],
-     "gate": "east"
-    },
-    {
-     "enemy": "town_guard",
-     "patrol": [
-      [
-       11,
-       32
-      ]
-     ],
-     "gate": "west"
-    },
-    {
-     "enemy": "town_guard",
-     "patrol": [
-      [
-       10,
-       34
-      ]
-     ],
-     "gate": "west"
-    },
-    {
-     "enemy": "town_guard",
-     "patrol": [
-      [
-       37,
-       30
+       65
       ],
       [
-       24,
-       27
+       76,
+       70
       ],
       [
-       16,
-       26
-      ]
-     ]
-    },
-    {
-     "enemy": "town_guard",
-     "patrol": [
-      [
-       37,
-       30
-      ],
-      [
-       46,
-       31
-      ],
-      [
-       55,
-       26
-      ]
-     ]
-    },
-    {
-     "enemy": "town_guard",
-     "patrol": [
-      [
-       36,
-       12
-      ],
-      [
-       27,
-       13
-      ],
-      [
-       19,
-       16
-      ]
-     ]
-    },
-    {
-     "enemy": "town_guard",
-     "patrol": [
-      [
-       39,
-       41
-      ],
-      [
-       48,
-       44
-      ],
-      [
-       55,
-       40
+       89,
+       65
       ]
      ]
     }
@@ -156,8 +156,8 @@
     "enemy": "citizen",
     "count": 6,
     "area": [
-     29,
-     24,
+     51,
+     42,
      17,
      13
     ]
@@ -180,8 +180,8 @@
      "enemy": "town_guard",
      "patrol": [
       [
-       41,
-       41
+       42,
+       43
       ]
      ],
      "gate": "north"
@@ -191,7 +191,7 @@
      "patrol": [
       [
        40,
-       80
+       95
       ]
      ],
      "gate": "south"
@@ -201,7 +201,7 @@
      "patrol": [
       [
        43,
-       80
+       95
       ]
      ],
      "gate": "south"
@@ -210,8 +210,8 @@
      "enemy": "town_guard",
      "patrol": [
       [
-       65,
-       61
+       73,
+       69
       ]
      ],
      "gate": "east"
@@ -220,8 +220,8 @@
      "enemy": "town_guard",
      "patrol": [
       [
-       67,
-       62
+       73,
+       70
       ]
      ],
      "gate": "east"
@@ -230,8 +230,8 @@
      "enemy": "town_guard",
      "patrol": [
       [
-       16,
-       61
+       8,
+       69
       ]
      ],
      "gate": "west"
@@ -240,8 +240,8 @@
      "enemy": "town_guard",
      "patrol": [
       [
-       16,
-       62
+       8,
+       70
       ]
      ],
      "gate": "west"
@@ -251,15 +251,15 @@
      "patrol": [
       [
        42,
-       62
+       70
       ],
       [
-       29,
-       60
+       30,
+       61
       ],
       [
-       25,
-       65
+       20,
+       73
       ]
      ]
     },
@@ -268,15 +268,15 @@
      "patrol": [
       [
        42,
-       62
+       70
       ],
       [
        53,
-       58
+       61
       ],
       [
-       59,
-       65
+       64,
+       74
       ]
      ]
     },
@@ -285,15 +285,15 @@
      "patrol": [
       [
        42,
-       48
-      ],
-      [
-       32,
-       50
-      ],
-      [
-       51,
        51
+      ],
+      [
+       29,
+       55
+      ],
+      [
+       54,
+       55
       ]
      ]
     },
@@ -302,15 +302,15 @@
      "patrol": [
       [
        42,
-       75
+       86
       ],
       [
-       32,
-       73
+       29,
+       84
       ],
       [
-       50,
-       73
+       54,
+       84
       ]
      ]
     },
@@ -318,7 +318,7 @@
      "enemy": "northern_guard",
      "patrol": [
       [
-       32,
+       26,
        16
       ]
      ],
@@ -328,8 +328,8 @@
      "enemy": "northern_guard",
      "patrol": [
       [
-       30,
-       17
+       26,
+       16
       ]
      ],
      "camp": "northern_guard"
@@ -338,8 +338,8 @@
      "enemy": "northern_guard",
      "patrol": [
       [
-       33,
-       30
+       32,
+       31
       ],
       [
        42,
@@ -352,16 +352,16 @@
      "enemy": "northern_guard",
      "patrol": [
       [
-       41,
+       42,
+       17
+      ],
+      [
+       51,
        16
       ],
       [
-       47,
-       16
-      ],
-      [
-       38,
-       23
+       34,
+       26
       ]
      ],
      "camp": "northern_guard"
@@ -370,8 +370,8 @@
      "enemy": "northern_soldier",
      "patrol": [
       [
-       40,
-       16
+       41,
+       15
       ]
      ],
      "camp": "northern_guard"
@@ -381,7 +381,7 @@
      "patrol": [
       [
        44,
-       16
+       14
       ]
      ],
      "camp": "northern_guard"
@@ -422,7 +422,7 @@
     "count": 6,
     "area": [
      34,
-     56,
+     64,
      17,
      13
     ]
@@ -435,16 +435,16 @@
      "enemy": "town_guard",
      "patrol": [
       [
-       4,
-       15
+       5,
+       19
       ],
       [
-       20,
-       15
+       26,
+       20
       ],
       [
-       30,
-       15
+       39,
+       19
       ]
      ]
     },
@@ -452,119 +452,33 @@
      "enemy": "town_guard",
      "patrol": [
       [
-       44,
+       57,
        2
       ],
       [
-       42,
-       10
+       54,
+       13
       ],
       [
-       35,
-       12
-      ]
-     ]
-    },
-    {
-     "enemy": "town_guard",
-     "patrol": [
-      [
-       8,
-       29
-      ],
-      [
-       24,
-       29
-      ],
-      [
-       40,
-       29
-      ]
-     ]
-    },
-    {
-     "enemy": "town_guard",
-     "patrol": [
-      [
-       40,
-       29
-      ],
-      [
-       56,
-       29
-      ],
-      [
-       63,
-       27
-      ]
-     ]
-    },
-    {
-     "enemy": "town_guard",
-     "patrol": [
-      [
-       24,
-       31
-      ],
-      [
-       24,
-       37
-      ]
-     ]
-    },
-    {
-     "enemy": "town_guard",
-     "patrol": [
-      [
-       36,
-       31
-      ],
-      [
-       36,
-       37
-      ]
-     ]
-    },
-    {
-     "enemy": "town_guard",
-     "patrol": [
-      [
-       48,
-       31
-      ],
-      [
-       48,
-       37
-      ]
-     ]
-    },
-    {
-     "enemy": "town_guard",
-     "patrol": [
-      [
-       12,
-       18
-      ],
-      [
-       11,
-       27
-      ]
-     ]
-    },
-    {
-     "enemy": "town_guard",
-     "patrol": [
-      [
-       39,
+       46,
        16
+      ]
+     ]
+    },
+    {
+     "enemy": "town_guard",
+     "patrol": [
+      [
+       10,
+       37
+      ],
+      [
+       31,
+       37
       ],
       [
        52,
-       17
-      ],
-      [
-       58,
-       25
+       37
       ]
      ]
     },
@@ -572,20 +486,106 @@
      "enemy": "town_guard",
      "patrol": [
       [
-       8,
-       36
+       52,
+       37
       ],
       [
-       24,
-       43
+       72,
+       37
       ],
       [
-       48,
-       43
+       81,
+       35
+      ]
+     ]
+    },
+    {
+     "enemy": "town_guard",
+     "patrol": [
+      [
+       31,
+       40
+      ],
+      [
+       29,
+       46
+      ]
+     ]
+    },
+    {
+     "enemy": "town_guard",
+     "patrol": [
+      [
+       46,
+       40
+      ],
+      [
+       45,
+       46
+      ]
+     ]
+    },
+    {
+     "enemy": "town_guard",
+     "patrol": [
+      [
+       62,
+       40
+      ],
+      [
+       61,
+       46
+      ]
+     ]
+    },
+    {
+     "enemy": "town_guard",
+     "patrol": [
+      [
+       15,
+       23
+      ],
+      [
+       14,
+       35
+      ]
+     ]
+    },
+    {
+     "enemy": "town_guard",
+     "patrol": [
+      [
+       50,
+       20
+      ],
+      [
+       67,
+       22
+      ],
+      [
+       75,
+       32
+      ]
+     ]
+    },
+    {
+     "enemy": "town_guard",
+     "patrol": [
+      [
+       10,
+       46
+      ],
+      [
+       31,
+       55
       ],
       [
        62,
-       43
+       55
+      ],
+      [
+       80,
+       55
       ]
      ]
     }
@@ -594,8 +594,8 @@
     "enemy": "citizen",
     "count": 5,
     "area": [
-     26,
-     11,
+     35,
+     16,
      15,
      15
     ]
