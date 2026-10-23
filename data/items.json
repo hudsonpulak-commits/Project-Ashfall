@@ -1147,6 +1147,13 @@
    "stackable": false,
    "category": "material",
    "note": "1 dusk ore + 1 coal at a furnace (Smithing 30). One tier above steel; forged into the dusk gear at an anvil (Smithing 36-42)."
+  },
+  "guard_steel_bundle": {
+   "name": "Bundle of guard steel",
+   "value": 0,
+   "stackable": false,
+   "category": "quest",
+   "note": "0.3.16 We Need Steel!: Brannoc's finished goods for the Northern Guard camp"
   }
  }
 }

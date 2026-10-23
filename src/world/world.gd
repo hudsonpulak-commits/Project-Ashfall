@@ -578,6 +578,9 @@ func autotile_piece(p: Vector2i, group: String) -> Vector2i:
 	var chance := Autotile.END_BROKEN_CHANCE if piece in [1, 2, 4, 8] else Autotile.BROKEN_CHANCE
 	if d.has("broken_row") and Autotile.is_broken(p, chance):
 		row = int(d["broken_row"])
+	var o := object_at(p) if chunks.has(chunk_of(p)) else null    # 0.3.16 repair props: broken until mended
+	if o != null and d.has("broken_row") and o.def().has("repair_quest"):
+		row = 0 if o.repaired() else int(d["broken_row"])
 	return Vector2i(piece, row)
 
 
@@ -621,6 +624,17 @@ func _apply_sprite(spr: Sprite2D, sprite_id: String) -> void:
 		spr.set_meta("animated", true)
 		var fps := float(GameData.sprite_def("objects", sprite_id).get("fps", 3))
 		_animated.append([spr, frames, fps])
+
+
+## 0.3.16 re-draw "repair_quest" props after a quest change (Can We Fix It?).
+func refresh_repair_views() -> void:
+	for c in chunk_views.keys():
+		for o in chunk_views[c].get_meta("objects", []):
+			if o.def().has("repair_quest") and o.view and is_instance_valid(o.view):
+				if o.view.has_meta("autotile"):
+					o.view.frame_coords = autotile_piece(o.pos, str(o.view.get_meta("autotile")))
+				else:
+					_apply_sprite(o.view, o.sprite_id(tick))
 
 
 func _refresh_object_view(o: WorldObject) -> void:

@@ -11,7 +11,7 @@ static func check(cond: bool, what: String) -> void:
 
 static func run(main, world, p) -> void:
 	print("  -- 0.3.15 side quests")
-	check(str(ProjectSettings.get_setting("application/config/version")) == "0.3.15", "version is 0.3.15")
+	check(str(ProjectSettings.get_setting("application/config/version")) >= "0.3.15", "version is 0.3.15+")
 	var keep_inv: Array = p.inventory.slots.duplicate(true)
 	var keep_q: Dictionary = p.quests.duplicate(true)
 	var keep_inf: int = p.influence

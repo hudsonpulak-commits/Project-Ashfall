@@ -2837,6 +2837,36 @@
    "frames": 1,
    "anchor": "bottom",
    "note": "0.3.14 designer Cinderholt v1 prop (art_handoff/towns/cinderholt)"
+  },
+  "farm_wall": {
+   "path": "res://assets/sprites/objects/quests/farm_wall.png",
+   "frame_size": [
+    16,
+    24
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.3.16 placeholder quest prop (generated)"
+  },
+  "farm_wall_damaged": {
+   "path": "res://assets/sprites/objects/quests/farm_wall_damaged.png",
+   "frame_size": [
+    16,
+    24
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.3.16 placeholder quest prop (generated)"
+  },
+  "wolf_den": {
+   "path": "res://assets/sprites/objects/quests/wolf_den.png",
+   "frame_size": [
+    32,
+    24
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.3.16 placeholder quest prop (generated)"
   }
  },
  "actors": {

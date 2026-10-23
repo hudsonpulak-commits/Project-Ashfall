@@ -1661,6 +1661,82 @@
    "giver": "qm_hale",
    "verb": "Talk-to",
    "note": "0.3.15 Chicken Slayer giver, Northern Guard supply officer"
+  },
+  "quest_giver_smith": {
+   "name": "Brannoc the Smith",
+   "sprite": "quest_giver",
+   "actor_sprite": "keeper_body",
+   "blocks": true,
+   "type": "quest",
+   "giver": "smith_brannoc",
+   "verb": "Talk-to",
+   "note": "0.3.16 We Need Steel! giver, Cinderholt forge"
+  },
+  "quest_giver_sergeant": {
+   "name": "Sergeant Voss",
+   "sprite": "quest_giver",
+   "actor_sprite": "town_guard",
+   "blocks": true,
+   "type": "quest",
+   "giver": "sgt_voss",
+   "verb": "Talk-to",
+   "note": "0.3.16 Northern Guard camp, We Need Steel! delivery"
+  },
+  "quest_giver_farmer": {
+   "name": "Farmer Garrow",
+   "sprite": "quest_giver",
+   "actor_sprite": "villager",
+   "blocks": true,
+   "type": "quest",
+   "giver": "farmer_garrow",
+   "verb": "Talk-to",
+   "note": "0.3.16 Can We Fix It? giver, Garrow farm south of Cinderholt"
+  },
+  "quest_giver_tamsin": {
+   "name": "Wenna Tamsin",
+   "sprite": "quest_giver",
+   "actor_sprite": "citizen",
+   "blocks": true,
+   "type": "quest",
+   "giver": "wenna_tamsin",
+   "verb": "Talk-to",
+   "note": "0.3.16 Finding Clip Clop giver, Tamsin farm east of Fenhollow"
+  },
+  "quest_giver_mabel": {
+   "name": "Old Mabel",
+   "sprite": "quest_giver",
+   "actor_sprite": "villager",
+   "blocks": true,
+   "type": "quest",
+   "giver": "old_mabel",
+   "verb": "Talk-to",
+   "note": "0.3.16 A Dead Rat is a Good Rat giver, Millbrook"
+  },
+  "farm_fence_repair": {
+   "name": "Broken fence",
+   "repaired_name": "Fence",
+   "sprite": "fence",
+   "blocks": true,
+   "type": "prop",
+   "repair_quest": "can_we_fix_it",
+   "note": "0.3.16 broken (autotile broken row) until Can We Fix It? is done"
+  },
+  "farm_wall_repair": {
+   "name": "Damaged wall",
+   "repaired_name": "Farm wall",
+   "sprite": "farm_wall_damaged",
+   "repaired_sprite": "farm_wall",
+   "blocks": true,
+   "type": "prop",
+   "repair_quest": "can_we_fix_it",
+   "note": "0.3.16 damaged until Can We Fix It? is done"
+  },
+  "wolf_den": {
+   "name": "Wolf den",
+   "sprite": "wolf_den",
+   "blocks": true,
+   "type": "prop",
+   "note": "0.3.16 Finding Clip Clop: the den Clip Clop strayed to"
   }
  }
 }

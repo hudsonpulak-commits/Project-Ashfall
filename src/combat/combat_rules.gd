@@ -69,6 +69,8 @@ static func can_aggro(enemy, actor, t: int) -> bool:
 static func can_attack(actor, enemy, t: int) -> String:
 	if enemy is Actor:
 		return PkRules.can_pvp(actor, enemy, t)   # 0.3.1: other players only in PK zones (all multi)
+	if bool(enemy.def.get("no_attack", false)):     # 0.3.16 quest animals (Clip Clop)
+		return "You can't attack %s." % enemy.display_name()
 	if is_multi(enemy.tile):
 		return ""
 	var ef = enemy_foe(enemy, t)
