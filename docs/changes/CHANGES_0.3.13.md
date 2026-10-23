@@ -75,3 +75,20 @@ Selftest: 939/939 (also fixed 3 latent SCRIPT ERRORs the release gate rejects: n
 ## QA fixes (0.3.13)
 - Fenhollow buildings: a tile now counts as walk-in floor only when at least 160 of its 256 px are drawn floor (it was 24). Before this, the top row of the forge hall, which is mostly outside the drawn floor, could be walked on. The furnace, anvil and keeper stood above the back wall, and the wall drew over the player's head.
 - QA bot: the walk and gear legs now run on a properly clear patch. The old search found no clear patch within radius 70 of the dense Fenhollow spawn, so the legs ran through crates and racks.
+
+## Bridge / boardwalk corner holes (0.3.13)
+- Cause: `assets/sprites/towns/fenhollow/tiles/fh_boardwalk_autotile.png` — every one of its 16 frames has a 2x2
+  transparent rounded corner. On wide (2+ tile) decks the four corners meet at every tile seam and leave a 4x4 hole.
+- Fix (builder-time, the art file is untouched): `build_fenhollow_v1.py render_ground` fills a corner from the board
+  2 px inward when both sides join and the diagonal tile is boardwalk too (L-bends keep their inner notch).
+  300 corners filled across 153 boardwalk tiles; ring QA still 0 gaps.
+- Audited clean: tiles/bridge.png, tiles/planks.png, tiles/boardwalk.png, transitions/boardwalk.png, transitions/planks.png,
+  autotile/moat_border(.png/_corners.png), saltmere docks/dock_planks_autotile.png, v2_dock_join.png, v3_pier_end_s.png.
+
+## Sound effects (0.3.13)
+- New autoload `Sfx` on its own "SFX" bus with its own volume (Settings > Sound effects volume, user://settings.cfg
+  [audio] sfx). Music player and fades unchanged.
+- mining_tick: each pickaxe swing; mining_ting_rock: ore obtained; axe_solid: each woodcutting (forestry) chop;
+  damage_hit: only when the player takes >0 damage; anvil_ting_high: each anvil smithing strike;
+  furnace_low: looped while smelting at a furnace (stops ~1.5 s after smelting stops).
+- Hooks `Sfx.npc_hit(humanoid)` -> npc_hit_humanoid / npc_hit_creature: no-ops until those .ogg files are added.

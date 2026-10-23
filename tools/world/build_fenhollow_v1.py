@@ -158,6 +158,7 @@ CNT_L = bits(fr(LV)); CNT_P = bits(fr(PV))
 # ---------------------------------------------------------------- base ground (water, marsh bank, main mud paths, boardwalk)
 def strip(n): return np.array(L('tiles', n))
 WD, WS = strip('fh_water_deep_4f'), strip('fh_water_shallow_4f'); dT = ndi.distance_transform_edt(~landT)
+BW_FILLED = []
 def render_ground(U):
     base = np.zeros((SH, SW, 4), np.uint8)
     for y in range(GH):
@@ -169,6 +170,7 @@ def render_ground(U):
             for x in range(GW):
                 if F[y, x] and not (n == 'fh_diag_mud_path' and BWt[y, x] and F[y, x] != 15): lay[y * 16:y * 16 + 16, x * 16:x * 16 + 16] = A[:, F[y, x] * 16:F[y, x] * 16 + 16]
         cover[n] = lay[..., 3] > 0; img.alpha_composite(Image.fromarray(lay))
+    BW_FILLED.clear()
     BA = strip('fh_boardwalk_autotile'); bwpx = np.zeros((SH, SW), bool)
     def nb(m, y, x):
         g = lambda yy, xx: 0 <= yy < GH and 0 <= xx < GW and m[yy, xx]
@@ -177,10 +179,20 @@ def render_ground(U):
     for y in range(GH):
         for x in range(GW):
             if BWt[y, x]:
-                m = nb(BWt, y, x); f = Image.fromarray(BA[:, m * 16:m * 16 + 16]); img.alpha_composite(f, (x * 16, y * 16))
+                m = nb(BWt, y, x); fa = BA[:, m * 16:m * 16 + 16].copy()
+                # 0.3.13 corner-hole fix: every frame has 2x2 transparent corners. Where both sides of a corner
+                # join AND the diagonal tile is boardwalk too (a 2+ wide deck), fill that 2x2 from the board
+                # 2 px inward so neighbouring tiles join with no hole. (L-bends keep their inner notch.)
+                bw = lambda yy, xx: 0 <= yy < GH and 0 <= xx < GW and BWt[yy, xx]
+                for (dy, dx, bv, bh, ys, xs, sy) in [(-1, 1, 1, 2, slice(0, 2), slice(14, 16), slice(2, 4)), (-1, -1, 1, 8, slice(0, 2), slice(0, 2), slice(2, 4)),
+                                                     (1, 1, 4, 2, slice(14, 16), slice(14, 16), slice(12, 14)), (1, -1, 4, 8, slice(14, 16), slice(0, 2), slice(12, 14))]:
+                    if m & bv and m & bh and bw(y + dy, x + dx) and bw(y + dy, x) and bw(y, x + dx):
+                        blk = fa[ys, xs]; hole = blk[..., 3] == 0; blk[hole] = fa[sy, xs][hole]; fa[ys, xs] = blk; BW_FILLED.append((x, y))
+                f = Image.fromarray(fa); img.alpha_composite(f, (x * 16, y * 16))
                 bwpx[y * 16:min(SH, y * 16 + 20), x * 16:x * 16 + 16] |= np.array(f)[:min(20, SH - y * 16), :, 3] > 0
     return img, cover['fh_diag_marsh_bank'], cover['fh_diag_mud_path'], bwpx
 img0, landpx, pathpx, bwpx = render_ground(MVl)
+print('boardwalk tiles', int(BWt.sum()), 'corner joins filled', len(BW_FILLED), 'sample', sorted(set(BW_FILLED))[:0] + sorted(set(BW_FILLED))[::25])
 waterpx = ~landpx & ~bwpx
 
 # ---------------------------------------------------------------- palisade rows, watchtowers, gates
