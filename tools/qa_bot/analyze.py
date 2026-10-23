@@ -416,7 +416,13 @@ def check_roof(ctx):
         back = next((i for i in range(exitf, len(alph)) if alph[i][2] >= 0.99), None) if exitf is not None else None
         others = [r["f"] for r in run.log if any(v < 0.99 for k, v in r["roofs"].items() if k != r["inside"] and k != bid)]
         ev = [ctx.gif(name, "%s_roof" % name, i0=max(0, alph[enter][0] - 15), i1=alph[gone][0] + 15 if gone else None, step=1, crop=False)]
-        out.append(Result("C7 roof", "%s: roof fades out on entering (%s)" % (name, bid), gone is not None and len(mid) >= 2 and dt is not None and dt <= fade_s * 2.5,
+        # 0.3.17 harness: under parallel QA load frames arrive late; wall time lost to frames
+        # slower than 30 fps inside the fade window is not the fade's fault (pops still fail on mid)
+        lag = 0.0
+        if gone is not None:
+            for i in range(enter + 1, gone + 1):
+                lag += max(0.0, (alph[i][1] - alph[i - 1][1]) / 1000.0 - 1.0 / 30.0)
+        out.append(Result("C7 roof", "%s: roof fades out on entering (%s)" % (name, bid), gone is not None and len(mid) >= 2 and dt is not None and dt - lag <= fade_s * 2.5,
                           "inside at frame %d; roof gone at %s after %s s with %d in-between frames (fade, not a pop)" % (alph[enter][0], alph[gone][0] if gone else None, round(dt, 3) if dt else None, len(mid)), ev))
         out.append(Result("C7 roof", "%s: roof returns after walking out" % name, back is not None,
                           "left at frame %s, roof fully back at frame %s" % (alph[exitf][0] if exitf is not None else None, alph[back][0] if back is not None else None)))

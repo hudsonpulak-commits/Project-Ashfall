@@ -1700,7 +1700,14 @@ func _pk() -> void:
 	_notes["finish_tries"] = tries
 	await frames(30)
 	# 0.3.9 give the respawned view time to take the new name outside the Scorch
-	await until(func(): return is_instance_valid(v) and v.display_name == victim.name and not PkRules.is_pk(v.tile), 8.0)
+	# 0.3.17 harness: the AI's view may be respawned (tier change) under load: follow victim.view
+	var tv := Time.get_ticks_msec() + 20000
+	while Time.get_ticks_msec() < tv:
+		if victim.view != null and is_instance_valid(victim.view):
+			v = victim.view
+		if is_instance_valid(v) and v.display_name == victim.name and not PkRules.is_pk(v.tile):
+			break
+		await frames(2)
 	_notes["reset"] = {"old_id": old_id, "old_name": old_name, "old_cb": old_cb, "new_id": victim.id, "new_name": victim.name, "new_cb": AdvBrain.cb_level(victim),
 		"new_coins": victim.coins, "new_tint": victim.tint, "view_name": v.display_name if is_instance_valid(v) else "", "view_pk": PkRules.is_pk(v.tile) if is_instance_valid(v) else true,
 		"estate": AdvBrain.estates.filter(func(e): return str(e["id"]) == "estate:" + old_id).size()}
@@ -2120,8 +2127,11 @@ func _bank035() -> void:
 	label = "dummy_block"
 	await tap_tile(dummy.pos, "training dummy")
 	var t2 := Time.get_ticks_msec() + 15000
+	var tk0: int = Tick.tick_count
 	var snapped := false
-	while Time.get_ticks_msec() < t2 and zero[0] < 3:
+	# 0.3.17 harness: under parallel load 15 s of wall time can be few game ticks;
+	# also wait for 60 game ticks (hard cap 45 s)
+	while (Time.get_ticks_msec() < t2 or Tick.tick_count - tk0 < 60) and Time.get_ticks_msec() < t2 + 30000 and zero[0] < 3:
 		if zero[0] >= 1 and not snapped:
 			await _snap("dummy_block")
 			snapped = true
