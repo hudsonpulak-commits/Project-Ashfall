@@ -850,7 +850,7 @@ static func _village_tests(world: World, p: Player) -> void:
 		for pz in gen.pastures:
 			if pz["village"] == vid:
 				goals.append(pz["gate"])
-				safe_ok = safe_ok and not gen.safe_at(pz["center"])
+				safe_ok = safe_ok and (gen.village_at(pz["center"], 0) == vid or not gen.safe_at(pz["center"]))   # 0.3.16 Millbrook v1 keeps its pasture inside the village
 		for g in goals:
 			var okg: bool = g == sp or not Pathfinder.find_path(world, sp, [g], g, 6000).is_empty()
 			if not okg:

@@ -1740,7 +1740,7 @@
   },
   "rat_den_entrance": {
    "name": "Rat hole",
-   "sprite": "wolf_den",
+   "sprite": "rat_den_entrance",
    "blocks": true,
    "type": "prop",
    "note": "0.3.16 A Dead Rat is a Good Rat: surface den entrance; the Rat Mother waits beside it. 0.3.17 turns this into the way down to the underworld rat den."
