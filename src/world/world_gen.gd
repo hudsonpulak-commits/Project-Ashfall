@@ -2066,4 +2066,9 @@ func _lip_stub(n: Vector2i, d: Vector2i) -> bool:
 	for q in [n + d, n + perp, n - perp]:
 		if _raw_at(q) in _CLIFF_BLOCK and not _cliff_lone_diag(q):   # real cliff that stays (not itself a dropped stub)
 			return false
-	return true   # no cliff to join along or across: it would be a stub
+	var k := 0
+	for dd in [Vector2i(1, 1), Vector2i(-1, 1), Vector2i(1, -1), Vector2i(-1, -1)]:
+		var c: Vector2i = n + dd
+		var rc := _raw_at(c)
+		k += int((rc in _CLIFF_BLOCK and not _cliff_lone_diag(c)) or (rc == -1 and cliff_gap_fill(c)))
+	return k == 1   # touches cliff only by a corner (diagonal gap fills included)
