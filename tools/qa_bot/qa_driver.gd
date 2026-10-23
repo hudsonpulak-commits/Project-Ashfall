@@ -2049,6 +2049,7 @@ func _bank035() -> void:
 	res["panel"] = main.hud.panels["bank"].visible
 	label = "bank_interior"
 	await _snap("bank_interior")
+	await _organize0317(res)
 	main.hud.panels["bank"].visible = false
 	# AI banking at the new building
 	var ai = await _pick_ai("fenhollow")
@@ -3544,3 +3545,96 @@ func _perf0316() -> void:
 		"worst_process_ms": srt[-1] if not srt.is_empty() else 0.0, "p1_low_process_ms": low_p / one,
 		"worst_frame_ms": srf[-1] if not srf.is_empty() else 0.0, "p1_low_frame_ms": low_f / one,
 		"median_frame_ms": srf[n / 2] if not srf.is_empty() else 0.0, "spikes": _top_spikes(spikes), "spike_count": spikes.size()}
+
+
+## 0.3.17 pack + bank organizing and bank tabs, all through real taps.
+func _organize0317(res: Dictionary) -> void:
+	var p: Player = main.player
+	var hud = main.hud
+	var o := {}
+	label = "organize_bank"
+	p.bank.clear()
+	p.bank.add("iron_ore", 6)
+	p.bank.add("coal", 4)
+	p.bank_tabs = []
+	p.bank_tab_of = {}
+	hud.bank_tab = BankTabs.ALL
+	hud._refresh_bank()
+	await frames(5)
+	await tap_control(hud.bank_arrange_btn, "Arrange")
+	await frames(5)
+	await tap_control(hud.bank_slots[0], "bank: pick iron ore")
+	await frames(3)
+	o["bank_highlight"] = hud.bank_slots[0].selected
+	await tap_control(hud.bank_slots[1], "bank: coal (swap)")
+	await frames(5)
+	o["bank_swap"] = p.bank.slots[0] != null and p.bank.slots[0]["id"] == "coal" and p.bank.slots[1]["id"] == "iron_ore"
+	await tap_control(hud.bank_tab_row.get_node_or_null("BankTabAdd"), "new tab")
+	await frames(5)
+	var ed: LineEdit = hud.bank_edit_row.get_node_or_null("BankTabName")
+	if ed:
+		ed.text = "Ores"
+		ed.text_submitted.emit("Ores")
+	await frames(5)
+	hud.bank_tab = BankTabs.ALL
+	hud._refresh_bank()
+	await frames(3)
+	await tap_control(hud.bank_slots[1], "bank: pick iron ore")
+	await frames(3)
+	await tap_control(hud.bank_tab_row.get_node_or_null("BankTab_2"), "tab Ores (file it)")
+	await frames(5)
+	o["filed"] = BankTabs.tab_of(p, "iron_ore") == 1
+	await tap_control(hud.bank_tab_row.get_node_or_null("BankTab_2"), "show tab Ores")
+	await frames(5)
+	await tap_control(hud.bank_slots[0], "bank: pick iron ore")
+	await frames(3)
+	await tap_control(find_button(hud.bank_edit_row, "Icon"), "icon from iron ore")
+	await frames(5)
+	o["tab_shows"] = BankTabs.indices(p, p.bank, 1).size() == 1 and hud.bank_slots[0].item_id == "iron_ore" and hud.bank_slots[1].item_id == ""
+	o["tab"] = p.bank_tabs.duplicate(true)
+	await _snap("bank_tabs")
+	var q := Player.new()
+	q.from_save(p.to_save())
+	o["tabs_persist"] = q.bank_tabs.size() == 1 and q.bank_tabs[0]["name"] == "Ores" and q.bank_tabs[0]["icon"] == "iron_ore" and BankTabs.tab_of(q, "iron_ore") == 1 and q.bank.slots[0]["id"] == "coal"
+	q.free()
+	await tap_control(find_button(hud.bank_edit_row, "Delete tab"), "delete tab")
+	await frames(5)
+	o["deleted"] = p.bank_tabs.is_empty() and BankTabs.tab_of(p, "iron_ore") == 0 and BankTabs.indices(p, p.bank, 0).size() == 2
+	await tap_control(hud.bank_arrange_btn, "Arrange off")
+	await frames(3)
+	# pack: pick up, move to an empty slot, swap, deselect; actions row still offered
+	label = "organize_pack"
+	hud.panels["bank"].visible = false
+	hud.show_panel("pack")
+	p.inventory.clear()
+	p.inventory.add("copper_ore", 1)
+	p.inventory.add("bronze_hatchet", 1)
+	await frames(5)
+	await tap_control(hud.inv_slots[0], "pack: pick copper ore")
+	await frames(3)
+	o["pack_highlight"] = hud.inv_slots[0].selected
+	o["pack_actions"] = find_button(hud.pack_actions, "Drop") != null
+	await snap_pack()
+	await tap_control(hud.inv_slots[9], "pack: empty slot (move)")
+	await frames(3)
+	o["pack_move"] = p.inventory.slots[0] == null and p.inventory.slots[9] != null and p.inventory.slots[9]["id"] == "copper_ore"
+	await tap_control(hud.inv_slots[1], "pack: pick hatchet")
+	await frames(3)
+	await tap_control(hud.inv_slots[9], "pack: ore (swap)")
+	await frames(3)
+	o["pack_swap"] = p.inventory.slots[9]["id"] == "bronze_hatchet" and p.inventory.slots[1]["id"] == "copper_ore"
+	await tap_control(hud.inv_slots[1], "pick")
+	await frames(2)
+	await tap_control(hud.inv_slots[1], "same item: put down")
+	await frames(3)
+	o["pack_deselect"] = hud._sel_slot == -1 and p.inventory.slots[1]["id"] == "copper_ore"
+	var q2 := Player.new()
+	q2.from_save(p.to_save())
+	o["pack_persist"] = q2.inventory.slots[9] != null and q2.inventory.slots[9]["id"] == "bronze_hatchet" and q2.inventory.slots[1]["id"] == "copper_ore"
+	q2.free()
+	hud.show_panel("")
+	res["organize"] = o
+
+
+func snap_pack() -> void:
+	await _snap("pack_picked")
