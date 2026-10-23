@@ -372,6 +372,8 @@ func take_hit(dmg: int, attacker, t: int) -> void:
 		return
 	hp -= dmg
 	last_combat_tick = t
+	if dmg > 0 and attacker is Player and not (self is Player):   # 0.3.13 sfx: AI players are humanoid
+		Sfx.npc_hit(true)
 	if attacker != null:
 		last_attacker = attacker
 		combat_foe = attacker

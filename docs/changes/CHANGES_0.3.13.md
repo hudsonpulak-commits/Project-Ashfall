@@ -100,3 +100,6 @@ Selftest: 939/939 (also fixed 3 latent SCRIPT ERRORs the release gate rejects: n
   they go back when the player leaves. Selftest check added.
 - Scenario fix (QA bot only): the smithy "inside the door" tap was door + (0, 2), which is outside a south facade,
   so the player stood on its own fading tap marker. It now taps the first tile inside, as the cookhouse scenario does.
+- NPC hit sounds (approved): npc_ehh_deeper when the player hits a humanoid (goblin, goblin warlord, town guard,
+  citizen, cinder brute, AI players incl. raiders); npc_eee_animal for creatures (rat, wolf, chicken, cow, slime and any
+  enemy without `"humanoid": true` in data/enemies.json). Plays on hits that deal damage, dealt by the player.

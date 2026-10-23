@@ -283,6 +283,8 @@ func take_hit(dmg: int, attacker: Actor, t: int) -> void:
 	hp -= dmg
 	last_combat_tick = t
 	Events.hitsplat.emit(self, tile, dmg)
+	if dmg > 0 and attacker is Player:   # 0.3.13 sfx: humanoid (goblins, guards, citizens...) vs creature
+		Sfx.npc_hit(bool(def.get("humanoid", false)))
 	queue_redraw()
 	if attacker and not attacker.dead and retaliates() and (target == null or not is_instance_valid(target)):
 		target = attacker
