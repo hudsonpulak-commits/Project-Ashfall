@@ -170,20 +170,96 @@
      "enemy": "town_guard",
      "patrol": [
       [
-       13,
-       11
+       41,
+       42
+      ]
+     ],
+     "gate": "north"
+    },
+    {
+     "enemy": "town_guard",
+     "patrol": [
+      [
+       41,
+       41
+      ]
+     ],
+     "gate": "north"
+    },
+    {
+     "enemy": "town_guard",
+     "patrol": [
+      [
+       40,
+       80
+      ]
+     ],
+     "gate": "south"
+    },
+    {
+     "enemy": "town_guard",
+     "patrol": [
+      [
+       43,
+       80
+      ]
+     ],
+     "gate": "south"
+    },
+    {
+     "enemy": "town_guard",
+     "patrol": [
+      [
+       65,
+       61
+      ]
+     ],
+     "gate": "east"
+    },
+    {
+     "enemy": "town_guard",
+     "patrol": [
+      [
+       67,
+       62
+      ]
+     ],
+     "gate": "east"
+    },
+    {
+     "enemy": "town_guard",
+     "patrol": [
+      [
+       16,
+       61
+      ]
+     ],
+     "gate": "west"
+    },
+    {
+     "enemy": "town_guard",
+     "patrol": [
+      [
+       16,
+       62
+      ]
+     ],
+     "gate": "west"
+    },
+    {
+     "enemy": "town_guard",
+     "patrol": [
+      [
+       42,
+       62
       ],
       [
-       23,
-       11
+       29,
+       60
       ],
       [
-       23,
-       19
-      ],
-      [
-       13,
-       19
+       25,
+       65
       ]
      ]
     },
@@ -191,106 +267,167 @@
      "enemy": "town_guard",
      "patrol": [
       [
-       3,
-       19
+       42,
+       62
       ],
+      [
+       53,
+       58
+      ],
+      [
+       59,
+       65
+      ]
+     ]
+    },
+    {
+     "enemy": "town_guard",
+     "patrol": [
+      [
+       42,
+       48
+      ],
+      [
+       32,
+       50
+      ],
+      [
+       51,
+       51
+      ]
+     ]
+    },
+    {
+     "enemy": "town_guard",
+     "patrol": [
+      [
+       42,
+       75
+      ],
+      [
+       32,
+       73
+      ],
+      [
+       50,
+       73
+      ]
+     ]
+    },
+    {
+     "enemy": "northern_guard",
+     "patrol": [
+      [
+       32,
+       16
+      ]
+     ],
+     "camp": "northern_guard"
+    },
+    {
+     "enemy": "northern_guard",
+     "patrol": [
+      [
+       30,
+       17
+      ]
+     ],
+     "camp": "northern_guard"
+    },
+    {
+     "enemy": "northern_guard",
+     "patrol": [
       [
        33,
-       19
-      ]
-     ]
-    },
-    {
-     "enemy": "town_guard",
-     "patrol": [
+       30
+      ],
       [
-       22,
-       1
+       42,
+       32
       ]
      ],
-     "gate": "north"
+     "camp": "northern_guard"
     },
     {
-     "enemy": "town_guard",
+     "enemy": "northern_guard",
      "patrol": [
       [
-       24,
-       1
+       41,
+       16
+      ],
+      [
+       47,
+       16
+      ],
+      [
+       38,
+       23
       ]
      ],
-     "gate": "north"
+     "camp": "northern_guard"
     },
     {
-     "enemy": "town_guard",
+     "enemy": "northern_soldier",
      "patrol": [
       [
-       22,
-       36
+       40,
+       16
       ]
      ],
-     "gate": "south"
+     "camp": "northern_guard"
     },
     {
-     "enemy": "town_guard",
-     "patrol": [
-      [
-       24,
-       36
-      ]
-     ],
-     "gate": "south"
-    },
-    {
-     "enemy": "town_guard",
-     "patrol": [
-      [
-       1,
-       18
-      ]
-     ],
-     "gate": "west"
-    },
-    {
-     "enemy": "town_guard",
-     "patrol": [
-      [
-       1,
-       20
-      ]
-     ],
-     "gate": "west"
-    },
-    {
-     "enemy": "town_guard",
+     "enemy": "northern_soldier",
      "patrol": [
       [
        44,
-       18
+       16
       ]
      ],
-     "gate": "east"
+     "camp": "northern_guard"
     },
     {
-     "enemy": "town_guard",
+     "enemy": "northern_soldier",
      "patrol": [
       [
-       44,
+       45,
+       22
+      ]
+     ],
+     "camp": "northern_guard"
+    },
+    {
+     "enemy": "northern_soldier",
+     "patrol": [
+      [
+       51,
+       23
+      ]
+     ],
+     "camp": "northern_guard"
+    },
+    {
+     "enemy": "northern_soldier",
+     "patrol": [
+      [
+       48,
        20
       ]
      ],
-     "gate": "east"
+     "camp": "northern_guard"
     }
    ],
    "citizens": {
     "enemy": "citizen",
-    "count": 5,
+    "count": 6,
     "area": [
-     18,
-     16,
-     11,
-     7
+     34,
+     56,
+     17,
+     13
     ]
-   }
+   },
+   "note": "0.3.14 two guards inside each of the 4 basalt gates + 4 lane patrols; Northern Guard camp: guards (lv 30) at the camp gate / stair road / camp, soldiers (lv 35) at the command tent and training yard"
   },
   "saltmere": {
    "guards": [

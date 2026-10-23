@@ -80,146 +80,65 @@
    "note": "0.3.13 Fenhollow v1 (designer fh_church)"
   },
   "cinderholt": {
+   "art": "ch_church",
+   "flip": false,
+   "at": [
+    42,
+    67
+   ],
+   "door": [
+    [
+     45,
+     73
+    ]
+   ],
+   "sign": [
+    46,
+    73
+   ],
+   "props": [
+    {
+     "object": "pew",
+     "at": [
+      43,
+      71
+     ]
+    },
+    {
+     "object": "pew",
+     "at": [
+      46,
+      71
+     ]
+    },
+    {
+     "object": "pew",
+     "at": [
+      44,
+      72
+     ]
+    }
+   ],
+   "counter": [],
+   "style": "stone",
+   "roof": "#3a3e4c",
    "id": "cinderholt_church",
    "kind": "church",
    "name": "Cinderholt Chapel",
    "keeper": "Brother Varr",
-   "style": "stone",
-   "rect": [
-    34,
-    14,
-    9,
-    8
-   ],
-   "door": [
-    [
-     38,
-     21
-    ]
+   "altar": [
+    45,
+    69
    ],
    "keeper_at": [
-    41,
-    15
+    44,
+    69
    ],
    "stand": [
-    41,
-    16
+    45,
+    72
    ],
-   "sign": [
-    39,
-    21
-   ],
-   "altar": [
-    38,
-    15
-   ],
-   "props": [
-    {
-     "object": "candle_stand",
-     "at": [
-      35,
-      15
-     ]
-    },
-    {
-     "object": "candle_stand",
-     "at": [
-      37,
-      15
-     ]
-    },
-    {
-     "object": "candle_stand",
-     "at": [
-      39,
-      15
-     ]
-    },
-    {
-     "object": "pew",
-     "at": [
-      35,
-      18
-     ]
-    },
-    {
-     "object": "pew",
-     "at": [
-      36,
-      18
-     ]
-    },
-    {
-     "object": "pew",
-     "at": [
-      37,
-      18
-     ]
-    },
-    {
-     "object": "pew",
-     "at": [
-      39,
-      18
-     ]
-    },
-    {
-     "object": "pew",
-     "at": [
-      40,
-      18
-     ]
-    },
-    {
-     "object": "pew",
-     "at": [
-      41,
-      18
-     ]
-    },
-    {
-     "object": "pew",
-     "at": [
-      35,
-      20
-     ]
-    },
-    {
-     "object": "pew",
-     "at": [
-      36,
-      20
-     ]
-    },
-    {
-     "object": "pew",
-     "at": [
-      37,
-      20
-     ]
-    },
-    {
-     "object": "pew",
-     "at": [
-      39,
-      20
-     ]
-    },
-    {
-     "object": "pew",
-     "at": [
-      40,
-      20
-     ]
-    },
-    {
-     "object": "pew",
-     "at": [
-      41,
-      20
-     ]
-    }
-   ]
+   "note": "0.3.14 Cinderholt v1 (designer ch_church)"
   },
   "saltmere": {
    "art": "v2_church",

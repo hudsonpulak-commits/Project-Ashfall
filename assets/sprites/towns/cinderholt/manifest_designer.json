@@ -1,0 +1,2400 @@
+{
+ "version": "cinderholt v1 (AshFall, Cinder region) + Northern Guard camp",
+ "tile_px": 16,
+ "rules": "layered unique buildings (floor/walls/upper*/roof; door gap in the ground facade; fade_group = roof cutaway); door needs >=44px clear ground in front; every door gets a narrow doorway spur routed to the nearest road; nothing (buildings/props) on roads; gates centred on straight wall runs, passage cut so walls butt flush; E/W gates side profile",
+ "buildings": [
+  {
+   "name": "ch_house_01",
+   "tiles": [
+    4,
+    4
+   ],
+   "px": [
+    64,
+    78
+   ],
+   "storeys": 2,
+   "footprint_origin_px": [
+    0,
+    14
+   ],
+   "layers": [
+    "ch_house_01_floor.png",
+    "ch_house_01_walls.png",
+    "ch_house_01_upper1.png",
+    "ch_house_01_roof.png"
+   ],
+   "fade_group": [
+    "ch_house_01_upper1.png",
+    "ch_house_01_roof.png"
+   ],
+   "door_px": [
+    26,
+    64
+   ],
+   "door_tile": [
+    1,
+    3
+   ],
+   "roof_tiles": [
+    [
+     0,
+     1
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     2,
+     1
+    ],
+    [
+     3,
+     1
+    ],
+    [
+     0,
+     2
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     2,
+     2
+    ],
+    [
+     3,
+     2
+    ],
+    [
+     0,
+     3
+    ],
+    [
+     1,
+     3
+    ],
+    [
+     2,
+     3
+    ],
+    [
+     3,
+     3
+    ]
+   ]
+  },
+  {
+   "name": "ch_house_02",
+   "tiles": [
+    3,
+    3
+   ],
+   "px": [
+    48,
+    62
+   ],
+   "storeys": 2,
+   "footprint_origin_px": [
+    0,
+    14
+   ],
+   "layers": [
+    "ch_house_02_floor.png",
+    "ch_house_02_walls.png",
+    "ch_house_02_upper1.png",
+    "ch_house_02_roof.png"
+   ],
+   "fade_group": [
+    "ch_house_02_upper1.png",
+    "ch_house_02_roof.png"
+   ],
+   "door_px": [
+    28,
+    48
+   ],
+   "door_tile": [
+    1,
+    2
+   ],
+   "roof_tiles": [
+    [
+     0,
+     0
+    ],
+    [
+     1,
+     0
+    ],
+    [
+     0,
+     1
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     2,
+     1
+    ],
+    [
+     0,
+     2
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     2,
+     2
+    ]
+   ]
+  },
+  {
+   "name": "ch_house_03",
+   "tiles": [
+    4,
+    3
+   ],
+   "px": [
+    64,
+    48
+   ],
+   "storeys": 1,
+   "footprint_origin_px": [
+    0,
+    0
+   ],
+   "layers": [
+    "ch_house_03_floor.png",
+    "ch_house_03_walls.png",
+    "ch_house_03_roof.png"
+   ],
+   "fade_group": [
+    "ch_house_03_roof.png"
+   ],
+   "door_px": [
+    34,
+    34
+   ],
+   "door_tile": [
+    2,
+    2
+   ],
+   "roof_tiles": [
+    [
+     0,
+     1
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     2,
+     1
+    ],
+    [
+     3,
+     1
+    ],
+    [
+     0,
+     2
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     2,
+     2
+    ],
+    [
+     3,
+     2
+    ]
+   ]
+  },
+  {
+   "name": "ch_house_04",
+   "tiles": [
+    4,
+    4
+   ],
+   "px": [
+    64,
+    78
+   ],
+   "storeys": 2,
+   "footprint_origin_px": [
+    0,
+    14
+   ],
+   "layers": [
+    "ch_house_04_floor.png",
+    "ch_house_04_walls.png",
+    "ch_house_04_upper1.png",
+    "ch_house_04_roof.png"
+   ],
+   "fade_group": [
+    "ch_house_04_upper1.png",
+    "ch_house_04_roof.png"
+   ],
+   "door_px": [
+    31,
+    64
+   ],
+   "door_tile": [
+    1,
+    3
+   ],
+   "roof_tiles": [
+    [
+     0,
+     0
+    ],
+    [
+     1,
+     0
+    ],
+    [
+     0,
+     1
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     2,
+     1
+    ],
+    [
+     3,
+     1
+    ],
+    [
+     0,
+     2
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     2,
+     2
+    ],
+    [
+     3,
+     2
+    ],
+    [
+     0,
+     3
+    ],
+    [
+     1,
+     3
+    ],
+    [
+     2,
+     3
+    ],
+    [
+     3,
+     3
+    ]
+   ]
+  },
+  {
+   "name": "ch_house_05",
+   "tiles": [
+    3,
+    3
+   ],
+   "px": [
+    48,
+    48
+   ],
+   "storeys": 1,
+   "footprint_origin_px": [
+    0,
+    0
+   ],
+   "layers": [
+    "ch_house_05_floor.png",
+    "ch_house_05_walls.png",
+    "ch_house_05_roof.png"
+   ],
+   "fade_group": [
+    "ch_house_05_roof.png"
+   ],
+   "door_px": [
+    27,
+    34
+   ],
+   "door_tile": [
+    1,
+    2
+   ],
+   "roof_tiles": [
+    [
+     0,
+     1
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     2,
+     1
+    ],
+    [
+     0,
+     2
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     2,
+     2
+    ]
+   ]
+  },
+  {
+   "name": "ch_house_06",
+   "tiles": [
+    3,
+    3
+   ],
+   "px": [
+    48,
+    62
+   ],
+   "storeys": 2,
+   "footprint_origin_px": [
+    0,
+    14
+   ],
+   "layers": [
+    "ch_house_06_floor.png",
+    "ch_house_06_walls.png",
+    "ch_house_06_upper1.png",
+    "ch_house_06_roof.png"
+   ],
+   "fade_group": [
+    "ch_house_06_upper1.png",
+    "ch_house_06_roof.png"
+   ],
+   "door_px": [
+    27,
+    48
+   ],
+   "door_tile": [
+    1,
+    2
+   ],
+   "roof_tiles": [
+    [
+     0,
+     0
+    ],
+    [
+     1,
+     0
+    ],
+    [
+     2,
+     0
+    ],
+    [
+     0,
+     1
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     2,
+     1
+    ],
+    [
+     0,
+     2
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     2,
+     2
+    ]
+   ]
+  },
+  {
+   "name": "ch_house_07",
+   "tiles": [
+    3,
+    2
+   ],
+   "px": [
+    48,
+    32
+   ],
+   "storeys": 1,
+   "footprint_origin_px": [
+    0,
+    0
+   ],
+   "layers": [
+    "ch_house_07_floor.png",
+    "ch_house_07_walls.png",
+    "ch_house_07_roof.png"
+   ],
+   "fade_group": [
+    "ch_house_07_roof.png"
+   ],
+   "door_px": [
+    30,
+    18
+   ],
+   "door_tile": [
+    1,
+    1
+   ],
+   "roof_tiles": [
+    [
+     0,
+     1
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     2,
+     1
+    ]
+   ]
+  },
+  {
+   "name": "ch_house_08",
+   "tiles": [
+    2,
+    3
+   ],
+   "px": [
+    32,
+    48
+   ],
+   "storeys": 1,
+   "footprint_origin_px": [
+    0,
+    0
+   ],
+   "layers": [
+    "ch_house_08_floor.png",
+    "ch_house_08_walls.png",
+    "ch_house_08_roof.png"
+   ],
+   "fade_group": [
+    "ch_house_08_roof.png"
+   ],
+   "door_px": [
+    17,
+    34
+   ],
+   "door_tile": [
+    1,
+    2
+   ],
+   "roof_tiles": [
+    [
+     0,
+     0
+    ],
+    [
+     0,
+     1
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     0,
+     2
+    ],
+    [
+     1,
+     2
+    ]
+   ]
+  },
+  {
+   "name": "ch_house_09",
+   "tiles": [
+    2,
+    3
+   ],
+   "px": [
+    32,
+    62
+   ],
+   "storeys": 2,
+   "footprint_origin_px": [
+    0,
+    14
+   ],
+   "layers": [
+    "ch_house_09_floor.png",
+    "ch_house_09_walls.png",
+    "ch_house_09_upper1.png",
+    "ch_house_09_roof.png"
+   ],
+   "fade_group": [
+    "ch_house_09_upper1.png",
+    "ch_house_09_roof.png"
+   ],
+   "door_px": [
+    13,
+    48
+   ],
+   "door_tile": [
+    0,
+    2
+   ],
+   "roof_tiles": [
+    [
+     0,
+     0
+    ],
+    [
+     0,
+     1
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     0,
+     2
+    ],
+    [
+     1,
+     2
+    ]
+   ]
+  },
+  {
+   "name": "ch_house_10",
+   "tiles": [
+    3,
+    2
+   ],
+   "px": [
+    48,
+    46
+   ],
+   "storeys": 2,
+   "footprint_origin_px": [
+    0,
+    14
+   ],
+   "layers": [
+    "ch_house_10_floor.png",
+    "ch_house_10_walls.png",
+    "ch_house_10_upper1.png",
+    "ch_house_10_roof.png"
+   ],
+   "fade_group": [
+    "ch_house_10_upper1.png",
+    "ch_house_10_roof.png"
+   ],
+   "door_px": [
+    28,
+    32
+   ],
+   "door_tile": [
+    1,
+    1
+   ],
+   "roof_tiles": [
+    [
+     0,
+     1
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     2,
+     1
+    ]
+   ]
+  },
+  {
+   "name": "ch_house_11",
+   "tiles": [
+    2,
+    3
+   ],
+   "px": [
+    32,
+    62
+   ],
+   "storeys": 2,
+   "footprint_origin_px": [
+    0,
+    14
+   ],
+   "layers": [
+    "ch_house_11_floor.png",
+    "ch_house_11_walls.png",
+    "ch_house_11_upper1.png",
+    "ch_house_11_roof.png"
+   ],
+   "fade_group": [
+    "ch_house_11_upper1.png",
+    "ch_house_11_roof.png"
+   ],
+   "door_px": [
+    14,
+    48
+   ],
+   "door_tile": [
+    0,
+    2
+   ],
+   "roof_tiles": [
+    [
+     0,
+     1
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     0,
+     2
+    ],
+    [
+     1,
+     2
+    ]
+   ]
+  },
+  {
+   "name": "ch_house_12",
+   "tiles": [
+    4,
+    4
+   ],
+   "px": [
+    64,
+    78
+   ],
+   "storeys": 2,
+   "footprint_origin_px": [
+    0,
+    14
+   ],
+   "layers": [
+    "ch_house_12_floor.png",
+    "ch_house_12_walls.png",
+    "ch_house_12_upper1.png",
+    "ch_house_12_roof.png"
+   ],
+   "fade_group": [
+    "ch_house_12_upper1.png",
+    "ch_house_12_roof.png"
+   ],
+   "door_px": [
+    40,
+    64
+   ],
+   "door_tile": [
+    2,
+    3
+   ],
+   "roof_tiles": [
+    [
+     0,
+     0
+    ],
+    [
+     1,
+     0
+    ],
+    [
+     2,
+     0
+    ],
+    [
+     3,
+     0
+    ],
+    [
+     0,
+     1
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     2,
+     1
+    ],
+    [
+     3,
+     1
+    ],
+    [
+     0,
+     2
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     2,
+     2
+    ],
+    [
+     3,
+     2
+    ],
+    [
+     0,
+     3
+    ],
+    [
+     1,
+     3
+    ],
+    [
+     2,
+     3
+    ],
+    [
+     3,
+     3
+    ]
+   ]
+  },
+  {
+   "name": "ch_church",
+   "tiles": [
+    4,
+    6
+   ],
+   "px": [
+    64,
+    130
+   ],
+   "storeys": 2,
+   "footprint_origin_px": [
+    0,
+    34
+   ],
+   "layers": [
+    "ch_church_floor.png",
+    "ch_church_walls.png",
+    "ch_church_upper1.png",
+    "ch_church_roof.png"
+   ],
+   "fade_group": [
+    "ch_church_upper1.png",
+    "ch_church_roof.png"
+   ],
+   "door_px": [
+    32,
+    116
+   ],
+   "door_tile": [
+    2,
+    5
+   ],
+   "roof_tiles": [
+    [
+     1,
+     1
+    ],
+    [
+     2,
+     1
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     2,
+     2
+    ],
+    [
+     0,
+     3
+    ],
+    [
+     1,
+     3
+    ],
+    [
+     2,
+     3
+    ],
+    [
+     3,
+     3
+    ],
+    [
+     1,
+     4
+    ],
+    [
+     2,
+     4
+    ],
+    [
+     1,
+     5
+    ],
+    [
+     2,
+     5
+    ]
+   ]
+  },
+  {
+   "name": "ch_bank",
+   "tiles": [
+    5,
+    4
+   ],
+   "px": [
+    80,
+    78
+   ],
+   "storeys": 2,
+   "footprint_origin_px": [
+    0,
+    14
+   ],
+   "layers": [
+    "ch_bank_floor.png",
+    "ch_bank_walls.png",
+    "ch_bank_upper1.png",
+    "ch_bank_roof.png"
+   ],
+   "fade_group": [
+    "ch_bank_upper1.png",
+    "ch_bank_roof.png"
+   ],
+   "door_px": [
+    40,
+    64
+   ],
+   "door_tile": [
+    2,
+    3
+   ],
+   "roof_tiles": [
+    [
+     1,
+     0
+    ],
+    [
+     2,
+     0
+    ],
+    [
+     3,
+     0
+    ],
+    [
+     0,
+     1
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     2,
+     1
+    ],
+    [
+     3,
+     1
+    ],
+    [
+     4,
+     1
+    ],
+    [
+     0,
+     2
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     2,
+     2
+    ],
+    [
+     3,
+     2
+    ],
+    [
+     4,
+     2
+    ],
+    [
+     0,
+     3
+    ],
+    [
+     1,
+     3
+    ],
+    [
+     2,
+     3
+    ],
+    [
+     3,
+     3
+    ],
+    [
+     4,
+     3
+    ]
+   ]
+  },
+  {
+   "name": "ch_general_store",
+   "tiles": [
+    5,
+    3
+   ],
+   "px": [
+    80,
+    62
+   ],
+   "storeys": 2,
+   "footprint_origin_px": [
+    0,
+    14
+   ],
+   "layers": [
+    "ch_general_store_floor.png",
+    "ch_general_store_walls.png",
+    "ch_general_store_upper1.png",
+    "ch_general_store_roof.png"
+   ],
+   "fade_group": [
+    "ch_general_store_upper1.png",
+    "ch_general_store_roof.png"
+   ],
+   "door_px": [
+    30,
+    48
+   ],
+   "door_tile": [
+    1,
+    2
+   ],
+   "roof_tiles": [
+    [
+     3,
+     0
+    ],
+    [
+     4,
+     0
+    ],
+    [
+     0,
+     1
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     2,
+     1
+    ],
+    [
+     3,
+     1
+    ],
+    [
+     4,
+     1
+    ],
+    [
+     0,
+     2
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     2,
+     2
+    ],
+    [
+     3,
+     2
+    ],
+    [
+     4,
+     2
+    ]
+   ]
+  },
+  {
+   "name": "ch_smithy",
+   "tiles": [
+    6,
+    4
+   ],
+   "px": [
+    96,
+    64
+   ],
+   "storeys": 1,
+   "footprint_origin_px": [
+    0,
+    0
+   ],
+   "layers": [
+    "ch_smithy_floor.png",
+    "ch_smithy_walls.png",
+    "ch_smithy_roof.png"
+   ],
+   "fade_group": [
+    "ch_smithy_roof.png"
+   ],
+   "door_px": [
+    28,
+    50
+   ],
+   "door_tile": [
+    1,
+    3
+   ],
+   "roof_tiles": [
+    [
+     0,
+     1
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     2,
+     1
+    ],
+    [
+     3,
+     1
+    ],
+    [
+     4,
+     1
+    ],
+    [
+     5,
+     1
+    ],
+    [
+     0,
+     2
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     2,
+     2
+    ],
+    [
+     3,
+     2
+    ],
+    [
+     4,
+     2
+    ],
+    [
+     5,
+     2
+    ],
+    [
+     0,
+     3
+    ],
+    [
+     1,
+     3
+    ],
+    [
+     2,
+     3
+    ],
+    [
+     3,
+     3
+    ],
+    [
+     4,
+     3
+    ],
+    [
+     5,
+     3
+    ]
+   ]
+  },
+  {
+   "name": "ch_cookhouse",
+   "tiles": [
+    4,
+    4
+   ],
+   "px": [
+    64,
+    64
+   ],
+   "storeys": 1,
+   "footprint_origin_px": [
+    0,
+    0
+   ],
+   "layers": [
+    "ch_cookhouse_floor.png",
+    "ch_cookhouse_walls.png",
+    "ch_cookhouse_roof.png"
+   ],
+   "fade_group": [
+    "ch_cookhouse_roof.png"
+   ],
+   "door_px": [
+    26,
+    50
+   ],
+   "door_tile": [
+    1,
+    3
+   ],
+   "roof_tiles": [
+    [
+     0,
+     1
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     2,
+     1
+    ],
+    [
+     3,
+     1
+    ],
+    [
+     0,
+     2
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     2,
+     2
+    ],
+    [
+     3,
+     2
+    ],
+    [
+     0,
+     3
+    ],
+    [
+     1,
+     3
+    ],
+    [
+     2,
+     3
+    ],
+    [
+     3,
+     3
+    ]
+   ]
+  },
+  {
+   "name": "ch_player_shop",
+   "tiles": [
+    3,
+    4
+   ],
+   "px": [
+    48,
+    78
+   ],
+   "storeys": 2,
+   "footprint_origin_px": [
+    0,
+    14
+   ],
+   "layers": [
+    "ch_player_shop_floor.png",
+    "ch_player_shop_walls.png",
+    "ch_player_shop_upper1.png",
+    "ch_player_shop_roof.png"
+   ],
+   "fade_group": [
+    "ch_player_shop_upper1.png",
+    "ch_player_shop_roof.png"
+   ],
+   "door_px": [
+    22,
+    64
+   ],
+   "door_tile": [
+    1,
+    3
+   ],
+   "roof_tiles": [
+    [
+     0,
+     0
+    ],
+    [
+     1,
+     0
+    ],
+    [
+     0,
+     1
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     2,
+     1
+    ],
+    [
+     0,
+     2
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     2,
+     2
+    ],
+    [
+     0,
+     3
+    ],
+    [
+     1,
+     3
+    ],
+    [
+     2,
+     3
+    ]
+   ]
+  },
+  {
+   "name": "ch_guard_post",
+   "tiles": [
+    3,
+    3
+   ],
+   "px": [
+    48,
+    62
+   ],
+   "storeys": 2,
+   "footprint_origin_px": [
+    0,
+    14
+   ],
+   "layers": [
+    "ch_guard_post_floor.png",
+    "ch_guard_post_walls.png",
+    "ch_guard_post_upper1.png",
+    "ch_guard_post_roof.png"
+   ],
+   "fade_group": [
+    "ch_guard_post_upper1.png",
+    "ch_guard_post_roof.png"
+   ],
+   "door_px": [
+    18,
+    48
+   ],
+   "door_tile": [
+    1,
+    2
+   ],
+   "roof_tiles": [
+    [
+     2,
+     0
+    ],
+    [
+     0,
+     1
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     2,
+     1
+    ],
+    [
+     0,
+     2
+    ],
+    [
+     1,
+     2
+    ]
+   ]
+  }
+ ],
+ "houses": [
+  "ch_house_01",
+  "ch_house_02",
+  "ch_house_03",
+  "ch_house_04",
+  "ch_house_05",
+  "ch_house_06",
+  "ch_house_07",
+  "ch_house_08",
+  "ch_house_09",
+  "ch_house_10",
+  "ch_house_11",
+  "ch_house_12"
+ ],
+ "civic": [
+  "ch_church",
+  "ch_bank",
+  "ch_general_store",
+  "ch_smithy",
+  "ch_cookhouse",
+  "ch_player_shop",
+  "ch_guard_post"
+ ],
+ "camp": {
+  "buildings": [
+   {
+    "name": "ng_tent_01",
+    "tiles": [
+     3,
+     2
+    ],
+    "px": [
+     48,
+     32
+    ],
+    "storeys": 1,
+    "footprint_origin_px": [
+     0,
+     0
+    ],
+    "layers": [
+     "ng_tent_01_floor.png",
+     "ng_tent_01_walls.png",
+     "ng_tent_01_roof.png"
+    ],
+    "fade_group": [
+     "ng_tent_01_roof.png"
+    ],
+    "door_px": [
+     24,
+     18
+    ],
+    "door_tile": [
+     1,
+     1
+    ],
+    "roof_tiles": [
+     [
+      0,
+      0
+     ],
+     [
+      1,
+      0
+     ],
+     [
+      2,
+      0
+     ],
+     [
+      0,
+      1
+     ],
+     [
+      1,
+      1
+     ],
+     [
+      2,
+      1
+     ]
+    ]
+   },
+   {
+    "name": "ng_tent_02",
+    "tiles": [
+     3,
+     3
+    ],
+    "px": [
+     48,
+     48
+    ],
+    "storeys": 1,
+    "footprint_origin_px": [
+     0,
+     0
+    ],
+    "layers": [
+     "ng_tent_02_floor.png",
+     "ng_tent_02_walls.png",
+     "ng_tent_02_roof.png"
+    ],
+    "fade_group": [
+     "ng_tent_02_roof.png"
+    ],
+    "door_px": [
+     24,
+     34
+    ],
+    "door_tile": [
+     1,
+     2
+    ],
+    "roof_tiles": [
+     [
+      0,
+      1
+     ],
+     [
+      1,
+      1
+     ],
+     [
+      2,
+      1
+     ],
+     [
+      0,
+      2
+     ],
+     [
+      1,
+      2
+     ],
+     [
+      2,
+      2
+     ]
+    ]
+   },
+   {
+    "name": "ng_tent_03",
+    "tiles": [
+     2,
+     3
+    ],
+    "px": [
+     32,
+     48
+    ],
+    "storeys": 1,
+    "footprint_origin_px": [
+     0,
+     0
+    ],
+    "layers": [
+     "ng_tent_03_floor.png",
+     "ng_tent_03_walls.png",
+     "ng_tent_03_roof.png"
+    ],
+    "fade_group": [
+     "ng_tent_03_roof.png"
+    ],
+    "door_px": [
+     16,
+     34
+    ],
+    "door_tile": [
+     1,
+     2
+    ],
+    "roof_tiles": [
+     [
+      0,
+      0
+     ],
+     [
+      1,
+      0
+     ],
+     [
+      0,
+      1
+     ],
+     [
+      1,
+      1
+     ],
+     [
+      0,
+      2
+     ],
+     [
+      1,
+      2
+     ]
+    ]
+   },
+   {
+    "name": "ng_tent_04",
+    "tiles": [
+     4,
+     3
+    ],
+    "px": [
+     64,
+     48
+    ],
+    "storeys": 1,
+    "footprint_origin_px": [
+     0,
+     0
+    ],
+    "layers": [
+     "ng_tent_04_floor.png",
+     "ng_tent_04_walls.png",
+     "ng_tent_04_roof.png"
+    ],
+    "fade_group": [
+     "ng_tent_04_roof.png"
+    ],
+    "door_px": [
+     32,
+     34
+    ],
+    "door_tile": [
+     2,
+     2
+    ],
+    "roof_tiles": [
+     [
+      0,
+      1
+     ],
+     [
+      1,
+      1
+     ],
+     [
+      2,
+      1
+     ],
+     [
+      3,
+      1
+     ],
+     [
+      0,
+      2
+     ],
+     [
+      1,
+      2
+     ],
+     [
+      2,
+      2
+     ],
+     [
+      3,
+      2
+     ]
+    ]
+   },
+   {
+    "name": "ng_command_tent",
+    "tiles": [
+     6,
+     5
+    ],
+    "px": [
+     96,
+     80
+    ],
+    "storeys": 1,
+    "footprint_origin_px": [
+     0,
+     0
+    ],
+    "layers": [
+     "ng_command_tent_floor.png",
+     "ng_command_tent_walls.png",
+     "ng_command_tent_roof.png"
+    ],
+    "fade_group": [
+     "ng_command_tent_roof.png"
+    ],
+    "door_px": [
+     48,
+     66
+    ],
+    "door_tile": [
+     3,
+     4
+    ],
+    "roof_tiles": [
+     [
+      2,
+      0
+     ],
+     [
+      3,
+      0
+     ],
+     [
+      0,
+      1
+     ],
+     [
+      1,
+      1
+     ],
+     [
+      2,
+      1
+     ],
+     [
+      3,
+      1
+     ],
+     [
+      4,
+      1
+     ],
+     [
+      5,
+      1
+     ],
+     [
+      0,
+      2
+     ],
+     [
+      1,
+      2
+     ],
+     [
+      2,
+      2
+     ],
+     [
+      3,
+      2
+     ],
+     [
+      4,
+      2
+     ],
+     [
+      5,
+      2
+     ],
+     [
+      0,
+      3
+     ],
+     [
+      1,
+      3
+     ],
+     [
+      2,
+      3
+     ],
+     [
+      3,
+      3
+     ],
+     [
+      4,
+      3
+     ],
+     [
+      5,
+      3
+     ],
+     [
+      0,
+      4
+     ],
+     [
+      1,
+      4
+     ],
+     [
+      2,
+      4
+     ],
+     [
+      3,
+      4
+     ],
+     [
+      4,
+      4
+     ],
+     [
+      5,
+      4
+     ]
+    ]
+   },
+   {
+    "name": "ng_barracks_hut",
+    "tiles": [
+     5,
+     3
+    ],
+    "px": [
+     80,
+     48
+    ],
+    "storeys": 1,
+    "footprint_origin_px": [
+     0,
+     0
+    ],
+    "layers": [
+     "ng_barracks_hut_floor.png",
+     "ng_barracks_hut_walls.png",
+     "ng_barracks_hut_roof.png"
+    ],
+    "fade_group": [
+     "ng_barracks_hut_roof.png"
+    ],
+    "door_px": [
+     40,
+     34
+    ],
+    "door_tile": [
+     2,
+     2
+    ],
+    "roof_tiles": [
+     [
+      0,
+      1
+     ],
+     [
+      1,
+      1
+     ],
+     [
+      2,
+      1
+     ],
+     [
+      3,
+      1
+     ],
+     [
+      4,
+      1
+     ],
+     [
+      0,
+      2
+     ],
+     [
+      1,
+      2
+     ],
+     [
+      2,
+      2
+     ],
+     [
+      3,
+      2
+     ],
+     [
+      4,
+      2
+     ]
+    ]
+   }
+  ],
+  "watchtower": {
+   "file": "tiles/ng_watchtower.png",
+   "size_px": [
+    48,
+    88
+   ],
+   "note": "base on the ground inside the palisade; ladder at x20..28"
+  },
+  "training_yard": "ng_diag_yard_dirt autotile patch + ng_training_dummy / ng_archery_target / racks around it",
+  "racks": [
+   "ng_weapon_rack",
+   "ng_spear_rack",
+   "ng_armor_stand",
+   "ng_shield_rack"
+  ]
+ },
+ "props": [
+  [
+   "ch_brazier",
+   [
+    16,
+    18
+   ]
+  ],
+  [
+   "ch_brazier_tall",
+   [
+    16,
+    34
+   ]
+  ],
+  [
+   "ch_lamp_post",
+   [
+    16,
+    48
+   ]
+  ],
+  [
+   "ch_coal_cart",
+   [
+    36,
+    22
+   ]
+  ],
+  [
+   "ch_ash_pile_a",
+   [
+    20,
+    10
+   ]
+  ],
+  [
+   "ch_ash_pile_b",
+   [
+    30,
+    14
+   ]
+  ],
+  [
+   "ch_ash_pile_c",
+   [
+    14,
+    8
+   ]
+  ],
+  [
+   "ch_anvil",
+   [
+    16,
+    16
+   ]
+  ],
+  [
+   "ch_coal_heap",
+   [
+    20,
+    18
+   ]
+  ],
+  [
+   "ch_quench_barrel",
+   [
+    16,
+    16
+   ]
+  ],
+  [
+   "ch_dead_tree_a",
+   [
+    24,
+    36
+   ]
+  ],
+  [
+   "ch_dead_tree_b",
+   [
+    30,
+    44
+   ]
+  ],
+  [
+   "ch_charred_stump",
+   [
+    16,
+    16
+   ]
+  ],
+  [
+   "ch_ember_vent",
+   [
+    16,
+    16
+   ]
+  ],
+  [
+   "ch_rubble",
+   [
+    16,
+    16
+   ]
+  ],
+  [
+   "ch_barrel",
+   [
+    16,
+    16
+   ]
+  ],
+  [
+   "ch_crates",
+   [
+    24,
+    24
+   ]
+  ],
+  [
+   "ch_cart",
+   [
+    32,
+    20
+   ]
+  ],
+  [
+   "ch_ash_well",
+   [
+    28,
+    22
+   ]
+  ],
+  [
+   "ch_sign_smith",
+   [
+    16,
+    24
+   ]
+  ],
+  [
+   "ch_sign_cook",
+   [
+    16,
+    24
+   ]
+  ],
+  [
+   "ch_sign_store",
+   [
+    16,
+    24
+   ]
+  ],
+  [
+   "ch_sign_bank",
+   [
+    16,
+    24
+   ]
+  ],
+  [
+   "ch_sign_church",
+   [
+    16,
+    24
+   ]
+  ],
+  [
+   "ch_town_sign",
+   [
+    56,
+    30
+   ]
+  ],
+  [
+   "ng_training_dummy",
+   [
+    16,
+    30
+   ]
+  ],
+  [
+   "ng_archery_target",
+   [
+    20,
+    28
+   ]
+  ],
+  [
+   "ng_weapon_rack",
+   [
+    32,
+    24
+   ]
+  ],
+  [
+   "ng_spear_rack",
+   [
+    24,
+    30
+   ]
+  ],
+  [
+   "ng_armor_stand",
+   [
+    16,
+    30
+   ]
+  ],
+  [
+   "ng_shield_rack",
+   [
+    32,
+    22
+   ]
+  ],
+  [
+   "ng_banner_north",
+   [
+    24,
+    46
+   ]
+  ],
+  [
+   "ng_campfire",
+   [
+    20,
+    16
+   ]
+  ],
+  [
+   "ng_cookpot",
+   [
+    24,
+    22
+   ]
+  ],
+  [
+   "ng_supply_crates",
+   [
+    24,
+    24
+   ]
+  ],
+  [
+   "ng_bedroll",
+   [
+    18,
+    16
+   ]
+  ]
+ ],
+ "diag_autotiles": {
+  "rule": "45-degree corner autotiles (shared by Saltmere v2 and Highfen v3.1).\nMask = which tile CORNERS are inside the terrain: NW=1, NE=2, SE=4, SW=8 (16 frames, frame index = mask).\nA set corner owns the 45deg diamond around it (|dx|+|dy|<=8 px); two set corners on one side own that half tile.\n=> 1 corner = outer 45deg diagonal cut, 3 corners = inner 45deg diagonal, 2 adjacent = straight edge, 2 opposite = saddle.\nA 45deg run alternates diag_out_* / diag_in_* tiles; a straight edge meeting a diag is the straight->diagonal transition.\nSample the shape on the (GH+1)x(GW+1) vertex grid; tile (y,x) frame = V[y,x]*1+V[y,x+1]*2+V[y+1,x+1]*4+V[y+1,x]*8.",
+  "frame_names": {
+   "0": "empty",
+   "15": "full",
+   "3": "edge_n",
+   "6": "edge_e",
+   "12": "edge_s",
+   "9": "edge_w",
+   "1": "diag_out_nw",
+   "2": "diag_out_ne",
+   "4": "diag_out_se",
+   "8": "diag_out_sw",
+   "14": "diag_in_nw",
+   "13": "diag_in_ne",
+   "11": "diag_in_se",
+   "7": "diag_in_sw",
+   "5": "saddle_nw_se",
+   "10": "saddle_ne_sw"
+  },
+  "sheets": [
+   "tiles/ch_diag_ash_drift.png",
+   "tiles/ch_diag_cobble_road.png",
+   "tiles/ng_diag_yard_dirt.png",
+   "tiles/ch_diag_basalt_wall.png",
+   "tiles/ng_diag_palisade.png"
+  ],
+  "named": "tiles/named/<sheet>_<frame>.png",
+  "walls": "ch_diag_basalt_wall / ng_diag_palisade: 16x30 frames, top + 14px south face hanging into the next row; draw rows top->bottom, y-sorted with sprites",
+  "layering": "ch_scorched_fill_a/b -> ch_diag_ash_drift -> ch_diag_cobble_road / ng_diag_yard_dirt -> wall rows / sprites"
+ },
+ "wall": {
+  "tower": "tiles/ch_wall_tower.png 48x64 (base on the wall row)",
+  "gates": {
+   "ch_gate_front": {
+    "layers": [
+     "ch_gate_front_floor.png",
+     "ch_gate_front_walls.png",
+     "ch_gate_front_roof.png"
+    ],
+    "fade_group": [
+     "ch_gate_front_roof.png"
+    ],
+    "size_px": [
+     64,
+     64
+    ],
+    "roof_tiles": [
+     [
+      1,
+      0
+     ],
+     [
+      1,
+      1
+     ],
+     [
+      1,
+      2
+     ],
+     [
+      1,
+      3
+     ],
+     [
+      2,
+      0
+     ],
+     [
+      2,
+      1
+     ],
+     [
+      2,
+      2
+     ],
+     [
+      2,
+      3
+     ]
+    ],
+    "passage_px": [
+     22,
+     8,
+     20,
+     56
+    ],
+    "note": "passage runs N-S through x22..42"
+   },
+   "ch_gate_back": {
+    "layers": [
+     "ch_gate_back_floor.png",
+     "ch_gate_back_walls.png",
+     "ch_gate_back_roof.png"
+    ],
+    "fade_group": [
+     "ch_gate_back_roof.png"
+    ],
+    "size_px": [
+     64,
+     64
+    ],
+    "roof_tiles": [
+     [
+      1,
+      0
+     ],
+     [
+      1,
+      1
+     ],
+     [
+      1,
+      2
+     ],
+     [
+      1,
+      3
+     ],
+     [
+      2,
+      0
+     ],
+     [
+      2,
+      1
+     ],
+     [
+      2,
+      2
+     ],
+     [
+      2,
+      3
+     ]
+    ],
+    "passage_px": [
+     22,
+     8,
+     20,
+     56
+    ],
+    "note": "passage runs N-S through x22..42"
+   },
+   "ch_gate_side": {
+    "layers": [
+     "ch_gate_side_floor.png",
+     "ch_gate_side_walls.png",
+     "ch_gate_side_roof.png"
+    ],
+    "fade_group": [
+     "ch_gate_side_roof.png"
+    ],
+    "size_px": [
+     48,
+     112
+    ],
+    "roof_tiles": [
+     [
+      0,
+      3
+     ],
+     [
+      0,
+      4
+     ],
+     [
+      1,
+      3
+     ],
+     [
+      1,
+      4
+     ],
+     [
+      2,
+      3
+     ],
+     [
+      2,
+      4
+     ]
+    ],
+    "passage_px": [
+     0,
+     48,
+     48,
+     18
+    ],
+    "note": "passage runs E-W across rows 48..66 (tile rows 3-4)"
+   },
+   "ng_gate_side": {
+    "layers": [
+     "ng_gate_side_floor.png",
+     "ng_gate_side_walls.png",
+     "ng_gate_side_roof.png"
+    ],
+    "fade_group": [
+     "ng_gate_side_roof.png"
+    ],
+    "size_px": [
+     48,
+     112
+    ],
+    "roof_tiles": [
+     [
+      0,
+      3
+     ],
+     [
+      0,
+      4
+     ],
+     [
+      1,
+      3
+     ],
+     [
+      1,
+      4
+     ],
+     [
+      2,
+      3
+     ],
+     [
+      2,
+      4
+     ]
+    ],
+    "passage_px": [
+     0,
+     48,
+     48,
+     18
+    ],
+    "note": "Northern Guard camp gate, side profile (E/W), passage runs E-W across rows 48..66 (tile rows 3-4)"
+   }
+  },
+  "gate_use": "ch_gate_front = S gate, ch_gate_back = N gate (seen from inside), ch_gate_side = E/W; ng_gate_side = camp palisade gate (W side). Fade the roof layer while the player is on roof_tiles"
+ },
+ "cinder_cliffs": {
+  "source": "/workspace/ashfen_rebuild/assets/sprites/cliffs/cinder",
+  "note": "existing darker Cinder cliff variant (read-only repo, not copied); used in the preview as the volcanic ridge north of town"
+ }
+}
