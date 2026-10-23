@@ -1115,6 +1115,36 @@ def check_quest(ctx):
     ]
 
 
+def check_sidequests(ctx):
+    """0.3.15 Wolf Pelts + Chicken Slayer start to finish."""
+    if "sidequests" not in ctx.expected:
+        return []
+    run = ctx.runs.get("sidequests")
+    if not run:
+        return [Result("C33 sidequests", "sidequests run present", False, "no capture")]
+    a = run.res.get("sidequests", {})
+    snaps = {e.get("name"): e.get("path") for e in run.events if e.get("type") == "snap"}
+    sp = lambda *n: [snaps[k] for k in n if k in snaps]
+    out = []
+    for qid, tag, giver in (("wolf_pelts", "sq_wolf", "Odric"), ("chicken_slayer", "sq_chicken", "Hale")):
+        r = a.get(qid, {})
+        out += [
+            Result("C33 sidequests", "%s: %s shows '?', the offer dialog, Accept starts it" % (qid, giver),
+                   r.get("mark_start") == "?" and (r.get("dialog_offer") or {}).get("node") == "offer" and r.get("state_after_accept") == "in_progress",
+                   "%r %r %s" % (r.get("mark_start"), (r.get("dialog_offer") or {}).get("node"), r.get("state_after_accept")), sp(tag + "_marker_offer", tag + "_dialog_offer")),
+            Result("C33 sidequests", "%s: real kills loot quest items; the journal counts them (yellow)" % qid,
+                   int(r.get("kills") or 0) >= 2 and sum((r.get("looted") or {}).values()) > 0 and r.get("color_mid") == "f0d040" and "/" in str(r.get("progress_mid", "")),
+                   "kills %s looted %s topped %s %r" % (r.get("kills"), r.get("looted"), r.get("topped_up"), r.get("progress_mid")), sp(tag + "_journal_progress")),
+            Result("C33 sidequests", "%s: all items -> '!' over %s, turn-in dialog" % (qid, giver),
+                   r.get("state_ready") == "ready" and r.get("mark_ready") == "!" and str((r.get("dialog_turnin") or {}).get("node", "")).startswith("stage_"),
+                   "%s %r %r" % (r.get("state_ready"), r.get("mark_ready"), (r.get("dialog_turnin") or {}).get("node")), sp(tag + "_marker_turnin", tag + "_dialog_turnin")),
+            Result("C33 sidequests", "%s: handed in: items taken, +5 Influence, marks, marker gone, journal green" % qid,
+                   r.get("state_final") == "completed" and r.get("items_left") == 0 and r.get("influence") == 5 and int(r.get("marks") or 0) > 0 and r.get("mark_final") == "" and r.get("color_final") == "60c060",
+                   "%s left %s inf %s marks %s mark %r %s" % (r.get("state_final"), r.get("items_left"), r.get("influence"), r.get("marks"), r.get("mark_final"), r.get("influence_text")), sp(tag + "_journal_completed")),
+        ]
+    return out
+
+
 def check_xp(ctx):
     """0.3.7 XP feedback lines + Skills panel session tracker."""
     if "xp" not in ctx.expected:
@@ -1203,7 +1233,7 @@ def check_capital(ctx):
     ]
 
 
-CHECKS = [check_runtime, check_diagonal, check_facing, check_ghost, check_jitter, check_taps, check_bubbles, check_roof, check_shop, check_smithy, check_markers, check_daynight, check_world, check_church, check_aggro, check_farm, check_city, check_cookhouse, check_pk, check_gear, check_archery, check_bank, check_v036, check_quest, check_xp, check_capital, check_autotile, check_gfx]
+CHECKS = [check_runtime, check_diagonal, check_facing, check_ghost, check_jitter, check_taps, check_bubbles, check_roof, check_shop, check_smithy, check_markers, check_daynight, check_world, check_church, check_aggro, check_farm, check_city, check_cookhouse, check_pk, check_gear, check_archery, check_bank, check_v036, check_quest, check_xp, check_capital, check_autotile, check_gfx, check_sidequests]
 SCENARIOS = ["walk", "combat", "shop", "pshop", "smithy", "markers", "daynight", "world", "church", "aggro", "farm", "city", "cookhouse", "pk", "gear", "archery"]
 
 
