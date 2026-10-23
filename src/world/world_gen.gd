@@ -281,7 +281,14 @@ func village_at(p: Vector2i, margin: int = 0) -> String:
 
 ## 0.3.1 safe ground: inside a city or a village (no starting aggro, no fights).
 func safe_at(p: Vector2i) -> bool:
-	return town_at(p, 0) != "" or village_at(p, 0) != ""
+	if town_at(p, 0) != "":
+		return true
+	if village_at(p, 0) == "":
+		return false
+	for pz in pastures:   # 0.3.16 a pasture inside a village (Millbrook v1) is still cow-fighting ground
+		if (pz["rect"] as Rect2i).has_point(p):
+			return false
+	return true
 
 
 ## The settlement (city first, else village) whose rect grown by margin holds p.
