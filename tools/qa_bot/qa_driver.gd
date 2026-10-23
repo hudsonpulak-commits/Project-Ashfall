@@ -2882,6 +2882,13 @@ func _gfx0391() -> void:
 			cow.facing.left = dname == "left"
 			w.set_focus(cow.tile, true)
 			await frames(2)
+			for _try in 3:    # 0.3.16: a wandering cow can turn between frames; re-pose
+				if cow._sprite.flip_h == (dname == "left"):
+					break
+				cow.facing.dir = "side" if dname in ["right", "left"] else dname
+				cow.facing.left = dname == "left"
+				cow._last_move_t = -100
+				await frames(2)
 			res["cow"][dname] = {"tex": cow._sprite.texture.resource_path, "flip": cow._sprite.flip_h}
 			label = "cow_" + dname
 			await _snap("cow_" + dname)
