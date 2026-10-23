@@ -288,15 +288,21 @@ var prefetch_adopted := 0
 func _pf_start() -> void:
 	if _pf_thread != null or not prefetch_enabled or OS.get_thread_caller_id() != OS.get_main_thread_id():
 		return
+	# 0.3.16 the worker's WorldGen is built here on the main thread (its setup touches
+	# shared GameData/static caches); the thread only calls generate_chunk on it
+	_pf_gen = WorldGen.new(_pf_seed)
 	_pf_thread = Thread.new()
 	_pf_thread.start(_pf_loop)
+	if _focus_chunk.x != 999999:
+		_pf_request(_focus_chunk, Vector2i.ZERO)
 
 
 var _pf_ramps: Dictionary = {}
+var _pf_gen: WorldGen = null
 
 
 func _pf_loop() -> void:
-	var wg := WorldGen.new(_pf_seed)
+	var wg: WorldGen = _pf_gen
 	while true:
 		_pf_sem.wait()
 		_pf_mutex.lock()
@@ -632,7 +638,6 @@ func _set_focus_inner(c: Vector2i, immediate: bool) -> void:
 			_mini_tex.erase(cc)
 	if not _job.is_empty() and maxi(absi(_job["c"].x - c.x), absi(_job["c"].y - c.y)) > VIEW_RADIUS:
 		_abort_job()
-	_pf_start()
 	var dirv := Vector2i.ZERO
 	if _pf_last.x != 999999:
 		dirv = Vector2i(signi(c.x - _pf_last.x), signi(c.y - _pf_last.y))
@@ -649,6 +654,8 @@ func _set_focus_inner(c: Vector2i, immediate: bool) -> void:
 
 
 func _process(delta: float) -> void:
+	if _pf_thread == null and _focus_chunk.x != 999999 and Tick.running:
+		_pf_start()   # once the game is running, never during loading
 	if not perf_on and perf_log.size() > 2000:
 		perf_log.clear()   # only the QA perf scenario keeps the timings
 	var _ta := Time.get_ticks_usec()
@@ -674,7 +681,7 @@ func _process(delta: float) -> void:
 	for a in _animated:
 		var spr: Sprite2D = a[0]
 		if is_instance_valid(spr):
-			spr.frame = int(_anim_time * float(a[2])) % int(a[1])
+			spr.frame = int(_anim_time * float(a[2])) % maxi(1, mini(int(a[1]), spr.hframes * spr.vframes))
 
 
 var perf_on := false   # set by the QA perf scenario
