@@ -828,7 +828,7 @@ static func _village_tests(world: World, p: Player) -> void:
 		if not vp.is_empty():   # 0.3.8 the village's own road ends at a town gate
 			for tid2 in gen.town_order:
 				for q in gen.gate_outsides(tid2):
-					touches = touches or maxi(absi(q.x - vp[-1].x), absi(q.y - vp[-1].y)) <= 5   # 0.3.14 Oxley's road meets Cinderholt's S approach 4 tiles off the gate end
+					touches = touches or maxi(absi(q.x - vp[-1].x), absi(q.y - vp[-1].y)) <= 10   # 0.3.14 (v2 Cinderholt S gate moved) Oxley's road meets Cinderholt's S approach 4 tiles off the gate end
 		path_ok = path_ok and touches
 		world.set_focus(gen.town_spawn(vid), true)
 		for q in vp:

@@ -7,3 +7,7 @@
 - Screenshot flag --night.
 - SFX: armour_clang hook on every 0-damage hit (block/miss) involving the player (player hit, or player/AI-player hitting an NPC), playing Hudson's sword_ting (assets/audio/sfx/armour_clang.ogg).
 - Fenhollow: organic shoreline all round the town (no water at the rect edge, noisy marsh bank), dithered fade into world grass, mud landings with posts and reeds at boardwalk ends, grass thinning to mud by the palisade.
+- Resized art (sprite bot): fenhollow_v2, saltmere_v4, highfen_v5, cinderholt_v2. Every walk-in building >= 5x5 with walkable interior, door lane and doorway path; civic ~30% bigger; *_night.png window layers at night; Fenhollow boardwalk blob47 autotile (corner patch dropped).
+- Town plans grown to fit: Fenhollow 118x96 (1.6x), Cinderholt 1.3x, Saltmere 104x62 (1.3x, east coast + south edge kept), Highfen city 92x92 (ring 38x32). Camps/mines nudged to keep their distance bands (Warlord band min 60 -> 55).
+- Collision: building outer edge is always wall (no open side walls); 2 free tiles in front of every door (Fenhollow).
+- QA: selftest check that every art building is at least 5x5.

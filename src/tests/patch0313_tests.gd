@@ -18,7 +18,7 @@ static func run(main, world, p) -> void:
 	# the palisade ring walked in collision (same 8-connected, diagonal-gap-aware flood as Highfen)
 	var gts: Dictionary = t.get("gate_tiles", {})
 	var spawn: Vector2i = gen.town_spawn("fenhollow")
-	var hc: Vector2i = world.find_free_tile_near(org + Vector2i(37, 30), 4)   # the green at the town centre
+	var hc: Vector2i = world.find_free_tile_near(org + Vector2i(59, 48), 4)   # the green at the town centre
 	var sealed := not Patch0311Tests._ring_flood(world, hc, org, gts, "")
 	var opens := 0
 	for g in gts.keys():

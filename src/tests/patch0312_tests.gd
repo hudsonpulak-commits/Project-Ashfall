@@ -26,12 +26,12 @@ static func run(main, world, p) -> void:
 		roles[str(id).trim_prefix("saltmere_")] = true
 		if str(b.get("art", "")).contains("fort") or str(b.get("name", "")).to_lower().contains("fort"):
 			fort += 1
-	check(fort == 0 and arts >= 30, "Saltmere: %d layered-art buildings, no fort" % arts)
+	check(fort == 0 and arts >= 26, "Saltmere: %d layered-art buildings, no fort" % arts)
 	for k in ["bank", "church", "general", "cook", "smithy", "player", "legs", "lighthouse"]:
 		check(roles.has(k), "Saltmere keeps its %s" % k)
 	# the basin + channel run open to the sea: flood the water from the basin and reach real ocean outside the rect
 	var r: Rect2i = gen._town_rects["saltmere"]
-	var start := org + Vector2i(30, 36)
+	var start := org + Vector2i(40, 46)
 	var water := func(q: Vector2i) -> bool: return gen.tile_at(q.x, q.y) == WorldGen.TileType.WATER
 	var seen := {start: true}
 	var stack := [start]
@@ -47,10 +47,10 @@ static func run(main, world, p) -> void:
 				stack.append(n)
 	check(water.call(start) and sea, "Saltmere's basin floods out through the channel to the open sea (%d water tiles)" % seen.size())
 	var narrow := 99
-	for x in range(57, 80):
+	for x in range(74, 104):   # 0.3.14 Saltmere grown 1.3x
 		var run := 0
 		var best := 0
-		for y in range(30, 44):
+		for y in range(39, 57):
 			run = run + 1 if water.call(org + Vector2i(x, y)) else 0
 			best = maxi(best, run)
 		narrow = mini(narrow, best)

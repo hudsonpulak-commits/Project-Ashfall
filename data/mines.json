@@ -45,8 +45,8 @@
    "tier": "coal",
    "town": "saltmere",
    "center": [
-    258,
-    140
+    244,
+    150
    ],
    "radius": 6,
    "density": 0.32,

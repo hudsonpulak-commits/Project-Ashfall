@@ -1623,7 +1623,7 @@ static func _building_tests(main, world: World, p: Player) -> void:
 	p.place_at(_outside_of(b1))
 	p._greeted.clear()
 	p.handle_tap(world, b1["keeper_at"])
-	var arrived := _run_until(func(): return not opened.is_empty(), 120)
+	var arrived := _run_until(func(): return not opened.is_empty(), 260)   # 0.3.14 bigger v2 buildings
 	Events.shop_opened.disconnect(c1)
 	Events.message.disconnect(c2)
 	check(arrived and p.tile == b1["stand"], "tapping the keeper walks you to the counter front (%s)" % str(p.tile))
@@ -1845,8 +1845,8 @@ static func _smithy_tests(_main, world: World, p: Player) -> void:
 		if bb["kind"] != "smithy":
 			continue
 		for oid in ["furnace", "anvil"]:
-			var st: WorldObject = world.find_nearest_object((bb["rect"] as Rect2i).get_center(), [oid], 8)
-			var pth := Pathfinder.find_path(world, gen.town_spawn(bb["town"]), Pathfinder.interaction_tiles(st.pos), st.pos, 30000)
+			var st: WorldObject = world.find_nearest_object((bb["rect"] as Rect2i).get_center(), [oid], 12)
+			var pth := Pathfinder.find_path(world, gen.town_spawn(bb["town"]), Pathfinder.interaction_tiles(st.pos), st.pos, 90000)
 			var via := false
 			for t2 in pth:
 				via = via or t2 in bb["doors"]

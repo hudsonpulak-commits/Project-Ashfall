@@ -30,9 +30,10 @@
    "pk_only": true
   },
   "goblin_warlord": {
-   "min": 60,
+   "min": 55,
    "max": 260,
-   "label": "Goblin Warlord (Millbrook)"
+   "label": "Goblin Warlord (Millbrook)",
+   "note": "0.3.14 min 60 -> 55: Highfen grew (v5 art) toward Millbrook"
   },
   "slime": {
    "min": 3,

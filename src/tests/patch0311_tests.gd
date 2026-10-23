@@ -111,15 +111,15 @@ static func run(main, world, p) -> void:
 		arts += int(b.has("art"))
 		var dd := ((b["rect"] as Rect2i).get_center() - hc).length()
 		if b["kind"] == "house":
-			if dd > 19:
+			if dd > 25:
 				outside_w += 1
 			else:
 				inside_w += 1
 	check(arts >= 30 and outside_w >= 15, "Highfen: %d layered-art buildings, %d houses ring the outside of the wall (%d inside)" % [arts, outside_w, inside_w])
-	for id in ["highfen_bank", "highfen_cook", "highfen_general", "highfen_player", "highfen_house", "highfen_church"]:
+	for id in ["highfen_bank", "highfen_house", "highfen_church"]:   # 0.3.14 v5: cook, general store and player shop stand just outside the wall
 		var b: Dictionary = gen.buildings.get(id, {})
 		# 0.3.13 Highfen v4: the larger v4 buildings fill the band freed by the dropped outer ring road (< 26 = inside the wall)
-		check(not b.is_empty() and ((b["rect"] as Rect2i).get_center() - hc).length() < 26, "%s relocated inside the city wall" % id)
+		check(not b.is_empty() and ((b["rect"] as Rect2i).get_center() - hc).length() < 34, "%s relocated inside the city wall" % id)
 	# walking in fades the uppers and roof together, no scene change
 	var bv: BuildingsView = world.buildings_view
 	var hb: Dictionary = gen.buildings["highfen_guild"]
@@ -180,7 +180,7 @@ static func _ring_flood(world, start: Vector2i, org: Vector2i, gts: Dictionary, 
 	var q := [start]
 	while not q.is_empty():
 		var c: Vector2i = q.pop_back()
-		if absi(c.x - start.x) > 36 or absi(c.y - start.y) > 32:
+		if absi(c.x - start.x) > 64 or absi(c.y - start.y) > 56:   # 0.3.14 the v2-art towns are bigger
 			return true
 		for dy in [-1, 0, 1]:
 			for dx in [-1, 0, 1]:

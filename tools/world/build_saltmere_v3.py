@@ -502,7 +502,7 @@ put_ship('v3_ship_galleon', tries_for('v3_ship_galleon', SHIP_TRIES_BASIN + SHIP
 put_ship('v3_ship_sloop', tries_for('v3_ship_sloop', SHIP_TRIES_SEA), hull=.5)
 put_ship('v3_ship_sloop', tries_for('v3_ship_sloop', SHIP_TRIES_BASIN + SHIP_TRIES_SEA), hull=.5)
 for i in (1, 2, 3):
-    put_ship(f'v3_rowboat_{i}', [(x, y) for y in range((qy + 2) * T + 4, 40 * T, 4) for x in range(qx0 * T + 8 + i * 100, qx1 * T, 6)])
+    put_ship(f'v3_rowboat_{i}', [(x, y) for y in range((qy + 2) * T + 4, int(40 * S) * T, 4) for x in range(qx0 * T + 8 + i * 100, qx1 * T, 6)])
 def hull_mask(n):   # the waterline part of each ship (galleon masts may stand over the quay, as in 0.3.12)
     al = np.array(L('ships', n))[..., 3] > 0; h = al.shape[0]; hf = .4 if 'galleon' in n else .5 if 'sloop' in n else 1.0
     al = al.copy(); al[:int(h * (1 - hf))] = False; return al
