@@ -183,6 +183,8 @@ static func gate_torch_tiles(world) -> Array:
 ## facade tiles, never the door or the sign (0.3.0 put one on the door).
 static func window_tiles(world, b: Dictionary, n_win: int) -> Array:
 	var r: Rect2i = b["rect"]
+	if b.has("art"):   # 0.3.14 layered-art buildings: no legacy glowing window overlay; the art's own windows only
+		return []
 	var fy := int(b.get("facade_y", r.end.y - 1))
 	var out: Array = []
 	if world.gen.has_method("object_id_at"):
@@ -190,17 +192,6 @@ static func window_tiles(world, b: Dictionary, n_win: int) -> Array:
 			if world.gen.object_id_at(Vector2i(x, fy)) == "stained_glass":
 				out.append(Vector2i(x, fy))
 	if not out.is_empty():
-		return out
-	if b.has("art"):   # 0.3.11 layered-art buildings: their own facade tiles (the art draws the windows)
-		var af: Array = []
-		for x in range(r.position.x, r.end.x):
-			var t := Vector2i(x, fy)
-			if not (t in b["doors"]) and str(world.gen._building_tiles.get(t, "")) == str(b["id"]):
-				af.append(t)
-		if af.size() <= n_win:
-			return af
-		for i in n_win:
-			out.append(af[int(round(float(i + 0.5) * af.size() / n_win - 0.5))])
 		return out
 	var free: Array = []
 	var drawn: Array = []   # timber facade tiles whose art shows a window or a lantern

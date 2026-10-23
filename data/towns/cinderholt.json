@@ -2,798 +2,187 @@
  "id": "cinderholt",
  "name": "Cinderholt",
  "origin": [
-  307,
-  -219
+  288,
+  -250
  ],
  "spawn": [
   330,
-  -200
- ],
- "rows": [
-  "@@@@@@@@@@@@@@@@@@@@@@GGG@@@@@@@@@@@@@@@@@@@@@",
-  "@@@=:::::::::=:::::::::=:::::::::=:::::::::@@@",
-  "@@@========================================@@@",
-  "@::=.........=.........=.........=.........::@",
-  "@::=.........=.........=.........=.........::@",
-  "@::=.........=.........=.........=.........::@",
-  "@::=.........=.........=.........=.........::@",
-  "@::=.........=.........=.........=.........::@",
-  "@::=.........=.........=.........=.........::@",
-  "@::=.........=.........=.........=.........::@",
-  "@::=:::::::::=:::::::::=:::::::::=:::::::::::@",
-  "@============================================@",
-  "@::=:::::::::=:::::::::=:::::::::=:::::::::::@",
-  "@::=:::::::::=:::::::::=:::::::::=:::::::::::@",
-  "@::=:::::::::=:::::::::=:::::::::=.........::@",
-  "@::=:::::::::=:::::::::=:::::::::=.........::@",
-  "@::=:::::::::=::::###########::::=.........::@",
-  "@::=:::::::::=::::##_#E#_####::::=.........::@",
-  "G::=:::::::::=::::###########::::=.........::G",
-  "G=================###########=====.........==G",
-  "G::=:::::::::=::::###########::::=.........::G",
-  "@::=:::::::::=::::##W#####D##::::=.........::@",
-  "@::=:::::::::=::::###########::::=:::::::::::@",
-  "@::=:::::::::=:::::::::=:::::::::=:::::::::::@",
-  "@::=:::::::::=:::::::::=:::::::::=:::::::::::@",
-  "@::=:::::::::=.........=:::::::::=:::::::::::@",
-  "@::=.........=.........=:::::::::=:::::::::::@",
-  "@::=.........=.........=:::::::::=:::::::::::@",
-  "@===.........=.........======================@",
-  "@::=.........=.........=::::e::::=:::::::::::@",
-  "@::=.........=.........=e::::::::=:::::::::::@",
-  "@::=.........=.........=:::::::::=:::::::::::@",
-  "@::=.........=.........=:::::::::=:::::::::::@",
-  "@::=:::::::::=.........=:::::::::=:::::::::::@",
-  "@::=:::::::::=:::::::::=:::::::::=:::::::::::@",
-  "@@@=:::::::::=:::::::::=:::::::::=:::::::::@@@",
-  "@@@=:::::::::=:::::::::=:::::::::=:::::::::@@@",
-  "@@@[[[[[[[[[[[[[[[[[[[GGG[[[[[[[[[[[[[[[[[[@@@"
+  -187
  ],
  "tiles": {
-  ".": "dirt",
-  ":": "dirt",
-  ",": "sand",
-  "~": "water",
-  "m": "marsh",
-  "=": "cobble_dark",
-  "#": "cobble_dark",
-  "_": "boardwalk",
-  "P": "plaster",
-  "%": "wall",
-  "^": "wall_front",
-  ";": "floor",
-  "+": "doorway",
-  "@": "basalt_wall",
-  "[": "basalt_front",
-  "G": "gate_basalt"
+  "g": "dirt",
+  ":": "cobble",
+  "=": "road_dirt",
+  "#": "basalt_wall",
+  "P": "palisade",
+  "^": "art_wall",
+  "G": "gate_basalt",
+  "Q": "gate_wood"
  },
  "objects": {
-  "a": {
-   "object": "ash_tree",
+  "A": {
+   "object": "ch_anvil",
    "ground": "dirt"
   },
-  "l": {
-   "object": "alder_tree",
+  "B": {
+   "object": "ch_ash_pile_a",
+   "ground": "dirt"
+  },
+  "C": {
+   "object": "ch_ash_pile_b",
+   "ground": "dirt"
+  },
+  "E": {
+   "object": "ch_ash_pile_c",
+   "ground": "dirt"
+  },
+  "F": {
+   "object": "ch_ash_well",
+   "ground": "dirt"
+  },
+  "H": {
+   "object": "ch_barrel",
+   "ground": "dirt"
+  },
+  "I": {
+   "object": "ch_brazier",
+   "ground": "dirt"
+  },
+  "J": {
+   "object": "ch_brazier_tall",
+   "ground": "dirt"
+  },
+  "L": {
+   "object": "ch_cart",
+   "ground": "dirt"
+  },
+  "M": {
+   "object": "ch_charred_stump",
+   "ground": "dirt"
+  },
+  "N": {
+   "object": "ch_coal_cart",
+   "ground": "dirt"
+  },
+  "O": {
+   "object": "ch_coal_heap",
+   "ground": "dirt"
+  },
+  "R": {
+   "object": "ch_crates",
+   "ground": "dirt"
+  },
+  "S": {
+   "object": "ch_dead_tree_a",
+   "ground": "dirt"
+  },
+  "T": {
+   "object": "ch_dead_tree_b",
+   "ground": "dirt"
+  },
+  "U": {
+   "object": "ch_ember_vent",
+   "ground": "dirt"
+  },
+  "V": {
+   "object": "ch_lamp_post",
+   "ground": "dirt"
+  },
+  "W": {
+   "object": "ch_quench_barrel",
+   "ground": "dirt"
+  },
+  "X": {
+   "object": "ch_rubble",
+   "ground": "dirt"
+  },
+  "Y": {
+   "object": "ch_sign_bank",
+   "ground": "dirt"
+  },
+  "Z": {
+   "object": "ch_sign_church",
+   "ground": "dirt"
+  },
+  "a": {
+   "object": "ch_sign_cook",
    "ground": "dirt"
   },
   "b": {
-   "object": "blackthorn_tree",
+   "object": "ch_sign_smith",
    "ground": "dirt"
   },
   "c": {
-   "object": "copper_rock",
+   "object": "ch_sign_store",
    "ground": "dirt"
   },
-  "i": {
-   "object": "iron_rock",
-   "ground": "dirt"
-  },
-  "k": {
-   "object": "coal_rock",
-   "ground": "dirt"
-  },
-  "f": {
-   "object": "fishing_spot",
-   "ground": "water"
-  },
-  "r": {
-   "object": "reed_bed",
-   "ground": "marsh"
-  },
-  "g": {
-   "object": "fenroot_patch",
-   "ground": "marsh"
-  },
-  "B": {
-   "object": "bank_chest",
-   "ground": "cobble_dark"
-  },
-  "E": {
-   "object": "exchange_board",
-   "ground": "cobble_dark"
-  },
-  "H": {
-   "object": "hearth",
-   "ground": "cobble_dark"
-  },
-  "F": {
-   "object": "furnace",
-   "ground": "cobble"
-  },
-  "D": {
-   "object": "training_dummy",
-   "ground": "cobble_dark"
-  },
-  "W": {
-   "object": "workbench",
-   "ground": "cobble_dark"
-  },
-  "A": {
-   "object": "anvil",
-   "ground": "cobble"
-  },
-  "S": {
-   "object": "general_store",
-   "ground": "cobble"
-  },
-  "1": {
-   "object": "shop_helmets",
-   "ground": "cobble"
-  },
-  "2": {
-   "object": "shop_swords",
-   "ground": "cobble"
-  },
-  "3": {
-   "object": "shop_archery",
-   "ground": "cobble"
-  },
-  "4": {
-   "object": "shop_body",
-   "ground": "cobble"
-  },
-  "5": {
-   "object": "shop_shields",
-   "ground": "cobble"
-  },
-  "6": {
-   "object": "shop_axes",
-   "ground": "cobble"
-  },
-  "7": {
-   "object": "shop_legs",
-   "ground": "cobble"
-  },
-  "8": {
-   "object": "shop_maces",
-   "ground": "cobble"
-  },
-  "t": {
-   "object": "tin_rock",
+  "d": {
+   "object": "ch_town_sign",
    "ground": "dirt"
   },
   "e": {
    "object": "embers",
    "ground": "dirt"
+  },
+  "f": {
+   "object": "exchange_board",
+   "ground": "dirt"
+  },
+  "h": {
+   "object": "ng_archery_target",
+   "ground": "dirt"
+  },
+  "i": {
+   "object": "ng_armor_stand",
+   "ground": "dirt"
+  },
+  "j": {
+   "object": "ng_banner_north",
+   "ground": "dirt"
+  },
+  "k": {
+   "object": "ng_bedroll",
+   "ground": "dirt"
+  },
+  "l": {
+   "object": "ng_campfire",
+   "ground": "dirt"
+  },
+  "m": {
+   "object": "ng_cookpot",
+   "ground": "dirt"
+  },
+  "n": {
+   "object": "ng_shield_rack",
+   "ground": "dirt"
+  },
+  "p": {
+   "object": "ng_spear_rack",
+   "ground": "dirt"
+  },
+  "q": {
+   "object": "ng_supply_crates",
+   "ground": "dirt"
+  },
+  "r": {
+   "object": "ng_training_dummy",
+   "ground": "dirt"
+  },
+  "s": {
+   "object": "ng_weapon_rack",
+   "ground": "dirt"
+  },
+  "t": {
+   "object": "training_dummy",
+   "ground": "dirt"
+  },
+  "u": {
+   "object": "workbench",
+   "ground": "dirt"
   }
  },
  "roof": "#3a3e4c",
  "building_style": "basalt",
- "buildings": [
-  {
-   "id": "cinderholt_general",
-   "kind": "shop",
-   "shop": "general",
-   "style": "basalt",
-   "rect": [
-    4,
-    3,
-    9,
-    7
-   ],
-   "door": [
-    [
-     8,
-     9
-    ]
-   ],
-   "counter": [
-    [
-     6,
-     5
-    ],
-    [
-     7,
-     5
-    ],
-    [
-     8,
-     5
-    ],
-    [
-     9,
-     5
-    ],
-    [
-     10,
-     5
-    ]
-   ],
-   "keeper_at": [
-    8,
-    4
-   ],
-   "stand": [
-    8,
-    6
-   ],
-   "sign": [
-    9,
-    9
-   ],
-   "roof": "#3a3e4c",
-   "props": [
-    {
-     "object": "shelf_goods",
-     "at": [
-      5,
-      4
-     ]
-    },
-    {
-     "object": "shelf_goods",
-     "at": [
-      11,
-      4
-     ]
-    },
-    {
-     "object": "barrel",
-     "at": [
-      5,
-      5
-     ]
-    },
-    {
-     "object": "barrel",
-     "at": [
-      11,
-      5
-     ]
-    },
-    {
-     "object": "crate",
-     "at": [
-      5,
-      7
-     ]
-    },
-    {
-     "object": "sacks",
-     "at": [
-      11,
-      7
-     ]
-    }
-   ],
-   "name": "Cinderholt Supply",
-   "keeper": "Osric Coalby"
-  },
-  {
-   "id": "cinderholt_body",
-   "kind": "shop",
-   "shop": "body",
-   "style": "basalt",
-   "rect": [
-    14,
-    3,
-    9,
-    7
-   ],
-   "door": [
-    [
-     18,
-     9
-    ]
-   ],
-   "counter": [
-    [
-     16,
-     5
-    ],
-    [
-     17,
-     5
-    ],
-    [
-     18,
-     5
-    ],
-    [
-     19,
-     5
-    ],
-    [
-     20,
-     5
-    ]
-   ],
-   "keeper_at": [
-    18,
-    4
-   ],
-   "stand": [
-    18,
-    6
-   ],
-   "sign": [
-    19,
-    9
-   ],
-   "roof": "#3a3e4c",
-   "props": [
-    {
-     "object": "shelf_goods",
-     "at": [
-      15,
-      4
-     ]
-    },
-    {
-     "object": "shelf_goods",
-     "at": [
-      21,
-      4
-     ]
-    },
-    {
-     "object": "crate",
-     "at": [
-      15,
-      5
-     ]
-    },
-    {
-     "object": "crate",
-     "at": [
-      21,
-      5
-     ]
-    },
-    {
-     "object": "armour_stand",
-     "at": [
-      15,
-      7
-     ]
-    },
-    {
-     "object": "armour_stand",
-     "at": [
-      21,
-      7
-     ]
-    }
-   ]
-  },
-  {
-   "id": "cinderholt_shields",
-   "kind": "shop",
-   "shop": "shields",
-   "style": "basalt",
-   "rect": [
-    24,
-    3,
-    9,
-    7
-   ],
-   "door": [
-    [
-     28,
-     9
-    ]
-   ],
-   "counter": [
-    [
-     26,
-     5
-    ],
-    [
-     27,
-     5
-    ],
-    [
-     28,
-     5
-    ],
-    [
-     29,
-     5
-    ],
-    [
-     30,
-     5
-    ]
-   ],
-   "keeper_at": [
-    28,
-    4
-   ],
-   "stand": [
-    28,
-    6
-   ],
-   "sign": [
-    29,
-    9
-   ],
-   "roof": "#3a3e4c",
-   "props": [
-    {
-     "object": "shelf_goods",
-     "at": [
-      25,
-      4
-     ]
-    },
-    {
-     "object": "shelf_goods",
-     "at": [
-      31,
-      4
-     ]
-    },
-    {
-     "object": "barrel",
-     "at": [
-      25,
-      5
-     ]
-    },
-    {
-     "object": "barrel",
-     "at": [
-      31,
-      5
-     ]
-    },
-    {
-     "object": "shield_rack",
-     "at": [
-      25,
-      7
-     ]
-    },
-    {
-     "object": "shield_rack",
-     "at": [
-      31,
-      7
-     ]
-    }
-   ]
-  },
-  {
-   "id": "cinderholt_player",
-   "kind": "house",
-   "shop": "",
-   "style": "basalt",
-   "rect": [
-    34,
-    3,
-    9,
-    7
-   ],
-   "door": [
-    [
-     38,
-     9
-    ]
-   ],
-   "counter": [],
-   "keeper_at": [
-    38,
-    4
-   ],
-   "stand": [
-    38,
-    6
-   ],
-   "sign": [
-    39,
-    9
-   ],
-   "roof": "#3a3e4c",
-   "name": "Townhouse",
-   "props": [
-    {
-     "object": "crate",
-     "at": [
-      35,
-      4
-     ]
-    },
-    {
-     "object": "crate",
-     "at": [
-      41,
-      4
-     ]
-    }
-   ],
-   "keeper": "Dagny Soot",
-   "keeper_sprite": "villager",
-   "sign_sprite": "sign_house",
-   "note": "0.3.8 was this town's player shop; the only player shop is now in Highfen (old saves migrate there)"
-  },
-  {
-   "id": "cinderholt_cook",
-   "kind": "cookhouse",
-   "shop": "cook",
-   "style": "basalt",
-   "rect": [
-    4,
-    26,
-    9,
-    7
-   ],
-   "door": [
-    [
-     8,
-     26
-    ]
-   ],
-   "counter": [
-    [
-     6,
-     30
-    ],
-    [
-     7,
-     30
-    ],
-    [
-     8,
-     30
-    ],
-    [
-     9,
-     30
-    ],
-    [
-     10,
-     30
-    ]
-   ],
-   "keeper_at": [
-    8,
-    31
-   ],
-   "stand": [
-    8,
-    29
-   ],
-   "sign": [
-    9,
-    26
-   ],
-   "roof": "#2e3240",
-   "props": [
-    {
-     "object": "shelf_goods",
-     "at": [
-      5,
-      31
-     ]
-    },
-    {
-     "object": "shelf_goods",
-     "at": [
-      11,
-      31
-     ]
-    },
-    {
-     "object": "barrel",
-     "at": [
-      5,
-      30
-     ]
-    },
-    {
-     "object": "barrel",
-     "at": [
-      11,
-      30
-     ]
-    },
-    {
-     "object": "oven",
-     "at": [
-      5,
-      27
-     ]
-    },
-    {
-     "object": "oven",
-     "at": [
-      11,
-      27
-     ]
-    }
-   ],
-   "name": "Ember Kitchen",
-   "keeper": "Greta Ashpan"
-  },
-  {
-   "id": "cinderholt_axes",
-   "kind": "smithy",
-   "shop": "axes",
-   "style": "basalt",
-   "roof": "#3a3e4c",
-   "rect": [
-    14,
-    25,
-    9,
-    9
-   ],
-   "door": [
-    [
-     18,
-     25
-    ]
-   ],
-   "counter": [
-    [
-     16,
-     31
-    ],
-    [
-     17,
-     31
-    ],
-    [
-     18,
-     31
-    ],
-    [
-     19,
-     31
-    ],
-    [
-     20,
-     31
-    ]
-   ],
-   "keeper_at": [
-    18,
-    32
-   ],
-   "stand": [
-    18,
-    30
-   ],
-   "sign": [
-    19,
-    25
-   ],
-   "name": "Blacksmith",
-   "keeper": "Smith",
-   "props": [
-    {
-     "object": "furnace",
-     "at": [
-      16,
-      29
-     ]
-    },
-    {
-     "object": "anvil",
-     "at": [
-      19,
-      29
-     ]
-    },
-    {
-     "object": "bellows",
-     "at": [
-      15,
-      28
-     ]
-    },
-    {
-     "object": "quench_barrel",
-     "at": [
-      21,
-      28
-     ]
-    },
-    {
-     "object": "coal_crate",
-     "at": [
-      15,
-      32
-     ]
-    },
-    {
-     "object": "weapon_rack",
-     "at": [
-      21,
-      32
-     ]
-    }
-   ]
-  },
-  {
-   "id": "cinderholt_bank",
-   "kind": "bank",
-   "shop": "",
-   "name": "Cinderholt Bank",
-   "keeper": "Hulda Coin",
-   "keeper_sprite": "keeper_general",
-   "sign_sprite": "sign_bank",
-   "rect": [
-    13,
-    11,
-    7,
-    6
-   ],
-   "door": [
-    [
-     16,
-     16
-    ]
-   ],
-   "counter": [
-    [
-     14,
-     13
-    ],
-    [
-     15,
-     13
-    ]
-   ],
-   "keeper_at": [
-    14,
-    12
-   ],
-   "stand": [
-    16,
-    14
-   ],
-   "sign": [
-    17,
-    16
-   ],
-   "props": [
-    {
-     "object": "bank_chest",
-     "at": [
-      17,
-      12
-     ]
-    },
-    {
-     "object": "bank_chest",
-     "at": [
-      18,
-      12
-     ]
-    },
-    {
-     "object": "barrel",
-     "at": [
-      18,
-      15
-     ]
-    }
-   ],
-   "note": "0.3.5 bank building (replaces the open 'B' chest in the plaza; the plaza hearth/oven 'H' is gone too: cook in the Cook House)",
-   "style": "stone",
-   "roof": "#5a6070"
-  }
- ],
  "specialists": [
   "body",
   "shields",
@@ -814,64 +203,2824 @@
   "fenroot": 1.2,
   "tin_ore": 0.85
  },
- "tagline": "Basalt forge city of coal smoke, tight blocks and slate roofs.",
+ "tagline": "Basalt forge city behind a towered ring wall: loose ash-and-cobble lanes, a smoking forge district, and the Northern Guard camp on the ridge above the north gate.",
  "theme": "cinderholt",
+ "walls": "basalt",
  "gates": {
   "north": [
    [
-    22,
+    10,
     0
    ],
    [
-    23,
+    11,
     0
    ],
    [
-    24,
+    12,
     0
    ]
   ],
   "south": [
    [
-    22,
-    37
+    41,
+    89
    ],
    [
-    23,
-    37
+    42,
+    89
    ],
    [
-    24,
-    37
+    43,
+    89
    ]
   ],
   "west": [
    [
     0,
-    18
+    61
    ],
    [
     0,
-    19
+    62
    ],
    [
     0,
-    20
+    63
    ]
   ],
   "east": [
    [
-    45,
-    18
+    83,
+    61
    ],
    [
-    45,
-    19
+    83,
+    62
    ],
    [
-    45,
-    20
+    83,
+    63
    ]
   ]
- }
+ },
+ "gate_walls": {
+  "north": [
+   [
+    41,
+    40
+   ],
+   [
+    42,
+    40
+   ]
+  ],
+  "south": [
+   [
+    41,
+    83
+   ],
+   [
+    42,
+    83
+   ]
+  ],
+  "east": [
+   [
+    69,
+    61
+   ],
+   [
+    69,
+    62
+   ]
+  ],
+  "west": [
+   [
+    14,
+    61
+   ],
+   [
+    14,
+    62
+   ]
+  ]
+ },
+ "gate_tiles": {
+  "north": [
+   [
+    41,
+    39
+   ],
+   [
+    41,
+    40
+   ],
+   [
+    41,
+    41
+   ],
+   [
+    42,
+    39
+   ],
+   [
+    42,
+    40
+   ],
+   [
+    42,
+    41
+   ]
+  ],
+  "south": [
+   [
+    41,
+    82
+   ],
+   [
+    41,
+    83
+   ],
+   [
+    41,
+    84
+   ],
+   [
+    42,
+    82
+   ],
+   [
+    42,
+    83
+   ],
+   [
+    42,
+    84
+   ]
+  ],
+  "east": [
+   [
+    68,
+    61
+   ],
+   [
+    68,
+    62
+   ],
+   [
+    69,
+    61
+   ],
+   [
+    69,
+    62
+   ],
+   [
+    70,
+    61
+   ],
+   [
+    70,
+    62
+   ]
+  ],
+  "west": [
+   [
+    13,
+    61
+   ],
+   [
+    13,
+    62
+   ],
+   [
+    14,
+    61
+   ],
+   [
+    14,
+    62
+   ],
+   [
+    15,
+    61
+   ],
+   [
+    15,
+    62
+   ]
+  ]
+ },
+ "ring_qa": {
+  "samples": 1452,
+  "gaps": [],
+  "gap_count": 0,
+  "gates": [
+   "east",
+   "north",
+   "south",
+   "west"
+  ],
+  "sealed": true,
+  "opens": 4,
+  "camp": {
+   "samples": 748,
+   "gaps": [],
+   "gap_count": 0,
+   "gates": [
+    "camp"
+   ],
+   "sealed": true,
+   "opens": 1
+  },
+  "diag_gaps": 0,
+  "diag_fixed": 0,
+  "note": "0.3.14 wall-ring walk: a ray from the centre every 2 px of perimeter must cross basalt wall/tower/gate art (camp: palisade/gate) near the ring; tile flood sealed with the gates shut and open through each; no diagonal corner gaps between blocking tiles (walls, towers, cliff)"
+ },
+ "camp": {
+  "id": "northern_guard",
+  "name": "Northern Guard camp",
+  "center": [
+   42,
+   17
+  ],
+  "gate_tiles": [
+   [
+    27,
+    16
+   ],
+   [
+    27,
+    17
+   ],
+   [
+    28,
+    16
+   ],
+   [
+    28,
+    17
+   ],
+   [
+    29,
+    16
+   ],
+   [
+    29,
+    17
+   ]
+  ],
+  "gate_wall": [
+   [
+    28,
+    16
+   ],
+   [
+    28,
+    17
+   ]
+  ],
+  "ridge": {
+   "face_rows": [
+    34,
+    35
+   ],
+   "stairs": [
+    40,
+    41,
+    42,
+    43
+   ]
+  }
+ },
+ "art": {
+  "market": [
+   [
+    44,
+    57
+   ],
+   [
+    38,
+    66
+   ]
+  ],
+  "plaza_px": [
+   672,
+   992
+  ],
+  "ground_decal": "res://assets/sprites/towns/cinderholt/ground_decal.png",
+  "ysort": [
+   {
+    "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_39_0.png",
+    "pos": [
+     560,
+     624
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_39_1.png",
+    "pos": [
+     688,
+     624
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_40_0.png",
+    "pos": [
+     528,
+     640
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_40_1.png",
+    "pos": [
+     704,
+     640
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_41_0.png",
+    "pos": [
+     448,
+     656
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_41_1.png",
+    "pos": [
+     704,
+     656
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_42_0.png",
+    "pos": [
+     400,
+     672
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_42_1.png",
+    "pos": [
+     816,
+     672
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_43_0.png",
+    "pos": [
+     368,
+     688
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_43_1.png",
+    "pos": [
+     864,
+     688
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_44_0.png",
+    "pos": [
+     352,
+     704
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_44_1.png",
+    "pos": [
+     896,
+     704
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_45_0.png",
+    "pos": [
+     336,
+     720
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_45_1.png",
+    "pos": [
+     912,
+     720
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_46_0.png",
+    "pos": [
+     304,
+     736
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_46_1.png",
+    "pos": [
+     928,
+     736
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_47_0.png",
+    "pos": [
+     288,
+     752
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_47_1.png",
+    "pos": [
+     944,
+     752
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_48_0.png",
+    "pos": [
+     272,
+     768
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_48_1.png",
+    "pos": [
+     960,
+     768
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_49_0.png",
+    "pos": [
+     256,
+     784
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_49_1.png",
+    "pos": [
+     976,
+     784
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_50_0.png",
+    "pos": [
+     240,
+     800
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_50_1.png",
+    "pos": [
+     992,
+     800
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_51_0.png",
+    "pos": [
+     224,
+     816
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_51_1.png",
+    "pos": [
+     1024,
+     816
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_52_0.png",
+    "pos": [
+     224,
+     832
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_52_1.png",
+    "pos": [
+     1040,
+     832
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_53_0.png",
+    "pos": [
+     208,
+     848
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_53_1.png",
+    "pos": [
+     1056,
+     848
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_54_0.png",
+    "pos": [
+     208,
+     864
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_54_1.png",
+    "pos": [
+     1072,
+     864
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_55_0.png",
+    "pos": [
+     208,
+     880
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_55_1.png",
+    "pos": [
+     1072,
+     880
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_56_0.png",
+    "pos": [
+     208,
+     896
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_56_1.png",
+    "pos": [
+     1088,
+     896
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_57_0.png",
+    "pos": [
+     208,
+     912
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_57_1.png",
+    "pos": [
+     1088,
+     912
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_58_0.png",
+    "pos": [
+     208,
+     928
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_58_1.png",
+    "pos": [
+     1088,
+     928
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_64_0.png",
+    "pos": [
+     208,
+     1024
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_64_1.png",
+    "pos": [
+     1088,
+     1024
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_65_0.png",
+    "pos": [
+     208,
+     1040
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_65_1.png",
+    "pos": [
+     1088,
+     1040
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_66_0.png",
+    "pos": [
+     208,
+     1056
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_66_1.png",
+    "pos": [
+     1088,
+     1056
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_67_0.png",
+    "pos": [
+     208,
+     1072
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_67_1.png",
+    "pos": [
+     1088,
+     1072
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_68_0.png",
+    "pos": [
+     208,
+     1088
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_68_1.png",
+    "pos": [
+     1056,
+     1088
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_69_0.png",
+    "pos": [
+     224,
+     1104
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_69_1.png",
+    "pos": [
+     1040,
+     1104
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_70_0.png",
+    "pos": [
+     240,
+     1120
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_70_1.png",
+    "pos": [
+     1040,
+     1120
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_71_0.png",
+    "pos": [
+     240,
+     1136
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_71_1.png",
+    "pos": [
+     1024,
+     1136
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_72_0.png",
+    "pos": [
+     256,
+     1152
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_72_1.png",
+    "pos": [
+     1024,
+     1152
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_73_0.png",
+    "pos": [
+     256,
+     1168
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_73_1.png",
+    "pos": [
+     1008,
+     1168
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_74_0.png",
+    "pos": [
+     256,
+     1184
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_74_1.png",
+    "pos": [
+     992,
+     1184
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_75_0.png",
+    "pos": [
+     272,
+     1200
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_75_1.png",
+    "pos": [
+     992,
+     1200
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_76_0.png",
+    "pos": [
+     272,
+     1216
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_76_1.png",
+    "pos": [
+     960,
+     1216
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_77_0.png",
+    "pos": [
+     288,
+     1232
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_77_1.png",
+    "pos": [
+     944,
+     1232
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_78_0.png",
+    "pos": [
+     304,
+     1248
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_78_1.png",
+    "pos": [
+     912,
+     1248
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_79_0.png",
+    "pos": [
+     320,
+     1264
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_79_1.png",
+    "pos": [
+     896,
+     1264
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_80_0.png",
+    "pos": [
+     368,
+     1280
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_80_1.png",
+    "pos": [
+     864,
+     1280
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_81_0.png",
+    "pos": [
+     416,
+     1296
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_81_1.png",
+    "pos": [
+     832,
+     1296
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_82_0.png",
+    "pos": [
+     448,
+     1312
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_82_1.png",
+    "pos": [
+     688,
+     1312
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_83_0.png",
+    "pos": [
+     496,
+     1328
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_83_1.png",
+    "pos": [
+     704,
+     1328
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_84_0.png",
+    "pos": [
+     560,
+     1344
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_84_1.png",
+    "pos": [
+     704,
+     1344
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/cinderholt/rows/wall_row_85_0.png",
+    "pos": [
+     768,
+     1360
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/cinderholt/rows/pal_row_06_0.png",
+    "pos": [
+     512,
+     96
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/cinderholt/rows/pal_row_07_0.png",
+    "pos": [
+     496,
+     112
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/cinderholt/rows/pal_row_08_0.png",
+    "pos": [
+     480,
+     128
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/cinderholt/rows/pal_row_08_1.png",
+    "pos": [
+     800,
+     128
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/cinderholt/rows/pal_row_09_0.png",
+    "pos": [
+     464,
+     144
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/cinderholt/rows/pal_row_09_1.png",
+    "pos": [
+     816,
+     144
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/cinderholt/rows/pal_row_10_0.png",
+    "pos": [
+     448,
+     160
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/cinderholt/rows/pal_row_10_1.png",
+    "pos": [
+     832,
+     160
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/cinderholt/rows/pal_row_11_0.png",
+    "pos": [
+     432,
+     176
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/cinderholt/rows/pal_row_11_1.png",
+    "pos": [
+     848,
+     176
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/cinderholt/rows/pal_row_12_0.png",
+    "pos": [
+     432,
+     192
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/cinderholt/rows/pal_row_12_1.png",
+    "pos": [
+     864,
+     192
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/cinderholt/rows/pal_row_13_0.png",
+    "pos": [
+     432,
+     208
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/cinderholt/rows/pal_row_13_1.png",
+    "pos": [
+     880,
+     208
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/cinderholt/rows/pal_row_14_0.png",
+    "pos": [
+     880,
+     224
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/cinderholt/rows/pal_row_15_0.png",
+    "pos": [
+     880,
+     240
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/cinderholt/rows/pal_row_16_0.png",
+    "pos": [
+     880,
+     256
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/cinderholt/rows/pal_row_17_0.png",
+    "pos": [
+     880,
+     272
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/cinderholt/rows/pal_row_18_0.png",
+    "pos": [
+     880,
+     288
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/cinderholt/rows/pal_row_19_0.png",
+    "pos": [
+     432,
+     304
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/cinderholt/rows/pal_row_19_1.png",
+    "pos": [
+     880,
+     304
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/cinderholt/rows/pal_row_20_0.png",
+    "pos": [
+     432,
+     320
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/cinderholt/rows/pal_row_20_1.png",
+    "pos": [
+     880,
+     320
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/cinderholt/rows/pal_row_21_0.png",
+    "pos": [
+     432,
+     336
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/cinderholt/rows/pal_row_21_1.png",
+    "pos": [
+     864,
+     336
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/cinderholt/rows/pal_row_22_0.png",
+    "pos": [
+     432,
+     352
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/cinderholt/rows/pal_row_22_1.png",
+    "pos": [
+     848,
+     352
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/cinderholt/rows/pal_row_23_0.png",
+    "pos": [
+     448,
+     368
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/cinderholt/rows/pal_row_23_1.png",
+    "pos": [
+     832,
+     368
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/cinderholt/rows/pal_row_24_0.png",
+    "pos": [
+     464,
+     384
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/cinderholt/rows/pal_row_24_1.png",
+    "pos": [
+     816,
+     384
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/cinderholt/rows/pal_row_25_0.png",
+    "pos": [
+     480,
+     400
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/cinderholt/rows/pal_row_25_1.png",
+    "pos": [
+     800,
+     400
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/cinderholt/rows/pal_row_26_0.png",
+    "pos": [
+     496,
+     416
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/cinderholt/rows/pal_row_27_0.png",
+    "pos": [
+     512,
+     432
+    ],
+    "base": 16
+   },
+   {
+    "path": "res://assets/sprites/towns/cinderholt/tiles/ch_wall_tower.png",
+    "pos": [
+     1056,
+     1058
+    ],
+    "base": 64
+   },
+   {
+    "path": "res://assets/sprites/towns/cinderholt/tiles/ch_wall_tower.png",
+    "pos": [
+     912,
+     1218
+    ],
+    "base": 64
+   },
+   {
+    "path": "res://assets/sprites/towns/cinderholt/tiles/ch_wall_tower.png",
+    "pos": [
+     384,
+     1218
+    ],
+    "base": 64
+   },
+   {
+    "path": "res://assets/sprites/towns/cinderholt/tiles/ch_wall_tower.png",
+    "pos": [
+     240,
+     1058
+    ],
+    "base": 64
+   },
+   {
+    "path": "res://assets/sprites/towns/cinderholt/tiles/ch_wall_tower.png",
+    "pos": [
+     208,
+     834
+    ],
+    "base": 64
+   },
+   {
+    "path": "res://assets/sprites/towns/cinderholt/tiles/ch_wall_tower.png",
+    "pos": [
+     384,
+     658
+    ],
+    "base": 64
+   },
+   {
+    "path": "res://assets/sprites/towns/cinderholt/tiles/ch_wall_tower.png",
+    "pos": [
+     912,
+     658
+    ],
+    "base": 64
+   },
+   {
+    "path": "res://assets/sprites/towns/cinderholt/tiles/ch_wall_tower.png",
+    "pos": [
+     1088,
+     834
+    ],
+    "base": 64
+   },
+   {
+    "path": "res://assets/sprites/towns/cinderholt/tiles/ng_watchtower.png",
+    "pos": [
+     760,
+     72
+    ],
+    "base": 88
+   },
+   {
+    "path": "res://assets/sprites/towns/cinderholt/tiles/ch_gate_back_walls.png",
+    "pos": [
+     640,
+     632
+    ],
+    "base": 64
+   },
+   {
+    "path": "res://assets/sprites/towns/cinderholt/tiles/ch_gate_front_walls.png",
+    "pos": [
+     640,
+     1320
+    ],
+    "base": 64
+   },
+   {
+    "path": "res://assets/sprites/towns/cinderholt/tiles/ch_gate_side_walls.png",
+    "pos": [
+     1088,
+     935
+    ],
+    "base": 112
+   },
+   {
+    "path": "res://assets/sprites/towns/cinderholt/tiles/ch_gate_side_walls.png",
+    "pos": [
+     208,
+     935
+    ],
+    "base": 112
+   },
+   {
+    "path": "res://assets/sprites/towns/cinderholt/tiles/ng_gate_side_walls.png",
+    "pos": [
+     432,
+     215
+    ],
+    "base": 112
+   }
+  ],
+  "fades": [
+   {
+    "path": "res://assets/sprites/towns/cinderholt/tiles/ch_gate_back_roof.png",
+    "pos": [
+     640,
+     632
+    ],
+    "tiles": [
+     [
+      41,
+      39
+     ],
+     [
+      41,
+      40
+     ],
+     [
+      41,
+      41
+     ],
+     [
+      41,
+      42
+     ],
+     [
+      42,
+      39
+     ],
+     [
+      42,
+      40
+     ],
+     [
+      42,
+      41
+     ],
+     [
+      42,
+      42
+     ]
+    ]
+   },
+   {
+    "path": "res://assets/sprites/towns/cinderholt/tiles/ch_gate_front_roof.png",
+    "pos": [
+     640,
+     1320
+    ],
+    "tiles": [
+     [
+      41,
+      82
+     ],
+     [
+      41,
+      83
+     ],
+     [
+      41,
+      84
+     ],
+     [
+      41,
+      85
+     ],
+     [
+      42,
+      82
+     ],
+     [
+      42,
+      83
+     ],
+     [
+      42,
+      84
+     ],
+     [
+      42,
+      85
+     ]
+    ]
+   },
+   {
+    "path": "res://assets/sprites/towns/cinderholt/tiles/ch_gate_side_roof.png",
+    "pos": [
+     1088,
+     935
+    ],
+    "tiles": [
+     [
+      68,
+      61
+     ],
+     [
+      68,
+      62
+     ],
+     [
+      69,
+      61
+     ],
+     [
+      69,
+      62
+     ],
+     [
+      70,
+      61
+     ],
+     [
+      70,
+      62
+     ]
+    ]
+   },
+   {
+    "path": "res://assets/sprites/towns/cinderholt/tiles/ch_gate_side_roof.png",
+    "pos": [
+     208,
+     935
+    ],
+    "tiles": [
+     [
+      13,
+      61
+     ],
+     [
+      13,
+      62
+     ],
+     [
+      14,
+      61
+     ],
+     [
+      14,
+      62
+     ],
+     [
+      15,
+      61
+     ],
+     [
+      15,
+      62
+     ]
+    ]
+   },
+   {
+    "path": "res://assets/sprites/towns/cinderholt/tiles/ng_gate_side_roof.png",
+    "pos": [
+     432,
+     215
+    ],
+    "tiles": [
+     [
+      27,
+      16
+     ],
+     [
+      27,
+      17
+     ],
+     [
+      28,
+      16
+     ],
+     [
+      28,
+      17
+     ],
+     [
+      29,
+      16
+     ],
+     [
+      29,
+      17
+     ]
+    ]
+   }
+  ]
+ },
+ "buildings": [
+  {
+   "art": "ch_smithy",
+   "flip": false,
+   "at": [
+    17,
+    56
+   ],
+   "door": [
+    [
+     19,
+     60
+    ]
+   ],
+   "sign": [
+    20,
+    60
+   ],
+   "props": [
+    {
+     "object": "furnace",
+     "at": [
+      18,
+      58
+     ]
+    },
+    {
+     "object": "anvil",
+     "at": [
+      20,
+      58
+     ]
+    }
+   ],
+   "counter": [],
+   "style": "basalt",
+   "roof": "#3a3e4c",
+   "id": "cinderholt_axes",
+   "kind": "smithy",
+   "shop": "axes",
+   "name": "Blacksmith",
+   "keeper": "Smith",
+   "keeper_at": [
+    19,
+    58
+   ],
+   "stand": [
+    19,
+    59
+   ],
+   "note": "0.3.14 Cinderholt v1 (designer ch_smithy); the forge (furnace + anvil)"
+  },
+  {
+   "art": "ch_bank",
+   "flip": false,
+   "at": [
+    43,
+    50
+   ],
+   "door": [
+    [
+     46,
+     54
+    ]
+   ],
+   "sign": [
+    47,
+    54
+   ],
+   "props": [
+    {
+     "object": "bank_chest",
+     "at": [
+      45,
+      52
+     ]
+    },
+    {
+     "object": "bank_chest",
+     "at": [
+      47,
+      52
+     ]
+    }
+   ],
+   "counter": [],
+   "style": "stone",
+   "roof": "#5a6070",
+   "id": "cinderholt_bank",
+   "kind": "bank",
+   "shop": "",
+   "name": "Cinderholt Bank",
+   "keeper": "Hulda Coin",
+   "keeper_sprite": "keeper_general",
+   "sign_sprite": "sign_bank",
+   "keeper_at": [
+    46,
+    51
+   ],
+   "stand": [
+    46,
+    53
+   ],
+   "note": "0.3.14 Cinderholt v1 (designer ch_bank)"
+  },
+  {
+   "art": "ch_general_store",
+   "flip": false,
+   "at": [
+    27,
+    56
+   ],
+   "door": [
+    [
+     29,
+     59
+    ]
+   ],
+   "sign": [
+    30,
+    59
+   ],
+   "props": [],
+   "counter": [],
+   "style": "basalt",
+   "roof": "#3a3e4c",
+   "id": "cinderholt_general",
+   "kind": "shop",
+   "shop": "general",
+   "name": "Cinderholt Supply",
+   "keeper": "Osric Coalby",
+   "keeper_at": [
+    31,
+    57
+   ],
+   "stand": [
+    29,
+    58
+   ],
+   "note": "0.3.14 Cinderholt v1 (designer ch_general_store)"
+  },
+  {
+   "art": "ch_cookhouse",
+   "flip": false,
+   "at": [
+    57,
+    68
+   ],
+   "door": [
+    [
+     59,
+     72
+    ]
+   ],
+   "sign": [
+    60,
+    72
+   ],
+   "props": [
+    {
+     "object": "oven",
+     "at": [
+      58,
+      70
+     ]
+    }
+   ],
+   "counter": [],
+   "style": "basalt",
+   "roof": "#2e3240",
+   "id": "cinderholt_cook",
+   "kind": "cookhouse",
+   "shop": "cook",
+   "name": "Ember Kitchen",
+   "keeper": "Greta Ashpan",
+   "keeper_at": [
+    59,
+    70
+   ],
+   "stand": [
+    59,
+    71
+   ],
+   "note": "0.3.14 Cinderholt v1 (designer ch_cookhouse)"
+  },
+  {
+   "art": "ch_player_shop",
+   "flip": false,
+   "at": [
+    35,
+    68
+   ],
+   "door": [
+    [
+     37,
+     72
+    ]
+   ],
+   "sign": [
+    38,
+    72
+   ],
+   "props": [],
+   "counter": [],
+   "style": "basalt",
+   "roof": "#3a3e4c",
+   "id": "cinderholt_player",
+   "kind": "house",
+   "shop": "",
+   "name": "Townhouse",
+   "keeper": "Dagny Soot",
+   "keeper_sprite": "villager",
+   "sign_sprite": "sign_house",
+   "keeper_at": [
+    37,
+    69
+   ],
+   "stand": [
+    37,
+    71
+   ],
+   "note": "0.3.14 Cinderholt v1 (designer ch_player_shop)"
+  },
+  {
+   "art": "ch_guard_post",
+   "flip": false,
+   "at": [
+    47,
+    76
+   ],
+   "door": [
+    [
+     49,
+     79
+    ]
+   ],
+   "sign": [
+    50,
+    79
+   ],
+   "props": [],
+   "counter": [],
+   "style": "basalt",
+   "roof": "#3a3e4c",
+   "id": "cinderholt_guard_post",
+   "kind": "house",
+   "shop": "",
+   "name": "Guard Post",
+   "keeper": "Captain Orla Vane",
+   "keeper_sprite": "town_guard",
+   "sign_sprite": "sign_house",
+   "note": "0.3.14 Cinderholt v1 (designer ch_guard_post)",
+   "keeper_at": [
+    50,
+    77
+   ],
+   "stand": [
+    49,
+    78
+   ]
+  },
+  {
+   "art": "ch_house_12",
+   "flip": false,
+   "at": [
+    19,
+    64
+   ],
+   "door": [
+    [
+     22,
+     68
+    ]
+   ],
+   "sign": [
+    23,
+    68
+   ],
+   "props": [],
+   "counter": [],
+   "style": "basalt",
+   "roof": "#3a3e4c",
+   "id": "cinderholt_body",
+   "kind": "shop",
+   "shop": "body",
+   "keeper_at": [
+    22,
+    65
+   ],
+   "stand": [
+    22,
+    67
+   ],
+   "note": "0.3.14 Cinderholt v1 (designer ch_house_12)"
+  },
+  {
+   "art": "ch_house_04",
+   "flip": false,
+   "at": [
+    60,
+    55
+   ],
+   "door": [
+    [
+     62,
+     59
+    ]
+   ],
+   "sign": [
+    63,
+    59
+   ],
+   "props": [],
+   "counter": [],
+   "style": "basalt",
+   "roof": "#3a3e4c",
+   "id": "cinderholt_shields",
+   "kind": "shop",
+   "shop": "shields",
+   "keeper_at": [
+    62,
+    57
+   ],
+   "stand": [
+    62,
+    58
+   ],
+   "note": "0.3.14 Cinderholt v1 (designer ch_house_04)"
+  },
+  {
+   "art": "ng_command_tent",
+   "flip": false,
+   "at": [
+    38,
+    9
+   ],
+   "door": [
+    [
+     42,
+     14
+    ]
+   ],
+   "sign": [
+    43,
+    14
+   ],
+   "props": [],
+   "counter": [],
+   "style": "canvas",
+   "roof": "#6a5a44",
+   "id": "cinderholt_ng_command",
+   "kind": "house",
+   "shop": "",
+   "name": "Command Tent",
+   "keeper": "Marshal Brannoc",
+   "keeper_sprite": "town_guard",
+   "sign_sprite": "sign_house",
+   "note": "0.3.14 Cinderholt v1 (designer ng_command_tent)",
+   "camp": "northern_guard",
+   "keeper_at": [
+    42,
+    10
+   ],
+   "stand": [
+    42,
+    13
+   ]
+  },
+  {
+   "art": "ng_barracks_hut",
+   "flip": false,
+   "at": [
+    46,
+    12
+   ],
+   "door": [
+    [
+     49,
+     15
+    ]
+   ],
+   "sign": [
+    50,
+    15
+   ],
+   "props": [],
+   "counter": [],
+   "style": "canvas",
+   "roof": "#6a5a44",
+   "id": "cinderholt_ng_barracks",
+   "kind": "house",
+   "shop": "",
+   "name": "Northern Guard Barracks",
+   "keeper": "Sergeant Hale",
+   "keeper_sprite": "town_guard",
+   "sign_sprite": "sign_house",
+   "note": "0.3.14 Cinderholt v1 (designer ng_barracks_hut)",
+   "camp": "northern_guard",
+   "keeper_at": [
+    48,
+    14
+   ],
+   "stand": [
+    49,
+    14
+   ]
+  },
+  {
+   "art": "ng_tent_03",
+   "flip": false,
+   "at": [
+    31,
+    12
+   ],
+   "door": [
+    [
+     33,
+     15
+    ]
+   ],
+   "sign": [
+    34,
+    15
+   ],
+   "props": [],
+   "counter": [],
+   "style": "canvas",
+   "roof": "#6a5a44",
+   "id": "cinderholt_ng_tent_1",
+   "kind": "house",
+   "shop": "",
+   "name": "Northern Guard tent",
+   "keeper": "Northern Guard",
+   "keeper_sprite": "town_guard",
+   "sign_sprite": "sign_house",
+   "note": "0.3.14 Cinderholt v1 (designer ng_tent_03)",
+   "camp": "northern_guard",
+   "no_keeper": true,
+   "keeper_at": [
+    33,
+    15
+   ],
+   "stand": [
+    33,
+    15
+   ]
+  },
+  {
+   "art": "ng_tent_04",
+   "flip": false,
+   "at": [
+    35,
+    19
+   ],
+   "door": [
+    [
+     38,
+     22
+    ]
+   ],
+   "sign": [
+    39,
+    22
+   ],
+   "props": [],
+   "counter": [],
+   "style": "canvas",
+   "roof": "#6a5a44",
+   "id": "cinderholt_ng_tent_2",
+   "kind": "house",
+   "shop": "",
+   "name": "Northern Guard tent",
+   "keeper": "Northern Guard",
+   "keeper_sprite": "town_guard",
+   "sign_sprite": "sign_house",
+   "note": "0.3.14 Cinderholt v1 (designer ng_tent_04)",
+   "camp": "northern_guard",
+   "no_keeper": true,
+   "keeper_at": [
+    38,
+    22
+   ],
+   "stand": [
+    38,
+    22
+   ]
+  },
+  {
+   "art": "ng_tent_03",
+   "flip": true,
+   "at": [
+    31,
+    17
+   ],
+   "door": [
+    [
+     32,
+     20
+    ]
+   ],
+   "sign": [
+    33,
+    20
+   ],
+   "props": [],
+   "counter": [],
+   "style": "canvas",
+   "roof": "#6a5a44",
+   "id": "cinderholt_ng_tent_3",
+   "kind": "house",
+   "shop": "",
+   "name": "Northern Guard tent",
+   "keeper": "Northern Guard",
+   "keeper_sprite": "town_guard",
+   "sign_sprite": "sign_house",
+   "note": "0.3.14 Cinderholt v1 (designer ng_tent_03, flipped)",
+   "camp": "northern_guard",
+   "no_keeper": true,
+   "keeper_at": [
+    32,
+    20
+   ],
+   "stand": [
+    32,
+    20
+   ]
+  },
+  {
+   "art": "ch_house_01",
+   "flip": false,
+   "at": [
+    49,
+    62
+   ],
+   "door": [
+    [
+     51,
+     66
+    ]
+   ],
+   "sign": [
+    52,
+    66
+   ],
+   "props": [],
+   "counter": [],
+   "style": "basalt",
+   "roof": "#3a3e4c",
+   "id": "cinderholt_home_1",
+   "kind": "house",
+   "shop": "",
+   "name": "The Coalbys' house",
+   "keeper": "Mara Coalby",
+   "keeper_sprite": "villager",
+   "sign_sprite": "sign_house",
+   "note": "0.3.14 Cinderholt v1 (designer ch_house_01)",
+   "keeper_at": [
+    51,
+    64
+   ],
+   "stand": [
+    51,
+    65
+   ]
+  },
+  {
+   "art": "ch_house_02",
+   "flip": false,
+   "at": [
+    53,
+    47
+   ],
+   "door": [
+    [
+     55,
+     50
+    ]
+   ],
+   "sign": [
+    56,
+    50
+   ],
+   "props": [],
+   "counter": [],
+   "style": "basalt",
+   "roof": "#3a3e4c",
+   "id": "cinderholt_home_2",
+   "kind": "house",
+   "shop": "",
+   "name": "Ember Row",
+   "keeper": "Tor Ashby",
+   "keeper_sprite": "villager",
+   "sign_sprite": "sign_house",
+   "note": "0.3.14 Cinderholt v1 (designer ch_house_02)",
+   "keeper_at": [
+    55,
+    48
+   ],
+   "stand": [
+    55,
+    49
+   ]
+  },
+  {
+   "art": "ch_house_03",
+   "flip": false,
+   "at": [
+    30,
+    45
+   ],
+   "door": [
+    [
+     33,
+     48
+    ]
+   ],
+   "sign": [
+    34,
+    48
+   ],
+   "props": [],
+   "counter": [],
+   "style": "basalt",
+   "roof": "#3a3e4c",
+   "id": "cinderholt_home_3",
+   "kind": "house",
+   "shop": "",
+   "name": "Slag House",
+   "keeper": "Wynn Slagg",
+   "keeper_sprite": "villager",
+   "sign_sprite": "sign_house",
+   "note": "0.3.14 Cinderholt v1 (designer ch_house_03)",
+   "keeper_at": [
+    32,
+    47
+   ],
+   "stand": [
+    33,
+    47
+   ]
+  },
+  {
+   "art": "ch_house_04",
+   "flip": false,
+   "at": [
+    36,
+    51
+   ],
+   "door": [
+    [
+     38,
+     55
+    ]
+   ],
+   "sign": [
+    39,
+    55
+   ],
+   "props": [],
+   "counter": [],
+   "style": "basalt",
+   "roof": "#3a3e4c",
+   "id": "cinderholt_home_4",
+   "kind": "house",
+   "shop": "",
+   "name": "The Flints' house",
+   "keeper": "Bera Flint",
+   "keeper_sprite": "villager",
+   "sign_sprite": "sign_house",
+   "note": "0.3.14 Cinderholt v1 (designer ch_house_04)",
+   "keeper_at": [
+    38,
+    53
+   ],
+   "stand": [
+    38,
+    54
+   ]
+  },
+  {
+   "art": "ch_house_05",
+   "flip": false,
+   "at": [
+    57,
+    51
+   ],
+   "door": [
+    [
+     59,
+     54
+    ]
+   ],
+   "sign": [
+    60,
+    54
+   ],
+   "props": [],
+   "counter": [],
+   "style": "basalt",
+   "roof": "#3a3e4c",
+   "id": "cinderholt_home_5",
+   "kind": "house",
+   "shop": "",
+   "name": "Bellows Cottage",
+   "keeper": "Ott Bellow",
+   "keeper_sprite": "villager",
+   "sign_sprite": "sign_house",
+   "note": "0.3.14 Cinderholt v1 (designer ch_house_05)",
+   "keeper_at": [
+    58,
+    53
+   ],
+   "stand": [
+    59,
+    53
+   ]
+  },
+  {
+   "art": "ch_house_06",
+   "flip": false,
+   "at": [
+    30,
+    63
+   ],
+   "door": [
+    [
+     32,
+     66
+    ]
+   ],
+   "sign": [
+    33,
+    66
+   ],
+   "props": [],
+   "counter": [],
+   "style": "basalt",
+   "roof": "#3a3e4c",
+   "id": "cinderholt_home_6",
+   "kind": "house",
+   "shop": "",
+   "name": "Cinder End",
+   "keeper": "Ilsa Cind",
+   "keeper_sprite": "villager",
+   "sign_sprite": "sign_house",
+   "note": "0.3.14 Cinderholt v1 (designer ch_house_06)",
+   "keeper_at": [
+    32,
+    64
+   ],
+   "stand": [
+    32,
+    65
+   ]
+  },
+  {
+   "art": "ch_house_07",
+   "flip": false,
+   "at": [
+    21,
+    52
+   ],
+   "door": [
+    [
+     23,
+     54
+    ]
+   ],
+   "sign": [
+    24,
+    54
+   ],
+   "props": [],
+   "counter": [],
+   "style": "basalt",
+   "roof": "#3a3e4c",
+   "id": "cinderholt_home_7",
+   "kind": "house",
+   "shop": "",
+   "name": "The Hammers' house",
+   "keeper": "Dag Hammer",
+   "keeper_sprite": "villager",
+   "sign_sprite": "sign_house",
+   "note": "0.3.14 Cinderholt v1 (designer ch_house_07)",
+   "no_keeper": true,
+   "keeper_at": [
+    23,
+    54
+   ],
+   "stand": [
+    23,
+    54
+   ]
+  },
+  {
+   "art": "ch_house_08",
+   "flip": false,
+   "at": [
+    26,
+    47
+   ],
+   "door": [
+    [
+     28,
+     50
+    ]
+   ],
+   "sign": [
+    29,
+    50
+   ],
+   "props": [],
+   "counter": [],
+   "style": "basalt",
+   "roof": "#3a3e4c",
+   "id": "cinderholt_home_8",
+   "kind": "house",
+   "shop": "",
+   "name": "Soot Lane house",
+   "keeper": "Petra Soot",
+   "keeper_sprite": "villager",
+   "sign_sprite": "sign_house",
+   "note": "0.3.14 Cinderholt v1 (designer ch_house_08)",
+   "keeper_at": [
+    27,
+    48
+   ],
+   "stand": [
+    28,
+    49
+   ]
+  },
+  {
+   "art": "ch_house_09",
+   "flip": false,
+   "at": [
+    63,
+    63
+   ],
+   "door": [
+    [
+     64,
+     66
+    ]
+   ],
+   "sign": [
+    65,
+    66
+   ],
+   "props": [],
+   "counter": [],
+   "style": "basalt",
+   "roof": "#3a3e4c",
+   "id": "cinderholt_home_9",
+   "kind": "house",
+   "shop": "",
+   "name": "Kiln House",
+   "keeper": "Arno Kiln",
+   "keeper_sprite": "villager",
+   "sign_sprite": "sign_house",
+   "note": "0.3.14 Cinderholt v1 (designer ch_house_09)",
+   "keeper_at": [
+    64,
+    64
+   ],
+   "stand": [
+    64,
+    65
+   ]
+  },
+  {
+   "art": "ch_house_10",
+   "flip": false,
+   "at": [
+    51,
+    55
+   ],
+   "door": [
+    [
+     53,
+     57
+    ]
+   ],
+   "sign": [
+    54,
+    57
+   ],
+   "props": [],
+   "counter": [],
+   "style": "basalt",
+   "roof": "#3a3e4c",
+   "id": "cinderholt_home_10",
+   "kind": "house",
+   "shop": "",
+   "name": "The Tongs' house",
+   "keeper": "Rhea Tong",
+   "keeper_sprite": "villager",
+   "sign_sprite": "sign_house",
+   "note": "0.3.14 Cinderholt v1 (designer ch_house_10)",
+   "no_keeper": true,
+   "keeper_at": [
+    53,
+    57
+   ],
+   "stand": [
+    53,
+    57
+   ]
+  },
+  {
+   "art": "ch_house_11",
+   "flip": false,
+   "at": [
+    25,
+    72
+   ],
+   "door": [
+    [
+     26,
+     75
+    ]
+   ],
+   "sign": [
+    27,
+    75
+   ],
+   "props": [],
+   "counter": [],
+   "style": "basalt",
+   "roof": "#3a3e4c",
+   "id": "cinderholt_home_11",
+   "kind": "house",
+   "shop": "",
+   "name": "Basalt Cottage",
+   "keeper": "Gil Stone",
+   "keeper_sprite": "villager",
+   "sign_sprite": "sign_house",
+   "note": "0.3.14 Cinderholt v1 (designer ch_house_11)",
+   "no_keeper": true,
+   "keeper_at": [
+    26,
+    75
+   ],
+   "stand": [
+    26,
+    75
+   ]
+  },
+  {
+   "art": "ch_house_12",
+   "flip": false,
+   "at": [
+    47,
+    43
+   ],
+   "door": [
+    [
+     50,
+     47
+    ]
+   ],
+   "sign": [
+    51,
+    47
+   ],
+   "props": [],
+   "counter": [],
+   "style": "basalt",
+   "roof": "#3a3e4c",
+   "id": "cinderholt_home_12",
+   "kind": "house",
+   "shop": "",
+   "name": "Quench House",
+   "keeper": "Fen Quench",
+   "keeper_sprite": "villager",
+   "sign_sprite": "sign_house",
+   "note": "0.3.14 Cinderholt v1 (designer ch_house_12)",
+   "keeper_at": [
+    50,
+    44
+   ],
+   "stand": [
+    50,
+    46
+   ]
+  },
+  {
+   "art": "ch_house_01",
+   "flip": true,
+   "at": [
+    33,
+    75
+   ],
+   "door": [
+    [
+     36,
+     79
+    ]
+   ],
+   "sign": [
+    37,
+    79
+   ],
+   "props": [],
+   "counter": [],
+   "style": "basalt",
+   "roof": "#3a3e4c",
+   "id": "cinderholt_home_13",
+   "kind": "house",
+   "shop": "",
+   "name": "The Ores' house",
+   "keeper": "Hal Ore",
+   "keeper_sprite": "villager",
+   "sign_sprite": "sign_house",
+   "note": "0.3.14 Cinderholt v1 (designer ch_house_01, flipped)",
+   "keeper_at": [
+    36,
+    77
+   ],
+   "stand": [
+    36,
+    78
+   ]
+  },
+  {
+   "art": "ch_house_02",
+   "flip": true,
+   "at": [
+    52,
+    74
+   ],
+   "door": [
+    [
+     54,
+     77
+    ]
+   ],
+   "sign": [
+    55,
+    77
+   ],
+   "props": [],
+   "counter": [],
+   "style": "basalt",
+   "roof": "#3a3e4c",
+   "id": "cinderholt_home_14",
+   "kind": "house",
+   "shop": "",
+   "name": "Smelter's Rest",
+   "keeper": "Kara Smelt",
+   "keeper_sprite": "villager",
+   "sign_sprite": "sign_house",
+   "note": "0.3.14 Cinderholt v1 (designer ch_house_02, flipped)",
+   "keeper_at": [
+    54,
+    75
+   ],
+   "stand": [
+    54,
+    76
+   ]
+  },
+  {
+   "art": "ch_house_03",
+   "flip": true,
+   "at": [
+    19,
+    70
+   ],
+   "door": [
+    [
+     21,
+     73
+    ]
+   ],
+   "sign": [
+    22,
+    73
+   ],
+   "props": [],
+   "counter": [],
+   "style": "basalt",
+   "roof": "#3a3e4c",
+   "id": "cinderholt_home_15",
+   "kind": "house",
+   "shop": "",
+   "name": "Ironside",
+   "keeper": "Bram Iron",
+   "keeper_sprite": "villager",
+   "sign_sprite": "sign_house",
+   "note": "0.3.14 Cinderholt v1 (designer ch_house_03, flipped)",
+   "keeper_at": [
+    20,
+    72
+   ],
+   "stand": [
+    21,
+    72
+   ]
+  },
+  {
+   "art": "ch_house_05",
+   "flip": true,
+   "at": [
+    36,
+    43
+   ],
+   "door": [
+    [
+     38,
+     46
+    ]
+   ],
+   "sign": [
+    39,
+    46
+   ],
+   "props": [],
+   "counter": [],
+   "style": "basalt",
+   "roof": "#3a3e4c",
+   "id": "cinderholt_home_16",
+   "kind": "house",
+   "shop": "",
+   "name": "Ash Hollow",
+   "keeper": "Una Ash",
+   "keeper_sprite": "villager",
+   "sign_sprite": "sign_house",
+   "note": "0.3.14 Cinderholt v1 (designer ch_house_05, flipped)",
+   "keeper_at": [
+    37,
+    45
+   ],
+   "stand": [
+    38,
+    45
+   ]
+  },
+  {
+   "art": "ch_house_07",
+   "flip": true,
+   "at": [
+    42,
+    43
+   ],
+   "door": [
+    [
+     44,
+     45
+    ]
+   ],
+   "sign": [
+    45,
+    45
+   ],
+   "props": [],
+   "counter": [],
+   "style": "basalt",
+   "roof": "#3a3e4c",
+   "id": "cinderholt_home_17",
+   "kind": "house",
+   "shop": "",
+   "name": "The Rivets' house",
+   "keeper": "Cole Rivet",
+   "keeper_sprite": "villager",
+   "sign_sprite": "sign_house",
+   "note": "0.3.14 Cinderholt v1 (designer ch_house_07, flipped)",
+   "no_keeper": true,
+   "keeper_at": [
+    44,
+    45
+   ],
+   "stand": [
+    44,
+    45
+   ]
+  }
+ ],
+ "rows": [
+  "gggggggggg===ggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg",
+  "gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg",
+  "gggggggggggggggggggggggggggggggggggTgggggggggggggggggggggggggggggggggggggggggggggggg",
+  "ggggggggggggggggggggggggggggggggggggCggggggggggggggggXggggggMgggggSggggggggggggggggg",
+  "gggUgggggggggggTgggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg",
+  "gggggggMggg=ggggggggggggggggggggggggggggggggggggggggggggUggggggggggggggggggggggggggg",
+  "ggggggggggg===gggggggggggggggggggPPPPPPPPPPPPPPPPPPggggggggggggggUgggggggggggggggggg",
+  "gggggMgSggggg====gggggggggggTgggPPPPPPPPPPPPPPPPPPPPgggggggggggggggggggggggggggggggg",
+  "ggggggggggggggg====gggggggggXggPPggggggggggggggggggPPggggXgggggggggUggggggggXggggggg",
+  "ggggggggggggggggg====gggggggggPPggggHgggggggggngPPggPPggggggggggUggggggggggggggggggg",
+  "gggggggggggggggggggg===ggggggPPgggqggggggggggggggggggPPggggggggggggggggUgggggggggggg",
+  "ggggggggggggggggggggE==gggggPPgggggggggggggggggggsggggPPggBgggggggggggggggggUggUMggg",
+  "gggggggggggUgggggggggg==gggPPggggggsgggggggggggggggggggPPggggggggggggggTgggggggggggg",
+  "ggggggggggggggggggggggg=ggIPPPgggggggJgggggggggggggggggPPgggggggBggggggggggggggggggg",
+  "gggggggggggggggggTggggC==ggPPPgggggqgggggggggggggggggkgPPgggggggggggggggggEggggggggg",
+  "gggggggggCgggggggggggggg=ggPPPggggggg=Hgj===jJgggggggggPPgggggggggggggEggggggggggggg",
+  "gggggggggggggggggggggggg==gQQQgg=======g==========gJgpgPPggggggggggggggggggUgggggggg",
+  "ggggggggggggggggggggBggg===QQQ=gggggggq===gggggggggggggPPgggggggggggXggggggggggggggg",
+  "ggTggggggggggggggggggggg==gPPP=ggggJgggg==lmkgRgggggglgPPggggggggggggggggggggggggggg",
+  "gggggggggggggUgggggUgggg==gPPP=gggggggggg=kkgggggigggggPPgggggggggggggggggggggggTggg",
+  "ggggggggggggggggTggggggg=gIPPg=gggggggggg==gggrggggrgLgPPgggggggggggggggggCggggggggg",
+  "ggggggggggggBgggggggggg==ggPPg===ggggggggp=ggggggrgggggPPggggggggggUgggSgggggXgggggg",
+  "gggggggggTggggggggggggg==gggPPggggkgggggg==gtgggggggrgPPgggggggggggggggggggggggggggg",
+  "ggggggggggggggggggggggg=gggggPPggggggg=====ggggghggggPPggggggggggggggggggggggggggggg",
+  "ggggggggggggggggggggggg=ggggggPPggggigggLggJgghggghgPPggggggggggUggggggggggggggggggg",
+  "ggggggggggggggggggTgggg==ggggggPPggggggggggggggggggPPggggUgggggggggggTgggggggggXgggg",
+  "gggggggggggggggggggggggg===gggggPPPPPPPPPPPPPPPPPPPPgggggggggggggggggggggggggggggggg",
+  "ggggggggEggggggggggggggggg===ggggPPPPPPPPPPPPPPPPPPggggggggggggggggggggggggggggggggg",
+  "gggggggggggUgggggggggggggggg===gggggggggggggggggggggggggggggggggggggggggBggggggggggg",
+  "gggggggggggggggggggggggggggggg====ggggggggggggggggggEggggggggggggggggggggggggggggggg",
+  "ggggggggggggggggggggggggggggggggg=======gggggggggXgggggggggggggggggggggggggggggggggg",
+  "ggggggggggggggggggggggggggggUgggMggUggg===UggggXgggggggggggggggggggggggggggBgggggggg",
+  "gggggMggSggggggggggSgggSggTggggggggTgggg=::gggggggXgggggUggTgggggTgggggMggXgggggUggg",
+  "gggggggggggggggUggggggggggggggggXXggggggg::ggggggggggggggggggggggggggggggggggggggggg",
+  "^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^::::^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^",
+  "^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^::::^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^",
+  "ggggggggggggggggggggggggggggggggggggggIgg::ggggggggggggggggggggggggggggUgggggggggggg",
+  "gggggggggggggggggggggggggggggggggCggggggg::ggIggggggggUggggggUgggggggggggggggggggggg",
+  "ggggggggggggggggggggggggggggggggggggggggg::ggggggggggggggggggggggggggggggggggggggggg",
+  "ggggggTgggggggggggggXggggUgggggggggg####gGGg#######gggggggggggggggggBggggggggggggggg",
+  "gggggggggggggggggggggggUgggggggggg#######GG###########ggggggggggggggggggggggggCggggg",
+  "ggggggggggggggggggggggggggggg############GG##############ggggggggggggggggggggggggggg",
+  "ggggggggggggggggggggTggggg#########gggggg:gggggggSgg######gggggggggggggXgggggggggggg",
+  "ggggggggTggggggggggggggg#########gggggggg:ggggggggggggg####ggggggggggggggggggggggggg",
+  "ggggggggggggggggggggggg#####ggggggggggggg:ggggggggggggggg###gggggggggggggggggggggggg",
+  "gggggggggggggggggggggg####ggggggggggggggg:ggggggggggggLggg###ggSgggggggCggggggMggggg",
+  "gggggBgggggggggggggg####ggggggggggggggggg::::gggggggggggggg###ggggMggggggggggggggggg",
+  "gggggggggggBggggggg####ggggggggggggggg::::::::gggggggggggggg###ggggggggggggggggggggg",
+  "gggggggggggggggggg###gggggggggggggggg:::::::::::g::gVgggggggg###gggggggggggggggMgggg",
+  "ggUgggggggggEgggg###gXgggggggggJ:::::::gg::ggHVg::::gggggggggg####ggggggggSggggggBgg",
+  "gggggMgggggggggg##ggggggggggggg::::gggggVg:ggggggg:::gggggIgggg####ggggggggggggggggg",
+  "ggggggggggggggg##ggggggggggg::::gggggggggg:gggggggg:::::ggggggggg###gggggggggggggggg",
+  "gggggggggggggg###ggggggggggg::::gggggggggg:ggggggggg::::gggggggggg###ggggggggggggggg",
+  "gggggggggEgggg###gggggggggg::g:::Mgggggggg:ggggggggg::::gggggggEggg###ggggggBggggggg",
+  "ggggggggggggg###gggWRggggg::gVgg::gRgggggg:ggggggg:::Mg::gggggggggg###gggggggggggggg",
+  "gggggBggggggg###BggOIVg::::gggggg::ggggggg:VgY:gN::ggggg::::gggggggg###ggggggggggggg",
+  "ggggggggggggg###ggggggggg:gggggggg::g::ggg:ggg::::ggggggg:::gggggggg###ggggggggggggg",
+  "ggBgggggggUgg###ggggggggg:Igggggggg::::gF:::fg:::ggggggggJ:ggggggggg###ggggggggggggg",
+  "ggggggggggggI###ggggggggg:gggggggggV::::::::::::ggggg:gggg::gggggggg###IgggggggggBgg",
+  "ggggXgggggggg###ggggggggg:ggggggggggg::::::::::HggJgg:ggggg:gggggggg###ggggggggggggg",
+  "ggggggggggggg###ggggggggg:AJc::Sgegg::::::::::::gggg:::ggg::::::gVgg###ggggggggggggg",
+  ":::::::gggg::GGG:b:::ggg:::g::::::::::::::::::::::::::::::::::::::::GGG:::::::ggg:::",
+  ":gggg::::::::GGG::::::::::::::::gg::::::::::::::gggggggO:::::::gggg:GGG:::::::::::::",
+  ":gggggggggggg###ggggggVO::Wgggggggggg::::::::::ggggggggggC:::ggggggg###gggggggggggg:",
+  "ggggggggggggg###ggggggggg:ggggggggggg::::::::::Vggggggggggg:gggggggg###ggggggggggggg",
+  "ggggggggUgggI###ggggggggg:ANCggggggg::::::::::::gggggggggg::ggJggggg###Igggggggggggg",
+  "ggggggggggggg###ggggggggg::gggggggg:::ug:::gggg::ggggggVO::BgggggggN###ggggggggggggg",
+  "ggggggggggggg###gggggggggV:gggLg::::gggJg:gggggg::::gEgg:::::::::ggg###ggggggggggTgg",
+  "gggggggggggEgg###gggggggg::ggggg:::gggggg:ggggggg:::gggg:gggggggggg###gggggggggggggg",
+  "ggggggggggggggg###ggVg::::::ggg:::ggggggg:gggggggg:::gg::ggggggggg###ggggggggggCgggg",
+  "ggggggggggggggg###gggggggg:::g::ggVgggggM:gggggggggg::::ggggggggg###ggggXggggggggggg",
+  "ggTggggggggggggg##ggggggggg::::Eggggggggg:gggggggBgVg:::ggggggggg##ggggggggggggggggg",
+  "ggggggggggggXggg###gggggggggg:::ggggggggg:gggggggggg:::::ggggggg###ggggggggBgggggggg",
+  "gggggggggggggggg###gggggggggg::::::g::ggg:gggggggg:::gg:::::aggg##gggggggggggggggggg",
+  "ggggggggEgggggggg##gg:gJggggg:gVgN:::::g:::V:::Z:::gggggg::gggg###gggggggggggXgggggg",
+  "ggggggggggggggggg###g::gggggg:egggggggg:::::::::::ggggggg:gggL###ggggggggggggggggggg",
+  "gggggggggggggggggg###:::::::::gggggggggg::::ggggggggggggg:gVg###gggggUgggggggggggggg",
+  "ggggggggggggggggggg####gRgggggIggggggggBg::gggggggggggggg:gg###ggggggggggggggggggggg",
+  "gggggggggggggggggggg######ggVggggggggggggg:ggggggggggg::::####gggggggggggggggggggggg",
+  "gggggggggggggggMggggg#######gggggggggggggg::ggggggggNgggg####ggggggggggggggggggggggg",
+  "ggMggggggggggggggggggggg#######gNggg::::::::::::::gJggg#####gggggggggEgggggggggggggg",
+  "ggggggggggggggggggggggggggg########gggVgg:::gJggggggg#####ggggggggggEgggggggggggTggg",
+  "gggggggggggggggggMggggggggggg###########gGGg####gg######gggggggggggggggggggggggggggg",
+  "ggggggggggggggCggggggggggggggggg#########GG############gggggggggggUggggggggggggggggg",
+  "ggggggggggggggggggggggggggBggggggggg#####GG##########gggggggggSgggggggggggEggggggggg",
+  "ggggggggggggggggggggggggggggggggggggggIgg::ggIggg#gggggBgggggggggggggggggggggggggBgg",
+  "ggggggggggggggggggggggggggMgggggggggggdgg::ggggggggggggggggggggggggggggggUgggggggggg",
+  "ggggggggggggggggTggggXggggggggggggggggggg::gggggBgBggggggggCggCggggggggggggggggggggg",
+  "ggggggggggggggggggggggggggggggggggggggggg::ggggggggggggggggggggggggggggggggggggggggg",
+  "ggggggggggggggggggggggggggggggggggggggggg:::gggggggggggggggggggggggggggggggggggggggg"
+ ],
+ "note": "0.3.14 generated by tools/world/build_cinderholt_v1.py from the designer's Cinderholt v1 set (art_handoff/towns/cinderholt); camp north per the lore"
 }

@@ -1425,6 +1425,222 @@
    "sprite": "hf4_tree_young",
    "blocks": true,
    "type": "prop"
+  },
+  "ch_anvil": {
+   "name": "Anvil",
+   "sprite": "ch_anvil",
+   "blocks": true,
+   "type": "prop"
+  },
+  "ch_ash_pile_a": {
+   "name": "Ash pile a",
+   "sprite": "ch_ash_pile_a",
+   "blocks": false,
+   "type": "prop"
+  },
+  "ch_ash_pile_b": {
+   "name": "Ash pile b",
+   "sprite": "ch_ash_pile_b",
+   "blocks": false,
+   "type": "prop"
+  },
+  "ch_ash_pile_c": {
+   "name": "Ash pile c",
+   "sprite": "ch_ash_pile_c",
+   "blocks": false,
+   "type": "prop"
+  },
+  "ch_ash_well": {
+   "name": "Ash well",
+   "sprite": "ch_ash_well",
+   "blocks": true,
+   "type": "prop"
+  },
+  "ch_barrel": {
+   "name": "Barrel",
+   "sprite": "ch_barrel",
+   "blocks": true,
+   "type": "prop"
+  },
+  "ch_brazier": {
+   "name": "Brazier",
+   "sprite": "ch_brazier",
+   "blocks": true,
+   "type": "prop"
+  },
+  "ch_brazier_tall": {
+   "name": "Brazier",
+   "sprite": "ch_brazier_tall",
+   "blocks": true,
+   "type": "prop"
+  },
+  "ch_cart": {
+   "name": "Cart",
+   "sprite": "ch_cart",
+   "blocks": true,
+   "type": "prop"
+  },
+  "ch_charred_stump": {
+   "name": "Charred stump",
+   "sprite": "ch_charred_stump",
+   "blocks": true,
+   "type": "prop"
+  },
+  "ch_coal_cart": {
+   "name": "Coal cart",
+   "sprite": "ch_coal_cart",
+   "blocks": true,
+   "type": "prop"
+  },
+  "ch_coal_heap": {
+   "name": "Coal heap",
+   "sprite": "ch_coal_heap",
+   "blocks": true,
+   "type": "prop"
+  },
+  "ch_crates": {
+   "name": "Crates",
+   "sprite": "ch_crates",
+   "blocks": true,
+   "type": "prop"
+  },
+  "ch_dead_tree_a": {
+   "name": "Dead tree a",
+   "sprite": "ch_dead_tree_a",
+   "blocks": true,
+   "type": "prop"
+  },
+  "ch_dead_tree_b": {
+   "name": "Dead tree b",
+   "sprite": "ch_dead_tree_b",
+   "blocks": true,
+   "type": "prop"
+  },
+  "ch_ember_vent": {
+   "name": "Ember vent",
+   "sprite": "ch_ember_vent",
+   "blocks": false,
+   "type": "prop"
+  },
+  "ch_lamp_post": {
+   "name": "Lamp post",
+   "sprite": "ch_lamp_post",
+   "blocks": true,
+   "type": "prop"
+  },
+  "ch_quench_barrel": {
+   "name": "Quench barrel",
+   "sprite": "ch_quench_barrel",
+   "blocks": true,
+   "type": "prop"
+  },
+  "ch_rubble": {
+   "name": "Rubble",
+   "sprite": "ch_rubble",
+   "blocks": false,
+   "type": "prop"
+  },
+  "ch_sign_bank": {
+   "name": "Bank sign",
+   "sprite": "ch_sign_bank",
+   "blocks": true,
+   "type": "prop"
+  },
+  "ch_sign_church": {
+   "name": "Chapel sign",
+   "sprite": "ch_sign_church",
+   "blocks": true,
+   "type": "prop"
+  },
+  "ch_sign_cook": {
+   "name": "Cookhouse sign",
+   "sprite": "ch_sign_cook",
+   "blocks": true,
+   "type": "prop"
+  },
+  "ch_sign_smith": {
+   "name": "Blacksmith sign",
+   "sprite": "ch_sign_smith",
+   "blocks": true,
+   "type": "prop"
+  },
+  "ch_sign_store": {
+   "name": "Supply sign",
+   "sprite": "ch_sign_store",
+   "blocks": true,
+   "type": "prop"
+  },
+  "ch_town_sign": {
+   "name": "Cinderholt",
+   "sprite": "ch_town_sign",
+   "blocks": true,
+   "type": "prop"
+  },
+  "ng_archery_target": {
+   "name": "Archery target",
+   "sprite": "ng_archery_target",
+   "blocks": true,
+   "type": "prop"
+  },
+  "ng_armor_stand": {
+   "name": "Armor stand",
+   "sprite": "ng_armor_stand",
+   "blocks": true,
+   "type": "prop"
+  },
+  "ng_banner_north": {
+   "name": "Northern Guard banner",
+   "sprite": "ng_banner_north",
+   "blocks": true,
+   "type": "prop"
+  },
+  "ng_bedroll": {
+   "name": "Bedroll",
+   "sprite": "ng_bedroll",
+   "blocks": false,
+   "type": "prop"
+  },
+  "ng_campfire": {
+   "name": "Campfire",
+   "sprite": "ng_campfire",
+   "blocks": true,
+   "type": "prop"
+  },
+  "ng_cookpot": {
+   "name": "Cookpot",
+   "sprite": "ng_cookpot",
+   "blocks": true,
+   "type": "prop"
+  },
+  "ng_shield_rack": {
+   "name": "Shield rack",
+   "sprite": "ng_shield_rack",
+   "blocks": true,
+   "type": "prop"
+  },
+  "ng_spear_rack": {
+   "name": "Spear rack",
+   "sprite": "ng_spear_rack",
+   "blocks": true,
+   "type": "prop"
+  },
+  "ng_supply_crates": {
+   "name": "Supply crates",
+   "sprite": "ng_supply_crates",
+   "blocks": true,
+   "type": "prop"
+  },
+  "ng_training_dummy": {
+   "name": "Training dummy",
+   "sprite": "ng_training_dummy",
+   "blocks": true,
+   "type": "prop"
+  },
+  "ng_weapon_rack": {
+   "name": "Weapon rack",
+   "sprite": "ng_weapon_rack",
+   "blocks": true,
+   "type": "prop"
   }
  }
 }

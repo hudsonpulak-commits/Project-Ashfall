@@ -2477,6 +2477,366 @@
    "frames": 1,
    "anchor": "bottom",
    "note": "0.3.13 designer Highfen v4 prop (art_handoff/towns/highfen/v4)"
+  },
+  "ch_anvil": {
+   "path": "res://assets/sprites/towns/cinderholt/props/ch_anvil.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.3.14 designer Cinderholt v1 prop (art_handoff/towns/cinderholt)"
+  },
+  "ch_ash_pile_a": {
+   "path": "res://assets/sprites/towns/cinderholt/props/ch_ash_pile_a.png",
+   "frame_size": [
+    20,
+    10
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.3.14 designer Cinderholt v1 prop (art_handoff/towns/cinderholt)"
+  },
+  "ch_ash_pile_b": {
+   "path": "res://assets/sprites/towns/cinderholt/props/ch_ash_pile_b.png",
+   "frame_size": [
+    30,
+    14
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.3.14 designer Cinderholt v1 prop (art_handoff/towns/cinderholt)"
+  },
+  "ch_ash_pile_c": {
+   "path": "res://assets/sprites/towns/cinderholt/props/ch_ash_pile_c.png",
+   "frame_size": [
+    14,
+    8
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.3.14 designer Cinderholt v1 prop (art_handoff/towns/cinderholt)"
+  },
+  "ch_ash_well": {
+   "path": "res://assets/sprites/towns/cinderholt/props/ch_ash_well.png",
+   "frame_size": [
+    28,
+    22
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.3.14 designer Cinderholt v1 prop (art_handoff/towns/cinderholt)"
+  },
+  "ch_barrel": {
+   "path": "res://assets/sprites/towns/cinderholt/props/ch_barrel.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.3.14 designer Cinderholt v1 prop (art_handoff/towns/cinderholt)"
+  },
+  "ch_brazier": {
+   "path": "res://assets/sprites/towns/cinderholt/props/ch_brazier.png",
+   "frame_size": [
+    16,
+    18
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.3.14 designer Cinderholt v1 prop (art_handoff/towns/cinderholt)"
+  },
+  "ch_brazier_tall": {
+   "path": "res://assets/sprites/towns/cinderholt/props/ch_brazier_tall.png",
+   "frame_size": [
+    16,
+    34
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.3.14 designer Cinderholt v1 prop (art_handoff/towns/cinderholt)"
+  },
+  "ch_cart": {
+   "path": "res://assets/sprites/towns/cinderholt/props/ch_cart.png",
+   "frame_size": [
+    32,
+    20
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.3.14 designer Cinderholt v1 prop (art_handoff/towns/cinderholt)"
+  },
+  "ch_charred_stump": {
+   "path": "res://assets/sprites/towns/cinderholt/props/ch_charred_stump.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.3.14 designer Cinderholt v1 prop (art_handoff/towns/cinderholt)"
+  },
+  "ch_coal_cart": {
+   "path": "res://assets/sprites/towns/cinderholt/props/ch_coal_cart.png",
+   "frame_size": [
+    36,
+    22
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.3.14 designer Cinderholt v1 prop (art_handoff/towns/cinderholt)"
+  },
+  "ch_coal_heap": {
+   "path": "res://assets/sprites/towns/cinderholt/props/ch_coal_heap.png",
+   "frame_size": [
+    20,
+    18
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.3.14 designer Cinderholt v1 prop (art_handoff/towns/cinderholt)"
+  },
+  "ch_crates": {
+   "path": "res://assets/sprites/towns/cinderholt/props/ch_crates.png",
+   "frame_size": [
+    24,
+    24
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.3.14 designer Cinderholt v1 prop (art_handoff/towns/cinderholt)"
+  },
+  "ch_dead_tree_a": {
+   "path": "res://assets/sprites/towns/cinderholt/props/ch_dead_tree_a.png",
+   "frame_size": [
+    24,
+    36
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.3.14 designer Cinderholt v1 prop (art_handoff/towns/cinderholt)"
+  },
+  "ch_dead_tree_b": {
+   "path": "res://assets/sprites/towns/cinderholt/props/ch_dead_tree_b.png",
+   "frame_size": [
+    30,
+    44
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.3.14 designer Cinderholt v1 prop (art_handoff/towns/cinderholt)"
+  },
+  "ch_ember_vent": {
+   "path": "res://assets/sprites/towns/cinderholt/props/ch_ember_vent.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.3.14 designer Cinderholt v1 prop (art_handoff/towns/cinderholt)"
+  },
+  "ch_lamp_post": {
+   "path": "res://assets/sprites/towns/cinderholt/props/ch_lamp_post.png",
+   "frame_size": [
+    16,
+    48
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.3.14 designer Cinderholt v1 prop (art_handoff/towns/cinderholt)"
+  },
+  "ch_quench_barrel": {
+   "path": "res://assets/sprites/towns/cinderholt/props/ch_quench_barrel.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.3.14 designer Cinderholt v1 prop (art_handoff/towns/cinderholt)"
+  },
+  "ch_rubble": {
+   "path": "res://assets/sprites/towns/cinderholt/props/ch_rubble.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.3.14 designer Cinderholt v1 prop (art_handoff/towns/cinderholt)"
+  },
+  "ch_sign_bank": {
+   "path": "res://assets/sprites/towns/cinderholt/props/ch_sign_bank.png",
+   "frame_size": [
+    16,
+    24
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.3.14 designer Cinderholt v1 prop (art_handoff/towns/cinderholt)"
+  },
+  "ch_sign_church": {
+   "path": "res://assets/sprites/towns/cinderholt/props/ch_sign_church.png",
+   "frame_size": [
+    16,
+    24
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.3.14 designer Cinderholt v1 prop (art_handoff/towns/cinderholt)"
+  },
+  "ch_sign_cook": {
+   "path": "res://assets/sprites/towns/cinderholt/props/ch_sign_cook.png",
+   "frame_size": [
+    16,
+    24
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.3.14 designer Cinderholt v1 prop (art_handoff/towns/cinderholt)"
+  },
+  "ch_sign_smith": {
+   "path": "res://assets/sprites/towns/cinderholt/props/ch_sign_smith.png",
+   "frame_size": [
+    16,
+    24
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.3.14 designer Cinderholt v1 prop (art_handoff/towns/cinderholt)"
+  },
+  "ch_sign_store": {
+   "path": "res://assets/sprites/towns/cinderholt/props/ch_sign_store.png",
+   "frame_size": [
+    16,
+    24
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.3.14 designer Cinderholt v1 prop (art_handoff/towns/cinderholt)"
+  },
+  "ch_town_sign": {
+   "path": "res://assets/sprites/towns/cinderholt/props/ch_town_sign.png",
+   "frame_size": [
+    56,
+    30
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.3.14 designer Cinderholt v1 prop (art_handoff/towns/cinderholt)"
+  },
+  "ng_archery_target": {
+   "path": "res://assets/sprites/towns/cinderholt/props/ng_archery_target.png",
+   "frame_size": [
+    20,
+    28
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.3.14 designer Cinderholt v1 prop (art_handoff/towns/cinderholt)"
+  },
+  "ng_armor_stand": {
+   "path": "res://assets/sprites/towns/cinderholt/props/ng_armor_stand.png",
+   "frame_size": [
+    16,
+    30
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.3.14 designer Cinderholt v1 prop (art_handoff/towns/cinderholt)"
+  },
+  "ng_banner_north": {
+   "path": "res://assets/sprites/towns/cinderholt/props/ng_banner_north.png",
+   "frame_size": [
+    24,
+    46
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.3.14 designer Cinderholt v1 prop (art_handoff/towns/cinderholt)"
+  },
+  "ng_bedroll": {
+   "path": "res://assets/sprites/towns/cinderholt/props/ng_bedroll.png",
+   "frame_size": [
+    18,
+    16
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.3.14 designer Cinderholt v1 prop (art_handoff/towns/cinderholt)"
+  },
+  "ng_campfire": {
+   "path": "res://assets/sprites/towns/cinderholt/props/ng_campfire.png",
+   "frame_size": [
+    20,
+    16
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.3.14 designer Cinderholt v1 prop (art_handoff/towns/cinderholt)"
+  },
+  "ng_cookpot": {
+   "path": "res://assets/sprites/towns/cinderholt/props/ng_cookpot.png",
+   "frame_size": [
+    24,
+    22
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.3.14 designer Cinderholt v1 prop (art_handoff/towns/cinderholt)"
+  },
+  "ng_shield_rack": {
+   "path": "res://assets/sprites/towns/cinderholt/props/ng_shield_rack.png",
+   "frame_size": [
+    32,
+    22
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.3.14 designer Cinderholt v1 prop (art_handoff/towns/cinderholt)"
+  },
+  "ng_spear_rack": {
+   "path": "res://assets/sprites/towns/cinderholt/props/ng_spear_rack.png",
+   "frame_size": [
+    24,
+    30
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.3.14 designer Cinderholt v1 prop (art_handoff/towns/cinderholt)"
+  },
+  "ng_supply_crates": {
+   "path": "res://assets/sprites/towns/cinderholt/props/ng_supply_crates.png",
+   "frame_size": [
+    24,
+    24
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.3.14 designer Cinderholt v1 prop (art_handoff/towns/cinderholt)"
+  },
+  "ng_training_dummy": {
+   "path": "res://assets/sprites/towns/cinderholt/props/ng_training_dummy.png",
+   "frame_size": [
+    16,
+    30
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.3.14 designer Cinderholt v1 prop (art_handoff/towns/cinderholt)"
+  },
+  "ng_weapon_rack": {
+   "path": "res://assets/sprites/towns/cinderholt/props/ng_weapon_rack.png",
+   "frame_size": [
+    32,
+    24
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.3.14 designer Cinderholt v1 prop (art_handoff/towns/cinderholt)"
   }
  },
  "actors": {
