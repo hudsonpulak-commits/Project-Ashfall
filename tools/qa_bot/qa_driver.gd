@@ -3459,6 +3459,7 @@ func _perf0316() -> void:
 	p.place_at(stops[0])
 	p.stop()
 	w.set_focus(p.tile, true)
+	w.perf_on = true
 	await frames(150)   # 0.3.16 let the spawn town's AI views settle (a teleport, not a walk)
 	w.perf_log.clear()
 	var ft: Array = []

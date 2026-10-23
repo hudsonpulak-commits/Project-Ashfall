@@ -39,6 +39,7 @@ var buildings_view: BuildingsView    # 0.3.0 roofs, signs, keepers, displays
 func setup(world_seed: int) -> void:
 	tile_px = GameData.tile_size
 	gen = WorldGen.new(world_seed)
+	gen.perf_sink = perf_log
 	_pf_seed = world_seed
 	ground_layer = Node2D.new()
 	ground_layer.name = "Ground"
@@ -648,6 +649,8 @@ func _set_focus_inner(c: Vector2i, immediate: bool) -> void:
 
 
 func _process(delta: float) -> void:
+	if not perf_on and perf_log.size() > 2000:
+		perf_log.clear()   # only the QA perf scenario keeps the timings
 	var _ta := Time.get_ticks_usec()
 	_pf_adopt()
 	perf_log.append(["adopt", (Time.get_ticks_usec() - _ta) / 1000.0])
@@ -674,6 +677,7 @@ func _process(delta: float) -> void:
 			spr.frame = int(_anim_time * float(a[2])) % int(a[1])
 
 
+var perf_on := false   # set by the QA perf scenario
 var perf_log: Array = []   # 0.3.16 [what, ms] for the QA perf scenario
 const BUILD_BUDGET_MS := 4.0   # 0.3.16 chunk views are built in slices within this per-frame budget
 var _job: Dictionary = {}      # the chunk view being built (time-sliced)

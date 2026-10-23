@@ -1585,13 +1585,19 @@ func _extra_ramp(p: Vector2i) -> bool:
 	return c2 != c and _cell_hit(c2, p)
 
 
+var perf_sink = null   # 0.3.16 main-thread gen: World.perf_log (QA perf)
+
+
 func _cell_hit(c: Vector2i, p: Vector2i) -> bool:
 	var hit = _cell_ramps.get(c)
 	if hit == null:
 		if _cell_ramps.size() > 4000:
 			_cell_ramps.clear()
+		var _tq := Time.get_ticks_usec()
 		hit = _analyse_cell(c)
 		_cell_ramps[c] = hit
+		if perf_sink != null:
+			perf_sink.append(["ramp_miss@%d,%d" % [c.x, c.y], (Time.get_ticks_usec() - _tq) / 1000.0])
 	return (hit as Dictionary).has(p)
 
 
