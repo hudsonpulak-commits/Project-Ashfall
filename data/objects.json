@@ -1641,6 +1641,26 @@
    "sprite": "ng_weapon_rack",
    "blocks": true,
    "type": "prop"
+  },
+  "quest_giver_hunter": {
+   "name": "Odric the Hunter",
+   "sprite": "quest_giver",
+   "actor_sprite": "villager",
+   "blocks": true,
+   "type": "quest",
+   "giver": "hunter_odric",
+   "verb": "Talk-to",
+   "note": "0.3.15 Wolf Pelts giver (quests.json)"
+  },
+  "quest_giver_quartermaster": {
+   "name": "Quartermaster Hale",
+   "sprite": "quest_giver",
+   "actor_sprite": "town_guard",
+   "blocks": true,
+   "type": "quest",
+   "giver": "qm_hale",
+   "verb": "Talk-to",
+   "note": "0.3.15 Chicken Slayer giver, Northern Guard supply officer"
   }
  }
 }

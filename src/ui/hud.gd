@@ -96,6 +96,7 @@ func setup(p: Player, w: World) -> void:
 	_refresh_title()
 	Events.message.connect(_on_message)
 	Events.inventory_changed.connect(_refresh_inventory)
+	Events.inventory_changed.connect(func(): if current_panel == "quests": refresh_quests())   # 0.3.15 gather counters
 	Events.bank_changed.connect(_refresh_bank)
 	Events.xp_gained.connect(func(_s, _a): _refresh_skills())
 	Events.action_changed.connect(func(t): status_label.text = t)

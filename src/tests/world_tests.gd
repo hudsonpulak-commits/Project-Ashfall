@@ -53,6 +53,7 @@ static func run(main, world: World, p: Player) -> void:
 	Patch0312Tests.run(main, world, p)   # 0.3.12 Saltmere v2 open harbour town
 	Patch0313Tests.run(main, world, p)   # 0.3.13 Fenhollow v1 palisade marsh town
 	Patch0314Tests.run(main, world, p)   # 0.3.14 Cinderholt forge city + Northern Guard camp
+	Patch0315Tests.run(main, world, p)   # 0.3.15 side quests + cliff/water rule
 	Patch0396VideoTests.run(main, world, p)   # 0.3.9.6 title video
 	p.place_at(world.gen.town_spawn("fenhollow"))
 	world.set_focus(p.tile, true)
