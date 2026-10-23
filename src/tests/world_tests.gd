@@ -1166,7 +1166,8 @@ static func _cookhouse_tests(world: World, p: Player) -> void:
 		var cp := m.shop_price("cook", "cooked_carp")
 		check(cp > 0 and cp < gp and cp <= int(ceil(gp * 0.85)),
 			"%s cookhouse cooked_carp %d < general %d (~80%%)" % [tid, cp, gp])
-		check(m.shelf("cook", "cooked_carp") > 0 and m.shelf("cook", "cooked_carp") <= 40,
+		# 0.3.14: AI shoppers can clear a shelf before this runs (saltmere_v4 cookhouse sits on the busy quay); finite = 0..max with a positive cap
+		check(m.max_shelf("cooked_carp") > 0 and m.shelf("cook", "cooked_carp") >= 0 and m.shelf("cook", "cooked_carp") <= m.max_shelf("cooked_carp"),
 			"%s cookhouse has finite stock (%d)" % [tid, m.shelf("cook", "cooked_carp")])
 	# walk in, cook on oven, buy cheaper food
 	var b2: Dictionary = gen.building_for_shop("fenhollow", "cook")
