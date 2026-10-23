@@ -308,10 +308,11 @@ func _pf_loop() -> void:
 			continue
 		var ch: ChunkData = wg.generate_chunk(c)
 		# 0.3.16 hand over the cliff-ramp cell analyses (expensive; the view build needs them too)
-		var cr := c * CHUNK / wg._ramp_period
+		var rp: int = wg._ramp_period
+		var cr: Vector2i = Vector2i(floori(float(c.x * CHUNK) / rp), floori(float(c.y * CHUNK) / rp))
 		var ramps := {}
-		for yy in range(cr.y - 1, cr.y + CHUNK / wg._ramp_period + 2):
-			for xx in range(cr.x - 1, cr.x + CHUNK / wg._ramp_period + 2):
+		for yy in range(cr.y - 1, cr.y + CHUNK / rp + 2):
+			for xx in range(cr.x - 1, cr.x + CHUNK / rp + 2):
 				var cc := Vector2i(xx, yy)
 				wg._cell_hit(cc, Vector2i.ZERO)
 				ramps[cc] = wg._cell_ramps.get(cc, {})
