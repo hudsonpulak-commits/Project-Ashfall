@@ -58,6 +58,19 @@ static func run(main, world, p) -> void:
 			bv.step(5.0)
 			if bv.roof_alpha(id) == 0.0:
 				faded += 1
+	# 0.3.13 QA C2: inside a building the front wall must not cover the player (walls sort at the top edge)
+	var sw: Dictionary = gen.buildings.get("fenhollow_swords", {})
+	var wall_ok := false
+	if not sw.is_empty() and bv._walls.has("fenhollow_swords"):
+		var y_out := bv.walls_sort_y("fenhollow_swords")
+		var inner: Vector2i = (sw["doors"][0] as Vector2i) + Vector2i(0, -1)
+		p.place_at(inner)
+		bv.step(5.0)
+		var y_in := bv.walls_sort_y("fenhollow_swords")
+		p.place_at(keep)
+		bv.step(5.0)
+		wall_ok = y_in < y_out - 16.0 and bv.walls_sort_y("fenhollow_swords") == y_out
+	check(wall_ok, "inside the Fenhollow forge the walls sort behind the player, and back once outside")
 	p.place_at(keep)
 	world.set_focus(keep, true)
 	check(designs.size() >= 15, "Fenhollow uses %d of the designer's v1 building designs" % designs.size())

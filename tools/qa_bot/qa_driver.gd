@@ -614,7 +614,10 @@ func _smithy() -> void:
 	p.place_at(_outside(b, 3))
 	await frames(20)
 	label = "walk_in"
-	await tap_tile(b["doors"][0] + Vector2i(0, 2), "inside the door")
+	# 0.3.13 scenario fix: door + (0, 2) is OUTSIDE a south-facing facade, so the player stood on its own
+	# fading tap marker for ~18 frames (read by C2 as a blended sprite). Tap the first tile really inside.
+	var inward := Vector2i(0, -1) if int(b["facade_y"]) == (b["rect"] as Rect2i).end.y - 1 else Vector2i(0, 1)
+	await tap_tile(b["doors"][0] + inward, "inside the door")
 	await until(arrived, 10.0)
 	await frames(15)
 	var fur: WorldObject = w.find_nearest_object(p.tile, ["furnace"], 10)

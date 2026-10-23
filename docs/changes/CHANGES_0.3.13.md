@@ -92,3 +92,11 @@ Selftest: 939/939 (also fixed 3 latent SCRIPT ERRORs the release gate rejects: n
   damage_hit: only when the player takes >0 damage; anvil_ting_high: each anvil smithing strike;
   furnace_low: looped while smelting at a furnace (stops ~1.5 s after smelting stops).
 - Hooks `Sfx.npc_hit(humanoid)` -> npc_hit_humanoid / npc_hit_creature: no-ops until those .ogg files are added.
+
+## QA fixes, round 2 (0.3.13)
+- Game fix: inside a layered-art building the walls sprite (y-sorted at its bottom edge) drew the FRONT wall over
+  the player in the first floor rows (only the head showed; QA C2 smithy 165 frames, shop 13). While the player is
+  inside, the building's walls now sort at their top edge, so the player and stations draw over the front wall;
+  they go back when the player leaves. Selftest check added.
+- Scenario fix (QA bot only): the smithy "inside the door" tap was door + (0, 2), which is outside a south facade,
+  so the player stood on its own fading tap marker. It now taps the first tile inside, as the cookhouse scenario does.
