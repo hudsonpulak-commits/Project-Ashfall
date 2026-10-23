@@ -233,7 +233,7 @@ static func _map_tester(world) -> void:
 	var ta: Dictionary = GameData.load_json("res://data/town_art.json")["buildings"] if GameData.has_method("load_json") else JSON.parse_string(FileAccess.get_file_as_string("res://data/town_art.json"))["buildings"]
 	for k in ["v3_smithy_large", "v3_elijah_tomb"]:
 		var np_: String = str(ta.get(k, {}).get("night", ""))
-		check(np_ != "" and ResourceLoader.exists(np_), "%s has a night layer (%s)" % [k, np_])
+		check(np_ != "" and FileAccess.file_exists(np_), "%s has a night layer (%s)" % [k, np_])
 	var blk := func(q: Vector2i) -> bool: return gen.tile_at(q.x, q.y) in [WorldGen.TileType.CLIFF_FACE, WorldGen.TileType.CLIFF_LIP, WorldGen.TileType.CLIFF_FOOT]
 	var lone := []
 	var n := 0
@@ -246,9 +246,9 @@ static func _map_tester(world) -> void:
 			var orth := false
 			for d in [Vector2i(1, 0), Vector2i(-1, 0), Vector2i(0, 1), Vector2i(0, -1)]:
 				orth = orth or blk.call(q + d)
-			var diag := false
+			var diag := 0
 			for d in [Vector2i(1, 1), Vector2i(-1, 1), Vector2i(1, -1), Vector2i(-1, -1)]:
-				diag = diag or blk.call(q + d)
-			if diag and not orth:
+				diag += int(blk.call(q + d))
+			if diag == 1 and not orth:   # a corner-only stub (diagonal runs are drawn with diagonal pieces and stay)
 				lone.append(q)
-	check(n > 100 and lone.is_empty() and not blk.call(Vector2i(360, 41)), "no blocking cliff (face, lip or foot) joins its run only at a corner (%d scanned, lone %s)" % [n, str(lone.slice(0, 5))])
+	check(n > 100 and lone.is_empty() and not blk.call(Vector2i(360, 41)), "no blocking cliff stub (face, lip or foot) hangs off a run by one corner (%d scanned, lone %s)" % [n, str(lone.slice(0, 5))])

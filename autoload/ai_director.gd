@@ -165,27 +165,42 @@ func money_supply() -> int:
 
 # -------------------------------------------------------------------- tick --
 func on_tick(t: int, world, player_tile: Vector2i) -> void:
+	var _pl: Array = world.perf_log if world != null and "perf_log" in world else []
+	var _t0 := Time.get_ticks_usec()
 	if t % 10 == 0:
 		_update_tiers(player_tile)
+	_pl.append(["ai:tiers", (Time.get_ticks_usec() - _t0) / 1000.0]); _t0 = Time.get_ticks_usec()
 	if t % 3 == 0:
 		_declutter_labels(player_tile)
+	_pl.append(["ai:declutter", (Time.get_ticks_usec() - _t0) / 1000.0]); _t0 = Time.get_ticks_usec()
+	var _tv := 0.0
+	var _ta := 0.0
+	var _tt := 0.0
 	for i in records.size():
 		var a: AIAgent = records[i]
+		var _u := Time.get_ticks_usec()
 		match a.tier:
 			0:
 				if a.view:
 					a.view.on_tick(t, world)
 					if a.trip.has("to") and int(a.trip.get("idx", 0)) >= _road(a).size() - 1:
 						_arrive(a, t)
+				_tv += Time.get_ticks_usec() - _u
 			1:
 				if (t + i) % 10 == 0:
 					_abstract_step(a, 10, t)
 					AdvBrain.drift(a, player_tile, t)
+				_ta += Time.get_ticks_usec() - _u
 			_:
 				if (t + i * 7) % 100 == 0:
 					_abstract_step(a, 100, t)
+				_ta += Time.get_ticks_usec() - _u
+		_u = Time.get_ticks_usec()
 		if t >= a.next_trade_tick:
 			_trade(a, t)
+		_tt += Time.get_ticks_usec() - _u
+	_pl.append(["ai:views", _tv / 1000.0]); _pl.append(["ai:abstract", _ta / 1000.0]); _pl.append(["ai:trade", _tt / 1000.0])
+	_t0 = Time.get_ticks_usec()
 	if t % 10 == 5 and world != null and world.ground != null and not world.ground.piles.is_empty():
 		_abstract_loot(world, t)
 	AIChatter.tick(t, player_tile)       # 0.3.3 chat bubbles (on-screen agents only)
@@ -193,6 +208,7 @@ func on_tick(t: int, world, player_tile: Vector2i) -> void:
 		AdvBrain.raid_tick(t, records)    # 0.3.1 off-screen Scorch PK
 	if t % 100 == 50:
 		AdvBrain.estate_tick(t)           # 0.3.1 estate sales of characters who quit
+	_pl.append(["ai:misc", (Time.get_ticks_usec() - _t0) / 1000.0])
 
 
 ## Nearby abstract (tier-1) agents sometimes claim public piles close to them.
@@ -292,16 +308,16 @@ func _place_for_activity(a: AIAgent) -> void:
 	var target = null
 	match a.activity.get("type", "rest"):
 		"gather":
-			target = _world.find_gather_node(a.home, a.activity["node"], a.home_town, 40)   # 0.3.1 named mines
+			target = _world.find_gather_node(a.home, a.activity["node"], a.home_town, 40, true)   # 0.3.1 named mines
 		"craft":
 			var r := Interactions.recipe_by_id(a.activity.get("recipe", ""))
 			var ids := []
 			for oid in GameData.objects.keys():
 				if not r.is_empty() and GameData.objects[oid].get("station", "") == r["station"]:
 					ids.append(oid)
-			target = _world.find_nearest_object(_world.gen.town_center(a.town), ids, 40)
+			target = _world.find_nearest_object(_world.gen.town_center(a.town), ids, 40, false, true)
 		"fight":
-			target = _world.find_nearest_object(_world.gen.town_center(a.town), ["training_dummy"], 40)
+			target = _world.find_nearest_object(_world.gen.town_center(a.town), ["training_dummy"], 40, false, true)
 	a.pos = target.pos if target else a.home
 
 

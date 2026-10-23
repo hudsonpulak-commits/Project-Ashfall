@@ -39,6 +39,7 @@ var buildings_view: BuildingsView    # 0.3.0 roofs, signs, keepers, displays
 func setup(world_seed: int) -> void:
 	tile_px = GameData.tile_size
 	gen = WorldGen.new(world_seed)
+	_pf_seed = world_seed
 	ground_layer = Node2D.new()
 	ground_layer.name = "Ground"
 	ground_layer.z_index = -10
@@ -264,6 +265,122 @@ func pos_to_tile(v: Vector2) -> Vector2i:
 
 
 # -------------------------------------------------------------------- data --
+# ---- 0.3.16 chunk data prefetch on a worker thread --------------------------
+## A second WorldGen (same seed, same data) lives on a worker thread and
+## generates chunk data ahead of the player; the main thread only adopts the
+## finished ChunkData (cheap). get_chunk() still generates synchronously when a
+## chunk is needed before the worker got to it.
+const PREFETCH_RADIUS := 4       # chunk data kept warm around the focus
+const PREFETCH_AHEAD := 3        # extra chunks in the walking direction
+var _pf_thread: Thread
+var _pf_mutex := Mutex.new()
+var _pf_sem := Semaphore.new()
+var _pf_todo: Array = []         # Vector2i, nearest first (guarded by _pf_mutex)
+var _pf_done: Array = []         # ChunkData (guarded by _pf_mutex)
+var _pf_quit := false
+var _pf_seed := 0
+var _pf_last := Vector2i(999999, 999999)
+var prefetch_enabled := true
+var prefetch_adopted := 0
+
+
+func _pf_start() -> void:
+	if _pf_thread != null or not prefetch_enabled or OS.get_thread_caller_id() != OS.get_main_thread_id():
+		return
+	_pf_thread = Thread.new()
+	_pf_thread.start(_pf_loop)
+
+
+func _pf_loop() -> void:
+	var wg := WorldGen.new(_pf_seed)
+	while true:
+		_pf_sem.wait()
+		_pf_mutex.lock()
+		if _pf_quit:
+			_pf_mutex.unlock()
+			return
+		var c = _pf_todo.pop_front() if not _pf_todo.is_empty() else null
+		_pf_mutex.unlock()
+		if c == null:
+			continue
+		var ch: ChunkData = wg.generate_chunk(c)
+		_pf_mutex.lock()
+		_pf_done.append(ch)
+		_pf_mutex.unlock()
+
+
+func _pf_request(c: Vector2i, dir: Vector2i) -> void:
+	if _pf_thread == null:
+		return
+	var want: Array = []
+	for dy in range(-PREFETCH_RADIUS, PREFETCH_RADIUS + 1):
+		for dx in range(-PREFETCH_RADIUS, PREFETCH_RADIUS + 1):
+			want.append(c + Vector2i(dx, dy))
+	if dir != Vector2i.ZERO:
+		for k in range(PREFETCH_RADIUS + 1, PREFETCH_RADIUS + 1 + PREFETCH_AHEAD):
+			for s2 in range(-2, 3):
+				want.append(c + dir * k + Vector2i(dir.y, dir.x) * s2)
+	var aim := c + dir * 2
+	want.sort_custom(func(a, b): return (a - aim).length_squared() < (b - aim).length_squared())
+	_pf_mutex.lock()
+	_pf_todo.clear()
+	for q in want:
+		if not chunks.has(q):
+			_pf_todo.append(q)
+	var n := _pf_todo.size()
+	_pf_mutex.unlock()
+	for i in n:
+		_pf_sem.post()
+
+
+func _pf_pending(c: Vector2i) -> bool:
+	_pf_mutex.lock()
+	var r := c in _pf_todo
+	_pf_mutex.unlock()
+	return r
+
+
+func _all_pending() -> bool:
+	for q in _build_queue:
+		if chunks.has(q) or not _pf_pending(q):
+			return false
+	return true
+
+
+func _pf_adopt() -> void:
+	if _pf_thread == null:
+		return
+	_pf_mutex.lock()
+	var done := _pf_done
+	_pf_done = []
+	_pf_mutex.unlock()
+	for ch in done:
+		if chunks.has(ch.coord):
+			continue
+		for p in ch.objects.keys():
+			if gen._town_meta.has(p):
+				ch.objects[p].meta = gen._town_meta[p]
+		_adopt_chunk(ch)
+		prefetch_adopted += 1
+
+
+func _adopt_chunk(ch: ChunkData) -> void:
+	for p in ch.objects.keys():
+		if depleted.has(p):
+			ch.objects[p].depleted_until = int(depleted[p])
+	chunks[ch.coord] = ch
+
+
+func _exit_tree() -> void:
+	if _pf_thread != null:
+		_pf_mutex.lock()
+		_pf_quit = true
+		_pf_mutex.unlock()
+		_pf_sem.post()
+		_pf_thread.wait_to_finish()
+		_pf_thread = null
+
+
 func get_chunk(c: Vector2i) -> ChunkData:
 	var ch: ChunkData = chunks.get(c)
 	if ch == null:
@@ -311,13 +428,15 @@ func find_free_tile_near(p: Vector2i, max_r: int = 12, outdoor: bool = false) ->
 
 
 ## Nearest object of the given def ids within radius (Chebyshev), not depleted.
-func find_nearest_object(from: Vector2i, def_ids: Array, radius: int = 30, allow_private: bool = false) -> WorldObject:
+func find_nearest_object(from: Vector2i, def_ids: Array, radius: int = 30, allow_private: bool = false, loaded_only: bool = false) -> WorldObject:
 	var best: WorldObject = null
 	var best_d := 1 << 30
 	var c0 := chunk_of(from - Vector2i(radius, radius))
 	var c1 := chunk_of(from + Vector2i(radius, radius))
 	for cy in range(c0.y, c1.y + 1):
 		for cx in range(c0.x, c1.x + 1):
+			if loaded_only and not chunks.has(Vector2i(cx, cy)):
+				continue   # 0.3.16 off-screen AI: never generate chunk data just to look
 			for o in get_chunk(Vector2i(cx, cy)).objects.values():
 				if not (o.def_id in def_ids) or o.is_depleted(tick):
 					continue
@@ -361,8 +480,8 @@ func pk_zone_at(p: Vector2i) -> Dictionary:
 ## 0.3.1 AI routing: a gather node of `def_id` for someone at `from` whose
 ## home town is `home_town`. Nearby first (as before); otherwise the closest
 ## named mine (data/mines.json) that holds it, Scorch mines last.
-func find_gather_node(from: Vector2i, def_id: String, home_town: String = "", radius: int = 30) -> WorldObject:
-	var o := find_nearest_object(from, [def_id], radius)
+func find_gather_node(from: Vector2i, def_id: String, home_town: String = "", radius: int = 30, loaded_only: bool = false) -> WorldObject:
+	var o := find_nearest_object(from, [def_id], radius, false, loaded_only)
 	if o != null:
 		return o
 	if bool(GameData.object_def(def_id).get("farm", false)):   # 0.3.1 village wheat fields
@@ -371,7 +490,7 @@ func find_gather_node(from: Vector2i, def_id: String, home_town: String = "", ra
 		if f.is_empty():
 			return null
 		var r: Rect2i = f["rect"]
-		return find_nearest_object(f["center"], [def_id], maxi(r.size.x, r.size.y))
+		return find_nearest_object(f["center"], [def_id], maxi(r.size.x, r.size.y), false, loaded_only)
 	if not def_id.ends_with("_rock"):
 		return null
 	var anchor := gen.town_center(home_town) if gen.towns.has(home_town) else from
@@ -380,7 +499,7 @@ func find_gather_node(from: Vector2i, def_id: String, home_town: String = "", ra
 		m = gen.nearest_mine(anchor, def_id, true)
 	if m.is_empty():
 		return null
-	return find_nearest_object(m["c"], [def_id], int(ceil(float(m["radius"]))) + 1)
+	return find_nearest_object(m["c"], [def_id], int(ceil(float(m["radius"]))) + 1, false, loaded_only)
 
 
 func deplete(o: WorldObject, ticks: int) -> void:
@@ -471,18 +590,42 @@ func set_focus(p: Vector2i, immediate: bool = false) -> void:
 		if maxi(absi(cc.x - c.x), absi(cc.y - c.y)) > DATA_KEEP_RADIUS:
 			chunks.erase(cc)
 			_mini_tex.erase(cc)
+	if not _job.is_empty() and maxi(absi(_job["c"].x - c.x), absi(_job["c"].y - c.y)) > VIEW_RADIUS:
+		_abort_job()
+	_pf_start()
+	var dirv := Vector2i.ZERO
+	if _pf_last.x != 999999:
+		dirv = Vector2i(signi(c.x - _pf_last.x), signi(c.y - _pf_last.y))
+	_pf_last = c
+	_pf_request(c, dirv)
 	if immediate:
+		while not _job.is_empty():
+			if _job_step(_job, 1e9):
+				_job = {}
 		while not _build_queue.is_empty():
-			_build_view(_build_queue.pop_front())
+			var cq: Vector2i = _build_queue.pop_front()
+			if not chunk_views.has(cq):
+				_build_view(cq)
 
 
 func _process(delta: float) -> void:
-	var n := 0
-	while n < BUILDS_PER_FRAME and not _build_queue.is_empty():
-		var cc: Vector2i = _build_queue.pop_front()
-		if maxi(absi(cc.x - _focus_chunk.x), absi(cc.y - _focus_chunk.y)) <= VIEW_RADIUS and not chunk_views.has(cc):
-			_build_view(cc)
-			n += 1
+	_pf_adopt()
+	var t_end := Time.get_ticks_usec() + int(BUILD_BUDGET_MS * 1000.0)
+	while Time.get_ticks_usec() < t_end:
+		if _job.is_empty():
+			if _build_queue.is_empty():
+				break
+			var cc: Vector2i = _build_queue.pop_front()
+			if maxi(absi(cc.x - _focus_chunk.x), absi(cc.y - _focus_chunk.y)) > VIEW_RADIUS or chunk_views.has(cc):
+				continue
+			if not chunks.has(cc) and _pf_thread != null and _pf_pending(cc):
+				_build_queue.push_back(cc)   # its data is still on the worker: build another one meanwhile
+				if _build_queue.size() <= 1 or _all_pending():
+					break
+				continue
+			_job = _job_new(cc)
+		if _job_step(_job, (t_end - Time.get_ticks_usec()) / 1000.0):
+			_job = {}
 	_anim_time += delta
 	for a in _animated:
 		var spr: Sprite2D = a[0]
@@ -490,55 +633,129 @@ func _process(delta: float) -> void:
 			spr.frame = int(_anim_time * float(a[2])) % int(a[1])
 
 
+var perf_log: Array = []   # 0.3.16 [what, ms] for the QA perf scenario
+const BUILD_BUDGET_MS := 4.0   # 0.3.16 chunk views are built in slices within this per-frame budget
+var _job: Dictionary = {}      # the chunk view being built (time-sliced)
+
+
 func _build_view(c: Vector2i) -> void:
+	var j := _job_new(c)
+	while not _job_step(j, 1e9):
+		pass
+
+
+func _job_new(c: Vector2i) -> Dictionary:
+	var _t0 := Time.get_ticks_usec()
 	var ch := get_chunk(c)
+	perf_log.append(["gen", (Time.get_ticks_usec() - _t0) / 1000.0])
 	var root := Node2D.new()
 	root.name = "Chunk_%d_%d" % [c.x, c.y]
 	var layer := TileMapLayer.new()
 	layer.tile_set = _tileset
 	layer.position = Vector2(c.x * CHUNK * tile_px, c.y * CHUNK * tile_px)
-	for ly in CHUNK:
-		for lx in CHUNK:
-			var t := ch.tile_local(lx, ly)
-			var wx := c.x * CHUNK + lx
-			var wy := c.y * CHUNK + ly
-			t = cliff_base_tile(Vector2i(wx, wy), t)
-			var nv := variants_for(t)
-			var v := 0 if nv <= 1 else int(gen.hash01(wx, wy, 7) * nv) % nv
-			layer.set_cell(Vector2i(lx, ly), t, Vector2i(v, 0))
-	root.add_child(layer)
-	# 0.3.9 overlays: names of the chunk + a 1-tile rim, computed once
-	var names := {}
-	var base := Vector2i(c.x * CHUNK, c.y * CHUNK)
-	for ly in range(-1, CHUNK + 1):
-		for lx in range(-1, CHUNK + 1):
-			var inside := lx >= 0 and ly >= 0 and lx < CHUNK and ly < CHUNK
-			var tt: int = ch.tile_local(lx, ly) if inside else gen.tile_at(base.x + lx, base.y + ly)
-			names[base + Vector2i(lx, ly)] = WorldGen.TILE_NAMES[tt]
-	var nm := func(q: Vector2i) -> String: return names.get(q, "")
-	var ovl: Array = []
-	for i in 5:
-		var l := TileMapLayer.new()
-		l.tile_set = _tileset
-		l.position = layer.position
-		l.name = ["trans0", "trans1", "autotile", "joins", "corners"][i]
-		ovl.append(l)
-	for ly in CHUNK:
-		for lx in CHUNK:
-			for cell in overlay_cells(base + Vector2i(lx, ly), nm):
-				(ovl[cell[0]] as TileMapLayer).set_cell(Vector2i(lx, ly), cell[1], cell[2])
-	for l in ovl:
-		if (l as TileMapLayer).get_used_cells().is_empty():
-			l.free()
-		else:
-			root.add_child(l)
-	ground_layer.add_child(root)
-	chunk_views[c] = root
-	var objs: Array = []
-	for o in ch.objects.values():
-		_make_object_view(o)
-		objs.append(o)
-	root.set_meta("objects", objs)
+	return {"c": c, "ch": ch, "root": root, "layer": layer, "stage": 0, "row": 0, "names": {}, "ovl": [],
+		"base": Vector2i(c.x * CHUNK, c.y * CHUNK), "objs": [], "oi": 0, "ol": []}
+
+
+## Advance a build job until budget_ms is used up. True when the chunk is shown.
+func _job_step(j: Dictionary, budget_ms: float) -> bool:
+	var t_end := Time.get_ticks_usec() + int(budget_ms * 1000.0)
+	var _t0 := Time.get_ticks_usec()
+	var c: Vector2i = j["c"]
+	var ch: ChunkData = j["ch"]
+	var base: Vector2i = j["base"]
+	while Time.get_ticks_usec() < t_end:
+		match int(j["stage"]):
+			0:   # base tiles, one row per step
+				var ly: int = j["row"]
+				var layer: TileMapLayer = j["layer"]
+				for lx in CHUNK:
+					var t := ch.tile_local(lx, ly)
+					var wx := base.x + lx
+					var wy := base.y + ly
+					t = cliff_base_tile(Vector2i(wx, wy), t)
+					var nv := variants_for(t)
+					var v := 0 if nv <= 1 else int(gen.hash01(wx, wy, 7) * nv) % nv
+					layer.set_cell(Vector2i(lx, ly), t, Vector2i(v, 0))
+				j["row"] = ly + 1
+				if j["row"] >= CHUNK:
+					j["stage"] = 1
+					j["row"] = -1
+			1:   # 0.3.9 overlay names of the chunk + a 1-tile rim, one row per step
+				var ly2: int = j["row"]
+				var names: Dictionary = j["names"]
+				for lx in range(-1, CHUNK + 1):
+					var inside := lx >= 0 and ly2 >= 0 and lx < CHUNK and ly2 < CHUNK
+					var tt: int = ch.tile_local(lx, ly2) if inside else gen.tile_at(base.x + lx, base.y + ly2)
+					names[base + Vector2i(lx, ly2)] = WorldGen.TILE_NAMES[tt]
+				j["row"] = ly2 + 1
+				if j["row"] > CHUNK:
+					j["stage"] = 2
+					j["row"] = 0
+					var ovl: Array = j["ovl"]
+					for i in 5:
+						var l := TileMapLayer.new()
+						l.tile_set = _tileset
+						l.position = (j["layer"] as TileMapLayer).position
+						l.name = ["trans0", "trans1", "autotile", "joins", "corners"][i]
+						ovl.append(l)
+			2:   # overlays, one row per step
+				var ly3: int = j["row"]
+				var names2: Dictionary = j["names"]
+				var nm := func(q: Vector2i) -> String: return names2.get(q, "")
+				var ovl2: Array = j["ovl"]
+				for lx in CHUNK:
+					for cell in overlay_cells(base + Vector2i(lx, ly3), nm):
+						(ovl2[cell[0]] as TileMapLayer).set_cell(Vector2i(lx, ly3), cell[1], cell[2])
+				j["row"] = ly3 + 1
+				if j["row"] >= CHUNK:
+					j["stage"] = 3
+			3:   # attach the layers
+				var root: Node2D = j["root"]
+				root.add_child(j["layer"])
+				for l in j["ovl"]:
+					if (l as TileMapLayer).get_used_cells().is_empty():
+						l.free()
+					else:
+						root.add_child(l)
+				ground_layer.add_child(root)
+				chunk_views[c] = root
+				j["ol"] = ch.objects.values()
+				root.set_meta("objects", j["objs"])
+				j["stage"] = 4
+			4:   # object views, a few per step
+				var ol: Array = j["ol"]
+				var objs: Array = j["objs"]
+				var k := 0
+				while int(j["oi"]) < ol.size() and k < 16:
+					var o: WorldObject = ol[int(j["oi"])]
+					j["oi"] = int(j["oi"]) + 1
+					k += 1
+					if o.view == null or not is_instance_valid(o.view):
+						_make_object_view(o)
+					objs.append(o)
+				if int(j["oi"]) >= ol.size():
+					perf_log.append(["build", (Time.get_ticks_usec() - _t0) / 1000.0])
+					return true
+	perf_log.append(["build", (Time.get_ticks_usec() - _t0) / 1000.0])
+	return false
+
+
+func _abort_job() -> void:
+	if _job.is_empty():
+		return
+	var j := _job
+	_job = {}
+	if chunk_views.has(j["c"]) and chunk_views[j["c"]] == j["root"]:
+		_free_view(j["c"])
+	else:
+		for l in j["ovl"]:
+			if is_instance_valid(l) and (l as Node).get_parent() == null:
+				l.free()
+		if is_instance_valid(j["layer"]) and (j["layer"] as Node).get_parent() == null:
+			j["layer"].free()
+		if is_instance_valid(j["root"]):
+			j["root"].free()
 
 
 func _free_view(c: Vector2i) -> void:
