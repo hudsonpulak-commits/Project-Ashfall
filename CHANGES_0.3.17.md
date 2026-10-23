@@ -1,5 +1,13 @@
 # 0.3.17 (versionCode 34) small fixes
 - Finding Clip Clop: only wolves killed within 15 tiles of the wolf den count (quest stage "near"/"radius").
 - Rat Mother: 2-frame bite strip (wind-up, lunge) plays on each attack, per facing; back to the walk sheet after.
+- Saltmere palms: the canopy was cut off at the sprite edge on the side it leans to; sprites widened 8 px and the fronds completed.
+- No trees on or next to any road (country roads and town brick/dirt roads); roads always win over cliffs.
+- Cliff stairs: one stair per crossing, never touching another, only on a straight cliff run (straight cliff both sides); other ramp tiles open as plain slope.
+- Removed the "While you were away" offline catch-up and its popup; AI only progresses while the game runs. Old saves load (timestamp ignored).
+- Quest journal: collapsed list of names + status; tap a quest to expand giver + place, objective/progress and who to return to; tap again to collapse.
+- Pack: tap an item to pick it up (gold frame; the Eat/Equip/Drop action row still shows), tap an empty slot to move, another item to swap, the same item to put it down. Bank: "Arrange" toggle does the same. Positions are saved.
+- Bank opened at a banker now accepts taps (it only checked for a chest within 3 tiles).
+- Custom bank tabs: code in, UI hidden (deferred).
 - QA harness de-flake (timing only): C7 roof fade discounts late frames under load, C23 dummy waits 60 game ticks, C18 follows a respawned AI view.
 - Underworld on hold. Item stacking unchanged (by request).
