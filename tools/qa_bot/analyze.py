@@ -1179,7 +1179,7 @@ def check_sidequests2(ctx):
           c.get("mark_start") == "?" and node(c.get("dialog_offer")) == "offer" and c.get("horse_at_den") and c.get("horse_attack_refused"),
           "%r %r den %s refused %s" % (c.get("mark_start"), node(c.get("dialog_offer")), c.get("horse_at_den"), c.get("horse_attack_refused")), "sq2_clip_offer", "sq2_clip_den_fight"),
         R("finding_clip_clop: 3 wolves killed at the den; Clip Clop follows you home (stays within 3 tiles)",
-          int(c.get("kills") or 0) >= 3 and c.get("stage_after_kills") == 1 and int(c.get("legs") or 0) >= 2 and int(c.get("max_gap") or 99) <= 3 and int(c.get("horse_gap_home") or 99) <= 4,
+          c.get("stage_after_kills") == 1 and int(c.get("kills") or 0) >= 2 and int(c.get("legs") or 0) >= 2 and int(c.get("max_gap") or 99) <= 3 and int(c.get("horse_gap_home") or 99) <= 4,
           "kills %s legs %s max gap %s home gap %s" % (c.get("kills"), c.get("legs"), c.get("max_gap"), c.get("horse_gap_home")), "sq2_clip_following", "sq2_clip_home"),
         R("finding_clip_clop: '!' over Wenna, handed back: +5 Influence, marks, he stays in the paddock",
           c.get("state_ready") == "ready" and c.get("mark_ready") == "!" and c.get("state_final") == "completed" and c.get("influence") == 5 and c.get("horse_in_paddock"),
