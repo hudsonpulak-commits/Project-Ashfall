@@ -160,6 +160,8 @@ func _init(p_seed: int, town: Dictionary = {}, world_cfg: Dictionary = {}) -> vo
 		var v: Dictionary = GameData.villages.get(vid, {})
 		if not v.is_empty():
 			_load_village(v)
+			_place_quest_givers(v, Vector2i(int(v["origin"][0]), int(v["origin"][1])))   # 0.3.16 village givers
+	_load_quest_sites()
 	_cells_ready = true
 
 
@@ -375,7 +377,7 @@ func _place_quest_givers(town: Dictionary, origin: Vector2i) -> void:
 	var givers: Dictionary = QuestSystem.cfg().get("givers", {})
 	for gid in givers.keys():
 		var g: Dictionary = givers[gid]
-		if str(g.get("town", "")) != tid or not g.has("near"):
+		if (str(g.get("town", "")) != tid and str(g.get("site", "")) != tid) or not g.has("near"):
 			continue
 		var want := origin + Vector2i(int(g["near"][0]), int(g["near"][1]))
 		var spot := _giver_spot(want, 14)
@@ -385,6 +387,44 @@ func _place_quest_givers(town: Dictionary, origin: Vector2i) -> void:
 
 
 var _giver_spots: Dictionary = {}    # 0.3.15 giver id -> tile
+var quest_sites: Dictionary = {}     # 0.3.16 site id -> {origin, rect, ...} (data/quests.json "sites")
+
+
+## 0.3.16 small data stamps outside towns (farms, dens): '.' clears the ground
+## (no trees or rocks; water and cliffs are left alone), legend chars place
+## objects on grass. Givers with "site" stand on them.
+func _load_quest_sites() -> void:
+	var sites: Dictionary = QuestSystem.cfg().get("sites", {})
+	for sid in sites.keys():
+		var sd: Dictionary = sites[sid]
+		var origin := Vector2i(int(sd["origin"][0]), int(sd["origin"][1]))
+		var rows: Array = sd["rows"]
+		var legend: Dictionary = sd.get("legend", {})
+		for y in rows.size():
+			var row: String = rows[y]
+			for x in row.length():
+				var p := origin + Vector2i(x, y)
+				var t := tile_at(p.x, p.y)
+				if t in BLOCKING_TILES or t == TileType.WATER or is_cliff(p.x, p.y) or town_at(p, 0) != "" or village_at(p, 0) != "":
+					continue
+				var keep_road := road_tiles.has(p)
+				if not keep_road:
+					_town_tiles[p] = region_grass(p)
+				if legend.has(row[x]):
+					_town_objects[p] = str(legend[row[x]])
+		var t2 := sd.duplicate()
+		t2["id"] = sid
+		t2["rect"] = Rect2i(origin, Vector2i(str(rows[0]).length(), rows.size()))
+		quest_sites[sid] = t2
+		_place_quest_givers(t2, origin)
+
+
+## 0.3.16 a named point of a site ("paddock": [x, y]), world tile.
+func site_point(sid: String, key: String) -> Vector2i:
+	var sd: Dictionary = quest_sites.get(sid, {})
+	if sd.is_empty() or not sd.has(key):
+		return Vector2i(-99999, -99999)
+	return Vector2i(int(sd["origin"][0]) + int(sd[key][0]), int(sd["origin"][1]) + int(sd[key][1]))
 
 
 func giver_spot(gid: String) -> Vector2i:
@@ -402,7 +442,7 @@ func _giver_spot(want: Vector2i, max_r: int) -> Vector2i:
 				for oy in range(-2, 5):
 					for ox in range(-2, 3):
 						var c := q + Vector2i(ox, oy)
-						if not _town_tiles.has(c) or int(_town_tiles[c]) in BLOCKING_TILES or _building_tiles.has(c) \
+						if not (_town_tiles.has(c) or village_at(c, 0) != "") or tile_at(c.x, c.y) in BLOCKING_TILES or is_cliff(c.x, c.y) or _building_tiles.has(c) \
 								or (str(_town_objects.get(c, "")) != "" and absi(ox) <= 1 and oy <= 1 and oy >= -1):
 							ok = false
 							break

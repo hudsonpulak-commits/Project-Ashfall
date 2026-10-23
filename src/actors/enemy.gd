@@ -94,11 +94,13 @@ func _ready() -> void:
 	_sprite.hframes = maxi(1, GameData.frame_count("actors", sid))
 	_sprite.offset = Vector2(-fs.x / 2.0, -fs.y)
 	_sprite.modulate = tint
+	var sc := float(def.get("scale", 1.0))     # 0.3.16 bosses drawn bigger (Rat Mother)
+	_sprite.scale = Vector2(sc, sc)
 	add_child(_sprite)
 	if Overhead.enemy_shows(def):
 		_lvl_label = Overhead.make(Overhead.level_color(level()))
-		_lvl_label.text = "%s (%d)" % [display_name(), level()]
-		Overhead.place(_lvl_label, fs.y)
+		_lvl_label.text = "%s (%d)" % [display_name(), level()] if not def.has("follow_quest") else display_name()
+		Overhead.place(_lvl_label, fs.y * sc)
 		Overhead.attach(_lvl_label, self)
 	_update_pos()
 
@@ -131,6 +133,8 @@ func _tick_body(t: int, world, actors: Array) -> void:
 	if dead:
 		if t >= respawn_at:
 			_respawn()
+		return
+	if def.has("follow_quest") and _follow_tick(t, world, actors):
 		return
 	var leash := int(def.get("leash", 7))
 	var aggro := int(def.get("aggro", 3))
@@ -195,6 +199,51 @@ func _tick_body(t: int, world, actors: Array) -> void:
 		best.last_combat_tick = t
 		return
 	_idle_wander(t, world)
+
+
+## 0.3.16 quest followers (Clip Clop): during the quest's "follow_stage" walk
+## behind the quest holder (catching up if left far behind); once the quest
+## is done, live at the home giver's site paddock. true = this tick handled.
+func _follow_tick(t: int, world, actors: Array) -> bool:
+	var qid := str(def["follow_quest"])
+	var holder = null
+	for a in actors:
+		if a != null and is_instance_valid(a) and a is Player:
+			holder = a
+	if QuestSystem.done_ids.has(qid) or (holder != null and QuestSystem.state(holder, qid) == QuestSystem.COMPLETED):
+		var pad := _home_paddock(world)
+		if pad.x > -99999 and cheb(home, pad) > 3:
+			home = pad
+			tile = world.find_free_tile_near(pad, 3)
+			prev_tile = tile
+		return false
+	if holder == null or not holder.quests.has(qid) or int(holder.quests[qid].get("stage", 0)) < int(def.get("follow_stage", 1)):
+		return false
+	var d := cheb(tile, holder.tile)
+	if d > 16:      # left behind (travel, teleport, a reload): catch up
+		tile = world.find_free_tile_near(holder.tile + Vector2i(-1, 1), 3)
+		prev_tile = tile
+	elif d > 1:
+		for i in 2:
+			if cheb(tile, holder.tile) <= 1:
+				break
+			var nx := _step_toward(world, holder.tile)
+			if nx == tile or cheb(nx, holder.tile) >= cheb(tile, holder.tile):
+				var path: Array = Pathfinder.find_path(world, tile, [holder.tile], holder.tile, 800)
+				if path.size() > 1:
+					nx = path[0]
+			if nx == holder.tile:
+				break
+			tile = nx
+	home = tile
+	return true
+
+
+func _home_paddock(world) -> Vector2i:
+	var g: Dictionary = QuestSystem.cfg().get("givers", {}).get(str(def.get("home_giver", "")), {})
+	if world == null or world.get("gen") == null or not g.has("site"):
+		return Vector2i(-99999, -99999)
+	return world.gen.site_point(str(g["site"]), "paddock")
 
 
 func _idle_wander(t: int, world) -> void:
@@ -365,7 +414,7 @@ func _update_pos() -> void:
 func _draw() -> void:
 	if dead or hp >= max_hp:
 		return
-	var h := float(GameData.frame_size("actors", def.get("sprite", kind)).y)
+	var h := float(GameData.frame_size("actors", def.get("sprite", kind)).y) * float(def.get("scale", 1.0))
 	var w := 12.0
 	var top := -h - 3.0
 	draw_rect(Rect2(-w / 2.0, top, w, 2), Color("#a8281e"))

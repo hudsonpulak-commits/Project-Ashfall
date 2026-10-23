@@ -22,7 +22,15 @@ func def() -> Dictionary:
 
 
 func display_name() -> String:
+	if repaired():
+		return str(def().get("repaired_name", def().get("name", def_id)))
 	return str(meta.get("name", def().get("name", def_id)))
+
+
+## 0.3.16 "repair_quest" props (Can We Fix It?): mended once that quest is done.
+func repaired() -> bool:
+	var q := str(def().get("repair_quest", ""))
+	return q != "" and QuestSystem.done_ids.has(q)
 
 
 ## Shop this object trades for (counter / keeper meta, else the def).
@@ -42,4 +50,6 @@ func sprite_id(tick: int) -> String:
 	var d := def()
 	if is_depleted(tick):
 		return d.get("depleted_sprite", "")
+	if d.has("repaired_sprite") and repaired():
+		return d["repaired_sprite"]
 	return d.get("sprite", "")

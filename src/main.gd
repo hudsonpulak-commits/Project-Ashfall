@@ -217,6 +217,10 @@ func _start_player(data: Dictionary) -> void:
 		player.give_starter_kit()
 		player.hp = player.max_hp()   # a new character starts at full HP (was the old 11 default)
 	world.entity_layer.add_child(player)
+	player.world_ref = world
+	QuestSystem.sync(player)      # 0.3.16 repaired farm props, Clip Clop at home
+	if not Events.quests_changed.is_connected(world.refresh_repair_views):
+		Events.quests_changed.connect(world.refresh_repair_views)
 	if bool(data.get("relayout_cities", false)):
 		apply_city_relayout(world, player)
 	relocate_if_walled(world, player)

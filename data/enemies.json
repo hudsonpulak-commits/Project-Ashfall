@@ -237,6 +237,52 @@
     "#8890a0",
     "#7a8494"
    ]
+  },
+  "clip_clop": {
+   "name": "Clip Clop",
+   "sprite": "cow",
+   "level": 1,
+   "hp": 30,
+   "max_hit": 0,
+   "accuracy": 0,
+   "defence": 0,
+   "attack_ticks": 5,
+   "aggro": 0,
+   "leash": 6,
+   "wander": 2,
+   "respawn_ticks": 50,
+   "xp": 0,
+   "retaliate": false,
+   "no_attack": true,
+   "drops": "",
+   "follow_quest": "finding_clip_clop",
+   "follow_stage": 1,
+   "home_giver": "wenna_tamsin",
+   "tints": [
+    "#9a6438"
+   ],
+   "note": "0.3.16 Finding Clip Clop: Wenna Tamsin's horse (placeholder: the cow sheet tinted chestnut). Can't be attacked; follows the quest holder during the escort stage, then stays at the Tamsin farm"
+  },
+  "rat_mother": {
+   "name": "Rat Mother",
+   "sprite": "giant_rat",
+   "level": 14,
+   "hp": 45,
+   "max_hit": 5,
+   "accuracy": 0.6,
+   "defence": 6,
+   "attack_ticks": 4,
+   "aggro": 4,
+   "leash": 7,
+   "wander": 1,
+   "respawn_ticks": 200,
+   "xp": 70,
+   "drops": "giant_rat",
+   "scale": 1.75,
+   "tints": [
+    "#b07a8a"
+   ],
+   "note": "0.3.16 A Dead Rat is a Good Rat boss near Millbrook (placeholder: giant rat sheet, scaled up and tinted)"
   }
  },
  "camps": [
@@ -628,6 +674,36 @@
    ],
    "count": 3,
    "spread": 3
+  },
+  {
+   "enemy": "giant_rat",
+   "at": [
+    146,
+    -78
+   ],
+   "count": 6,
+   "spread": 2,
+   "note": "0.3.16 rat nest south of Millbrook (A Dead Rat is a Good Rat)"
+  },
+  {
+   "enemy": "rat_mother",
+   "at": [
+    153,
+    -74
+   ],
+   "count": 1,
+   "spread": 1,
+   "note": "0.3.16 Rat Mother, by the nest"
+  },
+  {
+   "enemy": "clip_clop",
+   "at": [
+    100,
+    61
+   ],
+   "count": 1,
+   "spread": 1,
+   "note": "0.3.16 Clip Clop strayed to the wolf den east of the Tamsin farm"
   }
  ],
  "note_show_level": "0.3.3: combat enemies (aggro, or retaliate with max_hit > 0) show 'Name (level)' overhead; show_level overrides (false for citizens and chickens).",

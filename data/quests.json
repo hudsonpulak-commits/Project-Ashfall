@@ -1,5 +1,5 @@
 {
- "note": "0.3.7 data-driven quests. Stage types: kill (enemy, count; only the quest holder's own kills count) and talk (back to the giver). Rewards: influence always, plus optional marks and items. 0.3.7.1: \"dialog\" nodes per quest (offer, in_progress, stage_<i> for talk stages, completed): text ({progress} is replaced) + choices [{label, action: accept|decline|advance|close, reply?}]. Talking never auto-starts a quest. 0.3.15: \"gather\" stages {items {id: n}, labels?, source [enemy kinds], text}: ready when the pack holds them all, handing in (advance) removes them. Rewards may add xp {skill: n}. Givers with \"town\" + \"near\" (town-local [x,y]) are placed by WorldGen._place_quest_givers on an open street tile; their \"object\" is an objects.json def with type quest + giver.",
+ "note": "0.3.7 data-driven quests. Stage types: kill (enemy, count; only the quest holder's own kills count) and talk (back to the giver). Rewards: influence always, plus optional marks and items. 0.3.7.1: \"dialog\" nodes per quest (offer, in_progress, stage_<i> for talk stages, completed): text ({progress} is replaced) + choices [{label, action: accept|decline|advance|close, reply?}]. Talking never auto-starts a quest. 0.3.15: \"gather\" stages {items {id: n}, labels?, source [enemy kinds], text}: ready when the pack holds them all, handing in (advance) removes them. Rewards may add xp {skill: n}. Givers with \"town\" + \"near\" (town-local [x,y]) are placed by WorldGen._place_quest_givers on an open street tile; their \"object\" is an objects.json def with type quest + giver. 0.3.16: a stage may name \"npc\" (giver id) to talk to instead of the quest giver (deliveries); \"give\" {item: n} is handed over when that stage is completed; \"escort\" stages {follower: enemy kind, npc?, text} are ready once the follower stands within 4 tiles of that npc. Givers may have \"site\" (quests.json \"sites\") instead of \"town\": sites are small data stamps (origin, rows, legend char -> object; '.' = cleared ground) for farms, dens and camps outside towns. Objects with \"repair_quest\" show broken/damaged until that quest is done. A giver may also have \"idle\" (what it says with nothing to offer). Moving a giver = editing its town/site + near here; no code.",
  "givers": {
   "kell": {
    "name": "Kell",
@@ -24,6 +24,55 @@
     70
    ],
    "note": "Northern Guard supply officer posted in Fenhollow, gathering provisions for the camp up north"
+  },
+  "smith_brannoc": {
+   "name": "Brannoc the Smith",
+   "town": "cinderholt",
+   "object": "quest_giver_smith",
+   "near": [
+    16,
+    84
+   ],
+   "note": "forge district by the anvils"
+  },
+  "sgt_voss": {
+   "name": "Sergeant Voss",
+   "town": "cinderholt",
+   "object": "quest_giver_sergeant",
+   "near": [
+    42,
+    22
+   ],
+   "note": "Northern Guard camp on the ridge above the north gate",
+   "idle": "Keep your blade sharp. The north doesn't forgive a dull edge."
+  },
+  "farmer_garrow": {
+   "name": "Farmer Garrow",
+   "site": "garrow_farm",
+   "object": "quest_giver_farmer",
+   "near": [
+    9,
+    10
+   ]
+  },
+  "wenna_tamsin": {
+   "name": "Wenna Tamsin",
+   "site": "tamsin_farm",
+   "object": "quest_giver_tamsin",
+   "near": [
+    8,
+    9
+   ]
+  },
+  "old_mabel": {
+   "name": "Old Mabel",
+   "town": "millbrook",
+   "object": "quest_giver_mabel",
+   "near": [
+    8,
+    9
+   ],
+   "note": "village giver; when the new Millbrook art lands, edit town/near only"
   }
  },
  "quests": [
@@ -280,6 +329,441 @@
      ]
     }
    }
+  },
+  {
+   "id": "we_need_steel",
+   "name": "We Need Steel!",
+   "giver": "smith_brannoc",
+   "desc": "Brannoc, Cinderholt's smith, can't get ore. Even with the mines redirected north, the forges are starved. Bring him iron and coal, then take the finished steel up to the Northern Guard camp.",
+   "stages": [
+    {
+     "type": "gather",
+     "items": {
+      "iron_ore": 5,
+      "coal": 10
+     },
+     "labels": {
+      "iron_ore": "Iron ore",
+      "coal": "Coal"
+     },
+     "text": "Bring Brannoc 5 iron ore and 10 coal (mine or buy)",
+     "give": {
+      "guard_steel_bundle": 1
+     }
+    },
+    {
+     "type": "gather",
+     "npc": "sgt_voss",
+     "items": {
+      "guard_steel_bundle": 1
+     },
+     "labels": {
+      "guard_steel_bundle": "Guard steel"
+     },
+     "text": "Deliver the steel to Sergeant Voss at the Northern Guard camp"
+    }
+   ],
+   "rewards": {
+    "influence": 5,
+    "marks": 300,
+    "xp": {
+     "smithing": 1500
+    }
+   },
+   "dialog": {
+    "offer": {
+     "text": "Steel! I need steel, and I can't make it from nothing. They redirected half the mines to feed the Guard up north, and still the carts come back light. Bring me 5 iron ore and 10 coal, mine it or buy it, and I'll forge what the camp needs.",
+     "choices": [
+      {
+       "label": "Accept",
+       "action": "accept",
+       "reply": "Five iron, ten coal. The outcrops past the walls still give, if you swing hard enough."
+      },
+      {
+       "label": "Decline",
+       "action": "decline",
+       "reply": "Then the Guard goes without. Again."
+      }
+     ]
+    },
+    "in_progress": {
+     "text": "Any ore yet? {progress}.",
+     "choices": [
+      {
+       "label": "I'm on it",
+       "action": "close"
+      }
+     ]
+    },
+    "completed": {
+     "text": "The Guard sent word: the steel held. Good work.",
+     "choices": [
+      {
+       "label": "Goodbye",
+       "action": "close"
+      }
+     ]
+    },
+    "stage_0": {
+     "text": "That's good ore. Give me a moment at the anvil... There. Take this bundle up to Sergeant Voss at the Guard camp, past the north gate. And tell him that's the last of it until the carts come back full.",
+     "choices": [
+      {
+       "label": "Hand them over",
+       "action": "advance"
+      },
+      {
+       "label": "Not yet",
+       "action": "close"
+      }
+     ]
+    },
+    "stage_1": {
+     "text": "Haven't you taken that steel up to Voss yet? The camp's waiting on it.",
+     "choices": [
+      {
+       "label": "On my way",
+       "action": "close"
+      }
+     ]
+    }
+   },
+   "dialog_npc": {
+    "sgt_voss": {
+     "stage_1": {
+      "text": "From Brannoc? Finally. Half our blades are notched and the other half are rusting. The Guard owes you, and so does that stubborn smith.",
+      "choices": [
+       {
+        "label": "Hand over the steel",
+        "action": "advance"
+       },
+       {
+        "label": "Not yet",
+        "action": "close"
+       }
+      ]
+     }
+    }
+   }
+  },
+  {
+   "id": "can_we_fix_it",
+   "name": "Can We Fix It?",
+   "giver": "farmer_garrow",
+   "desc": "Garrow's farm south of Cinderholt was hit by creatures out of the Scorched Lands. His fences are smashed and the yard wall is half down.",
+   "stages": [
+    {
+     "type": "gather",
+     "items": {
+      "plank": 8
+     },
+     "labels": {
+      "plank": "Planks"
+     },
+     "text": "Bring Garrow 8 planks to mend the fences and wall"
+    }
+   ],
+   "rewards": {
+    "influence": 5,
+    "marks": 150,
+    "xp": {
+     "joinery": 700
+    }
+   },
+   "dialog": {
+    "offer": {
+     "text": "Something came down out of the Scorched Lands two nights back. Never saw it clear, just heard it. Smashed through my fences and took a bite out of the yard wall. I've the hands to mend it but not the wood. Bring me 8 planks?",
+     "choices": [
+      {
+       "label": "Accept",
+       "action": "accept",
+       "reply": "Eight planks. The general store in Cinderholt keeps them, or saw your own."
+      },
+      {
+       "label": "Decline",
+       "action": "decline",
+       "reply": "I'll keep watch with a pitchfork, then."
+      }
+     ]
+    },
+    "in_progress": {
+     "text": "Got that timber? {progress}.",
+     "choices": [
+      {
+       "label": "I'm on it",
+       "action": "close"
+      }
+     ]
+    },
+    "completed": {
+     "text": "Fences are holding. Haven't heard a thing since.",
+     "choices": [
+      {
+       "label": "Goodbye",
+       "action": "close"
+      }
+     ]
+    },
+    "stage_0": {
+     "text": "That's good timber. Hold this end... there. Fences up, wall patched. Whatever came through won't find it so easy next time.",
+     "choices": [
+      {
+       "label": "Hand them over",
+       "action": "advance"
+      },
+      {
+       "label": "Not yet",
+       "action": "close"
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "finding_clip_clop",
+   "name": "Finding Clip Clop",
+   "giver": "wenna_tamsin",
+   "desc": "Wenna Tamsin's horse, Clip Clop, bolted when the wolves came. He was last seen near the wolf den east of the farm.",
+   "stages": [
+    {
+     "type": "kill",
+     "enemy": "wolf",
+     "count": 3,
+     "label": "Wolves",
+     "text": "Drive off the wolves around Clip Clop at the den east of the farm"
+    },
+    {
+     "type": "escort",
+     "follower": "clip_clop",
+     "text": "Lead Clip Clop home to Wenna at the Tamsin farm"
+    }
+   ],
+   "rewards": {
+    "influence": 5,
+    "marks": 150,
+    "xp": {
+     "defence": 500
+    }
+   },
+   "dialog": {
+    "offer": {
+     "text": "Clip Clop's gone! My horse. The wolves came through and he bolted, and Ned saw him by the den out east. He won't come home with them circling. Please, drive them off and bring him back.",
+     "choices": [
+      {
+       "label": "Accept",
+       "action": "accept",
+       "reply": "Thank you! He's chestnut, about so high, and he likes apples. The den is east, past the trees."
+      },
+      {
+       "label": "Decline",
+       "action": "decline",
+       "reply": "Then I'll go myself. Somebody has to."
+      }
+     ]
+    },
+    "in_progress": {
+     "text": "Any sign of him? {progress}.",
+     "choices": [
+      {
+       "label": "I'm on it",
+       "action": "close"
+      }
+     ]
+    },
+    "completed": {
+     "text": "Clip Clop's not left the paddock since. Can't say I blame him.",
+     "choices": [
+      {
+       "label": "Goodbye",
+       "action": "close"
+      }
+     ]
+    },
+    "stage_1": {
+     "text": "Clip Clop! Oh, look at you, you daft thing. Thank you, truly. Here, it's not much, but take it.",
+     "choices": [
+      {
+       "label": "Here he is",
+       "action": "advance"
+      },
+      {
+       "label": "Not yet",
+       "action": "close"
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "a_dead_rat",
+   "name": "A Dead Rat is a Good Rat",
+   "giver": "old_mabel",
+   "desc": "Old Mabel of Millbrook wants the rats gone. They're awfully big rats.",
+   "stages": [
+    {
+     "type": "kill",
+     "enemy": "giant_rat",
+     "count": 6,
+     "label": "Giant rats",
+     "text": "Kill 6 giant rats by the nest south of Millbrook"
+    },
+    {
+     "type": "talk",
+     "text": "Return to Old Mabel in Millbrook"
+    },
+    {
+     "type": "kill",
+     "enemy": "rat_mother",
+     "count": 1,
+     "label": "Rat Mother",
+     "text": "Kill the Rat Mother at the nest"
+    },
+    {
+     "type": "talk",
+     "text": "Return to Old Mabel in Millbrook"
+    }
+   ],
+   "rewards": {
+    "influence": 5,
+    "marks": 120,
+    "xp": {
+     "strength": 500
+    },
+    "items": {
+     "cooked_rat_meat": 4
+    }
+   },
+   "dialog": {
+    "offer": {
+     "text": "Rats, dear. In the root cellar, in the wheat, in my good boots. Big ones too, must be all that rain. Would you kill six for me? Only six, I've counted. Twice.",
+     "choices": [
+      {
+       "label": "Accept",
+       "action": "accept",
+       "reply": "Lovely. They live just south of here, by those funny mushrooms."
+      },
+      {
+       "label": "Decline",
+       "action": "decline",
+       "reply": "Oh well. I'll get the broom."
+      }
+     ]
+    },
+    "in_progress": {
+     "text": "Rats still about, dear? {progress}.",
+     "choices": [
+      {
+       "label": "I'm on it",
+       "action": "close"
+      }
+     ]
+    },
+    "completed": {
+     "text": "Not a squeak since, dear. Not one squeak.",
+     "choices": [
+      {
+       "label": "Goodbye",
+       "action": "close"
+      }
+     ]
+    },
+    "stage_1": {
+     "text": "Six! How lovely. Though I did see a much bigger one waddling about. Ever so big. Probably their mother. Would you see to her too?",
+     "choices": [
+      {
+       "label": "I'll see to her",
+       "action": "advance",
+       "reply": "Thank you, dear. Mind your ankles."
+      }
+     ]
+    },
+    "stage_3": {
+     "text": "The big one too? Well, isn't that nice. Here, I made too much supper. Rat, I think. Waste not.",
+     "choices": [
+      {
+       "label": "Thank you, Mabel",
+       "action": "advance"
+      }
+     ]
+    }
+   }
   }
- ]
+ ],
+ "sites": {
+  "garrow_farm": {
+   "name": "Garrow farm",
+   "origin": [
+    275,
+    -132
+   ],
+   "note": "south of Cinderholt by the south road; broken fences and a damaged wall from the Scorched Lands raid",
+   "legend": {
+    "f": "fence",
+    "b": "farm_fence_repair",
+    "w": "farm_wall_repair"
+   },
+   "rows": [
+    "...............",
+    ".ffbfffffffbff.",
+    ".f...........f.",
+    ".b...........b.",
+    ".f...........f.",
+    ".f...........f.",
+    ".fffbf...fbfff.",
+    "...............",
+    "..wwwww........",
+    "...............",
+    "...............",
+    "...............",
+    "...............",
+    "...............",
+    "..............."
+   ]
+  },
+  "tamsin_farm": {
+   "name": "Tamsin farm",
+   "origin": [
+    64,
+    52
+   ],
+   "note": "east of Fenhollow; the farm Odric's wolves have been raiding, paddock for Clip Clop",
+   "legend": {
+    "f": "fence"
+   },
+   "rows": [
+    "..............",
+    ".ffffffffffff.",
+    ".f..........f.",
+    ".f..........f.",
+    ".f..........f.",
+    ".fffff..fffff.",
+    "..............",
+    "..............",
+    "..............",
+    "..............",
+    "..............",
+    "..............",
+    "..............",
+    ".............."
+   ],
+   "paddock": [
+    7,
+    3
+   ]
+  },
+  "wolf_den": {
+   "name": "Wolf den",
+   "origin": [
+    94,
+    55
+   ],
+   "legend": {
+    "D": "wolf_den"
+   },
+   "rows": [
+    "....",
+    ".D..",
+    "...."
+   ]
+  }
+ }
 }
