@@ -524,6 +524,8 @@ func _pshop() -> void:
 	await frames(20)
 	_notes["bought"] = {"owned": ps.owned, "coins_before": c0, "coins_after": p.inventory.count(GameData.currency), "price": PlayerShop.building_price()}
 	label = "stock"
+	var u_stock := int(ps.stats["units"])
+	var log0: int = ps.log.size()
 	var slot: ItemSlot = null
 	for s in main.hud.pshop_panel.find_children("*", "ItemSlot", true, false):
 		if (s as ItemSlot).item_id == "bronze_arrows":
@@ -549,9 +551,16 @@ func _pshop() -> void:
 	await tap_control(find_button(main.hud.pshop_panel, "Place"), "Place")
 	label = "manage"
 	await frames(20)
+	# 0.3.16: count right after the panel placed them; live AI shoppers may buy a stand out
+	# during the next frames (that sale is counted below, from u_stock)
+	var on_show := {}
+	for i in ps.stocked():
+		on_show[str(ps.slots[i]["item"])] = true
+	for e in ps.log.slice(log0):
+		on_show[str(e["item"])] = true   # a stand a live AI already bought out
+	_notes["stocked"] = on_show.size()
 	await shot("v030_player_shop_manage")
 	await frames(20)
-	_notes["stocked"] = ps.stocked().size()
 	if main.args.has("qa-shots"):   # screenshot runs only: fill more stands (same API as the panel)
 		var extra := [["bronze_sword", 1, 60], ["bronze_hatchet", 1, 45], ["iron_ore", 20, 9], ["ash_log", 30, 4]]
 		for e in extra:
@@ -569,7 +578,7 @@ func _pshop() -> void:
 	_notes["panel_closed"] = main.hud.current_panel == ""
 	# AI shoppers: the real decision (AIBrain.shop_browse) over the town's agents
 	var town_agents: Array = AIDirector.records.filter(func(a): return a.town == "fenhollow")
-	var u0 := int(ps.stats["units"])
+	var u0 := u_stock
 	for r in 60:
 		for a in town_agents:
 			AIBrain.shop_browse(a, Tick.tick_count)
