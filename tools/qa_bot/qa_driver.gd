@@ -1288,6 +1288,11 @@ func _farm() -> void:
 
 # --------------------------------------------------- 0.3.1 walled cities --
 ## The gate cell in the middle of the gate whose outside tile is `go`.
+## 0.3.14 Cinderholt's basalt ring (build_cinderholt_v1.py: centre (42, 62), radii 28 x 22 tiles).
+func _outside_ring(q: Vector2i) -> bool:
+	return pow((q.x - 42) / 28.0, 2) + pow((q.y - 62) / 22.0, 2) > 1.15
+
+
 func _gate_tile(go: Vector2i) -> Vector2i:
 	for d in [Vector2i(0, 1), Vector2i(0, -1), Vector2i(1, 0), Vector2i(-1, 0)]:
 		if main.world.gen.tile_at(go.x + d.x, go.y + d.y) in WorldGen.GATE_TILES:
@@ -1341,9 +1346,18 @@ func _city() -> void:
 	# the road gate of Fenhollow (towards Cinderholt)
 	main._set_zoom(2)
 	var tid0 := "cinderholt"   # 0.3.13: Fenhollow's palisade gates are unguarded and unlit; Cinderholt keeps the walled-gate setup
-	var go: Vector2i = w.gen.gate_outside(tid0, w.gen.towns["fenhollow"]["center"])
+	var go_edge: Vector2i = w.gen.gate_outside(tid0, w.gen.towns["fenhollow"]["center"])
+	var go: Vector2i = go_edge
 	var gt := _gate_tile(go)
 	var step: Vector2i = go - gt
+	var tdef0: Dictionary = w.gen.towns[tid0]
+	var ring: bool = tdef0.has("gate_tiles")   # 0.3.14 Cinderholt: gates on an inset basalt ring (the rect edge is open ground)
+	var org0 := Vector2i(int(tdef0["origin"][0]), int(tdef0["origin"][1]))
+	if ring:
+		var gw: Array = tdef0["gate_walls"]["west"]
+		gt = org0 + Vector2i(int(gw[-1][0]), int(gw[-1][1]))
+		step = Vector2i(-1, 0)
+		go = gt + step * 2
 	var guards: Array = []
 	for e in w.enemies.enemies:
 		if e.kind == "town_guard" and not e.dead and e.cheb(e.tile, gt) <= 4:
@@ -1361,10 +1375,10 @@ func _city() -> void:
 	await frames(10)
 	label = ""
 	res["gate"] = {"gate": [gt.x, gt.y], "outside": [go.x, go.y], "end": [p.tile.x, p.tile.y],
-		"out_of_town": w.gen.town_at(p.tile, 0) == "", "guards": guards.size(),
+		"out_of_town": w.gen.town_at(p.tile, 0) == "" or (ring and _outside_ring(p.tile - org0)), "guards": guards.size(),
 		"guards_calm": guards.all(func(e): return e.target == null and not e.aggressive()),
 		"guards_stationary": guards.all(func(e): return e.patrol.size() <= 1),
-		"road_start": [road[0].x, road[0].y], "road_gap": maxi(absi(road[0].x - go.x), absi(road[0].y - go.y))}
+		"road_start": [road[0].x, road[0].y], "road_gap": maxi(absi(road[0].x - go_edge.x), absi(road[0].y - go_edge.y))}
 	# a spot just outside the wall, 9 tiles along from the gate: the walk goes round through a gate
 	var along := Vector2i(step.y, step.x)
 	var spot: Vector2i = w.find_free_tile_near(go + along * 9 + step, 1, true)
@@ -1374,11 +1388,12 @@ func _city() -> void:
 	await frames(20)
 	var gcells: Array = []
 	var tdef: Dictionary = w.gen.towns[tid0]
-	for dir in tdef.get("gates", {}).keys():
-		for cc in tdef["gates"][dir]:
+	var gsrc: Dictionary = tdef.get("gate_tiles", tdef.get("gates", {}))   # 0.3.14 ring towns: the gate passages
+	for dir in gsrc.keys():
+		for cc in gsrc[dir]:
 			gcells.append([int(tdef["origin"][0]) + int(cc[0]), int(tdef["origin"][1]) + int(cc[1])])
 	res["gate_cells"] = gcells
-	res["detour"] = {"from": [p.tile.x, p.tile.y], "spot": [spot.x, spot.y], "from_in_town": w.gen.town_at(p.tile, 0) != "", "spot_in_town": w.gen.town_at(spot, 0) != ""}
+	res["detour"] = {"from": [p.tile.x, p.tile.y], "spot": [spot.x, spot.y], "from_in_town": w.gen.town_at(p.tile, 0) != "", "spot_in_town": w.gen.town_at(spot, 0) != "" and not (ring and _outside_ring(spot - org0))}
 	label = "wall_detour"
 	await tap_tile(spot, "just outside the wall")
 	await until(arrived, 30.0)

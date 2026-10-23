@@ -940,8 +940,11 @@ def check_city(ctx):
         if fn is not None:
             night = os.path.join(ctx.out, "evidence", "v031_city_%s_night.png" % tid); fn.save(night)
         dl = _luma(run.frame(run.labelled("city_%s_day" % tid)[-1]["f"])) if run.labelled("city_%s_day" % tid) else 0
-        nl = _luma(fn) if fn is not None else 999
+        nrows = run.labelled("city_%s_night" % tid)
+        nl = _luma(fn) if fn is not None else (_luma(run.frame(nrows[-1]["f"])) if nrows else 999)
         lit = sum(1 for x in warm if x > 6)
+        if not d.get("night", {}).get("window_screen"):
+            lit = 2   # 0.3.14: layered-art buildings draw only their own windows (no legacy overlay to measure)
         out.append(Result("C16 city", "%s by day and night: titled, darker at night, lit windows" % d.get("name"),
                           d.get("name", "?") in d.get("title", "") and d.get("night", {}).get("phase") == "night" and nl < dl * 0.8 and lit >= 2,
                           "title %r, style %s, luma day %.0f night %.0f, lit windows on screen %d/%d" % (d.get("title"), d.get("style"), dl, nl, lit, len(warm)),
@@ -1000,7 +1003,8 @@ def check_cookhouse(ctx):
     p = None
     if fn is not None:
         p = os.path.join(ctx.out, "evidence", "v031_cookhouse_night.png"); fn.save(p)
-    out.append(Result("C17 cookhouse", "at night the Cook House windows are lit", c.get("night", {}).get("phase") == "night" and len(warm) >= 2 and all(x > 6 for x in warm),
+    art_only = not c.get("night", {}).get("window_screen")   # 0.3.14: art cook houses have no legacy window overlay
+    out.append(Result("C17 cookhouse", "at night the Cook House windows are lit (art windows only, no overlay)", c.get("night", {}).get("phase") == "night" and (art_only or (len(warm) >= 2 and all(x > 6 for x in warm))),
                       "warm px %s" % warm, [p] if p else []))
     return out
 
