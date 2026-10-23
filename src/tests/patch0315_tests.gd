@@ -32,7 +32,7 @@ static func run(main, world, p) -> void:
 	_quest(world, p, "wolf_pelts", "hunter_odric", {"wolf_pelt": 5}, 120, "archery")
 	_quest(world, p, "chicken_slayer", "qm_hale", {"raw_chicken": 10, "feather": 30}, 80, "cooking")
 	check(p.influence - keep_inf == 10, "both side quests: +5 Influence each (%d)" % (p.influence - keep_inf))
-	var sv := p.to_save()
+	var sv: Dictionary = p.to_save()
 	var q := Player.new()
 	q.from_save(sv)
 	check(q.influence == p.influence and QuestSystem.state(q, "wolf_pelts") == QuestSystem.COMPLETED and QuestSystem.state(q, "chicken_slayer") == QuestSystem.COMPLETED,

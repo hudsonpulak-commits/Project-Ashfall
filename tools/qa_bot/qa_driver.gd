@@ -342,6 +342,8 @@ func _run() -> void:
 			await _autotile039()
 		"gfx":
 			await _gfx0391()
+		"sidequests":
+			await _sidequests0315()
 		_:
 			push_error("unknown QA scenario " + scenario)
 			await _finish(false)
@@ -2936,3 +2938,120 @@ func _gfx0391() -> void:
 		await _snap(pair[0])
 	label = ""
 	_notes["gfx"] = res
+
+
+## 0.3.15 Wolf Pelts (Odric) and Chicken Slayer (Quartermaster Hale), start to finish with
+## real taps: '?' marker, offer dialog, accept, real kills + loot pickup, journal counters,
+## '!' marker, turn-in dialog, rewards, completed journal.
+func _sidequests0315() -> void:
+	var p: Player = main.player
+	var w: World = main.world
+	var hud = main.hud
+	var res := {}
+	var keep_xp: Dictionary = p.skills.xp.duplicate()
+	var keep_slots: Array = p.inventory.slots.duplicate(true)
+	for sk in ["attack", "strength", "defence", "vitality"]:
+		p.skills.set_level(sk, 45)
+	for i in p.inventory.slots.size():
+		p.inventory.slots[i] = null
+	p.inventory.add("iron_sword")
+	Events.inventory_changed.emit()
+	for spec in [["wolf_pelts", "hunter_odric", "wolf", {"wolf_pelt": 5}, "sq_wolf"], ["chicken_slayer", "qm_hale", "chicken", {"raw_chicken": 10, "feather": 30}, "sq_chicken"]]:
+		var id: String = spec[0]
+		var gid: String = spec[1]
+		var kind: String = spec[2]
+		var need: Dictionary = spec[3]
+		var tag: String = spec[4]
+		var r := {}
+		var gt := QuestSystem.giver_tile(w, gid)
+		r["giver_tile"] = [gt.x, gt.y]
+		p.place_at(w.find_free_tile_near(gt + Vector2i(0, 3), 2, true))
+		w.set_focus(p.tile, true)
+		await frames(30)
+		var gl = hud.quest_ui.giver_label(gid)
+		r["mark_start"] = gl.text if gl else ""
+		label = tag + "_marker"
+		await _snap(tag + "_marker_offer")
+		r["dialog_offer"] = await _dialog_pick(gt, QuestSystem.giver_name(gid), "Accept", tag + "_dialog_offer")
+		await until(func(): return QuestSystem.state(p, id) != QuestSystem.NOT_STARTED, 10.0)
+		r["state_after_accept"] = QuestSystem.state(p, id)
+		r["progress_0"] = QuestSystem.progress_text(p, id)
+		# real kills: fight the nearest live one, then walk-pick the drops beside its body
+		var kills := 0
+		var looted := {}
+		var t_end := Time.get_ticks_msec() + 240000
+		while not QuestSystem.has_items(p, QuestSystem.current_stage(p, id)) and kills < 24 and Time.get_ticks_msec() < t_end:
+			var e: Enemy = w.enemies.nearest(p.tile, [kind], 4000)
+			if e == null:
+				break
+			e.reset_far()
+			label = tag + "_kill"
+			if await _kill(p, w, e, kind):
+				kills += 1
+				var dt := e.tile
+				await frames(4)
+				for dy in range(-1, 2):
+					for dx in range(-1, 2):
+						for pile in w.ground.at(dt + Vector2i(dx, dy)):
+							if str(pile["id"]) in need:
+								looted[pile["id"]] = int(looted.get(pile["id"], 0)) + int(pile["qty"])
+						w.ground.pick_up(p, dt + Vector2i(dx, dy))
+				for junk in ["bones"]:      # bury the bones so 10 single-slot chickens fit
+					p.inventory.remove(junk, p.inventory.count(junk))
+				Events.inventory_changed.emit()
+			_clear_foes(p, w)
+			if kills == 2:
+				r["progress_mid"] = QuestSystem.progress_text(p, id)
+				r["color_mid"] = _qcolor(id)
+				label = tag + "_journal"
+				await frames(6)
+				await _snap(tag + "_journal_progress")
+				hud.show_panel("")
+		r["kills"] = kills
+		r["looted"] = looted
+		# top-up only if the drops ran short in the time box (noted)
+		var topped := {}
+		for it in need.keys():
+			var short: int = int(need[it]) - p.inventory.count(it)
+			if short > 0:
+				p.inventory.add(it, short)
+				topped[it] = short
+		r["topped_up"] = topped
+		Events.inventory_changed.emit()
+		r["state_ready"] = QuestSystem.state(p, id)
+		var m0 := p.inventory.count(GameData.currency)
+		var inf0 := p.influence
+		var before := {}
+		for it in need.keys():
+			before[it] = p.inventory.count(it)
+		p.place_at(w.find_free_tile_near(gt + Vector2i(0, 3), 2, true))
+		w.set_focus(p.tile, true)
+		p.stop()
+		_clear_foes(p, w)
+		await frames(30)
+		gl = hud.quest_ui.giver_label(gid)
+		r["mark_ready"] = gl.text if gl else ""
+		label = tag + "_marker_ready"
+		await _snap(tag + "_marker_turnin")
+		r["dialog_turnin"] = await _dialog_pick(gt, QuestSystem.giver_name(gid), "Hand them over", tag + "_dialog_turnin")
+		await until(func(): return QuestSystem.state(p, id) == QuestSystem.COMPLETED, 10.0)
+		await frames(20)
+		r["state_final"] = QuestSystem.state(p, id)
+		r["influence"] = p.influence - inf0
+		r["marks"] = p.inventory.count(GameData.currency) - m0
+		var wrong := 0    # items taken must equal exactly what was asked (extras stay)
+		for it in need.keys():
+			wrong += absi(int(before[it]) - p.inventory.count(it) - int(need[it]))
+		r["items_left"] = wrong
+		gl = hud.quest_ui.giver_label(gid)
+		r["mark_final"] = gl.text if gl else ""
+		r["color_final"] = _qcolor(id)
+		r["influence_text"] = hud.influence_label.text
+		await frames(6)
+		await _snap(tag + "_journal_completed")
+		hud.show_panel("")
+		res[id] = r
+	p.skills.xp = keep_xp
+	p.inventory.slots = keep_slots
+	Events.inventory_changed.emit()
+	_notes["sidequests"] = res
