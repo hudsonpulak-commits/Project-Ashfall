@@ -808,8 +808,11 @@ static func _village_tests(world: World, p: Player) -> void:
 		# beside the road between its two cities
 		var road: Array = gen.village_roads.get(vid, [])   # 0.3.8 its own dirt road to a town
 		var dr := INF
+		var vrr: Rect2i = gen._village_rects[vid]   # 0.3.16 measured from the village edge (Millbrook v1 is 84x60)
 		for q in road:
-			dr = minf(dr, Vector2(q - c).length())
+			var ddx := maxi(maxi(vrr.position.x - q.x, 0), q.x - (vrr.end.x - 1))
+			var ddy := maxi(maxi(vrr.position.y - q.y, 0), q.y - (vrr.end.y - 1))
+			dr = minf(dr, Vector2(ddx, ddy).length())
 		between_ok = between_ok and dr < 25.0
 		# distance bands are measured from the cities only
 		bands_ok = bands_ok and gen.town_edge_distance(c) > 30.0 and gen.town_at(c, 0) == "" and gen.towns.has(gen.nearest_town(c))

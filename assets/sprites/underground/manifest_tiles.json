@@ -1,0 +1,742 @@
+{
+ "tile_size": 16,
+ "autotile": {
+  "mask": "N1|E2|S4|W8 (bit set = neighbour is wall)",
+  "inner": "NE1|SE2|SW4|NW8 diagonal-open bits, only meaningful when both adjacent cardinals are wall",
+  "face_rule": "16x32 pieces like cliffs: top 16px = wall cell (dark cap); when S neighbour is open, a 14px chunky face overhangs into the cell south. Draw walls after floor/props of the row below, sorted by y."
+ },
+ "tiles": [
+  {
+   "name": "cave_floor_0",
+   "file": "tiles/cave_floor_0.png",
+   "size": [
+    16,
+    16
+   ]
+  },
+  {
+   "name": "cave_floor_1",
+   "file": "tiles/cave_floor_1.png",
+   "size": [
+    16,
+    16
+   ]
+  },
+  {
+   "name": "cave_floor_2",
+   "file": "tiles/cave_floor_2.png",
+   "size": [
+    16,
+    16
+   ]
+  },
+  {
+   "name": "cave_floor_3",
+   "file": "tiles/cave_floor_3.png",
+   "size": [
+    16,
+    16
+   ]
+  },
+  {
+   "name": "cave_floor_4",
+   "file": "tiles/cave_floor_4.png",
+   "size": [
+    16,
+    16
+   ]
+  },
+  {
+   "name": "cave_floor_5",
+   "file": "tiles/cave_floor_5.png",
+   "size": [
+    16,
+    16
+   ]
+  },
+  {
+   "name": "cave_wall_m00",
+   "file": "tiles/cave_wall_m00.png",
+   "size": [
+    16,
+    32
+   ],
+   "mask": 0,
+   "anchor": "top-left of wall cell; overhangs 1 cell south"
+  },
+  {
+   "name": "cave_wall_m01",
+   "file": "tiles/cave_wall_m01.png",
+   "size": [
+    16,
+    32
+   ],
+   "mask": 1,
+   "anchor": "top-left of wall cell; overhangs 1 cell south"
+  },
+  {
+   "name": "cave_wall_m02",
+   "file": "tiles/cave_wall_m02.png",
+   "size": [
+    16,
+    32
+   ],
+   "mask": 2,
+   "anchor": "top-left of wall cell; overhangs 1 cell south"
+  },
+  {
+   "name": "cave_wall_m03",
+   "file": "tiles/cave_wall_m03.png",
+   "size": [
+    16,
+    32
+   ],
+   "mask": 3,
+   "anchor": "top-left of wall cell; overhangs 1 cell south"
+  },
+  {
+   "name": "cave_wall_m04",
+   "file": "tiles/cave_wall_m04.png",
+   "size": [
+    16,
+    32
+   ],
+   "mask": 4,
+   "anchor": "top-left of wall cell; overhangs 1 cell south"
+  },
+  {
+   "name": "cave_wall_m05",
+   "file": "tiles/cave_wall_m05.png",
+   "size": [
+    16,
+    32
+   ],
+   "mask": 5,
+   "anchor": "top-left of wall cell; overhangs 1 cell south"
+  },
+  {
+   "name": "cave_wall_m06",
+   "file": "tiles/cave_wall_m06.png",
+   "size": [
+    16,
+    32
+   ],
+   "mask": 6,
+   "anchor": "top-left of wall cell; overhangs 1 cell south"
+  },
+  {
+   "name": "cave_wall_m07",
+   "file": "tiles/cave_wall_m07.png",
+   "size": [
+    16,
+    32
+   ],
+   "mask": 7,
+   "anchor": "top-left of wall cell; overhangs 1 cell south"
+  },
+  {
+   "name": "cave_wall_m08",
+   "file": "tiles/cave_wall_m08.png",
+   "size": [
+    16,
+    32
+   ],
+   "mask": 8,
+   "anchor": "top-left of wall cell; overhangs 1 cell south"
+  },
+  {
+   "name": "cave_wall_m09",
+   "file": "tiles/cave_wall_m09.png",
+   "size": [
+    16,
+    32
+   ],
+   "mask": 9,
+   "anchor": "top-left of wall cell; overhangs 1 cell south"
+  },
+  {
+   "name": "cave_wall_m10",
+   "file": "tiles/cave_wall_m10.png",
+   "size": [
+    16,
+    32
+   ],
+   "mask": 10,
+   "anchor": "top-left of wall cell; overhangs 1 cell south"
+  },
+  {
+   "name": "cave_wall_m11",
+   "file": "tiles/cave_wall_m11.png",
+   "size": [
+    16,
+    32
+   ],
+   "mask": 11,
+   "anchor": "top-left of wall cell; overhangs 1 cell south"
+  },
+  {
+   "name": "cave_wall_m12",
+   "file": "tiles/cave_wall_m12.png",
+   "size": [
+    16,
+    32
+   ],
+   "mask": 12,
+   "anchor": "top-left of wall cell; overhangs 1 cell south"
+  },
+  {
+   "name": "cave_wall_m13",
+   "file": "tiles/cave_wall_m13.png",
+   "size": [
+    16,
+    32
+   ],
+   "mask": 13,
+   "anchor": "top-left of wall cell; overhangs 1 cell south"
+  },
+  {
+   "name": "cave_wall_m14",
+   "file": "tiles/cave_wall_m14.png",
+   "size": [
+    16,
+    32
+   ],
+   "mask": 14,
+   "anchor": "top-left of wall cell; overhangs 1 cell south"
+  },
+  {
+   "name": "cave_wall_m15",
+   "file": "tiles/cave_wall_m15.png",
+   "size": [
+    16,
+    32
+   ],
+   "mask": 15,
+   "anchor": "top-left of wall cell; overhangs 1 cell south"
+  },
+  {
+   "name": "cave_wall_inner_ne",
+   "file": "tiles/cave_wall_inner_ne.png",
+   "size": [
+    16,
+    32
+   ],
+   "mask": 15,
+   "inner": 1
+  },
+  {
+   "name": "cave_wall_inner_se",
+   "file": "tiles/cave_wall_inner_se.png",
+   "size": [
+    16,
+    32
+   ],
+   "mask": 15,
+   "inner": 2
+  },
+  {
+   "name": "cave_wall_inner_sw",
+   "file": "tiles/cave_wall_inner_sw.png",
+   "size": [
+    16,
+    32
+   ],
+   "mask": 15,
+   "inner": 4
+  },
+  {
+   "name": "cave_wall_inner_nw",
+   "file": "tiles/cave_wall_inner_nw.png",
+   "size": [
+    16,
+    32
+   ],
+   "mask": 15,
+   "inner": 8
+  },
+  {
+   "name": "cave_wall_diag_ne",
+   "file": "tiles/cave_wall_diag_ne.png",
+   "size": [
+    16,
+    32
+   ],
+   "diag": "ne",
+   "note": "45\u00b0 piece; transparent half shows floor tile beneath"
+  },
+  {
+   "name": "cave_wall_diag_nw",
+   "file": "tiles/cave_wall_diag_nw.png",
+   "size": [
+    16,
+    32
+   ],
+   "diag": "nw",
+   "note": "45\u00b0 piece; transparent half shows floor tile beneath"
+  },
+  {
+   "name": "cave_wall_diag_se",
+   "file": "tiles/cave_wall_diag_se.png",
+   "size": [
+    16,
+    32
+   ],
+   "diag": "se",
+   "note": "45\u00b0 piece; transparent half shows floor tile beneath"
+  },
+  {
+   "name": "cave_wall_diag_sw",
+   "file": "tiles/cave_wall_diag_sw.png",
+   "size": [
+    16,
+    32
+   ],
+   "diag": "sw",
+   "note": "45\u00b0 piece; transparent half shows floor tile beneath"
+  },
+  {
+   "name": "cave_puddle_0",
+   "file": "tiles/cave_puddle_0.png",
+   "size": [
+    16,
+    16
+   ]
+  },
+  {
+   "name": "cave_puddle_1",
+   "file": "tiles/cave_puddle_1.png",
+   "size": [
+    16,
+    16
+   ]
+  },
+  {
+   "name": "cave_puddle_2",
+   "file": "tiles/cave_puddle_2.png",
+   "size": [
+    16,
+    16
+   ]
+  },
+  {
+   "name": "den_puddle_0",
+   "file": "den/den_puddle_0.png",
+   "size": [
+    16,
+    16
+   ]
+  },
+  {
+   "name": "den_puddle_1",
+   "file": "den/den_puddle_1.png",
+   "size": [
+    16,
+    16
+   ]
+  },
+  {
+   "name": "den_puddle_2",
+   "file": "den/den_puddle_2.png",
+   "size": [
+    16,
+    16
+   ]
+  },
+  {
+   "name": "den_floor_0",
+   "file": "den/den_floor_0.png",
+   "size": [
+    16,
+    16
+   ]
+  },
+  {
+   "name": "den_floor_1",
+   "file": "den/den_floor_1.png",
+   "size": [
+    16,
+    16
+   ]
+  },
+  {
+   "name": "den_floor_2",
+   "file": "den/den_floor_2.png",
+   "size": [
+    16,
+    16
+   ]
+  },
+  {
+   "name": "den_floor_3",
+   "file": "den/den_floor_3.png",
+   "size": [
+    16,
+    16
+   ]
+  },
+  {
+   "name": "den_bones_0",
+   "file": "den/den_bones_0.png",
+   "size": [
+    16,
+    16
+   ],
+   "layer": "prop overlay"
+  },
+  {
+   "name": "den_bones_1",
+   "file": "den/den_bones_1.png",
+   "size": [
+    16,
+    16
+   ],
+   "layer": "prop overlay"
+  },
+  {
+   "name": "den_skull_0",
+   "file": "den/den_skull_0.png",
+   "size": [
+    16,
+    16
+   ],
+   "layer": "prop overlay"
+  },
+  {
+   "name": "den_skull_1",
+   "file": "den/den_skull_1.png",
+   "size": [
+    16,
+    16
+   ],
+   "layer": "prop overlay"
+  },
+  {
+   "name": "den_droppings_0",
+   "file": "den/den_droppings_0.png",
+   "size": [
+    16,
+    16
+   ],
+   "layer": "prop overlay"
+  },
+  {
+   "name": "den_droppings_1",
+   "file": "den/den_droppings_1.png",
+   "size": [
+    16,
+    16
+   ],
+   "layer": "prop overlay"
+  },
+  {
+   "name": "den_gnawed_0",
+   "file": "den/den_gnawed_0.png",
+   "size": [
+    16,
+    16
+   ],
+   "layer": "prop overlay"
+  },
+  {
+   "name": "den_gnawed_1",
+   "file": "den/den_gnawed_1.png",
+   "size": [
+    16,
+    16
+   ],
+   "layer": "prop overlay"
+  },
+  {
+   "name": "den_nest_0",
+   "file": "den/den_nest_0.png",
+   "size": [
+    16,
+    16
+   ],
+   "layer": "prop overlay"
+  },
+  {
+   "name": "den_nest_1",
+   "file": "den/den_nest_1.png",
+   "size": [
+    16,
+    16
+   ],
+   "layer": "prop overlay"
+  },
+  {
+   "name": "den_straw_0",
+   "file": "den/den_straw_0.png",
+   "size": [
+    16,
+    16
+   ],
+   "layer": "prop overlay"
+  },
+  {
+   "name": "den_straw_1",
+   "file": "den/den_straw_1.png",
+   "size": [
+    16,
+    16
+   ],
+   "layer": "prop overlay"
+  },
+  {
+   "name": "den_wall_m00",
+   "file": "den/den_wall_m00.png",
+   "size": [
+    16,
+    32
+   ],
+   "mask": 0
+  },
+  {
+   "name": "den_wall_m01",
+   "file": "den/den_wall_m01.png",
+   "size": [
+    16,
+    32
+   ],
+   "mask": 1
+  },
+  {
+   "name": "den_wall_m02",
+   "file": "den/den_wall_m02.png",
+   "size": [
+    16,
+    32
+   ],
+   "mask": 2
+  },
+  {
+   "name": "den_wall_m03",
+   "file": "den/den_wall_m03.png",
+   "size": [
+    16,
+    32
+   ],
+   "mask": 3
+  },
+  {
+   "name": "den_wall_m04",
+   "file": "den/den_wall_m04.png",
+   "size": [
+    16,
+    32
+   ],
+   "mask": 4
+  },
+  {
+   "name": "den_wall_m05",
+   "file": "den/den_wall_m05.png",
+   "size": [
+    16,
+    32
+   ],
+   "mask": 5
+  },
+  {
+   "name": "den_wall_m06",
+   "file": "den/den_wall_m06.png",
+   "size": [
+    16,
+    32
+   ],
+   "mask": 6
+  },
+  {
+   "name": "den_wall_m07",
+   "file": "den/den_wall_m07.png",
+   "size": [
+    16,
+    32
+   ],
+   "mask": 7
+  },
+  {
+   "name": "den_wall_m08",
+   "file": "den/den_wall_m08.png",
+   "size": [
+    16,
+    32
+   ],
+   "mask": 8
+  },
+  {
+   "name": "den_wall_m09",
+   "file": "den/den_wall_m09.png",
+   "size": [
+    16,
+    32
+   ],
+   "mask": 9
+  },
+  {
+   "name": "den_wall_m10",
+   "file": "den/den_wall_m10.png",
+   "size": [
+    16,
+    32
+   ],
+   "mask": 10
+  },
+  {
+   "name": "den_wall_m11",
+   "file": "den/den_wall_m11.png",
+   "size": [
+    16,
+    32
+   ],
+   "mask": 11
+  },
+  {
+   "name": "den_wall_m12",
+   "file": "den/den_wall_m12.png",
+   "size": [
+    16,
+    32
+   ],
+   "mask": 12
+  },
+  {
+   "name": "den_wall_m13",
+   "file": "den/den_wall_m13.png",
+   "size": [
+    16,
+    32
+   ],
+   "mask": 13
+  },
+  {
+   "name": "den_wall_m14",
+   "file": "den/den_wall_m14.png",
+   "size": [
+    16,
+    32
+   ],
+   "mask": 14
+  },
+  {
+   "name": "den_wall_m15",
+   "file": "den/den_wall_m15.png",
+   "size": [
+    16,
+    32
+   ],
+   "mask": 15
+  },
+  {
+   "name": "den_wall_inner_ne",
+   "file": "den/den_wall_inner_ne.png",
+   "size": [
+    16,
+    32
+   ],
+   "mask": 15,
+   "inner": 1
+  },
+  {
+   "name": "den_wall_inner_se",
+   "file": "den/den_wall_inner_se.png",
+   "size": [
+    16,
+    32
+   ],
+   "mask": 15,
+   "inner": 2
+  },
+  {
+   "name": "den_wall_inner_sw",
+   "file": "den/den_wall_inner_sw.png",
+   "size": [
+    16,
+    32
+   ],
+   "mask": 15,
+   "inner": 4
+  },
+  {
+   "name": "den_wall_inner_nw",
+   "file": "den/den_wall_inner_nw.png",
+   "size": [
+    16,
+    32
+   ],
+   "mask": 15,
+   "inner": 8
+  },
+  {
+   "name": "den_wall_diag_ne",
+   "file": "den/den_wall_diag_ne.png",
+   "size": [
+    16,
+    32
+   ],
+   "diag": "ne"
+  },
+  {
+   "name": "den_wall_diag_nw",
+   "file": "den/den_wall_diag_nw.png",
+   "size": [
+    16,
+    32
+   ],
+   "diag": "nw"
+  },
+  {
+   "name": "den_wall_diag_se",
+   "file": "den/den_wall_diag_se.png",
+   "size": [
+    16,
+    32
+   ],
+   "diag": "se"
+  },
+  {
+   "name": "den_wall_diag_sw",
+   "file": "den/den_wall_diag_sw.png",
+   "size": [
+    16,
+    32
+   ],
+   "diag": "sw"
+  },
+  {
+   "name": "cave_ladder_up",
+   "file": "tiles/cave_ladder_up.png",
+   "size": [
+    16,
+    32
+   ],
+   "anchor": "top-left; 16x32, occupies 1x2 cells, interact cell = bottom",
+   "interact": "exit_up"
+  },
+  {
+   "name": "den_entrance_3x2_trans",
+   "file": "overworld/den_entrance_3x2_trans.png",
+   "size": [
+    48,
+    32
+   ],
+   "anchor": "same as den_entrance_3x2; grass fades to alpha at edges, place over any grass/hill tile",
+   "interact_cell": [
+    1,
+    1
+   ]
+  },
+  {
+   "name": "den_entrance_3x2",
+   "file": "overworld/den_entrance_3x2.png",
+   "size": [
+    48,
+    32
+   ],
+   "anchor": "top-left; 48x32 = 3x2 cells; collision top row + sides, walkable interact cell = bottom-middle",
+   "interact_cell": [
+    1,
+    1
+   ]
+  }
+ ]
+}

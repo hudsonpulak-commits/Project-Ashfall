@@ -69,10 +69,10 @@
    "town": "millbrook",
    "object": "quest_giver_mabel",
    "near": [
-    8,
-    9
+    20,
+    42
    ],
-   "note": "village giver; when the new Millbrook art lands, edit town/near only"
+   "note": "village giver by the rat barn (Millbrook v1 layout); moving her = edit town/near only"
   }
  },
  "quests": [
@@ -141,12 +141,12 @@
      ]
     },
     "stage_1": {
-     "text": "Five goblins! Good work. But their leader, a Goblin Warlord, is terrorising Millbrook to the north-east. Slay him and Fenhollow will owe you.",
+     "text": "Five goblins! Good work. But their leader, a Goblin Warlord, is terrorising Millbrook, up past the Highfen road. Slay him and Fenhollow will owe you.",
      "choices": [
       {
        "label": "I'll hunt him down",
        "action": "advance",
-       "reply": "He camps just south of Millbrook. Watch yourself."
+       "reply": "He camps in the hills just north of Millbrook. Watch yourself."
       }
      ]
     },
@@ -778,8 +778,8 @@
   "rat_den": {
    "name": "Rat den (entrance)",
    "origin": [
-    151,
-    -76
+    168,
+    -82
    ],
    "legend": {
     "D": "rat_den_entrance"

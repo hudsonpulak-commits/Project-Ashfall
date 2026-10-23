@@ -66,7 +66,7 @@ static func run(world: World, p: Player) -> void:
 	var wd: Dictionary = GameData.enemies["goblin_warlord"]
 	check(int(wd["level"]) == 12 and int(wd["hp"]) == 42 and int(wd["max_hit"]) > int(GameData.enemies["goblin"]["max_hit"]), "Goblin Warlord: level 12, 42 HP (28 x1.5), hits harder than a goblin")
 	var wl: Enemy = world.enemies.nearest(p.tile, ["goblin_warlord"], 4000)
-	check(wl != null and wl.cheb(wl.home, world.gen.town_center("millbrook")) <= 25, "the Warlord lives near Millbrook")
+	check(wl != null and world.gen.village_at(wl.home, 25) == "millbrook" and world.gen.village_at(wl.home, 0) == "", "the Warlord lives near Millbrook (within 25 tiles of its edge)")
 	check(QuestSystem.objective_tile(p, world) == wl.tile, "guidance points at the Warlord")
 	var marks0 := p.inventory.count(GameData.currency)
 	wl.take_hit(999, p, Tick.tick_count)

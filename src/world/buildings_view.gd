@@ -61,8 +61,8 @@ func setup(w) -> void:
 ## city wall ring (8 octant pieces, each y-sorted by its own base).
 func _setup_town_art(w) -> void:
 	var ring_def: Dictionary = WorldGen.town_art().get("ring", {})
-	for tid in w.gen.town_order:
-		var t: Dictionary = w.gen.towns[tid]
+	for tid in w.gen.town_order + w.gen.village_order:   # 0.3.16 villages with designer art too (Millbrook v1)
+		var t: Dictionary = w.gen.towns[tid] if w.gen.towns.has(tid) else w.gen.villages[tid]
 		if not t.has("art"):
 			continue
 		var a: Dictionary = t["art"]

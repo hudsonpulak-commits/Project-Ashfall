@@ -3976,6 +3976,684 @@
     "##ooo##",
     "###D###"
    ]
+  },
+  "mb_house_01": {
+   "tiles": [
+    6,
+    5
+   ],
+   "px": [
+    96,
+    80
+   ],
+   "origin_y": 0,
+   "inset_x": 0,
+   "door_tile": [
+    3,
+    4
+   ],
+   "storeys": 1,
+   "floor": "res://assets/sprites/towns/villages/millbrook/buildings/mb_house_01_floor.png",
+   "walls": "res://assets/sprites/towns/villages/millbrook/buildings/mb_house_01_walls.png",
+   "fade": [
+    "res://assets/sprites/towns/villages/millbrook/buildings/mb_house_01_roof.png"
+   ],
+   "night": "res://assets/sprites/towns/villages/millbrook/buildings/mb_house_01_night.png",
+   "plan": [
+    "######",
+    "#ooo##",
+    "#ooo##",
+    "#ooo##",
+    "###D##"
+   ],
+   "note": "0.3.16 Millbrook v1 (villages/v1)"
+  },
+  "mb_house_02": {
+   "tiles": [
+    5,
+    6
+   ],
+   "px": [
+    80,
+    96
+   ],
+   "origin_y": 0,
+   "inset_x": 0,
+   "door_tile": [
+    2,
+    5
+   ],
+   "storeys": 1,
+   "floor": "res://assets/sprites/towns/villages/millbrook/buildings/mb_house_02_floor.png",
+   "walls": "res://assets/sprites/towns/villages/millbrook/buildings/mb_house_02_walls.png",
+   "fade": [
+    "res://assets/sprites/towns/villages/millbrook/buildings/mb_house_02_roof.png"
+   ],
+   "night": "res://assets/sprites/towns/villages/millbrook/buildings/mb_house_02_night.png",
+   "plan": [
+    "#####",
+    "#####",
+    "#ooo#",
+    "#ooo#",
+    "#ooo#",
+    "##D##"
+   ],
+   "note": "0.3.16 Millbrook v1 (villages/v1)"
+  },
+  "mb_house_03": {
+   "tiles": [
+    5,
+    5
+   ],
+   "px": [
+    80,
+    80
+   ],
+   "origin_y": 0,
+   "inset_x": 0,
+   "door_tile": [
+    2,
+    4
+   ],
+   "storeys": 1,
+   "floor": "res://assets/sprites/towns/villages/millbrook/buildings/mb_house_03_floor.png",
+   "walls": "res://assets/sprites/towns/villages/millbrook/buildings/mb_house_03_walls.png",
+   "fade": [
+    "res://assets/sprites/towns/villages/millbrook/buildings/mb_house_03_roof.png"
+   ],
+   "night": "res://assets/sprites/towns/villages/millbrook/buildings/mb_house_03_night.png",
+   "plan": [
+    "#####",
+    "#oo##",
+    "#oo##",
+    "#oo##",
+    "##D##"
+   ],
+   "note": "0.3.16 Millbrook v1 (villages/v1)"
+  },
+  "mb_house_04": {
+   "tiles": [
+    6,
+    5
+   ],
+   "px": [
+    96,
+    80
+   ],
+   "origin_y": 0,
+   "inset_x": 0,
+   "door_tile": [
+    3,
+    4
+   ],
+   "storeys": 1,
+   "floor": "res://assets/sprites/towns/villages/millbrook/buildings/mb_house_04_floor.png",
+   "walls": "res://assets/sprites/towns/villages/millbrook/buildings/mb_house_04_walls.png",
+   "fade": [
+    "res://assets/sprites/towns/villages/millbrook/buildings/mb_house_04_roof.png"
+   ],
+   "night": "res://assets/sprites/towns/villages/millbrook/buildings/mb_house_04_night.png",
+   "plan": [
+    "######",
+    "##ooo#",
+    "##ooo#",
+    "##ooo#",
+    "###D##"
+   ],
+   "note": "0.3.16 Millbrook v1 (villages/v1)"
+  },
+  "mb_house_05": {
+   "tiles": [
+    5,
+    5
+   ],
+   "px": [
+    80,
+    94
+   ],
+   "origin_y": 14,
+   "inset_x": 0,
+   "door_tile": [
+    2,
+    4
+   ],
+   "storeys": 2,
+   "floor": "res://assets/sprites/towns/villages/millbrook/buildings/mb_house_05_floor.png",
+   "walls": "res://assets/sprites/towns/villages/millbrook/buildings/mb_house_05_walls.png",
+   "fade": [
+    "res://assets/sprites/towns/villages/millbrook/buildings/mb_house_05_upper1.png",
+    "res://assets/sprites/towns/villages/millbrook/buildings/mb_house_05_roof.png"
+   ],
+   "night": "res://assets/sprites/towns/villages/millbrook/buildings/mb_house_05_night.png",
+   "plan": [
+    "#####",
+    "#ooo#",
+    "#ooo#",
+    "#ooo#",
+    "##D##"
+   ],
+   "note": "0.3.16 Millbrook v1 (villages/v1)"
+  },
+  "mb_house_06": {
+   "tiles": [
+    5,
+    6
+   ],
+   "px": [
+    80,
+    96
+   ],
+   "origin_y": 0,
+   "inset_x": 0,
+   "door_tile": [
+    2,
+    5
+   ],
+   "storeys": 1,
+   "floor": "res://assets/sprites/towns/villages/millbrook/buildings/mb_house_06_floor.png",
+   "walls": "res://assets/sprites/towns/villages/millbrook/buildings/mb_house_06_walls.png",
+   "fade": [
+    "res://assets/sprites/towns/villages/millbrook/buildings/mb_house_06_roof.png"
+   ],
+   "night": "res://assets/sprites/towns/villages/millbrook/buildings/mb_house_06_night.png",
+   "plan": [
+    "#####",
+    "#####",
+    "#ooo#",
+    "#ooo#",
+    "#ooo#",
+    "##D##"
+   ],
+   "note": "0.3.16 Millbrook v1 (villages/v1)"
+  },
+  "mb_house_07": {
+   "tiles": [
+    7,
+    6
+   ],
+   "px": [
+    112,
+    96
+   ],
+   "origin_y": 0,
+   "inset_x": 0,
+   "door_tile": [
+    3,
+    5
+   ],
+   "storeys": 1,
+   "floor": "res://assets/sprites/towns/villages/millbrook/buildings/mb_house_07_floor.png",
+   "walls": "res://assets/sprites/towns/villages/millbrook/buildings/mb_house_07_walls.png",
+   "fade": [
+    "res://assets/sprites/towns/villages/millbrook/buildings/mb_house_07_roof.png"
+   ],
+   "night": "res://assets/sprites/towns/villages/millbrook/buildings/mb_house_07_night.png",
+   "plan": [
+    "#######",
+    "#######",
+    "##ooo##",
+    "##ooo##",
+    "##ooo##",
+    "###D###"
+   ],
+   "note": "0.3.16 Millbrook v1 (villages/v1)"
+  },
+  "mb_house_08": {
+   "tiles": [
+    5,
+    5
+   ],
+   "px": [
+    80,
+    80
+   ],
+   "origin_y": 0,
+   "inset_x": 0,
+   "door_tile": [
+    3,
+    4
+   ],
+   "storeys": 1,
+   "floor": "res://assets/sprites/towns/villages/millbrook/buildings/mb_house_08_floor.png",
+   "walls": "res://assets/sprites/towns/villages/millbrook/buildings/mb_house_08_walls.png",
+   "fade": [
+    "res://assets/sprites/towns/villages/millbrook/buildings/mb_house_08_roof.png"
+   ],
+   "night": "res://assets/sprites/towns/villages/millbrook/buildings/mb_house_08_night.png",
+   "plan": [
+    "#####",
+    "#oo##",
+    "#ooo#",
+    "#ooo#",
+    "###D#"
+   ],
+   "note": "0.3.16 Millbrook v1 (villages/v1)"
+  },
+  "mb_house_09": {
+   "tiles": [
+    5,
+    5
+   ],
+   "px": [
+    80,
+    80
+   ],
+   "origin_y": 0,
+   "inset_x": 0,
+   "door_tile": [
+    2,
+    4
+   ],
+   "storeys": 1,
+   "floor": "res://assets/sprites/towns/villages/millbrook/buildings/mb_house_09_floor.png",
+   "walls": "res://assets/sprites/towns/villages/millbrook/buildings/mb_house_09_walls.png",
+   "fade": [
+    "res://assets/sprites/towns/villages/millbrook/buildings/mb_house_09_roof.png"
+   ],
+   "night": "res://assets/sprites/towns/villages/millbrook/buildings/mb_house_09_night.png",
+   "plan": [
+    "#####",
+    "#ooo#",
+    "#ooo#",
+    "#ooo#",
+    "##D##"
+   ],
+   "note": "0.3.16 Millbrook v1 (villages/v1)"
+  },
+  "mb_house_10": {
+   "tiles": [
+    6,
+    6
+   ],
+   "px": [
+    96,
+    96
+   ],
+   "origin_y": 0,
+   "inset_x": 0,
+   "door_tile": [
+    2,
+    5
+   ],
+   "storeys": 1,
+   "floor": "res://assets/sprites/towns/villages/millbrook/buildings/mb_house_10_floor.png",
+   "walls": "res://assets/sprites/towns/villages/millbrook/buildings/mb_house_10_walls.png",
+   "fade": [
+    "res://assets/sprites/towns/villages/millbrook/buildings/mb_house_10_roof.png"
+   ],
+   "night": "res://assets/sprites/towns/villages/millbrook/buildings/mb_house_10_night.png",
+   "plan": [
+    "######",
+    "######",
+    "#ooo##",
+    "#ooo##",
+    "#ooo##",
+    "##D###"
+   ],
+   "note": "0.3.16 Millbrook v1 (villages/v1)"
+  },
+  "mb_inn": {
+   "tiles": [
+    10,
+    7
+   ],
+   "px": [
+    160,
+    126
+   ],
+   "origin_y": 14,
+   "inset_x": 0,
+   "door_tile": [
+    4,
+    6
+   ],
+   "storeys": 2,
+   "floor": "res://assets/sprites/towns/villages/millbrook/buildings/mb_inn_floor.png",
+   "walls": "res://assets/sprites/towns/villages/millbrook/buildings/mb_inn_walls.png",
+   "fade": [
+    "res://assets/sprites/towns/villages/millbrook/buildings/mb_inn_upper1.png",
+    "res://assets/sprites/towns/villages/millbrook/buildings/mb_inn_roof.png"
+   ],
+   "night": "res://assets/sprites/towns/villages/millbrook/buildings/mb_inn_night.png",
+   "plan": [
+    "##########",
+    "##########",
+    "##########",
+    "###ooo####",
+    "###ooo####",
+    "###ooo####",
+    "####D#####"
+   ],
+   "note": "0.3.16 Millbrook v1 (villages/v1)"
+  },
+  "mb_mill": {
+   "tiles": [
+    9,
+    9
+   ],
+   "px": [
+    144,
+    158
+   ],
+   "origin_y": 14,
+   "inset_x": 0,
+   "door_tile": [
+    4,
+    8
+   ],
+   "storeys": 2,
+   "floor": "res://assets/sprites/towns/villages/millbrook/buildings/mb_mill_floor.png",
+   "walls": "res://assets/sprites/towns/villages/millbrook/buildings/mb_mill_walls.png",
+   "fade": [
+    "res://assets/sprites/towns/villages/millbrook/buildings/mb_mill_upper1.png",
+    "res://assets/sprites/towns/villages/millbrook/buildings/mb_mill_roof.png"
+   ],
+   "night": "res://assets/sprites/towns/villages/millbrook/buildings/mb_mill_night.png",
+   "plan": [
+    "#########",
+    "#########",
+    "#########",
+    "#########",
+    "#########",
+    "###ooo###",
+    "###ooo###",
+    "###ooo###",
+    "####D####"
+   ],
+   "note": "0.3.16 Millbrook v1 (villages/v1)"
+  },
+  "mb_rat_barn": {
+   "tiles": [
+    10,
+    8
+   ],
+   "px": [
+    160,
+    128
+   ],
+   "origin_y": 0,
+   "inset_x": 0,
+   "door_tile": [
+    5,
+    7
+   ],
+   "storeys": 1,
+   "floor": "res://assets/sprites/towns/villages/millbrook/buildings/mb_rat_barn_floor.png",
+   "walls": "res://assets/sprites/towns/villages/millbrook/buildings/mb_rat_barn_walls.png",
+   "fade": [
+    "res://assets/sprites/towns/villages/millbrook/buildings/mb_rat_barn_roof.png"
+   ],
+   "night": "res://assets/sprites/towns/villages/millbrook/buildings/mb_rat_barn_night.png",
+   "plan": [
+    "##########",
+    "##########",
+    "##########",
+    "##########",
+    "###ooo####",
+    "###ooo####",
+    "###ooo####",
+    "#####D####"
+   ],
+   "note": "0.3.16 Millbrook v1 (villages/v1)"
+  },
+  "mb_farmhouse_a": {
+   "tiles": [
+    6,
+    5
+   ],
+   "px": [
+    96,
+    94
+   ],
+   "origin_y": 14,
+   "inset_x": 0,
+   "door_tile": [
+    2,
+    4
+   ],
+   "storeys": 2,
+   "floor": "res://assets/sprites/towns/villages/millbrook/buildings/mb_farmhouse_a_floor.png",
+   "walls": "res://assets/sprites/towns/villages/millbrook/buildings/mb_farmhouse_a_walls.png",
+   "fade": [
+    "res://assets/sprites/towns/villages/millbrook/buildings/mb_farmhouse_a_upper1.png",
+    "res://assets/sprites/towns/villages/millbrook/buildings/mb_farmhouse_a_roof.png"
+   ],
+   "night": "res://assets/sprites/towns/villages/millbrook/buildings/mb_farmhouse_a_night.png",
+   "plan": [
+    "######",
+    "#ooo##",
+    "#ooo##",
+    "#ooo##",
+    "##D###"
+   ],
+   "note": "0.3.16 Millbrook v1 (villages/v1)"
+  },
+  "mb_farmhouse_b": {
+   "tiles": [
+    5,
+    5
+   ],
+   "px": [
+    80,
+    80
+   ],
+   "origin_y": 0,
+   "inset_x": 0,
+   "door_tile": [
+    1,
+    4
+   ],
+   "storeys": 1,
+   "floor": "res://assets/sprites/towns/villages/millbrook/buildings/mb_farmhouse_b_floor.png",
+   "walls": "res://assets/sprites/towns/villages/millbrook/buildings/mb_farmhouse_b_walls.png",
+   "fade": [
+    "res://assets/sprites/towns/villages/millbrook/buildings/mb_farmhouse_b_roof.png"
+   ],
+   "night": "res://assets/sprites/towns/villages/millbrook/buildings/mb_farmhouse_b_night.png",
+   "plan": [
+    "#####",
+    "#oo##",
+    "#oo##",
+    "#oo##",
+    "#D###"
+   ],
+   "note": "0.3.16 Millbrook v1 (villages/v1)"
+  },
+  "mb_cowshed": {
+   "tiles": [
+    6,
+    5
+   ],
+   "px": [
+    96,
+    80
+   ],
+   "origin_y": 0,
+   "inset_x": 0,
+   "door_tile": [
+    3,
+    4
+   ],
+   "storeys": 1,
+   "floor": "res://assets/sprites/towns/villages/millbrook/buildings/mb_cowshed_floor.png",
+   "walls": "res://assets/sprites/towns/villages/millbrook/buildings/mb_cowshed_walls.png",
+   "fade": [
+    "res://assets/sprites/towns/villages/millbrook/buildings/mb_cowshed_roof.png"
+   ],
+   "night": "res://assets/sprites/towns/villages/millbrook/buildings/mb_cowshed_night.png",
+   "plan": [
+    "######",
+    "#ooo##",
+    "#ooo##",
+    "#ooo##",
+    "###D##"
+   ],
+   "note": "0.3.16 Millbrook v1 (villages/v1)"
+  },
+  "mb_granary": {
+   "tiles": [
+    6,
+    6
+   ],
+   "px": [
+    96,
+    96
+   ],
+   "origin_y": 0,
+   "inset_x": 0,
+   "door_tile": [
+    3,
+    5
+   ],
+   "storeys": 1,
+   "floor": "res://assets/sprites/towns/villages/millbrook/buildings/mb_granary_floor.png",
+   "walls": "res://assets/sprites/towns/villages/millbrook/buildings/mb_granary_walls.png",
+   "fade": [
+    "res://assets/sprites/towns/villages/millbrook/buildings/mb_granary_roof.png"
+   ],
+   "night": "res://assets/sprites/towns/villages/millbrook/buildings/mb_granary_night.png",
+   "plan": [
+    "######",
+    "######",
+    "#ooo##",
+    "#ooo##",
+    "#ooo##",
+    "###D##"
+   ],
+   "note": "0.3.16 Millbrook v1 (villages/v1)"
+  },
+  "mb_rat_cellar": {
+   "tiles": [
+    7,
+    6
+   ],
+   "px": [
+    112,
+    96
+   ],
+   "origin_y": 0,
+   "inset_x": 0,
+   "door_tile": [
+    3,
+    5
+   ],
+   "storeys": 1,
+   "floor": "res://assets/sprites/towns/villages/millbrook/buildings/mb_rat_cellar_floor.png",
+   "walls": "res://assets/sprites/towns/villages/millbrook/buildings/mb_rat_cellar_walls.png",
+   "fade": [],
+   "night": "res://assets/sprites/towns/villages/millbrook/buildings/mb_rat_cellar_night.png",
+   "plan": [
+    "#######",
+    "#######",
+    "##ooo##",
+    "##ooo##",
+    "##ooo##",
+    "###D###"
+   ],
+   "note": "0.3.16 Millbrook v1 (villages/v1)"
+  },
+  "ch_ruin_chapel": {
+   "tiles": [
+    5,
+    7
+   ],
+   "px": [
+    80,
+    132
+   ],
+   "origin_y": 20,
+   "inset_x": 0,
+   "door_tile": [
+    2,
+    6
+   ],
+   "storeys": 1,
+   "floor": "res://assets/sprites/towns/villages/millbrook/buildings/ch_ruin_chapel_floor.png",
+   "walls": "res://assets/sprites/towns/villages/millbrook/buildings/ch_ruin_chapel_walls.png",
+   "fade": [
+    "res://assets/sprites/towns/villages/millbrook/buildings/ch_ruin_chapel_roof.png"
+   ],
+   "night": "res://assets/sprites/towns/villages/millbrook/buildings/ch_ruin_chapel_night.png",
+   "plan": [
+    "#####",
+    "#####",
+    "#####",
+    "#ooo#",
+    "#ooo#",
+    "#ooo#",
+    "##D##"
+   ],
+   "note": "0.3.16 Millbrook v1 (villages/v1)"
+  },
+  "ch_ruin_church": {
+   "tiles": [
+    10,
+    12
+   ],
+   "px": [
+    160,
+    212
+   ],
+   "origin_y": 20,
+   "inset_x": 0,
+   "door_tile": [
+    5,
+    11
+   ],
+   "storeys": 1,
+   "floor": "res://assets/sprites/towns/villages/millbrook/buildings/ch_ruin_church_floor.png",
+   "walls": "res://assets/sprites/towns/villages/millbrook/buildings/ch_ruin_church_walls.png",
+   "fade": [
+    "res://assets/sprites/towns/villages/millbrook/buildings/ch_ruin_church_roof.png"
+   ],
+   "night": "res://assets/sprites/towns/villages/millbrook/buildings/ch_ruin_church_night.png",
+   "plan": [
+    "##########",
+    "##########",
+    "##########",
+    "##########",
+    "##########",
+    "##########",
+    "##########",
+    "##########",
+    "###ooo####",
+    "###ooo####",
+    "###ooo####",
+    "#####D####"
+   ],
+   "note": "0.3.16 Millbrook v1 (villages/v1)"
+  },
+  "ch_ruin_shrine": {
+   "tiles": [
+    6,
+    6
+   ],
+   "px": [
+    96,
+    96
+   ],
+   "origin_y": 0,
+   "inset_x": 0,
+   "door_tile": [
+    3,
+    5
+   ],
+   "storeys": 1,
+   "floor": "res://assets/sprites/towns/villages/millbrook/buildings/ch_ruin_shrine_floor.png",
+   "walls": "res://assets/sprites/towns/villages/millbrook/buildings/ch_ruin_shrine_walls.png",
+   "fade": [
+    "res://assets/sprites/towns/villages/millbrook/buildings/ch_ruin_shrine_roof.png"
+   ],
+   "night": "res://assets/sprites/towns/villages/millbrook/buildings/ch_ruin_shrine_night.png",
+   "plan": [
+    "######",
+    "######",
+    "#ooo##",
+    "#ooo##",
+    "#ooo##",
+    "###D##"
+   ],
+   "note": "0.3.16 Millbrook v1 (villages/v1)"
   }
  }
 }

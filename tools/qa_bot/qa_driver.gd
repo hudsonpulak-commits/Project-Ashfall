@@ -2882,6 +2882,13 @@ func _gfx0391() -> void:
 			cow.facing.left = dname == "left"
 			w.set_focus(cow.tile, true)
 			await frames(2)
+			for _try in 3:    # 0.3.16: a wandering cow can turn between frames; re-pose
+				if cow._sprite.flip_h == (dname == "left"):
+					break
+				cow.facing.dir = "side" if dname in ["right", "left"] else dname
+				cow.facing.left = dname == "left"
+				cow._last_move_t = -100
+				await frames(2)
 			res["cow"][dname] = {"tex": cow._sprite.texture.resource_path, "flip": cow._sprite.flip_h}
 			label = "cow_" + dname
 			await _snap("cow_" + dname)
@@ -3233,7 +3240,10 @@ func _sidequests0316() -> void:
 	await until(func(): return QuestSystem.state(p, id) != QuestSystem.NOT_STARTED, 10.0)
 	r["state_after_accept"] = QuestSystem.state(p, id)
 	kills = 0
-	var nest := Vector2i(146, -78)
+	var nest := Vector2i(0, 0)
+	for c in GameData.camps:
+		if c.get("enemy", "") == "giant_rat" and "Dead Rat" in str(c.get("note", "")):
+			nest = Vector2i(int(c["at"][0]), int(c["at"][1]))
 	t_end = Time.get_ticks_msec() + 240000
 	while int(p.quests[id].get("stage", 0)) == 0 and kills < 20 and Time.get_ticks_msec() < t_end:
 		var e2: Enemy = w.enemies.nearest(nest, ["giant_rat"], 4000)
@@ -3258,7 +3268,7 @@ func _sidequests0316() -> void:
 	await until(func(): return int(p.quests[id].get("stage", 0)) == 2, 10.0)
 	var mom: Enemy = w.enemies.nearest(nest, ["rat_mother"], 4000)
 	mom.reset_far()
-	r["mother_scale"] = float(mom.def.get("scale", 1))
+	r["mother_sprite"] = str(mom.def.get("sprite", ""))
 	p.place_at(w.find_free_tile_near(mom.tile + Vector2i(2, 1), 2, true))
 	w.set_focus(p.tile, true)
 	await frames(20)

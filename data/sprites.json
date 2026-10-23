@@ -2867,6 +2867,286 @@
    "frames": 1,
    "anchor": "bottom",
    "note": "0.3.16 placeholder quest prop (generated)"
+  },
+  "mb_bounty_board": {
+   "path": "res://assets/sprites/towns/villages/millbrook/props/mb_bounty_board.png",
+   "frame_size": [
+    32,
+    32
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.3.16 Millbrook v1 prop (villages/v1)"
+  },
+  "mb_sign_inn": {
+   "path": "res://assets/sprites/towns/villages/millbrook/props/mb_sign_inn.png",
+   "frame_size": [
+    16,
+    24
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.3.16 Millbrook v1 prop (villages/v1)"
+  },
+  "mb_sign_rats": {
+   "path": "res://assets/sprites/towns/villages/millbrook/props/mb_sign_rats.png",
+   "frame_size": [
+    16,
+    24
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.3.16 Millbrook v1 prop (villages/v1)"
+  },
+  "vl_barrel": {
+   "path": "res://assets/sprites/towns/villages/millbrook/props/vl_barrel.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.3.16 Millbrook v1 prop (villages/v1)"
+  },
+  "vl_bush": {
+   "path": "res://assets/sprites/towns/villages/millbrook/props/vl_bush.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.3.16 Millbrook v1 prop (villages/v1)"
+  },
+  "vl_bush_flowers": {
+   "path": "res://assets/sprites/towns/villages/millbrook/props/vl_bush_flowers.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.3.16 Millbrook v1 prop (villages/v1)"
+  },
+  "vl_cart": {
+   "path": "res://assets/sprites/towns/villages/millbrook/props/vl_cart.png",
+   "frame_size": [
+    32,
+    20
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.3.16 Millbrook v1 prop (villages/v1)"
+  },
+  "vl_crates": {
+   "path": "res://assets/sprites/towns/villages/millbrook/props/vl_crates.png",
+   "frame_size": [
+    24,
+    24
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.3.16 Millbrook v1 prop (villages/v1)"
+  },
+  "vl_cross_broken": {
+   "path": "res://assets/sprites/towns/villages/millbrook/props/vl_cross_broken.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.3.16 Millbrook v1 prop (villages/v1)"
+  },
+  "vl_grave_a": {
+   "path": "res://assets/sprites/towns/villages/millbrook/props/vl_grave_a.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.3.16 Millbrook v1 prop (villages/v1)"
+  },
+  "vl_grave_b": {
+   "path": "res://assets/sprites/towns/villages/millbrook/props/vl_grave_b.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.3.16 Millbrook v1 prop (villages/v1)"
+  },
+  "vl_hay_bale": {
+   "path": "res://assets/sprites/towns/villages/millbrook/props/vl_hay_bale.png",
+   "frame_size": [
+    24,
+    16
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.3.16 Millbrook v1 prop (villages/v1)"
+  },
+  "vl_haystack": {
+   "path": "res://assets/sprites/towns/villages/millbrook/props/vl_haystack.png",
+   "frame_size": [
+    32,
+    32
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.3.16 Millbrook v1 prop (villages/v1)"
+  },
+  "vl_lamp": {
+   "path": "res://assets/sprites/towns/villages/millbrook/props/vl_lamp.png",
+   "frame_size": [
+    16,
+    32
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.3.16 Millbrook v1 prop (villages/v1)"
+  },
+  "vl_millstone": {
+   "path": "res://assets/sprites/towns/villages/millbrook/props/vl_millstone.png",
+   "frame_size": [
+    24,
+    24
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.3.16 Millbrook v1 prop (villages/v1)"
+  },
+  "vl_rat_bones": {
+   "path": "res://assets/sprites/towns/villages/millbrook/props/vl_rat_bones.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.3.16 Millbrook v1 prop (villages/v1)"
+  },
+  "vl_rubble": {
+   "path": "res://assets/sprites/towns/villages/millbrook/props/vl_rubble.png",
+   "frame_size": [
+    24,
+    16
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.3.16 Millbrook v1 prop (villages/v1)"
+  },
+  "vl_sack": {
+   "path": "res://assets/sprites/towns/villages/millbrook/props/vl_sack.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.3.16 Millbrook v1 prop (villages/v1)"
+  },
+  "vl_sack_gnawed": {
+   "path": "res://assets/sprites/towns/villages/millbrook/props/vl_sack_gnawed.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.3.16 Millbrook v1 prop (villages/v1)"
+  },
+  "vl_scarecrow": {
+   "path": "res://assets/sprites/towns/villages/millbrook/props/vl_scarecrow.png",
+   "frame_size": [
+    22,
+    32
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.3.16 Millbrook v1 prop (villages/v1)"
+  },
+  "vl_tree_autumn": {
+   "path": "res://assets/sprites/towns/villages/millbrook/props/vl_tree_autumn.png",
+   "frame_size": [
+    32,
+    40
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.3.16 Millbrook v1 prop (villages/v1)"
+  },
+  "vl_tree_oak": {
+   "path": "res://assets/sprites/towns/villages/millbrook/props/vl_tree_oak.png",
+   "frame_size": [
+    32,
+    40
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.3.16 Millbrook v1 prop (villages/v1)"
+  },
+  "vl_tree_oak_b": {
+   "path": "res://assets/sprites/towns/villages/millbrook/props/vl_tree_oak_b.png",
+   "frame_size": [
+    32,
+    40
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.3.16 Millbrook v1 prop (villages/v1)"
+  },
+  "vl_trough": {
+   "path": "res://assets/sprites/towns/villages/millbrook/props/vl_trough.png",
+   "frame_size": [
+    32,
+    16
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.3.16 Millbrook v1 prop (villages/v1)"
+  },
+  "vl_well": {
+   "path": "res://assets/sprites/towns/villages/millbrook/props/vl_well.png",
+   "frame_size": [
+    24,
+    28
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.3.16 Millbrook v1 prop (villages/v1)"
+  },
+  "vl_wheat_sheaf": {
+   "path": "res://assets/sprites/towns/villages/millbrook/props/vl_wheat_sheaf.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.3.16 Millbrook v1 prop (villages/v1)"
+  },
+  "vl_well_station": {
+   "path": "res://assets/sprites/towns/villages/millbrook/props/vl_well.png",
+   "frame_size": [
+    24,
+    28
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.3.16 Millbrook well (designer art)"
+  },
+  "rat_den_entrance": {
+   "path": "res://assets/sprites/underground/overworld/den_entrance_3x2_trans.png",
+   "frame_size": [
+    48,
+    32
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.3.16 sprite bot underground v1.1 den entrance (transparent-edge version)"
   }
  },
  "actors": {
@@ -4100,6 +4380,54 @@
     "down": "res://assets/sprites/actors/slime_front.png",
     "up": "res://assets/sprites/actors/slime_back.png"
    }
+  },
+  "odric_hunter": {
+   "path": "res://assets/sprites/towns/villages/millbrook/npcs/odric_hunter.png",
+   "frame_size": [
+    16,
+    24
+   ],
+   "frames": 4,
+   "fps": 2,
+   "anchor": "bottom",
+   "flip": true,
+   "dir_paths": {
+    "down": "res://assets/sprites/towns/villages/millbrook/npcs/odric_hunter_front.png",
+    "up": "res://assets/sprites/towns/villages/millbrook/npcs/odric_hunter_back.png"
+   },
+   "note": "0.3.16 sprite bot villages/v1 giver NPC"
+  },
+  "quartermaster_hale": {
+   "path": "res://assets/sprites/towns/villages/millbrook/npcs/quartermaster_hale.png",
+   "frame_size": [
+    16,
+    24
+   ],
+   "frames": 2,
+   "fps": 2,
+   "anchor": "bottom",
+   "flip": true,
+   "dir_paths": {
+    "down": "res://assets/sprites/towns/villages/millbrook/npcs/quartermaster_hale_front.png",
+    "up": "res://assets/sprites/towns/villages/millbrook/npcs/quartermaster_hale_back.png"
+   },
+   "note": "0.3.16 sprite bot villages/v1 giver NPC"
+  },
+  "rat_mother": {
+   "path": "res://assets/sprites/actors/rat_mother.png",
+   "frames": 4,
+   "frame_size": [
+    48,
+    48
+   ],
+   "fps": 6,
+   "anchor": "bottom",
+   "flip": true,
+   "dir_paths": {
+    "down": "res://assets/sprites/actors/rat_mother_front.png",
+    "up": "res://assets/sprites/actors/rat_mother_back.png"
+   },
+   "note": "0.3.16 sprite bot underground v1.1 Rat Mother (walk, 4 facings; fungal glow layer composited in). Bite strips exported as rat_mother_<dir>_bite.png for later."
   }
  },
  "items": {
