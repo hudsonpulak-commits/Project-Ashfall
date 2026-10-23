@@ -41,11 +41,14 @@ pids=()
 JOBS=${QA_JOBS:-6}
 for s in "${SCEN[@]}"; do
   while [ "$(jobs -rp | wc -l)" -ge "$JOBS" ]; do sleep 0.5; done
+  # 0.3.16 the perf scenario measures frame times: run it alone, after the others
+  if [ "$s" = "perf" ]; then while [ "$(jobs -rp | wc -l)" -gt 0 ]; do sleep 0.5; done; fi
   ( timeout 400 "$GODOT" --path . --rendering-driver opengl3 --resolution "$RES" -- --fresh \
       --qa="$s" --qa-out="$RUNS/$s" --zoom="$ZOOM" > "$RUNS/$s.godot.log" 2>&1
     echo "exit $?" >> "$RUNS/$s.godot.log"
     mkdir -p "$RUNS/$s"; mv "$RUNS/$s.godot.log" "$RUNS/$s/godot.log" ) &
   pids+=($!)
+  if [ "$s" = "perf" ]; then wait $!; fi
 done
 for p in "${pids[@]}"; do wait "$p"; done
 python3 tools/qa_bot/analyze.py --runs "$RUNS" --out "$OUT" --version "$VERSION" --scenarios "$(IFS=,; echo "${SCEN[*]}")" --verify-dir "$ROOT/build/verify"
