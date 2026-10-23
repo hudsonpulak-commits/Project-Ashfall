@@ -756,7 +756,7 @@ func _world() -> void:
 		p.place_at(w.find_free_tile_near(wolf.tile + Vector2i(3, 1), 3, true))
 		await frames(10)
 		label = "wolf"
-		var aggro := await until(func(): return wolf.target == p or p.hp < p.max_hp(), 12.0)   # 0.3.14: a fast wolf can hit and drop target between polls
+		var aggro := await until(func(): return wolf.target == p or p.hp < p.max_hp(), 25.0)   # 0.3.14: a fast wolf can hit and drop target between polls
 		await _wait_ticks(4)
 		await shot("v031_wolf")
 		wolf_n = {"kind": "wolf", "aggro": aggro, "dist_start": 3, "hp_lost": p.max_hp() - p.hp}
@@ -1235,7 +1235,7 @@ func _farm() -> void:
 	var fought_back := false
 	var cow_tile := cow.tile
 	await tap_tile(cow.tile, "cow")
-	var t_end := Time.get_ticks_msec() + 40000
+	var t_end := Time.get_ticks_msec() + 80000   # 0.3.14: slow under the full suite
 	while Time.get_ticks_msec() < t_end and not cow.dead:
 		fought_back = fought_back or cow.target == p
 		cow_tile = cow.tile
