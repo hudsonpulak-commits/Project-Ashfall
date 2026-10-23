@@ -68,10 +68,10 @@
   "decor": {
    "chance": 0.07,
    "fence_run": 7,
-   "fence_every": 6,
+   "fence_every": 4,
    "fence_min_run": 3,
    "gate_skip": 10,
-   "note": "0.3.8 fence runs (7 tiles every 6th run) + rocks/bushes/old logs (chance per verge tile) one tile beyond the road edge"
+   "note": "0.3.8 fence runs (7 tiles every 6th run) + rocks/bushes/old logs (chance per verge tile) one tile beyond the road edge; 0.3.14 every 4th run (the re-routed roads round the bigger towns had too few E-W fences)"
   }
  },
  "capital": "highfen",
