@@ -113,8 +113,8 @@ static func _map0317(world) -> void:
 					break
 			var e: int = gen._cliff_edge(p)
 			var st := Vector2i(1, 0) if e != 0 else Vector2i(0, 1)
-			var wall: int = T.CLIFF_FACE if e == 1 else T.CLIFF_LIP
-			if not (gen.tile_at(x + st.x, y + st.y) == wall and gen.tile_at(x - st.x, y - st.y) == wall):
+			var walls := [T.CLIFF_FACE, T.CLIFF_LIP]
+			if not (gen.tile_at(x + st.x, y + st.y) in walls and gen.tile_at(x - st.x, y - st.y) in walls and gen._cliff_edge(p + st) == e and gen._cliff_edge(p - st) == e):
 				bad_line.append(p)
 	check(stairs > 20 and bad_adj.is_empty(), "0.3.17 every cliff stair stands alone (%d stairs, %d touching another: %s)" % [stairs, bad_adj.size(), str(bad_adj.slice(0, 4))])
 	check(stairs > 20 and bad_line.is_empty(), "0.3.17 every stair has straight cliff on both sides along the line (%d bad: %s)" % [bad_line.size(), str(bad_line.slice(0, 4))])

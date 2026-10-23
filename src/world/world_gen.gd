@@ -1454,7 +1454,7 @@ func _cliff_tile(p: Vector2i, t: int) -> int:
 ## the rest become plain face / lip. No stair on a corner or diagonal section.
 func _thin_stair(p: Vector2i) -> int:
 	var e := _cliff_edge(p)
-	var wall: int = TileType.CLIFF_FACE if e == 1 else TileType.CLIFF_LIP
+	var wall: int = -1   # a thinned-out stair is a plain open slope (adds no wall, keeps every area reachable)
 	if e < 0:
 		return TileType.CLIFF_STAIRS
 	var step := Vector2i(1, 0) if e != 0 else Vector2i(0, 1)
@@ -1469,11 +1469,16 @@ func _thin_stair(p: Vector2i) -> int:
 	run.sort()
 	var ok: Array = []
 	for q in run:
-		if _stair_straight(q, e, step):
+		if _stair_straight(q, e, step) and not _lip_stub(q + step, step) and not _lip_stub(q - step, -step):   # its lip neighbours join the run
 			ok.append(q)
 	if ok.is_empty():
 		return wall
-	return TileType.CLIFF_STAIRS if ok[ok.size() / 2] == p else wall
+	var keep: Vector2i = ok[ok.size() / 2]
+	if keep == p:
+		return TileType.CLIFF_STAIRS
+	if keep == p + step or keep == p - step:
+		return TileType.CLIFF_LIP   # the kept stair's own neighbours: straight cliff either side
+	return wall
 
 
 ## Both line neighbours are cliff of the same edge, and so are theirs (no corner close by).
@@ -2053,3 +2058,12 @@ func _near_road(p: Vector2i) -> bool:
 
 static func is_tree_id(id: String) -> bool:
 	return id.contains("palm") or id.contains("tree") or id.begins_with("oak") or id.begins_with("pine") or id.begins_with("willow")
+
+
+## 0.3.17 would a lip at n (next to a kept stair, the run beyond it opened) touch cliff only by a corner?
+func _lip_stub(n: Vector2i, d: Vector2i) -> bool:
+	var perp := Vector2i(d.y, d.x)
+	for q in [n + d, n + perp, n - perp]:
+		if _raw_at(q) in _CLIFF_BLOCK and not _cliff_lone_diag(q):   # real cliff that stays (not itself a dropped stub)
+			return false
+	return true   # no cliff to join along or across: it would be a stub
