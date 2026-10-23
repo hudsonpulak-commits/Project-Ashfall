@@ -164,7 +164,7 @@ func money_supply() -> int:
 
 
 # -------------------------------------------------------------------- tick --
-const VIEW_TICK_BUDGET_MS := 8.0
+const VIEW_TICK_BUDGET_MS := 3.0
 var _view_rot := 0
 var _view_skipped := 0
 
