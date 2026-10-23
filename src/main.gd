@@ -6,20 +6,16 @@ extends Node2D
 ## Command-line (after `--`):  --fresh  --save-path=user://x.json
 ##   --selftest                 run headless tests, exit code = failures
 ##   --screenshot=/abs/out.png  [--ticks=N] [--panel=pack|skills|bank|menu|exchange|store|craft|report] [--zoom=N]
-##   --away=SECONDS             pretend the save is this old (offline catch-up test)
 ##   --qa=walk|combat|shop|pshop|smithy [--qa-out=/abs/dir]  QA bot scenario (tools/qa_bot)
 ##   --soak=DAYS [--soak-out=/abs/dir] [--pshop=MULT]  (MULT: simulated player shops priced at ref x MULT)  headless economy soak test (CSV + JSON;
 ##        0.3.1: + adventurer progression, raider kills, PK coin flows, Scorch resets, AI level spread, gear-tier supply/prices: soak.json "adventurers")
 
 const DEFAULT_SEED := 7331
 const AUTOSAVE_TICKS := 50          # 30 s
-const OFFLINE_CAP_SECONDS := 8 * 3600
 const ZOOMS := [1, 2, 3, 4]         # integer zooms only: pixel-perfect
 const BASE_VIEW := Vector2(360, 640) # minimum logical view (portrait)
 
 const MENU_SCENE := "res://scenes/main_menu.tscn"
-const OFFLINE_BUDGET_MS := 6000     # 0.3.2: wall-clock cap for the offline catch-up on the loading screen
-const OFFLINE_CHUNK := 600          # ticks per loading-screen frame
 
 static var force_fresh := false
 
@@ -131,12 +127,9 @@ func _boot_interactive() -> void:
 	await _frames(1)
 	_start_view()
 	SaveSystem.boot_log("BOOT world ready in %d ms" % (Time.get_ticks_msec() - t0))
-	if data.has("saved_unix"):
-		var away := int(Time.get_unix_time_from_system()) - int(data.get("saved_unix", Time.get_unix_time_from_system()))
-		if args.has("away"):
-			away = int(args["away"])
-		await _catch_up_async(clampi(away, 0, OFFLINE_CAP_SECONDS))
-	else:
+	# 0.3.17 no offline catch-up: the world (AI players too) only moves while you play;
+	# an old save's saved_unix is ignored
+	if not data.has("saved_unix"):
 		_welcome_new()
 	loading.set_progress(1.0, "Ready")
 	await _frames(1)
@@ -177,13 +170,8 @@ func _start(data: Dictionary) -> void:
 	_start_player(data)
 	_start_ai(data)
 	_start_view()
-	if data.has("saved_unix") or args.has("away"):
-		var away := int(Time.get_unix_time_from_system()) - int(data.get("saved_unix", Time.get_unix_time_from_system()))
-		if args.has("away"):
-			away = int(args["away"])
-		_catch_up(clampi(away, 0, OFFLINE_CAP_SECONDS))
-	else:
-		_welcome_new()
+	if not data.has("saved_unix"):
+		_welcome_new()   # 0.3.17 no offline catch-up
 
 
 func _welcome_new() -> void:
@@ -329,104 +317,6 @@ func money_supply() -> int:
 	if player:
 		n += player.inventory.count(GameData.currency) + player.vault_coins()
 	return n + AIDirector.money_supply() + Market.coins_in_market()
-
-
-## Offline catch-up: fast-forward the world for the time away (capped at 8 h)
-## and show a "While you were away" report. (Tests / tools: one call.)
-func _catch_up(away_seconds: int) -> void:
-	var ticks := int(away_seconds / Tick.TICK_SECONDS)
-	if ticks < 100:
-		Events.say("Welcome back to Fenhollow.")
-		return
-	var snap := _catch_up_snapshot()
-	var t0 := Time.get_ticks_msec()
-	var rep := AIDirector.simulate_offline(ticks, Tick.tick_count, player.actor_id)
-	Tick.tick_count = int(rep["end_tick"])
-	world.tick = Tick.tick_count
-	_catch_up_report(away_seconds, rep, snap, t0, ticks)
-
-
-## 0.3.2 player boot: the same catch-up in loading-screen chunks, under a
-## wall-clock budget (OFFLINE_BUDGET_MS). Whatever is left when the budget
-## runs out is skipped (the clock still jumps to now), so a slow phone never
-## sits for minutes; the report says how much was simulated.
-func _catch_up_async(away_seconds: int) -> void:
-	var ticks := int(away_seconds / Tick.TICK_SECONDS)
-	if ticks < 100:
-		Events.say("Welcome back to Fenhollow.")
-		return
-	var snap := _catch_up_snapshot()
-	var t0 := Time.get_ticks_msec()
-	var done := 0
-	var total := {"ticks": 0, "end_tick": Tick.tick_count, "days": 0, "player": {"bought": {}, "sold": {}, "coins": 0}}
-	var budget := int(args.get("catchup-budget-ms", OFFLINE_BUDGET_MS))
-	while done < ticks:
-		var n := mini(OFFLINE_CHUNK, ticks - done)
-		var rep := AIDirector.simulate_offline(n, Tick.tick_count, player.actor_id)
-		Tick.tick_count = int(rep["end_tick"])
-		done += n
-		total["days"] = int(total["days"]) + int(rep["days"])
-		for k in ["bought", "sold"]:
-			for item in rep["player"][k].keys():
-				total["player"][k][item] = int(total["player"][k].get(item, 0)) + int(rep["player"][k][item])
-		total["player"]["coins"] = int(total["player"]["coins"]) + int(rep["player"]["coins"])
-		if loading:
-			loading.set_progress(0.8 + 0.18 * float(done) / ticks, "While you were away... %d%%" % int(100.0 * done / ticks))
-		await get_tree().process_frame
-		if Time.get_ticks_msec() - t0 > budget:
-			break
-	var skipped := ticks - done
-	Tick.tick_count += skipped
-	world.tick = Tick.tick_count
-	total["ticks"] = done
-	total["end_tick"] = Tick.tick_count
-	if skipped > 0:
-		SaveSystem.boot_log("OFFLINE catch-up budget: simulated %d of %d ticks, skipped %d" % [done, ticks, skipped])
-	_catch_up_report(away_seconds, total, snap, t0, done)
-	if skipped > 0:
-		Events.say("The world caught up on %d%% of your time away (the rest passed quietly)." % int(100.0 * done / ticks))
-
-
-func _catch_up_snapshot() -> Dictionary:
-	var before := {}
-	var tm := Market.town(player.current_town)
-	for id in EconomyMonitor.BASKET:
-		before[id] = tm.reference_price(id)
-	return {"before": before, "trips": AIDirector.trip_log.size(), "notices": Market.notices.size(), "coins": AIDirector.money_supply()}
-
-
-func _catch_up_report(away_seconds: int, rep: Dictionary, snap: Dictionary, t0: int, ticks: int) -> void:
-	var tm := Market.town(player.current_town)
-	var before: Dictionary = snap["before"]
-	var trips_before := int(snap["trips"])
-	var notices_before := int(snap["notices"])
-	var coins_before := int(snap["coins"])
-	var lines := []
-	lines.append("You were away %dh %02dm (%d game days)." % [int(away_seconds / 3600.0), int(away_seconds / 60.0) % 60, int(rep["days"])])
-	lines.append("Prices in %s:" % tm.town_name)
-	var mine: Dictionary = rep["player"]
-	for k in mine["sold"].keys():
-		lines.append("Sold %d %s on the Exchange." % [int(mine["sold"][k]), GameData.item_name(k).to_lower()])
-	for k in mine["bought"].keys():
-		lines.append("Bought %d %s on the Exchange." % [int(mine["bought"][k]), GameData.item_name(k).to_lower()])
-	if not mine["sold"].is_empty() or not mine["bought"].is_empty():
-		lines.append("Collect at the Exchange board.")
-	var movers := []
-	for id in before.keys():
-		var now_p := tm.reference_price(id)
-		if now_p != int(before[id]):
-			movers.append([absf(float(now_p) / before[id] - 1.0), id, int(before[id]), now_p])
-	movers.sort_custom(func(a, b): return a[0] > b[0])
-	for m in movers.slice(0, 4):
-		lines.append("%s: %d -> %d" % [GameData.item_name(m[1]), m[2], m[3]])
-	if movers.is_empty():
-		lines.append("Prices held steady.")
-	for i in range(notices_before, Market.notices.size()):
-		lines.append(str(Market.notices[i]["text"]))
-	lines.append("Travelling traders set out on %d trips." % maxi(0, AIDirector.trip_log.size() - trips_before))
-	lines.append("Townsfolk coin: %d -> %d." % [coins_before, AIDirector.money_supply()])
-	SaveSystem.boot_log("OFFLINE catch-up: %d ticks in %d ms" % [ticks, Time.get_ticks_msec() - t0])
-	Events.report_ready.emit("While you were away", "\n".join(lines))
 
 
 # -------------------------------------------------------------------- tick --

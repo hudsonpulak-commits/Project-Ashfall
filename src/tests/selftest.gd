@@ -366,13 +366,8 @@ static func run(main) -> int:
 	a0.coins = -1
 	AIDirector.from_save(ai_save)
 	check(a0.coins == coins0 or a0.view != null, "AI records round-trip through save")
-	# offline catch-up
-	var day0 := Market.game_day()
-	var trips0 := AIDirector.trips_total
-	var rep := AIDirector.simulate_offline(4800, Tick.tick_count, p.actor_id)
-	Tick.tick_count = int(rep["end_tick"])
-	check(int(rep["days"]) >= 1 and Market.game_day() > day0, "offline catch-up advances game days (%d)" % int(rep["days"]))
-	check(AIDirector.trips_total > trips0, "travelling traders set off between towns (%d trips)" % (AIDirector.trips_total - trips0))
+	# 0.3.17 no offline catch-up: AI players only progress while the game runs
+	check(not AIDirector.has_method("simulate_offline") and not main.has_method("_catch_up"), "no offline catch-up simulation (AI only moves while you play)")
 
 	_combat_tests(world, p)
 	_loot_tests(world, p)

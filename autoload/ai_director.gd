@@ -406,48 +406,6 @@ func _on_day_closed(_day: int) -> void:
 		Market.record_sink(total)
 
 
-# ---------------------------------------------------------- offline catch-up --
-## Fast-forward `ticks` ticks starting after tick `t0`: abstract steps for every
-## agent (100-tick granularity), Exchange housekeeping and day rollovers.
-## Returns a summary for the "While you were away" report.
-func simulate_offline(ticks: int, t0: int, player_id: String = "player") -> Dictionary:
-	for a in records:
-		if a.tier == 0:
-			_demote(a)
-		a.tier = 2
-	var mine := {"bought": {}, "sold": {}, "coins": 0}
-	var on_trade := func(_town: String, item: String, q: int, price: int, buyer: String, seller: String) -> void:
-		if buyer == player_id:
-			mine["bought"][item] = int(mine["bought"].get(item, 0)) + q
-		if seller == player_id:
-			mine["sold"][item] = int(mine["sold"].get(item, 0)) + q
-			mine["coins"] = int(mine["coins"]) + q * price
-	Market.trade_executed.connect(on_trade)
-	var days := {"n": 0}
-	var day_cb := func(_d: int) -> void: days["n"] += 1
-	Market.day_closed.connect(day_cb)
-	var end := t0 + ticks
-	var t := t0
-	while t < end:
-		t += 1
-		if t % 50 == 0:
-			Market.on_tick(t)
-		if t % 100 == 0:
-			for a in records:
-				_abstract_step(a, 100, t)
-		if t % 100 == 50:
-			for a in records:
-				if t >= a.next_trade_tick:
-					_trade(a, t)
-		if t % 50 == 25:
-			AdvBrain.raid_tick(t, records)
-		if t % 100 == 50:
-			AdvBrain.estate_tick(t)
-	Market.trade_executed.disconnect(on_trade)
-	Market.day_closed.disconnect(day_cb)
-	return {"ticks": ticks, "end_tick": end, "days": int(days["n"]), "player": mine}
-
-
 # -------------------------------------------------------------------- save --
 func to_save() -> Dictionary:
 	var out := []

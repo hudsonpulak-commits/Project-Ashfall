@@ -253,7 +253,8 @@ def main():
         res("B3", "Load Game -> slot 1 (0.3.0 v3 save, 6 h old) migrates and reaches gameplay", ok and game and hud_visible(g_png) and not errs,
             "gameplay at %s ms; catch-up %s; script errors %d" % (game[0][1] if game else None, cu[-1] if cu else None, len(errs)))
         r2 = re.findall(r"BOOT progress (\d+)% While you were away", txt)
-        res("B3", "slot list showed the old save; it loads with a progress bar (catch-up in chunks)", "Slot1" in txt and len(r2) >= 2, "%d catch-up progress steps" % len(r2))
+        # 0.3.17 offline catch-up removed: a 6 h old save loads with no fast-forward and no away report
+        res("B3", "slot list showed the old save; it loads with no offline catch-up (no 'While you were away')", "Slot1" in txt and not r2 and not cu and "While you were away" not in txt, "%d catch-up steps, catch-up log %s" % (len(r2), cu[-1] if cu else None))
     finally:
         r.stop()
     blanks["v030"] = r.longest_blank()
