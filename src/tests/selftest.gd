@@ -621,7 +621,12 @@ static func _loot_tests(world: World, p: Player) -> void:
 	var ai := AIPlayer.new()
 	ai.bind(rec, world)
 	ai.think_cooldown = 100000
+	rec.trip = {}   # no offline catch-up any more to finish a trip begun at world start; looting skips travellers
 	var c: Vector2i = world.find_free_tile_near(world.gen.town_spawn("fenhollow") + Vector2i(6, 7), 4)
+	for k in 12:   # stand outside any building so the AI does not walk out of it first
+		if world.gen.building_at(c).is_empty() and world.gen.building_at(world.find_free_tile_near(c + Vector2i(4, 0), 2)).is_empty():
+			break
+		c = world.find_free_tile_near(c + Vector2i(0, 3), 2)
 	var spot: Vector2i = world.find_free_tile_near(c + Vector2i(4, 0), 2)
 	ai.place_at(c)
 	var T := Tick.tick_count + 300000

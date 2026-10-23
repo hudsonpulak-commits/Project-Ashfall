@@ -263,7 +263,13 @@ static func _map_tester(world) -> void:
 
 ## 0.3.17 the Rat Mother plays her 2-frame bite strip on each attack, then walks again.
 static func _bite(world, p) -> void:
-	var rm = world.enemies.nearest(p.tile, ["rat_mother"], 4000)
+	var rm = null
+	for e in world.enemies.enemies:
+		if e.kind == "rat_mother":
+			rm = e
+			break
+	if rm != null and rm.dead:
+		rm._respawn()   # an earlier quest test may have killed her
 	if rm == null:
 		check(false, "0.3.17 a Rat Mother to test the bite")
 		return
