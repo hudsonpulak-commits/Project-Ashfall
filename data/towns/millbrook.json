@@ -6,200 +6,804 @@
   "fenhollow",
   "cinderholt"
  ],
- "tagline": "Wheat and windbreaks on the Cinder road.",
+ "tagline": "Wheat, a windmill and a millpond on the Cinder road; something is breeding under the rat barn.",
  "origin": [
-  132,
-  -98
+  143,
+  -146
  ],
  "spawn": [
-  144,
-  -92
+  176,
+  -119
  ],
- "rows": [
-  "........................",
-  "........................",
-  "........................",
-  "........................",
-  "........................",
-  "....=..............=....",
-  "...==================...",
-  "...=..H...O...Q...=.....",
-  "...=........=...........",
-  "...=........=...........",
-  "............=...........",
-  "............=...........",
-  "............=...........",
-  "............=..........."
- ],
- "transparent": ".",
  "tiles": {
-  "=": "path"
+  ":": "road_dirt",
+  "~": "water"
  },
  "objects": {
-  "H": {
+  "A": {
    "object": "hearth",
-   "ground": "path"
+   "ground": "grass"
+  },
+  "B": {
+   "object": "mb_bounty_board",
+   "ground": "grass"
+  },
+  "C": {
+   "object": "mb_sign_inn",
+   "ground": "grass"
+  },
+  "E": {
+   "object": "mb_sign_rats",
+   "ground": "grass"
+  },
+  "F": {
+   "object": "quern",
+   "ground": "grass"
+  },
+  "H": {
+   "object": "vl_barrel",
+   "ground": "grass"
+  },
+  "I": {
+   "object": "vl_bush",
+   "ground": "grass"
+  },
+  "J": {
+   "object": "vl_bush_flowers",
+   "ground": "grass"
+  },
+  "K": {
+   "object": "vl_cart",
+   "ground": "grass"
+  },
+  "L": {
+   "object": "vl_crates",
+   "ground": "grass"
+  },
+  "M": {
+   "object": "vl_cross_broken",
+   "ground": "grass"
+  },
+  "N": {
+   "object": "vl_grave_a",
+   "ground": "grass"
   },
   "O": {
-   "object": "well",
-   "ground": "path"
+   "object": "vl_grave_b",
+   "ground": "grass"
+  },
+  "P": {
+   "object": "vl_hay_bale",
+   "ground": "grass"
   },
   "Q": {
-   "object": "quern",
-   "ground": "path"
+   "object": "vl_haystack",
+   "ground": "grass"
+  },
+  "R": {
+   "object": "vl_lamp",
+   "ground": "grass"
+  },
+  "S": {
+   "object": "vl_millstone",
+   "ground": "grass"
+  },
+  "T": {
+   "object": "vl_rat_bones",
+   "ground": "grass"
+  },
+  "U": {
+   "object": "vl_rubble",
+   "ground": "grass"
+  },
+  "V": {
+   "object": "vl_sack",
+   "ground": "grass"
+  },
+  "W": {
+   "object": "vl_sack_gnawed",
+   "ground": "grass"
+  },
+  "X": {
+   "object": "vl_scarecrow",
+   "ground": "grass"
+  },
+  "Y": {
+   "object": "vl_tree_autumn",
+   "ground": "grass"
+  },
+  "Z": {
+   "object": "vl_tree_oak",
+   "ground": "grass"
+  },
+  "a": {
+   "object": "vl_tree_oak_b",
+   "ground": "grass"
+  },
+  "b": {
+   "object": "vl_trough",
+   "ground": "grass"
+  },
+  "c": {
+   "object": "well",
+   "ground": "grass"
+  },
+  "d": {
+   "object": "vl_wheat_sheaf",
+   "ground": "grass"
   }
  },
  "roof": "#a0784a",
  "gate": [
-  12,
-  13
+  0,
+  29
  ],
  "buildings": [
   {
-   "id": "millbrook_house_1",
+   "id": "millbrook_inn",
    "kind": "house",
-   "name": "Miller's cottage",
+   "shop": "",
+   "name": "The Millwheel Inn",
    "keeper": "Hob Miller",
    "keeper_sprite": "villager",
    "sign_sprite": "sign_house",
    "roof": "#a0784a",
-   "rect": [
-    1,
-    0,
-    7,
-    5
+   "art": "mb_inn",
+   "flip": false,
+   "at": [
+    31,
+    17
    ],
    "door": [
     [
-     4,
-     4
+     35,
+     23
     ]
    ],
+   "sign": [
+    36,
+    23
+   ],
+   "props": [],
+   "counter": [],
+   "note": "0.3.16 Millbrook v1 (designer mb_inn)",
    "keeper_at": [
-    4,
-    1
+    35,
+    20
    ],
    "stand": [
-    4,
-    2
-   ],
-   "sign": [
-    5,
-    4
-   ],
-   "props": [
-    {
-     "object": "barrel",
-     "at": [
-      2,
-      1
-     ]
-    },
-    {
-     "object": "sacks",
-     "at": [
-      6,
-      1
-     ]
-    }
+    35,
+    22
    ]
   },
   {
-   "id": "millbrook_house_2",
+   "id": "millbrook_mill",
    "kind": "house",
-   "name": "Thresh's cottage",
+   "shop": "",
+   "name": "Millbrook windmill",
    "keeper": "Wenna Thresh",
    "keeper_sprite": "villager",
    "sign_sprite": "sign_house",
    "roof": "#a0784a",
-   "rect": [
-    16,
-    0,
-    7,
-    5
+   "art": "mb_mill",
+   "flip": false,
+   "at": [
+    50,
+    1
    ],
    "door": [
     [
-     19,
-     4
+     54,
+     9
     ]
    ],
+   "sign": [
+    55,
+    9
+   ],
+   "props": [],
+   "counter": [],
+   "note": "0.3.16 Millbrook v1 (designer mb_mill)",
    "keeper_at": [
-    19,
-    1
+    54,
+    6
    ],
    "stand": [
-    19,
-    2
-   ],
-   "sign": [
-    20,
-    4
-   ],
-   "props": [
-    {
-     "object": "crate",
-     "at": [
-      17,
-      1
-     ]
-    },
-    {
-     "object": "barrel",
-     "at": [
-      21,
-      1
-     ]
-    }
+    54,
+    8
    ]
   },
   {
-   "id": "millbrook_house_3",
+   "id": "millbrook_rat_barn",
    "kind": "house",
-   "name": "Corin's cottage",
+   "shop": "",
+   "name": "The rat barn",
    "keeper": "Old Corin",
    "keeper_sprite": "villager",
    "sign_sprite": "sign_house",
    "roof": "#a0784a",
-   "rect": [
-    16,
-    8,
-    7,
-    5
+   "art": "mb_rat_barn",
+   "flip": false,
+   "at": [
+    17,
+    33
    ],
    "door": [
     [
-     19,
-     8
+     22,
+     40
     ]
    ],
+   "sign": [
+    23,
+    40
+   ],
+   "props": [],
+   "counter": [],
+   "note": "0.3.16 Millbrook v1 (designer mb_rat_barn)",
    "keeper_at": [
+    22,
+    37
+   ],
+   "stand": [
+    22,
+    39
+   ]
+  },
+  {
+   "id": "millbrook_granary",
+   "kind": "house",
+   "shop": "",
+   "name": "Granary",
+   "keeper": "Dora Sheaf",
+   "keeper_sprite": "villager",
+   "sign_sprite": "sign_house",
+   "roof": "#a0784a",
+   "art": "mb_granary",
+   "flip": false,
+   "at": [
+    47,
+    32
+   ],
+   "door": [
+    [
+     50,
+     37
+    ]
+   ],
+   "sign": [
+    51,
+    37
+   ],
+   "props": [],
+   "counter": [],
+   "note": "0.3.16 Millbrook v1 (designer mb_granary)",
+   "keeper_at": [
+    50,
+    34
+   ],
+   "stand": [
+    50,
+    36
+   ]
+  },
+  {
+   "id": "millbrook_cowshed",
+   "kind": "house",
+   "shop": "",
+   "name": "Cowshed",
+   "keeper": "Abel Byre",
+   "keeper_sprite": "villager",
+   "sign_sprite": "sign_house",
+   "roof": "#a0784a",
+   "art": "mb_cowshed",
+   "flip": false,
+   "at": [
     19,
+    43
+   ],
+   "door": [
+    [
+     22,
+     47
+    ]
+   ],
+   "sign": [
+    23,
+    47
+   ],
+   "props": [],
+   "counter": [],
+   "note": "0.3.16 Millbrook v1 (designer mb_cowshed)",
+   "keeper_at": [
+    22,
+    44
+   ],
+   "stand": [
+    22,
+    46
+   ]
+  },
+  {
+   "id": "millbrook_farmhouse_a",
+   "kind": "house",
+   "shop": "",
+   "name": "Miller's cottage",
+   "keeper": "Tom Miller",
+   "keeper_sprite": "villager",
+   "sign_sprite": "sign_house",
+   "roof": "#a0784a",
+   "art": "mb_farmhouse_a",
+   "flip": false,
+   "at": [
+    5,
+    33
+   ],
+   "door": [
+    [
+     7,
+     37
+    ]
+   ],
+   "sign": [
+    8,
+    37
+   ],
+   "props": [],
+   "counter": [],
+   "note": "0.3.16 Millbrook v1 (designer mb_farmhouse_a)",
+   "keeper_at": [
+    7,
+    34
+   ],
+   "stand": [
+    7,
+    36
+   ]
+  },
+  {
+   "id": "millbrook_farmhouse_b",
+   "kind": "house",
+   "shop": "",
+   "name": "Thresh's cottage",
+   "keeper": "Bet Thresh",
+   "keeper_sprite": "villager",
+   "sign_sprite": "sign_house",
+   "roof": "#a0784a",
+   "art": "mb_farmhouse_b",
+   "flip": false,
+   "at": [
+    70,
+    23
+   ],
+   "door": [
+    [
+     71,
+     27
+    ]
+   ],
+   "sign": [
+    72,
+    27
+   ],
+   "props": [],
+   "counter": [],
+   "note": "0.3.16 Millbrook v1 (designer mb_farmhouse_b)",
+   "keeper_at": [
+    71,
+    24
+   ],
+   "stand": [
+    71,
+    26
+   ]
+  },
+  {
+   "id": "millbrook_ch_ruin_chapel",
+   "kind": "house",
+   "shop": "",
+   "name": "Ruined chapel",
+   "keeper": "Villager",
+   "keeper_sprite": "villager",
+   "sign_sprite": "sign_house",
+   "roof": "#a0784a",
+   "art": "ch_ruin_chapel",
+   "flip": false,
+   "at": [
+    76,
+    12
+   ],
+   "door": [
+    [
+     78,
+     18
+    ]
+   ],
+   "sign": [
+    79,
+    18
+   ],
+   "props": [],
+   "counter": [],
+   "note": "0.3.16 Millbrook v1 (designer ch_ruin_chapel)",
+   "no_keeper": true,
+   "keeper_at": [
+    78,
+    18
+   ],
+   "stand": [
+    78,
+    18
+   ]
+  },
+  {
+   "id": "millbrook_house_01",
+   "kind": "house",
+   "shop": "",
+   "name": "Corin's cottage",
+   "keeper": "Ada Corin",
+   "keeper_sprite": "villager",
+   "sign_sprite": "sign_house",
+   "roof": "#a0784a",
+   "art": "mb_house_01",
+   "flip": false,
+   "at": [
+    21,
+    10
+   ],
+   "door": [
+    [
+     24,
+     14
+    ]
+   ],
+   "sign": [
+    25,
+    14
+   ],
+   "props": [],
+   "counter": [],
+   "note": "0.3.16 Millbrook v1 (designer mb_house_01)",
+   "keeper_at": [
+    24,
     11
    ],
    "stand": [
-    19,
-    10
+    24,
+    13
+   ]
+  },
+  {
+   "id": "millbrook_house_02",
+   "kind": "house",
+   "shop": "",
+   "name": "Furrow House",
+   "keeper": "Ned Furrow",
+   "keeper_sprite": "villager",
+   "sign_sprite": "sign_house",
+   "roof": "#a0784a",
+   "art": "mb_house_02",
+   "flip": false,
+   "at": [
+    21,
+    18
+   ],
+   "door": [
+    [
+     23,
+     23
+    ]
    ],
    "sign": [
-    20,
+    24,
+    23
+   ],
+   "props": [],
+   "counter": [],
+   "note": "0.3.16 Millbrook v1 (designer mb_house_02)",
+   "keeper_at": [
+    23,
+    20
+   ],
+   "stand": [
+    23,
+    22
+   ]
+  },
+  {
+   "id": "millbrook_house_03",
+   "kind": "house",
+   "shop": "",
+   "name": "The Sheaves' house",
+   "keeper": "Molly Sheaf",
+   "keeper_sprite": "villager",
+   "sign_sprite": "sign_house",
+   "roof": "#a0784a",
+   "art": "mb_house_03",
+   "flip": false,
+   "at": [
+    41,
+    18
+   ],
+   "door": [
+    [
+     43,
+     22
+    ]
+   ],
+   "sign": [
+    44,
+    22
+   ],
+   "props": [],
+   "counter": [],
+   "note": "0.3.16 Millbrook v1 (designer mb_house_03)",
+   "keeper_at": [
+    43,
+    19
+   ],
+   "stand": [
+    43,
+    21
+   ]
+  },
+  {
+   "id": "millbrook_house_04",
+   "kind": "house",
+   "shop": "",
+   "name": "Brookside",
+   "keeper": "Ivo Brook",
+   "keeper_sprite": "villager",
+   "sign_sprite": "sign_house",
+   "roof": "#a0784a",
+   "art": "mb_house_04",
+   "flip": false,
+   "at": [
+    46,
+    18
+   ],
+   "door": [
+    [
+     49,
+     22
+    ]
+   ],
+   "sign": [
+    50,
+    22
+   ],
+   "props": [],
+   "counter": [],
+   "note": "0.3.16 Millbrook v1 (designer mb_house_04)",
+   "keeper_at": [
+    49,
+    19
+   ],
+   "stand": [
+    49,
+    21
+   ]
+  },
+  {
+   "id": "millbrook_house_05",
+   "kind": "house",
+   "shop": "",
+   "name": "Hayloft Cottage",
+   "keeper": "Pell Hay",
+   "keeper_sprite": "villager",
+   "sign_sprite": "sign_house",
+   "roof": "#a0784a",
+   "art": "mb_house_05",
+   "flip": false,
+   "at": [
+    28,
+    7
+   ],
+   "door": [
+    [
+     30,
+     11
+    ]
+   ],
+   "sign": [
+    31,
+    11
+   ],
+   "props": [],
+   "counter": [],
+   "note": "0.3.16 Millbrook v1 (designer mb_house_05)",
+   "keeper_at": [
+    30,
     8
    ],
-   "props": [
-    {
-     "object": "sacks",
-     "at": [
-      17,
-      11
-     ]
-    },
-    {
-     "object": "crate",
-     "at": [
-      21,
-      11
-     ]
-    }
+   "stand": [
+    30,
+    10
+   ]
+  },
+  {
+   "id": "millbrook_house_06",
+   "kind": "house",
+   "shop": "",
+   "name": "The Barleys' house",
+   "keeper": "Rose Barley",
+   "keeper_sprite": "villager",
+   "sign_sprite": "sign_house",
+   "roof": "#a0784a",
+   "art": "mb_house_06",
+   "flip": false,
+   "at": [
+    11,
+    35
+   ],
+   "door": [
+    [
+     13,
+     40
+    ]
+   ],
+   "sign": [
+    14,
+    40
+   ],
+   "props": [],
+   "counter": [],
+   "note": "0.3.16 Millbrook v1 (designer mb_house_06)",
+   "keeper_at": [
+    13,
+    37
+   ],
+   "stand": [
+    13,
+    39
+   ]
+  },
+  {
+   "id": "millbrook_house_08",
+   "kind": "house",
+   "shop": "",
+   "name": "Millpond End",
+   "keeper": "Sam Ponder",
+   "keeper_sprite": "villager",
+   "sign_sprite": "sign_house",
+   "roof": "#a0784a",
+   "art": "mb_house_08",
+   "flip": false,
+   "at": [
+    57,
+    35
+   ],
+   "door": [
+    [
+     60,
+     39
+    ]
+   ],
+   "sign": [
+    61,
+    39
+   ],
+   "props": [],
+   "counter": [],
+   "note": "0.3.16 Millbrook v1 (designer mb_house_08)",
+   "keeper_at": [
+    59,
+    36
+   ],
+   "stand": [
+    60,
+    38
+   ]
+  },
+  {
+   "id": "millbrook_house_09",
+   "kind": "house",
+   "shop": "",
+   "name": "Wheatear House",
+   "keeper": "Lise Ear",
+   "keeper_sprite": "villager",
+   "sign_sprite": "sign_house",
+   "roof": "#a0784a",
+   "art": "mb_house_09",
+   "flip": false,
+   "at": [
+    45,
+    10
+   ],
+   "door": [
+    [
+     47,
+     14
+    ]
+   ],
+   "sign": [
+    48,
+    14
+   ],
+   "props": [],
+   "counter": [],
+   "note": "0.3.16 Millbrook v1 (designer mb_house_09)",
+   "keeper_at": [
+    47,
+    11
+   ],
+   "stand": [
+    47,
+    13
+   ]
+  },
+  {
+   "id": "millbrook_house_10",
+   "kind": "house",
+   "shop": "",
+   "name": "Upper Farm",
+   "keeper": "Jory Field",
+   "keeper_sprite": "villager",
+   "sign_sprite": "sign_house",
+   "roof": "#a0784a",
+   "art": "mb_house_10",
+   "flip": false,
+   "at": [
+    38,
+    7
+   ],
+   "door": [
+    [
+     40,
+     12
+    ]
+   ],
+   "sign": [
+    41,
+    12
+   ],
+   "props": [],
+   "counter": [],
+   "note": "0.3.16 Millbrook v1 (designer mb_house_10)",
+   "keeper_at": [
+    40,
+    9
+   ],
+   "stand": [
+    40,
+    11
+   ]
+  },
+  {
+   "id": "millbrook_house_07",
+   "kind": "house",
+   "shop": "",
+   "name": "Lower Farm",
+   "keeper": "Mags Field",
+   "keeper_sprite": "villager",
+   "sign_sprite": "sign_house",
+   "roof": "#a0784a",
+   "art": "mb_house_07",
+   "flip": false,
+   "at": [
+    30,
+    1
+   ],
+   "door": [
+    [
+     33,
+     6
+    ]
+   ],
+   "sign": [
+    34,
+    6
+   ],
+   "props": [],
+   "counter": [],
+   "note": "0.3.16 Millbrook v1 (designer mb_house_07)",
+   "keeper_at": [
+    33,
+    3
+   ],
+   "stand": [
+    33,
+    5
    ]
   }
  ],
@@ -207,16 +811,76 @@
   {
    "id": "millbrook_wheat",
    "rect": [
-    0,
-    -9,
-    11,
+    3,
+    4,
+    16,
+    9
+   ],
+   "crop": "wheat",
+   "ground": "dirt",
+   "gate": [
+    17,
+    12
+   ]
+  },
+  {
+   "id": "millbrook_wheat_2",
+   "rect": [
+    3,
+    15,
+    8,
     8
    ],
    "crop": "wheat",
    "ground": "dirt",
    "gate": [
-    5,
-    -2
+    4,
+    22
+   ]
+  },
+  {
+   "id": "millbrook_wheat_3",
+   "rect": [
+    12,
+    15,
+    8,
+    8
+   ],
+   "crop": "wheat",
+   "ground": "dirt",
+   "gate": [
+    17,
+    15
+   ]
+  },
+  {
+   "id": "millbrook_wheat_4",
+   "rect": [
+    68,
+    38,
+    13,
+    9
+   ],
+   "crop": "wheat",
+   "ground": "dirt",
+   "gate": [
+    68,
+    39
+   ]
+  },
+  {
+   "id": "millbrook_wheat_5",
+   "rect": [
+    68,
+    49,
+    13,
+    8
+   ],
+   "crop": "wheat",
+   "ground": "dirt",
+   "gate": [
+    69,
+    49
    ]
   }
  ],
@@ -224,31 +888,438 @@
   {
    "id": "millbrook_pasture",
    "rect": [
-    12,
-    -9,
-    12,
-    8
+    32,
+    44,
+    20,
+    12
    ],
    "enemy": "cow",
-   "count": 4,
+   "count": 6,
    "gate": [
-    18,
-    -2
-   ],
-   "divider": {
-    "x": 16,
-    "to_y": -4,
-    "note": "0.3.9 a fence splits the paddock (T joint at the rim, end cap with a gap above the gate row)"
-   }
+    39,
+    44
+   ]
   }
  ],
  "citizens": {
   "area": [
-   3,
-   5,
+   28,
+   25,
    17,
-   4
+   9
   ],
-  "count": 3
- }
+  "count": 5
+ },
+ "art": {
+  "ground_decal": "res://assets/sprites/towns/villages/millbrook/ground_decal.png",
+  "ysort": [],
+  "fades": [
+   {
+    "path": "res://assets/sprites/towns/villages/millbrook/props/mb_mill_sails_4f.png",
+    "pos": [
+     827,
+     37
+    ],
+    "tiles": [
+     [
+      50,
+      1
+     ],
+     [
+      51,
+      1
+     ],
+     [
+      52,
+      1
+     ],
+     [
+      53,
+      1
+     ],
+     [
+      54,
+      1
+     ],
+     [
+      55,
+      1
+     ],
+     [
+      56,
+      1
+     ],
+     [
+      57,
+      1
+     ],
+     [
+      58,
+      1
+     ],
+     [
+      50,
+      2
+     ],
+     [
+      51,
+      2
+     ],
+     [
+      52,
+      2
+     ],
+     [
+      53,
+      2
+     ],
+     [
+      54,
+      2
+     ],
+     [
+      55,
+      2
+     ],
+     [
+      56,
+      2
+     ],
+     [
+      57,
+      2
+     ],
+     [
+      58,
+      2
+     ],
+     [
+      50,
+      3
+     ],
+     [
+      51,
+      3
+     ],
+     [
+      52,
+      3
+     ],
+     [
+      53,
+      3
+     ],
+     [
+      54,
+      3
+     ],
+     [
+      55,
+      3
+     ],
+     [
+      56,
+      3
+     ],
+     [
+      57,
+      3
+     ],
+     [
+      58,
+      3
+     ],
+     [
+      50,
+      4
+     ],
+     [
+      51,
+      4
+     ],
+     [
+      52,
+      4
+     ],
+     [
+      53,
+      4
+     ],
+     [
+      54,
+      4
+     ],
+     [
+      55,
+      4
+     ],
+     [
+      56,
+      4
+     ],
+     [
+      57,
+      4
+     ],
+     [
+      58,
+      4
+     ],
+     [
+      50,
+      5
+     ],
+     [
+      51,
+      5
+     ],
+     [
+      52,
+      5
+     ],
+     [
+      53,
+      5
+     ],
+     [
+      54,
+      5
+     ],
+     [
+      55,
+      5
+     ],
+     [
+      56,
+      5
+     ],
+     [
+      57,
+      5
+     ],
+     [
+      58,
+      5
+     ],
+     [
+      50,
+      6
+     ],
+     [
+      51,
+      6
+     ],
+     [
+      52,
+      6
+     ],
+     [
+      53,
+      6
+     ],
+     [
+      54,
+      6
+     ],
+     [
+      55,
+      6
+     ],
+     [
+      56,
+      6
+     ],
+     [
+      57,
+      6
+     ],
+     [
+      58,
+      6
+     ],
+     [
+      50,
+      7
+     ],
+     [
+      51,
+      7
+     ],
+     [
+      52,
+      7
+     ],
+     [
+      53,
+      7
+     ],
+     [
+      54,
+      7
+     ],
+     [
+      55,
+      7
+     ],
+     [
+      56,
+      7
+     ],
+     [
+      57,
+      7
+     ],
+     [
+      58,
+      7
+     ],
+     [
+      50,
+      8
+     ],
+     [
+      51,
+      8
+     ],
+     [
+      52,
+      8
+     ],
+     [
+      53,
+      8
+     ],
+     [
+      54,
+      8
+     ],
+     [
+      55,
+      8
+     ],
+     [
+      56,
+      8
+     ],
+     [
+      57,
+      8
+     ],
+     [
+      58,
+      8
+     ],
+     [
+      50,
+      9
+     ],
+     [
+      51,
+      9
+     ],
+     [
+      52,
+      9
+     ],
+     [
+      53,
+      9
+     ],
+     [
+      54,
+      9
+     ],
+     [
+      55,
+      9
+     ],
+     [
+      56,
+      9
+     ],
+     [
+      57,
+      9
+     ],
+     [
+      58,
+      9
+     ]
+    ],
+    "frames": 4,
+    "fps": 4
+   }
+  ],
+  "rat_barn_door": [
+   22,
+   40
+  ],
+  "green": [
+   36,
+   29
+  ]
+ },
+ "rows": [
+  "....................................................................................",
+  "....................................................................................",
+  "....d.Q....P.b.P.......Z..........................................~.................",
+  ".....................Q.....................Y................Z....~~~.............I..",
+  "..........................Z...................................a...~~~...............",
+  "..................................................................~~~...Z...........",
+  "...............................................J...............~~~~~~..........I....",
+  ".................................:...........................~~~~~~~~~~.....I.......",
+  ".................................:..........................~~~~~~~~~~~~......J.....",
+  ".................................:.........................~~~~~~~~~~~~~~...Z.......",
+  ".................................:..................V.:..S~~~~~~~~~~~~~~~~..........",
+  ".................................:....................:...~~~~~~~~~~~~~~~~Y..N..O...",
+  "..............................::::....................:....~~~~~~~~~~~~~~...........",
+  ".................:............:.........:.............:.L...~~~~~~~~~~~~.a.......N..",
+  ".................::::........:::........:.............:...I..~~~~~~~~~~.............",
+  "....................:::::...:::.........:::::::::::::::........~~~~~~....M..........",
+  "........................:..:::........................::...............U............",
+  "........................:::::.........................:::........Z......N.........O.",
+  "..........................::...........................:::.H............aU.......O..",
+  "..........................:.............................::............a...Z...:.....",
+  ".........................................................:..............O...R.:.M...",
+  ".............................................................................U:.....",
+  "............................................................J.................:.....",
+  "....:......................................:.....:.........................N..:.R...",
+  "...J:.Q....Q...:..H....:.....A.....:.C.....:.....:.I..........................:.....",
+  "....:...d.......:......:.:......F..:..c....:.....:.......:..................H.:.....",
+  "..K.:..........::::::::::::........:.......:..:::::::::::::......a............:.....",
+  "....:........:::::::::::::::......::::.....:.:::::::::::::::.......Y..........:.....",
+  "....:.I....::::...........::::...::::::....::::...........:::..........:....K.:.....",
+  ":::::::::::::....R......R..::::.::::::::..::::..H....R.....:::..L..J...:......:.H...",
+  ":::::::::::..................:::::::::::::::................:::........:......:.....",
+  "....:........................::::::::::::::..................:::::::::::::::::::::::",
+  "....:.......................:::..........:..............I.....::::::::::::::::::::::",
+  "....:.......................::......H..........................::::.................",
+  "....:.......................:...................................::......L...J..L....",
+  "....:............................................................:..................",
+  "....:.......................I...............R....................:......d..d........",
+  "....:....................................:.......................:..................",
+  "..H.::::................................:::::::::::............R.:..................",
+  ".......................................:::.......................:::................",
+  "..I....................................::....R...H..........::::::.:................",
+  ".............::::::::::.E..............:...........................:................",
+  ".....Z.I.Z........BW..::::.............:.........d.....I.......I..X:................",
+  ".........................:.T...........:...........................:................",
+  "......Y....I.............:...............................Y.........:................",
+  "....a....................:..J..............................Z.......:................",
+  "..........I..............:.:..d........................a...........:................",
+  ".................Z.......:::...............................a.......:................",
+  "......I...............:..:::.......................................:::..............",
+  ".........I............:.:::...............................Z.........................",
+  "......................::::..............................J......a....................",
+  "..................................................................P.................",
+  "....Z.......I.......J..L......P......................X..............................",
+  "..............................................................Z.....................",
+  "........Y...Z...I......................................Z............................",
+  "............................................................I.......................",
+  "...J.......................I........................................................",
+  ".........a........................b.....X...Q......P................................",
+  "....................................................................................",
+  "...................................................................................."
+ ],
+ "note": "0.3.16 generated by tools/world/build_millbrook_v1.py from the sprite bot's villages/v1 set"
 }

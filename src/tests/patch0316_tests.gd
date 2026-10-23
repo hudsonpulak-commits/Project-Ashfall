@@ -172,7 +172,18 @@ static func _rats(world, p) -> void:
 	check(world.gen.village_at(gt, 0) == "millbrook", "Old Mabel stands in Millbrook at %s" % gt)
 	check(QuestSystem.giver_marker(p, "old_mabel") == "?", "'?' over Mabel")
 	QuestSystem.choose(p, id, "accept")
-	var nest := Vector2i(146, -78)
+	var nest := Vector2i(0, 0)
+	for c in GameData.camps:
+		if c.get("enemy", "") == "giant_rat" and "Dead Rat" in str(c.get("note", "")):
+			nest = Vector2i(int(c["at"][0]), int(c["at"][1]))
+	var rq: Dictionary = {}
+	for q in QuestSystem.cfg().get("quests", []):
+		if q.get("id", "") == id:
+			rq = q
+	var enc: Dictionary = rq.get("encounter", {}).get("rat_mother", {})
+	var so: Array = QuestSystem.cfg().get("sites", {}).get(str(enc.get("site", "")), {}).get("origin", [0, 0])
+	var want_at: Array = [int(so[0]) + int(enc.get("at", [0, 0])[0]), int(so[1]) + int(enc.get("at", [0, 0])[1])]
+	check(world.gen.village_at(nest, 0) == "" and world.gen.village_at(nest, 12) == "millbrook", "the rat nest sits just outside Millbrook (%s)" % nest)
 	check(_kill(world, p, "giant_rat", 6, nest) == 6 and int(p.quests[id]["stage"]) == 1, "6 giant rats: back to Mabel")
 	check(QuestSystem.giver_marker(p, "old_mabel") == "!" and _talk(world, p, "old_mabel")["node"] == "stage_1", "Mabel asks about the big one")
 	QuestSystem.choose(p, id, "advance")
@@ -182,8 +193,8 @@ static func _rats(world, p) -> void:
 	for c in GameData.camps:
 		if c.get("enemy", "") == "rat_mother":
 			camp_at = c["at"]
-	check(hole != null and camp_at == [153, -74], "Rat Mother waits by the rat-den entrance; her spot comes from the quest's encounter data (%s)" % str(camp_at))
-	check(mom != null and float(mom.def.get("scale", 1)) > 1.4 and mom.max_hp > 30, "the Rat Mother is a big, tough rat")
+	check(hole != null and camp_at == want_at, "Rat Mother waits by the rat-den entrance; her spot comes from the quest's encounter data (%s)" % str(camp_at))
+	check(mom != null and str(mom.def.get("sprite", "")) == "rat_mother" and float(mom.def.get("scale", 1)) == 1.0 and mom.max_hp > 30, "the Rat Mother wears her own 48x48 sprite (no scaled rat) and is tough")
 	check(QuestSystem.objective(p, world).get("kind", "") in ["enemy", "area"], "guidance points at the Rat Mother")
 	check(_kill(world, p, "rat_mother", 1, nest) == 1 and QuestSystem.state(p, id) == QuestSystem.READY, "Rat Mother slain: back to Mabel")
 	var m0: int = p.inventory.count(GameData.currency)

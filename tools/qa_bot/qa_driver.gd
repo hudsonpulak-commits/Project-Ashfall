@@ -346,6 +346,8 @@ func _run() -> void:
 			await _sidequests0315()
 		"sidequests2":
 			await _sidequests0316()
+		"millbrook":
+			await _millbrook0316()
 		_:
 			push_error("unknown QA scenario " + scenario)
 			await _finish(false)
@@ -3240,7 +3242,10 @@ func _sidequests0316() -> void:
 	await until(func(): return QuestSystem.state(p, id) != QuestSystem.NOT_STARTED, 10.0)
 	r["state_after_accept"] = QuestSystem.state(p, id)
 	kills = 0
-	var nest := Vector2i(146, -78)
+	var nest := Vector2i(0, 0)
+	for c in GameData.camps:
+		if c.get("enemy", "") == "giant_rat" and "Dead Rat" in str(c.get("note", "")):
+			nest = Vector2i(int(c["at"][0]), int(c["at"][1]))
 	t_end = Time.get_ticks_msec() + 240000
 	while int(p.quests[id].get("stage", 0)) == 0 and kills < 20 and Time.get_ticks_msec() < t_end:
 		var e2: Enemy = w.enemies.nearest(nest, ["giant_rat"], 4000)
@@ -3265,7 +3270,7 @@ func _sidequests0316() -> void:
 	await until(func(): return int(p.quests[id].get("stage", 0)) == 2, 10.0)
 	var mom: Enemy = w.enemies.nearest(nest, ["rat_mother"], 4000)
 	mom.reset_far()
-	r["mother_scale"] = float(mom.def.get("scale", 1))
+	r["mother_sprite"] = str(mom.def.get("sprite", ""))
 	p.place_at(w.find_free_tile_near(mom.tile + Vector2i(2, 1), 2, true))
 	w.set_focus(p.tile, true)
 	await frames(20)
@@ -3329,3 +3334,89 @@ func _broken_count(w: World, props: Array) -> int:
 		elif o.view:
 			n += int(o.sprite_id(w.tick) == str(o.def().get("sprite", "")) and o.def().has("repaired_sprite"))
 	return n
+
+
+# ------------------------------------------- 0.3.16 Millbrook v1 art --
+## The sprite-bot Millbrook (villages/v1): gate, green, mill, inside the inn
+## (roof faded), the rat barn, the fields, the green at night; then the Rat
+## Mother (underground v1.1 sheet) and the den entrance south of the village.
+func _millbrook0316() -> void:
+	var p: Player = main.player
+	var w: World = main.world
+	var res := {}
+	var vid := "millbrook"
+	var oa: Array = GameData.villages[vid]["origin"]
+	var o := Vector2i(int(oa[0]), int(oa[1]))
+	p.hp = p.max_hp()
+	var spots := {"mb_gate": w.gen.town_spawn(vid), "mb_green": o + Vector2i(36, 30), "mb_mill": o + Vector2i(54, 13),
+		"mb_rat_barn": o + Vector2i(22, 42), "mb_fields": o + Vector2i(68, 46)}
+	res["spots"] = {}
+	for nm in spots.keys():
+		var t: Vector2i = spots[nm]
+		p.place_at(t)
+		p.stop()
+		w.set_focus(p.tile, true)
+		label = nm
+		await frames(40)
+		res["spots"][nm] = {"tile": [p.tile.x, p.tile.y], "village": w.gen.village_at(p.tile, 0)}
+		await _snap(nm)
+	# mill sails animate
+	var bv = w.buildings_view
+	res["sail_frames"] = []
+	p.place_at(spots["mb_mill"])
+	w.set_focus(p.tile, true)
+	for i in 6:
+		await frames(10)
+		if not bv._anim_fades.is_empty():
+			res["sail_frames"].append((bv._anim_fades[0][0] as Sprite2D).frame)
+	# inside the inn: roof and upper floor faded
+	var inn: Dictionary = w.gen.buildings.get("millbrook_inn", {})
+	res["inn"] = {}
+	if not inn.is_empty():
+		var st: Vector2i = inn["stand"]
+		p.place_at(st)
+		p.stop()
+		w.set_focus(p.tile, true)
+		label = "mb_inn_inside"
+		await frames(60)
+		res["inn"] = {"inside": bv.player_building(), "roof_alpha": bv.roof_alpha("millbrook_inn")}
+		await _snap("mb_inn_inside")
+	# the green at night (designer _night layers, no old overlay)
+	p.place_at(spots["mb_green"])
+	w.set_focus(p.tile, true)
+	DayNight.ensure_lights(w)
+	DayNight.debug_set_phase("night")
+	label = "mb_night"
+	await frames(40)
+	res["night"] = {"phase": DayNight.phase()}
+	await _snap("mb_night")
+	DayNight.debug_set_phase("day")
+	await frames(10)
+	# the Rat Mother and the den entrance
+	var mom: Enemy = w.enemies.nearest(o + Vector2i(26, 66), ["rat_mother"], 60)
+	res["mother"] = {}
+	if mom != null:
+		mom.reset_far()
+		var hole = w.find_nearest_object(mom.home, ["rat_den_entrance"], 6)
+		p.place_at(mom.home + Vector2i(-3, -2))
+		p.stop()
+		w.set_focus(p.tile, true)
+		label = "rat_mother"
+		await frames(50)
+		var fs := GameData.frame_size("actors", str(mom.def.get("sprite", "")))
+		res["mother"] = {"sprite": str(mom.def.get("sprite", "")), "frame": [fs.x, fs.y], "scale": mom._sprite.scale.x,
+			"home": [mom.home.x, mom.home.y], "hole": hole != null, "village": w.gen.village_at(mom.home, 0),
+			"hole_sprite": GameData.sprite_def("objects", "rat_den_entrance").get("path", "")}
+		await _snap("rat_mother")
+		label = "den_entrance"
+		await _snap("den_entrance")
+		label = "rat_mother_close"
+		var cam = get_viewport().get_camera_2d()
+		if cam:
+			var z0: Vector2 = cam.zoom
+			cam.zoom = z0 * 2.0
+			await frames(20)
+			await _snap("rat_mother_close")
+			cam.zoom = z0
+	label = ""
+	_notes["millbrook"] = res

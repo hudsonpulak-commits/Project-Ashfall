@@ -265,7 +265,7 @@
   },
   "rat_mother": {
    "name": "Rat Mother",
-   "sprite": "giant_rat",
+   "sprite": "rat_mother",
    "level": 14,
    "hp": 45,
    "max_hit": 5,
@@ -278,11 +278,7 @@
    "respawn_ticks": 200,
    "xp": 70,
    "drops": "giant_rat",
-   "scale": 1.75,
-   "tints": [
-    "#b07a8a"
-   ],
-   "note": "0.3.16 A Dead Rat is a Good Rat boss near Millbrook (placeholder: giant rat sheet, scaled up and tinted)"
+   "note": "0.3.16 A Dead Rat is a Good Rat boss near Millbrook (sprite bot underground v1.1 art)"
   }
  },
  "camps": [
@@ -543,11 +539,12 @@
   {
    "enemy": "goblin_warlord",
    "at": [
-    150,
-    -114
+    181,
+    -153
    ],
    "count": 1,
-   "spread": 1
+   "spread": 1,
+   "note": "0.3.16 north of the new Millbrook (v1 art moved the village)"
   },
   {
    "enemy": "slime",
@@ -606,8 +603,8 @@
   {
    "enemy": "slime",
    "at": [
-    121,
-    -51
+    150,
+    -70
    ],
    "count": 3,
    "spread": 3
@@ -624,8 +621,8 @@
   {
    "enemy": "slime",
    "at": [
-    125,
-    -105
+    136,
+    -112
    ],
    "count": 3,
    "spread": 3
@@ -633,8 +630,8 @@
   {
    "enemy": "slime",
    "at": [
-    162,
-    -78
+    150,
+    -80
    ],
    "count": 3,
    "spread": 3
@@ -678,18 +675,18 @@
   {
    "enemy": "giant_rat",
    "at": [
-    146,
-    -78
+    163,
+    -80
    ],
    "count": 6,
    "spread": 2,
-   "note": "0.3.16 rat nest south of Millbrook (A Dead Rat is a Good Rat)"
+   "note": "0.3.16 rat nest just south of Millbrook, below the rat barn (A Dead Rat is a Good Rat)"
   },
   {
    "enemy": "rat_mother",
    "at": [
-    153,
-    -74
+    170,
+    -80
    ],
    "count": 1,
    "spread": 1,

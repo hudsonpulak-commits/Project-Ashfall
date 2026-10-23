@@ -1645,7 +1645,7 @@
   "quest_giver_hunter": {
    "name": "Odric the Hunter",
    "sprite": "quest_giver",
-   "actor_sprite": "villager",
+   "actor_sprite": "odric_hunter",
    "blocks": true,
    "type": "quest",
    "giver": "hunter_odric",
@@ -1655,7 +1655,7 @@
   "quest_giver_quartermaster": {
    "name": "Quartermaster Hale",
    "sprite": "quest_giver",
-   "actor_sprite": "town_guard",
+   "actor_sprite": "quartermaster_hale",
    "blocks": true,
    "type": "quest",
    "giver": "qm_hale",
@@ -1740,10 +1740,173 @@
   },
   "rat_den_entrance": {
    "name": "Rat hole",
-   "sprite": "wolf_den",
+   "sprite": "rat_den_entrance",
    "blocks": true,
    "type": "prop",
    "note": "0.3.16 A Dead Rat is a Good Rat: surface den entrance; the Rat Mother waits beside it. 0.3.17 turns this into the way down to the underworld rat den."
+  },
+  "mb_bounty_board": {
+   "name": "Bounty board",
+   "sprite": "mb_bounty_board",
+   "blocks": true,
+   "type": "prop"
+  },
+  "mb_sign_inn": {
+   "name": "The Millwheel Inn",
+   "sprite": "mb_sign_inn",
+   "blocks": true,
+   "type": "prop"
+  },
+  "mb_sign_rats": {
+   "name": "Rat-catcher wanted",
+   "sprite": "mb_sign_rats",
+   "blocks": true,
+   "type": "prop"
+  },
+  "vl_barrel": {
+   "name": "Barrel",
+   "sprite": "vl_barrel",
+   "blocks": true,
+   "type": "prop"
+  },
+  "vl_bush": {
+   "name": "Bush",
+   "sprite": "vl_bush",
+   "blocks": true,
+   "type": "prop"
+  },
+  "vl_bush_flowers": {
+   "name": "Flowering bush",
+   "sprite": "vl_bush_flowers",
+   "blocks": false,
+   "type": "prop"
+  },
+  "vl_cart": {
+   "name": "Cart",
+   "sprite": "vl_cart",
+   "blocks": true,
+   "type": "prop"
+  },
+  "vl_crates": {
+   "name": "Crates",
+   "sprite": "vl_crates",
+   "blocks": true,
+   "type": "prop"
+  },
+  "vl_cross_broken": {
+   "name": "Broken cross",
+   "sprite": "vl_cross_broken",
+   "blocks": true,
+   "type": "prop"
+  },
+  "vl_grave_a": {
+   "name": "Grave",
+   "sprite": "vl_grave_a",
+   "blocks": true,
+   "type": "prop"
+  },
+  "vl_grave_b": {
+   "name": "Grave",
+   "sprite": "vl_grave_b",
+   "blocks": true,
+   "type": "prop"
+  },
+  "vl_hay_bale": {
+   "name": "Hay bale",
+   "sprite": "vl_hay_bale",
+   "blocks": true,
+   "type": "prop"
+  },
+  "vl_haystack": {
+   "name": "Haystack",
+   "sprite": "vl_haystack",
+   "blocks": true,
+   "type": "prop"
+  },
+  "vl_lamp": {
+   "name": "Lamp post",
+   "sprite": "vl_lamp",
+   "blocks": true,
+   "type": "prop"
+  },
+  "vl_millstone": {
+   "name": "Millstone",
+   "sprite": "vl_millstone",
+   "blocks": true,
+   "type": "prop"
+  },
+  "vl_rat_bones": {
+   "name": "Rat bones",
+   "sprite": "vl_rat_bones",
+   "blocks": false,
+   "type": "prop"
+  },
+  "vl_rubble": {
+   "name": "Rubble",
+   "sprite": "vl_rubble",
+   "blocks": true,
+   "type": "prop"
+  },
+  "vl_sack": {
+   "name": "Sack",
+   "sprite": "vl_sack",
+   "blocks": true,
+   "type": "prop"
+  },
+  "vl_sack_gnawed": {
+   "name": "Gnawed sack",
+   "sprite": "vl_sack_gnawed",
+   "blocks": false,
+   "type": "prop"
+  },
+  "vl_scarecrow": {
+   "name": "Scarecrow",
+   "sprite": "vl_scarecrow",
+   "blocks": true,
+   "type": "prop"
+  },
+  "vl_tree_autumn": {
+   "name": "Autumn tree",
+   "sprite": "vl_tree_autumn",
+   "blocks": true,
+   "type": "prop"
+  },
+  "vl_tree_oak": {
+   "name": "Oak tree",
+   "sprite": "vl_tree_oak",
+   "blocks": true,
+   "type": "prop"
+  },
+  "vl_tree_oak_b": {
+   "name": "Oak tree",
+   "sprite": "vl_tree_oak_b",
+   "blocks": true,
+   "type": "prop"
+  },
+  "vl_trough": {
+   "name": "Trough",
+   "sprite": "vl_trough",
+   "blocks": true,
+   "type": "prop"
+  },
+  "vl_well": {
+   "name": "Well",
+   "sprite": "vl_well",
+   "blocks": true,
+   "type": "prop"
+  },
+  "vl_wheat_sheaf": {
+   "name": "Wheat sheaf",
+   "sprite": "vl_wheat_sheaf",
+   "blocks": false,
+   "type": "prop"
+  },
+  "vl_well_station": {
+   "name": "Well",
+   "sprite": "vl_well_station",
+   "blocks": true,
+   "type": "prop",
+   "alias_of": "well"
   }
  }
 }

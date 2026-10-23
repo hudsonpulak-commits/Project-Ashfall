@@ -61,8 +61,8 @@ func setup(w) -> void:
 ## city wall ring (8 octant pieces, each y-sorted by its own base).
 func _setup_town_art(w) -> void:
 	var ring_def: Dictionary = WorldGen.town_art().get("ring", {})
-	for tid in w.gen.town_order:
-		var t: Dictionary = w.gen.towns[tid]
+	for tid in w.gen.town_order + w.gen.village_order:   # 0.3.16 villages with designer art too (Millbrook v1)
+		var t: Dictionary = w.gen.towns[tid] if w.gen.towns.has(tid) else w.gen.villages[tid]
 		if not t.has("art"):
 			continue
 		var a: Dictionary = t["art"]
@@ -97,6 +97,9 @@ func _setup_town_art(w) -> void:
 			fs.name = "GateRoof_%s_%d" % [tid, _gate_roofs.size()]
 			fs.centered = false
 			fs.texture = ft
+			fs.hframes = maxi(1, int(it.get("frames", 1)))   # 0.3.16 animated fades (Millbrook mill sails)
+			if fs.hframes > 1:
+				_anim_fades.append([fs, float(it.get("fps", 4))])
 			fs.position = org + Vector2(float(it["pos"][0]), float(it["pos"][1]))
 			var tl := {}
 			for q in it.get("tiles", []):
@@ -268,6 +271,8 @@ func hides(p: Vector2i) -> bool:
 ## Advance the roof fades by dt seconds (also called directly by tests).
 ## 0.3.11 v3.1 gatehouse roofs: [Sprite2D, {tile: true}] - faded while the player is in the passage
 var _gate_roofs: Array = []
+var _anim_fades: Array = []   # [Sprite2D, fps]
+var _anim_fade_t := 0.0
 
 
 func gate_roof_alpha(i: int) -> float:
@@ -278,6 +283,10 @@ func step(dt: float) -> void:
 	var inside := player_building()
 	var rate := dt / maxf(0.01, roof_fade_s())
 	var pt = player.tile if player != null and "tile" in player else Vector2i(-99999, -99999)
+	_anim_fade_t += dt
+	for af in _anim_fades:
+		var asp: Sprite2D = af[0]
+		asp.frame = int(_anim_fade_t * float(af[1])) % asp.hframes
 	for gr in _gate_roofs:
 		var gs: Sprite2D = gr[0]
 		gs.modulate.a = move_toward(gs.modulate.a, 0.0 if (gr[1] as Dictionary).has(pt) else 1.0, rate)

@@ -1086,6 +1086,14 @@ func _village_footprints(cfg: Dictionary) -> Array:
 				var a: Array = f["rect"]
 				r = r.merge(Rect2i(o + Vector2i(int(a[0]), int(a[1])), Vector2i(int(a[2]), int(a[3]))))
 		out.append(r.grow(1))
+	# 0.3.16 quest sites (farms, dens) keep roads out too, so a rerouted road never runs through a paddock fence
+	var sites: Dictionary = QuestSystem.cfg().get("sites", {})
+	for sid in sites.keys():
+		var sd: Dictionary = sites[sid]
+		var srows: Array = sd.get("rows", [])
+		if srows.is_empty() or not sd.has("origin"):
+			continue
+		out.append(Rect2i(Vector2i(int(sd["origin"][0]), int(sd["origin"][1])), Vector2i(str(srows[0]).length(), srows.size())).grow(1))
 	return out
 
 
