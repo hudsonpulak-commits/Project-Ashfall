@@ -692,6 +692,11 @@ func _job_new(c: Vector2i) -> Dictionary:
 	var layer := TileMapLayer.new()
 	layer.tile_set = _tileset
 	layer.position = Vector2(c.x * CHUNK * tile_px, c.y * CHUNK * tile_px)
+	# 0.3.16 in the tree (hidden) from the start, so the layers' internal updates are
+	# spread over the frames that fill them instead of landing in one frame
+	root.visible = false
+	root.add_child(layer)
+	ground_layer.add_child(root)
 	return {"c": c, "ch": ch, "root": root, "layer": layer, "stage": 0, "row": 0, "names": {}, "ovl": [],
 		"base": Vector2i(c.x * CHUNK, c.y * CHUNK), "objs": [], "oi": 0, "ol": []}
 
@@ -750,6 +755,7 @@ func _job_stage(j: Dictionary, c: Vector2i, ch: ChunkData, base: Vector2i) -> vo
 						l.tile_set = _tileset
 						l.position = (j["layer"] as TileMapLayer).position
 						l.name = ["trans0", "trans1", "autotile", "joins", "corners"][i]
+						(j["root"] as Node2D).add_child(l)
 						ovl.append(l)
 			2:   # overlays, one row per step
 				var ly3: int = j["row"]
@@ -773,13 +779,10 @@ func _job_stage(j: Dictionary, c: Vector2i, ch: ChunkData, base: Vector2i) -> vo
 					j["stage"] = 3
 			3:   # attach the layers
 				var root: Node2D = j["root"]
-				root.add_child(j["layer"])
 				for l in j["ovl"]:
 					if (l as TileMapLayer).get_used_cells().is_empty():
 						l.free()
-					else:
-						root.add_child(l)
-				ground_layer.add_child(root)
+				root.visible = true
 				chunk_views[c] = root
 				j["ol"] = ch.objects.values()
 				root.set_meta("objects", j["objs"])
@@ -816,14 +819,8 @@ func _abort_job() -> void:
 	_job = {}
 	if chunk_views.has(j["c"]) and chunk_views[j["c"]] == j["root"]:
 		_free_view(j["c"])
-	else:
-		for l in j["ovl"]:
-			if is_instance_valid(l) and (l as Node).get_parent() == null:
-				l.free()
-		if is_instance_valid(j["layer"]) and (j["layer"] as Node).get_parent() == null:
-			j["layer"].free()
-		if is_instance_valid(j["root"]):
-			j["root"].free()
+	elif is_instance_valid(j["root"]):
+		j["root"].free()
 
 
 func _free_view(c: Vector2i) -> void:

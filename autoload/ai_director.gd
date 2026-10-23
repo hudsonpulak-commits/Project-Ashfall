@@ -164,6 +164,11 @@ func money_supply() -> int:
 
 
 # -------------------------------------------------------------------- tick --
+const VIEW_TICK_BUDGET_MS := 8.0
+var _view_rot := 0
+var _view_skipped := 0
+
+
 func on_tick(t: int, world, player_tile: Vector2i) -> void:
 	var _pl: Array = world.perf_log if world != null and "perf_log" in world else []
 	var _t0 := Time.get_ticks_usec()
@@ -176,12 +181,19 @@ func on_tick(t: int, world, player_tile: Vector2i) -> void:
 	var _tv := 0.0
 	var _ta := 0.0
 	var _tt := 0.0
-	for i in records.size():
+	var _n := records.size()
+	_view_rot = (_view_rot + 7) % maxi(1, _n)
+	for i0 in _n:
+		var i: int = (i0 + _view_rot) % _n
 		var a: AIAgent = records[i]
 		var _u := Time.get_ticks_usec()
 		match a.tier:
 			0:
-				if a.view:
+				# 0.3.16 time-slice: once views used VIEW_TICK_BUDGET_MS this tick, the rest
+				# (rotating order) wait for the next tick instead of all pathing at once
+				if a.view and _tv / 1000.0 > VIEW_TICK_BUDGET_MS and a.view.has_method("on_tick"):
+					_view_skipped += 1
+				elif a.view:
 					a.view.on_tick(t, world)
 					if a.trip.has("to") and int(a.trip.get("idx", 0)) >= _road(a).size() - 1:
 						_arrive(a, t)
