@@ -128,6 +128,39 @@ static func progress_text(p, id: String) -> String:
 	return str(st.get("text", ""))
 
 
+## 0.3.17 journal details: where a giver stands ("Fenhollow", "near the wolf den").
+static func giver_place(gid: String, gen = null) -> String:
+	var g: Dictionary = cfg().get("givers", {}).get(gid, {})
+	var t := str(g.get("town", ""))
+	if t != "":
+		return gen.town_name(t) if gen != null and gen.has_method("town_name") else t.capitalize()
+	if g.has("near"):
+		return "near the " + str(g["near"]).replace("_", " ")
+	return "somewhere in Ashfen"
+
+
+## 0.3.17 journal status word for the collapsed list.
+static func status_word(p, id: String) -> String:
+	return {NOT_STARTED: "not started", IN_PROGRESS: "active", READY: "ready to hand in", COMPLETED: "complete"}.get(state(p, id), "active")
+
+
+## 0.3.17 the expanded journal entry: giver + place, objective/progress, who to return to.
+static func detail_lines(p, id: String, gen = null) -> Array:
+	var q := quest(id)
+	var gid := str(q.get("giver", ""))
+	var out: Array = ["Given by: %s (%s)" % [giver_name(gid), giver_place(gid, gen)]]
+	out.append("Objective: " + progress_text(p, id))
+	var st := state(p, id)
+	if st == COMPLETED:
+		out.append("Done.")
+	elif st == NOT_STARTED:
+		out.append("Talk to %s to start." % giver_name(gid))
+	else:
+		var who := stage_npc(id, current_stage(p, id))
+		out.append("Return to: %s (%s)" % [giver_name(who), giver_place(who, gen)])
+	return out
+
+
 static func giver_name(gid: String) -> String:
 	return str(cfg().get("givers", {}).get(gid, {}).get("name", gid))
 

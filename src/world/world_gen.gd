@@ -1442,9 +1442,50 @@ func _cliff_tile(p: Vector2i, t: int) -> int:
 	var r := _cliff_tile_raw(p, t)
 	if r in _CLIFF_BLOCK and _cliff_lone_diag(p):
 		return -1   # 0.3.16 Map Tester: a blocking cliff tile that joins the run only at a corner is dropped
+	if r == TileType.CLIFF_STAIRS:
+		r = _thin_stair(p)
 	if r >= 0 or t == TileType.WATER or t == TileType.ASH or t == TileType.ASH_EDGE:
 		return r
 	return TileType.CLIFF_LIP if cliff_gap_fill(p) else -1
+
+
+## 0.3.17 stairs come singly: along a cliff line a run of raw stairs keeps one
+## (the middle one of those with straight cliff of the same edge on both sides);
+## the rest become plain face / lip. No stair on a corner or diagonal section.
+func _thin_stair(p: Vector2i) -> int:
+	var e := _cliff_edge(p)
+	var wall: int = TileType.CLIFF_FACE if e == 1 else TileType.CLIFF_LIP
+	if e < 0:
+		return TileType.CLIFF_STAIRS
+	var step := Vector2i(1, 0) if e != 0 else Vector2i(0, 1)
+	var run: Array = [p]
+	for sgn in [-1, 1]:
+		var q: Vector2i = p + step * sgn
+		for i in 12:
+			if _town_tiles.has(q) or road_tiles.has(q) or _cliff_tile_raw(q, _terrain_at(q.x, q.y)) != TileType.CLIFF_STAIRS or _cliff_edge(q) != e:
+				break
+			run.append(q)
+			q += step * sgn
+	run.sort()
+	var ok: Array = []
+	for q in run:
+		if _stair_straight(q, e, step):
+			ok.append(q)
+	if ok.is_empty():
+		return wall
+	return TileType.CLIFF_STAIRS if ok[ok.size() / 2] == p else wall
+
+
+## Both line neighbours are cliff of the same edge, and so are theirs (no corner close by).
+func _stair_straight(q: Vector2i, e: int, step: Vector2i) -> bool:
+	for d in [step, -step, step * 2, -step * 2]:
+		var n: Vector2i = q + d
+		if _town_tiles.has(n) or road_tiles.has(n) or _cliff_edge(n) != e:
+			return false
+	for d in [Vector2i(0, 1), Vector2i(0, -1)] if e != 0 else [Vector2i(1, 0), Vector2i(-1, 0)]:
+		if _cliff_edge(q + d) >= 0:
+			return false   # a second cliff row: corner / diagonal section
+	return true
 
 
 const _CLIFF_BLOCK := [TileType.CLIFF_FACE, TileType.CLIFF_LIP, TileType.CLIFF_FOOT]
@@ -1871,11 +1912,16 @@ func autotile_group_at(p: Vector2i) -> String:
 func object_at(x: int, y: int, tile: int) -> String:
 	var p := Vector2i(x, y)
 	if _town_objects.has(p):
-		return _town_objects[p]
+		var tid: String = _town_objects[p]
+		if is_tree_id(tid) and (_town_tiles.get(p, -1) in ROAD_SURFACES or road_tiles.has(p) or _near_road(p)):
+			return ""   # 0.3.17 town trees never stand on / against a road
+		return tid
 	if road_decor.has(p):
 		return road_decor[p]
 	if town_at(p, 0) != "" or road_tiles.has(p) or _town_tiles.has(p) or village_at(p, 0) != "" or in_clear_rect(p):
 		return ""
+	if _near_road(p):
+		return ""   # 0.3.17 no scatter on or beside a road
 	var r := hash01(x, y, 1)
 	var r2 := hash01(x, y, 2)
 	if tile != TileType.WATER:
@@ -1993,3 +2039,17 @@ func generate_chunk(c: Vector2i) -> ChunkData:
 				if _town_meta.has(wp):
 					ch.objects[wp].meta = _town_meta[wp]
 	return ch
+
+
+## 0.3.17 a road tile (country road or town brick/dirt road) at or orthogonally/diagonally next to p.
+func _near_road(p: Vector2i) -> bool:
+	for dy in [-1, 0, 1]:
+		for dx in [-1, 0, 1]:
+			var q := p + Vector2i(dx, dy)
+			if road_tiles.has(q) or _town_tiles.get(q, -1) in ROAD_SURFACES:
+				return true
+	return false
+
+
+static func is_tree_id(id: String) -> bool:
+	return id.contains("palm") or id.contains("tree") or id.begins_with("oak") or id.begins_with("pine") or id.begins_with("willow")

@@ -849,7 +849,8 @@ func _refresh_bank_tabs() -> void:
 		add.name = "BankTabAdd"
 		bank_tab_row.add_child(add)
 	UIKit.clear(bank_edit_row)
-	bank_edit_row.visible = bank_arrange
+	bank_edit_row.visible = bank_arrange and BANK_TABS_ON
+	bank_tab_row.visible = BANK_TABS_ON
 	if not bank_arrange:
 		return
 	if bank_tab < 1:
@@ -957,6 +958,10 @@ func open_dialog(gid: String) -> void:
 	show_panel("dialog")
 
 
+const BANK_TABS_ON := false   # 0.3.17 custom bank tabs deferred: code kept, UI hidden
+var quest_open := ""   # 0.3.17 the one expanded journal entry
+
+
 func refresh_quests() -> void:
 	if quest_box == null or player == null:
 		return
@@ -966,14 +971,22 @@ func refresh_quests() -> void:
 	for q in QuestSystem.quests():
 		var id: String = q["id"]
 		var st := QuestSystem.state(player, id)
-		var t := UIKit.label(str(q["name"]), 11, QUEST_COLORS.get(st, Color.WHITE))
-		quest_box.add_child(t)
-		quest_rows[id] = t
-		var d := UIKit.label(str(q.get("desc", "")), 8, UIStyle.TEXT_DIM)
-		d.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-		d.custom_minimum_size = Vector2(300, 0)
-		quest_box.add_child(d)
-		quest_box.add_child(UIKit.label(QuestSystem.progress_text(player, id), 9, QUEST_COLORS.get(st, Color.WHITE)))
+		# 0.3.17 collapsed list: name + status; tap to open the details under it
+		var open := quest_open == id
+		var b := UIKit.button("%s %s  —  %s" % ["v" if open else ">", str(q["name"]), QuestSystem.status_word(player, id)], func():
+			quest_open = "" if quest_open == id else id
+			refresh_quests(), 320, 26)
+		b.name = "Quest_" + id
+		b.alignment = HORIZONTAL_ALIGNMENT_LEFT
+		b.add_theme_color_override("font_color", QUEST_COLORS.get(st, Color.WHITE))
+		quest_box.add_child(b)
+		quest_rows[id] = b
+		if open:
+			var d := UIKit.label("\n".join(QuestSystem.detail_lines(player, id, world.gen if world else null)), 9, UIStyle.TEXT_DIM)
+			d.name = "QuestDetail"
+			d.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+			d.custom_minimum_size = Vector2(300, 0)
+			quest_box.add_child(d)
 
 
 func _refresh_skills() -> void:

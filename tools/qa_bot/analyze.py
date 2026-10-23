@@ -1065,11 +1065,8 @@ def check_bank(ctx):
                str({k: a.get("organize", {}).get(k) for k in ("pack_highlight", "pack_actions", "pack_move", "pack_swap", "pack_deselect")}), sp("pack_picked")),
         Result("C37 organize", "bank Arrange: pick + swap stacks", bool(a.get("organize", {}).get("bank_highlight")) and bool(a.get("organize", {}).get("bank_swap")),
                str({k: a.get("organize", {}).get(k) for k in ("bank_highlight", "bank_swap")})),
-        Result("C37 organize", "bank tabs: create + rename 'Ores', file an item by tapping the tab, item icon, tab shows only its items, delete returns items to Main",
-               all(a.get("organize", {}).get(k) for k in ("filed", "tab_shows", "deleted")) and (a.get("organize", {}).get("tab") or [{}])[0].get("name") == "Ores",
-               "tab %s filed %s shows %s deleted %s" % (a.get("organize", {}).get("tab"), a.get("organize", {}).get("filed"), a.get("organize", {}).get("tab_shows"), a.get("organize", {}).get("deleted")), sp("bank_tabs")),
-        Result("C37 organize", "slot positions and tabs survive save/load", bool(a.get("organize", {}).get("pack_persist")) and bool(a.get("organize", {}).get("tabs_persist")),
-               "pack %s tabs %s" % (a.get("organize", {}).get("pack_persist"), a.get("organize", {}).get("tabs_persist"))),
+        Result("C37 organize", "slot positions and tabs survive save/load", bool(a.get("organize", {}).get("pack_persist")) and bool(a.get("organize", {}).get("bank_persist")),
+               "pack %s bank %s" % (a.get("organize", {}).get("pack_persist"), a.get("organize", {}).get("bank_persist"))),
         Result("C23 dummy", "dummy counter-swing shown blocked, Defence XP, no HP loss", a.get("dummy_blocks", 0) >= 1 and a.get("dummy_def_xp", 0) > 0 and a.get("dummy_hp_lost", 1) == 0,
                "blocks %s def xp %s hp lost %s" % (a.get("dummy_blocks"), a.get("dummy_def_xp"), a.get("dummy_hp_lost")), sp("dummy_block")),
     ]
@@ -1115,6 +1112,9 @@ def check_quest(ctx):
     return [
         Result("C29 quest", "Kell shows '?' (overhead + map) before the quest", a.get("mark_start") == "?" and a.get("minimap_mark_start") == "?", "%s / %s" % (a.get("mark_start"), a.get("minimap_mark_start")), sp("quest_npc_question")),
         Result("C29 quest", "tapping Kell starts it; no marker while hunting", a.get("state_after_talk") == "in_progress" and a.get("mark_hunting") == "", "%s mark %r" % (a.get("state_after_talk"), a.get("mark_hunting"))),
+        Result("C29 quest", "0.3.17 journal: names only; tap expands giver + place, 'Goblins 3/5', return-to; tap collapses",
+               bool(a.get("journal_collapsed")) and bool(a.get("journal_recollapsed")) and all(k in str(a.get("journal_detail", "")) for k in ("Given by: Kell", "3/5", "Return to:")),
+               repr(a.get("journal_detail")), sp("journal_in_progress", "journal_expanded")),
         Result("C29 quest", "journal colours: red, yellow with 'Goblins 3/5', green", a.get("color_not_started") == red and a.get("color_in_progress") == yel and str(a.get("progress_3", "")).endswith("Goblins 3/5") and a.get("color_completed") == grn,
                "%s / %s %r / %s" % (a.get("color_not_started"), a.get("color_in_progress"), a.get("progress_3"), a.get("color_completed")), sp("journal_not_started", "journal_in_progress", "journal_completed")),
         Result("C29 quest", "5 goblins killed in real fights -> Kell shows '!'", all(a.get("goblin_%d" % i) for i in range(1, 6)) and a.get("state_after_goblins") == "ready" and a.get("mark_ready") == "!", "ready %s mark %r" % (a.get("state_after_goblins"), a.get("mark_ready")), sp("quest_npc_exclaim")),

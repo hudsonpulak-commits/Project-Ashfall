@@ -1761,7 +1761,7 @@
   "sm_palm_cluster": {
    "path": "res://assets/sprites/towns/saltmere/props/v2_palm_cluster.png",
    "frame_size": [
-    40,
+    48,
     44
    ],
    "frames": 1,
@@ -1771,7 +1771,7 @@
   "sm_palm_lean": {
    "path": "res://assets/sprites/towns/saltmere/props/v2_palm_lean.png",
    "frame_size": [
-    24,
+    32,
     44
    ],
    "frames": 1,
@@ -1781,7 +1781,7 @@
   "sm_palm_short": {
    "path": "res://assets/sprites/towns/saltmere/props/v2_palm_short.png",
    "frame_size": [
-    20,
+    28,
     30
    ],
    "frames": 1,
@@ -1791,7 +1791,7 @@
   "sm_palm_tall": {
    "path": "res://assets/sprites/towns/saltmere/props/v2_palm_tall.png",
    "frame_size": [
-    24,
+    32,
     44
    ],
    "frames": 1,

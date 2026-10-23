@@ -2286,7 +2286,7 @@ func _v036() -> void:
 
 func _qcolor(id: String) -> String:
 	main.hud.show_panel("quests")
-	var l: Label = main.hud.quest_rows.get(id)
+	var l: Control = main.hud.quest_rows.get(id)
 	return l.get_theme_color("font_color").to_html(false) if l else ""
 
 
@@ -2371,6 +2371,16 @@ func _quest037() -> void:
 			res["color_in_progress"] = _qcolor(id)
 			label = "journal"
 			await _snap("journal_in_progress")
+			# 0.3.17 collapsed list -> tap to expand details -> tap to collapse
+			res["journal_collapsed"] = hud.quest_box.get_node_or_null("QuestDetail") == null
+			await tap_control(hud.quest_rows.get(id), "journal: expand")
+			await frames(3)
+			var dl = hud.quest_box.get_node_or_null("QuestDetail")
+			res["journal_detail"] = dl.text if dl else ""
+			await _snap("journal_expanded")
+			await tap_control(hud.quest_rows.get(id), "journal: collapse")
+			await frames(3)
+			res["journal_recollapsed"] = hud.quest_box.get_node_or_null("QuestDetail") == null
 			hud.show_panel("")
 	res["state_after_goblins"] = QuestSystem.state(p, id)
 	# back to Kell: arrow points at him, he shows "!"
@@ -3569,37 +3579,11 @@ func _organize0317(res: Dictionary) -> void:
 	await tap_control(hud.bank_slots[1], "bank: coal (swap)")
 	await frames(5)
 	o["bank_swap"] = p.bank.slots[0] != null and p.bank.slots[0]["id"] == "coal" and p.bank.slots[1]["id"] == "iron_ore"
-	await tap_control(hud.bank_tab_row.get_node_or_null("BankTabAdd"), "new tab")
-	await frames(5)
-	var ed: LineEdit = hud.bank_edit_row.get_node_or_null("BankTabName")
-	if ed:
-		ed.text = "Ores"
-		ed.text_submitted.emit("Ores")
-	await frames(5)
-	hud.bank_tab = BankTabs.ALL
-	hud._refresh_bank()
-	await frames(3)
-	await tap_control(hud.bank_slots[1], "bank: pick iron ore")
-	await frames(3)
-	await tap_control(hud.bank_tab_row.get_node_or_null("BankTab_2"), "tab Ores (file it)")
-	await frames(5)
-	o["filed"] = BankTabs.tab_of(p, "iron_ore") == 1
-	await tap_control(hud.bank_tab_row.get_node_or_null("BankTab_2"), "show tab Ores")
-	await frames(5)
-	await tap_control(hud.bank_slots[0], "bank: pick iron ore")
-	await frames(3)
-	await tap_control(find_button(hud.bank_edit_row, "Icon"), "icon from iron ore")
-	await frames(5)
-	o["tab_shows"] = BankTabs.indices(p, p.bank, 1).size() == 1 and hud.bank_slots[0].item_id == "iron_ore" and hud.bank_slots[1].item_id == ""
-	o["tab"] = p.bank_tabs.duplicate(true)
-	await _snap("bank_tabs")
+	await _snap("bank_arranged")
 	var q := Player.new()
 	q.from_save(p.to_save())
-	o["tabs_persist"] = q.bank_tabs.size() == 1 and q.bank_tabs[0]["name"] == "Ores" and q.bank_tabs[0]["icon"] == "iron_ore" and BankTabs.tab_of(q, "iron_ore") == 1 and q.bank.slots[0]["id"] == "coal"
+	o["bank_persist"] = q.bank.slots[0]["id"] == "coal" and q.bank.slots[1]["id"] == "iron_ore"
 	q.free()
-	await tap_control(find_button(hud.bank_edit_row, "Delete tab"), "delete tab")
-	await frames(5)
-	o["deleted"] = p.bank_tabs.is_empty() and BankTabs.tab_of(p, "iron_ore") == 0 and BankTabs.indices(p, p.bank, 0).size() == 2
 	await tap_control(hud.bank_arrange_btn, "Arrange off")
 	await frames(3)
 	# pack: pick up, move to an empty slot, swap, deselect; actions row still offered
