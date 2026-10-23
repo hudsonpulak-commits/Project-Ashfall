@@ -17,7 +17,8 @@
    "xp": 6,
    "drops": "giant_rat"
   },
-  "goblin": { "humanoid": true,
+  "goblin": {
+   "humanoid": true,
    "name": "Goblin",
    "sprite": "goblin",
    "level": 8,
@@ -70,7 +71,8 @@
    "drops": "wolf",
    "note": "0.3.1: aggressive, quick (chases 2 tiles per tick), packs of 3-4 mid-distance from towns"
   },
-  "town_guard": { "humanoid": true,
+  "town_guard": {
+   "humanoid": true,
    "name": "Town guard",
    "sprite": "town_guard",
    "level": 30,
@@ -88,7 +90,8 @@
    "drops": "town_guard",
    "note": "0.3.1: patrols its town (data/town_npcs.json); never starts a fight, fights back when attacked; tougher than a wolf, easier than a goblin camp"
   },
-  "citizen": { "humanoid": true,
+  "citizen": {
+   "humanoid": true,
    "name": "Citizen",
    "sprite": "citizen",
    "level": 1,
@@ -119,7 +122,8 @@
    "note": "0.3.1: wanders the town plaza; never starts a fight, swings back weakly",
    "show_level": false
   },
-  "cinder_brute": { "humanoid": true,
+  "cinder_brute": {
+   "humanoid": true,
    "name": "Cinder brute",
    "sprite": "cinder_brute",
    "level": 14,
@@ -154,7 +158,8 @@
    "drops": "cow",
    "note": "0.3.1 village pastures (towns/<village>.json pastures): passive, kicks back weakly when hit, respawns"
   },
-  "goblin_warlord": { "humanoid": true,
+  "goblin_warlord": {
+   "humanoid": true,
    "name": "Goblin Warlord",
    "sprite": "goblin_warlord",
    "level": 12,
@@ -187,6 +192,51 @@
    "xp": 4,
    "drops": "slime",
    "note": "0.3.8 from Grok's enemies_slime.json (attack/strength 2 -> max_hit 1, accuracy 0.3; coins -> marks); passive low-level blob by towns and villages; drops no bones"
+  },
+  "northern_guard": {
+   "humanoid": true,
+   "name": "Northern guard",
+   "sprite": "town_guard",
+   "level": 30,
+   "hp": 60,
+   "max_hit": 7,
+   "accuracy": 0.75,
+   "defence": 20,
+   "attack_ticks": 4,
+   "aggro": 0,
+   "leash": 16,
+   "wander": 0,
+   "respawn_ticks": 150,
+   "xp": 22,
+   "town_ok": true,
+   "drops": "town_guard",
+   "note": "0.3.14: Northern Guard camp north of Cinderholt (Lore_2026-10-21); town_guard sprite with a cold steel tint; fights back when attacked",
+   "tints": [
+    "#c8d0dc"
+   ]
+  },
+  "northern_soldier": {
+   "humanoid": true,
+   "name": "Northern soldier",
+   "sprite": "town_guard",
+   "level": 35,
+   "hp": 80,
+   "max_hit": 9,
+   "accuracy": 0.75,
+   "defence": 28,
+   "attack_ticks": 4,
+   "aggro": 0,
+   "leash": 16,
+   "wander": 0,
+   "respawn_ticks": 150,
+   "xp": 30,
+   "town_ok": true,
+   "drops": "town_guard",
+   "note": "0.3.14: heavier-armoured Northern Guard soldier (darker steel tint on the town_guard sprite; dedicated armoured sprite is an art gap)",
+   "tints": [
+    "#8890a0",
+    "#7a8494"
+   ]
   }
  },
  "camps": [
@@ -210,19 +260,13 @@
   },
   {
    "enemy": "chicken",
-   "at": [
-    362,
-    -208
-   ],
+   "at": [380, -196],
    "count": 4,
    "spread": 2
   },
   {
    "enemy": "chicken",
-   "at": [
-    328,
-    -228
-   ],
+   "at": [282, -186],
    "count": 4,
    "spread": 2
   },
@@ -320,19 +364,13 @@
   },
   {
    "enemy": "wolf",
-   "at": [
-    390,
-    -136
-   ],
+   "at": [402, -118],
    "count": 3,
    "spread": 2
   },
   {
    "enemy": "wolf",
-   "at": [
-    286,
-    -126
-   ],
+   "at": [280, -118],
    "count": 3,
    "spread": 2
   },
@@ -473,19 +511,13 @@
   },
   {
    "enemy": "slime",
-   "at": [
-    300,
-    -226
-   ],
+   "at": [282, -205],
    "count": 3,
    "spread": 3
   },
   {
    "enemy": "slime",
-   "at": [
-    359,
-    -175
-   ],
+   "at": [380, -222],
    "count": 3,
    "spread": 3
   },

@@ -584,6 +584,8 @@ func _screenshot_mode() -> void:
 		player.place_at(world.gen.town_spawn(tid) + Vector2i(0, 1))
 		player.set_town(tid)
 		world.set_focus(player.tile, true)
+	if args.has("night"):   # 0.3.14 night frames: jump the cycle to mid-night
+		DayNight._offset_ticks = DayNight.day_ticks() + DayNight.night_ticks() / 2 - Tick.tick_count
 	if args.has("at"):   # 0.3.10 region frames: --at=x,y (nearest free tile)
 		var xy := str(args["at"]).split(",")
 		player.place_at(world.find_free_tile_near(Vector2i(int(xy[0]), int(xy[1])), 12))

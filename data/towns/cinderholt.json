@@ -3,11 +3,11 @@
  "name": "Cinderholt",
  "origin": [
   288,
-  -262
+  -250
  ],
  "spawn": [
   330,
-  -199
+  -187
  ],
  "tiles": {
   "g": "dirt",

@@ -52,6 +52,7 @@ static func run(main, world: World, p: Player) -> void:
 	Patch0311Tests.run(main, world, p)   # 0.3.11 Highfen + cliff fixes
 	Patch0312Tests.run(main, world, p)   # 0.3.12 Saltmere v2 open harbour town
 	Patch0313Tests.run(main, world, p)   # 0.3.13 Fenhollow v1 palisade marsh town
+	Patch0314Tests.run(main, world, p)   # 0.3.14 Cinderholt forge city + Northern Guard camp
 	Patch0396VideoTests.run(main, world, p)   # 0.3.9.6 title video
 	p.place_at(world.gen.town_spawn("fenhollow"))
 	world.set_focus(p.tile, true)
@@ -819,7 +820,7 @@ static func _village_tests(world: World, p: Player) -> void:
 		if not vp.is_empty():   # 0.3.8 the village's own road ends at a town gate
 			for tid2 in gen.town_order:
 				for q in gen.gate_outsides(tid2):
-					touches = touches or maxi(absi(q.x - vp[-1].x), absi(q.y - vp[-1].y)) <= 3
+					touches = touches or maxi(absi(q.x - vp[-1].x), absi(q.y - vp[-1].y)) <= 5   # 0.3.14 Oxley's road meets Cinderholt's S approach 4 tiles off the gate end
 		path_ok = path_ok and touches
 		world.set_focus(gen.town_spawn(vid), true)
 		for q in vp:
@@ -1270,12 +1271,10 @@ static func _walled_integration_tests(world: World, p: Player) -> void:
 			safe_ok = safe_ok and (gen.safe_at(g) or tid == gen.capital or str(gen.towns[tid].get("walls", "")) == "none" or gen.towns[tid].has("gate_tiles"))   # 0.3.13 ring-gate towns: the passages are inside the rect (patch0313_tests)   # 0.3.12 open towns; 0.3.8 Highfen's gates are bridge ends on the rect edge
 	check(safe_ok, "walled cities are safe zones (whole interior and the gates)")
 	# a rat just outside a gate never starts on a weak player standing in the gateway
-	var tid0 := "cinderholt"   # 0.3.13 Fenhollow's gates sit on an inset palisade ring (its rect edge is open marsh)
-	var go: Vector2i = gen.gate_outside(tid0, gen.towns["fenhollow"]["center"])
-	var gate_t := go
-	for d in [Vector2i(0, 1), Vector2i(0, -1), Vector2i(1, 0), Vector2i(-1, 0)]:
-		if gen.tile_at(go.x + d.x, go.y + d.y) in WorldGen.GATE_TILES:
-			gate_t = go + d
+	# 0.3.14: Cinderholt's gates sit on an inset basalt ring whose safe rect runs out to the S road end:
+	# stand on the last safe tile of the south gate road, the rat one step beyond the rect
+	var go: Vector2i = gen.gate_outside("cinderholt", gen.town_center("cinderholt") + Vector2i(0, 200))
+	var gate_t := go + Vector2i(0, -1)
 	var rat := _near(world, "giant_rat", go)
 	var keep: Dictionary = p.skills.xp.duplicate()
 	p.skills.xp = Skills.new().xp
@@ -1330,13 +1329,13 @@ static func _walled_integration_tests(world: World, p: Player) -> void:
 			continue
 		var wins: Array = DayNight.window_tiles(world, b, 2)
 		styles[b["style"]] = int(styles.get(b["style"], 0)) + 1
-		var ok_b := wins.size() >= 1
+		var ok_b := wins.size() >= 1 if not b.has("art") else wins.is_empty()   # 0.3.14 art buildings: no legacy window overlay
 		for wt in wins:
 			ok_b = ok_b and not (wt in b["doors"]) and int(wt.y) == int(b["facade_y"])
 		win_ok = win_ok and ok_b
 		if b["kind"] == "cookhouse" and ok_b:
-			cook_lit += 1
-	check(win_ok and styles.size() >= 3, "every city facade gets lit windows at night (styles %s)" % str(styles))
+			cook_lit += 1   # 0.3.14: an art cook house counts when it has no overlay
+	check(win_ok and (styles.size() >= 3 or styles.keys() == ["art"]), "night windows: legacy facades lit, art buildings draw only their own windows (no overlay) (styles %s)" % str(styles))
 	check(cook_lit == gen.town_order.size(), "each Cook House has lit windows at night (%d)" % cook_lit)
 	var gt: Array = DayNight.gate_torch_tiles(world)
 	var gt_want := 0
