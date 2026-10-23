@@ -346,17 +346,19 @@ def place_any(n, spots, role, reach=48):
     for i, (a_, r_) in enumerate(spots):
         if place(n, *wp(a_, r_), True, role=role, reach=reach, quiet=True): return
     for a_ in range(0, 360, 30):     # last resort: wide search from the outer band
-        if place(n, *wp(a_, .75), True, role=role, reach=200, quiet=a_ < 330): return
+        if place(n, *wp(a_, .75), True, role=role, reach=200, quiet=True): return
+    for a_ in range(0, 360, 15):     # 0.3.14 v5 art is bigger: outside the wall, by the ring road
+        if place(n, *wp(a_, 1.14), False, role=role, reach=120, quiet=a_ < 345): print('outside the wall:', n, role); return
 # 0.3.13 v4 layout (designer preview_v4): v3.1 civic core round the plaza; the larger v4 buildings take the room
 # freed by the dropped outer ring road (guild, general store, smithy in the outer band; player shop + cookhouse mid-ring)
 RING = lambda a0, r0: [(a0, r0)] + [((a0 + d) % 360, r_) for d in (8, -8, 16, -16, 24, -24, 36, -36, 50, -50, 70, -70, 90, -90) for r_ in (r0, r0 + .05, r0 - .05)]
 place_any('v3_temple', RING(232, .56), 'church', reach=60)
 place_any('v3_town_hall', RING(308, .56), 'townhall', reach=60)
 place_any('v4_guild', RING(20, .42), 'guild', reach=60)
-for n_, a_, r_, role_ in [('v3_bank', 345, .40, 'bank'), ('shop_tavern', 135, .40, 'cook'), ('v4_general_store', 110, .40, 'general'),
-                          ('v4_player_shop', 150, .40, 'player_shop'), ('v3_player_house', 75, .40, 'player_house'),
-                          ('v4_cookhouse', 195, .40, 'baker'), ('v4_smithy', 20, .8, 'smithy')]:
-    place_any(n_, RING(a_, r_), role_, reach=90)
+for n_, a_, r_, role_ in [('v3_bank', 345, .50, 'bank'), ('shop_tavern', 135, .74, 'cook'), ('v4_general_store', 100, .74, 'general'),
+                          ('v4_player_shop', 165, .74, 'player_shop'), ('v3_player_house', 75, .50, 'player_house'),
+                          ('v4_cookhouse', 195, .50, 'baker'), ('v4_smithy', 20, .8, 'smithy')]:
+    place_any(n_, RING(a_, r_), role_, reach=150)
 POOL = M3['houses'] + ['v3_house_narrow_tall', 'v3_house_longhouse']
 use = {}; pi = 0; fill = 0
 cands = [(r_, a_) for r_ in (.3, .36, .42, .47, .52, .58, .78, .82) for a_ in range(0, 360, 3)]

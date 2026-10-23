@@ -11,6 +11,7 @@ static func check(cond: bool, what: String) -> void:
 static func run(main, world, p) -> void:
 	var gen: WorldGen = world.gen
 	check(str(ProjectSettings.get_setting("application/config/version")) == "0.3.14", "version is 0.3.14")
+	_min_5x5(gen)
 	var t: Dictionary = gen.towns["cinderholt"]
 	var org := Vector2i(int(t["origin"][0]), int(t["origin"][1]))
 	var gts: Dictionary = t.get("gate_tiles", {})
@@ -98,3 +99,19 @@ static func _clang(p) -> void:
 	check(Sfx.has_sound("armour_clang") and Sfx.last_event == "armour_clang", "the armour_clang hook plays sword_ting (armour_clang.ogg)")
 	var src := FileAccess.get_file_as_string("res://src/actors/enemy.gd")
 	check(src.contains("Sfx.armour_clang()"), "a 0-damage hit on an NPC calls the armour_clang hook")
+
+
+## 0.3.14 sprite bot's resized sets: every walk-in art building is at least 5x5 tiles (the Elijah tomb is a monument)
+static func _min_5x5(gen) -> void:
+	var ta: Dictionary = JSON.parse_string(FileAccess.get_file_as_string("res://data/town_art.json"))["buildings"]
+	var n := 0
+	var small: Array = []
+	for tid in ["fenhollow", "saltmere", "highfen", "cinderholt"]:
+		for b in gen.towns[tid].get("buildings", []):
+			var a: Dictionary = ta.get(str(b["art"]), {})
+			if a.is_empty() or str(b["art"]) == "v3_elijah_tomb":
+				continue
+			n += 1
+			if int(a["tiles"][0]) < 5 or (a["plan"] as Array).size() < 5:
+				small.append("%s/%s" % [tid, b["art"]])
+	check(n > 100 and small.is_empty(), "every art building in the 4 art towns is at least 5x5 (%d checked, small %s)" % [n, small])

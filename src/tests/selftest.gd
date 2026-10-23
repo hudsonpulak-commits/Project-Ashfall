@@ -146,21 +146,21 @@ static func run(main) -> int:
 	p.inventory.clear()
 	p.inventory.add("copper_ore", 3)
 	p.inventory.add("tin_ore", 2)
-	p.interact(world, world.find_nearest_object(p.tile, ["furnace"], 20))
-	ticks(80)   # 0.3.13 Fenhollow's forge hall is a longer walk from the bank
+	p.interact(world, world.find_nearest_object(p.tile, ["furnace"], 45))
+	ticks(160)   # 0.3.14 Fenhollow v2 is 1.6x larger   # 0.3.13 Fenhollow's forge hall is a longer walk from the bank
 	check(p.inventory.count("bronze_bar") == 2 and p.inventory.count("copper_ore") == 1 and p.inventory.count("tin_ore") == 0,
 		"furnace: bronze bar = 1 copper ore + 1 tin ore (2+3 ore -> 2 bars, spare copper left)")
 	p.inventory.clear()
 	p.inventory.add("raw_carp", 3)
-	p.interact(world, world.find_nearest_object(p.tile, ["hearth", "oven"], 40))
-	ticks(80)
+	p.interact(world, world.find_nearest_object(p.tile, ["hearth", "oven"], 60))
+	ticks(160)
 	check(p.inventory.count("cooked_carp") + p.inventory.count("charred_fish") == 3, "hearth: 3 carp cooked or charred")
 	check(int(p.skills.xp["cooking"]) > 0, "cooking xp gained")
 
 	# --- dummy
 	var mxp := int(p.skills.xp["attack"]) + int(p.skills.xp["strength"])
-	p.interact(world, world.find_nearest_object(p.tile, ["training_dummy"], 20))
-	ticks(60)
+	p.interact(world, world.find_nearest_object(p.tile, ["training_dummy"], 45))
+	ticks(140)
 	check(int(p.skills.xp["attack"]) + int(p.skills.xp["strength"]) > mxp, "training dummy gives Attack/Strength xp (by style)")
 	p.stop()
 
