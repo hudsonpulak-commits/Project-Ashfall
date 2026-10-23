@@ -41,6 +41,7 @@ static func _find_path(world, start: Vector2i, goals: Array, aim: Vector2i, max_
 	var came := {}
 	var closed := {}
 	var counter := 0
+	var bc := {}   # 0.3.16 per-search is_blocked memo (diagonal checks revisit the same tiles)
 	_push(open_heap, [_h(start, aim), counter, start])
 	var expanded := 0
 	while not open_heap.is_empty() and expanded < max_nodes:
@@ -59,9 +60,9 @@ static func _find_path(world, start: Vector2i, goals: Array, aim: Vector2i, max_
 		expanded += 1
 		for d in DIRS:
 			var n: Vector2i = cur + d
-			if closed.has(n) or world.is_blocked(n):
+			if closed.has(n) or _blk(world, bc, n):
 				continue
-			if d.x != 0 and d.y != 0 and not diag_ok(world, cur, d):
+			if d.x != 0 and d.y != 0 and not _diag_ok_c(world, bc, cur, d):
 				continue
 			var cost: float = g_cost[cur] + (DIAG if (d.x != 0 and d.y != 0) else 1.0)
 			if cost < g_cost.get(n, INF):
@@ -76,6 +77,28 @@ static func _find_path(world, start: Vector2i, goals: Array, aim: Vector2i, max_
 ## tree, a rock: the sprites just overlap) but never past a wall/water corner,
 ## and never between two blocked tiles. (0.2.x forbade it next to any object,
 ## so every tree corner turned a diagonal into an up-then-over pair.)
+static func _blk(world, bc: Dictionary, q: Vector2i) -> bool:
+	var b = bc.get(q)
+	if b == null:
+		b = world.is_blocked(q)
+		bc[q] = b
+	return b
+
+
+static func _diag_ok_c(world, bc: Dictionary, cur: Vector2i, d: Vector2i) -> bool:
+	var a := Vector2i(cur.x + d.x, cur.y)
+	var b := Vector2i(cur.x, cur.y + d.y)
+	var ba: bool = _blk(world, bc, a)
+	var bb: bool = _blk(world, bc, b)
+	if ba and bb:
+		return false
+	if not (ba or bb):
+		return true
+	if not world.has_method("is_tile_blocked"):
+		return false
+	return not ((ba and world.is_tile_blocked(a)) or (bb and world.is_tile_blocked(b)))
+
+
 static func diag_ok(world, cur: Vector2i, d: Vector2i) -> bool:
 	var a := Vector2i(cur.x + d.x, cur.y)
 	var b := Vector2i(cur.x, cur.y + d.y)

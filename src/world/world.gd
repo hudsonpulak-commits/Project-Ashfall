@@ -433,9 +433,11 @@ func object_at_loaded(p: Vector2i) -> WorldObject:
 
 
 func is_blocked(p: Vector2i) -> bool:
-	if tile_type(p) in WorldGen.BLOCKING_TILES:
+	var c := chunk_of(p)
+	var ch := get_chunk(c)
+	if ch.tile_local(p.x - c.x * CHUNK, p.y - c.y * CHUNK) in WorldGen.BLOCKING_TILES:
 		return true
-	var o := object_at(p)
+	var o: WorldObject = ch.objects.get(p)
 	return o != null and o.blocks()
 
 
