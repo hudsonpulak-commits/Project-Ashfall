@@ -689,7 +689,7 @@ var bank_at := Vector2i(1 << 20, 0)   # 0.3.17 the chest / banker the bank was o
 
 func on_bank(_world, obj) -> void:
 	if obj != null:
-		bank_at = obj.tile
+		bank_at = obj.pos
 	Events.bank_opened.emit()
 
 
