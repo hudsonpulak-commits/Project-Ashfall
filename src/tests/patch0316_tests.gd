@@ -177,6 +177,12 @@ static func _rats(world, p) -> void:
 	check(QuestSystem.giver_marker(p, "old_mabel") == "!" and _talk(world, p, "old_mabel")["node"] == "stage_1", "Mabel asks about the big one")
 	QuestSystem.choose(p, id, "advance")
 	var mom = world.enemies.nearest(nest, ["rat_mother"], 40)
+	var hole = world.find_nearest_object(mom.tile if mom else nest, ["rat_den_entrance"], 6)
+	var camp_at: Array = []
+	for c in GameData.camps:
+		if c.get("enemy", "") == "rat_mother":
+			camp_at = c["at"]
+	check(hole != null and camp_at == [153, -74], "Rat Mother waits by the rat-den entrance; her spot comes from the quest's encounter data (%s)" % str(camp_at))
 	check(mom != null and float(mom.def.get("scale", 1)) > 1.4 and mom.max_hp > 30, "the Rat Mother is a big, tough rat")
 	check(QuestSystem.objective(p, world).get("kind", "") in ["enemy", "area"], "guidance points at the Rat Mother")
 	check(_kill(world, p, "rat_mother", 1, nest) == 1 and QuestSystem.state(p, id) == QuestSystem.READY, "Rat Mother slain: back to Mabel")

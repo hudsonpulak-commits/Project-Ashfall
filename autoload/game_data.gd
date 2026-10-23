@@ -74,6 +74,7 @@ func reload() -> void:
 	var en: Dictionary = _load_json("enemies.json")
 	enemies = en.get("enemies", {})
 	camps = en.get("camps", [])
+	_apply_quest_encounters()
 	var dr: Dictionary = _load_json("drops.json")
 	drop_tables = dr.get("tables", {})
 	ground_rules = dr.get("ground", {})
@@ -248,3 +249,27 @@ func _tex(path: String) -> Texture2D:
 		push_warning("GameData: missing texture %s" % path)
 	_tex_cache[path] = t
 	return t
+
+
+## 0.3.16: a quest may pin where its boss stands ("encounter" in data/quests.json:
+## {kind: {site, at, plane}}). The camp of that kind moves to site origin + at, so
+## 0.3.17 can move the Rat Mother down into the underworld den with a data edit.
+func _apply_quest_encounters() -> void:
+	var f := FileAccess.open("res://data/quests.json", FileAccess.READ)
+	if f == null:
+		return
+	var qd = JSON.parse_string(f.get_as_text())
+	if not (qd is Dictionary):
+		return
+	var sites: Dictionary = qd.get("sites", {})
+	for q in qd.get("quests", []):
+		var enc: Dictionary = q.get("encounter", {})
+		for kind in enc.keys():
+			var e: Dictionary = enc[kind]
+			if str(e.get("plane", "surface")) != "surface" or not sites.has(e.get("site", "")):
+				continue      # only the surface exists in 0.3.16
+			var o: Array = sites[e["site"]]["origin"]
+			var a: Array = e.get("at", [0, 0])
+			for c in camps:
+				if str(c.get("enemy", "")) == kind:
+					c["at"] = [int(o[0]) + int(a[0]), int(o[1]) + int(a[1])]
