@@ -329,7 +329,7 @@ func _attack(t: int) -> void:
 	if _sprite and GameData.sprite_def("actors", def.get("sprite", kind)).has("bite_paths"):
 		_bite_t = 0.0   # 0.3.17 play the wind-up + lunge bite strip
 	var acc := Combat.enemy_accuracy(def, target.combat_def(), target.skills.level("defence")) * Prayer.mult(target.prayer, "def")
-	var dmg := Combat.swing(acc, int(def.get("max_hit", 1)), rng)
+	var dmg := Combat.final_damage(Combat.swing(acc, int(def.get("max_hit", 1)), rng))   # 0.3.18 x0.5
 	target.take_hit(dmg, self, t)
 
 

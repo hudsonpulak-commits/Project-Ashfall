@@ -134,8 +134,40 @@ static func defence_xp(dmg: int) -> float:
 	return float(d.get("hit_base", 2.0)) + float(d.get("hit_per_damage", 1.0)) * dmg
 
 
-static func award_defence_xp(skills: Skills, dmg: int, set_mult: float, rng: RandomNumberGenerator) -> int:
-	var n := roll_xp(defence_xp(dmg) * set_mult, rng)
+## 0.3.18 the final damage step: x damage_mult, never below 1 on a landed hit.
+static func final_damage(dmg: int) -> int:
+	if dmg <= 0:
+		return dmg
+	return maxi(1, int(round(dmg * float(cfg().get("damage_mult", 1.0)))))
+
+
+## 0.3.18 bonus Defence XP for one hit taken, summed over worn armour pieces by tier.
+static func armour_hit_xp(armour_ids: Array) -> float:
+	var t: Dictionary = cfg().get("armour_hit_xp", {})
+	var sum := 0.0
+	for id in armour_ids:
+		var g: Dictionary = GameData.item(str(id)).get("gear", {})
+		if g.is_empty() or str(g.get("slot", "")) in ["weapon", "ammo"]:
+			continue
+		sum += tier_hit_xp(int(g.get("tier", 1)))
+	return sum
+
+
+static func tier_hit_xp(tier: int) -> float:
+	var t: Dictionary = cfg().get("armour_hit_xp", {})
+	if t.has(str(tier)):
+		return float(t[str(tier)])
+	var top := 0
+	for k in t.keys():
+		if str(k).is_valid_int():
+			top = maxi(top, int(k))
+	if top == 0:
+		return 0.0
+	return float(t[str(top)]) + float(t.get("step", 1.0)) * (tier - top)
+
+
+static func award_defence_xp(skills: Skills, dmg: int, set_mult: float, rng: RandomNumberGenerator, bonus: float = 0.0) -> int:
+	var n := roll_xp(defence_xp(dmg) * set_mult + bonus, rng)
 	skills.add_xp("defence", n)
 	return n
 
@@ -176,13 +208,14 @@ static func expected_fight(e: Dictionary, s: Dictionary, acc_mult: float = 1.0, 
 	var w := str(s.get("weapon", ""))
 	var acc := minf(0.95, actor_accuracy(int(s.get("attack", 1)), int(s.get("atk", 0)), int(e.get("defence", 0)), armour_break(w)) * acc_mult)
 	var mh := actor_max_hit(int(s.get("strength", 1)), float(s.get("power", 0.0)), int(s.get("str", 0)))
-	var dps := acc * (1.0 + mh) / 2.0 * dmg_mult / weapon_ticks(w)
+	var dm := float(cfg().get("damage_mult", 1.0))   # 0.3.18
+	var dps := acc * (1.0 + mh) / 2.0 * dmg_mult * dm / weapon_ticks(w)
 	var swing_ticks := float(e.get("hp", 5)) / maxf(0.01, dps)
 	var ticks := swing_ticks + SEARCH_TICKS
 	var e_acc := enemy_accuracy(e, int(s.get("def", 0)), int(s.get("defence", 1))) * def_mult
 	var e_max := float(e.get("max_hit", 1))
 	var swings := swing_ticks / float(e.get("attack_ticks", ATTACK_TICKS))
-	var taken := e_acc * (1.0 + e_max) / 2.0 * swings
+	var taken := e_acc * (1.0 + e_max) / 2.0 * swings * dm
 	var dx: Dictionary = cfg().get("defence_xp", {})
 	var per_swing := (1.0 - e_acc) * float(dx.get("block", 2.0)) + e_acc * (float(dx.get("hit_base", 2.0)) + float(dx.get("hit_per_damage", 1.0)) * (1.0 + e_max) / 2.0)
 	return {"ticks": ticks, "damage": taken, "swings": swings, "def_xp": per_swing * swings * float(s.get("set_mult", 1.0))}

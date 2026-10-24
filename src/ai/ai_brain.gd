@@ -456,7 +456,7 @@ static func simulate(agent: AIAgent, ticks: int, now: int) -> void:
 				Prayer.tick(agent.prayer, plv, ticks)
 			var n := _take(agent, "k", ticks / float(fn["ticks"]))
 			for i in n:
-				agent.hp -= float(fn["damage"]) * agent.rng.randf_range(0.5, 1.5)
+				agent.hp -= float(fn["damage"]) * agent.rng.randf_range(0.5, 1.5) * float(Combat.cfg().get("damage_mult", 1.0))   # 0.3.18
 				if agent.hp <= 0.0 and not heal(agent):
 					if PkRules.is_pk(agent.pos):
 						AdvBrain.npc_pk_death(agent, now)   # 0.3.1: keep-3 rule in the Scorch

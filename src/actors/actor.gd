@@ -316,7 +316,7 @@ func _shoot(e, t: int, world) -> bool:
 		acc = minf(0.95, Combat.actor_accuracy(skills.level("archery"), combat_atk(), int(e.def.get("defence", 0)), Combat.armour_break(w)) * Prayer.mult(prayer, "acc"))
 	var mh := Combat.actor_max_hit(skills.level("archery"), weapon_power(), combat_str()) + Combat.arrow_power(arrow)
 	var dmg := Combat.swing(acc, mh, rng)
-	dmg = Prayer.scale_damage(dmg, Prayer.mult(prayer, "dmg"), rng)
+	dmg = Combat.final_damage(Prayer.scale_damage(dmg, Prayer.mult(prayer, "dmg"), rng))   # 0.3.18 x0.5
 	Events.projectile.emit(self, e, str(Combat.rcfg().get("projectile_sprite", "arrow")))
 	Combat.award_hit_xp(skills, "ranged", dmg)
 	if world != null and world.get("ground") != null and rng.randf() < float(Combat.rcfg().get("arrow_drop_chance", 0.5)):
@@ -366,6 +366,9 @@ func on_pvp_kill(_victim, _t: int) -> void:
 	set_status("")
 
 
+var last_armour_bonus := 0.0   # 0.3.18 tests / QA
+
+
 ## An enemy hit us (dmg 0 = a miss, still shown).
 func take_hit(dmg: int, attacker, t: int) -> void:
 	if dead:
@@ -379,7 +382,11 @@ func take_hit(dmg: int, attacker, t: int) -> void:
 	if attacker != null:
 		last_attacker = attacker
 		combat_foe = attacker
-		Combat.award_defence_xp(skills, dmg, set_mult(), rng)   # block or hit: small Defence XP
+		var bonus := Combat.armour_hit_xp(armour_ids()) if self is Player and dmg > 0 else 0.0   # 0.3.18 armour XP bonus
+		var dx := Combat.award_defence_xp(skills, dmg, set_mult(), rng, bonus)   # block or hit: small Defence XP
+		if bonus > 0.0 and self is Player:
+			last_armour_bonus = bonus
+			Events.say("+%d Defence XP (armour +%s)" % [dx, str(snappedf(bonus, 0.01))])
 	Events.hitsplat.emit(self, tile, dmg)
 	queue_redraw()
 	on_damaged(t)
@@ -489,7 +496,7 @@ func _fight_tick(t: int, world) -> void:
 			else:
 				acc = minf(0.95, Combat.actor_accuracy(skills.level("attack"), combat_atk(), int(e.def.get("defence", 0)), Combat.armour_break(w)) * Prayer.mult(prayer, "acc"))
 			var dmg := Combat.swing(acc, Combat.actor_max_hit(skills.level("strength"), weapon_power(), combat_str()), rng)
-			dmg = Prayer.scale_damage(dmg, Prayer.mult(prayer, "dmg"), rng)
+			dmg = Combat.final_damage(Prayer.scale_damage(dmg, Prayer.mult(prayer, "dmg"), rng))   # 0.3.18 x0.5
 			Combat.award_hit_xp(skills, current_style(), dmg)
 			e.take_hit(dmg, self, t)
 		return
