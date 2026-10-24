@@ -30,9 +30,9 @@ static func run(_main, _world, p) -> void:
 		p.last_armour_bonus = 0.0
 		p.take_hit(1, e, Tick.tick_count)
 		sum += p.last_armour_bonus
-	var gained := float(p.skills.xp["defence"]) - x0
-	var base := Combat.defence_xp(1) * p.set_mult() * n
-	var want := Combat.armour_hit_xp(p.armour_ids()) * n
+	var gained: float = float(p.skills.xp["defence"]) - x0
+	var base: float = Combat.defence_xp(1) * p.set_mult() * n
+	var want: float = Combat.armour_hit_xp(p.armour_ids()) * n
 	check(e != null and absf(sum - want) < 0.01 and gained >= base + want - n and gained <= base + want + n, "0.3.18 a hit on the player adds the armour bonus to Defence XP (worn %s: bonus %.2f/hit, gained %d vs base %d)" % [str(p.armour_ids()), want / n, int(gained), int(base)])
 	check(absf(want / n - 3.5) < 0.01, "0.3.18 steel helm + iron body + bronze legs = +3.5 per hit")
 	p.equipment = keep_gear
