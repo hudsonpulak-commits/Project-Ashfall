@@ -12,15 +12,33 @@ var tick_count: int = 0
 var running: bool = true
 var time_scale: float = 1.0
 var _acc: float = 0.0
+## 0.3.19 QA (not the perf scenario): each rendered frame is 1/60 s of game
+## time, and now_ms() advances 16 ms per frame. Waits then don't expire early
+## when a loaded machine draws slowly.
+var fixed_step := false
+var virtual_msec := 0
+var _virtual_ready := false
 
 
 func _process(delta: float) -> void:
+	if fixed_step:
+		if not _virtual_ready:
+			virtual_msec = Time.get_ticks_msec()
+			_virtual_ready = true
+		else:
+			virtual_msec += 16
 	if not running:
 		return
-	_acc += minf(delta, 0.25) * time_scale
+	var d := (1.0 / 60.0) if fixed_step else delta
+	_acc += minf(d, 0.25) * time_scale
 	while _acc >= TICK_SECONDS:
 		_acc -= TICK_SECONDS
 		step()
+
+
+## Wall clock, or the QA virtual clock when fixed_step is on.
+func now_ms() -> int:
+	return virtual_msec if fixed_step else Time.get_ticks_msec()
 
 
 ## Advance exactly one tick (also used by headless tests to fast-forward).

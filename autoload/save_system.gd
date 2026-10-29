@@ -7,7 +7,7 @@ extends Node
 const SAVE_PATH := "user://ashfen_save.json"
 const TMP_PATH := "user://ashfen_save.tmp"
 const BACKUP_PATH := "user://ashfen_save.bak"
-const SAVE_VERSION := 8      # 4 = map markers, 5 = 0.3.1 day/night cycle, 6 = 0.3.1 world layout (mines, Scorch, churches), 7 = 0.3.1 walled cities, 8 = 0.3.1 adventurers + Scorch PK
+const SAVE_VERSION := 9      # 4 = map markers, 5 = 0.3.1 day/night cycle, 6 = 0.3.1 world layout (mines, Scorch, churches), 7 = 0.3.1 walled cities, 8 = 0.3.1 adventurers + Scorch PK, 9 = 0.3.19 plate/chain armour
 
 const SLOTS := 3                 # 0.3.2 save slots (slot 1 = the pre-0.3.2 file, so old saves just appear there)
 const BOOT_MARK := "user://ashfen_boot.json"   # 0.3.2 boot watchdog: set while a slot loads, cleared in gameplay
@@ -232,6 +232,9 @@ func _migrate(data: Dictionary) -> Dictionary:
 	if v < 8:
 		data = migrate_adventurers_pk(data)
 		data["version"] = 8
+	if v < 9:
+		data = migrate_armour_fit(data)
+		data["version"] = 9
 	if v > SAVE_VERSION:
 		push_warning("SaveSystem: save from a newer build (v%d)" % v)
 	return data
@@ -368,4 +371,11 @@ static func migrate_adventurers_pk(data):
 			ai["adv"] = {}
 		if not ai.has("gear_econ"):
 			ai["gear_econ"] = {}
+	return data
+
+
+## v8 -> v9 (0.3.19): melee armour is plate or chain. The ids already in a
+## save (bronze_cap, iron_helm, steel_brigandine, ...) are the plate fit, so
+## nothing is rewritten. Chain ids are new and only appear when smithed.
+static func migrate_armour_fit(data):
 	return data

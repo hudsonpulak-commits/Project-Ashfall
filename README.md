@@ -7,7 +7,7 @@ An original top-down, tile-based skilling RPG for Android: an MMO-feel world whe
 - Art drop-in guide: [`docs/ART_GUIDE.md`](docs/ART_GUIDE.md)
 
 ```bash
-./scripts/test.sh            # headless gameplay tests (230 checks)
+./scripts/test.sh            # headless gameplay tests (1199 checks)
 ./scripts/build_web.sh       # -> build/web/
 ./scripts/build_android.sh   # -> build/android/ashfen-debug.apk
 ./scripts/build_android_release.sh  # -> small release APK (custom template), signed with the debug keystore

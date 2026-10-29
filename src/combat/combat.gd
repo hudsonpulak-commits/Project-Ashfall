@@ -55,6 +55,27 @@ static func class_def(item_id: String) -> Dictionary:
 	return cfg().get("classes", {}).get(weapon_class(item_id), {})
 
 
+## 0.3.19 pack/bank line for a gear piece. Plate and chain add the hit and
+## block percents (1 point = 1%) and their shared power.
+static func gear_note(item_id: String) -> String:
+	var gd: Dictionary = GameData.item(item_id).get("gear", {})
+	if gd.is_empty():
+		return ""
+	var rs := req_skill(item_id)
+	var note := " %s: atk %d, str %d, def %d (needs %s %d)." % [str(gd["slot"]).capitalize(), int(gd.get("atk", 0)), int(gd.get("str", 0)), int(gd.get("def", 0)), GameData.skill_by_id[rs]["name"] if rs != "" else "level", int(gd.get("level", 1))]
+	var fit := str(gd.get("fit", ""))
+	if fit == "plate" or fit == "chain":
+		var atk := int(gd.get("atk", 0))
+		var def := int(gd.get("def", 0))
+		note += " %s: +%d%% hit, +%d%% block (power %d)." % [fit.capitalize(), atk, def, atk + def]
+	return note
+
+
+## Worn equipment, as hit chance and block chance. Each gear point is 1%.
+static func equip_stat_line(atk: int, def_bonus: int) -> String:
+	return "+%d%% hit  +%d%% block" % [atk, def_bonus]
+
+
 ## Skill needed to use a gear piece: weapon class skill, Defence for armour.
 static func req_skill(item_id: String) -> String:
 	var gd: Dictionary = GameData.item(item_id).get("gear", {})

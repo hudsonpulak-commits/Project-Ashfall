@@ -61,7 +61,8 @@
  "damage_mult": 0.5,
  "note_damage_mult": "0.3.18 every landed hit (player, enemies, NPCs, AI, PvP) is scaled at the final step; a hit never drops below 1",
  "armour_hit_xp": {"1": 0.5, "2": 1.0, "3": 2.0, "4": 3.0, "step": 1.0},
- "note_armour_hit_xp": "0.3.18 bonus Defence XP per worn armour piece each time the player is hit, by gear tier (1 bronze/leather, 2 iron, 3 steel, 4 dusk; higher tiers +step each)",
+ "note_armour_hit_xp": "0.3.18 bonus Defence XP per worn armour piece each time the player is hit, by gear tier (1 bronze/leather, 2 iron, 3 steel, 4 dusk; higher tiers +step each). 0.3.19 plate and chain of the same tier grant the same bonus.",
+ "note_armour_fit": "0.3.19 melee metal armour is plate or chain. Power = atk + def and matches the other fit of that piece. Plate keeps the old defence and adds a smaller attack bonus (max(1, old def / 4)). Chain swaps those two numbers. Each atk point is +1% hit chance; each def point is +1% block (enemy accuracy). Leather and wolf-pelt ranger armour is not part of this split. The alder buckler stays a wooden shield.",
  "defence_xp": {
   "block": 2.0,
   "hit_base": 2.0,

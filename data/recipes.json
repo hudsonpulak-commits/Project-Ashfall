@@ -276,6 +276,20 @@
    }
   },
   {
+   "id": "forge_bronze_chain_coif",
+   "station": "anvil",
+   "skill": "smithing",
+   "level": 5,
+   "xp": 50,
+   "ticks": 5,
+   "in": {
+    "bronze_bar": 3
+   },
+   "out": {
+    "bronze_chain_coif": 1
+   }
+  },
+  {
    "id": "forge_bronze_greaves",
    "station": "anvil",
    "skill": "smithing",
@@ -290,6 +304,20 @@
    }
   },
   {
+   "id": "forge_bronze_chain_skirt",
+   "station": "anvil",
+   "skill": "smithing",
+   "level": 7,
+   "xp": 62,
+   "ticks": 5,
+   "in": {
+    "bronze_bar": 4
+   },
+   "out": {
+    "bronze_chain_skirt": 1
+   }
+  },
+  {
    "id": "forge_bronze_scale_vest",
    "station": "anvil",
    "skill": "smithing",
@@ -301,6 +329,20 @@
    },
    "out": {
     "bronze_scale_vest": 1
+   }
+  },
+  {
+   "id": "forge_bronze_chain_vest",
+   "station": "anvil",
+   "skill": "smithing",
+   "level": 9,
+   "xp": 78,
+   "ticks": 6,
+   "in": {
+    "bronze_bar": 5
+   },
+   "out": {
+    "bronze_chain_vest": 1
    }
   },
   {
@@ -378,6 +420,20 @@
    }
   },
   {
+   "id": "forge_iron_chain_coif",
+   "station": "anvil",
+   "skill": "smithing",
+   "level": 20,
+   "xp": 165,
+   "ticks": 6,
+   "in": {
+    "iron_bar": 3
+   },
+   "out": {
+    "iron_chain_coif": 1
+   }
+  },
+  {
    "id": "forge_iron_kite_shield",
    "station": "anvil",
    "skill": "smithing",
@@ -390,6 +446,21 @@
    },
    "out": {
     "iron_kite_shield": 1
+   }
+  },
+  {
+   "id": "forge_iron_chain_kite",
+   "station": "anvil",
+   "skill": "smithing",
+   "level": 21,
+   "xp": 180,
+   "ticks": 6,
+   "in": {
+    "iron_bar": 3,
+    "plank": 2
+   },
+   "out": {
+    "iron_chain_kite": 1
    }
   },
   {
@@ -408,6 +479,21 @@
    }
   },
   {
+   "id": "forge_iron_chain_legs",
+   "station": "anvil",
+   "skill": "smithing",
+   "level": 22,
+   "xp": 190,
+   "ticks": 7,
+   "in": {
+    "iron_bar": 3,
+    "plank": 2
+   },
+   "out": {
+    "iron_chain_legs": 1
+   }
+  },
+  {
    "id": "forge_iron_hauberk",
    "station": "anvil",
    "skill": "smithing",
@@ -419,6 +505,20 @@
    },
    "out": {
     "iron_hauberk": 1
+   }
+  },
+  {
+   "id": "forge_iron_chain_hauberk",
+   "station": "anvil",
+   "skill": "smithing",
+   "level": 24,
+   "xp": 220,
+   "ticks": 8,
+   "in": {
+    "iron_bar": 4
+   },
+   "out": {
+    "iron_chain_hauberk": 1
    }
   },
   {
@@ -525,6 +625,20 @@
    }
   },
   {
+   "id": "forge_steel_chain_coif",
+   "station": "anvil",
+   "skill": "smithing",
+   "level": 28,
+   "xp": 245,
+   "ticks": 6,
+   "in": {
+    "steel_bar": 3
+   },
+   "out": {
+    "steel_chain_coif": 1
+   }
+  },
+  {
    "id": "forge_steel_heater_shield",
    "station": "anvil",
    "skill": "smithing",
@@ -537,6 +651,21 @@
    },
    "out": {
     "steel_heater_shield": 1
+   }
+  },
+  {
+   "id": "forge_steel_chain_heater",
+   "station": "anvil",
+   "skill": "smithing",
+   "level": 29,
+   "xp": 270,
+   "ticks": 6,
+   "in": {
+    "steel_bar": 3,
+    "plank": 2
+   },
+   "out": {
+    "steel_chain_heater": 1
    }
   },
   {
@@ -555,6 +684,21 @@
    }
   },
   {
+   "id": "forge_steel_chain_legs",
+   "station": "anvil",
+   "skill": "smithing",
+   "level": 30,
+   "xp": 285,
+   "ticks": 7,
+   "in": {
+    "steel_bar": 3,
+    "plank": 2
+   },
+   "out": {
+    "steel_chain_legs": 1
+   }
+  },
+  {
    "id": "forge_steel_brigandine",
    "station": "anvil",
    "skill": "smithing",
@@ -566,6 +710,20 @@
    },
    "out": {
     "steel_brigandine": 1
+   }
+  },
+  {
+   "id": "forge_steel_chain_shirt",
+   "station": "anvil",
+   "skill": "smithing",
+   "level": 32,
+   "xp": 330,
+   "ticks": 8,
+   "in": {
+    "steel_bar": 4
+   },
+   "out": {
+    "steel_chain_shirt": 1
    }
   },
   {
@@ -711,6 +869,20 @@
    }
   },
   {
+   "id": "forge_dusk_chain_coif",
+   "station": "anvil",
+   "skill": "smithing",
+   "level": 38,
+   "xp": 343,
+   "ticks": 6,
+   "in": {
+    "dusk_steel_bar": 3
+   },
+   "out": {
+    "dusk_chain_coif": 1
+   }
+  },
+  {
    "id": "forge_dusk_tower_shield",
    "station": "anvil",
    "skill": "smithing",
@@ -723,6 +895,21 @@
    },
    "out": {
     "dusk_tower_shield": 1
+   }
+  },
+  {
+   "id": "forge_dusk_chain_tower",
+   "station": "anvil",
+   "skill": "smithing",
+   "level": 39,
+   "xp": 378,
+   "ticks": 6,
+   "in": {
+    "dusk_steel_bar": 3,
+    "plank": 2
+   },
+   "out": {
+    "dusk_chain_tower": 1
    }
   },
   {
@@ -741,6 +928,21 @@
    }
   },
   {
+   "id": "forge_dusk_chain_tassets",
+   "station": "anvil",
+   "skill": "smithing",
+   "level": 40,
+   "xp": 399,
+   "ticks": 7,
+   "in": {
+    "dusk_steel_bar": 3,
+    "plank": 2
+   },
+   "out": {
+    "dusk_chain_tassets": 1
+   }
+  },
+  {
    "id": "forge_dusk_cuirass",
    "station": "anvil",
    "skill": "smithing",
@@ -752,6 +954,20 @@
    },
    "out": {
     "dusk_cuirass": 1
+   }
+  },
+  {
+   "id": "forge_dusk_chain_cuirass",
+   "station": "anvil",
+   "skill": "smithing",
+   "level": 42,
+   "xp": 461,
+   "ticks": 8,
+   "in": {
+    "dusk_steel_bar": 4
+   },
+   "out": {
+    "dusk_chain_cuirass": 1
    }
   },
   {
