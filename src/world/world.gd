@@ -34,6 +34,12 @@ var _mini_tex: Dictionary = {}       # Vector2i -> ImageTexture (minimap)
 var ground: GroundItems              # items lying on tiles
 var enemies: EnemyManager            # creature camps
 var buildings_view: BuildingsView    # 0.3.0 roofs, signs, keepers, displays
+var door_tiles: Dictionary = {}      # 0.3.19 Vector2i -> true, for worn paths
+var _sway_mat: ShaderMaterial
+var _canopy_fade: Array = []         # foliage WorldObjects currently faded
+const SWAY_SHADER := preload("res://assets/shaders/foliage_sway.gdshader")
+const GROUND_SHADER := preload("res://assets/shaders/ground_variation.gdshader")
+const CANOPY_ALPHA := 0.4           # 0.3.19 tree crown when the player stands behind it
 
 
 func setup(world_seed: int) -> void:
@@ -61,6 +67,7 @@ func setup(world_seed: int) -> void:
 	buildings_view.name = "Buildings"
 	add_child(buildings_view)
 	buildings_view.setup(self)
+	_index_doors()
 
 
 func _build_tileset() -> TileSet:
@@ -654,6 +661,7 @@ func _set_focus_inner(c: Vector2i, immediate: bool) -> void:
 
 
 func _process(delta: float) -> void:
+	var d := (1.0 / 60.0) if Tick.fixed_step else delta   # 0.3.19 QA: one frame is one fixed slice
 	if _pf_thread == null and _focus_chunk.x != 999999 and Tick.running:
 		_pf_start()   # once the game is running, never during loading
 	if not perf_on and perf_log.size() > 2000:
@@ -677,11 +685,12 @@ func _process(delta: float) -> void:
 			_job = _job_new(cc)
 		if _job_step(_job, (t_end - Time.get_ticks_usec()) / 1000.0):
 			_job = {}
-	_anim_time += delta
+	_anim_time += d
 	for a in _animated:
 		var spr: Sprite2D = a[0]
 		if is_instance_valid(spr):
 			spr.frame = int(_anim_time * float(a[2])) % maxi(1, mini(int(a[1]), spr.hframes * spr.vframes))
+	_update_canopies(d)
 
 
 var perf_on := false   # set by the QA perf scenario
@@ -709,6 +718,7 @@ func _job_new(c: Vector2i) -> Dictionary:
 	# spread over the frames that fill them instead of landing in one frame
 	root.visible = false
 	root.add_child(layer)
+	layer.material = _ground_material(c, ch)
 	ground_layer.add_child(root)
 	return {"c": c, "ch": ch, "root": root, "layer": layer, "stage": 0, "row": 0, "names": {}, "ovl": [],
 		"base": Vector2i(c.x * CHUNK, c.y * CHUNK), "objs": [], "oi": 0, "ol": []}
@@ -861,6 +871,7 @@ func _make_object_view(o: WorldObject) -> void:
 		apply_autotile_sprite(spr, o.pos, str(GameData.sprite_def("objects", o.sprite_id(tick))["autotile"]))
 	else:
 		_apply_sprite(spr, o.sprite_id(tick))
+	_sync_foliage(spr, o)
 	entity_layer.add_child(spr)
 
 
@@ -935,6 +946,119 @@ func refresh_repair_views() -> void:
 func _refresh_object_view(o: WorldObject) -> void:
 	if o.view and is_instance_valid(o.view) and not o.view.has_meta("autotile"):
 		_apply_sprite(o.view, o.sprite_id(tick))
+		_sync_foliage(o.view, o)
+
+
+# ------------------------------------------------- 0.3.19 scene polish --
+func _index_doors() -> void:
+	door_tiles.clear()
+	for id in gen.building_order:
+		for d in gen.buildings[id].get("doors", []):
+			door_tiles[d] = true
+
+
+## Worn-path weight for one tile. 0 away from roads and doors. Ragged at
+## distance 2 so the band is not a hard rectangle. Grass and dirt only.
+func wear_amount(p: Vector2i, tile_type: int = -1) -> float:
+	var t := tile_type if tile_type >= 0 else gen.tile_at(p.x, p.y)
+	if not (t in WorldGen.GRASS_TILES or t == WorldGen.TileType.DIRT):
+		return 0.0
+	var best := 0.0
+	for dy in range(-2, 3):
+		for dx in range(-2, 3):
+			var dist := maxi(absi(dx), absi(dy))
+			if dist == 0:
+				continue
+			var q := p + Vector2i(dx, dy)
+			var road := gen.road_tiles.has(q) or int(gen._town_tiles.get(q, -1)) in WorldGen.ROAD_SURFACES
+			if not road and not door_tiles.has(q):
+				continue
+			var w := 0.72 if dist == 1 else 0.38
+			if dist == 2 and gen.hash01(p.x, p.y, 91) < 0.42:
+				w = 0.0
+			best = maxf(best, w)
+	if best > 0.0:
+		best *= 0.82 + 0.18 * gen.hash01(p.x, p.y, 92)
+	return best
+
+
+func _ground_material(c: Vector2i, ch: ChunkData) -> ShaderMaterial:
+	var mat := ShaderMaterial.new()
+	mat.shader = GROUND_SHADER
+	var img := Image.create(CHUNK, CHUNK, false, Image.FORMAT_RGBA8)
+	var base := c * CHUNK
+	for y in CHUNK:
+		for x in CHUNK:
+			var t := ch.tile_local(x, y)
+			var vary := 1.0 if (t in WorldGen.GRASS_TILES or t == WorldGen.TileType.DIRT) else 0.0
+			img.set_pixel(x, y, Color(wear_amount(base + Vector2i(x, y), t), vary, 0, 1))
+	mat.set_shader_parameter("wear_tex", ImageTexture.create_from_image(img))
+	mat.set_shader_parameter("chunk_origin", Vector2(base) * float(tile_px))
+	mat.set_shader_parameter("chunk_px", float(CHUNK * tile_px))
+	mat.set_shader_parameter("tile_px", float(tile_px))
+	return mat
+
+
+static func foliage_sprite(sprite_id: String) -> bool:
+	var s := sprite_id.to_lower()
+	if s == "" or s.contains("stump") or s.contains("dead") or s.contains("burnt") or s.contains("log"):
+		return false
+	return s.contains("tree") or s.contains("palm") or s.contains("bush")
+
+
+func _sway_material() -> ShaderMaterial:
+	if _sway_mat == null:
+		_sway_mat = ShaderMaterial.new()
+		_sway_mat.shader = SWAY_SHADER
+	return _sway_mat
+
+
+func _sync_foliage(spr: Sprite2D, o: WorldObject) -> void:
+	var sid := o.sprite_id(tick)
+	if foliage_sprite(sid):
+		spr.material = _sway_material()
+	else:
+		spr.material = null
+		spr.modulate.a = 1.0
+
+
+## Fade a tree/palm/bush crown while the player stands just north of it
+## (the sprite draws over them). One call with a large dt finishes the fade.
+func _update_canopies(dt: float) -> void:
+	var pl = buildings_view.player if buildings_view != null else null
+	var step := dt / 0.18
+	var keep := []
+	var seen := {}
+	if pl != null and "tile" in pl:
+		var origin: Vector2i = pl.tile
+		var cc := chunk_of(origin)
+		for cy in range(cc.y - 1, cc.y + 2):
+			for cx in range(cc.x - 1, cc.x + 2):
+				var root = chunk_views.get(Vector2i(cx, cy))
+				if root == null:
+					continue
+				for o in root.get_meta("objects", []):
+					if not (o is WorldObject) or o.view == null or not is_instance_valid(o.view):
+						continue
+					if not foliage_sprite(o.sprite_id(tick)):
+						continue
+					var dx: int = absi(int(o.pos.x) - origin.x)
+					var dy: int = int(o.pos.y) - origin.y
+					var cover: bool = dy >= 1 and dy <= 2 and dx <= 1
+					var target: float = CANOPY_ALPHA if cover else 1.0
+					if absf(o.view.modulate.a - target) > 0.001:
+						o.view.modulate.a = move_toward(o.view.modulate.a, target, step)
+					if o.view.modulate.a < 0.99:
+						keep.append(o)
+						seen[o.get_instance_id()] = true
+	for o in _canopy_fade:
+		if not is_instance_valid(o) or seen.has(o.get_instance_id()):
+			continue
+		if o.view and is_instance_valid(o.view) and o.view.modulate.a < 0.99:
+			o.view.modulate.a = move_toward(o.view.modulate.a, 1.0, step)
+			if o.view.modulate.a < 0.99:
+				keep.append(o)
+	_canopy_fade = keep
 
 
 # ---------------------------------------------------------------- minimap --

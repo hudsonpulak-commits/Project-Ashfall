@@ -5084,6 +5084,111 @@
     16
    ],
    "note": "0.3.10 PLACEHOLDER recolour - designer redraw (docs/ART_TODO_0.3.10.md)"
+  },
+  "bronze_chain_coif": {
+   "path": "res://assets/sprites/items/bronze_cap.png",
+   "frame_size": [
+    16,
+    16
+   ]
+  },
+  "bronze_chain_vest": {
+   "path": "res://assets/sprites/items/bronze_scale_vest.png",
+   "frame_size": [
+    16,
+    16
+   ]
+  },
+  "bronze_chain_skirt": {
+   "path": "res://assets/sprites/items/bronze_greaves.png",
+   "frame_size": [
+    16,
+    16
+   ]
+  },
+  "iron_chain_coif": {
+   "path": "res://assets/sprites/items/iron_helm.png",
+   "frame_size": [
+    16,
+    16
+   ]
+  },
+  "iron_chain_hauberk": {
+   "path": "res://assets/sprites/items/iron_hauberk.png",
+   "frame_size": [
+    16,
+    16
+   ]
+  },
+  "iron_chain_legs": {
+   "path": "res://assets/sprites/items/iron_legguards.png",
+   "frame_size": [
+    16,
+    16
+   ]
+  },
+  "iron_chain_kite": {
+   "path": "res://assets/sprites/items/iron_kite_shield.png",
+   "frame_size": [
+    16,
+    16
+   ]
+  },
+  "steel_chain_coif": {
+   "path": "res://assets/sprites/items/steel_helm.png",
+   "frame_size": [
+    16,
+    16
+   ]
+  },
+  "steel_chain_shirt": {
+   "path": "res://assets/sprites/items/steel_brigandine.png",
+   "frame_size": [
+    16,
+    16
+   ]
+  },
+  "steel_chain_legs": {
+   "path": "res://assets/sprites/items/steel_legplates.png",
+   "frame_size": [
+    16,
+    16
+   ]
+  },
+  "steel_chain_heater": {
+   "path": "res://assets/sprites/items/steel_heater_shield.png",
+   "frame_size": [
+    16,
+    16
+   ]
+  },
+  "dusk_chain_coif": {
+   "path": "res://assets/sprites/items/dusk_helm.png",
+   "frame_size": [
+    16,
+    16
+   ]
+  },
+  "dusk_chain_cuirass": {
+   "path": "res://assets/sprites/items/dusk_cuirass.png",
+   "frame_size": [
+    16,
+    16
+   ]
+  },
+  "dusk_chain_tassets": {
+   "path": "res://assets/sprites/items/dusk_tassets.png",
+   "frame_size": [
+    16,
+    16
+   ]
+  },
+  "dusk_chain_tower": {
+   "path": "res://assets/sprites/items/dusk_tower_shield.png",
+   "frame_size": [
+    16,
+    16
+   ]
   }
  },
  "ui": {

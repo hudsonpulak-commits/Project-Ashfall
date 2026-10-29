@@ -42,19 +42,31 @@
    "bronze_cap",
    "iron_helm",
    "steel_helm",
-   "dusk_helm"
+   "dusk_helm",
+   "bronze_chain_coif",
+   "iron_chain_coif",
+   "steel_chain_coif",
+   "dusk_chain_coif"
   ],
   "body": [
    "bronze_scale_vest",
    "iron_hauberk",
    "steel_brigandine",
-   "dusk_cuirass"
+   "dusk_cuirass",
+   "bronze_chain_vest",
+   "iron_chain_hauberk",
+   "steel_chain_shirt",
+   "dusk_chain_cuirass"
   ],
   "legs": [
    "bronze_greaves",
    "iron_legguards",
    "steel_legplates",
-   "dusk_tassets"
+   "dusk_tassets",
+   "bronze_chain_skirt",
+   "iron_chain_legs",
+   "steel_chain_legs",
+   "dusk_chain_tassets"
   ],
   "shields": [
    "alder_buckler",

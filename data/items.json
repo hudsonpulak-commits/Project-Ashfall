@@ -234,7 +234,7 @@
    }
   },
   "bronze_cap": {
-   "name": "Bronze cap",
+   "name": "Bronze plate cap",
    "value": 65,
    "stackable": false,
    "category": "gear",
@@ -242,15 +242,35 @@
     "slot": "head",
     "line": "helmets",
     "tier": 1,
-    "atk": 0,
+    "atk": 1,
     "str": 0,
     "def": 2,
     "level": 1,
-    "durability": 400
-   }
+    "durability": 400,
+    "fit": "plate"
+   },
+   "note": "0.3.19 plate fit. Power 3 (atk 1 + def 2), same as the chain piece."
+  },
+  "bronze_chain_coif": {
+   "name": "Bronze chain coif",
+   "value": 65,
+   "stackable": false,
+   "category": "gear",
+   "gear": {
+    "slot": "head",
+    "line": "helmets",
+    "tier": 1,
+    "atk": 2,
+    "str": 0,
+    "def": 1,
+    "level": 1,
+    "durability": 400,
+    "fit": "chain"
+   },
+   "note": "0.3.19 chain fit. Power 3 (atk 2 + def 1), same as the plate piece. Same bars, smithing level and Defence level."
   },
   "iron_helm": {
-   "name": "Iron helm",
+   "name": "Iron plate helm",
    "value": 130,
    "stackable": false,
    "category": "gear",
@@ -258,15 +278,35 @@
     "slot": "head",
     "line": "helmets",
     "tier": 2,
-    "atk": 0,
+    "atk": 1,
     "str": 0,
     "def": 4,
     "level": 10,
-    "durability": 800
-   }
+    "durability": 800,
+    "fit": "plate"
+   },
+   "note": "0.3.19 plate fit. Power 5 (atk 1 + def 4), same as the chain piece."
+  },
+  "iron_chain_coif": {
+   "name": "Iron chain coif",
+   "value": 130,
+   "stackable": false,
+   "category": "gear",
+   "gear": {
+    "slot": "head",
+    "line": "helmets",
+    "tier": 2,
+    "atk": 4,
+    "str": 0,
+    "def": 1,
+    "level": 10,
+    "durability": 800,
+    "fit": "chain"
+   },
+   "note": "0.3.19 chain fit. Power 5 (atk 4 + def 1), same as the plate piece. Same bars, smithing level and Defence level."
   },
   "dusk_helm": {
-   "name": "Dusksteel helm",
+   "name": "Dusksteel plate helm",
    "value": 560,
    "stackable": false,
    "category": "gear",
@@ -274,15 +314,35 @@
     "slot": "head",
     "line": "helmets",
     "tier": 4,
-    "atk": 0,
+    "atk": 1,
     "str": 0,
     "def": 7,
     "level": 30,
-    "durability": 1400
-   }
+    "durability": 1400,
+    "fit": "plate"
+   },
+   "note": "0.3.19 plate fit. Power 8 (atk 1 + def 7), same as the chain piece."
+  },
+  "dusk_chain_coif": {
+   "name": "Dusksteel chain coif",
+   "value": 560,
+   "stackable": false,
+   "category": "gear",
+   "gear": {
+    "slot": "head",
+    "line": "helmets",
+    "tier": 4,
+    "atk": 7,
+    "str": 0,
+    "def": 1,
+    "level": 30,
+    "durability": 1400,
+    "fit": "chain"
+   },
+   "note": "0.3.19 chain fit. Power 8 (atk 7 + def 1), same as the plate piece. Same bars, smithing level and Defence level."
   },
   "bronze_scale_vest": {
-   "name": "Bronze scale vest",
+   "name": "Bronze plate vest",
    "value": 95,
    "stackable": false,
    "category": "gear",
@@ -290,15 +350,35 @@
     "slot": "body",
     "line": "body",
     "tier": 1,
-    "atk": 0,
+    "atk": 1,
     "str": 0,
     "def": 5,
     "level": 1,
-    "durability": 400
-   }
+    "durability": 400,
+    "fit": "plate"
+   },
+   "note": "0.3.19 plate fit. Power 6 (atk 1 + def 5), same as the chain piece."
+  },
+  "bronze_chain_vest": {
+   "name": "Bronze chain shirt",
+   "value": 95,
+   "stackable": false,
+   "category": "gear",
+   "gear": {
+    "slot": "body",
+    "line": "body",
+    "tier": 1,
+    "atk": 5,
+    "str": 0,
+    "def": 1,
+    "level": 1,
+    "durability": 400,
+    "fit": "chain"
+   },
+   "note": "0.3.19 chain fit. Power 6 (atk 5 + def 1), same as the plate piece. Same bars, smithing level and Defence level."
   },
   "iron_hauberk": {
-   "name": "Iron hauberk",
+   "name": "Iron plate hauberk",
    "value": 180,
    "stackable": false,
    "category": "gear",
@@ -306,15 +386,35 @@
     "slot": "body",
     "line": "body",
     "tier": 2,
-    "atk": 0,
+    "atk": 2,
     "str": 0,
     "def": 9,
     "level": 10,
-    "durability": 800
-   }
+    "durability": 800,
+    "fit": "plate"
+   },
+   "note": "0.3.19 plate fit. Power 11 (atk 2 + def 9), same as the chain piece."
+  },
+  "iron_chain_hauberk": {
+   "name": "Iron chain hauberk",
+   "value": 180,
+   "stackable": false,
+   "category": "gear",
+   "gear": {
+    "slot": "body",
+    "line": "body",
+    "tier": 2,
+    "atk": 9,
+    "str": 0,
+    "def": 2,
+    "level": 10,
+    "durability": 800,
+    "fit": "chain"
+   },
+   "note": "0.3.19 chain fit. Power 11 (atk 9 + def 2), same as the plate piece. Same bars, smithing level and Defence level."
   },
   "dusk_cuirass": {
-   "name": "Dusksteel cuirass",
+   "name": "Dusksteel plate cuirass",
    "value": 720,
    "stackable": false,
    "category": "gear",
@@ -322,15 +422,35 @@
     "slot": "body",
     "line": "body",
     "tier": 4,
-    "atk": 0,
+    "atk": 3,
     "str": 0,
     "def": 14,
     "level": 30,
-    "durability": 1400
-   }
+    "durability": 1400,
+    "fit": "plate"
+   },
+   "note": "0.3.19 plate fit. Power 17 (atk 3 + def 14), same as the chain piece."
+  },
+  "dusk_chain_cuirass": {
+   "name": "Dusksteel chain cuirass",
+   "value": 720,
+   "stackable": false,
+   "category": "gear",
+   "gear": {
+    "slot": "body",
+    "line": "body",
+    "tier": 4,
+    "atk": 14,
+    "str": 0,
+    "def": 3,
+    "level": 30,
+    "durability": 1400,
+    "fit": "chain"
+   },
+   "note": "0.3.19 chain fit. Power 17 (atk 14 + def 3), same as the plate piece. Same bars, smithing level and Defence level."
   },
   "bronze_greaves": {
-   "name": "Bronze greaves",
+   "name": "Bronze plate greaves",
    "value": 75,
    "stackable": false,
    "category": "gear",
@@ -338,15 +458,35 @@
     "slot": "legs",
     "line": "legs",
     "tier": 1,
-    "atk": 0,
+    "atk": 1,
     "str": 0,
     "def": 3,
     "level": 1,
-    "durability": 400
-   }
+    "durability": 400,
+    "fit": "plate"
+   },
+   "note": "0.3.19 plate fit. Power 4 (atk 1 + def 3), same as the chain piece."
+  },
+  "bronze_chain_skirt": {
+   "name": "Bronze chain skirt",
+   "value": 75,
+   "stackable": false,
+   "category": "gear",
+   "gear": {
+    "slot": "legs",
+    "line": "legs",
+    "tier": 1,
+    "atk": 3,
+    "str": 0,
+    "def": 1,
+    "level": 1,
+    "durability": 400,
+    "fit": "chain"
+   },
+   "note": "0.3.19 chain fit. Power 4 (atk 3 + def 1), same as the plate piece. Same bars, smithing level and Defence level."
   },
   "iron_legguards": {
-   "name": "Iron legguards",
+   "name": "Iron plate legguards",
    "value": 160,
    "stackable": false,
    "category": "gear",
@@ -354,15 +494,35 @@
     "slot": "legs",
     "line": "legs",
     "tier": 2,
-    "atk": 0,
+    "atk": 1,
     "str": 0,
     "def": 6,
     "level": 10,
-    "durability": 800
-   }
+    "durability": 800,
+    "fit": "plate"
+   },
+   "note": "0.3.19 plate fit. Power 7 (atk 1 + def 6), same as the chain piece."
+  },
+  "iron_chain_legs": {
+   "name": "Iron chain leggings",
+   "value": 160,
+   "stackable": false,
+   "category": "gear",
+   "gear": {
+    "slot": "legs",
+    "line": "legs",
+    "tier": 2,
+    "atk": 6,
+    "str": 0,
+    "def": 1,
+    "level": 10,
+    "durability": 800,
+    "fit": "chain"
+   },
+   "note": "0.3.19 chain fit. Power 7 (atk 6 + def 1), same as the plate piece. Same bars, smithing level and Defence level."
   },
   "dusk_tassets": {
-   "name": "Dusksteel tassets",
+   "name": "Dusksteel plate tassets",
    "value": 620,
    "stackable": false,
    "category": "gear",
@@ -370,12 +530,32 @@
     "slot": "legs",
     "line": "legs",
     "tier": 4,
-    "atk": 0,
+    "atk": 2,
     "str": 0,
     "def": 10,
     "level": 30,
-    "durability": 1400
-   }
+    "durability": 1400,
+    "fit": "plate"
+   },
+   "note": "0.3.19 plate fit. Power 12 (atk 2 + def 10), same as the chain piece."
+  },
+  "dusk_chain_tassets": {
+   "name": "Dusksteel chain tassets",
+   "value": 620,
+   "stackable": false,
+   "category": "gear",
+   "gear": {
+    "slot": "legs",
+    "line": "legs",
+    "tier": 4,
+    "atk": 10,
+    "str": 0,
+    "def": 2,
+    "level": 30,
+    "durability": 1400,
+    "fit": "chain"
+   },
+   "note": "0.3.19 chain fit. Power 12 (atk 10 + def 2), same as the plate piece. Same bars, smithing level and Defence level."
   },
   "alder_buckler": {
    "name": "Alder buckler",
@@ -394,7 +574,7 @@
    }
   },
   "iron_kite_shield": {
-   "name": "Iron kite shield",
+   "name": "Iron plate kite",
    "value": 155,
    "stackable": false,
    "category": "gear",
@@ -402,15 +582,35 @@
     "slot": "shield",
     "line": "shields",
     "tier": 2,
-    "atk": 0,
+    "atk": 1,
     "str": 0,
     "def": 6,
     "level": 10,
-    "durability": 800
-   }
+    "durability": 800,
+    "fit": "plate"
+   },
+   "note": "0.3.19 plate fit. Power 7 (atk 1 + def 6), same as the chain piece."
+  },
+  "iron_chain_kite": {
+   "name": "Iron chain kite",
+   "value": 155,
+   "stackable": false,
+   "category": "gear",
+   "gear": {
+    "slot": "shield",
+    "line": "shields",
+    "tier": 2,
+    "atk": 6,
+    "str": 0,
+    "def": 1,
+    "level": 10,
+    "durability": 800,
+    "fit": "chain"
+   },
+   "note": "0.3.19 chain fit. Power 7 (atk 6 + def 1), same as the plate piece. Same bars, smithing level and Defence level."
   },
   "dusk_tower_shield": {
-   "name": "Dusksteel tower shield",
+   "name": "Dusksteel plate tower",
    "value": 600,
    "stackable": false,
    "category": "gear",
@@ -418,12 +618,32 @@
     "slot": "shield",
     "line": "shields",
     "tier": 4,
-    "atk": 0,
+    "atk": 2,
     "str": 0,
     "def": 10,
     "level": 30,
-    "durability": 1400
-   }
+    "durability": 1400,
+    "fit": "plate"
+   },
+   "note": "0.3.19 plate fit. Power 12 (atk 2 + def 10), same as the chain piece."
+  },
+  "dusk_chain_tower": {
+   "name": "Dusksteel chain tower",
+   "value": 600,
+   "stackable": false,
+   "category": "gear",
+   "gear": {
+    "slot": "shield",
+    "line": "shields",
+    "tier": 4,
+    "atk": 10,
+    "str": 0,
+    "def": 2,
+    "level": 30,
+    "durability": 1400,
+    "fit": "chain"
+   },
+   "note": "0.3.19 chain fit. Power 12 (atk 10 + def 2), same as the plate piece. Same bars, smithing level and Defence level."
   },
   "dusk_sword": {
    "name": "Dusksteel sword",
@@ -770,7 +990,7 @@
    }
   },
   "steel_helm": {
-   "name": "Steel helm",
+   "name": "Steel plate helm",
    "value": 195,
    "stackable": false,
    "category": "gear",
@@ -778,15 +998,35 @@
     "slot": "head",
     "line": "helmets",
     "tier": 3,
-    "atk": 0,
+    "atk": 1,
     "str": 0,
     "def": 5,
     "level": 20,
-    "durability": 1100
-   }
+    "durability": 1100,
+    "fit": "plate"
+   },
+   "note": "0.3.19 plate fit. Power 6 (atk 1 + def 5), same as the chain piece."
+  },
+  "steel_chain_coif": {
+   "name": "Steel chain coif",
+   "value": 195,
+   "stackable": false,
+   "category": "gear",
+   "gear": {
+    "slot": "head",
+    "line": "helmets",
+    "tier": 3,
+    "atk": 5,
+    "str": 0,
+    "def": 1,
+    "level": 20,
+    "durability": 1100,
+    "fit": "chain"
+   },
+   "note": "0.3.19 chain fit. Power 6 (atk 5 + def 1), same as the plate piece. Same bars, smithing level and Defence level."
   },
   "steel_brigandine": {
-   "name": "Steel brigandine",
+   "name": "Steel plate brigandine",
    "value": 260,
    "stackable": false,
    "category": "gear",
@@ -794,15 +1034,35 @@
     "slot": "body",
     "line": "body",
     "tier": 3,
-    "atk": 0,
+    "atk": 2,
     "str": 0,
     "def": 11,
     "level": 20,
-    "durability": 1100
-   }
+    "durability": 1100,
+    "fit": "plate"
+   },
+   "note": "0.3.19 plate fit. Power 13 (atk 2 + def 11), same as the chain piece."
+  },
+  "steel_chain_shirt": {
+   "name": "Steel chain shirt",
+   "value": 260,
+   "stackable": false,
+   "category": "gear",
+   "gear": {
+    "slot": "body",
+    "line": "body",
+    "tier": 3,
+    "atk": 11,
+    "str": 0,
+    "def": 2,
+    "level": 20,
+    "durability": 1100,
+    "fit": "chain"
+   },
+   "note": "0.3.19 chain fit. Power 13 (atk 11 + def 2), same as the plate piece. Same bars, smithing level and Defence level."
   },
   "steel_legplates": {
-   "name": "Steel legplates",
+   "name": "Steel plate legplates",
    "value": 225,
    "stackable": false,
    "category": "gear",
@@ -810,15 +1070,35 @@
     "slot": "legs",
     "line": "legs",
     "tier": 3,
-    "atk": 0,
+    "atk": 2,
     "str": 0,
     "def": 8,
     "level": 20,
-    "durability": 1100
-   }
+    "durability": 1100,
+    "fit": "plate"
+   },
+   "note": "0.3.19 plate fit. Power 10 (atk 2 + def 8), same as the chain piece."
+  },
+  "steel_chain_legs": {
+   "name": "Steel chain leggings",
+   "value": 225,
+   "stackable": false,
+   "category": "gear",
+   "gear": {
+    "slot": "legs",
+    "line": "legs",
+    "tier": 3,
+    "atk": 8,
+    "str": 0,
+    "def": 2,
+    "level": 20,
+    "durability": 1100,
+    "fit": "chain"
+   },
+   "note": "0.3.19 chain fit. Power 10 (atk 8 + def 2), same as the plate piece. Same bars, smithing level and Defence level."
   },
   "steel_heater_shield": {
-   "name": "Steel heater shield",
+   "name": "Steel plate heater",
    "value": 220,
    "stackable": false,
    "category": "gear",
@@ -826,12 +1106,32 @@
     "slot": "shield",
     "line": "shields",
     "tier": 3,
-    "atk": 0,
+    "atk": 2,
     "str": 0,
     "def": 8,
     "level": 20,
-    "durability": 1100
-   }
+    "durability": 1100,
+    "fit": "plate"
+   },
+   "note": "0.3.19 plate fit. Power 10 (atk 2 + def 8), same as the chain piece."
+  },
+  "steel_chain_heater": {
+   "name": "Steel chain heater",
+   "value": 220,
+   "stackable": false,
+   "category": "gear",
+   "gear": {
+    "slot": "shield",
+    "line": "shields",
+    "tier": 3,
+    "atk": 8,
+    "str": 0,
+    "def": 2,
+    "level": 20,
+    "durability": 1100,
+    "fit": "chain"
+   },
+   "note": "0.3.19 chain fit. Power 10 (atk 8 + def 2), same as the plate piece. Same bars, smithing level and Defence level."
   },
   "steel_arrows": {
    "name": "Steel arrows",

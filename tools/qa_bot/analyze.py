@@ -1067,6 +1067,9 @@ def check_bank(ctx):
                str({k: a.get("organize", {}).get(k) for k in ("bank_highlight", "bank_swap")})),
         Result("C37 organize", "slot positions and tabs survive save/load", bool(a.get("organize", {}).get("pack_persist")) and bool(a.get("organize", {}).get("bank_persist")),
                "pack %s bank %s" % (a.get("organize", {}).get("pack_persist"), a.get("organize", {}).get("bank_persist"))),
+        Result("C37 organize", "custom bank tabs: create, file an item, rename, icon, save, delete",
+               all(a.get("organize", {}).get(k) for k in ("tab_created", "tab_filed", "tab_renamed", "tab_icon", "tab_persist", "tab_deleted")),
+               str({k: a.get("organize", {}).get(k) for k in ("tab_created", "tab_filed", "tab_renamed", "tab_icon", "tab_persist", "tab_deleted")})),
         Result("C23 dummy", "dummy counter-swing shown blocked, Defence XP, no HP loss", a.get("dummy_blocks", 0) >= 1 and a.get("dummy_def_xp", 0) > 0 and a.get("dummy_hp_lost", 1) == 0,
                "blocks %s def xp %s hp lost %s" % (a.get("dummy_blocks"), a.get("dummy_def_xp"), a.get("dummy_hp_lost")), sp("dummy_block")),
     ]

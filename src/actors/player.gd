@@ -460,7 +460,7 @@ func _shop_tick(world, t: int) -> void:
 ## straight for the counter: the counter greeting covers that).
 func smith_greet(world, b: Dictionary) -> String:
 	var key := str(b["id"]) + ":enter"
-	var now := Time.get_ticks_msec()
+	var now := Tick.now_ms()
 	if now - int(_greeted.get(key, -1000000)) < int(float(GameData.buildings_cfg.get("greet_cooldown_s", 20)) * 1000.0):
 		return ""
 	_greeted[key] = now
@@ -475,7 +475,7 @@ func smith_greet(world, b: Dictionary) -> String:
 		lines = b.get("greet", [])
 	if lines.is_empty():
 		return ""
-	var line: String = lines[randi() % lines.size()]
+	var line: String = lines[absi(hash([key, Tick.tick_count])) % lines.size()]
 	if world and world.buildings_view:
 		world.buildings_view.keeper_say(b, line)
 	return line
@@ -483,7 +483,7 @@ func smith_greet(world, b: Dictionary) -> String:
 
 ## A keeper line (data/buildings.json), at most every greet_cooldown_s per shop.
 func greet(world, b: Dictionary) -> String:
-	var now := Time.get_ticks_msec()
+	var now := Tick.now_ms()
 	if now - int(_greeted.get(b["id"], -1000000)) < int(float(GameData.buildings_cfg.get("greet_cooldown_s", 20)) * 1000.0):
 		return ""
 	_greeted[b["id"]] = now

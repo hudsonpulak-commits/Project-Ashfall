@@ -55,6 +55,8 @@ func _ready() -> void:
 	elif args.has("screenshot"):
 		_screenshot_mode()
 	elif args.has("qa"):
+		if str(args["qa"]) != "perf":
+			Tick.fixed_step = true   # 0.3.19 fixed frame step; perf keeps real frame time
 		# 0.3.3: the pixel-exact sprite checks judge the player alone; chat bubbles
 		# drawn over it would read as ghosting. --qa-chatter turns them back on.
 		AIChatter.enabled = args.has("qa-chatter")
@@ -206,6 +208,7 @@ func _start_player(data: Dictionary) -> void:
 		player.hp = player.max_hp()   # a new character starts at full HP (was the old 11 default)
 	world.entity_layer.add_child(player)
 	player.world_ref = world
+	player.rng.seed = int(data.get("world", {}).get("seed", DEFAULT_SEED)) ^ 0x0A11F11   # 0.3.19 deterministic combat/gather rolls
 	QuestSystem.sync(player)      # 0.3.16 repaired farm props, Clip Clop at home
 	if not Events.quests_changed.is_connected(world.refresh_repair_views):
 		Events.quests_changed.connect(world.refresh_repair_views)

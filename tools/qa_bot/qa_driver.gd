@@ -89,7 +89,7 @@ func _state() -> Dictionary:
 	var hud: HUD = main.hud
 	return {
 		"near": snappedf(near, 0.1), "others": others,
-		"f": frame, "ms": Time.get_ticks_msec(), "tick": Tick.tick_count, "alpha": snappedf(Tick.alpha(), 0.001), "label": label,
+		"f": frame, "ms": Tick.now_ms(), "tick": Tick.tick_count, "alpha": snappedf(Tick.alpha(), 0.001), "label": label,
 		"pos": [p.position.x, p.position.y], "tile": [p.tile.x, p.tile.y], "flip": p._sprite.flip_h, "sframe": p._sprite.frame,
 		"scr": [scr.x, scr.y], "zoom": main.camera.zoom.x, "cam": [main.camera.position.x, main.camera.position.y],
 		"moving": not p.path.is_empty(), "sprint": p.sprint, "blocked": w.is_blocked(p.tile),
@@ -126,9 +126,9 @@ func frames(n: int) -> void:
 
 
 func until(cond: Callable, max_s: float) -> bool:
-	var t0 := Time.get_ticks_msec()
+	var t0 := Tick.now_ms()
 	while not cond.call():
-		if Time.get_ticks_msec() - t0 > int(max_s * 1000.0):
+		if Tick.now_ms() - t0 > int(max_s * 1000.0):
 			return false
 		await get_tree().process_frame
 	return true
@@ -815,6 +815,12 @@ func _world() -> void:
 		"vp": [get_viewport().get_visible_rect().size.x, get_viewport().get_visible_rect().size.y]}
 	await shot("v031_scorch_banner")
 	await frames(20)
+	# The entry report covers the lower half of the phone screen, so a tap
+	# south of the player hits the panel and the walk never starts. Dismiss it
+	# the way a player would, then the out-and-back and the night shot can move.
+	if main.hud.current_panel == "report":
+		await tap_control(find_button(main.hud.report_panel, "OK"), "dismiss the Scorch warning")
+		await frames(4)
 	# walk out and back in: no second banner (only the first crossing)
 	await walk_leg("scorch_out", start, 20.0)
 	await walk_leg("scorch_again", start + Vector2i(0, -9), 20.0)
@@ -1134,15 +1140,15 @@ func _aggro() -> void:
 		var hp0 := p.hp
 		await tap_tile(b, "walk past the rats (" + nm + ")")
 		var attackers := {}
-		var t_end := Time.get_ticks_msec() + 9000
-		while Time.get_ticks_msec() < t_end:
+		var t_end := Tick.now_ms() + 9000
+		while Tick.now_ms() < t_end:
 			for e in w.enemies.enemies:
 				if is_instance_valid(e) and e.target == p:
 					attackers[str(e.name)] = e.kind
 			if not attackers.is_empty() and nm == "low":
 				await frames(30)
 				break
-			if arrived() and Time.get_ticks_msec() > t_end - 6000:
+			if arrived() and Tick.now_ms() > t_end - 6000:
 				await frames(20)
 				break
 			await frames(1)
@@ -1252,8 +1258,8 @@ func _farm() -> void:
 	var fought_back := false
 	var cow_tile := cow.tile
 	await tap_tile(cow.tile, "cow")
-	var t_end := Time.get_ticks_msec() + 80000   # 0.3.14: slow under the full suite
-	while Time.get_ticks_msec() < t_end and not cow.dead:
+	var t_end := Tick.now_ms() + 80000   # 0.3.14: slow under the full suite
+	while Tick.now_ms() < t_end and not cow.dead:
 		fought_back = fought_back or cow.target == p
 		cow_tile = cow.tile
 		if p.path.is_empty() and p.action.is_empty() and not cow.dead:
@@ -1701,8 +1707,8 @@ func _pk() -> void:
 	await frames(30)
 	# 0.3.9 give the respawned view time to take the new name outside the Scorch
 	# 0.3.17 harness: the AI's view may be respawned (tier change) under load: follow victim.view
-	var tv := Time.get_ticks_msec() + 20000
-	while Time.get_ticks_msec() < tv:
+	var tv := Tick.now_ms() + 20000
+	while Tick.now_ms() < tv:
 		if victim.view != null and is_instance_valid(victim.view):
 			v = victim.view
 		if is_instance_valid(v) and v.display_name == victim.name and not PkRules.is_pk(v.tile):
@@ -1917,9 +1923,9 @@ func _archery() -> void:
 	var start := p.tile
 	var arrows0 := p.ammo_qty
 	await tap(tile_screen(rat.tile), "rat (archery)")
-	var t_end := Time.get_ticks_msec() + 15000
+	var t_end := Tick.now_ms() + 15000
 	var max_d := 0
-	while Time.get_ticks_msec() < t_end:
+	while Tick.now_ms() < t_end:
 		if shots[0] >= 1 and not shot_snapped[0]:
 			await frames(1)       # arrow mid-flight
 			await _snap("archery_projectile")
@@ -2059,8 +2065,8 @@ func _bank035() -> void:
 		ai.inventory.clear()
 		ai.inventory.add("ash_log", 5)
 		var went: bool = ai._go_bank(w)
-		var t_end := Time.get_ticks_msec() + 25000
-		while Time.get_ticks_msec() < t_end and ai.inventory.count("ash_log") > 0:
+		var t_end := Tick.now_ms() + 25000
+		while Tick.now_ms() < t_end and ai.inventory.count("ash_log") > 0:
 			if ai.action.is_empty():
 				ai._go_bank(w)
 			await frames(5)
@@ -2127,12 +2133,12 @@ func _bank035() -> void:
 	Events.hitsplat.connect(func(t, _q, amt): if t == p and amt == 0: zero[0] += 1)
 	label = "dummy_block"
 	await tap_tile(dummy.pos, "training dummy")
-	var t2 := Time.get_ticks_msec() + 15000
+	var t2 := Tick.now_ms() + 15000
 	var tk0: int = Tick.tick_count
 	var snapped := false
 	# 0.3.17 harness: under parallel load 15 s of wall time can be few game ticks;
 	# also wait for 60 game ticks (hard cap 45 s)
-	while (Time.get_ticks_msec() < t2 or Tick.tick_count - tk0 < 60) and Time.get_ticks_msec() < t2 + 30000 and zero[0] < 3:
+	while (Tick.now_ms() < t2 or Tick.tick_count - tk0 < 60) and Tick.now_ms() < t2 + 30000 and zero[0] < 3:
 		if zero[0] >= 1 and not snapped:
 			await _snap("dummy_block")
 			snapped = true
@@ -2274,8 +2280,8 @@ func _v036() -> void:
 	var day_track := Music.current
 	DayNight.debug_set_phase("night")
 	var faded := false
-	var t_end := Time.get_ticks_msec() + 6000
-	while Time.get_ticks_msec() < t_end and Music.current != "ambient_night":
+	var t_end := Tick.now_ms() + 6000
+	while Tick.now_ms() < t_end and Music.current != "ambient_night":
 		faded = faded or Music.fading
 		await frames(1)
 	res["night_music"] = [day_track, faded, Music.current]
@@ -2295,8 +2301,8 @@ func _kill(p: Player, w: World, e: Enemy, what: String) -> bool:
 	p.place_at(w.find_free_tile_near(e.tile + Vector2i(1, 0), 2))
 	w.set_focus(p.tile, true)
 	await frames(10)
-	var t_end := Time.get_ticks_msec() + 60000
-	while not e.dead and Time.get_ticks_msec() < t_end:
+	var t_end := Tick.now_ms() + 60000
+	while not e.dead and Tick.now_ms() < t_end:
 		if p.action.is_empty():
 			p.hp = p.max_hp()
 			if p._cheb(p.tile, e.tile) > 3:
@@ -2590,8 +2596,8 @@ func _capital038() -> void:
 		# walking: tap the far side of the log, the path goes round it
 		await tap_tile(lg + ld, "far side of the log")
 		var stood_on := false
-		var t_end := Time.get_ticks_msec() + 12000
-		while Time.get_ticks_msec() < t_end and p.tile != lg + ld:
+		var t_end := Tick.now_ms() + 12000
+		while Tick.now_ms() < t_end and p.tile != lg + ld:
 			stood_on = stood_on or p.tile == lg
 			await frames(2)
 		res["walk_round_log"] = p.tile == lg + ld and not stood_on and w.is_blocked(lg)
@@ -2624,9 +2630,9 @@ func _capital038() -> void:
 		await frames(20)
 		var start := p.tile
 		await tap(tile_screen(foe.tile), "slime over the log")
-		var t2 := Time.get_ticks_msec() + 12000
+		var t2 := Tick.now_ms() + 12000
 		var snapped := false
-		while Time.get_ticks_msec() < t2 and shots[0] < 2:
+		while Tick.now_ms() < t2 and shots[0] < 2:
 			if shots[0] >= 1 and not snapped:
 				await frames(1)
 				await _snap("arrow_over_log")
@@ -3022,8 +3028,8 @@ func _sidequests0315() -> void:
 		# real kills: fight the nearest live one, then walk-pick the drops beside its body
 		var kills := 0
 		var looted := {}
-		var t_end := Time.get_ticks_msec() + 240000
-		while not QuestSystem.has_items(p, QuestSystem.current_stage(p, id)) and kills < 24 and Time.get_ticks_msec() < t_end:
+		var t_end := Tick.now_ms() + 240000
+		while not QuestSystem.has_items(p, QuestSystem.current_stage(p, id)) and kills < 24 and Tick.now_ms() < t_end:
 			var e: Enemy = w.enemies.nearest(p.tile, [kind], 4000)
 			if e == null:
 				break
@@ -3210,8 +3216,8 @@ func _sidequests0316() -> void:
 	r["horse_at_den"] = horse != null and den != null
 	r["horse_attack_refused"] = horse != null and CombatRules.can_attack(p, horse, Tick.tick_count) != ""
 	var kills := 0
-	var t_end := Time.get_ticks_msec() + 180000
-	while QuestSystem.state(p, id) == QuestSystem.IN_PROGRESS and int(p.quests[id].get("stage", 0)) == 0 and kills < 12 and Time.get_ticks_msec() < t_end:
+	var t_end := Tick.now_ms() + 180000
+	while QuestSystem.state(p, id) == QuestSystem.IN_PROGRESS and int(p.quests[id].get("stage", 0)) == 0 and kills < 12 and Tick.now_ms() < t_end:
 		var e: Enemy = w.enemies.nearest(den.pos if den else p.tile, ["wolf"], 4000)
 		if e == null:
 			break
@@ -3278,8 +3284,8 @@ func _sidequests0316() -> void:
 	for c in GameData.camps:
 		if c.get("enemy", "") == "giant_rat" and "Dead Rat" in str(c.get("note", "")):
 			nest = Vector2i(int(c["at"][0]), int(c["at"][1]))
-	t_end = Time.get_ticks_msec() + 240000
-	while int(p.quests[id].get("stage", 0)) == 0 and kills < 20 and Time.get_ticks_msec() < t_end:
+	t_end = Tick.now_ms() + 240000
+	while int(p.quests[id].get("stage", 0)) == 0 and kills < 20 and Tick.now_ms() < t_end:
 		var e2: Enemy = w.enemies.nearest(nest, ["giant_rat"], 4000)
 		if e2 == null:
 			break
@@ -3498,11 +3504,11 @@ func _perf0316() -> void:
 	var t_prev := Time.get_ticks_usec()
 	var i0 := 0
 	label = "perf_walk"
-	var t_end := Time.get_ticks_msec() + 420000
+	var t_end := Tick.now_ms() + 420000
 	var chunks_seen := {}
 	var pl_prev := 0
 	var gt: Array = []
-	while i0 < route.size() and Time.get_ticks_msec() < t_end:
+	while i0 < route.size() and Tick.now_ms() < t_end:
 		if p.path.is_empty():
 			var seg2: Array = route.slice(i0, mini(i0 + 24, route.size()))
 			i0 += seg2.size()
@@ -3585,6 +3591,43 @@ func _organize0317(res: Dictionary) -> void:
 	q.from_save(p.to_save())
 	o["bank_persist"] = q.bank.slots[0]["id"] == "coal" and q.bank.slots[1]["id"] == "iron_ore"
 	q.free()
+	# 0.3.19 create, file, rename, icon, save, delete — still through taps
+	var add := hud.bank_tab_row.get_node_or_null("BankTabAdd") as Button
+	await tap_control(add, "new tab")
+	await frames(4)
+	o["tab_created"] = p.bank_tabs.size() == 1 and hud.bank_tab == 1
+	# The new tab is empty, so go back to All (both stacks) before filing.
+	await tap_control(hud.bank_tab_row.get_node_or_null("BankTab_0"), "all items")
+	await frames(2)
+	await tap_control(hud.bank_slots[1], "pick iron ore")
+	await frames(2)
+	var tab_btn := hud.bank_tab_row.get_node_or_null("BankTab_2") as Button
+	await tap_control(tab_btn, "file iron under the new tab")
+	await frames(3)
+	o["tab_filed"] = BankTabs.tab_of(p, "iron_ore") == 1 and BankTabs.tab_of(p, "coal") == 0
+	# Filing rebuilds the tab row, so the button we just tapped is gone.
+	await tap_control(hud.bank_tab_row.get_node_or_null("BankTab_2"), "show the new tab")
+	await frames(3)
+	var ed := hud.bank_edit_row.get_node_or_null("BankTabName") as LineEdit
+	if ed:
+		ed.text = "Ores"
+	await frames(2)
+	o["tab_renamed"] = p.bank_tabs.size() == 1 and str(p.bank_tabs[0]["name"]) == "Ores"
+	await tap_control(hud.bank_slots[0], "pick iron on its tab")
+	await frames(2)
+	await tap_control(hud.bank_edit_row.get_node_or_null("BankTabIcon"), "icon")
+	await frames(3)
+	o["tab_icon"] = str(p.bank_tabs[0].get("icon", "")) == "iron_ore"
+	var q3 := Player.new()
+	q3.from_save(p.to_save())
+	o["tab_persist"] = q3.bank_tabs.size() == 1 and str(q3.bank_tabs[0]["name"]) == "Ores" and str(q3.bank_tabs[0]["icon"]) == "iron_ore" and BankTabs.tab_of(q3, "iron_ore") == 1 and BankTabs.tab_of(q3, "coal") == 0
+	q3.free()
+	# from_save emits bank_changed, which rebuilds the row. Wait until the
+	# new Delete button has been laid out, then tap it.
+	await frames(2)
+	await tap_control(hud.bank_edit_row.get_node_or_null("BankTabDelete"), "delete tab")
+	await frames(3)
+	o["tab_deleted"] = p.bank_tabs.is_empty() and BankTabs.tab_of(p, "iron_ore") == 0 and BankTabs.tab_of(p, "coal") == 0
 	await tap_control(hud.bank_arrange_btn, "Arrange off")
 	await frames(3)
 	# pack: pick up, move to an empty slot, swap, deselect; actions row still offered

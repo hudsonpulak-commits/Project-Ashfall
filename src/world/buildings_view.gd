@@ -262,6 +262,25 @@ func roof_alpha(id: String) -> float:
 	return float(alpha.get(id, 1.0))
 
 
+## 0.3.19 under the roof (inside) it fades out; one tile north of a tall art
+## building the roof still covers the player, so it fades to 40% instead.
+func _roof_target(id: String, inside: String) -> float:
+	if id == inside:
+		return 0.0
+	var b: Dictionary = world.gen.buildings.get(id, {})
+	if _player_behind_roof(b):
+		return 0.4
+	return 1.0
+
+
+func _player_behind_roof(b: Dictionary) -> bool:
+	if b.is_empty() or not b.has("art") or player == null or not ("tile" in player):
+		return false
+	var r: Rect2i = b["rect"]
+	var t: Vector2i = player.tile
+	return t.y == r.position.y - 1 and t.x >= r.position.x and t.x < r.end.x
+
+
 ## A tile whose contents the roof is hiding right now.
 func hides(p: Vector2i) -> bool:
 	var b: Dictionary = world.gen.building_at(p)
@@ -270,6 +289,7 @@ func hides(p: Vector2i) -> bool:
 
 ## Advance the roof fades by dt seconds (also called directly by tests).
 ## 0.3.11 v3.1 gatehouse roofs: [Sprite2D, {tile: true}] - faded while the player is in the passage
+var _roof_from := Vector2i(999999, 999999)   # last tile this view faded for
 var _gate_roofs: Array = []
 var _anim_fades: Array = []   # [Sprite2D, fps]
 var _anim_fade_t := 0.0
@@ -283,6 +303,11 @@ func step(dt: float) -> void:
 	var inside := player_building()
 	var rate := dt / maxf(0.01, roof_fade_s())
 	var pt = player.tile if player != null and "tile" in player else Vector2i(-99999, -99999)
+	# A teleport into the open must not leave a roof half-faded from the tile you left.
+	# Entering still animates, so a short step does not pop the roof off.
+	var jumped := _roof_from.x != 999999 and maxi(absi(pt.x - _roof_from.x), absi(pt.y - _roof_from.y)) > 1
+	if player != null and "tile" in player:
+		_roof_from = pt
 	_anim_fade_t += dt
 	for af in _anim_fades:
 		var asp: Sprite2D = af[0]
@@ -298,8 +323,8 @@ func step(dt: float) -> void:
 			ws.offset.y += ws.position.y - y0
 			ws.position.y = y0
 	for id in alpha.keys():
-		var target := 0.0 if id == inside else 1.0
-		alpha[id] = move_toward(float(alpha[id]), target, rate)
+		var target := _roof_target(id, inside)
+		alpha[id] = target if jumped and target >= 0.999 else move_toward(float(alpha[id]), target, rate)
 		_roofs[id].modulate.a = alpha[id]
 		_roofs[id].visible = alpha[id] > 0.001
 
@@ -307,7 +332,8 @@ func step(dt: float) -> void:
 func _process(delta: float) -> void:
 	if world == null:
 		return
-	step(minf(delta, 1.0 / 30.0))   # 0.3.11 a long frame (first draw of a big art sprite) must not pop the roof
+	var d := (1.0 / 60.0) if Tick.fixed_step else delta
+	step(minf(d, 1.0 / 30.0))   # 0.3.11 a long frame (first draw of a big art sprite) must not pop the roof
 	_apply_hiding()
 	_update_keepers()
 	_update_displays()
@@ -421,7 +447,7 @@ func keeper_say(b: Dictionary, line: String) -> void:
 	l.reset_size()
 	var sz := l.get_combined_minimum_size() / K
 	l.position = (world.tile_foot(b["keeper_at"]) + Vector2(-sz.x / 2.0, -26 - sz.y)).round()
-	_bubbles[b["id"]] = [l, Time.get_ticks_msec() + 3500]
+	_bubbles[b["id"]] = [l, Tick.now_ms() + 3500]
 
 
 func _update_bubbles() -> void:
@@ -429,7 +455,7 @@ func _update_bubbles() -> void:
 		var e: Array = _bubbles[id]
 		if not is_instance_valid(e[0]):
 			_bubbles.erase(id)
-		elif Time.get_ticks_msec() > int(e[1]) or roof_alpha(id) > 0.5:
+		elif Tick.now_ms() > int(e[1]) or roof_alpha(id) > 0.5:
 			e[0].queue_free()
 			_bubbles.erase(id)
 

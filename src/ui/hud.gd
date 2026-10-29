@@ -56,6 +56,7 @@ var _sel_slot := -1
 var bank_tab := BankTabs.ALL     # 0.3.17 bank tab shown (-1 All, 0 main, 1..8 custom)
 var bank_arrange := false        # 0.3.17 Arrange mode: taps select / move / swap / file into tabs
 var _bank_sel := -1              # container index of the picked bank item
+var bank_tab_scroll: ScrollContainer
 var bank_tab_row: HBoxContainer
 var bank_edit_row: HBoxContainer
 var bank_arrange_btn: Button
@@ -378,7 +379,7 @@ func _refresh_worn() -> void:
 		b.add_theme_font_size_override("font_size", 7)
 		b.disabled = id == ""
 		worn_row.add_child(b)
-	worn_row.add_child(UIKit.label("atk %d def %d" % [player.combat_atk(), player.combat_def()], 7, UIStyle.TEXT_DIM))
+	worn_row.add_child(UIKit.label(Combat.equip_stat_line(player.combat_atk(), player.combat_def()), 7, UIStyle.TEXT_DIM))
 	if set_label:
 		var sb := Combat.set_bonus(player.armour_ids())
 		if int(sb["tier"]) > 0:
@@ -592,9 +593,15 @@ func _build_bank_panel() -> Control:
 	arow.add_child(bank_arrange_btn)
 	arow.add_child(UIKit.label("  on: tap an item, then a slot to move / swap", 8, UIStyle.TEXT_DIM))
 	v.add_child(arow)
+	bank_tab_scroll = ScrollContainer.new()   # 0.3.19 phone: 8 tabs scroll instead of overflowing
+	bank_tab_scroll.name = "BankTabScroll"
+	bank_tab_scroll.custom_minimum_size = Vector2(0, 28)
+	bank_tab_scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_AUTO
+	bank_tab_scroll.vertical_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
 	bank_tab_row = HBoxContainer.new()     # 0.3.17 All / Main / custom tabs / +
 	bank_tab_row.add_theme_constant_override("separation", 2)
-	v.add_child(bank_tab_row)
+	bank_tab_scroll.add_child(bank_tab_row)
+	v.add_child(bank_tab_scroll)
 	bank_edit_row = HBoxContainer.new()
 	bank_edit_row.add_theme_constant_override("separation", 2)
 	v.add_child(bank_edit_row)
@@ -670,6 +677,8 @@ func show_panel(key: String) -> void:
 		_refresh_prayer_panel()
 	elif key == "skills":
 		_refresh_skills()
+	elif key == "bank":
+		_refresh_bank()
 	elif key == "pack":
 		_refresh_worn()
 	_reset_armed = false
@@ -714,7 +723,23 @@ func _bank_in_reach() -> bool:
 	return maxi(absi(ba.x - player.tile.x), absi(ba.y - player.tile.y)) <= 3   # opened at a banker
 
 
+func _sync_bank_tab_name() -> void:
+	if bank_edit_row == null or player == null or not bank_arrange or bank_tab < 1 or bank_tab > player.bank_tabs.size():
+		return
+	var ed := bank_edit_row.get_node_or_null("BankTabName") as LineEdit
+	if ed == null:
+		return
+	var t := ed.text.strip_edges()
+	if t == "" or t == str(player.bank_tabs[bank_tab - 1]["name"]):
+		return
+	BankTabs.rename(player, bank_tab, t)
+	var btn := bank_tab_row.get_node_or_null("BankTab_%d" % (bank_tab + 1))
+	if btn is Button:
+		btn.text = t.left(7)
+
+
 func _process(_dt: float) -> void:
+	_sync_bank_tab_name()
 	if log_box and log_box.get_child_count() > 0:   # 0.3.7.1 no overhead labels over the chat log
 		var lr := log_box.get_global_rect()
 		var top := lr.end.y
@@ -858,6 +883,8 @@ func _refresh_bank_tabs() -> void:
 		bank_tab_row.add_child(add)
 	UIKit.clear(bank_edit_row)
 	bank_edit_row.visible = bank_arrange and BANK_TABS_ON
+	if bank_tab_scroll:
+		bank_tab_scroll.visible = BANK_TABS_ON
 	bank_tab_row.visible = BANK_TABS_ON
 	if not bank_arrange:
 		return
@@ -869,23 +896,29 @@ func _refresh_bank_tabs() -> void:
 	ed.text = str(player.bank_tabs[bank_tab - 1]["name"])
 	ed.max_length = 12
 	ed.custom_minimum_size = Vector2(90, 20)
+	ed.placeholder_text = "Tab name"
 	var tab_now := bank_tab
-	ed.text_submitted.connect(func(t):
-		BankTabs.rename(player, tab_now, t)
-		_refresh_bank())
+	# Live rename: a phone keyboard often never sends "submit". Keystrokes emit
+	# text_changed. Godot 4.7 does not emit it when `text` is assigned, so
+	# _process also copies the field (the QA bot types that way).
+	ed.text_changed.connect(func(_t): _sync_bank_tab_name())
 	bank_edit_row.add_child(ed)
-	bank_edit_row.add_child(UIKit.button("Icon", func():
+	var icon_b := UIKit.button("Icon", func():
 		if _bank_sel >= 0 and player.bank.slots[_bank_sel] != null:
 			BankTabs.set_icon(player, tab_now, str(player.bank.slots[_bank_sel]["id"]))
 			_bank_sel = -1
 		else:
 			Events.say("Pick an item first: its picture becomes the tab's icon.")
-		_refresh_bank(), 34, 20))
-	bank_edit_row.add_child(UIKit.button("Delete tab", func():
+		_refresh_bank(), 34, 20)
+	icon_b.name = "BankTabIcon"
+	bank_edit_row.add_child(icon_b)
+	var del_b := UIKit.button("Delete tab", func():
 		BankTabs.remove(player, tab_now)
 		bank_tab = 0
 		Events.say("Tab deleted: its items are back on the main tab.")
-		_refresh_bank(), 60, 20))
+		_refresh_bank(), 60, 20)
+	del_b.name = "BankTabDelete"
+	bank_edit_row.add_child(del_b)
 
 
 func _on_bank_tab(tab: int) -> void:
@@ -966,7 +999,7 @@ func open_dialog(gid: String) -> void:
 	show_panel("dialog")
 
 
-const BANK_TABS_ON := false   # 0.3.17 custom bank tabs deferred: code kept, UI hidden
+const BANK_TABS_ON := true   # 0.3.19 custom bank tabs on (create, rename, delete, file, save)
 var quest_open := ""   # 0.3.17 the one expanded journal entry
 
 
@@ -1042,10 +1075,8 @@ func _on_pack_tap(i: int) -> void:
 	var extra := ""
 	if s.has("dur"):
 		extra = " Wear: %d/%d." % [int(s["dur"]), int(GameData.item(id)["tool"]["durability"])]
-	var gd: Dictionary = GameData.item(id).get("gear", {})
-	if not gd.is_empty():
-		var rs := Combat.req_skill(id)
-		extra += " %s: atk %d, str %d, def %d (needs %s %d)." % [str(gd["slot"]).capitalize(), int(gd["atk"]), int(gd["str"]), int(gd["def"]), GameData.skill_by_id[rs]["name"] if rs != "" else "level", int(gd["level"])]
+	if not GameData.item(id).get("gear", {}).is_empty():
+		extra += Combat.gear_note(id)
 	Events.say("%s — about %d marks in %s.%s" % [GameData.item_name(id), Market.town(player.current_town).reference_price(id), world.gen.town_name(player.current_town), extra])
 
 

@@ -28,6 +28,8 @@ static func run(main) -> int:
 	var world: World = main.world
 	var p: Player = main.player
 	print("SELFTEST start (Godot %s)" % Engine.get_version_info()["string"])
+	seed(42)                 # 0.3.19 global RNG is fixed for the whole run
+	p.rng.seed = 42
 
 	# --- data
 	check(GameData.items.size() >= 20, "items loaded (%d)" % GameData.items.size())
@@ -868,8 +870,27 @@ static func _metal_tests(main, world: World, p: Player) -> void:
 			if not groups.has(key):
 				groups[key] = []
 			groups[key].append(id)
+		# Plate and chain share a shop line. Split only when both fits are sold, so the
+		# wooden buckler stays in the same shield run as the plate kites (chain shields are anvil-only).
+		var split := {}
 		for key in groups.keys():
-			var arr: Array = groups[key]
+			var src: Array = groups[key]
+			var fits := {}
+			for id in src:
+				var f := str(GameData.items[id]["gear"].get("fit", ""))
+				if f != "":
+					fits[f] = true
+			if fits.has("plate") and fits.has("chain"):
+				for id in src:
+					var f2 := str(GameData.items[id]["gear"].get("fit", ""))
+					var k2: String = str(key) + ":" + f2
+					if not split.has(k2):
+						split[k2] = []
+					split[k2].append(id)
+			else:
+				split[key] = src
+		for key in split.keys():
+			var arr: Array = split[key]
 			var prev := -1
 			ok = ok and arr.size() == 4 and str(arr[2]).begins_with("steel_") and str(arr[3]).begins_with("dusk_")
 			for i in arr.size():
