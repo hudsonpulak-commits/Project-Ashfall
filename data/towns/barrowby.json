@@ -3,17 +3,17 @@
  "name": "Barrowby",
  "kind": "village",
  "between": [
-  "fenhollow",
-  "saltmere"
+  "saltmere",
+  "highfen"
  ],
- "tagline": "A herding hamlet on the Salt road.",
+ "tagline": "The southernmost village, a herding hamlet between Saltmere and Highfen.",
  "origin": [
-  148,
-  126
+  228,
+  62
  ],
  "spawn": [
-  160,
-  133
+  240,
+  69
  ],
  "rows": [
   "............=...........",

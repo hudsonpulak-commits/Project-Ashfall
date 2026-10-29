@@ -10,11 +10,13 @@
  "greet": [
   "Peace be with you. The altar is open to all who kneel.",
   "Light a candle if you like. Then kneel and be restored.",
-  "Bones feed the spirit, child, but the altar mends it."
+  "The head priest is away up north, holding the Scorch Line with Prayer. I keep the altar until they return.",
+  "Bones feed the spirit, but the altar mends it. We lay folk do what we can while the priests hold the line."
  ],
  "enter_greet": [
   "Welcome, traveller. Kneel at the altar and your prayer is restored.",
   "Come in out of the wind. The altar is just ahead.",
+  "The head priest is up north with the others, holding the Scorch Line with Prayer. I am only the lay keeper.",
   "The church is open. Rest your spirit at the altar."
  ],
  "towns": {
@@ -64,7 +66,7 @@
    "id": "fenhollow_church",
    "kind": "church",
    "name": "Fenhollow Church",
-   "keeper": "Father Aldric",
+   "keeper": "Aldric, lay keeper",
    "altar": [
     52,
     29
@@ -125,7 +127,7 @@
    "id": "cinderholt_church",
    "kind": "church",
    "name": "Cinderholt Chapel",
-   "keeper": "Brother Varr",
+   "keeper": "Varr, lay keeper",
    "altar": [
     38,
     60
@@ -207,7 +209,7 @@
    "id": "saltmere_church",
    "kind": "church",
    "name": "Saltmere Chapel",
-   "keeper": "Sister Mare",
+   "keeper": "Mare, lay keeper",
    "altar": [
     42,
     7

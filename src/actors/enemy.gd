@@ -40,6 +40,8 @@ var _last_move_t := -100000
 
 var _lvl_label: Label = null    # 0.3.3 overhead "Name (lvl)"
 var _lvl_t := 0.0
+var _gossip: Label = null            # 0.3.20 lore lines when the player stands close
+var _gossip_until := -1
 
 
 func setup(k: String, at: Vector2i, seed_v: int) -> void:
@@ -136,6 +138,7 @@ func _tick_body(t: int, world, actors: Array) -> void:
 		if t >= respawn_at:
 			_respawn()
 		return
+	_lore_gossip(t, actors)
 	if def.has("follow_quest") and _follow_tick(t, world, actors):
 		return
 	var leash := int(def.get("leash", 7))
@@ -246,6 +249,37 @@ func _home_paddock(world) -> Vector2i:
 	if world == null or world.get("gen") == null or not g.has("site"):
 		return Vector2i(-99999, -99999)
 	return world.gen.site_point(str(g["site"]), "paddock")
+
+
+## 0.3.20 Highfen townsfolk and Saltmere guards. The internal adventurer id
+## "hero" is never spoken. Lines live in data/town_npcs.json "lore_talk".
+func _lore_gossip(t: int, actors: Array) -> void:
+	if _gossip != null and t >= _gossip_until:
+		_gossip.visible = false
+	if kind != "citizen" and kind != "town_guard":
+		return
+	if (t + absi(home.x * 3 + home.y)) % 48 != 0:
+		return
+	var pack: Dictionary = GameData.town_npcs.get("lore_talk", {}).get(town, {})
+	var lines: Array = pack.get(kind, [])
+	if lines.is_empty():
+		return
+	var near := false
+	for a in actors:
+		if a is Player and cheb((a as Player).tile, tile) <= 3:
+			near = true
+			break
+	if not near:
+		return
+	var line: String = str(lines[absi(hash(str(t / 48) + town + kind)) % lines.size()])
+	if _gossip == null:
+		_gossip = Label.new()
+		_gossip.add_theme_font_size_override("font_size", 8)
+		_gossip.position = Vector2(-46, -28)
+		add_child(_gossip)
+	_gossip.text = line
+	_gossip.visible = true
+	_gossip_until = t + 10
 
 
 func _idle_wander(t: int, world) -> void:

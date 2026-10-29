@@ -7,7 +7,7 @@ extends Node
 const SAVE_PATH := "user://ashfen_save.json"
 const TMP_PATH := "user://ashfen_save.tmp"
 const BACKUP_PATH := "user://ashfen_save.bak"
-const SAVE_VERSION := 9      # 4 = map markers, 5 = 0.3.1 day/night cycle, 6 = 0.3.1 world layout (mines, Scorch, churches), 7 = 0.3.1 walled cities, 8 = 0.3.1 adventurers + Scorch PK, 9 = 0.3.19 plate/chain armour
+const SAVE_VERSION := 10     # 4 = map markers, 5 = 0.3.1 day/night cycle, 6 = 0.3.1 world layout (mines, Scorch, churches), 7 = 0.3.1 walled cities, 8 = 0.3.1 adventurers + Scorch PK, 9 = 0.3.19 plate/chain armour, 10 = 0.3.20 village move
 
 const SLOTS := 3                 # 0.3.2 save slots (slot 1 = the pre-0.3.2 file, so old saves just appear there)
 const BOOT_MARK := "user://ashfen_boot.json"   # 0.3.2 boot watchdog: set while a slot loads, cleared in gameplay
@@ -235,6 +235,9 @@ func _migrate(data: Dictionary) -> Dictionary:
 	if v < 9:
 		data = migrate_armour_fit(data)
 		data["version"] = 9
+	if v < 10:
+		data = migrate_villages_0320(data)
+		data["version"] = 10
 	if v > SAVE_VERSION:
 		push_warning("SaveSystem: save from a newer build (v%d)" % v)
 	return data
@@ -378,4 +381,38 @@ static func migrate_adventurers_pk(data):
 ## save (bronze_cap, iron_helm, steel_brigandine, ...) are the plate fit, so
 ## nothing is rewritten. Chain ids are new and only appear when smithed.
 static func migrate_armour_fit(data):
+	return data
+
+
+## v9 -> v10 (0.3.20): Millbrook, Barrowby and Oxley moved. A player standing
+## in a tile that used to be inside a village, and is not inside it now, is
+## put on that village's new plaza. Bank vaults and player shops are not touched.
+## rect = [x, y, w, h] of the old footprint. centre = the new plaza.
+const OLD_VILLAGE_0320 := [
+	{"id": "millbrook", "old": [143, -146, 84, 60], "new": [180, -152, 84, 60], "centre": [213, -125]},
+	{"id": "barrowby", "old": [148, 126, 24, 23], "new": [228, 62, 24, 23], "centre": [240, 69]},
+	{"id": "oxley", "old": [276, -35, 24, 23], "new": [310, -17, 24, 23], "centre": [322, -2]},
+]
+
+
+static func _rect_has(r: Array, x: int, y: int) -> bool:
+	return x >= int(r[0]) and y >= int(r[1]) and x < int(r[0]) + int(r[2]) and y < int(r[1]) + int(r[3])
+
+
+static func migrate_villages_0320(data):
+	if typeof(data) != TYPE_DICTIONARY:
+		return data
+	var pl = data.get("player", {})
+	if typeof(pl) != TYPE_DICTIONARY:
+		return data
+	var tile = pl.get("tile", [])
+	if typeof(tile) != TYPE_ARRAY or tile.size() < 2:
+		return data
+	var x := int(tile[0])
+	var y := int(tile[1])
+	for v in OLD_VILLAGE_0320:
+		if _rect_has(v["old"], x, y) and not _rect_has(v["new"], x, y):
+			pl["tile"] = (v["centre"] as Array).duplicate()
+			data["player"] = pl
+			break
 	return data

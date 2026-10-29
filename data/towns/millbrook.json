@@ -3,17 +3,17 @@
  "name": "Millbrook",
  "kind": "village",
  "between": [
-  "fenhollow",
+  "highfen",
   "cinderholt"
  ],
- "tagline": "Wheat, a windmill and a millpond on the Cinder road; something is breeding under the rat barn.",
+ "tagline": "Wheat and a windmill on the road north of Highfen, toward Cinderholt; something is breeding under the rat barn.",
  "origin": [
-  143,
-  -146
+  180,
+  -152
  ],
  "spawn": [
-  176,
-  -119
+  213,
+  -125
  ],
  "tiles": {
   ":": "road_dirt",

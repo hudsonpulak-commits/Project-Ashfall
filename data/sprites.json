@@ -3138,6 +3138,16 @@
    "anchor": "bottom",
    "note": "0.3.16 Millbrook well (designer art)"
   },
+  "scaffold_plank": {
+   "path": "res://assets/sprites/items/plank.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.3.20 church scaffold: one plank, not a stack"
+  },
   "rat_den_entrance": {
    "path": "res://assets/sprites/underground/overworld/den_entrance_3x2_trans.png",
    "frame_size": [

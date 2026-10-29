@@ -58,6 +58,7 @@ static func run(main, world: World, p: Player) -> void:
 	Patch0317Tests.run(main, world, p)   # 0.3.17 organizing + bank tabs
 	Patch0318Tests.run(main, world, p)   # 0.3.18 damage x0.5 + armour XP
 	Patch0319Tests.run(main, world, p)   # 0.3.19 bank tabs, scene polish
+	preload("res://src/tests/patch0320_tests.gd").run(main, world, p)   # 0.3.20 villages, lore, scene life
 	Patch0396VideoTests.run(main, world, p)   # 0.3.9.6 title video
 	p.place_at(world.gen.town_spawn("fenhollow"))
 	world.set_focus(p.tile, true)
@@ -595,21 +596,21 @@ static func _migration_tests(main, world: World, p: Player) -> void:
 	# one save chain: a v3 (0.3.0) save picks up markers (v4), day/night (v5) and the world layout (v6)
 	var v3 := {"version": 3, "tick": 10, "player": {"tile": [5, 5]}, "world": {"seed": 7331, "depleted": {"3,4": 50}, "ground": []}}
 	var mig: Dictionary = SaveSystem._migrate(v3)
-	check(int(mig["version"]) == SaveSystem.SAVE_VERSION and SaveSystem.SAVE_VERSION == 9 and mig["player"].has("map_markers")
+	check(int(mig["version"]) == SaveSystem.SAVE_VERSION and SaveSystem.SAVE_VERSION == 10 and mig["player"].has("map_markers")
 		and mig.has("daynight") and typeof(mig["player"].get("zone_seen")) == TYPE_DICTIONARY and (mig["world"]["depleted"] as Dictionary).is_empty()
 		and bool(mig.get("relayout_cities", false)),
-		"save chain v3 -> v9: map markers + day/night + zone memory, old rock timers dropped, walled-city relayout flagged")
+		"save chain v3 -> v10: map markers + day/night + zone memory, old rock timers dropped, walled-city relayout flagged")
 	var v6 := {"version": 6, "player": {"tile": [1, 1], "zone_seen": {}, "map_markers": []}, "daynight": {}, "world": {"seed": 7331}}
 	var m6: Dictionary = SaveSystem._migrate(v6)
-	check(int(m6["version"]) == 9 and bool(m6.get("relayout_cities", false)) and (m6["player"]["zone_seen"] as Dictionary).is_empty(), "save chain v6 -> v9 (walled cities, adventurers/PK, plate armour) keeps v6 data")
+	check(int(m6["version"]) == 10 and bool(m6.get("relayout_cities", false)) and (m6["player"]["zone_seen"] as Dictionary).is_empty(), "save chain v6 -> v10 (walled cities, adventurers/PK, plate armour, villages) keeps v6 data")
 	var m7: Dictionary = SaveSystem._migrate({"version": 7, "player": {"tile": [1, 1]}, "ai": {"version": 2, "agents": []}})
 	check(not m7.has("relayout_cities"), "a v7 save is not re-laid out again")
 	# 0.3.2 safety net: a migrated save is validated before it is used
 	check(SaveSystem.validate(mig) == "" and SaveSystem.validate({"version": 3, "player": "x"}) != "" and SaveSystem.validate(null) != ""
 		and SaveSystem.validate(SaveSystem._migrate({"version": 3, "player": "oops", "world": 7})) != "",
 		"save validation: a migrated v3 save passes; damaged saves are rejected (not loaded half-way)")
-	check(int(m7["version"]) == 9 and int(m7["player"]["skull_until"]) == -1 and not bool(m7["player"]["pk_warned"]) and m7["ai"].has("adv") and m7["ai"].has("gear_econ"),
-		"save chain v7 -> v9 (adventurers + Scorch PK, plate armour): no skull, rules card unseen, empty adventurer/gear-market blocks")
+	check(int(m7["version"]) == 10 and int(m7["player"]["skull_until"]) == -1 and not bool(m7["player"]["pk_warned"]) and m7["ai"].has("adv") and m7["ai"].has("gear_econ"),
+		"save chain v7 -> v10 (adventurers + Scorch PK, plate armour, villages): no skull, rules card unseen, empty adventurer/gear-market blocks")
 	# v7 load step: a player saved on an old Fenhollow street that is now a wall goes to the square
 	var fr: Rect2i = gen._town_rects["fenhollow"]
 	var wall_t := Vector2i(fr.position.x, fr.position.y + 3)

@@ -1901,6 +1901,82 @@
    "blocks": false,
    "type": "prop"
   },
+  "decor_crate": {
+   "name": "Crate",
+   "sprite": "crate",
+   "blocks": false,
+   "type": "scenery",
+   "note": "0.3.20 town clutter. One prop, not a stack, and it does not block the street."
+  },
+  "decor_barrel": {
+   "name": "Barrel",
+   "sprite": "barrel",
+   "blocks": false,
+   "type": "scenery"
+  },
+  "decor_fence": {
+   "name": "Fence",
+   "sprite": "hf_fence_straight",
+   "blocks": false,
+   "type": "scenery"
+  },
+  "decor_flowers": {
+   "name": "Flowers",
+   "sprite": "hf_flowerbed_small",
+   "blocks": false,
+   "type": "scenery"
+  },
+  "decor_signpost": {
+   "name": "Signpost",
+   "sprite": "vl_lamp",
+   "blocks": false,
+   "type": "scenery"
+  },
+  "raided_cart": {
+   "name": "Raided trader's cart",
+   "sprite": "vl_cart",
+   "blocks": false,
+   "type": "scenery",
+   "note": "0.3.20 story prop beside a road. Does not block the road."
+  },
+  "burnt_cottage": {
+   "name": "Burnt cottage",
+   "sprite": "burnt_tree",
+   "blocks": false,
+   "type": "scenery",
+   "note": "0.3.20 a cottage left where a Cinder brute was turned."
+  },
+  "supply_wagon": {
+   "name": "Supply wagon",
+   "sprite": "vl_cart",
+   "blocks": false,
+   "type": "scenery"
+  },
+  "spike_barrier": {
+   "name": "Spiked barrier",
+   "sprite": "hf_fence_straight",
+   "blocks": false,
+   "type": "scenery"
+  },
+  "scaffold_plank": {
+   "name": "Scaffold plank",
+   "sprite": "scaffold_plank",
+   "blocks": false,
+   "type": "scenery",
+   "note": "0.3.20 one plank prop. Not a stack of the plank item."
+  },
+  "tomb_flowers": {
+   "name": "Fresh flowers",
+   "sprite": "sm_flowerbed",
+   "blocks": false,
+   "type": "scenery"
+  },
+  "tomb_candles": {
+   "name": "Candles",
+   "sprite": "candle_stand",
+   "blocks": false,
+   "type": "scenery"
+  },
   "vl_well_station": {
    "name": "Well",
    "sprite": "vl_well_station",

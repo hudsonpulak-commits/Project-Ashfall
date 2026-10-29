@@ -86,6 +86,7 @@ var _village_rects: Dictionary = {}   # id -> Rect2i (the core rows: the safe zo
 var farms: Array = []                 # [{"id", "village", "rect": Rect2i, "crop", "gate": Vector2i, "center"}]
 var pastures: Array = []              # [{"id", "village", "rect": Rect2i, "enemy", "count", "gate", "center"}]
 var village_paths: Dictionary = {}    # village id -> Array[Vector2i] (gate -> road)
+var story_marks: Dictionary = {}      # 0.3.20 lore props placed by _place_lore_0320
 var _clear_rects: Array = []          # Rect2i: fields / pastures (no generated trees)
 
 ## 0.3.1 cache: A* roads are deterministic per seed + data, so build each
@@ -162,6 +163,9 @@ func _init(p_seed: int, town: Dictionary = {}, world_cfg: Dictionary = {}) -> vo
 			_load_village(v)
 			_place_quest_givers(v, Vector2i(int(v["origin"][0]), int(v["origin"][1])))   # 0.3.16 village givers
 	_load_quest_sites()
+	_place_lore_0320()
+	_prune_short_fences(int(_road_cfg.get("decor", {}).get("fence_min_run", 3)))
+	_ensure_fence_tee()
 	_cells_ready = true
 
 
@@ -205,7 +209,9 @@ func _load_village(v: Dictionary) -> void:
 	for f in farms + pastures:
 		if f["village"] == v["id"]:
 			whole = whole.merge(f["rect"])
-	_clear_rects.append(whole.grow(1))
+	var apron := whole.grow(1)
+	_clear_rects.append(apron)
+	_settle_village_ground(apron)
 	if village_roads.has(v["id"]):
 		village_paths[v["id"]] = village_roads[v["id"]]   # 0.3.8 winding dirt road to its town
 	elif v.has("gate"):
@@ -1021,6 +1027,63 @@ func _prune_short_fences(min_run: int) -> void:
 			for c in comp:
 				if road_decor.get(c, "") == "road_fence":
 					road_decor.erase(c)
+
+
+## 0.3.20 village yards no longer keep the road fences that used to branch
+## through them, and a straight roadside run never makes a T on its own.
+## A short pen T (not road decor, so it does not have to parallel a road)
+## keeps one T-joint in the world.
+func _ensure_fence_tee() -> void:
+	if _fence_has_tee():
+		return
+	var anchor: Vector2i = town_center("fenhollow") + Vector2i(80, 8)
+	for dy in range(-24, 25):
+		for dx in range(-24, 25):
+			var c: Vector2i = anchor + Vector2i(dx, dy)
+			var pad: Array = [c + Vector2i(-1, 0), c, c + Vector2i(1, 0), c + Vector2i(0, 1), c + Vector2i(0, 2)]
+			if not _tee_pad_ok(pad):
+				continue
+			for p in pad:
+				_town_objects[p] = "fence"
+			return
+
+
+func _fence_has_tee() -> bool:
+	for src in [_town_objects, road_decor]:
+		for q in src.keys():
+			if autotile_group_at(q) != "fence_rural":
+				continue
+			var n := 0
+			for d in [Vector2i(1, 0), Vector2i(-1, 0), Vector2i(0, 1), Vector2i(0, -1)]:
+				n += int(autotile_group_at(q + d) == "fence_rural")
+			if n == 3:
+				return true
+	return false
+
+
+func _spur_ok(p: Vector2i) -> bool:
+	if road_decor.has(p) or road_tiles.has(p) or _town_objects.has(p) or _building_tiles.has(p):
+		return false
+	if town_at(p, 2) != "" or village_at(p, 2) != "" or _in_field(p):
+		return false
+	if is_cliff(p.x, p.y):
+		return false
+	var t := tile_at(p.x, p.y)
+	return not (t in BLOCKING_TILES) and (t in GRASS_TILES or t == TileType.DIRT)
+
+
+func _tee_pad_ok(pad: Array) -> bool:
+	var on := {}
+	for p in pad:
+		on[p] = true
+	for p in pad:
+		if not _spur_ok(p):
+			return false
+		for d in [Vector2i(1, 0), Vector2i(-1, 0), Vector2i(0, 1), Vector2i(0, -1), Vector2i(1, 1), Vector2i(1, -1), Vector2i(-1, 1), Vector2i(-1, -1)]:
+			var n: Vector2i = p + d
+			if not on.has(n) and autotile_group_at(n) == "fence_rural":
+				return false
+	return true
 
 
 ## The 4-connected run of fence tiles (any fence object) containing q.
@@ -2072,3 +2135,213 @@ func _lip_stub(n: Vector2i, d: Vector2i) -> bool:
 		var rc := _raw_at(c)
 		k += int((rc in _CLIFF_BLOCK and not _cliff_lone_diag(c)) or (rc == -1 and cliff_gap_fill(c)))
 	return k == 1   # touches cliff only by a corner (diagonal gap fills included)
+
+
+## 0.3.20 lore props and town clutter. Props are scenery (they do not block
+## roads or doors). Cottages follow the Cinder brute camps. Mushrooms sit by
+## the rat den. One scaffold plank per church, never a stack of the item.
+func _place_lore_0320() -> void:
+	story_marks = {"burnt_cottages": [], "mushrooms": [], "scaffolds": [], "clutter": 0}
+	var doors := {}
+	for bid in building_order:
+		for d in buildings[bid].get("doors", []):
+			doors[d] = true
+	_lore_doors = doors
+	_place_elijah_tomb()
+	_place_raided_cart()
+	_place_burnt_cottages()
+	_place_rat_mushrooms()
+	_place_guard_camp()
+	_place_church_scaffolds()
+	_place_settlement_clutter()
+
+
+var _lore_doors: Dictionary = {}
+
+
+func _open_for_prop(p: Vector2i) -> bool:
+	if _town_objects.has(p) or road_tiles.has(p) or _building_tiles.has(p) or _lore_doors.has(p):
+		return false
+	if _in_field(p):
+		return false
+	var t := tile_at(p.x, p.y)
+	if t in BLOCKING_TILES or t == TileType.WATER or t in ROAD_SURFACES or is_cliff(p.x, p.y):
+		return false
+	return true
+
+
+func _in_field(p: Vector2i) -> bool:
+	for f in farms:
+		if (f["rect"] as Rect2i).has_point(p):
+			return true
+	for f in pastures:
+		if (f["rect"] as Rect2i).has_point(p):
+			return true
+	return false
+
+
+func _stamp_prop(p: Vector2i, id: String) -> bool:
+	if not _open_for_prop(p):
+		return false
+	road_decor.erase(p)
+	_town_objects[p] = id
+	return true
+
+
+## 0.3.20 a moved village keeps a walkable yard. Transparent cells and the
+## gap out to its fields used to keep whatever terrain was there; on the new
+## sites that was lake and cliff, which cut the cottages off from the plaza.
+## Authored walls stay. Roadside fences already laid through the yard go too.
+func _settle_village_ground(apron: Rect2i) -> void:
+	for y in range(apron.position.y, apron.end.y):
+		for x in range(apron.position.x, apron.end.x):
+			var p := Vector2i(x, y)
+			road_decor.erase(p)
+			if _building_tiles.has(p):
+				continue
+			if tile_at(x, y) in BLOCKING_TILES:
+				_town_tiles[p] = region_grass(p)
+
+
+func _place_elijah_tomb() -> void:
+	if not buildings.has("saltmere_elijah_tomb"):
+		return
+	var b: Dictionary = buildings["saltmere_elijah_tomb"]
+	var door: Vector2i = b["doors"][0]
+	var flower := Vector2i(-99999, 0)
+	var candle := Vector2i(-99999, 0)
+	for off in [Vector2i(0, 2), Vector2i(-1, 2), Vector2i(1, 2), Vector2i(-2, 1), Vector2i(2, 1), Vector2i(0, -2), Vector2i(-2, 0), Vector2i(2, 0), Vector2i(1, 1), Vector2i(-1, 1)]:
+		var p: Vector2i = door + off
+		if flower.x < -90000 and _stamp_prop(p, "tomb_flowers"):
+			flower = p
+		elif candle.x < -90000 and _stamp_prop(p, "tomb_candles"):
+			candle = p
+	story_marks["elijah_flowers"] = flower
+	story_marks["elijah_candles"] = candle
+
+
+func _place_raided_cart() -> void:
+	var road: Array = road_between("fenhollow", "highfen")
+	if road.is_empty():
+		road = road_between("highfen", "fenhollow")
+	var spot := Vector2i(-99999, 0)
+	var spill := Vector2i(-99999, 0)
+	var step := maxi(1, road.size() / 12)
+	for i in range(step, road.size() - 1, step):
+		var q: Vector2i = road[i]
+		for off in [Vector2i(2, 0), Vector2i(-2, 0), Vector2i(0, 2), Vector2i(0, -2), Vector2i(2, 1), Vector2i(-2, 1)]:
+			var p: Vector2i = q + off
+			if not _stamp_prop(p, "raided_cart"):
+				continue
+			spot = p
+			for off2 in [Vector2i(1, 0), Vector2i(-1, 0), Vector2i(0, 1), Vector2i(0, -1)]:
+				if _stamp_prop(p + off2, "decor_crate"):
+					spill = p + off2
+					break
+			break
+		if spot.x > -90000:
+			break
+	story_marks["raided_cart"] = spot
+	story_marks["raided_spill"] = spill
+
+
+func _place_burnt_cottages() -> void:
+	var out: Array = story_marks["burnt_cottages"]
+	for camp in GameData.camps:
+		if str(camp.get("enemy", "")) != "cinder_brute":
+			continue
+		var at := Vector2i(int(camp["at"][0]), int(camp["at"][1]))
+		for off in [Vector2i(2, 1), Vector2i(-2, 1), Vector2i(1, 2), Vector2i(-1, 2), Vector2i(3, 0), Vector2i(0, 3), Vector2i(2, -1), Vector2i(-2, -1), Vector2i(2, 2)]:
+			var p: Vector2i = at + off
+			if _stamp_prop(p, "burnt_cottage"):
+				out.append(p)
+				_stamp_prop(p + Vector2i(1, 0), "vl_rubble")
+				break
+	story_marks["burnt_cottages"] = out
+
+
+func _place_rat_mushrooms() -> void:
+	var sd: Dictionary = quest_sites.get("rat_den", {})
+	if sd.is_empty():
+		return
+	var o := Vector2i(int(sd["origin"][0]), int(sd["origin"][1]))
+	var out: Array = story_marks["mushrooms"]
+	for off in [Vector2i(3, 1), Vector2i(-2, 2), Vector2i(2, -2), Vector2i(-3, 0), Vector2i(4, 2), Vector2i(1, 3), Vector2i(-1, -2)]:
+		var p: Vector2i = o + off
+		if _stamp_prop(p, "magic_mushroom"):
+			out.append(p)
+		if out.size() >= 3:
+			break
+	story_marks["mushrooms"] = out
+
+
+func _place_guard_camp() -> void:
+	var town: Dictionary = towns.get("cinderholt", {})
+	var camp: Dictionary = town.get("camp", {})
+	if camp.is_empty() or not town.has("origin"):
+		return
+	var o := Vector2i(int(town["origin"][0]), int(town["origin"][1]))
+	var c: Array = camp.get("center", [0, 0])
+	var at := o + Vector2i(int(c[0]), int(c[1]))
+	var wagon := Vector2i(-99999, 0)
+	var spike := Vector2i(-99999, 0)
+	for off in [Vector2i(3, 2), Vector2i(-3, 2), Vector2i(2, -3), Vector2i(-2, 3), Vector2i(4, 0), Vector2i(0, 4), Vector2i(3, -2), Vector2i(-4, 1), Vector2i(1, 3), Vector2i(-1, -3)]:
+		var p: Vector2i = at + off
+		if wagon.x < -90000 and _stamp_prop(p, "supply_wagon"):
+			wagon = p
+		elif spike.x < -90000 and _stamp_prop(p, "spike_barrier"):
+			spike = p
+	story_marks["supply_wagon"] = wagon
+	story_marks["spike_barrier"] = spike
+
+
+func _place_church_scaffolds() -> void:
+	var out: Array = story_marks["scaffolds"]
+	for bid in building_order:
+		var b: Dictionary = buildings[bid]
+		if str(b.get("kind", "")) != "church":
+			continue
+		var r: Rect2i = b["rect"]
+		var placed := false
+		for x in [r.position.x - 1, r.end.x]:
+			for y in range(r.position.y, r.end.y):
+				if _stamp_prop(Vector2i(x, y), "scaffold_plank"):
+					out.append(Vector2i(x, y))
+					placed = true
+					break
+			if placed:
+				break
+		if placed:
+			continue
+		for y in [r.position.y - 1, r.end.y]:
+			for x in range(r.position.x, r.end.x):
+				if _stamp_prop(Vector2i(x, y), "scaffold_plank"):
+					out.append(Vector2i(x, y))
+					break
+	story_marks["scaffolds"] = out
+
+
+func _place_settlement_clutter() -> void:
+	var kinds: Array = ["decor_crate", "decor_barrel", "decor_fence", "decor_flowers", "decor_signpost"]
+	var rects: Array = []
+	for id in _town_rects.keys():
+		rects.append([id, _town_rects[id]])
+	for id in _village_rects.keys():
+		rects.append([id, _village_rects[id]])
+	var n := 0
+	for pair in rects:
+		var r: Rect2i = pair[1]
+		var cap := 0
+		for y in range(r.position.y, r.end.y):
+			if cap >= 14:
+				break
+			for x in range(r.position.x, r.end.x):
+				if cap >= 14:
+					break
+				if hash01(x, y, 920) > 0.02:
+					continue
+				var kind: String = kinds[int(hash01(x, y, 921) * kinds.size()) % kinds.size()]
+				if _stamp_prop(Vector2i(x, y), kind):
+					cap += 1
+					n += 1
+	story_marks["clutter"] = n

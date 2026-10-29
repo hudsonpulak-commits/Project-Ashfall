@@ -20,9 +20,9 @@ static func run(main, world, p) -> void:
 		if rm.region_at(gen.town_center(tid)) != want[tid]:
 			bad.append(tid)
 	for vid in gen.villages.keys():
-		if vid == "millbrook" and rm.region_at(gen.villages[vid]["center"]) != "lower":
+		if vid == "millbrook" and rm.region_at(gen.villages[vid]["center"]) not in ["central", "cinder"]:
 			bad.append(vid)
-	check(bad.is_empty(), "towns sit in their lore regions (Millbrook in Lower Ashfen) %s" % str(bad))
+	check(bad.is_empty(), "towns sit in their lore regions (Millbrook between Highfen and Cinderholt) %s" % str(bad))
 	check(rm.region_at(Vector2i(300, -300)) == "cinder" and gen.is_pk(Vector2i(300, -300)), "the Scorch is the northern half of Cinder")
 	# soft border: somewhere between Fenhollow and Highfen the blend weight drops and both regions dither in
 	var soft := false

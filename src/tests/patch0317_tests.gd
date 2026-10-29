@@ -11,7 +11,7 @@ static func run(_main, _world, p) -> void:
 	_map0317(_world)
 	_journal0317(_main, p)
 	print("  -- 0.3.17 organizing + bank tabs")
-	check(str(ProjectSettings.get_setting("application/config/version")) .begins_with("0.3.1"), "version is 0.3.1x")
+	check(str(ProjectSettings.get_setting("application/config/version")).begins_with("0.3."), "version is 0.3.x")
 	var keep_inv: Array = p.inventory.slots.duplicate(true)
 	var keep_bank: Array = p.bank.slots.duplicate(true)
 	var keep_tabs: Dictionary = BankTabs.to_save(p)
