@@ -539,12 +539,12 @@
   {
    "enemy": "goblin_warlord",
    "at": [
-    181,
-    -153
+    218,
+    -159
    ],
    "count": 1,
    "spread": 1,
-   "note": "0.3.16 north of the new Millbrook (v1 art moved the village)"
+   "note": "0.3.20 north of Millbrook after the village moved onto the Highfen-Cinderholt road"
   },
   {
    "enemy": "slime",
@@ -603,8 +603,8 @@
   {
    "enemy": "slime",
    "at": [
-    150,
-    -70
+    187,
+    -76
    ],
    "count": 3,
    "spread": 3
@@ -621,8 +621,8 @@
   {
    "enemy": "slime",
    "at": [
-    136,
-    -112
+    173,
+    -118
    ],
    "count": 3,
    "spread": 3
@@ -630,8 +630,8 @@
   {
    "enemy": "slime",
    "at": [
-    150,
-    -80
+    187,
+    -86
    ],
    "count": 3,
    "spread": 3
@@ -639,8 +639,8 @@
   {
    "enemy": "slime",
    "at": [
-    141,
-    119
+    221,
+    55
    ],
    "count": 3,
    "spread": 3
@@ -648,8 +648,8 @@
   {
    "enemy": "slime",
    "at": [
-    178,
-    146
+    258,
+    82
    ],
    "count": 3,
    "spread": 3
@@ -657,8 +657,8 @@
   {
    "enemy": "slime",
    "at": [
-    269,
-    -33
+    303,
+    -15
    ],
    "count": 3,
    "spread": 3
@@ -675,18 +675,18 @@
   {
    "enemy": "giant_rat",
    "at": [
-    163,
-    -80
+    200,
+    -86
    ],
    "count": 6,
    "spread": 2,
-   "note": "0.3.16 rat nest just south of Millbrook, below the rat barn (A Dead Rat is a Good Rat)"
+   "note": "0.3.20 rat nest just south of Millbrook, moved with the village (A Dead Rat is a Good Rat)"
   },
   {
    "enemy": "rat_mother",
    "at": [
-    170,
-    -80
+    207,
+    -86
    ],
    "count": 1,
    "spread": 1,

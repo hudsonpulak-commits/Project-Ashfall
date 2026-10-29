@@ -1,4 +1,25 @@
 {
+ "lore_talk": {
+  "highfen": {
+   "citizen": [
+    "Queen Jessica had the boy at last. Prince Elijah, named for the old knight of Saltmere.",
+    "The twins, Princess Avery and Princess Sophia, are about fourteen. Little Princess Kylie follows them everywhere.",
+    "Have you heard the palace news? A newborn prince, and the queen is well."
+   ],
+   "house": [
+    "The palace is all talk of Prince Elijah. Queen Jessica named him for Elijah of Saltmere.",
+    "Princess Avery and Princess Sophia are the twins. Little Princess Kylie is the small one underfoot.",
+    "Folks say the queen is tired and happy. Four children now, and a prince in the cradle."
+   ]
+  },
+  "saltmere": {
+   "town_guard": [
+    "Elijah? Aye. The old trainer. He drilled us on this very quay.",
+    "I remember Elijah as the old trainer. Quiet man. Knew a blade.",
+    "The old trainer is buried just outside town. Elijah. We still walk the drills he taught."
+   ]
+  }
+ },
  "note": "0.3.1 town guards and citizens. Coordinates are TOWN-LOCAL (same grid as data/towns/<id>.json rows; add the town origin for world tiles). Guards walk their patrol waypoints in a loop (straight streets), never start a fight and fight back when hit. Citizens wander around a random spot inside 'area' [x, y, w, h]. Both respawn (enemies.json respawn_ticks) at their first waypoint / home.",
  "towns": {
   "fenhollow": {

@@ -469,6 +469,8 @@ func smith_greet(world, b: Dictionary) -> String:
 		lines = GameData.churches.get("enter_greet", [])
 	elif b["kind"] == "house":
 		lines = GameData.villages_cfg.get("enter_greet", [])
+		if str(b.get("town", "")) == "highfen":
+			lines = lines + GameData.town_npcs.get("lore_talk", {}).get("highfen", {}).get("house", [])
 	elif b["kind"] == "cookhouse":
 		lines = GameData.buildings_cfg.get("cookhouse", {}).get("enter_greet", [])
 	elif b["kind"] == "hall":
@@ -494,6 +496,8 @@ func greet(world, b: Dictionary) -> String:
 		lines = GameData.churches.get("greet", [])
 	elif b["kind"] == "house":
 		lines = GameData.villages_cfg.get("greet", [])
+		if str(b.get("town", "")) == "highfen":
+			lines = lines + GameData.town_npcs.get("lore_talk", {}).get("highfen", {}).get("house", [])
 	if not (b.get("greet", []) as Array).is_empty():   # 0.3.11 per-building lines (palace, guild)
 		lines = b["greet"]
 	if lines.is_empty():

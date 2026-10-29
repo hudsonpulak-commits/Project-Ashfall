@@ -28,6 +28,7 @@
   "smith_brannoc": {
    "name": "Brannoc the Smith",
    "town": "cinderholt",
+   "idle": "Cindervill fell to the Scorch. The ore that used to come down from there is gone, and every smith in the north is short.",
    "object": "quest_giver_smith",
    "near": [
     16,
@@ -44,7 +45,7 @@
     22
    ],
    "note": "Northern Guard camp on the ridge above the north gate",
-   "idle": "Keep your blade sharp. The north doesn't forgive a dull edge."
+   "idle": "Cindervill fell to the Scorch, so the ore is thin. Keep your blade sharp. The north doesn't forgive a dull edge."
   },
   "farmer_garrow": {
    "name": "Farmer Garrow",
@@ -172,7 +173,7 @@
   },
   {
    "id": "wolf_pelts",
-   "name": "Wolf Pelts",
+   "name": "Night of 1000 Howls",
    "giver": "hunter_odric",
    "desc": "Odric, a Fenhollow hunter, says wolves are terrorising a farm outside town. He wants proof they've been thinned out.",
    "stages": [
@@ -780,8 +781,8 @@
   "rat_den": {
    "name": "Rat den (entrance)",
    "origin": [
-    168,
-    -82
+    205,
+    -88
    ],
    "legend": {
     "D": "rat_den_entrance"

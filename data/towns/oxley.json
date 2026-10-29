@@ -3,17 +3,16 @@
  "name": "Oxley",
  "kind": "village",
  "between": [
-  "cinderholt",
-  "saltmere"
+  "highfen"
  ],
- "tagline": "Cattle country between the hills and the sea.",
+ "tagline": "A quiet village east of Highfen, about as far from the Scorch as the capital.",
  "origin": [
-  276,
-  -26
+  310,
+  -8
  ],
  "spawn": [
-  288,
-  -20
+  322,
+  -2
  ],
  "rows": [
   "........................",

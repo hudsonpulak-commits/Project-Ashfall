@@ -78,7 +78,7 @@
  "village_roads": [
   [
    "millbrook",
-   "fenhollow"
+   "highfen"
   ],
   [
    "barrowby",
@@ -86,7 +86,7 @@
   ],
   [
    "oxley",
-   "cinderholt"
+   "highfen"
   ]
  ],
  "note_038": "0.3.8 (from Grok's world_capital.json, adapted): Highfen (data/towns/highfen.json, kind capital) sits at the continent centre. Main roads run town -> Highfen as 3-wide stone roads; trips between two towns go through Highfen (WorldGen._compose_capital_roads). village_roads are winding 2-wide dirt roads from each village to its NEAREST town (Grok paired cinderholt-barrowby, ~370 tiles apart; barrowby now goes to Saltmere and oxley to Cinderholt). Roadside decor: road_rules.decor."

@@ -35,6 +35,9 @@ var ground: GroundItems              # items lying on tiles
 var enemies: EnemyManager            # creature camps
 var buildings_view: BuildingsView    # 0.3.0 roofs, signs, keepers, displays
 var door_tiles: Dictionary = {}      # 0.3.19 Vector2i -> true, for worn paths
+const AMBIENT := preload("res://src/world/ambient_life.gd")
+var ambient                              # 0.3.20 smoke, birds, frogs, butterflies
+var focus_tile := Vector2i.ZERO
 var _sway_mat: ShaderMaterial
 var _canopy_fade: Array = []         # foliage WorldObjects currently faded
 const SWAY_SHADER := preload("res://assets/shaders/foliage_sway.gdshader")
@@ -67,6 +70,10 @@ func setup(world_seed: int) -> void:
 	buildings_view.name = "Buildings"
 	add_child(buildings_view)
 	buildings_view.setup(self)
+	ambient = AMBIENT.new()
+	ambient.name = "AmbientLife"
+	add_child(ambient)
+	ambient.setup(self, WorldGen.GRASS_TILES, WorldGen.TileType.MARSH)
 	_index_doors()
 
 
@@ -615,6 +622,7 @@ func on_tick(t: int) -> void:
 
 # --------------------------------------------------------------- streaming --
 func set_focus(p: Vector2i, immediate: bool = false) -> void:
+	focus_tile = p
 	var c := chunk_of(p)
 	if c == _focus_chunk and not immediate:
 		return
@@ -691,6 +699,8 @@ func _process(delta: float) -> void:
 		if is_instance_valid(spr):
 			spr.frame = int(_anim_time * float(a[2])) % maxi(1, mini(int(a[1]), spr.hframes * spr.vframes))
 	_update_canopies(d)
+	if ambient != null:
+		ambient.step(focus_tile, d)
 
 
 var perf_on := false   # set by the QA perf scenario
