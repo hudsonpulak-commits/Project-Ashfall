@@ -352,6 +352,8 @@ func _run() -> void:
 			await _perf0316()
 		"frames0319":
 			await _frames0319()
+		"frames0320":
+			await _frames0320()
 		_:
 			push_error("unknown QA scenario " + scenario)
 			await _finish(false)
@@ -3758,3 +3760,42 @@ func _frames0319() -> void:
 	hud._on_pack_tap(1)
 	await frames(15)
 	await _snap("armour_chain_tooltip")
+
+
+## 0.3.20 review frames (not a gate): relocated villages, Elijah's tomb, story
+## props, chimney smoke, critters.
+func _frames0320() -> void:
+	var p: Player = main.player
+	var w: World = main.world
+	var g = w.gen
+	var shots := []
+	for v in ["millbrook", "barrowby", "oxley"]:
+		shots.append(["village_" + v, g.town_spawn(v), Vector2i(0, 4)])
+	var sm: Dictionary = g.story_marks
+	for k in ["elijah_flowers", "raided_cart"]:
+		if sm.has(k) and (sm[k] as Vector2i).x > -90000:
+			shots.append([k, sm[k], Vector2i(0, 3)])
+	if sm.get("mushrooms", []).size() > 0:
+		shots.append(["magic_mushrooms", sm["mushrooms"][0], Vector2i(0, 3)])
+	if sm.get("burnt_cottages", []).size() > 0:
+		shots.append(["burnt_cottage", sm["burnt_cottages"][0], Vector2i(0, 4)])
+	var amb = w.ambient
+	if amb.smokes.size() > 0:
+		var sp: Vector2 = amb.smokes[0].position
+		shots.append(["chimney_smoke", Vector2i(int(sp.x) / w.tile_px, int(sp.y) / w.tile_px), Vector2i(0, 4)])
+	if amb.frogs.size() > 0:
+		shots.append(["frogs_marsh", amb.frogs[0]["home"], Vector2i(2, 2)])
+	if amb.butterflies.size() > 0:
+		shots.append(["butterflies_meadow", amb.butterflies[0]["home"], Vector2i(2, 2)])
+	if amb.birds.size() > 0:
+		shots.append(["birds", amb.birds[0]["home"], Vector2i(5, 5)])
+	for sh in shots:
+		var t: Vector2i = sh[1] + sh[2]
+		for dy in range(0, 6):
+			if not w.is_blocked(t + Vector2i(0, dy)):
+				t += Vector2i(0, dy)
+				break
+		p.place_at(t)
+		w.set_focus(p.tile, true)
+		await frames(60)
+		await _snap(sh[0])
