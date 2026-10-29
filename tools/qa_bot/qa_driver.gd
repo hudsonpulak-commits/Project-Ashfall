@@ -350,6 +350,8 @@ func _run() -> void:
 			await _millbrook0316()
 		"perf":
 			await _perf0316()
+		"frames0319":
+			await _frames0319()
 		_:
 			push_error("unknown QA scenario " + scenario)
 			await _finish(false)
@@ -3666,3 +3668,93 @@ func _organize0317(res: Dictionary) -> void:
 
 func snap_pack() -> void:
 	await _snap("pack_picked")
+
+
+## 0.3.19 review frames (not a gate; run on demand): bank tabs, canopy and roof
+## fade, ground variation and worn paths, plate vs chain tooltips.
+func _frames0319() -> void:
+	var p: Player = main.player
+	var w: World = main.world
+	var hud = main.hud
+	# bank tabs
+	var chest: WorldObject = w.find_nearest_object(w.gen.town_spawn("fenhollow"), ["bank_chest"], 40)
+	if chest:
+		p.bank.clear()
+		p.bank_tabs = []
+		p.bank_tab_of = {}
+		for it in [["iron_ore", 14], ["coal", 22], ["copper_ore", 9], ["logs", 30], ["raw_chicken", 5]]:
+			p.bank.add(it[0], it[1])
+		var t1 := BankTabs.add(p, "Ores")
+		BankTabs.set_icon(p, t1, "iron_ore")
+		BankTabs.assign(p, "iron_ore", t1)
+		BankTabs.assign(p, "coal", t1)
+		BankTabs.assign(p, "copper_ore", t1)
+		var t2 := BankTabs.add(p, "Food")
+		BankTabs.set_icon(p, t2, "raw_chicken")
+		BankTabs.assign(p, "raw_chicken", t2)
+		p.place_at(chest.pos)
+		w.set_focus(p.tile, true)
+		await frames(20)
+		hud.bank_tab = BankTabs.ALL
+		hud.show_panel("bank")
+		await frames(10)
+		await _snap("bank_tabs_all")
+		hud.bank_tab = t1
+		hud._refresh_bank()
+		await frames(10)
+		await _snap("bank_tab_ores")
+		hud.show_panel("")
+	# canopy fade
+	var tree: WorldObject = w.find_nearest_object(w.gen.town_spawn("fenhollow"), ["ash_tree"], 60)
+	if tree:
+		p.place_at(tree.pos + Vector2i(0, 3))
+		w.set_focus(p.tile, true)
+		await frames(40)
+		await _snap("tree_canopy_normal")
+		p.place_at(tree.pos + Vector2i(0, -1))
+		await frames(60)
+		await _snap("tree_canopy_faded")
+	# roof fade
+	for id in w.gen.building_order:
+		var b: Dictionary = w.gen.buildings[id]
+		if not b.has("art"):
+			continue
+		var r: Rect2i = b["rect"]
+		var t := Vector2i(r.position.x + r.size.x / 2, r.position.y - 1)
+		if not w.gen.building_at(t).is_empty() or w.is_blocked(t):
+			continue
+		p.place_at(t)
+		w.set_focus(p.tile, true)
+		await frames(60)
+		await _snap("roof_faded_behind")
+		p.place_at(t + Vector2i(0, -8))
+		w.set_focus(p.tile, true)
+		await frames(60)
+		await _snap("roof_normal")
+		break
+	# ground variation / worn paths beside a road
+	var origin := w.gen.town_spawn("fenhollow")
+	var best := Vector2i.ZERO
+	var bd := 1 << 30
+	for road in w.gen.road_tiles.keys():
+		var d: int = (road - origin).length_squared()
+		if d > 100 and d < bd and w.gen.building_at(road).is_empty():
+			bd = d
+			best = road
+	p.place_at(best)
+	w.set_focus(p.tile, true)
+	await frames(60)
+	await _snap("ground_worn_paths")
+	# plate vs chain tooltips
+	p.inventory.clear()
+	p.inventory.add("iron_helm", 1)
+	p.inventory.add("iron_chain_coif", 1)
+	hud.show_panel("pack")
+	await frames(10)
+	hud._on_pack_tap(0)
+	await frames(15)
+	await _snap("armour_plate_tooltip")
+	hud._sel_slot = -1
+	hud._on_pack_tap(1)
+	await frames(15)
+	await _snap("armour_chain_tooltip")
