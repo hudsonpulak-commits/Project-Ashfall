@@ -4074,6 +4074,11 @@ func _frames_restyle() -> void:
 		w.set_focus(p.tile, true)
 		await frames(40)
 		await _snap("restyle_mob_%s" % k)
+		if k == "wolf":
+			Events.splat.emit(foe, foe.tile, 4, "heal")
+			Events.splat.emit(p, p.tile, 2, "poison")
+			await frames(4)
+			await _snap("restyle_splat_heal_poison")
 		if k == "greymaw":
 			foe.call("_die", p, Tick.tick_count)
 			await frames(20)

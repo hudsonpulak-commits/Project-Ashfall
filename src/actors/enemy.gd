@@ -171,6 +171,7 @@ func _tick_body(t: int, world, actors: Array) -> void:
 		return
 	if hp < max_hp and t % Combat.REGEN_TICKS == 0:
 		hp += 1
+		Events.splat.emit(self, tile, 1, "heal")
 		queue_redraw()
 	# 0.3.1 guards walk their patrol loop (home follows, so the leash moves with them)
 	if not patrol.is_empty():

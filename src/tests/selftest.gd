@@ -837,6 +837,30 @@ static func _bubble_tests(main, world: World, p: Player) -> void:
 	Events.hitsplat.emit(e, e.tile, 4)
 	check(hb.count_on(p) == 1 and hb.count_on(e) == 1 and hb.value_on(p) == 2 and hb.value_on(e) == 4 and hb.get_child_count() == n0 + 2,
 		"hits on different actors each keep their own bubble")
+	# restyle: green heal / purple poison splats on the same path; healing is never red
+	hb.screen_gate = false
+	var red := HitBubbles.splat_color(3)
+	var hp0 := p.hp
+	p.hp = maxi(1, p.max_hp() - 5)
+	p.inventory.add("cooked_rat_meat")
+	p.next_attack = 0
+	var healed: int = p.eat_slot(p.inventory.find("cooked_rat_meat"), Tick.tick_count + 1000)
+	var hcol: Color = (hb.label_on(p).get_theme_stylebox("normal") as StyleBoxFlat).bg_color if hb.label_on(p) else Color.BLACK
+	check(healed > 0 and hb.kind_on(p) == "heal" and hb.value_on(p) == healed and hcol == Color(HitBubbles.SPLAT_COLORS["heal"]) and hcol != red,
+		"eating food shows a green heal splat with the amount healed (%d, %s)" % [healed, hcol.to_html(false)])
+	Events.splat.emit(p, p.tile, 2, "poison")
+	var pcol := (hb.label_on(p).get_theme_stylebox("normal") as StyleBoxFlat).bg_color
+	check(hb.count_on(p) == 1 and hb.kind_on(p) == "poison" and hb.value_on(p) == 2 and pcol == Color(HitBubbles.SPLAT_COLORS["poison"]), "a poison tick shows a purple splat with its damage")
+	var hp1 := p.hp
+	p.poison_tick(3)
+	check(p.hp == maxi(1, hp1 - 3) and hb.kind_on(p) == "poison" and hb.value_on(p) == 3, "Actor.poison_tick deals the damage and splats purple")
+	Events.splat.emit(p, p.tile, 1, "heal")
+	check(hb.kind_on(p) == "heal" and HitBubbles.splat_color(1, "heal") != red and HitBubbles.splat_color(0, "heal") != red, "regen heals splat green, never red")
+	var n_heal := hb.get_child_count()
+	Events.splat.emit(e, e.tile, 0, "heal")
+	check(hb.get_child_count() <= n_heal, "a 0 heal shows no bubble")
+	hb.screen_gate = true
+	p.hp = hp0
 	p.position += Vector2(16, 0)
 	hb._process(0.01)
 	check(hb.label_on(p).position == pos_a + Vector2(16, 0), "a bubble follows its actor when it moves")

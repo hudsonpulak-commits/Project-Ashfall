@@ -212,6 +212,16 @@ func start_pack_recipe(station: String, recipe_id: String, count: int = -1) -> b
 	return true
 
 
+## restyle: a poison tick (purple splat). Nothing in the game poisons yet; this is the
+## damage path a future poison source calls each tick.
+func poison_tick(dmg: int) -> void:
+	if dead or dmg <= 0:
+		return
+	hp = maxi(1, hp - dmg)   # a tick never kills by itself (death stays on the combat path)
+	Events.splat.emit(self, tile, dmg, "poison")
+	queue_redraw()
+
+
 func on_hitsplat(_obj, _dmg: int) -> void:
 	pass
 
@@ -465,6 +475,8 @@ func eat_slot(i: int, t: int) -> int:
 	hp = mini(max_hp(), hp + heals)
 	next_attack = maxi(next_attack, t + Combat.EAT_DELAY)
 	queue_redraw()
+	if hp > before:
+		Events.splat.emit(self, tile, hp - before, "heal")
 	return hp - before
 
 
@@ -608,6 +620,7 @@ func _tick_body(t: int, world) -> void:
 	Prayer.tick(prayer, skills.level("prayer"))
 	if hp < max_hp() and not in_combat(t) and t % Combat.REGEN_TICKS == 0:
 		hp += 1
+		Events.splat.emit(self, tile, 1, "heal")
 		queue_redraw()
 	if action.get("kind", "") == "fight":
 		_fight_tick(t, world)
