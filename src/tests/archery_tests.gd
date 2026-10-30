@@ -10,7 +10,7 @@ static func check(cond: bool, what: String) -> void:
 
 static func run(world: World, p: Player) -> void:
 	print("  -- 0.3.3 archery")
-	check(GameData.skill_by_id.has("archery") and GameData.skill_by_id["archery"]["short"] == "ARC", "Archery skill in skills.json (ARC)")
+	check(GameData.skill_by_id.has("archery") and GameData.skill_by_id["archery"]["short"] == "RNG", "Archery skill shown as Ranged (RNG, 0.4.0)")
 	check(Combat.req_skill("ash_shortbow") == "archery" and Combat.default_style("ash_shortbow") == "ranged" and Combat.style_skill("ranged") == "archery", "bows need Archery, default to the Ranged style, which trains Archery")
 	check(Combat.is_ranged("ash_shortbow") and not Combat.is_ranged("bronze_sword"), "bows are ranged, swords are not")
 	var sk := Skills.new()

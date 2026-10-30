@@ -391,10 +391,39 @@ func _die(killer: Actor, t: int) -> void:
 	dead = true
 	target = null
 	returning = false
+	_play_death()
 	visible = false
 	respawn_at = t + int(def.get("respawn_ticks", 60))
 	if manager:
 		manager.on_killed(self, killer, t)
+
+
+## 0.4.0 one-shot death strip (sprite "death_paths") left where it fell.
+func _play_death() -> void:
+	var sd := GameData.sprite_def("actors", def.get("sprite", kind))
+	var dp: String = str(sd.get("death_paths", {}).get(facing.dir, ""))
+	if dp == "" or _sprite == null or get_parent() == null:
+		return
+	var n := int(sd.get("death_frames", 4))
+	var spr := Sprite2D.new()
+	spr.texture = GameData._tex(dp)
+	spr.hframes = maxi(1, n)
+	spr.centered = false
+	spr.offset = _sprite.offset
+	spr.scale = scale
+	spr.flip_h = _sprite.flip_h
+	spr.position = position
+	spr.z_index = z_index
+	spr.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+	get_parent().add_child(spr)
+	var tw := spr.create_tween()
+	var step := 1.0 / maxf(1.0, float(sd.get("death_fps", 6)))
+	for i in n:
+		tw.tween_callback(func(): spr.frame = i)
+		tw.tween_interval(step)
+	tw.tween_interval(0.6)
+	tw.tween_property(spr, "modulate:a", 0.0, 0.5)
+	tw.tween_callback(spr.queue_free)
 
 
 func _respawn() -> void:
@@ -455,12 +484,23 @@ func _process(delta: float) -> void:
 				_sprite.frame = clampi(bf, 0, bn - 1)
 		if _bite_t < 0.0:
 			_bite_dir = ""
+			var moving := _tick_now - _last_move_t <= int(Facing.cfg().get("anim_grace_ticks", 2))
+			# 0.4.0 optional idle strip (Greymaw, dire wolves) while standing still
+			var ip: String = str(sd.get("idle_paths", {}).get(facing.dir, ""))
+			var want := (facing.dir + "_idle") if (ip != "" and not moving and not is_engaged()) else facing.dir
+			if want != _shown_dir:   # 0.3.9 front / back / side sheets
+				_shown_dir = want
+				if want.ends_with("_idle"):
+					_sprite.texture = GameData._tex(ip)
+					_sprite.hframes = maxi(1, int(sd.get("idle_frames", 2)))
+				else:
+					_sprite.texture = GameData.actor_texture(def.get("sprite", kind), facing.dir)
+					_sprite.hframes = maxi(1, GameData.frame_count("actors", def.get("sprite", kind)))
 			if _sprite.hframes > 1:
-				var moving := _tick_now - _last_move_t <= int(Facing.cfg().get("anim_grace_ticks", 2))
-				_sprite.frame = Facing.anim_frame(_anim_t, float(sd.get("fps", 4)), _sprite.hframes) if (moving or is_engaged()) else 0
-			if facing.dir != _shown_dir:   # 0.3.9 front / back / side sheets
-				_shown_dir = facing.dir
-				_sprite.texture = GameData.actor_texture(def.get("sprite", kind), facing.dir)
+				if want.ends_with("_idle"):
+					_sprite.frame = int(_anim_t * float(sd.get("idle_fps", 2))) % _sprite.hframes
+				else:
+					_sprite.frame = Facing.anim_frame(_anim_t, float(sd.get("fps", 4)), _sprite.hframes) if (moving or is_engaged()) else 0
 		_sprite.flip_h = facing.left and bool(sd.get("flip", true)) and facing.dir == "side"
 
 

@@ -33,8 +33,8 @@ static func run(main) -> int:
 
 	# --- data
 	check(GameData.items.size() >= 20, "items loaded (%d)" % GameData.items.size())
-	check(GameData.skills.size() == 14 and GameData.skill_by_id.has("archery") and GameData.skill_by_id.has("prayer") and GameData.skill_by_id.has("attack") and GameData.skill_by_id.has("strength")
-		and GameData.skill_by_id.has("defence") and not GameData.skill_by_id.has("melee"), "14 skills defined (Attack, Strength, Defence replace Melee; incl. Prayer, Archery)")
+	check(GameData.skills.size() == 15 and GameData.skill_by_id.has("archery") and GameData.skill_by_id.has("prayer") and GameData.skill_by_id.has("attack") and GameData.skill_by_id.has("strength")
+		and GameData.skill_by_id.has("defence") and not GameData.skill_by_id.has("melee"), "15 skills defined (Attack, Strength, Defence replace Melee; incl. Prayer, Ranged, 0.4.0 Crafting)")
 	check(GameData.objects.size() >= 12, "world objects loaded")
 	check(GameData.xp_for_level(2) == 100, "xp curve L2 = 100")
 	var mono := true
@@ -295,7 +295,7 @@ static func run(main) -> int:
 		check(have_all, "%s has a bank chest, general store and Exchange" % gen.town_name(tid))
 		for line in gen.towns[tid].get("specialists", []):
 			check(not gen.building_for_shop(tid, line).is_empty(), "%s has its %s shop" % [gen.town_name(tid), line])
-			if line == "cook":
+			if line in ["cook", "crafting"]:   # 0.4.0 Crafting Supply is in every city
 				continue  # cookhouse is in every city
 			spec_dup = spec_dup or spec_seen.has(line)
 			spec_seen[line] = tid
@@ -443,12 +443,17 @@ static func _combat_tests(world: World, p: Player) -> void:
 		expect_n += int(world.gen.villages[vid].get("citizens", {}).get("count", 0))
 	for pz in world.gen.pastures:
 		expect_n += int(pz["count"])
+	if GameData.enemies.has("greymaw"):   # 0.4.0 one dormant named dire wolf
+		expect_n += 1
 	var kinds := {}
 	var spawn_ok := true
 	var bx := Rect2i(em.enemies[0].home, Vector2i.ONE)
 	for e in em.enemies:
 		kinds[e.kind] = true
-		spawn_ok = spawn_ok and not world.is_blocked(e.home) and (world.gen.town_at(e.home, 0) == "" or e.town_ok())
+		var e_ok: bool = bool(e.def.get("rotates", false)) or (not world.is_blocked(e.home) and (world.gen.town_at(e.home, 0) == "" or e.town_ok()))
+		if not e_ok:
+			printerr("    camp off-land: %s at %s" % [e.kind, str(e.home)])
+		spawn_ok = spawn_ok and e_ok
 		bx = bx.expand(e.home)
 	check(em.enemies.size() == expect_n and kinds.has("giant_rat") and kinds.has("goblin"), "%d enemies spawned in camps + towns (rats, goblins, ...)" % em.enemies.size())
 	check(spawn_ok and bx.size.x > 250, "camps sit on walkable land outside towns, spread across the continent (%d tiles wide)" % bx.size.x)
@@ -1525,7 +1530,7 @@ static func _building_tests(main, world: World, p: Player) -> void:
 	var where := {}
 	var ok_unique := true
 	for sid in GameData.buildings_cfg["shops"].keys():
-		if sid in ["general", "player", "cook"]:
+		if sid in ["general", "player", "cook", "crafting"]:
 			continue  # cookhouse is one per city
 		var n := 0
 		for id in gen.building_order:
@@ -1549,7 +1554,7 @@ static func _building_tests(main, world: World, p: Player) -> void:
 				ck += 1 if b["shop"] == "cook" else 0
 		per_town_ok = per_town_ok and g == 1 and pl == (1 if tid == Market.shop_town() else 0) and ck == 1   # 0.3.8 player shop: Highfen only
 		for sid in Market.town(tid).specialists:
-			if sid == "cook":
+			if sid in ["cook", "crafting"]:
 				continue
 			per_town_ok = per_town_ok and where.get(sid, "") == tid
 	check(per_town_ok, "each town: general, cookhouse, its gear specialists (player shop: Highfen only)alists")

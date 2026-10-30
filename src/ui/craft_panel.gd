@@ -6,6 +6,8 @@ var player: Player
 var world
 var station := ""
 var station_pos := Vector2i.ZERO
+var filter_item := ""     # 0.4.0 knife-on-log: only recipes using this item
+const QTY := [1, 5, 10, -1]   # 0.4.0 quantity choice (All = -1) on every station
 var _title: Label
 var _list: VBoxContainer
 
@@ -27,17 +29,37 @@ func setup(p: Player, w) -> void:
 			refresh())
 
 
-func open(st: String, pos: Vector2i) -> void:
+func open(st: String, pos: Vector2i, filter: String = "") -> void:
 	station = st
 	station_pos = pos
+	filter_item = filter
 	refresh()
 
 
-func refresh() -> void:
-	var obj: WorldObject = world.object_at(station_pos)
-	_title.text = obj.display_name() if obj else station.capitalize()
-	UIKit.clear(_list)
+func is_pack() -> bool:
+	return Interactions.PACK_STATIONS.has(station)
+
+
+## 0.4.0 the recipes this window lists (pack stations: optionally by input).
+func recipes() -> Array:
+	var out: Array = []
 	for r in GameData.recipes_for_station(station):
+		if filter_item != "" and not r["in"].has(filter_item):
+			continue
+		out.append(r)
+	return out
+
+
+func refresh() -> void:
+	var obj: WorldObject = null if is_pack() else world.object_at(station_pos)
+	if is_pack():
+		_title.text = GameData.skill_by_id[Interactions.PACK_STATIONS[station]]["name"]
+		if filter_item != "":
+			_title.text += ": " + GameData.item_name(filter_item)
+	else:
+		_title.text = obj.display_name() if obj else station.capitalize()
+	UIKit.clear(_list)
+	for r in recipes():
 		var out_id: String = r["out"].keys()[0]
 		var lvl_ok: bool = player.skills.level(r["skill"]) >= int(r.get("level", 1))
 		var row := HBoxContainer.new()
@@ -52,18 +74,22 @@ func refresh() -> void:
 			UIStyle.TEXT if lvl_ok else Color("#e07a5a"))
 		l.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		row.add_child(l)
-		var can := lvl_ok and player.inventory.has_all(r["in"])
+		var can := lvl_ok and Interactions.can_make(player, r)
 		var rid: String = r["id"]
-		var b1 := UIKit.button("Make 1", func(): _make(rid, 1), 44, 22)
-		var b2 := UIKit.button("All", func(): _make(rid, -1), 30, 22)
-		b1.disabled = not can
-		b2.disabled = not can
-		row.add_child(b1)
-		row.add_child(b2)
+		for q in QTY:
+			var n: int = q
+			var b := UIKit.button("All" if n < 0 else str(n), func(): _make(rid, n), 26, 22)
+			b.disabled = not can
+			b.name = "q%d" % n
+			row.add_child(b)
 		_list.add_child(row)
 
 
 func _make(rid: String, count: int) -> void:
+	if is_pack():
+		if player.start_pack_recipe(station, rid, count):
+			get_meta("hud").show_panel("")
+		return
 	var obj: WorldObject = world.object_at(station_pos)
 	if obj == null:
 		return

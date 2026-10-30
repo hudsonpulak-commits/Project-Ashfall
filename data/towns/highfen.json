@@ -151,7 +151,8 @@
  "roof": "#b8a888",
  "building_style": "capital",
  "specialists": [
-  "cook"
+  "cook",
+  "crafting"
  ],
  "price_bias": {
   "iron_ore": 1.1,
@@ -2741,11 +2742,11 @@
    ]
   },
   {
-   "art": "v3_house_05",
-   "flip": true,
+   "art": "v4_crafting_supply",
+   "flip": false,
    "at": [
     22,
-    10
+    11
    ],
    "door": [
     [
@@ -2757,24 +2758,45 @@
     26,
     16
    ],
-   "props": [],
+   "props": [
+    {
+     "object": "spinning_wheel",
+     "at": [
+      24,
+      12
+     ]
+    },
+    {
+     "object": "tanning_rack",
+     "at": [
+      26,
+      12
+     ]
+    },
+    {
+     "object": "tanning_vat",
+     "at": [
+      27,
+      14
+     ]
+    }
+   ],
    "counter": [],
    "id": "highfen_home_27",
-   "kind": "house",
-   "shop": "",
-   "name": "Weaver's house",
-   "keeper": "Kit Weaver",
-   "keeper_sprite": "villager",
-   "sign_sprite": "sign_house",
+   "kind": "shop",
+   "shop": "crafting",
+   "name": "Highfen Crafting Supply",
+   "keeper": "Aldous Weft",
    "roof": "#8a7050",
    "keeper_at": [
-    26,
+    23,
     15
    ],
    "stand": [
-    25,
+    24,
     15
-   ]
+   ],
+   "note": "0.4.0 Crafting Supply (sprites_040 v4_crafting_supply)"
   },
   {
    "art": "v3_house_12",

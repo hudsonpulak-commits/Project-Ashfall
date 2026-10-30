@@ -7,7 +7,7 @@ extends Node
 const SAVE_PATH := "user://ashfen_save.json"
 const TMP_PATH := "user://ashfen_save.tmp"
 const BACKUP_PATH := "user://ashfen_save.bak"
-const SAVE_VERSION := 10     # 4 = map markers, 5 = 0.3.1 day/night cycle, 6 = 0.3.1 world layout (mines, Scorch, churches), 7 = 0.3.1 walled cities, 8 = 0.3.1 adventurers + Scorch PK, 9 = 0.3.19 plate/chain armour, 10 = 0.3.20 village move
+const SAVE_VERSION := 11     # 11 = 0.4.0 Joinery -> Fletching (+Crafting), 4 = map markers, 5 = 0.3.1 day/night cycle, 6 = 0.3.1 world layout (mines, Scorch, churches), 7 = 0.3.1 walled cities, 8 = 0.3.1 adventurers + Scorch PK, 9 = 0.3.19 plate/chain armour, 10 = 0.3.20 village move
 
 const SLOTS := 3                 # 0.3.2 save slots (slot 1 = the pre-0.3.2 file, so old saves just appear there)
 const BOOT_MARK := "user://ashfen_boot.json"   # 0.3.2 boot watchdog: set while a slot loads, cleared in gameplay
@@ -238,8 +238,39 @@ func _migrate(data: Dictionary) -> Dictionary:
 	if v < 10:
 		data = migrate_villages_0320(data)
 		data["version"] = 10
+	if v < 11:
+		data = migrate_fletching_040(data)
+		if typeof(data) == TYPE_DICTIONARY:
+			data["version"] = 11
 	if v > SAVE_VERSION:
 		push_warning("SaveSystem: save from a newer build (v%d)" % v)
+	return data
+
+
+## v10 -> v11 (0.4.0): Joinery became Fletching. Every skill-XP dictionary
+## (player and AI agents) moves its Joinery XP to Fletching; Crafting starts
+## at 0 (Skills fills missing keys). AI activities naming joinery now name
+## crafting (the plank/rod/buckler recipes moved there). Archery keeps its
+## internal id and is shown as Ranged, so its XP carries over untouched.
+static func migrate_fletching_040(data):
+	match typeof(data):
+		TYPE_DICTIONARY:
+			var out := {}
+			var is_xp: bool = data.has("joinery") and data.has("vitality") and typeof(data["joinery"]) in [TYPE_INT, TYPE_FLOAT]
+			for k in data.keys():
+				var v = data[k]
+				if is_xp and k == "joinery":
+					out["fletching"] = maxi(int(data.get("fletching", 0)), int(v))
+					continue
+				if k == "skill" and typeof(v) == TYPE_STRING and v == "joinery":
+					v = "crafting"
+				out[k] = migrate_fletching_040(v)
+			return out
+		TYPE_ARRAY:
+			var arr := []
+			for v in data:
+				arr.append(migrate_fletching_040(v))
+			return arr
 	return data
 
 

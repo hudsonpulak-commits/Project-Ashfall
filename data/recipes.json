@@ -147,7 +147,7 @@
   {
    "id": "saw_plank",
    "station": "workbench",
-   "skill": "joinery",
+   "skill": "crafting",
    "level": 1,
    "xp": 12,
    "ticks": 3,
@@ -161,7 +161,7 @@
   {
    "id": "twist_rod",
    "station": "workbench",
-   "skill": "joinery",
+   "skill": "crafting",
    "level": 4,
    "xp": 30,
    "ticks": 4,
@@ -522,24 +522,9 @@
    }
   },
   {
-   "id": "carve_ash_shortbow",
-   "station": "workbench",
-   "skill": "joinery",
-   "level": 5,
-   "xp": 40,
-   "ticks": 4,
-   "in": {
-    "ash_log": 4,
-    "reed_fibre": 6
-   },
-   "out": {
-    "ash_shortbow": 1
-   }
-  },
-  {
    "id": "carve_alder_buckler",
    "station": "workbench",
-   "skill": "joinery",
+   "skill": "crafting",
    "level": 6,
    "xp": 45,
    "ticks": 4,
@@ -549,21 +534,6 @@
    },
    "out": {
     "alder_buckler": 1
-   }
-  },
-  {
-   "id": "carve_alder_longbow",
-   "station": "workbench",
-   "skill": "joinery",
-   "level": 15,
-   "xp": 120,
-   "ticks": 6,
-   "in": {
-    "alder_log": 8,
-    "reed_fibre": 10
-   },
-   "out": {
-    "alder_longbow": 1
    }
   },
   {
@@ -1051,6 +1021,640 @@
     "min": 0.05,
     "item": "burnt_meat"
    }
+  },
+  {
+   "id": "fletch_shafts_ash_log",
+   "station": "knife",
+   "skill": "fletching",
+   "level": 1,
+   "xp": 5,
+   "ticks": 2,
+   "in": {
+    "ash_log": 1
+   },
+   "out": {
+    "arrow_shaft": 5
+   },
+   "tools": [
+    "knife"
+   ]
+  },
+  {
+   "id": "fletch_shafts_alder_log",
+   "station": "knife",
+   "skill": "fletching",
+   "level": 10,
+   "xp": 10,
+   "ticks": 2,
+   "in": {
+    "alder_log": 1
+   },
+   "out": {
+    "arrow_shaft": 10
+   },
+   "tools": [
+    "knife"
+   ]
+  },
+  {
+   "id": "fletch_shafts_spruce_log",
+   "station": "knife",
+   "skill": "fletching",
+   "level": 20,
+   "xp": 14,
+   "ticks": 2,
+   "in": {
+    "spruce_log": 1
+   },
+   "out": {
+    "arrow_shaft": 15
+   },
+   "tools": [
+    "knife"
+   ]
+  },
+  {
+   "id": "fletch_shafts_blackthorn_log",
+   "station": "knife",
+   "skill": "fletching",
+   "level": 25,
+   "xp": 18,
+   "ticks": 2,
+   "in": {
+    "blackthorn_log": 1
+   },
+   "out": {
+    "arrow_shaft": 20
+   },
+   "tools": [
+    "knife"
+   ]
+  },
+  {
+   "id": "fletch_shafts_mahogany_log",
+   "station": "knife",
+   "skill": "fletching",
+   "level": 35,
+   "xp": 24,
+   "ticks": 2,
+   "in": {
+    "mahogany_log": 1
+   },
+   "out": {
+    "arrow_shaft": 25
+   },
+   "tools": [
+    "knife"
+   ]
+  },
+  {
+   "id": "fletch_ash_shortbow_u",
+   "station": "knife",
+   "skill": "fletching",
+   "level": 5,
+   "xp": 25,
+   "ticks": 3,
+   "in": {
+    "ash_log": 2
+   },
+   "out": {
+    "ash_shortbow_u": 1
+   },
+   "tools": [
+    "knife"
+   ]
+  },
+  {
+   "id": "fletch_alder_longbow_u",
+   "station": "knife",
+   "skill": "fletching",
+   "level": 15,
+   "xp": 60,
+   "ticks": 4,
+   "in": {
+    "alder_log": 3
+   },
+   "out": {
+    "alder_longbow_u": 1
+   },
+   "tools": [
+    "knife"
+   ]
+  },
+  {
+   "id": "fletch_blackthorn_warbow_u",
+   "station": "knife",
+   "skill": "fletching",
+   "level": 30,
+   "xp": 140,
+   "ticks": 5,
+   "in": {
+    "blackthorn_log": 3
+   },
+   "out": {
+    "blackthorn_warbow_u": 1
+   },
+   "tools": [
+    "knife"
+   ]
+  },
+  {
+   "id": "string_ash_shortbow",
+   "station": "knife",
+   "skill": "fletching",
+   "level": 5,
+   "xp": 20,
+   "ticks": 2,
+   "in": {
+    "ash_shortbow_u": 1,
+    "simple_string": 1
+   },
+   "out": {
+    "ash_shortbow": 1
+   },
+   "tools": [
+    "knife"
+   ]
+  },
+  {
+   "id": "string_alder_longbow",
+   "station": "knife",
+   "skill": "fletching",
+   "level": 15,
+   "xp": 50,
+   "ticks": 2,
+   "in": {
+    "alder_longbow_u": 1,
+    "simple_string": 1
+   },
+   "out": {
+    "alder_longbow": 1
+   },
+   "tools": [
+    "knife"
+   ]
+  },
+  {
+   "id": "string_blackthorn_warbow",
+   "station": "knife",
+   "skill": "fletching",
+   "level": 30,
+   "xp": 120,
+   "ticks": 2,
+   "in": {
+    "blackthorn_warbow_u": 1,
+    "superior_string": 1
+   },
+   "out": {
+    "blackthorn_warbow": 1
+   },
+   "tools": [
+    "knife"
+   ]
+  },
+  {
+   "id": "fletch_headless",
+   "station": "knife",
+   "skill": "fletching",
+   "level": 1,
+   "xp": 15,
+   "ticks": 2,
+   "in": {
+    "arrow_shaft": 15,
+    "feather": 15
+   },
+   "out": {
+    "headless_arrows": 15
+   },
+   "tools": [
+    "knife"
+   ]
+  },
+  {
+   "id": "fletch_bronze_arrows",
+   "station": "knife",
+   "skill": "fletching",
+   "level": 1,
+   "xp": 20,
+   "ticks": 2,
+   "in": {
+    "headless_arrows": 15,
+    "bronze_arrowheads": 15
+   },
+   "out": {
+    "bronze_arrows": 15
+   },
+   "tools": [
+    "knife"
+   ]
+  },
+  {
+   "id": "fletch_iron_arrows",
+   "station": "knife",
+   "skill": "fletching",
+   "level": 10,
+   "xp": 40,
+   "ticks": 2,
+   "in": {
+    "headless_arrows": 15,
+    "iron_arrowheads": 15
+   },
+   "out": {
+    "iron_arrows": 15
+   },
+   "tools": [
+    "knife"
+   ]
+  },
+  {
+   "id": "fletch_steel_arrows",
+   "station": "knife",
+   "skill": "fletching",
+   "level": 20,
+   "xp": 75,
+   "ticks": 2,
+   "in": {
+    "headless_arrows": 15,
+    "steel_arrowheads": 15
+   },
+   "out": {
+    "steel_arrows": 15
+   },
+   "tools": [
+    "knife"
+   ]
+  },
+  {
+   "id": "fletch_dusk_arrows",
+   "station": "knife",
+   "skill": "fletching",
+   "level": 30,
+   "xp": 120,
+   "ticks": 2,
+   "in": {
+    "headless_arrows": 15,
+    "dusk_arrowheads": 15
+   },
+   "out": {
+    "dusk_arrows": 15
+   },
+   "tools": [
+    "knife"
+   ]
+  },
+  {
+   "id": "forge_bronze_arrowheads",
+   "station": "anvil",
+   "skill": "smithing",
+   "level": 5,
+   "xp": 12,
+   "ticks": 3,
+   "in": {
+    "bronze_bar": 1
+   },
+   "out": {
+    "bronze_arrowheads": 15
+   }
+  },
+  {
+   "id": "forge_iron_arrowheads",
+   "station": "anvil",
+   "skill": "smithing",
+   "level": 20,
+   "xp": 25,
+   "ticks": 3,
+   "in": {
+    "iron_bar": 1
+   },
+   "out": {
+    "iron_arrowheads": 15
+   }
+  },
+  {
+   "id": "forge_steel_arrowheads",
+   "station": "anvil",
+   "skill": "smithing",
+   "level": 33,
+   "xp": 38,
+   "ticks": 3,
+   "in": {
+    "steel_bar": 1
+   },
+   "out": {
+    "steel_arrowheads": 15
+   }
+  },
+  {
+   "id": "forge_dusk_arrowheads",
+   "station": "anvil",
+   "skill": "smithing",
+   "level": 40,
+   "xp": 55,
+   "ticks": 3,
+   "in": {
+    "dusk_steel_bar": 1
+   },
+   "out": {
+    "dusk_arrowheads": 15
+   }
+  },
+  {
+   "id": "tan_cowhide",
+   "station": "tanning",
+   "skill": "crafting",
+   "level": 1,
+   "xp": 10,
+   "ticks": 3,
+   "in": {
+    "cowhide": 1
+   },
+   "out": {
+    "leather": 1
+   }
+  },
+  {
+   "id": "tan_wolf_pelt",
+   "station": "tanning",
+   "skill": "crafting",
+   "level": 18,
+   "xp": 25,
+   "ticks": 3,
+   "in": {
+    "wolf_pelt": 1
+   },
+   "out": {
+    "tanned_wolf_pelt": 1
+   }
+  },
+  {
+   "id": "tan_dire_pelt",
+   "station": "tanning",
+   "skill": "crafting",
+   "level": 28,
+   "xp": 50,
+   "ticks": 4,
+   "in": {
+    "dire_wolf_pelt": 1
+   },
+   "out": {
+    "tanned_dire_pelt": 1
+   }
+  },
+  {
+   "id": "spin_simple_string",
+   "station": "spinning",
+   "skill": "crafting",
+   "level": 1,
+   "xp": 6,
+   "ticks": 2,
+   "in": {
+    "reed_fibre": 2
+   },
+   "out": {
+    "simple_string": 1
+   }
+  },
+  {
+   "id": "spin_superior_string",
+   "station": "spinning",
+   "skill": "crafting",
+   "level": 20,
+   "xp": 20,
+   "ticks": 2,
+   "in": {
+    "flax": 2
+   },
+   "out": {
+    "superior_string": 1
+   }
+  },
+  {
+   "id": "sew_leather_coif",
+   "station": "needle",
+   "skill": "crafting",
+   "level": 1,
+   "xp": 14,
+   "ticks": 4,
+   "in": {
+    "leather": 1,
+    "bronze_bar": 1,
+    "thread": 1
+   },
+   "out": {
+    "leather_coif": 1
+   },
+   "tools": [
+    "needle"
+   ]
+  },
+  {
+   "id": "sew_leather_body",
+   "station": "needle",
+   "skill": "crafting",
+   "level": 3,
+   "xp": 28,
+   "ticks": 4,
+   "in": {
+    "leather": 1,
+    "bronze_bar": 1,
+    "thread": 1
+   },
+   "out": {
+    "leather_body": 1
+   },
+   "tools": [
+    "needle"
+   ]
+  },
+  {
+   "id": "sew_leather_chaps",
+   "station": "needle",
+   "skill": "crafting",
+   "level": 2,
+   "xp": 14,
+   "ticks": 4,
+   "in": {
+    "leather": 1,
+    "bronze_bar": 1,
+    "thread": 1
+   },
+   "out": {
+    "leather_chaps": 1
+   },
+   "tools": [
+    "needle"
+   ]
+  },
+  {
+   "id": "sew_studded_coif",
+   "station": "needle",
+   "skill": "crafting",
+   "level": 10,
+   "xp": 40,
+   "ticks": 4,
+   "in": {
+    "leather": 1,
+    "iron_bar": 1,
+    "thread": 1
+   },
+   "out": {
+    "studded_coif": 1
+   },
+   "tools": [
+    "needle"
+   ]
+  },
+  {
+   "id": "sew_studded_body",
+   "station": "needle",
+   "skill": "crafting",
+   "level": 12,
+   "xp": 80,
+   "ticks": 4,
+   "in": {
+    "leather": 1,
+    "iron_bar": 1,
+    "thread": 1
+   },
+   "out": {
+    "studded_body": 1
+   },
+   "tools": [
+    "needle"
+   ]
+  },
+  {
+   "id": "sew_studded_chaps",
+   "station": "needle",
+   "skill": "crafting",
+   "level": 11,
+   "xp": 40,
+   "ticks": 4,
+   "in": {
+    "leather": 1,
+    "iron_bar": 1,
+    "thread": 1
+   },
+   "out": {
+    "studded_chaps": 1
+   },
+   "tools": [
+    "needle"
+   ]
+  },
+  {
+   "id": "sew_wolfpelt_coif",
+   "station": "needle",
+   "skill": "crafting",
+   "level": 20,
+   "xp": 90,
+   "ticks": 4,
+   "in": {
+    "tanned_wolf_pelt": 1,
+    "steel_bar": 1,
+    "thread": 1
+   },
+   "out": {
+    "wolfpelt_coif": 1
+   },
+   "tools": [
+    "needle"
+   ]
+  },
+  {
+   "id": "sew_wolfpelt_body",
+   "station": "needle",
+   "skill": "crafting",
+   "level": 22,
+   "xp": 180,
+   "ticks": 4,
+   "in": {
+    "tanned_wolf_pelt": 1,
+    "steel_bar": 1,
+    "thread": 1
+   },
+   "out": {
+    "wolfpelt_body": 1
+   },
+   "tools": [
+    "needle"
+   ]
+  },
+  {
+   "id": "sew_wolfpelt_chaps",
+   "station": "needle",
+   "skill": "crafting",
+   "level": 21,
+   "xp": 90,
+   "ticks": 4,
+   "in": {
+    "tanned_wolf_pelt": 1,
+    "steel_bar": 1,
+    "thread": 1
+   },
+   "out": {
+    "wolfpelt_chaps": 1
+   },
+   "tools": [
+    "needle"
+   ]
+  },
+  {
+   "id": "sew_direpelt_coif",
+   "station": "needle",
+   "skill": "crafting",
+   "level": 30,
+   "xp": 160,
+   "ticks": 4,
+   "in": {
+    "tanned_dire_pelt": 1,
+    "dusk_steel_bar": 1,
+    "thread": 1
+   },
+   "out": {
+    "direpelt_coif": 1
+   },
+   "tools": [
+    "needle"
+   ]
+  },
+  {
+   "id": "sew_direpelt_body",
+   "station": "needle",
+   "skill": "crafting",
+   "level": 32,
+   "xp": 320,
+   "ticks": 4,
+   "in": {
+    "tanned_dire_pelt": 1,
+    "dusk_steel_bar": 1,
+    "thread": 1
+   },
+   "out": {
+    "direpelt_body": 1
+   },
+   "tools": [
+    "needle"
+   ]
+  },
+  {
+   "id": "sew_direpelt_chaps",
+   "station": "needle",
+   "skill": "crafting",
+   "level": 31,
+   "xp": 160,
+   "ticks": 4,
+   "in": {
+    "tanned_dire_pelt": 1,
+    "dusk_steel_bar": 1,
+    "thread": 1
+   },
+   "out": {
+    "direpelt_chaps": 1
+   },
+   "tools": [
+    "needle"
+   ]
   }
  ]
 }

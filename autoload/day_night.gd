@@ -144,6 +144,10 @@ func ensure_lights(world) -> void:
 		var voff := [Vector2i(-3, 0), Vector2i(3, 0)]
 		for i in mini(int(GameData.villages_cfg.get("torches_per_village", 2)), voff.size()):
 			_add_light(world, vs + voff[i], "torch", torch_col, glow_scale)
+	# 0.4.0 Elijah's headstone: candle glow overlay at night
+	var hs: Vector2i = world.gen.story_marks.get("elijah_headstone", Vector2i(-99999, 0))
+	if hs.x > -90000:
+		_add_light(world, hs, "tomb", Color("#d0be91"), glow_scale)
 	# Lit windows on each building facade
 	var n_win := int(lc.get("windows_per_building", 2))
 	var glass_col := Color(str(lc.get("stained_glass_color", "#ffb8d0")))
@@ -204,6 +208,11 @@ func _add_light(world, tile: Vector2i, kind: String, col: Color, glow_scale: flo
 	spr.centered = true
 	spr.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 	spr.modulate = col
+	if kind == "tomb":   # 0.4.0 2-frame overlay drawn over the 32x40 headstone
+		spr.hframes = 2
+		spr.modulate = Color.WHITE
+		spr.position = Vector2(0, -12)
+		n.set_meta("anim", 2)
 	n.add_child(spr)
 	var glow := Sprite2D.new()
 	glow.texture = GameData.texture("ui", "light_glow")

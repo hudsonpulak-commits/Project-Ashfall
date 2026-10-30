@@ -65,7 +65,7 @@ static func run(world: World, p: Player) -> void:
 			break
 	Events.bank_opened.disconnect(cb)
 	check(keeper != null and opened[0], "talking to the banker opens the bank")
-	check(Combat.ranged_range() == 10, "0.3.5 archery range is 10 tiles (Chebyshev)")
+	check(Combat.ranged_range() >= 10, "0.3.5 archery range is at least 10 tiles (0.4.0: no limit, LOS only)")
 	# dummy: 3x XP, blocked counter-swing trains Defence, no HP lost
 	var dummy: WorldObject = world.find_nearest_object(world.gen.town_spawn("fenhollow"), ["training_dummy"], 60)
 	p.hp = p.max_hp()

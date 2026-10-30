@@ -279,6 +279,48 @@
    "xp": 70,
    "drops": "giant_rat",
    "note": "0.3.16 A Dead Rat is a Good Rat boss near Millbrook (sprite bot underground v1.1 art)"
+  },
+  "greymaw": {
+   "name": "Greymaw",
+   "sprite": "greymaw",
+   "level": 34,
+   "hp": 70,
+   "max_hit": 9,
+   "accuracy": 0.62,
+   "defence": 14,
+   "attack_ticks": 4,
+   "aggro": 0,
+   "leash": 16,
+   "wander": 2,
+   "respawn_ticks": 1000,
+   "xp": 90,
+   "chase_steps": 2,
+   "drops": "greymaw",
+   "scale": 1.4,
+   "rotates": true,
+   "note": "0.4.0 Night of 1000 Howls part 2. Named dire wolf: no aggro until attacked, leash 16 from her farm, spawns only once step 5 is active, then every 10 min (1000 ticks) at a random farm (Millbrook / Barrowby / Oxley). Sprite swappable in data/sprites.json actors.greymaw.",
+   "tints": [
+    "#ffd6d0"
+   ]
+  },
+  "dire_wolf": {
+   "name": "Dire wolf",
+   "sprite": "dire_wolf",
+   "level": 28,
+   "hp": 63,
+   "max_hit": 8,
+   "accuracy": 0.58,
+   "defence": 12,
+   "attack_ticks": 5,
+   "aggro": 5,
+   "leash": 12,
+   "wander": 2,
+   "respawn_ticks": 200,
+   "xp": 70,
+   "chase_steps": 2,
+   "drops": "dire_wolf",
+   "scale": 1.0,
+   "note": "0.4.0 lesser dire wolves in low Scorch (levels 3-8): ~90% of Greymaw, slower, packs of 2"
   }
  },
  "camps": [
@@ -701,6 +743,56 @@
    "count": 1,
    "spread": 1,
    "note": "0.3.16 Clip Clop strayed to the wolf den east of the Tamsin farm"
+  },
+  {
+   "enemy": "dire_wolf",
+   "at": [
+    120,
+    -285
+   ],
+   "count": 2,
+   "spread": 2,
+   "note": "0.4.0 low Scorch dire wolf pack"
+  },
+  {
+   "enemy": "dire_wolf",
+   "at": [
+    250,
+    -300
+   ],
+   "count": 2,
+   "spread": 2,
+   "note": "0.4.0 low Scorch dire wolf pack"
+  },
+  {
+   "enemy": "dire_wolf",
+   "at": [
+    300,
+    -295
+   ],
+   "count": 2,
+   "spread": 2,
+   "note": "0.4.0 low Scorch dire wolf pack"
+  },
+  {
+   "enemy": "wolf",
+   "at": [
+    236,
+    92
+   ],
+   "count": 3,
+   "spread": 2,
+   "note": "0.4.0 Barrowby fields"
+  },
+  {
+   "enemy": "wolf",
+   "at": [
+    318,
+    -26
+   ],
+   "count": 3,
+   "spread": 2,
+   "note": "0.4.0 Oxley fields"
   }
  ],
  "note_show_level": "0.3.3: combat enemies (aggro, or retaliate with max_hit > 0) show 'Name (level)' overhead; show_level overrides (false for citizens and chickens).",

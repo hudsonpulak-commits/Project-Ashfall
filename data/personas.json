@@ -7,7 +7,7 @@
    "tint": "#4a8a3a",
    "focus": [
     "forestry",
-    "joinery"
+    "crafting"
    ],
    "sells": [
     "ash_log",
@@ -96,7 +96,7 @@
    "tint": "#7aa04a",
    "focus": [
     "foraging",
-    "joinery"
+    "fletching"
    ],
    "sells": [
     "reed_fibre",

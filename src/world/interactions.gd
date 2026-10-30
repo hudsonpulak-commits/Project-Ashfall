@@ -8,6 +8,9 @@ const DUMMY_ATTACK_TICKS := 3
 
 
 static func perform(actor: Actor, world, t: int) -> void:
+	if actor.action.get("kind", "") == "pack_craft":   # 0.4.0 knife / needle in the pack
+		_station(actor, null, {"station": str(actor.action.get("station", ""))})
+		return
 	var obj: WorldObject = world.object_at(actor.action.get("pos", Vector2i(1 << 20, 0)))
 	if obj == null:
 		actor.stop()
@@ -186,7 +189,19 @@ static func recipe_by_id(id: String) -> Dictionary:
 
 
 static func can_make(actor: Actor, r: Dictionary) -> bool:
-	return actor.skills.level(r["skill"]) >= int(r.get("level", 1)) and actor.inventory.has_all(r["in"])
+	return actor.skills.level(r["skill"]) >= int(r.get("level", 1)) and actor.inventory.has_all(r["in"]) and has_tools(actor, r)
+
+
+## 0.4.0 recipes with "tools" (knife, needle) need them in the pack (not used up).
+static func has_tools(actor: Actor, r: Dictionary) -> bool:
+	for tl in r.get("tools", []):
+		if actor.inventory.count(str(tl)) <= 0:
+			return false
+	return true
+
+
+## 0.4.0 stations worked from the pack, not a world object.
+const PACK_STATIONS := {"knife": "fletching", "needle": "crafting"}
 
 
 static func _station(actor: Actor, obj: WorldObject, d: Dictionary) -> void:
@@ -196,7 +211,9 @@ static func _station(actor: Actor, obj: WorldObject, d: Dictionary) -> void:
 	if want != "":
 		recipe = recipe_by_id(want)
 		if recipe.is_empty() or not can_make(actor, recipe):
-			if not recipe.is_empty() and actor.skills.level(recipe["skill"]) < int(recipe.get("level", 1)):
+			if not recipe.is_empty() and not has_tools(actor, recipe):
+				actor.say("You need a %s for that." % GameData.item_name(str(recipe["tools"][0])).to_lower())
+			elif not recipe.is_empty() and actor.skills.level(recipe["skill"]) < int(recipe.get("level", 1)):
 				actor.say("You need %s level %d for that." % [GameData.skill_by_id[recipe["skill"]]["name"], int(recipe["level"])])
 			else:
 				actor.say("You don't have the materials to continue.")
@@ -207,7 +224,7 @@ static func _station(actor: Actor, obj: WorldObject, d: Dictionary) -> void:
 		for r in GameData.recipes_for_station(station):
 			if can_make(actor, r):
 				options.append(r)
-		if options.size() > 1 and actor.wants_recipe_choice():
+		if options.size() > 1 and actor.wants_recipe_choice() and obj != null:
 			actor.action = {}
 			actor.on_station_menu(station, obj)
 			return
@@ -220,8 +237,8 @@ static func _station(actor: Actor, obj: WorldObject, d: Dictionary) -> void:
 			if actor.inventory.has_all(r["in"]):
 				hint = " (needs %s level %d)" % [GameData.skill_by_id[r["skill"]]["name"], int(r["level"])]
 				break
-		actor.say("You have nothing to use at the %s%s." % [obj.display_name().to_lower(), hint])
-		if actor.wants_recipe_choice():
+		actor.say("You have nothing to use at the %s%s." % [obj.display_name().to_lower() if obj else station, hint])
+		if actor.wants_recipe_choice() and obj != null:
 			actor.on_station_menu(station, obj)
 		actor.stop()
 		return
@@ -233,6 +250,8 @@ static func _station(actor: Actor, obj: WorldObject, d: Dictionary) -> void:
 			Sfx.play("anvil_strike")
 		elif station == "furnace":
 			Sfx.furnace_tick()
+		elif station in ["knife", "tanning", "needle", "spinning"]:
+			Sfx.play("axe_chop")
 	if int(actor.action["progress"]) < int(recipe.get("ticks", 3)):
 		return
 	actor.action["progress"] = 0

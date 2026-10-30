@@ -12,7 +12,7 @@
    "category": "gathering",
    "short": "FOR",
    "color": "#5f9a46",
-   "desc": "Fell trees for logs. Feeds Joinery and Hearth fuel."
+   "desc": "Fell trees for logs. Feeds Fletching, Crafting and Hearth fuel."
   },
   {
    "id": "mining",
@@ -36,7 +36,7 @@
    "category": "gathering",
    "short": "FRG",
    "color": "#a8b84a",
-   "desc": "Gather fenroot, reeds and fungi. Feeds Brewing and Joinery (fibre)."
+   "desc": "Gather fenroot, reeds, flax and fungi. Feeds Brewing and string at the spinning wheel."
   },
   {
    "id": "smithing",
@@ -47,12 +47,20 @@
    "desc": "Smelt bars and forge tools and blades. Tools wear out, so smiths are always in demand."
   },
   {
-   "id": "joinery",
-   "name": "Joinery",
+   "id": "fletching",
+   "name": "Fletching",
    "category": "production",
-   "short": "JOI",
+   "short": "FLE",
    "color": "#a8784a",
-   "desc": "Turn logs and fibre into planks, handles, rods and bows."
+   "desc": "Use a knife on a log: unstrung bows, arrow shafts, headless arrows and arrows. String a bow with bow string."
+  },
+  {
+   "id": "crafting",
+   "name": "Crafting",
+   "category": "production",
+   "short": "CRA",
+   "color": "#b0885a",
+   "desc": "Planks, rods and bucklers at a workbench; tan hides; spin string; sew ranger armour with a needle and thread from your pack."
   },
   {
    "id": "cooking",
@@ -104,11 +112,11 @@
   },
   {
    "id": "archery",
-   "name": "Archery",
+   "name": "Ranged",
    "category": "combat",
-   "short": "ARC",
+   "short": "RNG",
    "color": "#7ab04a",
-   "desc": "Bows: accuracy and max hit with a bow. Needed to wield bows. Range 5 tiles with line of sight; each shot uses one arrow. Trains in the Ranged style."
+   "desc": "Bows and arrows. Accuracy and max hit with a bow; needed to wield bows and wear ranger armour. No range limit, but you need line of sight: walls, buildings and cliffs block a shot, plants, rocks and fences do not. Each shot uses one arrow from the ammo slot. Trains in the Ranged style."
   },
   {
    "id": "prayer",

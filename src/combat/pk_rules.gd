@@ -100,8 +100,8 @@ static func random_spot(rng: RandomNumberGenerator, world = null, band: int = 70
 		if world == null:
 			if _on_land(p):
 				return p
-		elif world.gen.land_value(p.x, p.y) > WorldGen.BEACH_LEVEL + 0.05 and not world.is_blocked(p):
-			return p
+		elif world.gen.land_value(p.x, p.y) > WorldGen.BEACH_LEVEL + 0.05 and (not world.chunks.has(world.chunk_of(p)) or not world.is_blocked(p)):
+			return p   # 0.4.0 perf: never generate a far chunk just to test one tile
 	for i in 40:
 		var q := Vector2i(rng.randi_range(r.position.x, r.end.x - 1), rng.randi_range(r.position.y, r.end.y - 1))
 		if (world == null and _on_land(q)) or (world != null and not world.is_blocked(q) and world.gen.land_value(q.x, q.y) > WorldGen.BEACH_LEVEL):

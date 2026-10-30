@@ -12,10 +12,11 @@
    "label": "Giant rats"
   },
   "wolf": {
-   "min": 38,
-   "max": 85,
+   "min": 30,
+   "max": 95,
    "label": "Wolves",
-   "pk": true
+   "pk": true,
+   "note": "0.4.0 min 38->30, max 85->95: Greymaw draws packs onto the Barrowby/Oxley fields"
   },
   "goblin": {
    "min": 70,
@@ -49,6 +50,17 @@
    "min": 0,
    "max": 85,
    "label": "Clip Clop (Finding Clip Clop, quest horse)"
+  },
+  "dire_wolf": {
+   "min": 40,
+   "max": 200,
+   "label": "Dire wolves (low Scorch)",
+   "pk": true
+  },
+  "greymaw": {
+   "min": 0,
+   "max": 400,
+   "label": "Greymaw (rotates between the village farms)"
   }
  }
 }

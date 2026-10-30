@@ -60,6 +60,17 @@ func combat_def() -> int:
 	return _gear_sum("def")
 
 
+## 0.4.0 bow stats + ranger armour "rng" (acc +1 % per point, max hit +rng/2).
+func ranged_atk() -> int:
+	var g: Dictionary = GameData.item(equipment.get("weapon", "")).get("gear", {})
+	return int(g.get("atk", 0)) + _gear_sum("rng")
+
+
+func ranged_str() -> int:
+	var g: Dictionary = GameData.item(equipment.get("weapon", "")).get("gear", {})
+	return int(g.get("str", 0)) + _gear_sum("rng") * 2
+
+
 func weapon_id() -> String:
 	var w: String = equipment.get("weapon", "")
 	return w if w != "" else super.weapon_id()

@@ -354,6 +354,8 @@ func _run() -> void:
 			await _frames0319()
 		"frames0320":
 			await _frames0320()
+		"frames040":
+			await _frames040()
 		_:
 			push_error("unknown QA scenario " + scenario)
 			await _finish(false)
@@ -690,8 +692,8 @@ func _recipe_button(item_name: String, btn: String) -> Button:
 		if (l as Label).text.begins_with(item_name + " "):
 			var row: Node = l.get_parent()
 			for c in row.get_children():
-				if c is Button and (c as Button).text == btn:
-					return c
+				if c is Button and ((c as Button).text == btn or (btn == "Make 1" and (c as Button).text == "1")):
+					return c   # 0.4.0 quantity row: 1 / 5 / 10 / All
 	return null
 
 
@@ -1995,7 +1997,7 @@ func _archery() -> void:
 	label = "skills"
 	main.hud.show_panel("skills")
 	await frames(20)
-	res["skills_panel_archery"] = _has_text(main.hud.panels["skills"], "Archery") or _has_text(main.hud.panels["skills"], "ARC")
+	res["skills_panel_archery"] = _has_text(main.hud.panels["skills"], "Archery") or _has_text(main.hud.panels["skills"], "ARC") or _has_text(main.hud.panels["skills"], "Ranged") or _has_text(main.hud.panels["skills"], "RNG")
 	await _snap("skills_panel_archery")
 	main.hud.toggle_panel("skills")
 	label = ""
@@ -3799,3 +3801,99 @@ func _frames0320() -> void:
 		w.set_focus(p.tile, true)
 		await frames(60)
 		await _snap(sh[0])
+
+
+## 0.4.0 review frames: fletching window, tanning station, Crafting Supply with
+## the spinning wheel, ranger armour, ranged combat, Greymaw, Elijah's tomb.
+func _frames040() -> void:
+	var p: Player = main.player
+	var w: World = main.world
+	var g = w.gen
+	var hud: HUD = main.hud
+	DayNight.debug_set_phase("day")
+	p.inventory.clear()
+	p.inventory.add("knife")
+	p.inventory.add("ash_log", 3)
+	p.inventory.add("alder_log", 2)
+	for sk in ["fletching", "crafting", "archery", "defence"]:
+		p.skills.set_level(sk, 35)
+	var spot := w.find_free_tile_near(g.town_spawn("fenhollow") + Vector2i(3, 3), 6)
+	p.place_at(spot)
+	w.set_focus(p.tile, true)
+	await frames(40)
+	hud.open_pack_craft("knife", "ash_log")
+	await frames(20)
+	await _snap("040_fletching_window")
+	hud.show_panel("")
+	# Crafting Supply / tanning station in each city
+	for t in ["fenhollow", "highfen"]:
+		var b: Dictionary = g.building_for_shop(t, "crafting")
+		if b.is_empty():
+			continue
+		var r: Rect2i = b["rect"]
+		p.place_at(b["stand"] if b.has("stand") else r.get_center())
+		w.set_focus(p.tile, true)
+		await frames(60)
+		await _snap("040_crafting_supply_" + t)
+		for y in range(r.position.y, r.end.y):
+			for x in range(r.position.x, r.end.x):
+				var oid: String = g.object_id_at(Vector2i(x, y))
+				if oid == "tanning_rack" and t == "fenhollow":
+					p.inventory.add("cowhide", 3)
+					Events.station_opened.emit("tanning", Vector2i(x, y))
+					await frames(20)
+					await _snap("040_tanning_station_window")
+					hud.show_panel("")
+	# ranger armour on the player (dire pelt set + longbow)
+	p.inventory.clear()
+	for id in ["direpelt_coif", "direpelt_body", "direpelt_chaps", "alder_longbow"]:
+		p.inventory.add(id)
+	for k in 4:
+		p.equip_slot(0)
+	p.inventory.add("dusk_arrows", 30)
+	p.auto_equip_ammo()
+	p.place_at(spot)
+	w.set_focus(p.tile, true)
+	await frames(40)
+	await _snap("040_ranger_armour_player")
+	# ranged combat at a wolf pack
+	var wolf: Enemy = w.enemies.nearest(g.town_center("barrowby"), ["wolf"], 120)
+	if wolf:
+		var st := w.find_free_tile_near(wolf.tile + Vector2i(-6, 0), 3)
+		p.place_at(st)
+		p.hp = p.max_hp()
+		w.set_focus(p.tile, true)
+		await frames(30)
+		await tap(tile_screen(wolf.tile), "wolf (ranged)")
+		await frames(70)
+		await _snap("040_ranged_combat")
+		p.stop()
+		_clear_foes(p, w)
+	# Greymaw at her farm (quest step 5)
+	p.quests["wolf_pelts"] = {"stage": 0, "count": 0, "done": true}
+	p.quests["dire_wolf"] = {"stage": DireWolf.HUNT_STAGE, "count": 0, "done": false}
+	for e in w.enemies.enemies:
+		if e.kind == "greymaw":
+			DireWolf.manage(e, Tick.tick_count, w, [p])
+			p.place_at(w.find_free_tile_near(e.home + Vector2i(-4, 1), 3))
+			e.visible = true
+			e.tile = w.find_free_tile_near(p.tile + Vector2i(1, -3), 2)
+			e._update_pos()
+			w.set_focus(p.tile, true)
+			await frames(60)
+			await _snap("040_greymaw")
+			DayNight.debug_set_phase("night")
+			await frames(40)
+			await _snap("040_greymaw_night")
+			DayNight.debug_set_phase("day")
+	# Elijah's tomb (day + night glow)
+	var hs: Vector2i = g.story_marks.get("elijah_headstone", Vector2i(-99999, 0))
+	if hs.x > -90000:
+		p.place_at(w.find_free_tile_near(hs + Vector2i(0, 3), 3))
+		w.set_focus(p.tile, true)
+		await frames(60)
+		await _snap("040_elijah_tomb")
+		DayNight.debug_set_phase("night")
+		await frames(40)
+		await _snap("040_elijah_tomb_night")
+		DayNight.debug_set_phase("day")

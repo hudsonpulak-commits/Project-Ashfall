@@ -10,7 +10,7 @@ static func check(cond: bool, what: String) -> void:
 
 static func run(main, world: World, p: Player) -> void:
 	print("  -- 0.3.19 bank tabs + scene polish")
-	check(str(ProjectSettings.get_setting("application/config/version")).begins_with("0.3."), "0.3.19 scene polish still ships on the 0.3 line")
+	check((str(ProjectSettings.get_setting("application/config/version")).begins_with("0.3.") or str(ProjectSettings.get_setting("application/config/version")).begins_with("0.4.")), "0.3.19 scene polish still ships on the 0.3 line")
 	var preset := FileAccess.get_file_as_string("res://export_presets.cfg")
 	check(preset.contains("version/code="), "Android export still carries a versionCode")
 	var a := RandomNumberGenerator.new()
@@ -211,7 +211,7 @@ static func _armour_fits(p: Player) -> void:
 			chains.append(id)
 		var sid := str(id)
 		if sid.contains("leather") or sid.contains("pelt") or sid == "cowhide":
-			ranger_ok = ranger_ok and fit == ""
+			ranger_ok = ranger_ok and fit in ["", "ranger"]
 	ranger_ok = ranger_ok and not GameData.item("alder_buckler").get("gear", {}).has("fit") and int(GameData.item("alder_buckler")["gear"]["def"]) == 3 and int(GameData.item("alder_buckler")["gear"].get("atk", 0)) == 0
 	check(plates.size() == 15 and chains.size() == 15, "every melee armour piece (bronze, iron, steel, dusk, including metal shields) has a plate and a chain (%d/%d)" % [plates.size(), chains.size()])
 	var paired := true

@@ -84,6 +84,8 @@ static func req_skill(item_id: String) -> String:
 	if gd.get("slot", "") == "weapon":
 		return str(class_def(item_id).get("skill", "attack"))
 	if gd.get("slot", "") in ARMOUR_SLOTS:
+		if gd.has("wear_skill"):     # 0.4.0 ranger armour is worn with Ranged
+			return str(gd["wear_skill"])
 		return str(cfg().get("armour_skill", "defence"))
 	return ""
 
@@ -170,7 +172,7 @@ static func armour_hit_xp(armour_ids: Array) -> float:
 		var g: Dictionary = GameData.item(str(id)).get("gear", {})
 		if g.is_empty() or str(g.get("slot", "")) in ["weapon", "ammo"]:
 			continue
-		sum += tier_hit_xp(int(g.get("tier", 1)))
+		sum += float(g["hit_xp"]) if g.has("hit_xp") else tier_hit_xp(int(g.get("tier", 1)))
 	return sum
 
 

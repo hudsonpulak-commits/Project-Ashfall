@@ -193,7 +193,8 @@
  "specialists": [
   "legs",
   "maces",
-  "cook"
+  "cook",
+  "crafting"
  ],
  "price_bias": {
   "raw_carp": 0.85,
@@ -1024,11 +1025,11 @@
    ]
   },
   {
-   "art": "v2_house_01",
+   "art": "v4_tanning_station",
    "flip": false,
    "at": [
     57,
-    30
+    31
    ],
    "door": [
     [
@@ -1040,25 +1041,46 @@
     60,
     35
    ],
-   "props": [],
+   "props": [
+    {
+     "object": "spinning_wheel",
+     "at": [
+      59,
+      32
+     ]
+    },
+    {
+     "object": "tanning_rack",
+     "at": [
+      60,
+      33
+     ]
+    },
+    {
+     "object": "tanning_vat",
+     "at": [
+      61,
+      32
+     ]
+    }
+   ],
    "counter": [],
    "style": "plaster",
    "roof": "#2a6a9a",
    "id": "saltmere_home_4",
-   "kind": "house",
-   "shop": "",
-   "name": "The Kellows' house",
-   "keeper": "Tamsin Kellow",
-   "keeper_sprite": "villager",
-   "sign_sprite": "sign_house",
+   "kind": "shop",
+   "shop": "crafting",
+   "name": "Saltmere Crafting Supply",
+   "keeper": "Dory Tarn",
    "keeper_at": [
-    61,
+    58,
     34
    ],
    "stand": [
     59,
     34
-   ]
+   ],
+   "note": "0.4.0 Crafting Supply (sprites_040 v4_tanning_station): spinning wheel + tanning rack/vat inside"
   },
   {
    "art": "v2_house_03",

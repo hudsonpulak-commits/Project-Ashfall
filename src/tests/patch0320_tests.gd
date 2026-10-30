@@ -10,9 +10,9 @@ static func check(cond: bool, what: String) -> void:
 
 static func run(main, world: World, p: Player) -> void:
 	print("  -- 0.3.20 villages, lore, scene life")
-	check(str(ProjectSettings.get_setting("application/config/version")) == "0.3.20", "version is 0.3.20")
+	check(str(ProjectSettings.get_setting("application/config/version")) in ["0.3.20", "0.4.0"], "version is 0.3.20 or later (0.4.0)")
 	var preset := FileAccess.get_file_as_string("res://export_presets.cfg")
-	check(preset.contains("version/code=37") and preset.contains("version/name=\"0.3.20\""), "Android versionCode is 37")
+	check((preset.contains("version/code=37") or preset.contains("version/code=38")), "Android versionCode is 37 or later")
 	_villages(world)
 	_quest_and_save(p)
 	_story(world)
@@ -66,7 +66,7 @@ static func _quest_and_save(p: Player) -> void:
 	check(stages.size() == 1 and not JSON.stringify(q).to_lower().contains("dire"), "the Dire Wolf half is not in this update (%d stages)" % stages.size())
 	var old := {"version": 9, "player": {"tile": [150, -140], "vaults": {"fenhollow": {"n": 3}}, "quests": {"wolf_pelts": {"stage": 1}}}, "world": {"seed": 7331}}
 	var mig: Dictionary = SaveSystem._migrate(old)
-	check(int(mig["version"]) == 10 and (mig["player"]["tile"] as Array) == [213, -125], "a player left in old Millbrook wakes on the new plaza %s" % str(mig["player"]["tile"]))
+	check(int(mig["version"]) == SaveSystem.SAVE_VERSION and (mig["player"]["tile"] as Array) == [213, -125], "a player left in old Millbrook wakes on the new plaza %s" % str(mig["player"]["tile"]))
 	check(int(mig["player"]["vaults"]["fenhollow"]["n"]) == 3 and mig["player"]["quests"].has("wolf_pelts"), "the move leaves the bank and the old wolf_pelts save alone")
 	var stay := {"version": 9, "player": {"tile": [200, -140]}, "world": {"seed": 7331}}
 	var m2: Dictionary = SaveSystem._migrate(stay)

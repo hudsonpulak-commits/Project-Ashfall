@@ -438,6 +438,13 @@ func _refresh_pack_actions() -> void:
 			Events.inventory_changed.emit()
 			_sel_slot = -1
 			_refresh_pack_actions(), 40))
+	for tl in Interactions.PACK_STATIONS.keys():   # 0.4.0 Fletch (knife) / Sew (needle)
+		var st_id: String = tl
+		if player.inventory.count(st_id) > 0 and (id == st_id or pack_station_for(st_id, id) == st_id):
+			pack_actions.add_child(UIKit.button("Fletch" if st_id == "knife" else "Sew", func():
+				_sel_slot = -1
+				_refresh_pack_actions()
+				open_pack_craft(st_id, "" if id == st_id else id), 44))
 	pack_actions.add_child(UIKit.button("Drop", func():
 		player.drop_slot(i, Tick.tick_count)
 		_sel_slot = -1
@@ -796,7 +803,7 @@ func _process(_dt: float) -> void:
 		var pb: Dictionary = world.gen.building_for_shop(pshop_panel.town, "player")
 		if pb.is_empty() or not world.gen.is_inside(player.tile, pb):
 			show_panel("")
-	if current_panel in ["exchange", "store", "craft"]:
+	if current_panel in ["exchange", "store", "craft"] and not (current_panel == "craft" and craft_panel.is_pack()):
 		var d := (player.tile - panel_anchor).abs()
 		if maxi(d.x, d.y) > 1:
 			show_panel("")
@@ -1051,6 +1058,24 @@ func _refresh_skills() -> void:
 
 
 # ------------------------------------------------------------------- taps --
+## 0.4.0 the pack station (knife / needle) used by item a on item b, or "".
+func pack_station_for(a: String, b: String) -> String:
+	for tl in Interactions.PACK_STATIONS.keys():
+		var other := b if a == tl else (a if b == tl else "")
+		if other == "" or other == tl:
+			continue
+		for r in GameData.recipes_for_station(tl):
+			if r["in"].has(other):
+				return tl
+	return ""
+
+
+func open_pack_craft(st: String, filter: String = "") -> void:
+	craft_panel.open(st, player.tile, filter)
+	panel_anchor = player.tile
+	show_panel("craft")
+
+
 func _on_pack_tap(i: int) -> void:
 	var s = player.inventory.slots[i]
 	# 0.3.17 organizing: with an item picked, tap it again to put it down, an empty
@@ -1061,6 +1086,13 @@ func _on_pack_tap(i: int) -> void:
 			_refresh_pack_actions()
 			return
 		var was_empty: bool = s == null
+		var a_id: String = player.inventory.slots[_sel_slot]["id"]
+		var st := pack_station_for(a_id, s["id"]) if s != null else ""
+		if st != "":      # 0.4.0 knife on a log (needle on a hide...) opens the window
+			_sel_slot = -1
+			_refresh_pack_actions()
+			open_pack_craft(st, s["id"] if Interactions.PACK_STATIONS.has(a_id) else a_id)
+			return
 		player.inventory.move_slot(_sel_slot, i)
 		Events.say("Moved." if was_empty else "Swapped.")
 		_sel_slot = -1

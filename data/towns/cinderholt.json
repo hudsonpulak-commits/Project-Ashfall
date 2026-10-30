@@ -183,7 +183,8 @@
   "body",
   "shields",
   "axes",
-  "cook"
+  "cook",
+  "crafting"
  ],
  "price_bias": {
   "copper_ore": 0.85,
@@ -2784,40 +2785,60 @@
    ]
   },
   {
-   "art": "ch_house_07",
+   "art": "v4_crafting_supply",
    "flip": false,
    "at": [
     23,
-    71
+    72
    ],
    "door": [
     [
-     27,
+     26,
      77
     ]
    ],
    "sign": [
-    28,
+    27,
     77
    ],
-   "props": [],
+   "props": [
+    {
+     "object": "spinning_wheel",
+     "at": [
+      25,
+      73
+     ]
+    },
+    {
+     "object": "tanning_rack",
+     "at": [
+      27,
+      73
+     ]
+    },
+    {
+     "object": "tanning_vat",
+     "at": [
+      28,
+      75
+     ]
+    }
+   ],
    "counter": [],
    "style": "basalt",
    "roof": "#3a3e4c",
    "id": "cinderholt_home_7",
-   "kind": "house",
-   "shop": "",
-   "name": "The Hammers' house",
-   "keeper": "Dag Hammer",
-   "keeper_sprite": "villager",
-   "sign_sprite": "sign_house",
-   "note": "0.3.14 Cinderholt v1 (designer ch_house_07)",
+   "kind": "shop",
+   "shop": "crafting",
+   "name": "Cinderholt Crafting Supply",
+   "keeper": "Brisa Thorne",
+   "note": "0.4.0 Crafting Supply (sprites_040 v4_crafting_supply): spinning wheel + tanning rack/vat inside",
    "keeper_at": [
-    27,
-    74
+    24,
+    76
    ],
    "stand": [
-    27,
+    25,
     76
    ]
   },
