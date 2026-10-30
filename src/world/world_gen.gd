@@ -540,7 +540,25 @@ const EDGE_SOFT := ["dirt", "cobble", "grass", "grass_lush", "grass_boreal", "gr
 ## gfx audit: data "grass" in a town / village plan means the local biome grass
 ## (plain grass cells inside a lush / boreal / tropic region read as light boxes).
 func _floor_or_biome(n: String, p: Vector2i) -> int:
-	return region_grass(p) if n == "grass" else TILE_NAMES.find(n)
+	if n != "grass":
+		return TILE_NAMES.find(n)
+	# one grass per settlement (the region at its centre): a settlement on a region
+	# border otherwise gets boxy plain/lush patches outlined by the transition frames
+	var best := p
+	var bd := 1 << 30
+	for d: Dictionary in [towns, villages]:
+		for id in d.keys():
+			var c: Vector2i = d[id].get("center", p)
+			var dd := (c - p).length_squared()
+			if dd < bd:
+				bd = dd
+				best = c
+	var rid := region_map.ground_region(best, 0.5)
+	match str(region_map.def(rid).get("grass", "grass")):
+		"grass_lush": return TileType.GRASS_LUSH
+		"grass_boreal": return TileType.GRASS_BOREAL
+		"grass_tropic": return TileType.GRASS_TROPIC
+	return TileType.GRASS
 
 
 func _blend_footprint_edge(rect: Rect2i) -> void:
@@ -2045,7 +2063,7 @@ func region_grass(p: Vector2i) -> int:
 	# gfx audit: the region-border dither is a low-frequency noise blob field with a
 	# little per-tile jitter (was pure per-tile hash: single-tile lush/plain specks
 	# that the transition frames outlined as dark boxes)
-	var hd := clampf(0.5 + _detail.get_noise_2d(p.x * 2.3 + 1700, p.y * 2.3 - 400) * 0.9 + (hash01(p.x, p.y, 31) - 0.5) * 0.12, 0.0, 1.0)
+	var hd := clampf(0.5 + _detail.get_noise_2d(p.x * 0.7 + 1700, p.y * 0.7 - 400) * 0.45 + (hash01(p.x, p.y, 31) - 0.5) * 0.04, 0.0, 1.0)
 	var rid := region_map.ground_region(p, hd)
 	match str(region_map.def(rid).get("grass", "grass")):
 		"grass_lush": return TileType.GRASS_LUSH
