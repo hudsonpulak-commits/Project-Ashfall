@@ -119,6 +119,26 @@ func _build_tileset() -> TileSet:
 			ts.add_source(src, sid)
 			_overlay_src[cat + "/" + id] = [sid, cols]
 			sid += 1
+	# batch_08_polish: 2 extra wobble variants per transition sheet (sources 400+), same frame layout
+	var vid := 400
+	for id in GameData.sprites.get("transitions", {}).keys():
+		if not _overlay_src.has("transitions/" + str(id)):
+			continue
+		for v in [1, 2]:
+			var vp := "res://assets/sprites/transitions/variants/%s_v%d.png" % [id, v]
+			if not ResourceLoader.exists(vp):
+				continue
+			var vt: Texture2D = load(vp)
+			var vsrc := TileSetAtlasSource.new()
+			vsrc.texture = vt
+			vsrc.texture_region_size = Vector2i(tile_px, tile_px)
+			var vc := maxi(1, vt.get_width() / tile_px)
+			for r in maxi(1, vt.get_height() / tile_px):
+				for cx in vc:
+					vsrc.create_tile(Vector2i(cx, r))
+			ts.add_source(vsrc, vid)
+			_overlay_src["transitions/%s#%d" % [id, v]] = [vid, vc]
+			vid += 1
 	# restyle r5: thin unified walls -- one 16x28 atlas per material (16 top + 12 face drop,
 	# drawn at the cell's top-left), frame picked by the 5x5 occupancy key via the shared LUT
 	_wall_src.clear()
@@ -234,6 +254,10 @@ func overlay_cells(p: Vector2i, nm: Callable) -> Array:
 	var ov := Autotile.overlays_for(TRANS_ALIAS.get(here, here), nbt)
 	for i in ov.size():
 		var s: Array = _overlay_src.get("transitions/" + str(ov[i]), [])
+		if gen != null:
+			var tv := int(gen.hash01(p.x, p.y, 13) * 3)
+			if tv > 0:
+				s = _overlay_src.get("transitions/%s#%d" % [ov[i], tv], s)
 		if not s.is_empty():
 			var f := Autotile.transition_frame(ov[i], nbt)
 			out.append([i, s[0], Vector2i(f % int(s[1]), f / int(s[1]))])
