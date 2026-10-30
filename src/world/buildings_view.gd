@@ -47,11 +47,18 @@ func setup(w) -> void:
 		r.set("label_text", label_for(b))
 		add_child(r)
 		_roofs[id] = r
+		# gfx audit: signs y-sort on the building's base (not on the z50 roof layer), so an
+		# actor walking past in front of the facade draws over the sign
 		var s := Sprite2D.new()
+		s.name = "Sign_%s" % id
 		s.centered = false
-		s.position = w.tile_to_pos(b["sign"]) + Vector2(0, -2)
-		s.z_index = 1
-		add_child(s)
+		var spos: Vector2 = w.tile_to_pos(b["sign"]) + Vector2(0, -2)
+		var rb: Rect2i = b["rect"]
+		var base_y: float = float(_walls[id][1]) if _walls.has(id) else float((rb.position.y + rb.size.y) * w.tile_px) - 1.0
+		base_y = maxf(base_y, spos.y)
+		s.position = Vector2(spos.x, base_y + 0.25)
+		s.offset = Vector2(0, spos.y - base_y - 0.25)
+		w.entity_layer.add_child(s)
 		_signs[id] = s
 		_keeper_facing[id] = Facing.new()
 	refresh_all()
