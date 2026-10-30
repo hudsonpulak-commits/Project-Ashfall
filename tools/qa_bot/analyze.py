@@ -1220,6 +1220,10 @@ def check_sidequests2(ctx):
         R("a_dead_rat: back to Mabel ('!'), then the big Rat Mother killed",
           r.get("mark_mid") == "!" and node(r.get("dialog_mid")) == "stage_1" and r.get("mother_sprite") == "rat_mother" and r.get("mother_killed") and r.get("state_ready") == "ready",
           "%r %r sprite %s killed %s" % (r.get("mark_mid"), node(r.get("dialog_mid")), r.get("mother_sprite"), r.get("mother_killed")), "sq2_rat_mother_ask", "sq2_rat_mother"),
+        R("a_dead_rat (0.4.2): down the rat hole into the dark den, walk to the Rat Mother in her den, kill her, climb the ladder back out by the hole",
+          r.get("den_entered") and r.get("den_dark") and r.get("mother_in_den") and r.get("mother_killed") and r.get("den_exited") and r.get("den_light_back"),
+          "in %s dark %s mom-in-den %s killed %s out %s at %s legs %s" % (r.get("den_entered"), r.get("den_dark"), r.get("mother_in_den"), r.get("mother_killed"), r.get("den_exited"), r.get("exit_tile"), r.get("den_walk_legs")),
+          "sq2_den_hole", "sq2_den_inside", "sq2_rat_mother", "sq2_rat_mother_dead", "sq2_den_out"),
         R("a_dead_rat: turned in: +5 Influence, marks, journal green",
           r.get("mark_ready") == "!" and node(r.get("dialog_turnin")) == "stage_3" and r.get("state_final") == "completed" and r.get("influence") == 5 and int(r.get("marks") or 0) > 0 and r.get("color_final") == "60c060",
           "%r %s inf %s marks %s" % (r.get("mark_ready"), r.get("state_final"), r.get("influence"), r.get("marks")), "sq2_rat_turnin", "sq2_journal_completed"),
@@ -1249,9 +1253,9 @@ def check_millbrook(ctx):
         R("the windmill sails turn (4-frame fade layer)", len(set(sf)) >= 2, str(sf), "mb_mill"),
         R("inside the inn the roof/upper floor fade out", inn.get("inside") == "millbrook_inn" and float(inn.get("roof_alpha", 1)) < 0.3, str(inn), "mb_inn_inside"),
         R("Millbrook at night uses the designer night layers", a.get("night", {}).get("phase") == "night", str(a.get("night")), "mb_night"),
-        R("the Rat Mother wears the 48x48 underground sheet (no scaled rat) beside the 3x2 den entrance, outside the village",
-          m.get("sprite") == "rat_mother" and m.get("frame") == [48, 48] and float(m.get("scale", 0)) == 1.0 and m.get("hole") and "den_entrance_3x2" in str(m.get("hole_sprite")) and m.get("village") == "",
-          str(m), "rat_mother", "den_entrance", "rat_mother_close"),
+        R("the Rat Mother wears the 48x48 underground sheet (no scaled rat) in the den below the 3x2 rat hole, outside the village",
+          m.get("sprite") == "rat_mother" and m.get("frame") == [48, 48] and float(m.get("scale", 0)) == 1.0 and m.get("hole") and "den_entrance_3x2" in str(m.get("hole_sprite")) and m.get("village") == "" and m.get("den") == "rat_den",
+          str(m), "den_entrance", "den_interior", "rat_mother", "rat_mother_close"),
     ]
 
 
