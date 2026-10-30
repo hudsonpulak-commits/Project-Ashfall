@@ -4,7 +4,7 @@
  "world_scale": 1,
  "tiles": {
   "grass": {
-   "path": "res://assets/sprites/tiles/grass.png",
+   "path": "res://assets/sprites/tiles/variants/grass_x4.png",
    "frame_size": [
     16,
     16
@@ -13,7 +13,7 @@
    "_order": 0
   },
   "path": {
-   "path": "res://assets/sprites/tiles/path.png",
+   "path": "res://assets/sprites/tiles/variants/path_x4.png",
    "frame_size": [
     16,
     16
@@ -22,7 +22,7 @@
    "_order": 1
   },
   "water": {
-   "path": "res://assets/sprites/tiles/water.png",
+   "path": "res://assets/sprites/tiles/variants/water_x4.png",
    "frame_size": [
     16,
     16
@@ -31,7 +31,7 @@
    "_order": 2
   },
   "sand": {
-   "path": "res://assets/sprites/tiles/sand.png",
+   "path": "res://assets/sprites/tiles/variants/sand_x4.png",
    "frame_size": [
     16,
     16
@@ -40,7 +40,7 @@
    "_order": 3
   },
   "dirt": {
-   "path": "res://assets/sprites/tiles/dirt.png",
+   "path": "res://assets/sprites/tiles/variants/dirt_x4.png",
    "frame_size": [
     16,
     16
@@ -49,7 +49,7 @@
    "_order": 4
   },
   "cobble": {
-   "path": "res://assets/sprites/tiles/cobble.png",
+   "path": "res://assets/sprites/tiles/variants/cobble_x4.png",
    "frame_size": [
     16,
     16
@@ -58,7 +58,7 @@
    "_order": 5
   },
   "planks": {
-   "path": "res://assets/sprites/tiles/planks.png",
+   "path": "res://assets/sprites/tiles/variants/planks_x4.png",
    "frame_size": [
     16,
     16
@@ -67,7 +67,7 @@
    "_order": 6
   },
   "marsh": {
-   "path": "res://assets/sprites/tiles/marsh.png",
+   "path": "res://assets/sprites/tiles/variants/marsh_x4.png",
    "frame_size": [
     16,
     16
@@ -94,7 +94,7 @@
    "_order": 9
   },
   "floor": {
-   "path": "res://assets/sprites/tiles/floor.png",
+   "path": "res://assets/sprites/tiles/variants/floor_x4.png",
    "frame_size": [
     16,
     16
@@ -112,7 +112,7 @@
    "_order": 11
   },
   "ash": {
-   "path": "res://assets/sprites/tiles/ash.png",
+   "path": "res://assets/sprites/tiles/variants/ash_x4.png",
    "frame_size": [
     16,
     16
@@ -159,7 +159,7 @@
    "note": "restyle: 16x24 wall front, top 8px overhangs the wall-top cell to the north"
   },
   "stone_floor": {
-   "path": "res://assets/sprites/tiles/stone_floor.png",
+   "path": "res://assets/sprites/tiles/variants/stone_floor_x4.png",
    "frame_size": [
     16,
     16
@@ -261,7 +261,7 @@
    "note": "restyle: 16x24 wall front, top 8px overhangs the wall-top cell to the north"
   },
   "boardwalk": {
-   "path": "res://assets/sprites/tiles/boardwalk.png",
+   "path": "res://assets/sprites/tiles/variants/boardwalk_x4.png",
    "frame_size": [
     16,
     16
@@ -270,7 +270,7 @@
    "_order": 27
   },
   "cobble_dark": {
-   "path": "res://assets/sprites/tiles/cobble_dark.png",
+   "path": "res://assets/sprites/tiles/variants/cobble_dark_x4.png",
    "frame_size": [
     16,
     16
@@ -279,7 +279,7 @@
    "_order": 28
   },
   "plaster": {
-   "path": "res://assets/sprites/tiles/plaster.png",
+   "path": "res://assets/sprites/tiles/variants/plaster_x4.png",
    "frame_size": [
     16,
     16
@@ -306,7 +306,7 @@
    "_order": 31
   },
   "road_stone": {
-   "path": "res://assets/sprites/tiles/road_stone.png",
+   "path": "res://assets/sprites/tiles/variants/road_stone_x4.png",
    "frame_size": [
     16,
     16
@@ -316,7 +316,7 @@
    "note": "0.3.8 placeholder"
   },
   "road_dirt": {
-   "path": "res://assets/sprites/tiles/road_dirt.png",
+   "path": "res://assets/sprites/tiles/variants/road_dirt_x4.png",
    "frame_size": [
     16,
     16
@@ -418,7 +418,7 @@
    "note": "0.3.8 placeholder"
   },
   "grass_lush": {
-   "path": "res://assets/sprites/tiles/grass_lush.png",
+   "path": "res://assets/sprites/tiles/variants/grass_lush_x4.png",
    "frame_size": [
     16,
     16
@@ -428,7 +428,7 @@
    "note": "0.3.10 PLACEHOLDER recolour - designer redraw (docs/ART_TODO_0.3.10.md)"
   },
   "grass_boreal": {
-   "path": "res://assets/sprites/tiles/grass_boreal.png",
+   "path": "res://assets/sprites/tiles/variants/grass_boreal_x4.png",
    "frame_size": [
     16,
     16
@@ -438,7 +438,7 @@
    "note": "0.3.10 PLACEHOLDER recolour - designer redraw (docs/ART_TODO_0.3.10.md)"
   },
   "grass_tropic": {
-   "path": "res://assets/sprites/tiles/grass_tropic.png",
+   "path": "res://assets/sprites/tiles/variants/grass_tropic_x4.png",
    "frame_size": [
     16,
     16
@@ -448,7 +448,7 @@
    "note": "0.3.10 PLACEHOLDER recolour - designer redraw (docs/ART_TODO_0.3.10.md)"
   },
   "rocky": {
-   "path": "res://assets/sprites/tiles/rocky.png",
+   "path": "res://assets/sprites/tiles/variants/rocky_x4.png",
    "frame_size": [
     16,
     16
@@ -8604,6 +8604,123 @@
    ],
    "frames": 1,
    "note": "restyle batch 02: pilings drawn in the water cell south of a boardwalk"
+  },
+  "water_shore": {
+   "path": "res://assets/sprites/autotile/water_shore.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 256,
+   "cols": 16
+  },
+  "water_shore_ash": {
+   "path": "res://assets/sprites/autotile/water_shore_ash.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 256,
+   "cols": 16
+  },
+  "water_shore_cobble": {
+   "path": "res://assets/sprites/autotile/water_shore_cobble.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 256,
+   "cols": 16
+  },
+  "water_shore_dirt": {
+   "path": "res://assets/sprites/autotile/water_shore_dirt.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 256,
+   "cols": 16
+  },
+  "water_shore_grass": {
+   "path": "res://assets/sprites/autotile/water_shore_grass.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 256,
+   "cols": 16
+  },
+  "water_shore_grass_boreal": {
+   "path": "res://assets/sprites/autotile/water_shore_grass_boreal.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 256,
+   "cols": 16
+  },
+  "water_shore_grass_lush": {
+   "path": "res://assets/sprites/autotile/water_shore_grass_lush.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 256,
+   "cols": 16
+  },
+  "water_shore_grass_tropic": {
+   "path": "res://assets/sprites/autotile/water_shore_grass_tropic.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 256,
+   "cols": 16
+  },
+  "water_shore_marsh": {
+   "path": "res://assets/sprites/autotile/water_shore_marsh.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 256,
+   "cols": 16
+  },
+  "water_shore_path": {
+   "path": "res://assets/sprites/autotile/water_shore_path.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 256,
+   "cols": 16
+  },
+  "water_shore_road_stone": {
+   "path": "res://assets/sprites/autotile/water_shore_road_stone.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 256,
+   "cols": 16
+  },
+  "water_shore_rocky": {
+   "path": "res://assets/sprites/autotile/water_shore_rocky.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 256,
+   "cols": 16
+  },
+  "water_shore_sand": {
+   "path": "res://assets/sprites/autotile/water_shore_sand.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 256,
+   "cols": 16
   }
  },
  "transitions": {

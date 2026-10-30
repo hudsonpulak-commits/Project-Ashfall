@@ -185,6 +185,49 @@ const MOAT_CORNERS := [[0, 1, 5], [1, 2, 6], [2, 3, 7], [3, 0, 4]]
 
 
 const BOARDWALK_JOINS := ["boardwalk", "planks", "bridge"]
+const TRANS_ALIAS := {"ash_edge": "ash"}
+## restyle batch 04: organic water edges. Not land: water, moat, decks over water, out of world.
+const SHORE_NOT_LAND := ["water", "moat", "bridge", "boardwalk", "planks", ""]
+const SHORE_ALIAS := {"ash_edge": "ash", "road_dirt": "path"}
+
+
+## restyle batch 04: on a water cell, a bank frame from autotile/water_shore_<land> (same
+## edge/corner bit rule as the floor transitions, bits where a neighbour is LAND),
+## <land> = the most common land floor around it, else the generic water_shore. Layer 2.
+func _add_shore(out: Array, nb: Array) -> void:
+	var e := 0
+	var cnt := {}
+	for k in 8:
+		var n: String = str(nb[k])
+		if n in SHORE_NOT_LAND:
+			continue
+		if k < 4:
+			e |= 1 << k
+		var key: String = SHORE_ALIAS.get(n, n)
+		cnt[key] = int(cnt.get(key, 0)) + 1
+	if cnt.is_empty():
+		return
+	var c := 0
+	var land := func(k): return not (str(nb[k]) in SHORE_NOT_LAND)
+	if land.call(4) and not (e & 9): c |= 1
+	if land.call(5) and not (e & 3): c |= 2
+	if land.call(6) and not (e & 6): c |= 4
+	if land.call(7) and not (e & 12): c |= 8
+	var f := e | (c << 4)
+	if f == 0:
+		return
+	var best := ""
+	var bn := 0
+	for k2 in cnt:
+		if int(cnt[k2]) > bn or (int(cnt[k2]) == bn and str(k2) < best):
+			best = k2
+			bn = int(cnt[k2])
+	var s: Array = _overlay_src.get("autotile/water_shore_" + best, [])
+	if s.is_empty():
+		s = _overlay_src.get("autotile/water_shore", [])
+	if s.is_empty():
+		return
+	out.append([2, s[0], Vector2i(f % int(s[1]), f / int(s[1]))])
 
 
 func overlay_cells(p: Vector2i, nm: Callable) -> Array:
@@ -196,11 +239,13 @@ func overlay_cells(p: Vector2i, nm: Callable) -> Array:
 	var dgp := diag_piece(here, nb.slice(0, 4))
 	if dgp != "" and _diag_src.has(dgp):
 		out.append([3 if dgp.contains("/back") else 4, _diag_src[dgp], Vector2i.ZERO])
-	var ov := Autotile.overlays_for(here, nb)
+	# restyle batch 04: ash_edge blends as ash (same art) -- the Scorch border is no longer a straight line
+	var nbt: Array = nb.map(func(n): return TRANS_ALIAS.get(n, n))
+	var ov := Autotile.overlays_for(TRANS_ALIAS.get(here, here), nbt)
 	for i in ov.size():
 		var s: Array = _overlay_src.get("transitions/" + str(ov[i]), [])
 		if not s.is_empty():
-			var f := Autotile.transition_frame(ov[i], nb)
+			var f := Autotile.transition_frame(ov[i], nbt)
 			out.append([i, s[0], Vector2i(f % int(s[1]), f / int(s[1]))])
 	if Autotile.WALL_FAMILIES.has(here) and not Autotile.ART_WALLS.has(here):
 		var s: Array = _overlay_src.get("autotile/" + str(Autotile.WALL_FAMILIES[here]), [])
@@ -217,10 +262,13 @@ func overlay_cells(p: Vector2i, nm: Callable) -> Array:
 					bm |= 1 << k
 			out.append([2, sb[0], Vector2i(bm, 0)])
 	elif here == "water" and nb[0] == "boardwalk":
+		_add_shore(out, nb)
 		# pilings under the deck edge, in the water cell south of a boardwalk
 		var sp: Array = _overlay_src.get("autotile/boardwalk_piling16", [])
 		if not sp.is_empty():
 			out.append([3, sp[0], Vector2i(0, 0)])
+	elif here == "water":
+		_add_shore(out, nb)
 	elif here == "moat":
 		var s: Array = _overlay_src.get("autotile/moat_border", [])
 		if not s.is_empty():
