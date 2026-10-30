@@ -8,7 +8,7 @@ static func check(cond: bool, what: String) -> void:
 
 static func run(_main, _world, p) -> void:
 	print("  -- 0.3.18 damage halved + armour XP")
-	check(str(ProjectSettings.get_setting("application/config/version")).begins_with("0.3."), "damage rules still apply on 0.3.x")
+	check((str(ProjectSettings.get_setting("application/config/version")).begins_with("0.3.") or str(ProjectSettings.get_setting("application/config/version")).begins_with("0.4.")), "damage rules still apply on 0.3.x")
 	check(Combat.final_damage(0) == 0 and Combat.final_damage(1) == 1 and Combat.final_damage(2) == 1 and Combat.final_damage(4) == 2 and Combat.final_damage(10) == 5 and Combat.final_damage(9) == 5,
 		"0.3.18 damage x0.5 at the final step, a hit never below 1, a miss stays 0")
 	check(Combat.tier_hit_xp(1) == 0.5 and Combat.tier_hit_xp(2) == 1.0 and Combat.tier_hit_xp(3) == 2.0 and Combat.tier_hit_xp(4) == 3.0 and Combat.tier_hit_xp(5) == 4.0,

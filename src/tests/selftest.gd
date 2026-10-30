@@ -33,8 +33,8 @@ static func run(main) -> int:
 
 	# --- data
 	check(GameData.items.size() >= 20, "items loaded (%d)" % GameData.items.size())
-	check(GameData.skills.size() == 14 and GameData.skill_by_id.has("archery") and GameData.skill_by_id.has("prayer") and GameData.skill_by_id.has("attack") and GameData.skill_by_id.has("strength")
-		and GameData.skill_by_id.has("defence") and not GameData.skill_by_id.has("melee"), "14 skills defined (Attack, Strength, Defence replace Melee; incl. Prayer, Archery)")
+	check(GameData.skills.size() == 15 and GameData.skill_by_id.has("archery") and GameData.skill_by_id.has("prayer") and GameData.skill_by_id.has("attack") and GameData.skill_by_id.has("strength")
+		and GameData.skill_by_id.has("defence") and not GameData.skill_by_id.has("melee"), "15 skills defined (Attack, Strength, Defence replace Melee; incl. Prayer, Ranged, 0.4.0 Crafting)")
 	check(GameData.objects.size() >= 12, "world objects loaded")
 	check(GameData.xp_for_level(2) == 100, "xp curve L2 = 100")
 	var mono := true
@@ -443,12 +443,14 @@ static func _combat_tests(world: World, p: Player) -> void:
 		expect_n += int(world.gen.villages[vid].get("citizens", {}).get("count", 0))
 	for pz in world.gen.pastures:
 		expect_n += int(pz["count"])
+	if GameData.enemies.has("greymaw"):   # 0.4.0 one dormant named dire wolf
+		expect_n += 1
 	var kinds := {}
 	var spawn_ok := true
 	var bx := Rect2i(em.enemies[0].home, Vector2i.ONE)
 	for e in em.enemies:
 		kinds[e.kind] = true
-		spawn_ok = spawn_ok and not world.is_blocked(e.home) and (world.gen.town_at(e.home, 0) == "" or e.town_ok())
+		spawn_ok = spawn_ok and (bool(e.def.get("rotates", false)) or (not world.is_blocked(e.home) and (world.gen.town_at(e.home, 0) == "" or e.town_ok())))
 		bx = bx.expand(e.home)
 	check(em.enemies.size() == expect_n and kinds.has("giant_rat") and kinds.has("goblin"), "%d enemies spawned in camps + towns (rats, goblins, ...)" % em.enemies.size())
 	check(spawn_ok and bx.size.x > 250, "camps sit on walkable land outside towns, spread across the continent (%d tiles wide)" % bx.size.x)

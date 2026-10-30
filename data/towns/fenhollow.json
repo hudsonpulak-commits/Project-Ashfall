@@ -129,7 +129,8 @@
   "helmets",
   "swords",
   "archery",
-  "cook"
+  "cook",
+  "crafting"
  ],
  "price_bias": {
   "reed_fibre": 0.85,
@@ -2187,11 +2188,11 @@
    ]
   },
   {
-   "art": "fh_house_02",
+   "art": "v4_tanning_station",
    "flip": false,
    "at": [
     91,
-    32
+    33
    ],
    "door": [
     [
@@ -2203,21 +2204,41 @@
     94,
     37
    ],
-   "props": [],
+   "props": [
+    {
+     "object": "spinning_wheel",
+     "at": [
+      93,
+      34
+     ]
+    },
+    {
+     "object": "tanning_rack",
+     "at": [
+      94,
+      35
+     ]
+    },
+    {
+     "object": "tanning_vat",
+     "at": [
+      95,
+      34
+     ]
+    }
+   ],
    "counter": [],
    "style": "timber",
    "roof": "#9a8a5a",
    "id": "fenhollow_home_4",
-   "kind": "house",
-   "shop": "",
-   "name": "The Sedges' house",
-   "keeper": "Caro Sedge",
-   "keeper_sprite": "villager",
-   "sign_sprite": "sign_house",
-   "note": "0.3.13 Fenhollow v1 (designer fh_house_02)",
+   "kind": "shop",
+   "shop": "crafting",
+   "name": "Fenhollow Crafting Supply",
+   "keeper": "Wenna Reed",
+   "note": "0.4.0 Crafting Supply (sprites_040 v4_tanning_station): spinning wheel + tanning rack/vat inside",
    "keeper_at": [
-    93,
-    34
+    92,
+    36
    ],
    "stand": [
     93,

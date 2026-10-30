@@ -2218,6 +2218,17 @@ func _place_elijah_tomb() -> void:
 			candle = p
 	story_marks["elijah_flowers"] = flower
 	story_marks["elijah_candles"] = candle
+	# 0.4.0 more visible: Elijah's headstone (32x40, night glow) + a path to the door
+	var head := Vector2i(-99999, 0)
+	for off in [Vector2i(-2, 3), Vector2i(2, 3), Vector2i(-3, 2), Vector2i(3, 2), Vector2i(0, 4), Vector2i(-2, 2), Vector2i(2, 2)]:
+		if _stamp_prop(door + off, "tomb_headstone"):
+			head = door + off
+			break
+	story_marks["elijah_headstone"] = head
+	for k in [1, 2]:
+		if _stamp_prop(door + Vector2i(0, k), "elijah_path"):
+			story_marks["elijah_path"] = door + Vector2i(0, k)
+			break
 
 
 func _place_raided_cart() -> void:

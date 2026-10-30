@@ -3159,25 +3159,25 @@
    "note": "0.3.16 sprite bot underground v1.1 den entrance (transparent-edge version)"
   },
   "spinning_wheel": {
-   "path": "res://assets/sprites/objects/quern.png",
+   "path": "res://assets/sprites/v040/objects/spinning_wheel.png",
    "frame_size": [
-    16,
+    32,
     24
    ],
    "frames": 1,
    "anchor": "bottom"
   },
   "tanning_rack": {
-   "path": "res://assets/sprites/objects/workbench.png",
+   "path": "res://assets/sprites/v040/objects/tanning_rack.png",
    "frame_size": [
-    16,
+    32,
     24
    ],
    "frames": 1,
    "anchor": "bottom"
   },
   "flax_plant": {
-   "path": "res://assets/sprites/objects/reed_bed.png",
+   "path": "res://assets/sprites/v040/objects/flax_plant.png",
    "frame_size": [
     16,
     24
@@ -3186,13 +3186,40 @@
    "anchor": "bottom"
   },
   "tomb_headstone": {
-   "path": "res://assets/sprites/objects/candle_stand.png",
+   "path": "res://assets/sprites/v040/objects/elijah_headstone.png",
+   "frame_size": [
+    32,
+    40
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.4.0 elijah_headstone; night glow = ui light_tomb"
+  },
+  "tanning_vat": {
+   "path": "res://assets/sprites/v040/objects/tanning_vat.png",
    "frame_size": [
     16,
     24
    ],
    "frames": 1,
-   "fps": 3,
+   "anchor": "bottom"
+  },
+  "flax_picked": {
+   "path": "res://assets/sprites/v040/objects/flax_picked.png",
+   "frame_size": [
+    16,
+    24
+   ],
+   "frames": 1,
+   "anchor": "bottom"
+  },
+  "elijah_path": {
+   "path": "res://assets/sprites/v040/objects/elijah_path.png",
+   "frame_size": [
+    16,
+    48
+   ],
+   "frames": 1,
    "anchor": "bottom"
   }
  },
@@ -4484,34 +4511,286 @@
    "note": "0.3.16 sprite bot underground v1.1 Rat Mother (walk, 4 facings; fungal glow layer composited in). Bite strips exported as rat_mother_<dir>_bite.png for later."
   },
   "greymaw": {
-   "path": "res://assets/sprites/actors/wolf.png",
+   "path": "res://assets/sprites/v040/actors/greymaw.png",
    "frame_size": [
-    24,
-    16
+    40,
+    26
    ],
-   "frames": 2,
+   "frames": 4,
    "fps": 6,
    "anchor": "bottom",
    "flip": true,
    "dir_paths": {
-    "down": "res://assets/sprites/actors/wolf_front.png",
-    "up": "res://assets/sprites/actors/wolf_back.png"
-   }
+    "down": "res://assets/sprites/v040/actors/greymaw_front.png",
+    "up": "res://assets/sprites/v040/actors/greymaw_back.png"
+   },
+   "bite_frames": 4,
+   "bite_fps": 8,
+   "bite_paths": {
+    "side": "res://assets/sprites/v040/actors/greymaw_attack.png",
+    "down": "res://assets/sprites/v040/actors/greymaw_attack_front.png",
+    "up": "res://assets/sprites/v040/actors/greymaw_attack_back.png"
+   },
+   "idle_frames": 2,
+   "idle_fps": 2,
+   "idle_paths": {
+    "side": "res://assets/sprites/v040/actors/greymaw_idle.png",
+    "down": "res://assets/sprites/v040/actors/greymaw_idle_front.png",
+    "up": "res://assets/sprites/v040/actors/greymaw_idle_back.png"
+   },
+   "death_frames": 4,
+   "death_fps": 6,
+   "death_paths": {
+    "side": "res://assets/sprites/v040/actors/greymaw_death.png",
+    "down": "res://assets/sprites/v040/actors/greymaw_death_front.png",
+    "up": "res://assets/sprites/v040/actors/greymaw_death_back.png"
+   },
+   "note": "0.4.0 sprites_040"
   },
   "dire_wolf": {
-   "path": "res://assets/sprites/actors/wolf.png",
+   "path": "res://assets/sprites/v040/actors/dire_wolf.png",
    "frame_size": [
-    24,
-    16
+    28,
+    18
    ],
-   "frames": 2,
+   "frames": 4,
    "fps": 6,
    "anchor": "bottom",
    "flip": true,
    "dir_paths": {
-    "down": "res://assets/sprites/actors/wolf_front.png",
-    "up": "res://assets/sprites/actors/wolf_back.png"
-   }
+    "down": "res://assets/sprites/v040/actors/dire_wolf_front.png",
+    "up": "res://assets/sprites/v040/actors/dire_wolf_back.png"
+   },
+   "bite_frames": 4,
+   "bite_fps": 8,
+   "bite_paths": {
+    "side": "res://assets/sprites/v040/actors/dire_wolf_attack.png",
+    "down": "res://assets/sprites/v040/actors/dire_wolf_attack_front.png",
+    "up": "res://assets/sprites/v040/actors/dire_wolf_attack_back.png"
+   },
+   "idle_frames": 2,
+   "idle_fps": 2,
+   "idle_paths": {
+    "side": "res://assets/sprites/v040/actors/dire_wolf_idle.png",
+    "down": "res://assets/sprites/v040/actors/dire_wolf_idle_front.png",
+    "up": "res://assets/sprites/v040/actors/dire_wolf_idle_back.png"
+   },
+   "death_frames": 4,
+   "death_fps": 6,
+   "death_paths": {
+    "side": "res://assets/sprites/v040/actors/dire_wolf_death.png",
+    "down": "res://assets/sprites/v040/actors/dire_wolf_death_front.png",
+    "up": "res://assets/sprites/v040/actors/dire_wolf_death_back.png"
+   },
+   "note": "0.4.0 sprites_040"
+  },
+  "gear_item_leather_coif": {
+   "path": "res://assets/sprites/v040/gear/head_ranger_leather.png",
+   "frame_size": [
+    16,
+    24
+   ],
+   "frames": 4,
+   "fps": 5,
+   "anchor": "bottom",
+   "flip": true,
+   "dir_paths": {
+    "down": "res://assets/sprites/v040/gear/head_ranger_leather_front.png",
+    "up": "res://assets/sprites/v040/gear/head_ranger_leather_back.png"
+   },
+   "note": "0.4.0 sprites_040 ranger armour"
+  },
+  "gear_item_leather_body": {
+   "path": "res://assets/sprites/v040/gear/body_ranger_leather.png",
+   "frame_size": [
+    16,
+    24
+   ],
+   "frames": 4,
+   "fps": 5,
+   "anchor": "bottom",
+   "flip": true,
+   "dir_paths": {
+    "down": "res://assets/sprites/v040/gear/body_ranger_leather_front.png",
+    "up": "res://assets/sprites/v040/gear/body_ranger_leather_back.png"
+   },
+   "note": "0.4.0 sprites_040 ranger armour"
+  },
+  "gear_item_leather_chaps": {
+   "path": "res://assets/sprites/v040/gear/legs_ranger_leather.png",
+   "frame_size": [
+    16,
+    24
+   ],
+   "frames": 4,
+   "fps": 5,
+   "anchor": "bottom",
+   "flip": true,
+   "dir_paths": {
+    "down": "res://assets/sprites/v040/gear/legs_ranger_leather_front.png",
+    "up": "res://assets/sprites/v040/gear/legs_ranger_leather_back.png"
+   },
+   "note": "0.4.0 sprites_040 ranger armour"
+  },
+  "gear_item_studded_coif": {
+   "path": "res://assets/sprites/v040/gear/head_ranger_studded.png",
+   "frame_size": [
+    16,
+    24
+   ],
+   "frames": 4,
+   "fps": 5,
+   "anchor": "bottom",
+   "flip": true,
+   "dir_paths": {
+    "down": "res://assets/sprites/v040/gear/head_ranger_studded_front.png",
+    "up": "res://assets/sprites/v040/gear/head_ranger_studded_back.png"
+   },
+   "note": "0.4.0 sprites_040 ranger armour"
+  },
+  "gear_item_studded_body": {
+   "path": "res://assets/sprites/v040/gear/body_ranger_studded.png",
+   "frame_size": [
+    16,
+    24
+   ],
+   "frames": 4,
+   "fps": 5,
+   "anchor": "bottom",
+   "flip": true,
+   "dir_paths": {
+    "down": "res://assets/sprites/v040/gear/body_ranger_studded_front.png",
+    "up": "res://assets/sprites/v040/gear/body_ranger_studded_back.png"
+   },
+   "note": "0.4.0 sprites_040 ranger armour"
+  },
+  "gear_item_studded_chaps": {
+   "path": "res://assets/sprites/v040/gear/legs_ranger_studded.png",
+   "frame_size": [
+    16,
+    24
+   ],
+   "frames": 4,
+   "fps": 5,
+   "anchor": "bottom",
+   "flip": true,
+   "dir_paths": {
+    "down": "res://assets/sprites/v040/gear/legs_ranger_studded_front.png",
+    "up": "res://assets/sprites/v040/gear/legs_ranger_studded_back.png"
+   },
+   "note": "0.4.0 sprites_040 ranger armour"
+  },
+  "gear_item_wolfpelt_coif": {
+   "path": "res://assets/sprites/v040/gear/head_ranger_wolf_pelt.png",
+   "frame_size": [
+    16,
+    24
+   ],
+   "frames": 4,
+   "fps": 5,
+   "anchor": "bottom",
+   "flip": true,
+   "dir_paths": {
+    "down": "res://assets/sprites/v040/gear/head_ranger_wolf_pelt_front.png",
+    "up": "res://assets/sprites/v040/gear/head_ranger_wolf_pelt_back.png"
+   },
+   "note": "0.4.0 sprites_040 ranger armour"
+  },
+  "gear_item_wolfpelt_body": {
+   "path": "res://assets/sprites/v040/gear/body_ranger_wolf_pelt.png",
+   "frame_size": [
+    16,
+    24
+   ],
+   "frames": 4,
+   "fps": 5,
+   "anchor": "bottom",
+   "flip": true,
+   "dir_paths": {
+    "down": "res://assets/sprites/v040/gear/body_ranger_wolf_pelt_front.png",
+    "up": "res://assets/sprites/v040/gear/body_ranger_wolf_pelt_back.png"
+   },
+   "note": "0.4.0 sprites_040 ranger armour"
+  },
+  "gear_item_wolfpelt_chaps": {
+   "path": "res://assets/sprites/v040/gear/legs_ranger_wolf_pelt.png",
+   "frame_size": [
+    16,
+    24
+   ],
+   "frames": 4,
+   "fps": 5,
+   "anchor": "bottom",
+   "flip": true,
+   "dir_paths": {
+    "down": "res://assets/sprites/v040/gear/legs_ranger_wolf_pelt_front.png",
+    "up": "res://assets/sprites/v040/gear/legs_ranger_wolf_pelt_back.png"
+   },
+   "note": "0.4.0 sprites_040 ranger armour"
+  },
+  "gear_item_direpelt_coif": {
+   "path": "res://assets/sprites/v040/gear/head_ranger_dire_wolf_pelt.png",
+   "frame_size": [
+    16,
+    24
+   ],
+   "frames": 4,
+   "fps": 5,
+   "anchor": "bottom",
+   "flip": true,
+   "dir_paths": {
+    "down": "res://assets/sprites/v040/gear/head_ranger_dire_wolf_pelt_front.png",
+    "up": "res://assets/sprites/v040/gear/head_ranger_dire_wolf_pelt_back.png"
+   },
+   "note": "0.4.0 sprites_040 ranger armour"
+  },
+  "gear_item_direpelt_body": {
+   "path": "res://assets/sprites/v040/gear/body_ranger_dire_wolf_pelt.png",
+   "frame_size": [
+    16,
+    24
+   ],
+   "frames": 4,
+   "fps": 5,
+   "anchor": "bottom",
+   "flip": true,
+   "dir_paths": {
+    "down": "res://assets/sprites/v040/gear/body_ranger_dire_wolf_pelt_front.png",
+    "up": "res://assets/sprites/v040/gear/body_ranger_dire_wolf_pelt_back.png"
+   },
+   "note": "0.4.0 sprites_040 ranger armour"
+  },
+  "gear_item_direpelt_chaps": {
+   "path": "res://assets/sprites/v040/gear/legs_ranger_dire_wolf_pelt.png",
+   "frame_size": [
+    16,
+    24
+   ],
+   "frames": 4,
+   "fps": 5,
+   "anchor": "bottom",
+   "flip": true,
+   "dir_paths": {
+    "down": "res://assets/sprites/v040/gear/legs_ranger_dire_wolf_pelt_front.png",
+    "up": "res://assets/sprites/v040/gear/legs_ranger_dire_wolf_pelt_back.png"
+   },
+   "note": "0.4.0 sprites_040 ranger armour"
+  },
+  "warden_pye": {
+   "path": "res://assets/sprites/v040/actors/warden_pye.png",
+   "frame_size": [
+    16,
+    24
+   ],
+   "frames": 4,
+   "fps": 2,
+   "anchor": "bottom",
+   "flip": true,
+   "dir_paths": {
+    "down": "res://assets/sprites/v040/actors/warden_pye_front.png",
+    "up": "res://assets/sprites/v040/actors/warden_pye_back.png"
+   },
+   "note": "0.4.0 sprites_040"
   }
  },
  "items": {
@@ -5020,7 +5299,7 @@
    ]
   },
   "feather": {
-   "path": "res://assets/sprites/items/feather.png",
+   "path": "res://assets/sprites/v040/items/feather.png",
    "frame_size": [
     16,
     16
@@ -5044,7 +5323,7 @@
    "frames": 1
   },
   "wolf_pelt": {
-   "path": "res://assets/sprites/items/wolf_pelt.png",
+   "path": "res://assets/sprites/v040/items/wolf_pelt.png",
    "frame_size": [
     16,
     16
@@ -5268,120 +5547,135 @@
    ]
   },
   "knife": {
-   "path": "res://assets/sprites/items/flint.png",
-   "frame_size": [
-    16,
-    16
-   ]
-  },
-  "needle": {
-   "path": "res://assets/sprites/items/flint.png",
-   "frame_size": [
-    16,
-    16
-   ]
-  },
-  "thread": {
-   "path": "res://assets/sprites/items/reed_fibre.png",
-   "frame_size": [
-    16,
-    16
-   ]
-  },
-  "simple_string": {
-   "path": "res://assets/sprites/items/reed_fibre.png",
-   "frame_size": [
-    16,
-    16
-   ]
-  },
-  "superior_string": {
-   "path": "res://assets/sprites/items/reed_fibre.png",
-   "frame_size": [
-    16,
-    16
-   ]
-  },
-  "flax": {
-   "path": "res://assets/sprites/items/reed_fibre.png",
-   "frame_size": [
-    16,
-    16
-   ]
-  },
-  "arrow_shaft": {
-   "path": "res://assets/sprites/items/reed_rod.png",
-   "frame_size": [
-    16,
-    16
-   ]
-  },
-  "headless_arrows": {
-   "path": "res://assets/sprites/items/bronze_arrows.png",
-   "frame_size": [
-    16,
-    16
-   ]
-  },
-  "bronze_arrowheads": {
-   "path": "res://assets/sprites/items/bronze_bar.png",
-   "frame_size": [
-    16,
-    16
-   ]
-  },
-  "iron_arrowheads": {
-   "path": "res://assets/sprites/items/iron_bar.png",
-   "frame_size": [
-    16,
-    16
-   ]
-  },
-  "steel_arrowheads": {
-   "path": "res://assets/sprites/items/steel_bar.png",
-   "frame_size": [
-    16,
-    16
-   ]
-  },
-  "dusk_arrowheads": {
-   "path": "res://assets/sprites/items/dusk_steel_bar.png",
+   "path": "res://assets/sprites/v040/items/knife.png",
    "frame_size": [
     16,
     16
    ],
-   "note": "0.3.10 PLACEHOLDER recolour - designer redraw (docs/ART_TODO_0.3.10.md)"
+   "frames": 1
+  },
+  "needle": {
+   "path": "res://assets/sprites/v040/items/needle.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 1
+  },
+  "thread": {
+   "path": "res://assets/sprites/v040/items/thread.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 1
+  },
+  "simple_string": {
+   "path": "res://assets/sprites/v040/items/simple_string.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 1
+  },
+  "superior_string": {
+   "path": "res://assets/sprites/v040/items/superior_string.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 1
+  },
+  "flax": {
+   "path": "res://assets/sprites/v040/items/flax.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 1
+  },
+  "arrow_shaft": {
+   "path": "res://assets/sprites/v040/items/arrow_shaft.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 1
+  },
+  "headless_arrows": {
+   "path": "res://assets/sprites/v040/items/headless_arrow.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 1
+  },
+  "bronze_arrowheads": {
+   "path": "res://assets/sprites/v040/items/bronze_arrowheads.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 1
+  },
+  "iron_arrowheads": {
+   "path": "res://assets/sprites/v040/items/iron_arrowheads.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 1
+  },
+  "steel_arrowheads": {
+   "path": "res://assets/sprites/v040/items/steel_arrowheads.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 1
+  },
+  "dusk_arrowheads": {
+   "path": "res://assets/sprites/v040/items/dusk_arrowheads.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 1
   },
   "dusk_arrows": {
-   "path": "res://assets/sprites/items/steel_arrows.png",
+   "path": "res://assets/sprites/v040/items/dusk_arrows.png",
    "frame_size": [
     16,
     16
-   ]
+   ],
+   "frames": 1
   },
   "ash_shortbow_u": {
-   "path": "res://assets/sprites/items/ash_shortbow.png",
+   "path": "res://assets/sprites/v040/items/unstrung_ash_shortbow.png",
    "frame_size": [
     16,
     16
-   ]
+   ],
+   "frames": 1
   },
   "alder_longbow_u": {
-   "path": "res://assets/sprites/items/alder_longbow.png",
+   "path": "res://assets/sprites/v040/items/unstrung_alder_longbow.png",
    "frame_size": [
     16,
     16
-   ]
+   ],
+   "frames": 1
   },
   "blackthorn_warbow_u": {
-   "path": "res://assets/sprites/items/blackthorn_warbow.png",
+   "path": "res://assets/sprites/v040/items/unstrung_blackthorn_warbow.png",
    "frame_size": [
     16,
     16
-   ]
+   ],
+   "frames": 1
   },
   "leather": {
-   "path": "res://assets/sprites/items/cowhide.png",
+   "path": "res://assets/sprites/v040/items/leather.png",
    "frame_size": [
     16,
     16
@@ -5389,7 +5683,7 @@
    "frames": 1
   },
   "tanned_wolf_pelt": {
-   "path": "res://assets/sprites/items/wolf_pelt.png",
+   "path": "res://assets/sprites/v040/items/tanned_wolf_pelt.png",
    "frame_size": [
     16,
     16
@@ -5397,7 +5691,7 @@
    "frames": 1
   },
   "dire_wolf_pelt": {
-   "path": "res://assets/sprites/items/wolf_pelt.png",
+   "path": "res://assets/sprites/v040/items/dire_wolf_pelt.png",
    "frame_size": [
     16,
     16
@@ -5405,7 +5699,7 @@
    "frames": 1
   },
   "tanned_dire_pelt": {
-   "path": "res://assets/sprites/items/wolf_pelt.png",
+   "path": "res://assets/sprites/v040/items/dire_wolf_pelt.png",
    "frame_size": [
     16,
     16
@@ -5413,7 +5707,7 @@
    "frames": 1
   },
   "wolf_meat": {
-   "path": "res://assets/sprites/items/raw_beef.png",
+   "path": "res://assets/sprites/v040/items/wolf_meat.png",
    "frame_size": [
     16,
     16
@@ -5428,7 +5722,7 @@
    ]
   },
   "greymaw_hide": {
-   "path": "res://assets/sprites/items/wolf_pelt.png",
+   "path": "res://assets/sprites/v040/items/greymaw_hide.png",
    "frame_size": [
     16,
     16
@@ -5459,88 +5753,100 @@
    ]
   },
   "leather_coif": {
-   "path": "res://assets/sprites/items/bronze_cap.png",
+   "path": "res://assets/sprites/v040/items/leather_coif.png",
    "frame_size": [
     16,
     16
-   ]
+   ],
+   "frames": 1
   },
   "leather_body": {
-   "path": "res://assets/sprites/items/bronze_scale_vest.png",
+   "path": "res://assets/sprites/v040/items/leather_body.png",
    "frame_size": [
     16,
     16
-   ]
+   ],
+   "frames": 1
   },
   "leather_chaps": {
-   "path": "res://assets/sprites/items/bronze_greaves.png",
+   "path": "res://assets/sprites/v040/items/leather_legs.png",
    "frame_size": [
     16,
     16
-   ]
+   ],
+   "frames": 1
   },
   "studded_coif": {
-   "path": "res://assets/sprites/items/bronze_cap.png",
+   "path": "res://assets/sprites/v040/items/studded_coif.png",
    "frame_size": [
     16,
     16
-   ]
+   ],
+   "frames": 1
   },
   "studded_body": {
-   "path": "res://assets/sprites/items/bronze_scale_vest.png",
+   "path": "res://assets/sprites/v040/items/studded_body.png",
    "frame_size": [
     16,
     16
-   ]
+   ],
+   "frames": 1
   },
   "studded_chaps": {
-   "path": "res://assets/sprites/items/bronze_greaves.png",
+   "path": "res://assets/sprites/v040/items/studded_legs.png",
    "frame_size": [
     16,
     16
-   ]
+   ],
+   "frames": 1
   },
   "wolfpelt_coif": {
-   "path": "res://assets/sprites/items/bronze_cap.png",
+   "path": "res://assets/sprites/v040/items/wolf_pelt_coif.png",
    "frame_size": [
     16,
     16
-   ]
+   ],
+   "frames": 1
   },
   "wolfpelt_body": {
-   "path": "res://assets/sprites/items/bronze_scale_vest.png",
+   "path": "res://assets/sprites/v040/items/wolf_pelt_body.png",
    "frame_size": [
     16,
     16
-   ]
+   ],
+   "frames": 1
   },
   "wolfpelt_chaps": {
-   "path": "res://assets/sprites/items/bronze_greaves.png",
+   "path": "res://assets/sprites/v040/items/wolf_pelt_legs.png",
    "frame_size": [
     16,
     16
-   ]
+   ],
+   "frames": 1
   },
   "direpelt_coif": {
-   "path": "res://assets/sprites/items/bronze_cap.png",
+   "path": "res://assets/sprites/v040/items/dire_wolf_pelt_coif.png",
    "frame_size": [
     16,
     16
-   ]
+   ],
+   "frames": 1
   },
   "direpelt_body": {
-   "path": "res://assets/sprites/items/bronze_scale_vest.png",
+   "path": "res://assets/sprites/v040/items/dire_wolf_pelt_body.png",
    "frame_size": [
     16,
     16
-   ]
+   ],
+   "frames": 1
   },
   "direpelt_chaps": {
-   "path": "res://assets/sprites/items/bronze_greaves.png",
+   "path": "res://assets/sprites/v040/items/dire_wolf_pelt_legs.png",
    "frame_size": [
     16,
     16
-   ]
+   ],
+   "frames": 1
   }
  },
  "ui": {
@@ -5705,6 +6011,14 @@
    "path": "res://assets/ui/title_bg.png",
    "filter": "linear",
    "note": "0.3.9 title background slot: drop Hudson's PNG here; until then ui/menu_bg is used. Cover-scaled, aspect kept."
+  },
+  "light_tomb": {
+   "path": "res://assets/sprites/v040/objects/elijah_headstone_night.png",
+   "frame_size": [
+    32,
+    40
+   ],
+   "frames": 2
   }
  },
  "_doc_facing": "actors: the side sheet faces right ('flip' mirrors it for left); 'dir_paths' down/up are the front/back sheets with the same frames (0.3.9). Moving up shows the back, down the front.",

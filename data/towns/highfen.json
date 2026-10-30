@@ -151,7 +151,8 @@
  "roof": "#b8a888",
  "building_style": "capital",
  "specialists": [
-  "cook"
+  "cook",
+  "crafting"
  ],
  "price_bias": {
   "iron_ore": 1.1,
@@ -1753,7 +1754,7 @@
    "note": "0.3.8 player house; 0.3.11 a walk-in townhouse with a walled work yard behind it (stations + bank chest work for the owner only)"
   },
   {
-   "art": "v4_cookhouse",
+   "art": "v4_crafting_supply",
    "flip": false,
    "at": [
     28,
@@ -1761,32 +1762,53 @@
    ],
    "door": [
     [
-     30,
+     31,
      60
     ]
    ],
    "sign": [
-    31,
+    32,
     60
    ],
-   "props": [],
+   "props": [
+    {
+     "object": "spinning_wheel",
+     "at": [
+      30,
+      56
+     ]
+    },
+    {
+     "object": "tanning_rack",
+     "at": [
+      32,
+      56
+     ]
+    },
+    {
+     "object": "tanning_vat",
+     "at": [
+      33,
+      58
+     ]
+    }
+   ],
    "counter": [],
    "id": "highfen_home_1",
-   "kind": "house",
-   "shop": "",
-   "name": "Hob's bakery",
-   "keeper": "Hob Larder",
-   "keeper_sprite": "villager",
-   "sign_sprite": "sign_house",
+   "kind": "shop",
+   "shop": "crafting",
+   "name": "Highfen Crafting Supply",
+   "keeper": "Aldous Weft",
    "roof": "#8a7050",
    "keeper_at": [
-    31,
+    29,
     59
    ],
    "stand": [
     30,
     59
-   ]
+   ],
+   "note": "0.4.0 Crafting Supply (sprites_040 v4_crafting_supply): spinning wheel + tanning rack/vat inside"
   },
   {
    "art": "v4_smithy",

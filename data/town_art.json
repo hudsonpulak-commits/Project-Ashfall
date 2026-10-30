@@ -4655,6 +4655,67 @@
     "###D##"
    ],
    "note": "0.3.16 Millbrook v1 (villages/v1)"
+  },
+  "v4_tanning_station": {
+   "tiles": [
+    6,
+    5
+   ],
+   "px": [
+    96,
+    80
+   ],
+   "origin_y": 0,
+   "door_tile": [
+    2,
+    4
+   ],
+   "storeys": 1,
+   "floor": "res://assets/sprites/v040/buildings/v4_tanning_station_floor.png",
+   "walls": "res://assets/sprites/v040/buildings/v4_tanning_station_walls.png",
+   "fade": [
+    "res://assets/sprites/v040/buildings/v4_tanning_station_roof.png"
+   ],
+   "night": "res://assets/sprites/v040/buildings/v4_tanning_station_night.png",
+   "plan": [
+    "######",
+    "#oooo#",
+    "#oooo#",
+    "#oooo#",
+    "##D###"
+   ],
+   "roof": "thatch"
+  },
+  "v4_crafting_supply": {
+   "tiles": [
+    7,
+    6
+   ],
+   "px": [
+    112,
+    96
+   ],
+   "origin_y": 0,
+   "door_tile": [
+    3,
+    5
+   ],
+   "storeys": 1,
+   "floor": "res://assets/sprites/v040/buildings/v4_crafting_supply_floor.png",
+   "walls": "res://assets/sprites/v040/buildings/v4_crafting_supply_walls.png",
+   "fade": [
+    "res://assets/sprites/v040/buildings/v4_crafting_supply_roof.png"
+   ],
+   "night": "res://assets/sprites/v040/buildings/v4_crafting_supply_night.png",
+   "plan": [
+    "#######",
+    "#ooooo#",
+    "#ooooo#",
+    "#ooooo#",
+    "#ooooo#",
+    "###D###"
+   ],
+   "roof": "slate"
   }
  }
 }

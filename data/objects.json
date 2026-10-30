@@ -2005,7 +2005,7 @@
   "flax_plant": {
    "name": "Flax",
    "sprite": "flax_plant",
-   "depleted_sprite": "",
+   "depleted_sprite": "flax_picked",
    "blocks": false,
    "type": "gather",
    "skill": "foraging",
@@ -2029,7 +2029,7 @@
   "quest_giver_warden_pye": {
    "name": "Warden Pye",
    "sprite": "quest_giver",
-   "actor_sprite": "odric_hunter",
+   "actor_sprite": "warden_pye",
    "blocks": true,
    "type": "quest",
    "giver": "warden_pye",
@@ -2075,6 +2075,20 @@
    "giver": "smith_venn",
    "verb": "Talk-to",
    "note": "0.4.0 Night of 1000 Howls part 2"
+  },
+  "tanning_vat": {
+   "name": "Tanning vat",
+   "sprite": "tanning_rack",
+   "blocks": true,
+   "type": "station",
+   "station": "tanning",
+   "verb": "Tan at",
+   "note": "0.4.0 Crafting Supply: cowhide -> leather, wolf pelt -> tanned pelt. Quest hides do not tan."
+  },
+  "elijah_path": {
+   "name": "Path",
+   "type": "prop",
+   "blocks": false
   }
  }
 }
