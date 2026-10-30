@@ -3988,4 +3988,39 @@ func _frames_restyle() -> void:
 			await frames(40)
 			await _snap("restyle_mix_ai_player")
 			break
+	# restyle batch 05: canines (Greymaw dies on camera) and chibi NPCs
+	main.camera.zoom = Vector2(6, 6)
+	DayNight.debug_set_phase("day")
+	for k in ["wolf", "dire_wolf", "citizen", "town_guard", "goblin", "cinder_brute", "rat_mother", "greymaw"]:
+		var foe = null
+		var bd2 := 1 << 30
+		for e2 in (w.enemies.enemies if w.enemies else []):
+			if is_instance_valid(e2) and (k == "greymaw" or not e2.dead) and str(e2.def.get("sprite", e2.kind)) == k:
+				var dd: int = (e2.tile - p.tile).length_squared()
+				if dd < bd2:
+					bd2 = dd
+					foe = e2
+		if foe == null:
+			continue
+		foe.visible = true
+		p.place_at(w.find_free_tile_near(foe.tile + Vector2i(2, 0), 3))
+		w.set_focus(p.tile, true)
+		await frames(40)
+		await _snap("restyle_mob_%s" % k)
+		if k == "greymaw":
+			foe.call("_die", p, Tick.tick_count)
+			await frames(20)
+			await _snap("restyle_mob_greymaw_death_mid")
+			await frames(60)
+			await _snap("restyle_mob_greymaw_death_end")
+	var seen := {}
+	for ac in get_tree().get_nodes_in_group("actors"):
+		if ac is Actor and ac != p and ac.visible:
+			var sid: String = (ac as Actor).sprite_id
+			if sid in ["npc", "citizen", "priest", "villager", "town_guard", "goblin", "cinder_brute", "odric_hunter", "warden_pye", "quartermaster_hale"] and not seen.has(sid) and seen.size() < 6:
+				seen[sid] = true
+				p.place_at(w.find_free_tile_near((ac as Actor).tile + Vector2i(1, 0), 2))
+				w.set_focus(p.tile, true)
+				await frames(40)
+				await _snap("restyle_npc_%s" % sid)
 	main.camera.zoom = Vector2(3, 3)
