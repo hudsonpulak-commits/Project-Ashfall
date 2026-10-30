@@ -3876,6 +3876,9 @@ func _frames040() -> void:
 		if e.kind == "greymaw":
 			DireWolf.manage(e, Tick.tick_count, w, [p])
 			p.place_at(w.find_free_tile_near(e.home + Vector2i(-4, 1), 3))
+			e.visible = true
+			e.tile = w.find_free_tile_near(p.tile + Vector2i(1, -3), 2)
+			e._update_pos()
 			w.set_focus(p.tile, true)
 			await frames(60)
 			await _snap("040_greymaw")
