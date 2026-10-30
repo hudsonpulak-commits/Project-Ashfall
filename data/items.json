@@ -106,14 +106,14 @@
    "value": 9,
    "stackable": false,
    "category": "food",
-   "heals": 5
+   "heals": 7
   },
   "cooked_eel": {
    "name": "Cooked fen eel",
    "value": 24,
    "stackable": false,
    "category": "food",
-   "heals": 14
+   "heals": 18
   },
   "charred_fish": {
    "name": "Charred fish",
@@ -915,7 +915,7 @@
    "value": 4,
    "stackable": false,
    "category": "food",
-   "heals": 4
+   "heals": 5
   },
   "burnt_meat": {
    "name": "Burnt meat",
@@ -1342,7 +1342,7 @@
    "value": 5,
    "stackable": false,
    "category": "food",
-   "heals": 4
+   "heals": 6
   },
   "wolf_pelt": {
    "name": "Wolf pelt",
@@ -1370,7 +1370,7 @@
    "value": 9,
    "stackable": false,
    "category": "food",
-   "heals": 6,
+   "heals": 10,
    "note": "0.3.1 hearth: flour -> bread (Cooking 3)"
   },
   "burnt_bread": {
@@ -1391,7 +1391,7 @@
    "value": 8,
    "stackable": false,
    "category": "food",
-   "heals": 8,
+   "heals": 11,
    "note": "0.3.1 hearth: Cooking 5"
   },
   "cowhide": {

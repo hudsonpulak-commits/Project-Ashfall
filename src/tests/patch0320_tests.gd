@@ -10,9 +10,9 @@ static func check(cond: bool, what: String) -> void:
 
 static func run(main, world: World, p: Player) -> void:
 	print("  -- 0.3.20 villages, lore, scene life")
-	check(str(ProjectSettings.get_setting("application/config/version")) in ["0.3.20", "0.4.0"], "version is 0.3.20 or later (0.4.0)")
+	check(str(ProjectSettings.get_setting("application/config/version")) in ["0.3.20", "0.4.0", "0.4.1"], "version is 0.3.20 or later (0.4.0)")
 	var preset := FileAccess.get_file_as_string("res://export_presets.cfg")
-	check((preset.contains("version/code=37") or preset.contains("version/code=38")), "Android versionCode is 37 or later")
+	check((preset.contains("version/code=37") or preset.contains("version/code=38") or preset.contains("version/code=39")), "Android versionCode is 37 or later")
 	_villages(world)
 	_quest_and_save(p)
 	_story(world)

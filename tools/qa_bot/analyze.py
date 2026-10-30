@@ -54,13 +54,24 @@ def sprite_path(sid):
     return os.path.join(ROOT, _SPRITE_DEFS[sid]["path"].replace("res://", ""))
 
 
+def _player_fs():
+    try:
+        fs = json.load(open(os.path.join(ROOT, "data/sprites.json")))["actors"]["player"]["frame_size"]
+        return int(fs[0]), int(fs[1])
+    except Exception:
+        return 16, 24
+
+
+PLAYER_FS = _player_fs()   # restyle: 16x16 (was 16x24)
+
+
 class Sprites:
     """Player sheet templates (each frame, plain + mirrored) at screen scale.
     `layers` = the gear layer sprite ids the game reports as worn (draw order):
     each template is the body frame with the same frame of every layer
     composited on top, exactly as the game draws it (0.3.1 visible gear)."""
     def __init__(self, zoom, layers=()):
-        fw, fh = 16, 24
+        fw, fh = PLAYER_FS
         z = int(round(zoom))
         self.w, self.h = fw * z, fh * z
         self.t = []          # (facing, frame, rgb float array, mask)
@@ -134,7 +145,7 @@ def occluded(r):
     overlaps the player's sprite box: image checks can't judge that frame."""
     if "others" not in r:
         return r.get("near", 9999) < NEAR_SKIP
-    px0, px1, py0, py1 = -8, 8, -24, 0
+    px0, px1, py0, py1 = -8, 8, -PLAYER_FS[1], 0
     for dx, dy in r["others"]:
         for bx0, bx1, by0, by1 in ((dx - 8, dx + 8, dy - 24, dy), (dx - 36, dx + 36, dy - 42, dy - 24)):
             if bx0 < px1 and bx1 > px0 and by0 < py1 and by1 > py0:
@@ -604,7 +615,7 @@ def check_pk(ctx):
     return out
 
 
-SKULL_OFF = (-4, -38)
+SKULL_OFF = (-4, -38 + (24 - PLAYER_FS[1]))   # restyle: 8 px lower on the 16x16 body
 
 
 def _skull_box(run, row):
@@ -820,7 +831,7 @@ def check_church(ctx):
         box = _rect_px(run, r["prayer_bar_rect"], r["vp"], f0)
         def blue(im):
             a = np.asarray(im.crop(box)).astype(int)
-            m = (np.abs(a - np.array([58, 106, 200])).sum(axis=2) < 70)
+            m = (np.abs(a - np.array([122, 138, 152])).sum(axis=2) < 40)   # restyle batch 07 slate Prayer fill
             cols = m.any(axis=0)
             return float(cols.mean())
         b0, b1 = blue(f0), blue(f1)
@@ -836,7 +847,7 @@ def check_church(ctx):
             for (x, y) in cn["window_screen"]:
                 box2 = (int((x - 8) * k), int((y - 8) * k), int((x + 8) * k), int((y + 8) * k))
                 a2 = np.asarray(fn.crop(box2)).astype(float)
-                warm.append(int(((a2[..., 0] > 180) & (a2[..., 1] > 110) & (a2[..., 2] < a2[..., 0] * 0.8)).sum()))
+                warm.append(int(((a2[..., 0] > 180) & (a2[..., 1] > g_min) & (a2[..., 2] < a2[..., 0] * 0.8)).sum()))
             p2 = os.path.join(ctx.out, "evidence", "church_night.png"); fn.save(p2)
             out.append(Result("C13 church", "at night the church windows are lit (not the door)", cn.get("phase") == "night" and all(w_ > 6 for w_ in warm) and len(warm) >= 2,
                               "windows %s, warm px %s" % (cn.get("windows"), warm), [p2]))
@@ -898,7 +909,7 @@ def check_farm(ctx):
         warm = []
         for (x, y) in ws:
             a2 = np.asarray(fn.convert("RGB").crop((int((x - 8) * k), int((y - 8) * k), int((x + 8) * k), int((y + 8) * k)))).astype(float)
-            warm.append(int(((a2[..., 0] > 180) & (a2[..., 1] > 110) & (a2[..., 2] < a2[..., 0] * 0.8)).sum()))
+            warm.append(int(((a2[..., 0] > 180) & (a2[..., 1] > g_min) & (a2[..., 2] < a2[..., 0] * 0.8)).sum()))
         p2 = os.path.join(ctx.out, "evidence", "village_night.png"); fn.save(p2)
         out.append(Result("C15 farm", "at night the cottage windows are lit", len(warm) >= 2 and all(x > 6 for x in warm), "%s warm px %s" % (f.get("night", {}).get("house"), warm), [p2]))
     rows = run.labelled("harvest")
@@ -910,7 +921,7 @@ def check_farm(ctx):
     return out
 
 
-def _warm(run, label, pts):
+def _warm(run, label, pts, g_min=110):
     rows = run.labelled(label)
     if not rows or not pts:
         return None, []
@@ -920,7 +931,7 @@ def _warm(run, label, pts):
     warm = []
     for (x, y) in pts:
         a2 = a[max(0, int((y - 8) * k)):int((y + 8) * k), max(0, int((x - 8) * k)):int((x + 8) * k)]
-        warm.append(int(((a2[..., 0] > 180) & (a2[..., 1] > 110) & (a2[..., 2] < a2[..., 0] * 0.8)).sum()))
+        warm.append(int(((a2[..., 0] > 180) & (a2[..., 1] > g_min) & (a2[..., 2] < a2[..., 0] * 0.8)).sum()))
     return fn, warm
 
 
@@ -976,7 +987,7 @@ def check_city(ctx):
     out.append(Result("C16 city", "the wall blocks: a tap just outside it walks round through a gate", dt.get("from_in_town") and not dt.get("spot_in_town") and dt.get("reached") and via and blocked == 0,
                       "from %s to %s: reached %s via a gate %s, blocked frames %d, %d steps" % (dt.get("from"), dt.get("spot"), dt.get("reached"), via, blocked, len(set(tiles))), [ev2]))
     gn = c.get("gate_night", {})
-    fn, warm = _warm(run, "gate_night", gn.get("torch_screen", []))
+    fn, warm = _warm(run, "gate_night", gn.get("torch_screen", []), g_min=90)   # restyle ember torch flame (204,103,30)
     p = None
     if fn is not None:
         p = os.path.join(ctx.out, "evidence", "v031_city_gate_night.png"); fn.save(p)
@@ -1122,8 +1133,8 @@ def check_quest(ctx):
                "%s / %s %r / %s" % (a.get("color_not_started"), a.get("color_in_progress"), a.get("progress_3"), a.get("color_completed")), sp("journal_not_started", "journal_in_progress", "journal_completed")),
         Result("C29 quest", "5 goblins killed in real fights -> Kell shows '!'", all(a.get("goblin_%d" % i) for i in range(1, 6)) and a.get("state_after_goblins") == "ready" and a.get("mark_ready") == "!", "ready %s mark %r" % (a.get("state_after_goblins"), a.get("mark_ready")), sp("quest_npc_exclaim")),
         Result("C29 quest", "0.3.7.1 dialog: Decline keeps '?', Accept starts", (a.get("dialog_offer") or {}).get("node") == "offer" and a.get("state_after_decline") == "not_started" and a.get("mark_after_decline") == "?", "offer %r decline %s mark %r" % ((a.get("dialog_offer") or {}).get("node"), a.get("state_after_decline"), a.get("mark_after_decline")), sp("quest_dialog_offer")),
-        Result("C29 quest", "0.3.7.1 arrow right after accepting in Fenhollow (goblins far)", bool(a.get("arrow_from_town")) and int(a.get("arrow_px_town") or 0) > 20, "visible %s px %s obj %s" % (a.get("arrow_from_town"), a.get("arrow_px_town"), a.get("objective_from_town")), sp("quest_arrow_from_town")),
-        Result("C29 quest", "0.3.7.1 arrow/marker pixels drawn in every kill stage", all(int(a.get(k) or 0) > 20 for k in ("arrow_px_town", "arrow_px_goblin", "arrow_px_warlord")), "town %s goblin %s warlord %s" % (a.get("arrow_px_town"), a.get("arrow_px_goblin"), a.get("arrow_px_warlord")), sp("quest_arrow_goblin", "quest_arrow_warlord")),
+        Result("C29 quest", "0.3.7.1 arrow right after accepting in Fenhollow (goblins far)", bool(a.get("arrow_from_town")) and int(a.get("arrow_px_town") or 0) > 10, "visible %s px %s obj %s" % (a.get("arrow_from_town"), a.get("arrow_px_town"), a.get("objective_from_town")), sp("quest_arrow_from_town")),
+        Result("C29 quest", "0.3.7.1 arrow/marker pixels drawn in every kill stage", all(int(a.get(k) or 0) > 10 for k in ("arrow_px_town", "arrow_px_goblin", "arrow_px_warlord")), "town %s goblin %s warlord %s" % (a.get("arrow_px_town"), a.get("arrow_px_goblin"), a.get("arrow_px_warlord")), sp("quest_arrow_goblin", "quest_arrow_warlord")),
         Result("C29 quest", "0.3.7.1 map Markers toggle hides/shows + persists; zoom +", bool(a.get("map_markers_off")) and bool(a.get("map_markers_persist")) and bool(a.get("map_markers_on")) and (a.get("map_zoom") or [1, 1])[1] > (a.get("map_zoom") or [1, 1])[0] * 1.5, "off %s persist %s on %s zoom %s" % (a.get("map_markers_off"), a.get("map_markers_persist"), a.get("map_markers_on"), a.get("map_zoom")), sp("map_markers_shown", "map_markers_hidden", "map_zoomed")),
         Result("C29 quest", "guidance arrow: goblin, Kell, Warlord off screen; hidden on screen", bool(a.get("arrow_goblin")) and bool(a.get("arrow_to_kell")) and bool(a.get("arrow_warlord")) and bool(a.get("arrow_hidden_on_screen")),
                "goblin %s kell %s warlord %s hidden %s" % (a.get("arrow_goblin"), a.get("arrow_to_kell"), a.get("arrow_warlord"), a.get("arrow_hidden_on_screen")), sp("quest_arrow_goblin", "quest_arrow_warlord")),

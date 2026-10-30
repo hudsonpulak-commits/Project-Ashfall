@@ -356,6 +356,10 @@ func _run() -> void:
 			await _frames0320()
 		"frames040":
 			await _frames040()
+		"framesrestyle":
+			await _frames_restyle()
+		"gfxaudit":
+			await _gfx_audit()
 		_:
 			push_error("unknown QA scenario " + scenario)
 			await _finish(false)
@@ -3897,3 +3901,422 @@ func _frames040() -> void:
 		await frames(40)
 		await _snap("040_elijah_tomb_night")
 		DayNight.debug_set_phase("day")
+
+
+
+## restyle: player tiers, attack + bow poses, every town and village by day and night.
+func _frames_restyle() -> void:
+	var p: Player = main.player
+	var w: World = main.world
+	var g = w.gen
+	DayNight.debug_set_phase("day")
+	var sets := {
+		"t1_bronze_plate": ["bronze_cap", "bronze_scale_vest", "bronze_greaves", "bronze_sword"],
+		"t2_iron_chain": ["iron_chain_coif", "iron_chain_hauberk", "iron_chain_legs", "iron_chain_kite", "iron_sword"],
+		"t3_steel_plate": ["steel_helm", "steel_brigandine", "steel_legplates", "steel_heater_shield", "steel_sword"],
+		"t4_dusk_plate": ["dusk_helm", "dusk_cuirass", "dusk_tassets", "dusk_tower_shield", "dusk_sword"],
+		"ranger_direpelt": ["direpelt_coif", "direpelt_body", "direpelt_chaps", "alder_longbow"],
+	}
+	for sk in ["attack", "strength", "defence", "archery", "ranged"]:
+		p.skills.set_level(sk, 60)
+	var spot := w.find_free_tile_near(g.town_spawn("highfen") + Vector2i(2, 2), 6)
+	main.camera.zoom = Vector2(6, 6)
+	for nm in sets.keys():
+		for sl in ["head", "body", "legs", "shield", "weapon"]:
+			p.equipment.erase(sl)
+		p.inventory.clear()
+		for id in sets[nm]:
+			p.inventory.add(id)
+		for k in sets[nm].size():
+			p.equip_slot(0)
+		p.place_at(spot)
+		w.set_focus(p.tile, true)
+		for d in ["side", "down", "up"]:
+			p.facing.dir = d
+			await frames(20)
+			await _snap("restyle_player_%s_%s" % [nm, d])
+		if nm == "t4_dusk_plate" or nm == "t2_iron_chain":
+			for d in ["side", "down"]:
+				p.facing.dir = d
+				p.start_pose("attack")
+				await frames(9)
+				await _snap("restyle_attack_%s_%s" % [nm, d])
+				await frames(40)
+		if nm == "ranger_direpelt":
+			for d in ["side", "down"]:
+				p.facing.dir = d
+				p.start_pose("shoot")
+				await frames(14)
+				await _snap("restyle_bowshot_%s" % d)
+				await frames(40)
+	main.camera.zoom = Vector2(3, 3)
+	p.facing.dir = "down"
+	for t in ["highfen", "fenhollow", "cinderholt", "saltmere", "millbrook", "barrowby", "oxley"]:
+		var c: Vector2i = g.town_center(t)
+		p.place_at(w.find_free_tile_near(c, 6))
+		w.set_focus(p.tile, true)
+		DayNight.debug_set_phase("day")
+		await frames(90)
+		await _snap("restyle_town_%s_day" % t)
+		DayNight.debug_set_phase("night")
+		await frames(50)
+		await _snap("restyle_town_%s_night" % t)
+	# r5 thin walls: corner close-ups (45-degree joins, no square gaps)
+	DayNight.debug_set_phase("day")
+	for t in ["highfen", "cinderholt", "fenhollow", "barrowby", "saltmere"]:
+		var c: Vector2i = g.town_center(t)
+		for corner: Vector2i in [Vector2i(1, -1), Vector2i(-1, 1)]:
+			var best := Vector2i(1 << 29, 0)
+			var bs := -999999
+			for wp in g._wall_keys.keys():
+				var d: Vector2i = wp - c
+				if absi(d.x) > 70 or absi(d.y) > 70:
+					continue
+				var own := true  # only this town's walls (barrowby_sw used to pick Highfen's)
+				for o in ["highfen", "cinderholt", "fenhollow", "barrowby", "saltmere"]:
+					if o != t and (wp - g.town_center(o)).length_squared() < d.length_squared():
+						own = false
+				if not own:
+					continue
+				var sc: int = d.x * corner.x + d.y * corner.y
+				if sc > bs:
+					bs = sc
+					best = wp
+			if bs == -999999:
+				continue
+			p.place_at(w.find_free_tile_near(best - corner * 2, 4))
+			w.set_focus(p.tile, true)
+			await frames(60)
+			await _snap("restyle_wall_%s_%s" % [t, "ne" if corner.x > 0 else "sw"])
+	# moat shore (no town ships a moat since 0.3.11b): a synthetic 2-wide moat ring with a
+	# bridge, stamped on unvisited open ground, drawn by the live shore pass
+	var mo := Vector2i(1 << 29, 0)
+	var cands: Array = []
+	for cy in range(-300, 301, 40):
+		for cx in range(-300, 401, 40):
+			cands.append(Vector2i(cx, cy))
+	for cand in cands:
+		if mo.x != 1 << 29:
+			break
+		var okc := true
+		for yy in range(-8, 9):
+			for xx in range(-10, 11):
+				var q: Vector2i = cand + Vector2i(xx, yy)
+				var tn: String = WorldGen.TILE_NAMES[g.tile_at(q.x, q.y)]
+				if tn.contains("water") or tn.contains("cliff") or tn.contains("moat") or tn.contains("wall") or tn.contains("tree") or tn.contains("rock") or g.tile_at(q.x, q.y) == WorldGen.TileType.WATER or g._town_objects.has(q) or g.in_town(q):
+					okc = false
+		if okc:
+			mo = cand
+	print("QA moat site ", mo)
+	if mo.x != 1 << 29:
+		for yy in range(-6, 7):
+			for xx in range(-8, 9):
+				var ring: bool = (absi(xx) >= 5 and absi(xx) <= 6 and absi(yy) <= 4) or (absi(yy) >= 3 and absi(yy) <= 4 and absi(xx) <= 6)
+				if ring:
+					g._town_tiles[mo + Vector2i(xx, yy)] = WorldGen.TileType.MOAT
+		g._town_tiles[mo + Vector2i(0, 3)] = WorldGen.TileType.BRIDGE
+		g._town_tiles[mo + Vector2i(0, 4)] = WorldGen.TileType.BRIDGE
+		p.place_at(mo + Vector2i(0, 6))
+		w.set_focus(p.tile, true)
+		await frames(60)
+		await _snap("restyle_moat_shore")
+	# restyle batch 04: wilderness (designer's preview spots, world tile coords)
+	var wild := {"shore_tropic": Vector2i(288, 242), "scorch_dead": Vector2i(102, -268), "fen_marsh": Vector2i(402, -46), "boreal_rocky": Vector2i(-42, -178), "meadow_roads": Vector2i(270, -34)}
+	for wn in wild:
+		p.place_at(w.find_free_tile_near(wild[wn], 8))
+		w.set_focus(p.tile, true)
+		DayNight.debug_set_phase("day")
+		await frames(90)
+		await _snap("restyle_wild_%s_day" % wn)
+		DayNight.debug_set_phase("night")
+		await frames(50)
+		await _snap("restyle_wild_%s_night" % wn)
+	DayNight.debug_set_phase("day")
+	# mixed sizes: the 16x16 player beside old 16x24 NPCs / keepers
+	main.camera.zoom = Vector2(5, 5)
+	for b in g.building_order:
+		var bd: Dictionary = g.buildings[b]
+		if str(bd.get("town", "")) == "highfen" and bd.has("stand") and not bool(bd.get("no_keeper", false)):
+			p.place_at(bd["stand"])
+			w.set_focus(p.tile, true)
+			await frames(60)
+			await _snap("restyle_mix_keeper_highfen")
+			break
+	for ac in get_tree().get_nodes_in_group("actors"):
+		if ac != p and ac is Actor and ac.visible:
+			p.place_at(w.find_free_tile_near((ac as Actor).tile + Vector2i(1, 0), 2))
+			w.set_focus(p.tile, true)
+			await frames(40)
+			await _snap("restyle_mix_ai_player")
+			break
+	# restyle batch 06: inventory with the new item icons (incl. guard_steel_bundle)
+	for it in ["guard_steel_bundle", "steel_bar", "iron_hatchet", "bronze_arrows", "copper_ore", "tin_ore", "iron_ore", "coal", "bronze_bar", "iron_bar", "logs", "raw_shrimp", "cooked_shrimp", "bread", "bones", "flax", "knife", "needle", "dusk_arrows", "greymaw_hide", "coins"]:
+		if GameData.items.has(it):
+			p.inventory.add(it, 5 if GameData.items[it].get("stackable", false) else 1)
+	main.hud.show_panel("pack")
+	await frames(20)
+	await _snap("restyle_inventory")
+	# restyle batch 07: UI frames (text centred on every tab / button / entry)
+	for pk in ["skills", "menu", "quests", "pack"]:
+		main.hud.show_panel(pk)
+		await frames(15)
+		await _snap("restyle_ui_%s" % pk)
+	main.hud.show_panel("")
+	main.hud.store_panel.shop = "general"
+	main.hud.show_panel("store")
+	main.hud.panel_anchor = main.player.tile
+	await frames(20)
+	main.hud.panel_anchor = main.player.tile
+	await _snap("restyle_ui_shop")
+	main.hud.show_panel("")
+	await frames(5)
+	# restyle batch 05: canines (Greymaw dies on camera) and chibi NPCs
+	main.camera.zoom = Vector2(6, 6)
+	DayNight.debug_set_phase("day")
+	for k in ["wolf", "dire_wolf", "citizen", "town_guard", "goblin", "cinder_brute", "rat_mother", "greymaw"]:
+		var foe = null
+		var bd2 := 1 << 30
+		for e2 in (w.enemies.enemies if w.enemies else []):
+			if is_instance_valid(e2) and (k == "greymaw" or not e2.dead) and str(e2.def.get("sprite", e2.kind)) == k:
+				var dd: int = (e2.tile - p.tile).length_squared()
+				if dd < bd2:
+					bd2 = dd
+					foe = e2
+		if foe == null:
+			continue
+		foe.visible = true
+		p.place_at(w.find_free_tile_near(foe.tile + Vector2i(2, 0), 3))
+		w.set_focus(p.tile, true)
+		await frames(40)
+		await _snap("restyle_mob_%s" % k)
+		if k == "wolf":
+			Events.splat.emit(foe, foe.tile, 4, "heal")
+			Events.splat.emit(p, p.tile, 2, "poison")
+			await frames(4)
+			await _snap("restyle_splat_heal_poison")
+		if k == "greymaw":
+			foe.call("_die", p, Tick.tick_count)
+			await frames(20)
+			await _snap("restyle_mob_greymaw_death_mid")
+			await frames(60)
+			await _snap("restyle_mob_greymaw_death_end")
+	var seen := {}
+	for ac in get_tree().get_nodes_in_group("actors"):
+		if ac is Actor and ac != p and ac.visible:
+			var sid: String = (ac as Actor).sprite_id
+			if sid in ["npc", "citizen", "priest", "villager", "town_guard", "goblin", "cinder_brute", "odric_hunter", "warden_pye", "quartermaster_hale"] and not seen.has(sid) and seen.size() < 6:
+				seen[sid] = true
+				p.place_at(w.find_free_tile_near((ac as Actor).tile + Vector2i(1, 0), 2))
+				w.set_focus(p.tile, true)
+				await frames(40)
+				await _snap("restyle_npc_%s" % sid)
+	main.camera.zoom = Vector2(3, 3)
+
+
+# ------------------------------------------------------------------ gfx audit --
+## gfx audit: snaps across towns/villages (centre, edges zoomed out, road ends and
+## junctions, actor in front of / behind signs, towers, trees, rocks), day and night,
+## each with a scene dump (visible cells + overlays, z-order checks) for
+## tools/qa_bot/gfx_audit.py.
+func _gfx_effz(n: Node) -> int:
+	var z := 0
+	var c: Node = n
+	while c != null and c is CanvasItem:
+		z += (c as CanvasItem).z_index
+		if not (c as CanvasItem).z_as_relative:
+			break
+		c = c.get_parent()
+	return z
+
+
+func _gfx_vis(n: CanvasItem) -> float:
+	var a := 1.0
+	var c: Node = n
+	while c != null and c is CanvasItem:
+		if not (c as CanvasItem).visible:
+			return 0.0
+		a *= (c as CanvasItem).modulate.a * (c as CanvasItem).self_modulate.a
+		c = c.get_parent()
+	return a
+
+
+var _gfx_img_cache: Dictionary = {}
+
+
+## opaque texels of a sprite inside a world rect (stride 2)
+func _gfx_opaque_px(sp: Sprite2D, wr: Rect2) -> int:
+	var tex: Texture2D = sp.texture
+	var key := tex.get_rid()
+	if not _gfx_img_cache.has(key):
+		_gfx_img_cache[key] = tex.get_image()
+	var img: Image = _gfx_img_cache[key]
+	if img == null:
+		return 99
+	var inv := (sp.get_global_transform()).affine_inverse()
+	var rr: Rect2 = sp.get_rect()
+	var n := 0
+	var y := wr.position.y
+	while y < wr.end.y:
+		var x := wr.position.x
+		while x < wr.end.x:
+			var l: Vector2 = inv * Vector2(x, y) - rr.position
+			if sp.flip_h:
+				l.x = rr.size.x - l.x
+			var src := Vector2i(int(l.x), int(l.y))
+			if src.x >= 0 and src.y >= 0 and src.x < img.get_width() and src.y < img.get_height() and img.get_pixelv(src).a > 0.5:
+				n += 1
+			x += 2.0
+		y += 2.0
+	return n
+
+
+func _gfx_dump(name: String, actors: Array) -> void:
+	var w: World = main.world
+	var g = w.gen
+	var vt: Transform2D = get_viewport().get_canvas_transform()
+	var vs: Vector2 = get_viewport().get_visible_rect().size
+	var inv := vt.affine_inverse()
+	var a0: Vector2 = inv * Vector2.ZERO
+	var a1: Vector2 = inv * vs
+	var tp: int = w.tile_px
+	var t0 := Vector2i(floori(a0.x / tp), floori(a0.y / tp))
+	var t1 := Vector2i(floori(a1.x / tp), floori(a1.y / tp))
+	var nm := func(q: Vector2i) -> String: return WorldGen.TILE_NAMES[g.tile_at(q.x, q.y)]
+	var cells := []
+	for y in range(t0.y, t1.y + 1):
+		for x in range(t0.x, t1.x + 1):
+			var q := Vector2i(x, y)
+			var ov := []
+			for c in w.overlay_cells(q, nm):
+				ov.append([c[0], c[1], c[2].x])
+			var o = g._town_objects.get(q, "")
+			cells.append([x, y, nm.call(q), ov, str(o), g.road_tiles.has(q)])
+	# z-order: props drawn after an actor whose foot is above (north of) the actor's foot
+	var props := []
+	for root in [w.entity_layer, main.world.buildings_view]:
+		for n in root.find_children("*", "Sprite2D", true, false):
+			props.append(n)
+	var viol := []
+	for ac in actors:
+		if ac == null or not is_instance_valid(ac):
+			continue
+		var af: Vector2 = (ac as Node2D).global_position
+		var body := Rect2(af + Vector2(-5, -22), Vector2(10, 20))
+		var az := _gfx_effz(ac)
+		for n in props:
+			var sp := n as Sprite2D
+			if sp == ac or ac.is_ancestor_of(sp) or sp.texture == null:
+				continue
+			if _gfx_vis(sp) < 0.15:
+				continue
+			var r: Rect2 = sp.get_global_transform() * sp.get_rect()
+			if not r.intersects(body):
+				continue
+			var pz := _gfx_effz(sp)
+			var foot: float = sp.global_position.y
+			var ysorted: bool = sp.get_parent() == w.entity_layer
+			if not ysorted:
+				foot = r.end.y
+			var after: bool = pz > az or (pz == az and ysorted and foot > af.y)
+			if after and foot < af.y - 2.0 and _gfx_opaque_px(sp, body.intersection(r)) >= 6:
+				viol.append({"actor": str(ac.name), "prop": str(sp.get_path()).get_file(), "tex": sp.texture.resource_path.get_file() if sp.texture.resource_path != "" else str(sp.texture), "prop_z": pz, "actor_z": az, "prop_foot": foot, "actor_foot": af.y, "rect": [r.position.x, r.position.y, r.size.x, r.size.y]})
+	var d := {"name": name, "xform": [vt.x.x, vt.y.y, vt.origin.x, vt.origin.y], "tile_px": tp, "t0": [t0.x, t0.y], "cells": cells, "zviol": viol, "phase": DayNight.phase_name() if DayNight.has_method("phase_name") else ""}
+	DirAccess.make_dir_recursive_absolute(out_dir + "/gfx")
+	var f := FileAccess.open("%s/gfx/%s.json" % [out_dir, name], FileAccess.WRITE)
+	f.store_string(JSON.stringify(d))
+	f.close()
+
+
+func _gfx_shot(name: String, at: Vector2i, zoom: float = 3.0) -> void:
+	var p: Player = main.player
+	var w: World = main.world
+	p.place_at(at)
+	main.camera.zoom = Vector2(zoom, zoom)
+	w.set_focus(p.tile, true)
+	await frames(45)
+	await _snap(name)
+	var acts: Array = [p]
+	for n in w.entity_layer.find_children("*", "Actor", true, false):
+		if n != p and (n as Node2D).is_visible_in_tree() and ((n as Node2D).global_position - p.global_position).length() < 200.0:
+			acts.append(n)
+	await _gfx_dump(name, acts)
+
+
+func _gfx_audit() -> void:
+	var p: Player = main.player
+	var w: World = main.world
+	var g = w.gen
+	var only := OS.get_environment("GFX_ONLY")
+	var ids: Array = g.town_order + g.village_order
+	for tid in ids:
+		if only != "" and not tid in only.split(","):
+			continue
+		var rect: Rect2i = g._town_rects[tid] if g._town_rects.has(tid) else g._village_rects.get(tid, Rect2i())
+		if rect.size == Vector2i.ZERO:
+			continue
+		DayNight.debug_set_phase("day")
+		var c := rect.get_center()
+		await _gfx_shot("%s_center_day" % tid, w.find_free_tile_near(c, 8))
+		# zoomed-out footprint views (town edge vs biome)
+		await _gfx_shot("%s_zoomout_day" % tid, w.find_free_tile_near(c, 8), 1.0)
+		for e in [["n", Vector2i(c.x, rect.position.y - 1)], ["s", Vector2i(c.x, rect.end.y)], ["w", Vector2i(rect.position.x - 1, c.y)], ["e", Vector2i(rect.end.x, c.y)]]:
+			await _gfx_shot("%s_edge_%s" % [tid, e[0]], w.find_free_tile_near(e[1], 6), 2.0)
+		# road ends / junctions inside the footprint (+4)
+		var rr := rect.grow(4)
+		var picks := []
+		var isroad := func(q: Vector2i) -> bool:
+			var tn: String = WorldGen.TILE_NAMES[g.tile_at(q.x, q.y)]
+			return tn.begins_with("road") or tn == "path" or tn == "cobble"
+		for y in range(rr.position.y, rr.end.y):
+			for x in range(rr.position.x, rr.end.x):
+				var q := Vector2i(x, y)
+				if not isroad.call(q):
+					continue
+				var n := 0
+				for d in [Vector2i(0, -1), Vector2i(1, 0), Vector2i(0, 1), Vector2i(-1, 0)]:
+					if isroad.call(q + d):
+						n += 1
+				if n == 1 or n == 2 and (isroad.call(q + Vector2i(1, 0)) != isroad.call(q + Vector2i(-1, 0))):
+					picks.append(q)
+		var taken := []
+		for q in picks:
+			var far := true
+			for t in taken:
+				if (q - t).length() < 14:
+					far = false
+			if far:
+				taken.append(q)
+			if taken.size() >= 4:
+				break
+		for i in taken.size():
+			await _gfx_shot("%s_road_%d" % [tid, i], w.find_free_tile_near(taken[i], 3))
+		# signs: in front of (south) and behind (north of the sign row)
+		var ns := 0
+		for bid in g.building_order:
+			var b: Dictionary = g.buildings[bid]
+			if str(b.get("town", "")) != tid or not b.has("sign") or ns >= 2:
+				continue
+			ns += 1
+			var sg: Vector2i = b["sign"]
+			await _gfx_shot("%s_sign_%s_front" % [tid, bid], w.find_free_tile_near(sg + Vector2i(0, 1), 2))
+		# towers: south and north side
+		var nt := 0
+		for q in g.wall_tower_cells():
+			if not rect.grow(2).has_point(q) or nt >= 2:
+				continue
+			nt += 1
+			await _gfx_shot("%s_tower%d_s" % [tid, nt], w.find_free_tile_near(q + Vector2i(0, 2), 3))
+			await _gfx_shot("%s_tower%d_n" % [tid, nt], w.find_free_tile_near(q + Vector2i(0, -2), 3))
+		# blocking props (trees / rocks / stalls / fences) near the centre: actor just south
+		var no := 0
+		for q in g._town_objects.keys():
+			if no >= 3 or not rect.has_point(q):
+				continue
+			if (q.x * 31 + q.y * 17) % 23 != 0:
+				continue
+			no += 1
+			await _gfx_shot("%s_prop_%s_%d" % [tid, str(g._town_objects[q]), no], w.find_free_tile_near(q + Vector2i(0, 1), 2))
+		DayNight.debug_set_phase("night")
+		await _gfx_shot("%s_center_night" % tid, w.find_free_tile_near(c, 8))
+	DayNight.debug_set_phase("day")
+	main.camera.zoom = Vector2(3, 3)

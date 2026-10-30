@@ -104,7 +104,7 @@ func _ready() -> void:
 	if Overhead.enemy_shows(def):
 		_lvl_label = Overhead.make(Overhead.level_color(level()))
 		_lvl_label.text = "%s (%d)" % [display_name(), level()] if not def.has("follow_quest") else display_name()
-		Overhead.place(_lvl_label, fs.y * sc)
+		Overhead.place(_lvl_label, (fs.y - Actor.head_drop(sid)) * sc)
 		Overhead.attach(_lvl_label, self)
 	_update_pos()
 
@@ -171,6 +171,7 @@ func _tick_body(t: int, world, actors: Array) -> void:
 		return
 	if hp < max_hp and t % Combat.REGEN_TICKS == 0:
 		hp += 1
+		Events.splat.emit(self, tile, 1, "heal")
 		queue_redraw()
 	# 0.3.1 guards walk their patrol loop (home follows, so the leash moves with them)
 	if not patrol.is_empty():
@@ -514,7 +515,8 @@ func _update_pos() -> void:
 func _draw() -> void:
 	if dead or hp >= max_hp:
 		return
-	var h := float(GameData.frame_size("actors", def.get("sprite", kind)).y) * float(def.get("scale", 1.0))
+	var _hs: String = str(def.get("sprite", kind))
+	var h := float(GameData.frame_size("actors", _hs).y - Actor.head_drop(_hs)) * float(def.get("scale", 1.0))
 	var w := 12.0
 	var top := -h - 3.0
 	draw_rect(Rect2(-w / 2.0, top, w, 2), Color("#a8281e"))

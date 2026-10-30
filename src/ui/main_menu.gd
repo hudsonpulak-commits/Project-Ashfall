@@ -185,6 +185,7 @@ static func title_label(text: String, size: int) -> Label:
 	var t := Label.new()
 	t.text = text
 	t.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	t.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	t.add_theme_font_size_override("font_size", size)
 	t.add_theme_color_override("font_color", UIStyle.ACCENT)
 	t.add_theme_color_override("font_outline_color", Color("#2a1a08"))
@@ -213,6 +214,7 @@ func _build() -> void:
 	var ver := Label.new()
 	ver.text = "v%s" % ProjectSettings.get_setting("application/config/version", "")
 	ver.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	ver.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	ver.add_theme_color_override("font_color", UIStyle.TEXT_DIM)
 	ver.add_theme_constant_override("outline_size", 3)
 	ver.add_theme_color_override("font_outline_color", Color(0, 0, 0, 0.9))
@@ -242,7 +244,7 @@ func _build() -> void:
 	message = Label.new()
 	message.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	message.custom_minimum_size = Vector2(230, 0)
-	message.add_theme_font_size_override("font_size", 9)
+	message.add_theme_font_size_override("font_size", 10)
 	message.visible = false
 	stack.add_child(message)
 	# main page
@@ -301,6 +303,7 @@ func _build() -> void:
 	var sl := Label.new()
 	sl.text = "Settings\n\nMusic volume"
 	sl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	sl.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	st.add_child(sl)
 	var vol := HSlider.new()       # 0.3.4 music volume (saved in user://settings.cfg)
 	vol.name = "MusicVolume"
@@ -314,6 +317,7 @@ func _build() -> void:
 	var sl2 := Label.new()   # 0.3.13 sound-effects volume (own SFX bus)
 	sl2.text = "Sound effects volume"
 	sl2.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	sl2.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	st.add_child(sl2)
 	var svol := HSlider.new()
 	svol.name = "SfxVolume"
@@ -373,6 +377,7 @@ func _open_slots(mode: String) -> void:
 	var head := Label.new()
 	head.text = "Load Game" if mode == "load" else "New Game: choose a slot"
 	head.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	head.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	head.add_theme_color_override("font_color", UIStyle.ACCENT)
 	slot_box.add_child(head)
 	for n in range(1, SaveSystem.SLOTS + 1):
@@ -380,7 +385,7 @@ func _open_slots(mode: String) -> void:
 		var b := Button.new()
 		b.custom_minimum_size = Vector2(230, 44)
 		b.alignment = HORIZONTAL_ALIGNMENT_LEFT
-		b.add_theme_font_size_override("font_size", 9)
+		b.add_theme_font_size_override("font_size", 10)
 		b.text = slot_text(info)
 		b.name = "Slot%d" % n
 		buttons["Slot%d" % n] = b

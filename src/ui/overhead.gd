@@ -36,6 +36,7 @@ static func make(font_color := Color(1, 1, 0.75)) -> Label:
 	l.add_theme_color_override("font_outline_color", Color.BLACK)
 	l.add_theme_constant_override("outline_size", 3)
 	l.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	l.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	l.vertical_alignment = VERTICAL_ALIGNMENT_BOTTOM
 	l.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	l.size = Vector2(200, FONT_SIZE + 4)

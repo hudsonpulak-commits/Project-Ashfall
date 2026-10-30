@@ -27,6 +27,7 @@ func _init() -> void:
 	label = Label.new()
 	label.text = "Loading..."
 	label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	label.add_theme_color_override("font_color", UIStyle.TEXT)
 	label.add_theme_constant_override("outline_size", 3)
 	label.add_theme_color_override("font_outline_color", Color(0, 0, 0, 0.9))

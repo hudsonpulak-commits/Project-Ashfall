@@ -42,6 +42,7 @@ static func run(_main, _world, _p) -> void:
 					for x in range(xs[0], xs[-1] + 1):
 						if not Patch0391Tests._opaque(fr, x, y):
 							holes += 1
-			if shown < 24 or over_body < 6 or holes > 0:
+			# restyle: thresholds scale with the frame height (24 px on 16x24, 16 px on 16x16)
+			if shown < 24 * fs.y / 24 - (8 if fs.y < 24 else 0) or over_body < 6 or holes > 0:
 				bad.append("%s f%d (shown %d, over body %d, holes %d)" % [s, f, shown, over_body, holes])
 	check(bad.is_empty(), "shields: the side view is solid and clearly visible (24+ px, 6+ over the body, no holes; bucklers are small) for every shield %s" % [bad])

@@ -25,7 +25,12 @@ var tick: int = 0
 var ground_layer: Node2D
 var entity_layer: Node2D             # y-sorted: objects + actors
 var _tileset: TileSet
-var _overlay_src: Dictionary = {}    # "autotile/<id>" / "transitions/<id>" -> [source id, cols]
+## batch_08_polish mood: the ground shader used to square every base tile (much darker
+## ground than the art). With that fixed, the ground and its transition layers are dimmed
+## together here (sprites, walls, roofs keep their painted values) to keep the old mood.
+const GROUND_MOOD := Color(0.74, 0.73, 0.70)
+var _overlay_src: Dictionary = {}
+var _trans_var: Dictionary = {}       # transition id -> [[source, cols] v1, v2] (batch_08 wobble variants)    # "autotile/<id>" / "transitions/<id>" -> [source id, cols]
 var _build_queue: Array = []
 var _focus_chunk := Vector2i(999999, 999999)
 var _animated: Array = []            # [Sprite2D, frames, fps]
@@ -70,6 +75,7 @@ func setup(world_seed: int) -> void:
 	buildings_view.name = "Buildings"
 	add_child(buildings_view)
 	buildings_view.setup(self)
+	_build_wall_towers()
 	ambient = AMBIENT.new()
 	ambient.name = "AmbientLife"
 	add_child(ambient)
@@ -84,10 +90,15 @@ func _build_tileset() -> TileSet:
 		var tex := GameData.texture("tiles", WorldGen.TILE_NAMES[i])
 		var src := TileSetAtlasSource.new()
 		src.texture = tex
-		src.texture_region_size = Vector2i(tile_px, tile_px)
+		# restyle (batch 02): 16x24 wall fronts / gates -- one tall tile whose
+		# top 8 px overhang the wall-top cell to the north (bottom anchored)
+		var tall := tex.get_height() > tile_px
+		src.texture_region_size = Vector2i(tile_px, tex.get_height() if tall else tile_px)
 		var cols := maxi(1, tex.get_width() / tile_px)
 		for v in cols:
 			src.create_tile(Vector2i(v, 0))
+			if tall:
+				src.get_tile_data(Vector2i(v, 0), 0).texture_origin = Vector2i(0, (tex.get_height() - tile_px) / 2)
 		ts.add_source(src, i)
 	# 0.3.9 autotile + transition overlay sheets (sources 100+ / 200+)
 	_overlay_src.clear()
@@ -113,7 +124,69 @@ func _build_tileset() -> TileSet:
 			ts.add_source(src, sid)
 			_overlay_src[cat + "/" + id] = [sid, cols]
 			sid += 1
+	# batch_08_polish: 2 extra wobble variants per transition sheet (sources 400+), same frame layout
+	_trans_var.clear()
+	var vid := 400
+	for id in GameData.sprites.get("transitions", {}).keys():
+		if not _overlay_src.has("transitions/" + str(id)):
+			continue
+		for v in [1, 2]:
+			var vp := "res://assets/sprites/transitions/variants/%s_v%d.png" % [id, v]
+			if not ResourceLoader.exists(vp):
+				continue
+			var vt: Texture2D = load(vp)
+			var vsrc := TileSetAtlasSource.new()
+			vsrc.texture = vt
+			vsrc.texture_region_size = Vector2i(tile_px, tile_px)
+			var vc := maxi(1, vt.get_width() / tile_px)
+			for r in maxi(1, vt.get_height() / tile_px):
+				for cx in vc:
+					vsrc.create_tile(Vector2i(cx, r))
+			ts.add_source(vsrc, vid)
+			_overlay_src["transitions/%s#%d" % [id, v]] = [vid, vc]
+			var tva: Array = _trans_var.get(str(id), [])
+			tva.append([vid, vc])
+			_trans_var[str(id)] = tva
+			vid += 1
+	# restyle r5: thin unified walls -- one 16x28 atlas per material (16 top + 12 face drop,
+	# drawn at the cell's top-left), frame picked by the 5x5 occupancy key via the shared LUT
+	_wall_src.clear()
+	var wid := 300
+	for mat in WALL_ATLAS_MATS:
+		var ap := "res://assets/sprites/tiles/walls_diag/%s_wall_atlas.png" % mat
+		if not ResourceLoader.exists(ap):
+			continue
+		var at: Texture2D = load(ap)
+		var asrc := TileSetAtlasSource.new()
+		asrc.texture = at
+		asrc.texture_region_size = Vector2i(tile_px, WALL_FRAME_H)
+		var acols := at.get_width() / tile_px
+		for r in at.get_height() / WALL_FRAME_H:
+			for cx in acols:
+				asrc.create_tile(Vector2i(cx, r))
+				asrc.get_tile_data(Vector2i(cx, r), 0).texture_origin = Vector2i(0, -(WALL_FRAME_H - tile_px) / 2)
+		ts.add_source(asrc, wid)
+		_wall_src[mat] = [wid, acols]
+		wid += 1
 	return ts
+
+
+## restyle r5 thin walls (batch_02 tiles/walls_diag, manifest r5).
+const WALL_ATLAS_MATS := ["palisade", "basalt", "capital", "stone", "sandstone"]
+const WALL_FRAME_H := 28
+var _wall_src: Dictionary = {}     # mat -> [source id, cols]
+static var _wall_lut: Dictionary = {}
+
+
+static func wall_lut() -> Dictionary:
+	if _wall_lut.is_empty():
+		var f := FileAccess.open("res://assets/sprites/tiles/walls_diag/wall_atlas_lut.json", FileAccess.READ)
+		if f != null:
+			var d = JSON.parse_string(f.get_as_text())
+			if d is Dictionary:
+				for k in d:
+					_wall_lut[int(k)] = int(d[k])
+	return _wall_lut
 
 
 ## 0.3.9 overlay cells for one tile: [[layer, source id, atlas coords], ...].
@@ -125,44 +198,111 @@ func _build_tileset() -> TileSet:
 const MOAT_CORNERS := [[0, 1, 5], [1, 2, 6], [2, 3, 7], [3, 0, 4]]
 
 
+const BOARDWALK_JOINS := ["boardwalk", "planks", "bridge"]
+const TRANS_ALIAS := {"ash_edge": "ash"}
+## restyle batch 04: organic water edges. Not land: water, moat, decks over water, out of world.
+const SHORE_NOT_LAND := ["water", "moat", "bridge", "boardwalk", "planks", ""]
+const SHORE_ALIAS := {"ash_edge": "ash", "road_dirt": "path"}
+
+
+## restyle batch 04: on a water cell, a bank frame from autotile/water_shore_<land> (same
+## edge/corner bit rule as the floor transitions, bits where a neighbour is LAND),
+## <land> = the most common land floor around it, else the generic water_shore. Layer 2.
+func _add_shore(out: Array, nb: Array) -> void:
+	var e := 0
+	var cnt := {}
+	for k in 8:
+		var n: String = str(nb[k])
+		if n in SHORE_NOT_LAND:
+			continue
+		if k < 4:
+			e |= 1 << k
+		var key: String = SHORE_ALIAS.get(n, n)
+		cnt[key] = int(cnt.get(key, 0)) + 1
+	if cnt.is_empty():
+		return
+	var c := 0
+	var land := func(k): return not (str(nb[k]) in SHORE_NOT_LAND)
+	if land.call(4) and not (e & 9): c |= 1
+	if land.call(5) and not (e & 3): c |= 2
+	if land.call(6) and not (e & 6): c |= 4
+	if land.call(7) and not (e & 12): c |= 8
+	var f := e | (c << 4)
+	if f == 0:
+		return
+	var best := ""
+	var bn := 0
+	for k2 in cnt:
+		if int(cnt[k2]) > bn or (int(cnt[k2]) == bn and str(k2) < best):
+			best = k2
+			bn = int(cnt[k2])
+	var s: Array = _overlay_src.get("autotile/water_shore_" + best, [])
+	if s.is_empty():
+		s = _overlay_src.get("autotile/water_shore", [])
+	if s.is_empty():
+		return
+	out.append([2, s[0], Vector2i(f % int(s[1]), f / int(s[1]))])
+
+
 func overlay_cells(p: Vector2i, nm: Callable) -> Array:
 	var out: Array = []
 	var here: String = nm.call(p)
 	var nb: Array = []
 	for d in [Vector2i(0, -1), Vector2i(1, 0), Vector2i(0, 1), Vector2i(-1, 0), Vector2i(-1, -1), Vector2i(1, -1), Vector2i(1, 1), Vector2i(-1, 1)]:
 		nb.append(nm.call(p + d))
-	var ov := Autotile.overlays_for(here, nb)
+	# restyle r5: thin wall frame on every wall cell and every cell next to one (gates draw their own sprite)
+	if gen != null and not here.begins_with("gate_"):
+		var wk: Array = gen.wall_key(p)
+		if not wk.is_empty() and _wall_src.has(wk[0]):
+			var fi: int = int(wall_lut().get(int(wk[1]), -1))
+			if fi >= 0:
+				var ws: Array = _wall_src[wk[0]]
+				out.append([5, ws[0], Vector2i(fi % int(ws[1]), fi / int(ws[1]))])
+	# restyle batch 04: ash_edge blends as ash (same art) -- the Scorch border is no longer a straight line
+	var nbt: Array = nb.map(func(n): return TRANS_ALIAS.get(n, n))
+	var ov := Autotile.overlays_for(TRANS_ALIAS.get(here, here), nbt)
+	var tv := int(gen.hash01(p.x, p.y, 13) * 3) if gen != null and not ov.is_empty() else 0
 	for i in ov.size():
 		var s: Array = _overlay_src.get("transitions/" + str(ov[i]), [])
+		if tv > 0:
+			var va: Array = _trans_var.get(ov[i], [])
+			if va.size() >= tv:
+				s = va[tv - 1]
 		if not s.is_empty():
-			var f := Autotile.transition_frame(ov[i], nb)
+			var f := Autotile.transition_frame(ov[i], nbt)
 			out.append([i, s[0], Vector2i(f % int(s[1]), f / int(s[1]))])
-	if Autotile.WALL_FAMILIES.has(here) and not Autotile.ART_WALLS.has(here):
+	if Autotile.WALL_FAMILIES.has(here) and not Autotile.ART_WALLS.has(here) and not (gen != null and gen.is_thin_wall_cell(p)):
 		var s: Array = _overlay_src.get("autotile/" + str(Autotile.WALL_FAMILIES[here]), [])
 		if not s.is_empty():
 			var f := Autotile.piece_at(p, func(q): var t: String = nm.call(q); return t == here or t in Autotile.WALL_JOIN_ALSO)
 			out.append([2, s[0], Vector2i(f, 0)])
+	elif here == "boardwalk":
+		# restyle (batch 02): boardwalk deck autotile by the N1|E2|S4|W8 mask
+		var sb: Array = _overlay_src.get("autotile/boardwalk16", [])
+		if not sb.is_empty():
+			var bm := 0
+			for k in 4:
+				if nb[k] in BOARDWALK_JOINS:
+					bm |= 1 << k
+			out.append([2, sb[0], Vector2i(bm, 0)])
+	elif here == "water" and nb[0] == "boardwalk":
+		_add_shore(out, nb)
+		# pilings under the deck edge, in the water cell south of a boardwalk
+		var sp: Array = _overlay_src.get("autotile/boardwalk_piling16", [])
+		if not sp.is_empty():
+			out.append([3, sp[0], Vector2i(0, 0)])
+	elif here == "water":
+		_add_shore(out, nb)
 	elif here == "moat":
+		# restyle: moats get the same organic shore pass as natural water (replaces the
+		# moat_border bank + inner-corner pieces); bridge joins stay on layer 3.
+		_add_shore(out, nb)
 		var s: Array = _overlay_src.get("autotile/moat_border", [])
 		if not s.is_empty():
-			var m := 0
-			for k in 4:
-				if nb[k] in ["moat", "bridge"]:
-					m |= 1 << k
-			out.append([2, s[0], Vector2i(m, 0)])
 			for k in 4:
 				if nb[k] == "bridge":
 					out.append([3, s[0], Vector2i(16 + k, 0)])
 					break
-		# 0.3.9.2 inner corners: both side neighbours are moat and the diagonal
-		# between them is land (not moat, bridge or water) -> layer 4, NE SE SW NW.
-		var cs: Array = _overlay_src.get("autotile/moat_border_corners", [])
-		if not cs.is_empty():
-			for i in 4:
-				var sides: Array = MOAT_CORNERS[i]
-				var dg: String = nb[sides[2]]
-				if nb[sides[0]] == "moat" and nb[sides[1]] == "moat" and not dg in ["moat", "bridge", "water", ""]:
-					out.append([4, cs[0], Vector2i(i, 0)])
 	if gen != null and (here in CLIFF_NAMES or (nb.size() >= 4 and (str(nb[0]) in CLIFF_NAMES or str(nb[1]) in CLIFF_NAMES or str(nb[2]) in CLIFF_NAMES or str(nb[3]) in CLIFF_NAMES))):
 		for pc in cliff_pieces(p, here, nb):
 			var cs2: Array = _overlay_src.get("autotile/" + cliff_palette(p) + str(pc[0]), [])
@@ -729,6 +869,7 @@ func _job_new(c: Vector2i) -> Dictionary:
 	root.visible = false
 	root.add_child(layer)
 	layer.material = _ground_material(c, ch)
+	layer.modulate = GROUND_MOOD
 	ground_layer.add_child(root)
 	return {"c": c, "ch": ch, "root": root, "layer": layer, "stage": 0, "row": 0, "names": {}, "ovl": [],
 		"base": Vector2i(c.x * CHUNK, c.y * CHUNK), "objs": [], "oi": 0, "ol": []}
@@ -764,6 +905,7 @@ func _job_stage(j: Dictionary, c: Vector2i, ch: ChunkData, base: Vector2i) -> vo
 					var wx := base.x + lx
 					var wy := base.y + ly
 					t = cliff_base_tile(Vector2i(wx, wy), t)
+					t = gen.wall_ground_tile(Vector2i(wx, wy), t)
 					var nv := variants_for(t)
 					var v := 0 if nv <= 1 else int(gen.hash01(wx, wy, 7) * nv) % nv
 					layer.set_cell(Vector2i(lx, ly), t, Vector2i(v, 0))
@@ -783,11 +925,13 @@ func _job_stage(j: Dictionary, c: Vector2i, ch: ChunkData, base: Vector2i) -> vo
 					j["stage"] = 2
 					j["row"] = 0
 					var ovl: Array = j["ovl"]
-					for i in 5:
+					for i in 6:
 						var l := TileMapLayer.new()
 						l.tile_set = _tileset
 						l.position = (j["layer"] as TileMapLayer).position
-						l.name = ["trans0", "trans1", "autotile", "joins", "corners"][i]
+						l.name = ["trans0", "trans1", "autotile", "joins", "corners", "walls"][i]
+						if i < 2:
+							l.modulate = GROUND_MOOD   # transition rims match the base tiles they blend
 						(j["root"] as Node2D).add_child(l)
 						ovl.append(l)
 			2:   # overlays, one row per step
@@ -1202,3 +1346,64 @@ func from_save(d: Dictionary, now_tick: int) -> void:
 		for o in ch.objects.values():
 			o.depleted_until = int(depleted.get(o.pos, 0))
 			_refresh_object_view(o)
+
+
+## restyle r7: wall towers are wall-atlas junction frames on thin-wall cells (y-sorted).
+## 48x96 frames painted by the wall heightfield painter; the frame stores only the pixels
+## that differ from the walls-only render for that exact 25-bit wall key.
+const TOWER_FW := 48
+const TOWER_FH := 96
+const TOWER_FOOT := 76                 # ground under the drum centre (cell top 56 + 8 + drop 12)
+const TOWER_CELL := Vector2(16, 56)    # wall cell top-left inside the frame
+const TOWER_NB := [Vector2i(0, -1), Vector2i(1, -1), Vector2i(1, 0), Vector2i(1, 1), Vector2i(0, 1), Vector2i(-1, 1), Vector2i(-1, 0), Vector2i(-1, -1)]
+static var _tower_lut: Dictionary = {}
+static var _tower_mask_lut: Dictionary = {}
+
+
+static func _load_int_lut(path: String, into: Dictionary) -> void:
+	var f := FileAccess.open(path, FileAccess.READ)
+	if f == null:
+		return
+	var d = JSON.parse_string(f.get_as_text())
+	if d is Dictionary:
+		for k in d:
+			into[int(k)] = int(d[k])
+
+
+## Frame index for a tower on wall cell key `key` (exact key, then 8-neighbour mask).
+static func tower_frame(key: int) -> int:
+	if _tower_lut.is_empty():
+		_load_int_lut("res://assets/sprites/tiles/walls_diag/tower_atlas_lut.json", _tower_lut)
+		_load_int_lut("res://assets/sprites/tiles/walls_diag/tower_mask_lut.json", _tower_mask_lut)
+	if _tower_lut.has(key):
+		return int(_tower_lut[key])
+	var m := 0
+	for i in 8:
+		var d2: Vector2i = TOWER_NB[i]
+		if key & (1 << ((d2.y + 2) * 5 + d2.x + 2)):
+			m |= 1 << i
+	return int(_tower_mask_lut.get(m, -1))
+
+
+func _build_wall_towers() -> void:
+	for p in gen.wall_tower_cells():
+		var wk: Array = gen.wall_key(p)
+		if wk.is_empty():
+			continue
+		var fi := tower_frame(int(wk[1]))
+		if fi < 0:
+			continue
+		var tex: Texture2D = load("res://assets/sprites/tiles/walls_diag/%s_tower_atlas.png" % str(wk[0]))
+		if tex == null:
+			continue
+		var at := AtlasTexture.new()
+		at.atlas = tex
+		var cols := tex.get_width() / TOWER_FW
+		at.region = Rect2((fi % cols) * TOWER_FW, (fi / cols) * TOWER_FH, TOWER_FW, TOWER_FH)
+		var s := Sprite2D.new()
+		s.name = "WallTower_%d_%d" % [p.x, p.y]
+		s.centered = false
+		s.texture = at
+		s.position = Vector2(p * tile_px) - TOWER_CELL + Vector2(0, TOWER_FOOT)
+		s.offset = Vector2(0, -TOWER_FOOT)
+		entity_layer.add_child(s)

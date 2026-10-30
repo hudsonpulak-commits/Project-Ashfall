@@ -74,7 +74,7 @@ func _draw() -> void:
 			var ap := Vector2((area.x - pt.x) * SCALE, (area.y - pt.y) * SCALE) + center
 			ap = ap.clamp(Vector2(5, 5), size - Vector2(5, 5))   # off the minimap: pinned to its edge
 			draw_circle(ap, 4.5, Color(0, 0, 0, 0.7))
-			draw_circle(ap, 3.2, Color("#e04040"))
+			draw_circle(ap, 3.2, UIStyle.EMBER)
 		for gid in QuestSystem.cfg().get("givers", {}).keys():
 			var mk := QuestSystem.giver_marker(player, gid)
 			var gt := QuestSystem.giver_tile(world, gid)
@@ -87,11 +87,11 @@ func _draw() -> void:
 	for a in others:
 		if is_instance_valid(a):
 			var p2 := Vector2((a.tile.x - pt.x) * SCALE, (a.tile.y - pt.y) * SCALE) + center
-			draw_rect(Rect2(p2.floor(), Vector2(SCALE, SCALE)), Color("#f0e060"))
+			draw_rect(Rect2(p2.floor(), Vector2(SCALE, SCALE)), Color("#e2dccb"))
 	draw_rect(Rect2(center.floor(), Vector2(SCALE, SCALE)), Color.WHITE)
 	if markers_btn:
 		markers_btn.modulate = Color.WHITE if MapPrefs.markers_shown() else Color(1, 1, 1, 0.45)
-	draw_rect(Rect2(Vector2.ZERO, size), UIStyle.BORDER_HI, false, 1.0)
+	draw_style_box(UIStyle.tex("minimap_frame", 4), Rect2(-2, -2, size.x + 4, size.y + 4))
 
 
 func _gui_input(ev: InputEvent) -> void:

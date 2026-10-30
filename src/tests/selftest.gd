@@ -524,7 +524,18 @@ static func _combat_tests(world: World, p: Player) -> void:
 	p.hp = 2
 	p.inventory.add("cooked_rat_meat")
 	var healed := p.eat_slot(p.inventory.find("cooked_rat_meat"), tt)
-	check(healed == 4 and p.hp == 6, "eating food heals (rat meat 4)")
+	check(healed == 5 and p.hp == 7, "eating food heals (rat meat 5)")
+	# restyle food rebalance: rat meat stays 5; heals rise along each chain
+	var chains := {"meat": ["cooked_rat_meat", "cooked_chicken", "cooked_beef"], "fish": ["cooked_carp", "cooked_eel"], "steps": ["cooked_chicken", "bread"]}
+	var mono := int(GameData.item("cooked_rat_meat").get("heals", 0)) == 5
+	for cn in chains:
+		var hs: Array = chains[cn].map(func(f): return int(GameData.item(f).get("heals", 0)))
+		for k in range(1, hs.size()):
+			mono = mono and hs[k] > hs[k - 1]
+	var mid_hp := 10 + 40
+	for f in ["cooked_rat_meat", "cooked_chicken", "cooked_carp", "bread", "cooked_beef", "cooked_eel"]:
+		mono = mono and int(GameData.item(f).get("heals", 0)) < mid_hp / 2
+	check(mono, "food: rat meat heals exactly 5, heals rise monotonically within each chain, no food heals half a mid-level (Vitality 40) player")
 	p.inventory.add("bronze_cap")
 	var def0 := p.combat_def()
 	check(p.equip_slot(p.inventory.find("bronze_cap")) == "" and p.combat_def() > def0, "equipping a helmet raises defence")
@@ -837,6 +848,30 @@ static func _bubble_tests(main, world: World, p: Player) -> void:
 	Events.hitsplat.emit(e, e.tile, 4)
 	check(hb.count_on(p) == 1 and hb.count_on(e) == 1 and hb.value_on(p) == 2 and hb.value_on(e) == 4 and hb.get_child_count() == n0 + 2,
 		"hits on different actors each keep their own bubble")
+	# restyle: green heal / purple poison splats on the same path; healing is never red
+	hb.screen_gate = false
+	var red := HitBubbles.splat_color(3)
+	var hp0 := p.hp
+	p.hp = maxi(1, p.max_hp() - 5)
+	p.inventory.add("cooked_rat_meat")
+	p.next_attack = 0
+	var healed: int = p.eat_slot(p.inventory.find("cooked_rat_meat"), Tick.tick_count + 1000)
+	var hcol: Color = (hb.label_on(p).get_theme_stylebox("normal") as StyleBoxFlat).bg_color if hb.label_on(p) else Color.BLACK
+	check(healed > 0 and hb.kind_on(p) == "heal" and hb.value_on(p) == healed and hcol == Color(HitBubbles.SPLAT_COLORS["heal"]) and hcol != red,
+		"eating food shows a green heal splat with the amount healed (%d, %s)" % [healed, hcol.to_html(false)])
+	Events.splat.emit(p, p.tile, 2, "poison")
+	var pcol := (hb.label_on(p).get_theme_stylebox("normal") as StyleBoxFlat).bg_color
+	check(hb.count_on(p) == 1 and hb.kind_on(p) == "poison" and hb.value_on(p) == 2 and pcol == Color(HitBubbles.SPLAT_COLORS["poison"]), "a poison tick shows a purple splat with its damage")
+	var hp1 := p.hp
+	p.poison_tick(3)
+	check(p.hp == maxi(1, hp1 - 3) and hb.kind_on(p) == "poison" and hb.value_on(p) == 3, "Actor.poison_tick deals the damage and splats purple")
+	Events.splat.emit(p, p.tile, 1, "heal")
+	check(hb.kind_on(p) == "heal" and HitBubbles.splat_color(1, "heal") != red and HitBubbles.splat_color(0, "heal") != red, "regen heals splat green, never red")
+	var n_heal := hb.get_child_count()
+	Events.splat.emit(e, e.tile, 0, "heal")
+	check(hb.get_child_count() <= n_heal, "a 0 heal shows no bubble")
+	hb.screen_gate = true
+	p.hp = hp0
 	p.position += Vector2(16, 0)
 	hb._process(0.01)
 	check(hb.label_on(p).position == pos_a + Vector2(16, 0), "a bubble follows its actor when it moves")

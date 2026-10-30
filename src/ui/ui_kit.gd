@@ -15,7 +15,7 @@ static func button(text: String, cb: Callable, min_w: int = 0, h: int = 20) -> B
 	var b := Button.new()
 	b.text = text
 	b.focus_mode = Control.FOCUS_NONE
-	b.add_theme_font_size_override("font_size", 9)
+	b.add_theme_font_size_override("font_size", 10)
 	b.custom_minimum_size = Vector2(min_w, h)
 	b.pressed.connect(cb)
 	return b
@@ -52,7 +52,7 @@ static func tabs(names: Array, cb: Callable) -> HBoxContainer:
 		b.text = n[1]
 		b.toggle_mode = true
 		b.focus_mode = Control.FOCUS_NONE
-		b.add_theme_font_size_override("font_size", 9)
+		b.add_theme_font_size_override("font_size", 10)
 		b.custom_minimum_size = Vector2(0, 20)
 		b.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		var key: String = n[0]

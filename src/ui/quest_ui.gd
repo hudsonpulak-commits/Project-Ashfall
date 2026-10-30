@@ -37,7 +37,7 @@ func _process(_d: float) -> void:
 			l.add_theme_font_size_override("font_size", 20)   # 0.3.7.1 bigger ? / !
 			l.add_theme_constant_override("outline_size", 5)
 			l.size = Vector2(40, 26)
-			Overhead.place(l, 24.0)
+			Overhead.place(l, 24.0 - float(Actor.head_drop(str(o.def().get("actor_sprite", "")))))   # restyle batch 05 chibi keepers
 			Overhead.attach(l, o.view)
 			e = [l, o.view]
 			_labels[gid] = e

@@ -14,9 +14,9 @@ var selected := false
 func _init() -> void:
 	custom_minimum_size = Vector2(SIZE, SIZE)
 	focus_mode = Control.FOCUS_NONE
-	add_theme_stylebox_override("normal", UIStyle.box(UIStyle.SLOT, UIStyle.BORDER, 1, 0))
-	add_theme_stylebox_override("hover", UIStyle.box(UIStyle.SLOT, UIStyle.BORDER_HI, 1, 0))
-	add_theme_stylebox_override("pressed", UIStyle.box(Color("#3a3020"), UIStyle.BORDER_HI, 1, 0))
+	add_theme_stylebox_override("normal", UIStyle.tex("slot", 3))
+	add_theme_stylebox_override("hover", UIStyle.tex("slot_selected", 3))
+	add_theme_stylebox_override("pressed", UIStyle.tex("slot_selected", 3))
 	icon_rect = TextureRect.new()
 	icon_rect.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 	icon_rect.stretch_mode = TextureRect.STRETCH_KEEP
@@ -27,15 +27,15 @@ func _init() -> void:
 	icon_rect.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(icon_rect)
 	qty_label = Label.new()
-	qty_label.add_theme_font_size_override("font_size", 9)
-	qty_label.add_theme_color_override("font_color", Color("#f8e080"))
+	qty_label.add_theme_font_size_override("font_size", 10)
+	qty_label.add_theme_color_override("font_color", Color("#f4b45a"))
 	qty_label.add_theme_color_override("font_outline_color", Color.BLACK)
 	qty_label.add_theme_constant_override("outline_size", 3)
 	qty_label.position = Vector2(2, -1)
 	qty_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(qty_label)
 	dur_bar = ColorRect.new()
-	dur_bar.color = Color("#6ac04a")
+	dur_bar.color = Color("#8a9460")
 	dur_bar.position = Vector2(3, SIZE - 4)
 	dur_bar.size = Vector2(SIZE - 6, 2)
 	dur_bar.mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -47,7 +47,7 @@ func set_selected(on: bool) -> void:
 	if on == selected:
 		return
 	selected = on
-	add_theme_stylebox_override("normal", UIStyle.box(Color("#3a3020") if on else UIStyle.SLOT, UIStyle.ACCENT if on else UIStyle.BORDER, 2 if on else 1, 0))
+	add_theme_stylebox_override("normal", UIStyle.tex("slot_selected" if on else "slot", 3))
 
 
 func set_item(slot) -> void:
@@ -71,7 +71,7 @@ func set_item(slot) -> void:
 		var f := clampf(float(slot["dur"]) / maxd, 0.0, 1.0)
 		dur_bar.visible = true
 		dur_bar.size.x = floorf((SIZE - 6) * f)
-		dur_bar.color = Color("#6ac04a") if f > 0.3 else Color("#e05a3a")
+		dur_bar.color = Color("#8a9460") if f > 0.3 else Color("#e05a3a")
 	else:
 		dur_bar.visible = false
 

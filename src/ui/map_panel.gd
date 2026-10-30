@@ -82,7 +82,7 @@ func setup(p: Player, w) -> void:
 	_label_edit = LineEdit.new()
 	_label_edit.placeholder_text = "Label (optional)"
 	_label_edit.max_length = MapMarkers.label_max()
-	_label_edit.add_theme_font_size_override("font_size", 9)
+	_label_edit.add_theme_font_size_override("font_size", 10)
 	_label_edit.custom_minimum_size = Vector2(0, 22)
 	_label_edit.text_changed.connect(func(t): _draft_label = t)
 	_tools.add_child(_label_edit)

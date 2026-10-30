@@ -65,6 +65,7 @@ func _ready() -> void:
 	region_label.add_theme_color_override("font_color", Color("#f0e6c8"))
 	region_label.add_theme_constant_override("outline_size", 4)
 	region_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	region_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	region_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	region_label.visible = false
 	add_child(region_label)
@@ -82,7 +83,7 @@ func attach_row(info: Container) -> void:
 	row.add_child(ic)
 	label = Label.new()
 	label.add_theme_constant_override("outline_size", 3)
-	label.add_theme_font_size_override("font_size", 9)
+	label.add_theme_font_size_override("font_size", 10)
 	label.add_theme_color_override("font_color", Color("#ff8a5a"))
 	label.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	row.add_child(label)

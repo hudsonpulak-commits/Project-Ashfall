@@ -10,9 +10,15 @@ var label := ""
 var cur := 0.0
 var max_v := 1.0
 var fill := Color("#c83a3a")
+var fill_tex := ""   # restyle batch 07: kit/bar_fill_<hp|prayer|energy>
 var highlight := false
 var highlight_color := Color("#f0e060")
 var prefix := ""
+const FILL_BANDS := {
+	"hp": [Color8(200, 86, 42), Color8(122, 42, 42)],
+	"prayer": [Color8(122, 138, 152), Color8(67, 80, 96)],
+	"energy": [Color8(138, 148, 96), Color8(108, 122, 72)],
+}
 
 
 func _init() -> void:
@@ -40,22 +46,22 @@ func text() -> String:
 
 func _draw() -> void:
 	var r := Rect2(Vector2.ZERO, size)
-	draw_rect(r, Color(0.06, 0.05, 0.04, 0.85))
-	var inner := r.grow(-2)
-	draw_rect(inner, fill.darkened(0.7))
+	draw_style_box(UIStyle.tex("bar_frame", 3), r)
+	var inner := r.grow(-3)
 	var w := inner.size.x * clampf(cur / maxf(1.0, max_v), 0.0, 1.0)
-	draw_rect(Rect2(inner.position, Vector2(w, inner.size.y)), fill)
-	draw_rect(Rect2(inner.position, Vector2(w, 2)), fill.lightened(0.3))
+	# batch 07 kit fill drawn as colour bands (texture draw rendered white on device)
+	var bands: Array = FILL_BANDS.get(fill_tex, [fill, fill.darkened(0.4)])
+	var hh := inner.size.y
+	draw_rect(Rect2(inner.position, Vector2(w, hh)), bands[1])
+	draw_rect(Rect2(inner.position, Vector2(w, ceilf(hh * 0.5))), bands[0])
 	if highlight:
-		draw_rect(r.grow(-0.5), highlight_color, false, 2.0)
-	else:
-		draw_rect(r.grow(-0.5), UIStyle.BORDER_HI, false, 1.0)
+		draw_rect(r.grow(-0.5), UIStyle.EMBER, false, 2.0)
 	var font := get_theme_default_font()
-	var fs := 9
+	var fs := 10
 	var t := text()
 	var tw := font.get_string_size(t, HORIZONTAL_ALIGNMENT_LEFT, -1, fs).x
 	var pos := Vector2(maxf(3.0, (size.x - tw) / 2.0), (size.y + fs) / 2.0 - 1)
-	draw_string_outline(font, pos, t, HORIZONTAL_ALIGNMENT_LEFT, -1, fs, 3, Color.BLACK)
+	draw_string_outline(font, pos, t, HORIZONTAL_ALIGNMENT_LEFT, -1, fs, 2, Color.BLACK)
 	draw_string(font, pos, t, HORIZONTAL_ALIGNMENT_LEFT, -1, fs, Color.WHITE)
 
 

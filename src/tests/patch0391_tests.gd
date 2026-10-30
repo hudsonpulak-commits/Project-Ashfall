@@ -1,5 +1,9 @@
 class_name Patch0391Tests
 extends RefCounted
+
+## restyle batch 05: chibi redraws with the designer's own proportions (wider heads,
+## full-width frames, 2px eyes) - the legacy geometry heuristics do not apply.
+const RESTYLE_CHIBI := ["citizen", "wolf", "slime", "goblin", "goblin_warlord", "cinder_brute"]
 ## 0.3.9.1: directional sheets (no doubled / mirrored heads or rears), clean
 ## human fronts, shields hidden on backs, fences only in runs of 3+.
 
@@ -59,6 +63,7 @@ static func run(main, world: World, p: Player) -> void:
 		if str(sid).begins_with("gear_"):
 			continue
 		var side := _frame(sid, "side")
+		var restyled: bool = str(sid) in RESTYLE_CHIBI
 		var front := _frame(sid, "down")
 		var back := _frame(sid, "up")
 		var sym := _same_as_mirrored_half(side, side, true)   # a symmetric blob (slime) may keep its side frame
@@ -66,9 +71,10 @@ static func run(main, world: World, p: Player) -> void:
 			if _same_as_mirrored_half(front, side, true) or _same_as_mirrored_half(back, side, false):
 				bad.append(sid)
 		var fs := GameData.frame_size("actors", sid)
-		if fs.x > 16 or fs.y <= 16:   # quadrupeds / small creatures: head-on is narrower than the side
+		# restyle: 16x16 humanoids (the gear rig, attack_paths) are not small creatures
+		if (fs.x > 16 or fs.y <= 16) and not GameData.sprite_def("actors", sid).has("attack_paths"):   # quadrupeds / small creatures: head-on is narrower than the side
 			var blob := front.get_data() == side.get_data() and back.get_data() == side.get_data()   # symmetric blob keeps one view
-			if not sym and not blob and (_width(front) >= _width(side) or _width(back) >= _width(side)):
+			if not sym and not blob and not restyled and (_width(front) >= _width(side) or _width(back) >= _width(side)):
 				narrow_bad.append("%s %d/%d/%d" % [sid, _width(side), _width(front), _width(back)])
 	check(bad.is_empty(), "sprites: no front/back frame is a mirrored half of the side (2 heads / 2 rears) %s" % [bad])
 	check(narrow_bad.is_empty(), "sprites: creatures seen head-on / from behind are narrower than from the side %s" % [narrow_bad])
@@ -79,6 +85,8 @@ static func run(main, world: World, p: Player) -> void:
 	# --- human fronts: one face, two eyes symmetric about the middle ---
 	var eyes_bad := []
 	for sid in ["player", "npc", "villager", "citizen", "priest", "town_guard", "keeper_general"]:
+		if sid in RESTYLE_CHIBI:
+			continue
 		var f := _frame(sid, "down")
 		var found := false
 		for y in range(0, 12):

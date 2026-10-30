@@ -16,7 +16,7 @@ void vertex() {
 }
 
 void fragment() {
-	vec4 c = texture(TEXTURE, UV) * COLOR;
+	vec4 c = COLOR; // batch_08: COLOR already holds the texel in canvas_item; *COLOR squared every base tile
 	vec2 tile = floor(world_px / tile_px);
 	float n = fract(sin(dot(tile, vec2(127.1, 311.7))) * 43758.5453);
 	float n2 = fract(sin(dot(floor(tile / 3.0) + vec2(19.0, 7.0), vec2(269.5, 183.3))) * 43758.5453);

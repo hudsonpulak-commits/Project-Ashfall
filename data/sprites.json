@@ -4,75 +4,75 @@
  "world_scale": 1,
  "tiles": {
   "grass": {
-   "path": "res://assets/sprites/tiles/grass.png",
+   "path": "res://assets/sprites/tiles/variants/grass_x4.png",
    "frame_size": [
     16,
     16
    ],
-   "minimap_color": "#55883f",
+   "minimap_color": "#4e5c38",
    "_order": 0
   },
   "path": {
-   "path": "res://assets/sprites/tiles/path.png",
+   "path": "res://assets/sprites/tiles/variants/path_x4.png",
    "frame_size": [
     16,
     16
    ],
-   "minimap_color": "#a8885a",
+   "minimap_color": "#836344",
    "_order": 1
   },
   "water": {
-   "path": "res://assets/sprites/tiles/water.png",
+   "path": "res://assets/sprites/tiles/variants/water_x4.png",
    "frame_size": [
     16,
     16
    ],
-   "minimap_color": "#3378a0",
+   "minimap_color": "#2e313e",
    "_order": 2
   },
   "sand": {
-   "path": "res://assets/sprites/tiles/sand.png",
+   "path": "res://assets/sprites/tiles/variants/sand_x4.png",
    "frame_size": [
     16,
     16
    ],
-   "minimap_color": "#d8c486",
+   "minimap_color": "#a2835a",
    "_order": 3
   },
   "dirt": {
-   "path": "res://assets/sprites/tiles/dirt.png",
+   "path": "res://assets/sprites/tiles/variants/dirt_x4.png",
    "frame_size": [
     16,
     16
    ],
-   "minimap_color": "#7a5c3c",
+   "minimap_color": "#654a34",
    "_order": 4
   },
   "cobble": {
-   "path": "res://assets/sprites/tiles/cobble.png",
+   "path": "res://assets/sprites/tiles/variants/cobble_x4.png",
    "frame_size": [
     16,
     16
    ],
-   "minimap_color": "#605952",
+   "minimap_color": "#3d3c43",
    "_order": 5
   },
   "planks": {
-   "path": "res://assets/sprites/tiles/planks.png",
+   "path": "res://assets/sprites/tiles/variants/planks_x4.png",
    "frame_size": [
     16,
     16
    ],
-   "minimap_color": "#966e40",
+   "minimap_color": "#5b4431",
    "_order": 6
   },
   "marsh": {
-   "path": "res://assets/sprites/tiles/marsh.png",
+   "path": "res://assets/sprites/tiles/variants/marsh_x4.png",
    "frame_size": [
     16,
     16
    ],
-   "minimap_color": "#466a40",
+   "minimap_color": "#36422c",
    "_order": 7
   },
   "wall": {
@@ -81,7 +81,7 @@
     16,
     16
    ],
-   "minimap_color": "#5a5048",
+   "minimap_color": "#805631",
    "_order": 8
   },
   "wall_front": {
@@ -90,16 +90,16 @@
     16,
     16
    ],
-   "minimap_color": "#6e5e50",
+   "minimap_color": "#744d2c",
    "_order": 9
   },
   "floor": {
-   "path": "res://assets/sprites/tiles/floor.png",
+   "path": "res://assets/sprites/tiles/variants/floor_x4.png",
    "frame_size": [
     16,
     16
    ],
-   "minimap_color": "#a07a4c",
+   "minimap_color": "#493628",
    "_order": 10
   },
   "doorway": {
@@ -108,16 +108,16 @@
     16,
     16
    ],
-   "minimap_color": "#b08a58",
+   "minimap_color": "#5b4431",
    "_order": 11
   },
   "ash": {
-   "path": "res://assets/sprites/tiles/ash.png",
+   "path": "res://assets/sprites/tiles/variants/ash_x4.png",
    "frame_size": [
     16,
     16
    ],
-   "minimap_color": "#3a3430",
+   "minimap_color": "#4d4346",
    "_order": 12
   },
   "ash_edge": {
@@ -126,7 +126,7 @@
     16,
     16
    ],
-   "minimap_color": "#6a2a18",
+   "minimap_color": "#494c3f",
    "_order": 13
   },
   "bridge": {
@@ -135,7 +135,7 @@
     16,
     16
    ],
-   "minimap_color": "#8a6438",
+   "minimap_color": "#613d23",
    "_order": 14
   },
   "stone_wall": {
@@ -144,25 +144,27 @@
     16,
     16
    ],
-   "minimap_color": "#7e7e84",
+   "minimap_color": "#615f66",
    "_order": 15
   },
   "stone_front": {
    "path": "res://assets/sprites/tiles/stone_front.png",
    "frame_size": [
     16,
-    16
+    24
    ],
-   "minimap_color": "#8e8e94",
-   "_order": 16
+   "minimap_color": "#4e4d53",
+   "_order": 16,
+   "anchor": "bottom",
+   "note": "restyle: 16x24 wall front, top 8px overhangs the wall-top cell to the north"
   },
   "stone_floor": {
-   "path": "res://assets/sprites/tiles/stone_floor.png",
+   "path": "res://assets/sprites/tiles/variants/stone_floor_x4.png",
    "frame_size": [
     16,
     16
    ],
-   "minimap_color": "#aaa8a4",
+   "minimap_color": "#4c4b51",
    "_order": 17
   },
   "palisade": {
@@ -171,17 +173,19 @@
     16,
     16
    ],
-   "minimap_color": "#6a3a18",
+   "minimap_color": "#72563c",
    "_order": 18
   },
   "palisade_front": {
    "path": "res://assets/sprites/tiles/palisade_front.png",
    "frame_size": [
     16,
-    16
+    24
    ],
-   "minimap_color": "#7a4a22",
-   "_order": 19
+   "minimap_color": "#5c4532",
+   "_order": 19,
+   "anchor": "bottom",
+   "note": "restyle: 16x24 wall front, top 8px overhangs the wall-top cell to the north"
   },
   "basalt_wall": {
    "path": "res://assets/sprites/tiles/basalt_wall.png",
@@ -189,17 +193,19 @@
     16,
     16
    ],
-   "minimap_color": "#2e2e36",
+   "minimap_color": "#494850",
    "_order": 20
   },
   "basalt_front": {
    "path": "res://assets/sprites/tiles/basalt_front.png",
    "frame_size": [
     16,
-    16
+    24
    ],
-   "minimap_color": "#3a3a44",
-   "_order": 21
+   "minimap_color": "#3f4145",
+   "_order": 21,
+   "anchor": "bottom",
+   "note": "restyle: 16x24 wall front, top 8px overhangs the wall-top cell to the north"
   },
   "sandstone_wall": {
    "path": "res://assets/sprites/tiles/sandstone_wall.png",
@@ -207,70 +213,78 @@
     16,
     16
    ],
-   "minimap_color": "#c8a878",
+   "minimap_color": "#b29265",
    "_order": 22
   },
   "sandstone_front": {
    "path": "res://assets/sprites/tiles/sandstone_front.png",
    "frame_size": [
     16,
-    16
+    24
    ],
-   "minimap_color": "#d2b888",
-   "_order": 23
+   "minimap_color": "#947c5e",
+   "_order": 23,
+   "anchor": "bottom",
+   "note": "restyle: 16x24 wall front, top 8px overhangs the wall-top cell to the north"
   },
   "gate_wood": {
    "path": "res://assets/sprites/tiles/gate_wood.png",
    "frame_size": [
     16,
-    16
+    24
    ],
-   "minimap_color": "#a8885a",
-   "_order": 24
+   "minimap_color": "#4f3d2f",
+   "_order": 24,
+   "anchor": "bottom",
+   "note": "restyle: 16x24 wall front, top 8px overhangs the wall-top cell to the north"
   },
   "gate_basalt": {
    "path": "res://assets/sprites/tiles/gate_basalt.png",
    "frame_size": [
     16,
-    16
+    24
    ],
-   "minimap_color": "#5a5a66",
-   "_order": 25
+   "minimap_color": "#463e3b",
+   "_order": 25,
+   "anchor": "bottom",
+   "note": "restyle: 16x24 wall front, top 8px overhangs the wall-top cell to the north"
   },
   "gate_sand": {
    "path": "res://assets/sprites/tiles/gate_sand.png",
    "frame_size": [
     16,
-    16
+    24
    ],
-   "minimap_color": "#d2c090",
-   "_order": 26
+   "minimap_color": "#705d48",
+   "_order": 26,
+   "anchor": "bottom",
+   "note": "restyle: 16x24 wall front, top 8px overhangs the wall-top cell to the north"
   },
   "boardwalk": {
-   "path": "res://assets/sprites/tiles/boardwalk.png",
+   "path": "res://assets/sprites/tiles/variants/boardwalk_x4.png",
    "frame_size": [
     16,
     16
    ],
-   "minimap_color": "#8a6838",
+   "minimap_color": "#5b4431",
    "_order": 27
   },
   "cobble_dark": {
-   "path": "res://assets/sprites/tiles/cobble_dark.png",
+   "path": "res://assets/sprites/tiles/variants/cobble_dark_x4.png",
    "frame_size": [
     16,
     16
    ],
-   "minimap_color": "#3e3834",
+   "minimap_color": "#404047",
    "_order": 28
   },
   "plaster": {
-   "path": "res://assets/sprites/tiles/plaster.png",
+   "path": "res://assets/sprites/tiles/variants/plaster_x4.png",
    "frame_size": [
     16,
     16
    ],
-   "minimap_color": "#e8e8f0",
+   "minimap_color": "#c7bdb2",
    "_order": 29
   },
   "plaster_wall": {
@@ -279,7 +293,7 @@
     16,
     16
    ],
-   "minimap_color": "#e8e0d0",
+   "minimap_color": "#b09c8a",
    "_order": 30
   },
   "plaster_front": {
@@ -288,26 +302,26 @@
     16,
     16
    ],
-   "minimap_color": "#f0e8d8",
+   "minimap_color": "#c6b6a3",
    "_order": 31
   },
   "road_stone": {
-   "path": "res://assets/sprites/tiles/road_stone.png",
+   "path": "res://assets/sprites/tiles/variants/road_stone_x4.png",
    "frame_size": [
     16,
     16
    ],
-   "minimap_color": "#676057",
+   "minimap_color": "#6c6a6f",
    "_order": 32,
    "note": "0.3.8 placeholder"
   },
   "road_dirt": {
-   "path": "res://assets/sprites/tiles/road_dirt.png",
+   "path": "res://assets/sprites/tiles/variants/road_dirt_x4.png",
    "frame_size": [
     16,
     16
    ],
-   "minimap_color": "#9a7a4c",
+   "minimap_color": "#5c4330",
    "_order": 33,
    "note": "0.3.8 placeholder"
   },
@@ -327,7 +341,7 @@
     16,
     16
    ],
-   "minimap_color": "#9c9a92",
+   "minimap_color": "#4a6c36",
    "_order": 35,
    "note": "0.3.8 placeholder"
   },
@@ -337,7 +351,7 @@
     16,
     16
    ],
-   "minimap_color": "#c9c2b0",
+   "minimap_color": "#7b797d",
    "_order": 36,
    "note": "0.3.8 placeholder"
   },
@@ -345,21 +359,23 @@
    "path": "res://assets/sprites/tiles/capital_front.png",
    "frame_size": [
     16,
-    16
+    24
    ],
-   "minimap_color": "#bdb5a2",
+   "minimap_color": "#656468",
    "_order": 37,
-   "note": "0.3.8 placeholder"
+   "note": "restyle: 16x24 wall front, top 8px overhangs the wall-top cell to the north",
+   "anchor": "bottom"
   },
   "gate_capital": {
    "path": "res://assets/sprites/tiles/gate_capital.png",
    "frame_size": [
     16,
-    16
+    24
    ],
-   "minimap_color": "#8f8c84",
+   "minimap_color": "#5d5550",
    "_order": 38,
-   "note": "0.3.8 placeholder"
+   "note": "restyle: 16x24 wall front, top 8px overhangs the wall-top cell to the north",
+   "anchor": "bottom"
   },
   "capital_bldg_wall": {
    "path": "res://assets/sprites/tiles/capital_bldg_wall.png",
@@ -367,7 +383,7 @@
     16,
     16
    ],
-   "minimap_color": "#e2dccb",
+   "minimap_color": "#897f80",
    "_order": 39,
    "note": "0.3.8 placeholder"
   },
@@ -377,7 +393,7 @@
     16,
     16
    ],
-   "minimap_color": "#d6cfbb",
+   "minimap_color": "#8b8180",
    "_order": 40,
    "note": "0.3.8 placeholder"
   },
@@ -387,7 +403,7 @@
     16,
     16
    ],
-   "minimap_color": "#b88a5a",
+   "minimap_color": "#805631",
    "_order": 41,
    "note": "0.3.8 placeholder"
   },
@@ -397,47 +413,47 @@
     16,
     16
    ],
-   "minimap_color": "#a87a4c",
+   "minimap_color": "#83552f",
    "_order": 42,
    "note": "0.3.8 placeholder"
   },
   "grass_lush": {
-   "path": "res://assets/sprites/tiles/grass_lush.png",
+   "path": "res://assets/sprites/tiles/variants/grass_lush_x4.png",
    "frame_size": [
     16,
     16
    ],
-   "minimap_color": "#4f8a3a",
+   "minimap_color": "#4d5b37",
    "_order": 43,
    "note": "0.3.10 PLACEHOLDER recolour - designer redraw (docs/ART_TODO_0.3.10.md)"
   },
   "grass_boreal": {
-   "path": "res://assets/sprites/tiles/grass_boreal.png",
+   "path": "res://assets/sprites/tiles/variants/grass_boreal_x4.png",
    "frame_size": [
     16,
     16
    ],
-   "minimap_color": "#5f7a5c",
+   "minimap_color": "#405b41",
    "_order": 44,
    "note": "0.3.10 PLACEHOLDER recolour - designer redraw (docs/ART_TODO_0.3.10.md)"
   },
   "grass_tropic": {
-   "path": "res://assets/sprites/tiles/grass_tropic.png",
+   "path": "res://assets/sprites/tiles/variants/grass_tropic_x4.png",
    "frame_size": [
     16,
     16
    ],
-   "minimap_color": "#7a9a34",
+   "minimap_color": "#6b7848",
    "_order": 45,
    "note": "0.3.10 PLACEHOLDER recolour - designer redraw (docs/ART_TODO_0.3.10.md)"
   },
   "rocky": {
-   "path": "res://assets/sprites/tiles/rocky.png",
+   "path": "res://assets/sprites/tiles/variants/rocky_x4.png",
    "frame_size": [
     16,
     16
    ],
-   "minimap_color": "#8a8278",
+   "minimap_color": "#776c63",
    "_order": 46,
    "note": "0.3.10 PLACEHOLDER recolour - designer redraw (docs/ART_TODO_0.3.10.md)"
   },
@@ -447,7 +463,7 @@
     16,
     16
    ],
-   "minimap_color": "#4a3f38",
+   "minimap_color": "#3d6736",
    "_order": 47,
    "note": "0.3.11 designer cliff art; in-game the autotile pieces (autotile/cliff_*) draw the look over region ground"
   },
@@ -457,7 +473,7 @@
     16,
     16
    ],
-   "minimap_color": "#9a9088",
+   "minimap_color": "#3d6736",
    "_order": 48,
    "note": "0.3.11 designer cliff art; in-game the autotile pieces (autotile/cliff_*) draw the look over region ground"
   },
@@ -467,7 +483,7 @@
     16,
     16
    ],
-   "minimap_color": "#2f4a2a",
+   "minimap_color": "#3d6736",
    "_order": 49,
    "note": "0.3.11 designer cliff art; in-game the autotile pieces (autotile/cliff_*) draw the look over region ground"
   },
@@ -477,7 +493,7 @@
     16,
     16
    ],
-   "minimap_color": "#a89a88",
+   "minimap_color": "#4f4b45",
    "_order": 50,
    "note": "0.3.11 designer cliff art; in-game the autotile pieces (autotile/cliff_*) draw the look over region ground"
   },
@@ -487,7 +503,7 @@
     16,
     16
    ],
-   "minimap_color": "#5a5450",
+   "minimap_color": "#496c35",
    "note": "0.3.11 under the Highfen city wall art (blocking); the designer art draws over it"
   },
   "art_wall": {
@@ -496,7 +512,7 @@
     16,
     16
    ],
-   "minimap_color": "#6a5a4a",
+   "minimap_color": "#496c35",
    "note": "0.3.11 under layered-art building walls (blocking); the designer art draws over it"
   },
   "art_floor": {
@@ -505,7 +521,7 @@
     16,
     16
    ],
-   "minimap_color": "#8a7a64",
+   "minimap_color": "#6d6264",
    "note": "0.3.11 under layered-art building floors; the designer art draws over it"
   },
   "cliff_foot": {
@@ -515,7 +531,7 @@
     16
    ],
    "note": "0.3.11 designer cliff art; in-game the autotile pieces (autotile/cliff_*) draw the look over region ground",
-   "minimap_color": "#4a3f38",
+   "minimap_color": "#3d6736",
    "_order": 50
   }
  },
@@ -3228,7 +3244,7 @@
    "path": "res://assets/sprites/actors/gear/head_1.png",
    "frame_size": [
     16,
-    24
+    16
    ],
    "frames": 4,
    "fps": 5,
@@ -3237,13 +3253,43 @@
    "dir_paths": {
     "down": "res://assets/sprites/actors/gear/head_1_front.png",
     "up": "res://assets/sprites/actors/gear/head_1_back.png"
+   },
+   "attack_paths": {
+    "side": "res://assets/sprites/actors/gear/head_1_attack.png",
+    "down": "res://assets/sprites/actors/gear/head_1_attack_front.png",
+    "up": "res://assets/sprites/actors/gear/head_1_attack_back.png",
+    "frame_size": [
+     32,
+     32
+    ],
+    "frames": 4,
+    "fps": 8,
+    "offset": [
+     -8,
+     -8
+    ]
+   },
+   "shoot_paths": {
+    "side": "res://assets/sprites/actors/gear/head_1_shoot.png",
+    "down": "res://assets/sprites/actors/gear/head_1_shoot_front.png",
+    "up": "res://assets/sprites/actors/gear/head_1_shoot_back.png",
+    "frame_size": [
+     32,
+     32
+    ],
+    "frames": 4,
+    "fps": 8,
+    "offset": [
+     -8,
+     -8
+    ]
    }
   },
   "gear_body_1": {
    "path": "res://assets/sprites/actors/gear/body_1.png",
    "frame_size": [
     16,
-    24
+    16
    ],
    "frames": 4,
    "fps": 5,
@@ -3252,13 +3298,43 @@
    "dir_paths": {
     "down": "res://assets/sprites/actors/gear/body_1_front.png",
     "up": "res://assets/sprites/actors/gear/body_1_back.png"
+   },
+   "attack_paths": {
+    "side": "res://assets/sprites/actors/gear/body_1_attack.png",
+    "down": "res://assets/sprites/actors/gear/body_1_attack_front.png",
+    "up": "res://assets/sprites/actors/gear/body_1_attack_back.png",
+    "frame_size": [
+     32,
+     32
+    ],
+    "frames": 4,
+    "fps": 8,
+    "offset": [
+     -8,
+     -8
+    ]
+   },
+   "shoot_paths": {
+    "side": "res://assets/sprites/actors/gear/body_1_shoot.png",
+    "down": "res://assets/sprites/actors/gear/body_1_shoot_front.png",
+    "up": "res://assets/sprites/actors/gear/body_1_shoot_back.png",
+    "frame_size": [
+     32,
+     32
+    ],
+    "frames": 4,
+    "fps": 8,
+    "offset": [
+     -8,
+     -8
+    ]
    }
   },
   "gear_legs_1": {
    "path": "res://assets/sprites/actors/gear/legs_1.png",
    "frame_size": [
     16,
-    24
+    16
    ],
    "frames": 4,
    "fps": 5,
@@ -3267,13 +3343,43 @@
    "dir_paths": {
     "down": "res://assets/sprites/actors/gear/legs_1_front.png",
     "up": "res://assets/sprites/actors/gear/legs_1_back.png"
+   },
+   "attack_paths": {
+    "side": "res://assets/sprites/actors/gear/legs_1_attack.png",
+    "down": "res://assets/sprites/actors/gear/legs_1_attack_front.png",
+    "up": "res://assets/sprites/actors/gear/legs_1_attack_back.png",
+    "frame_size": [
+     32,
+     32
+    ],
+    "frames": 4,
+    "fps": 8,
+    "offset": [
+     -8,
+     -8
+    ]
+   },
+   "shoot_paths": {
+    "side": "res://assets/sprites/actors/gear/legs_1_shoot.png",
+    "down": "res://assets/sprites/actors/gear/legs_1_shoot_front.png",
+    "up": "res://assets/sprites/actors/gear/legs_1_shoot_back.png",
+    "frame_size": [
+     32,
+     32
+    ],
+    "frames": 4,
+    "fps": 8,
+    "offset": [
+     -8,
+     -8
+    ]
    }
   },
   "gear_shield_1": {
    "path": "res://assets/sprites/actors/gear/shield_1.png",
    "frame_size": [
     16,
-    24
+    16
    ],
    "frames": 4,
    "fps": 5,
@@ -3282,13 +3388,28 @@
    "dir_paths": {
     "down": "res://assets/sprites/actors/gear/shield_1_front.png",
     "up": "res://assets/sprites/actors/gear/shield_1_back.png"
+   },
+   "attack_paths": {
+    "side": "res://assets/sprites/actors/gear/shield_1_attack.png",
+    "down": "res://assets/sprites/actors/gear/shield_1_attack_front.png",
+    "up": "res://assets/sprites/actors/gear/shield_1_attack_back.png",
+    "frame_size": [
+     32,
+     32
+    ],
+    "frames": 4,
+    "fps": 8,
+    "offset": [
+     -8,
+     -8
+    ]
    }
   },
   "gear_weapon_1": {
    "path": "res://assets/sprites/actors/gear/weapon_sword_1.png",
    "frame_size": [
     16,
-    24
+    16
    ],
    "frames": 4,
    "fps": 5,
@@ -3297,13 +3418,28 @@
    "dir_paths": {
     "down": "res://assets/sprites/actors/gear/weapon_sword_1_front.png",
     "up": "res://assets/sprites/actors/gear/weapon_sword_1_back.png"
+   },
+   "attack_paths": {
+    "side": "res://assets/sprites/actors/gear/weapon_sword_1_attack.png",
+    "down": "res://assets/sprites/actors/gear/weapon_sword_1_attack_front.png",
+    "up": "res://assets/sprites/actors/gear/weapon_sword_1_attack_back.png",
+    "frame_size": [
+     32,
+     32
+    ],
+    "frames": 4,
+    "fps": 8,
+    "offset": [
+     -8,
+     -8
+    ]
    }
   },
   "gear_weapon_dagger_1": {
    "path": "res://assets/sprites/actors/gear/weapon_dagger_1.png",
    "frame_size": [
     16,
-    24
+    16
    ],
    "frames": 4,
    "fps": 5,
@@ -3312,13 +3448,28 @@
    "dir_paths": {
     "down": "res://assets/sprites/actors/gear/weapon_dagger_1_front.png",
     "up": "res://assets/sprites/actors/gear/weapon_dagger_1_back.png"
+   },
+   "attack_paths": {
+    "side": "res://assets/sprites/actors/gear/weapon_dagger_1_attack.png",
+    "down": "res://assets/sprites/actors/gear/weapon_dagger_1_attack_front.png",
+    "up": "res://assets/sprites/actors/gear/weapon_dagger_1_attack_back.png",
+    "frame_size": [
+     32,
+     32
+    ],
+    "frames": 4,
+    "fps": 8,
+    "offset": [
+     -8,
+     -8
+    ]
    }
   },
   "gear_weapon_mace_1": {
    "path": "res://assets/sprites/actors/gear/weapon_mace_1.png",
    "frame_size": [
     16,
-    24
+    16
    ],
    "frames": 4,
    "fps": 5,
@@ -3327,13 +3478,28 @@
    "dir_paths": {
     "down": "res://assets/sprites/actors/gear/weapon_mace_1_front.png",
     "up": "res://assets/sprites/actors/gear/weapon_mace_1_back.png"
+   },
+   "attack_paths": {
+    "side": "res://assets/sprites/actors/gear/weapon_mace_1_attack.png",
+    "down": "res://assets/sprites/actors/gear/weapon_mace_1_attack_front.png",
+    "up": "res://assets/sprites/actors/gear/weapon_mace_1_attack_back.png",
+    "frame_size": [
+     32,
+     32
+    ],
+    "frames": 4,
+    "fps": 8,
+    "offset": [
+     -8,
+     -8
+    ]
    }
   },
   "gear_weapon_warhammer_1": {
    "path": "res://assets/sprites/actors/gear/weapon_warhammer_1.png",
    "frame_size": [
     16,
-    24
+    16
    ],
    "frames": 4,
    "fps": 5,
@@ -3342,13 +3508,28 @@
    "dir_paths": {
     "down": "res://assets/sprites/actors/gear/weapon_warhammer_1_front.png",
     "up": "res://assets/sprites/actors/gear/weapon_warhammer_1_back.png"
+   },
+   "attack_paths": {
+    "side": "res://assets/sprites/actors/gear/weapon_warhammer_1_attack.png",
+    "down": "res://assets/sprites/actors/gear/weapon_warhammer_1_attack_front.png",
+    "up": "res://assets/sprites/actors/gear/weapon_warhammer_1_attack_back.png",
+    "frame_size": [
+     32,
+     32
+    ],
+    "frames": 4,
+    "fps": 8,
+    "offset": [
+     -8,
+     -8
+    ]
    }
   },
   "gear_weapon_battleaxe_1": {
    "path": "res://assets/sprites/actors/gear/weapon_battleaxe_1.png",
    "frame_size": [
     16,
-    24
+    16
    ],
    "frames": 4,
    "fps": 5,
@@ -3357,13 +3538,28 @@
    "dir_paths": {
     "down": "res://assets/sprites/actors/gear/weapon_battleaxe_1_front.png",
     "up": "res://assets/sprites/actors/gear/weapon_battleaxe_1_back.png"
+   },
+   "attack_paths": {
+    "side": "res://assets/sprites/actors/gear/weapon_battleaxe_1_attack.png",
+    "down": "res://assets/sprites/actors/gear/weapon_battleaxe_1_attack_front.png",
+    "up": "res://assets/sprites/actors/gear/weapon_battleaxe_1_attack_back.png",
+    "frame_size": [
+     32,
+     32
+    ],
+    "frames": 4,
+    "fps": 8,
+    "offset": [
+     -8,
+     -8
+    ]
    }
   },
   "gear_head_2": {
    "path": "res://assets/sprites/actors/gear/head_2.png",
    "frame_size": [
     16,
-    24
+    16
    ],
    "frames": 4,
    "fps": 5,
@@ -3372,13 +3568,43 @@
    "dir_paths": {
     "down": "res://assets/sprites/actors/gear/head_2_front.png",
     "up": "res://assets/sprites/actors/gear/head_2_back.png"
+   },
+   "attack_paths": {
+    "side": "res://assets/sprites/actors/gear/head_2_attack.png",
+    "down": "res://assets/sprites/actors/gear/head_2_attack_front.png",
+    "up": "res://assets/sprites/actors/gear/head_2_attack_back.png",
+    "frame_size": [
+     32,
+     32
+    ],
+    "frames": 4,
+    "fps": 8,
+    "offset": [
+     -8,
+     -8
+    ]
+   },
+   "shoot_paths": {
+    "side": "res://assets/sprites/actors/gear/head_2_shoot.png",
+    "down": "res://assets/sprites/actors/gear/head_2_shoot_front.png",
+    "up": "res://assets/sprites/actors/gear/head_2_shoot_back.png",
+    "frame_size": [
+     32,
+     32
+    ],
+    "frames": 4,
+    "fps": 8,
+    "offset": [
+     -8,
+     -8
+    ]
    }
   },
   "gear_body_2": {
    "path": "res://assets/sprites/actors/gear/body_2.png",
    "frame_size": [
     16,
-    24
+    16
    ],
    "frames": 4,
    "fps": 5,
@@ -3387,13 +3613,43 @@
    "dir_paths": {
     "down": "res://assets/sprites/actors/gear/body_2_front.png",
     "up": "res://assets/sprites/actors/gear/body_2_back.png"
+   },
+   "attack_paths": {
+    "side": "res://assets/sprites/actors/gear/body_2_attack.png",
+    "down": "res://assets/sprites/actors/gear/body_2_attack_front.png",
+    "up": "res://assets/sprites/actors/gear/body_2_attack_back.png",
+    "frame_size": [
+     32,
+     32
+    ],
+    "frames": 4,
+    "fps": 8,
+    "offset": [
+     -8,
+     -8
+    ]
+   },
+   "shoot_paths": {
+    "side": "res://assets/sprites/actors/gear/body_2_shoot.png",
+    "down": "res://assets/sprites/actors/gear/body_2_shoot_front.png",
+    "up": "res://assets/sprites/actors/gear/body_2_shoot_back.png",
+    "frame_size": [
+     32,
+     32
+    ],
+    "frames": 4,
+    "fps": 8,
+    "offset": [
+     -8,
+     -8
+    ]
    }
   },
   "gear_legs_2": {
    "path": "res://assets/sprites/actors/gear/legs_2.png",
    "frame_size": [
     16,
-    24
+    16
    ],
    "frames": 4,
    "fps": 5,
@@ -3402,13 +3658,43 @@
    "dir_paths": {
     "down": "res://assets/sprites/actors/gear/legs_2_front.png",
     "up": "res://assets/sprites/actors/gear/legs_2_back.png"
+   },
+   "attack_paths": {
+    "side": "res://assets/sprites/actors/gear/legs_2_attack.png",
+    "down": "res://assets/sprites/actors/gear/legs_2_attack_front.png",
+    "up": "res://assets/sprites/actors/gear/legs_2_attack_back.png",
+    "frame_size": [
+     32,
+     32
+    ],
+    "frames": 4,
+    "fps": 8,
+    "offset": [
+     -8,
+     -8
+    ]
+   },
+   "shoot_paths": {
+    "side": "res://assets/sprites/actors/gear/legs_2_shoot.png",
+    "down": "res://assets/sprites/actors/gear/legs_2_shoot_front.png",
+    "up": "res://assets/sprites/actors/gear/legs_2_shoot_back.png",
+    "frame_size": [
+     32,
+     32
+    ],
+    "frames": 4,
+    "fps": 8,
+    "offset": [
+     -8,
+     -8
+    ]
    }
   },
   "gear_shield_2": {
    "path": "res://assets/sprites/actors/gear/shield_2.png",
    "frame_size": [
     16,
-    24
+    16
    ],
    "frames": 4,
    "fps": 5,
@@ -3417,13 +3703,28 @@
    "dir_paths": {
     "down": "res://assets/sprites/actors/gear/shield_2_front.png",
     "up": "res://assets/sprites/actors/gear/shield_2_back.png"
+   },
+   "attack_paths": {
+    "side": "res://assets/sprites/actors/gear/shield_2_attack.png",
+    "down": "res://assets/sprites/actors/gear/shield_2_attack_front.png",
+    "up": "res://assets/sprites/actors/gear/shield_2_attack_back.png",
+    "frame_size": [
+     32,
+     32
+    ],
+    "frames": 4,
+    "fps": 8,
+    "offset": [
+     -8,
+     -8
+    ]
    }
   },
   "gear_weapon_2": {
    "path": "res://assets/sprites/actors/gear/weapon_sword_2.png",
    "frame_size": [
     16,
-    24
+    16
    ],
    "frames": 4,
    "fps": 5,
@@ -3432,13 +3733,28 @@
    "dir_paths": {
     "down": "res://assets/sprites/actors/gear/weapon_sword_2_front.png",
     "up": "res://assets/sprites/actors/gear/weapon_sword_2_back.png"
+   },
+   "attack_paths": {
+    "side": "res://assets/sprites/actors/gear/weapon_sword_2_attack.png",
+    "down": "res://assets/sprites/actors/gear/weapon_sword_2_attack_front.png",
+    "up": "res://assets/sprites/actors/gear/weapon_sword_2_attack_back.png",
+    "frame_size": [
+     32,
+     32
+    ],
+    "frames": 4,
+    "fps": 8,
+    "offset": [
+     -8,
+     -8
+    ]
    }
   },
   "gear_weapon_dagger_2": {
    "path": "res://assets/sprites/actors/gear/weapon_dagger_2.png",
    "frame_size": [
     16,
-    24
+    16
    ],
    "frames": 4,
    "fps": 5,
@@ -3447,13 +3763,28 @@
    "dir_paths": {
     "down": "res://assets/sprites/actors/gear/weapon_dagger_2_front.png",
     "up": "res://assets/sprites/actors/gear/weapon_dagger_2_back.png"
+   },
+   "attack_paths": {
+    "side": "res://assets/sprites/actors/gear/weapon_dagger_2_attack.png",
+    "down": "res://assets/sprites/actors/gear/weapon_dagger_2_attack_front.png",
+    "up": "res://assets/sprites/actors/gear/weapon_dagger_2_attack_back.png",
+    "frame_size": [
+     32,
+     32
+    ],
+    "frames": 4,
+    "fps": 8,
+    "offset": [
+     -8,
+     -8
+    ]
    }
   },
   "gear_weapon_mace_2": {
    "path": "res://assets/sprites/actors/gear/weapon_mace_2.png",
    "frame_size": [
     16,
-    24
+    16
    ],
    "frames": 4,
    "fps": 5,
@@ -3462,13 +3793,28 @@
    "dir_paths": {
     "down": "res://assets/sprites/actors/gear/weapon_mace_2_front.png",
     "up": "res://assets/sprites/actors/gear/weapon_mace_2_back.png"
+   },
+   "attack_paths": {
+    "side": "res://assets/sprites/actors/gear/weapon_mace_2_attack.png",
+    "down": "res://assets/sprites/actors/gear/weapon_mace_2_attack_front.png",
+    "up": "res://assets/sprites/actors/gear/weapon_mace_2_attack_back.png",
+    "frame_size": [
+     32,
+     32
+    ],
+    "frames": 4,
+    "fps": 8,
+    "offset": [
+     -8,
+     -8
+    ]
    }
   },
   "gear_weapon_warhammer_2": {
    "path": "res://assets/sprites/actors/gear/weapon_warhammer_2.png",
    "frame_size": [
     16,
-    24
+    16
    ],
    "frames": 4,
    "fps": 5,
@@ -3477,13 +3823,28 @@
    "dir_paths": {
     "down": "res://assets/sprites/actors/gear/weapon_warhammer_2_front.png",
     "up": "res://assets/sprites/actors/gear/weapon_warhammer_2_back.png"
+   },
+   "attack_paths": {
+    "side": "res://assets/sprites/actors/gear/weapon_warhammer_2_attack.png",
+    "down": "res://assets/sprites/actors/gear/weapon_warhammer_2_attack_front.png",
+    "up": "res://assets/sprites/actors/gear/weapon_warhammer_2_attack_back.png",
+    "frame_size": [
+     32,
+     32
+    ],
+    "frames": 4,
+    "fps": 8,
+    "offset": [
+     -8,
+     -8
+    ]
    }
   },
   "gear_weapon_battleaxe_2": {
    "path": "res://assets/sprites/actors/gear/weapon_battleaxe_2.png",
    "frame_size": [
     16,
-    24
+    16
    ],
    "frames": 4,
    "fps": 5,
@@ -3492,13 +3853,28 @@
    "dir_paths": {
     "down": "res://assets/sprites/actors/gear/weapon_battleaxe_2_front.png",
     "up": "res://assets/sprites/actors/gear/weapon_battleaxe_2_back.png"
+   },
+   "attack_paths": {
+    "side": "res://assets/sprites/actors/gear/weapon_battleaxe_2_attack.png",
+    "down": "res://assets/sprites/actors/gear/weapon_battleaxe_2_attack_front.png",
+    "up": "res://assets/sprites/actors/gear/weapon_battleaxe_2_attack_back.png",
+    "frame_size": [
+     32,
+     32
+    ],
+    "frames": 4,
+    "fps": 8,
+    "offset": [
+     -8,
+     -8
+    ]
    }
   },
   "gear_head_3": {
    "path": "res://assets/sprites/actors/gear/head_3.png",
    "frame_size": [
     16,
-    24
+    16
    ],
    "frames": 4,
    "fps": 5,
@@ -3507,13 +3883,43 @@
    "dir_paths": {
     "down": "res://assets/sprites/actors/gear/head_3_front.png",
     "up": "res://assets/sprites/actors/gear/head_3_back.png"
+   },
+   "attack_paths": {
+    "side": "res://assets/sprites/actors/gear/head_3_attack.png",
+    "down": "res://assets/sprites/actors/gear/head_3_attack_front.png",
+    "up": "res://assets/sprites/actors/gear/head_3_attack_back.png",
+    "frame_size": [
+     32,
+     32
+    ],
+    "frames": 4,
+    "fps": 8,
+    "offset": [
+     -8,
+     -8
+    ]
+   },
+   "shoot_paths": {
+    "side": "res://assets/sprites/actors/gear/head_3_shoot.png",
+    "down": "res://assets/sprites/actors/gear/head_3_shoot_front.png",
+    "up": "res://assets/sprites/actors/gear/head_3_shoot_back.png",
+    "frame_size": [
+     32,
+     32
+    ],
+    "frames": 4,
+    "fps": 8,
+    "offset": [
+     -8,
+     -8
+    ]
    }
   },
   "gear_body_3": {
    "path": "res://assets/sprites/actors/gear/body_3.png",
    "frame_size": [
     16,
-    24
+    16
    ],
    "frames": 4,
    "fps": 5,
@@ -3522,13 +3928,43 @@
    "dir_paths": {
     "down": "res://assets/sprites/actors/gear/body_3_front.png",
     "up": "res://assets/sprites/actors/gear/body_3_back.png"
+   },
+   "attack_paths": {
+    "side": "res://assets/sprites/actors/gear/body_3_attack.png",
+    "down": "res://assets/sprites/actors/gear/body_3_attack_front.png",
+    "up": "res://assets/sprites/actors/gear/body_3_attack_back.png",
+    "frame_size": [
+     32,
+     32
+    ],
+    "frames": 4,
+    "fps": 8,
+    "offset": [
+     -8,
+     -8
+    ]
+   },
+   "shoot_paths": {
+    "side": "res://assets/sprites/actors/gear/body_3_shoot.png",
+    "down": "res://assets/sprites/actors/gear/body_3_shoot_front.png",
+    "up": "res://assets/sprites/actors/gear/body_3_shoot_back.png",
+    "frame_size": [
+     32,
+     32
+    ],
+    "frames": 4,
+    "fps": 8,
+    "offset": [
+     -8,
+     -8
+    ]
    }
   },
   "gear_legs_3": {
    "path": "res://assets/sprites/actors/gear/legs_3.png",
    "frame_size": [
     16,
-    24
+    16
    ],
    "frames": 4,
    "fps": 5,
@@ -3537,13 +3973,43 @@
    "dir_paths": {
     "down": "res://assets/sprites/actors/gear/legs_3_front.png",
     "up": "res://assets/sprites/actors/gear/legs_3_back.png"
+   },
+   "attack_paths": {
+    "side": "res://assets/sprites/actors/gear/legs_3_attack.png",
+    "down": "res://assets/sprites/actors/gear/legs_3_attack_front.png",
+    "up": "res://assets/sprites/actors/gear/legs_3_attack_back.png",
+    "frame_size": [
+     32,
+     32
+    ],
+    "frames": 4,
+    "fps": 8,
+    "offset": [
+     -8,
+     -8
+    ]
+   },
+   "shoot_paths": {
+    "side": "res://assets/sprites/actors/gear/legs_3_shoot.png",
+    "down": "res://assets/sprites/actors/gear/legs_3_shoot_front.png",
+    "up": "res://assets/sprites/actors/gear/legs_3_shoot_back.png",
+    "frame_size": [
+     32,
+     32
+    ],
+    "frames": 4,
+    "fps": 8,
+    "offset": [
+     -8,
+     -8
+    ]
    }
   },
   "gear_shield_3": {
    "path": "res://assets/sprites/actors/gear/shield_3.png",
    "frame_size": [
     16,
-    24
+    16
    ],
    "frames": 4,
    "fps": 5,
@@ -3552,13 +4018,28 @@
    "dir_paths": {
     "down": "res://assets/sprites/actors/gear/shield_3_front.png",
     "up": "res://assets/sprites/actors/gear/shield_3_back.png"
+   },
+   "attack_paths": {
+    "side": "res://assets/sprites/actors/gear/shield_3_attack.png",
+    "down": "res://assets/sprites/actors/gear/shield_3_attack_front.png",
+    "up": "res://assets/sprites/actors/gear/shield_3_attack_back.png",
+    "frame_size": [
+     32,
+     32
+    ],
+    "frames": 4,
+    "fps": 8,
+    "offset": [
+     -8,
+     -8
+    ]
    }
   },
   "gear_weapon_3": {
    "path": "res://assets/sprites/actors/gear/weapon_sword_3.png",
    "frame_size": [
     16,
-    24
+    16
    ],
    "frames": 4,
    "fps": 5,
@@ -3567,13 +4048,28 @@
    "dir_paths": {
     "down": "res://assets/sprites/actors/gear/weapon_sword_3_front.png",
     "up": "res://assets/sprites/actors/gear/weapon_sword_3_back.png"
+   },
+   "attack_paths": {
+    "side": "res://assets/sprites/actors/gear/weapon_sword_3_attack.png",
+    "down": "res://assets/sprites/actors/gear/weapon_sword_3_attack_front.png",
+    "up": "res://assets/sprites/actors/gear/weapon_sword_3_attack_back.png",
+    "frame_size": [
+     32,
+     32
+    ],
+    "frames": 4,
+    "fps": 8,
+    "offset": [
+     -8,
+     -8
+    ]
    }
   },
   "gear_weapon_dagger_3": {
    "path": "res://assets/sprites/actors/gear/weapon_dagger_3.png",
    "frame_size": [
     16,
-    24
+    16
    ],
    "frames": 4,
    "fps": 5,
@@ -3582,13 +4078,28 @@
    "dir_paths": {
     "down": "res://assets/sprites/actors/gear/weapon_dagger_3_front.png",
     "up": "res://assets/sprites/actors/gear/weapon_dagger_3_back.png"
+   },
+   "attack_paths": {
+    "side": "res://assets/sprites/actors/gear/weapon_dagger_3_attack.png",
+    "down": "res://assets/sprites/actors/gear/weapon_dagger_3_attack_front.png",
+    "up": "res://assets/sprites/actors/gear/weapon_dagger_3_attack_back.png",
+    "frame_size": [
+     32,
+     32
+    ],
+    "frames": 4,
+    "fps": 8,
+    "offset": [
+     -8,
+     -8
+    ]
    }
   },
   "gear_weapon_mace_3": {
    "path": "res://assets/sprites/actors/gear/weapon_mace_3.png",
    "frame_size": [
     16,
-    24
+    16
    ],
    "frames": 4,
    "fps": 5,
@@ -3597,13 +4108,28 @@
    "dir_paths": {
     "down": "res://assets/sprites/actors/gear/weapon_mace_3_front.png",
     "up": "res://assets/sprites/actors/gear/weapon_mace_3_back.png"
+   },
+   "attack_paths": {
+    "side": "res://assets/sprites/actors/gear/weapon_mace_3_attack.png",
+    "down": "res://assets/sprites/actors/gear/weapon_mace_3_attack_front.png",
+    "up": "res://assets/sprites/actors/gear/weapon_mace_3_attack_back.png",
+    "frame_size": [
+     32,
+     32
+    ],
+    "frames": 4,
+    "fps": 8,
+    "offset": [
+     -8,
+     -8
+    ]
    }
   },
   "gear_weapon_warhammer_3": {
    "path": "res://assets/sprites/actors/gear/weapon_warhammer_3.png",
    "frame_size": [
     16,
-    24
+    16
    ],
    "frames": 4,
    "fps": 5,
@@ -3612,13 +4138,28 @@
    "dir_paths": {
     "down": "res://assets/sprites/actors/gear/weapon_warhammer_3_front.png",
     "up": "res://assets/sprites/actors/gear/weapon_warhammer_3_back.png"
+   },
+   "attack_paths": {
+    "side": "res://assets/sprites/actors/gear/weapon_warhammer_3_attack.png",
+    "down": "res://assets/sprites/actors/gear/weapon_warhammer_3_attack_front.png",
+    "up": "res://assets/sprites/actors/gear/weapon_warhammer_3_attack_back.png",
+    "frame_size": [
+     32,
+     32
+    ],
+    "frames": 4,
+    "fps": 8,
+    "offset": [
+     -8,
+     -8
+    ]
    }
   },
   "gear_weapon_battleaxe_3": {
    "path": "res://assets/sprites/actors/gear/weapon_battleaxe_3.png",
    "frame_size": [
     16,
-    24
+    16
    ],
    "frames": 4,
    "fps": 5,
@@ -3627,13 +4168,28 @@
    "dir_paths": {
     "down": "res://assets/sprites/actors/gear/weapon_battleaxe_3_front.png",
     "up": "res://assets/sprites/actors/gear/weapon_battleaxe_3_back.png"
+   },
+   "attack_paths": {
+    "side": "res://assets/sprites/actors/gear/weapon_battleaxe_3_attack.png",
+    "down": "res://assets/sprites/actors/gear/weapon_battleaxe_3_attack_front.png",
+    "up": "res://assets/sprites/actors/gear/weapon_battleaxe_3_attack_back.png",
+    "frame_size": [
+     32,
+     32
+    ],
+    "frames": 4,
+    "fps": 8,
+    "offset": [
+     -8,
+     -8
+    ]
    }
   },
   "gear_head_4": {
    "path": "res://assets/sprites/actors/gear/head_4.png",
    "frame_size": [
     16,
-    24
+    16
    ],
    "frames": 4,
    "fps": 5,
@@ -3642,13 +4198,43 @@
    "dir_paths": {
     "down": "res://assets/sprites/actors/gear/head_4_front.png",
     "up": "res://assets/sprites/actors/gear/head_4_back.png"
+   },
+   "attack_paths": {
+    "side": "res://assets/sprites/actors/gear/head_4_attack.png",
+    "down": "res://assets/sprites/actors/gear/head_4_attack_front.png",
+    "up": "res://assets/sprites/actors/gear/head_4_attack_back.png",
+    "frame_size": [
+     32,
+     32
+    ],
+    "frames": 4,
+    "fps": 8,
+    "offset": [
+     -8,
+     -8
+    ]
+   },
+   "shoot_paths": {
+    "side": "res://assets/sprites/actors/gear/head_4_shoot.png",
+    "down": "res://assets/sprites/actors/gear/head_4_shoot_front.png",
+    "up": "res://assets/sprites/actors/gear/head_4_shoot_back.png",
+    "frame_size": [
+     32,
+     32
+    ],
+    "frames": 4,
+    "fps": 8,
+    "offset": [
+     -8,
+     -8
+    ]
    }
   },
   "gear_body_4": {
    "path": "res://assets/sprites/actors/gear/body_4.png",
    "frame_size": [
     16,
-    24
+    16
    ],
    "frames": 4,
    "fps": 5,
@@ -3657,13 +4243,43 @@
    "dir_paths": {
     "down": "res://assets/sprites/actors/gear/body_4_front.png",
     "up": "res://assets/sprites/actors/gear/body_4_back.png"
+   },
+   "attack_paths": {
+    "side": "res://assets/sprites/actors/gear/body_4_attack.png",
+    "down": "res://assets/sprites/actors/gear/body_4_attack_front.png",
+    "up": "res://assets/sprites/actors/gear/body_4_attack_back.png",
+    "frame_size": [
+     32,
+     32
+    ],
+    "frames": 4,
+    "fps": 8,
+    "offset": [
+     -8,
+     -8
+    ]
+   },
+   "shoot_paths": {
+    "side": "res://assets/sprites/actors/gear/body_4_shoot.png",
+    "down": "res://assets/sprites/actors/gear/body_4_shoot_front.png",
+    "up": "res://assets/sprites/actors/gear/body_4_shoot_back.png",
+    "frame_size": [
+     32,
+     32
+    ],
+    "frames": 4,
+    "fps": 8,
+    "offset": [
+     -8,
+     -8
+    ]
    }
   },
   "gear_legs_4": {
    "path": "res://assets/sprites/actors/gear/legs_4.png",
    "frame_size": [
     16,
-    24
+    16
    ],
    "frames": 4,
    "fps": 5,
@@ -3672,13 +4288,43 @@
    "dir_paths": {
     "down": "res://assets/sprites/actors/gear/legs_4_front.png",
     "up": "res://assets/sprites/actors/gear/legs_4_back.png"
+   },
+   "attack_paths": {
+    "side": "res://assets/sprites/actors/gear/legs_4_attack.png",
+    "down": "res://assets/sprites/actors/gear/legs_4_attack_front.png",
+    "up": "res://assets/sprites/actors/gear/legs_4_attack_back.png",
+    "frame_size": [
+     32,
+     32
+    ],
+    "frames": 4,
+    "fps": 8,
+    "offset": [
+     -8,
+     -8
+    ]
+   },
+   "shoot_paths": {
+    "side": "res://assets/sprites/actors/gear/legs_4_shoot.png",
+    "down": "res://assets/sprites/actors/gear/legs_4_shoot_front.png",
+    "up": "res://assets/sprites/actors/gear/legs_4_shoot_back.png",
+    "frame_size": [
+     32,
+     32
+    ],
+    "frames": 4,
+    "fps": 8,
+    "offset": [
+     -8,
+     -8
+    ]
    }
   },
   "gear_shield_4": {
    "path": "res://assets/sprites/actors/gear/shield_4.png",
    "frame_size": [
     16,
-    24
+    16
    ],
    "frames": 4,
    "fps": 5,
@@ -3687,13 +4333,28 @@
    "dir_paths": {
     "down": "res://assets/sprites/actors/gear/shield_4_front.png",
     "up": "res://assets/sprites/actors/gear/shield_4_back.png"
+   },
+   "attack_paths": {
+    "side": "res://assets/sprites/actors/gear/shield_4_attack.png",
+    "down": "res://assets/sprites/actors/gear/shield_4_attack_front.png",
+    "up": "res://assets/sprites/actors/gear/shield_4_attack_back.png",
+    "frame_size": [
+     32,
+     32
+    ],
+    "frames": 4,
+    "fps": 8,
+    "offset": [
+     -8,
+     -8
+    ]
    }
   },
   "gear_weapon_4": {
    "path": "res://assets/sprites/actors/gear/weapon_sword_4.png",
    "frame_size": [
     16,
-    24
+    16
    ],
    "frames": 4,
    "fps": 5,
@@ -3702,13 +4363,28 @@
    "dir_paths": {
     "down": "res://assets/sprites/actors/gear/weapon_sword_4_front.png",
     "up": "res://assets/sprites/actors/gear/weapon_sword_4_back.png"
+   },
+   "attack_paths": {
+    "side": "res://assets/sprites/actors/gear/weapon_sword_4_attack.png",
+    "down": "res://assets/sprites/actors/gear/weapon_sword_4_attack_front.png",
+    "up": "res://assets/sprites/actors/gear/weapon_sword_4_attack_back.png",
+    "frame_size": [
+     32,
+     32
+    ],
+    "frames": 4,
+    "fps": 8,
+    "offset": [
+     -8,
+     -8
+    ]
    }
   },
   "gear_weapon_dagger_4": {
    "path": "res://assets/sprites/actors/gear/weapon_dagger_4.png",
    "frame_size": [
     16,
-    24
+    16
    ],
    "frames": 4,
    "fps": 5,
@@ -3717,13 +4393,28 @@
    "dir_paths": {
     "down": "res://assets/sprites/actors/gear/weapon_dagger_4_front.png",
     "up": "res://assets/sprites/actors/gear/weapon_dagger_4_back.png"
+   },
+   "attack_paths": {
+    "side": "res://assets/sprites/actors/gear/weapon_dagger_4_attack.png",
+    "down": "res://assets/sprites/actors/gear/weapon_dagger_4_attack_front.png",
+    "up": "res://assets/sprites/actors/gear/weapon_dagger_4_attack_back.png",
+    "frame_size": [
+     32,
+     32
+    ],
+    "frames": 4,
+    "fps": 8,
+    "offset": [
+     -8,
+     -8
+    ]
    }
   },
   "gear_weapon_mace_4": {
    "path": "res://assets/sprites/actors/gear/weapon_mace_4.png",
    "frame_size": [
     16,
-    24
+    16
    ],
    "frames": 4,
    "fps": 5,
@@ -3732,13 +4423,28 @@
    "dir_paths": {
     "down": "res://assets/sprites/actors/gear/weapon_mace_4_front.png",
     "up": "res://assets/sprites/actors/gear/weapon_mace_4_back.png"
+   },
+   "attack_paths": {
+    "side": "res://assets/sprites/actors/gear/weapon_mace_4_attack.png",
+    "down": "res://assets/sprites/actors/gear/weapon_mace_4_attack_front.png",
+    "up": "res://assets/sprites/actors/gear/weapon_mace_4_attack_back.png",
+    "frame_size": [
+     32,
+     32
+    ],
+    "frames": 4,
+    "fps": 8,
+    "offset": [
+     -8,
+     -8
+    ]
    }
   },
   "gear_weapon_warhammer_4": {
    "path": "res://assets/sprites/actors/gear/weapon_warhammer_4.png",
    "frame_size": [
     16,
-    24
+    16
    ],
    "frames": 4,
    "fps": 5,
@@ -3747,13 +4453,28 @@
    "dir_paths": {
     "down": "res://assets/sprites/actors/gear/weapon_warhammer_4_front.png",
     "up": "res://assets/sprites/actors/gear/weapon_warhammer_4_back.png"
+   },
+   "attack_paths": {
+    "side": "res://assets/sprites/actors/gear/weapon_warhammer_4_attack.png",
+    "down": "res://assets/sprites/actors/gear/weapon_warhammer_4_attack_front.png",
+    "up": "res://assets/sprites/actors/gear/weapon_warhammer_4_attack_back.png",
+    "frame_size": [
+     32,
+     32
+    ],
+    "frames": 4,
+    "fps": 8,
+    "offset": [
+     -8,
+     -8
+    ]
    }
   },
   "gear_weapon_battleaxe_4": {
    "path": "res://assets/sprites/actors/gear/weapon_battleaxe_4.png",
    "frame_size": [
     16,
-    24
+    16
    ],
    "frames": 4,
    "fps": 5,
@@ -3762,13 +4483,28 @@
    "dir_paths": {
     "down": "res://assets/sprites/actors/gear/weapon_battleaxe_4_front.png",
     "up": "res://assets/sprites/actors/gear/weapon_battleaxe_4_back.png"
+   },
+   "attack_paths": {
+    "side": "res://assets/sprites/actors/gear/weapon_battleaxe_4_attack.png",
+    "down": "res://assets/sprites/actors/gear/weapon_battleaxe_4_attack_front.png",
+    "up": "res://assets/sprites/actors/gear/weapon_battleaxe_4_attack_back.png",
+    "frame_size": [
+     32,
+     32
+    ],
+    "frames": 4,
+    "fps": 8,
+    "offset": [
+     -8,
+     -8
+    ]
    }
   },
   "gear_weapon_bow_1": {
    "path": "res://assets/sprites/actors/gear/weapon_bow_1.png",
    "frame_size": [
     16,
-    24
+    16
    ],
    "frames": 4,
    "fps": 5,
@@ -3777,13 +4513,28 @@
    "dir_paths": {
     "down": "res://assets/sprites/actors/gear/weapon_bow_1_front.png",
     "up": "res://assets/sprites/actors/gear/weapon_bow_1_back.png"
+   },
+   "shoot_paths": {
+    "side": "res://assets/sprites/actors/gear/weapon_bow_1_shoot.png",
+    "down": "res://assets/sprites/actors/gear/weapon_bow_1_shoot_front.png",
+    "up": "res://assets/sprites/actors/gear/weapon_bow_1_shoot_back.png",
+    "frame_size": [
+     32,
+     32
+    ],
+    "frames": 4,
+    "fps": 8,
+    "offset": [
+     -8,
+     -8
+    ]
    }
   },
   "gear_shield_buckler_1": {
    "path": "res://assets/sprites/actors/gear/shield_buckler_1.png",
    "frame_size": [
     16,
-    24
+    16
    ],
    "frames": 4,
    "fps": 5,
@@ -3792,13 +4543,28 @@
    "dir_paths": {
     "down": "res://assets/sprites/actors/gear/shield_buckler_1_front.png",
     "up": "res://assets/sprites/actors/gear/shield_buckler_1_back.png"
+   },
+   "attack_paths": {
+    "side": "res://assets/sprites/actors/gear/shield_buckler_1_attack.png",
+    "down": "res://assets/sprites/actors/gear/shield_buckler_1_attack_front.png",
+    "up": "res://assets/sprites/actors/gear/shield_buckler_1_attack_back.png",
+    "frame_size": [
+     32,
+     32
+    ],
+    "frames": 4,
+    "fps": 8,
+    "offset": [
+     -8,
+     -8
+    ]
    }
   },
   "gear_shield_kite_1": {
    "path": "res://assets/sprites/actors/gear/shield_kite_1.png",
    "frame_size": [
     16,
-    24
+    16
    ],
    "frames": 4,
    "fps": 5,
@@ -3807,13 +4573,28 @@
    "dir_paths": {
     "down": "res://assets/sprites/actors/gear/shield_kite_1_front.png",
     "up": "res://assets/sprites/actors/gear/shield_kite_1_back.png"
+   },
+   "attack_paths": {
+    "side": "res://assets/sprites/actors/gear/shield_kite_1_attack.png",
+    "down": "res://assets/sprites/actors/gear/shield_kite_1_attack_front.png",
+    "up": "res://assets/sprites/actors/gear/shield_kite_1_attack_back.png",
+    "frame_size": [
+     32,
+     32
+    ],
+    "frames": 4,
+    "fps": 8,
+    "offset": [
+     -8,
+     -8
+    ]
    }
   },
   "gear_shield_heater_1": {
    "path": "res://assets/sprites/actors/gear/shield_heater_1.png",
    "frame_size": [
     16,
-    24
+    16
    ],
    "frames": 4,
    "fps": 5,
@@ -3822,13 +4603,28 @@
    "dir_paths": {
     "down": "res://assets/sprites/actors/gear/shield_heater_1_front.png",
     "up": "res://assets/sprites/actors/gear/shield_heater_1_back.png"
+   },
+   "attack_paths": {
+    "side": "res://assets/sprites/actors/gear/shield_heater_1_attack.png",
+    "down": "res://assets/sprites/actors/gear/shield_heater_1_attack_front.png",
+    "up": "res://assets/sprites/actors/gear/shield_heater_1_attack_back.png",
+    "frame_size": [
+     32,
+     32
+    ],
+    "frames": 4,
+    "fps": 8,
+    "offset": [
+     -8,
+     -8
+    ]
    }
   },
   "gear_shield_tower_1": {
    "path": "res://assets/sprites/actors/gear/shield_tower_1.png",
    "frame_size": [
     16,
-    24
+    16
    ],
    "frames": 4,
    "fps": 5,
@@ -3837,13 +4633,28 @@
    "dir_paths": {
     "down": "res://assets/sprites/actors/gear/shield_tower_1_front.png",
     "up": "res://assets/sprites/actors/gear/shield_tower_1_back.png"
+   },
+   "attack_paths": {
+    "side": "res://assets/sprites/actors/gear/shield_tower_1_attack.png",
+    "down": "res://assets/sprites/actors/gear/shield_tower_1_attack_front.png",
+    "up": "res://assets/sprites/actors/gear/shield_tower_1_attack_back.png",
+    "frame_size": [
+     32,
+     32
+    ],
+    "frames": 4,
+    "fps": 8,
+    "offset": [
+     -8,
+     -8
+    ]
    }
   },
   "gear_weapon_bow_2": {
    "path": "res://assets/sprites/actors/gear/weapon_bow_2.png",
    "frame_size": [
     16,
-    24
+    16
    ],
    "frames": 4,
    "fps": 5,
@@ -3852,13 +4663,28 @@
    "dir_paths": {
     "down": "res://assets/sprites/actors/gear/weapon_bow_2_front.png",
     "up": "res://assets/sprites/actors/gear/weapon_bow_2_back.png"
+   },
+   "shoot_paths": {
+    "side": "res://assets/sprites/actors/gear/weapon_bow_2_shoot.png",
+    "down": "res://assets/sprites/actors/gear/weapon_bow_2_shoot_front.png",
+    "up": "res://assets/sprites/actors/gear/weapon_bow_2_shoot_back.png",
+    "frame_size": [
+     32,
+     32
+    ],
+    "frames": 4,
+    "fps": 8,
+    "offset": [
+     -8,
+     -8
+    ]
    }
   },
   "gear_shield_buckler_2": {
    "path": "res://assets/sprites/actors/gear/shield_buckler_2.png",
    "frame_size": [
     16,
-    24
+    16
    ],
    "frames": 4,
    "fps": 5,
@@ -3867,13 +4693,28 @@
    "dir_paths": {
     "down": "res://assets/sprites/actors/gear/shield_buckler_2_front.png",
     "up": "res://assets/sprites/actors/gear/shield_buckler_2_back.png"
+   },
+   "attack_paths": {
+    "side": "res://assets/sprites/actors/gear/shield_buckler_2_attack.png",
+    "down": "res://assets/sprites/actors/gear/shield_buckler_2_attack_front.png",
+    "up": "res://assets/sprites/actors/gear/shield_buckler_2_attack_back.png",
+    "frame_size": [
+     32,
+     32
+    ],
+    "frames": 4,
+    "fps": 8,
+    "offset": [
+     -8,
+     -8
+    ]
    }
   },
   "gear_shield_kite_2": {
    "path": "res://assets/sprites/actors/gear/shield_kite_2.png",
    "frame_size": [
     16,
-    24
+    16
    ],
    "frames": 4,
    "fps": 5,
@@ -3882,13 +4723,28 @@
    "dir_paths": {
     "down": "res://assets/sprites/actors/gear/shield_kite_2_front.png",
     "up": "res://assets/sprites/actors/gear/shield_kite_2_back.png"
+   },
+   "attack_paths": {
+    "side": "res://assets/sprites/actors/gear/shield_kite_2_attack.png",
+    "down": "res://assets/sprites/actors/gear/shield_kite_2_attack_front.png",
+    "up": "res://assets/sprites/actors/gear/shield_kite_2_attack_back.png",
+    "frame_size": [
+     32,
+     32
+    ],
+    "frames": 4,
+    "fps": 8,
+    "offset": [
+     -8,
+     -8
+    ]
    }
   },
   "gear_shield_heater_2": {
    "path": "res://assets/sprites/actors/gear/shield_heater_2.png",
    "frame_size": [
     16,
-    24
+    16
    ],
    "frames": 4,
    "fps": 5,
@@ -3897,13 +4753,28 @@
    "dir_paths": {
     "down": "res://assets/sprites/actors/gear/shield_heater_2_front.png",
     "up": "res://assets/sprites/actors/gear/shield_heater_2_back.png"
+   },
+   "attack_paths": {
+    "side": "res://assets/sprites/actors/gear/shield_heater_2_attack.png",
+    "down": "res://assets/sprites/actors/gear/shield_heater_2_attack_front.png",
+    "up": "res://assets/sprites/actors/gear/shield_heater_2_attack_back.png",
+    "frame_size": [
+     32,
+     32
+    ],
+    "frames": 4,
+    "fps": 8,
+    "offset": [
+     -8,
+     -8
+    ]
    }
   },
   "gear_shield_tower_2": {
    "path": "res://assets/sprites/actors/gear/shield_tower_2.png",
    "frame_size": [
     16,
-    24
+    16
    ],
    "frames": 4,
    "fps": 5,
@@ -3912,13 +4783,28 @@
    "dir_paths": {
     "down": "res://assets/sprites/actors/gear/shield_tower_2_front.png",
     "up": "res://assets/sprites/actors/gear/shield_tower_2_back.png"
+   },
+   "attack_paths": {
+    "side": "res://assets/sprites/actors/gear/shield_tower_2_attack.png",
+    "down": "res://assets/sprites/actors/gear/shield_tower_2_attack_front.png",
+    "up": "res://assets/sprites/actors/gear/shield_tower_2_attack_back.png",
+    "frame_size": [
+     32,
+     32
+    ],
+    "frames": 4,
+    "fps": 8,
+    "offset": [
+     -8,
+     -8
+    ]
    }
   },
   "gear_weapon_bow_3": {
    "path": "res://assets/sprites/actors/gear/weapon_bow_3.png",
    "frame_size": [
     16,
-    24
+    16
    ],
    "frames": 4,
    "fps": 5,
@@ -3927,13 +4813,28 @@
    "dir_paths": {
     "down": "res://assets/sprites/actors/gear/weapon_bow_3_front.png",
     "up": "res://assets/sprites/actors/gear/weapon_bow_3_back.png"
+   },
+   "shoot_paths": {
+    "side": "res://assets/sprites/actors/gear/weapon_bow_3_shoot.png",
+    "down": "res://assets/sprites/actors/gear/weapon_bow_3_shoot_front.png",
+    "up": "res://assets/sprites/actors/gear/weapon_bow_3_shoot_back.png",
+    "frame_size": [
+     32,
+     32
+    ],
+    "frames": 4,
+    "fps": 8,
+    "offset": [
+     -8,
+     -8
+    ]
    }
   },
   "gear_shield_buckler_3": {
    "path": "res://assets/sprites/actors/gear/shield_buckler_3.png",
    "frame_size": [
     16,
-    24
+    16
    ],
    "frames": 4,
    "fps": 5,
@@ -3942,13 +4843,28 @@
    "dir_paths": {
     "down": "res://assets/sprites/actors/gear/shield_buckler_3_front.png",
     "up": "res://assets/sprites/actors/gear/shield_buckler_3_back.png"
+   },
+   "attack_paths": {
+    "side": "res://assets/sprites/actors/gear/shield_buckler_3_attack.png",
+    "down": "res://assets/sprites/actors/gear/shield_buckler_3_attack_front.png",
+    "up": "res://assets/sprites/actors/gear/shield_buckler_3_attack_back.png",
+    "frame_size": [
+     32,
+     32
+    ],
+    "frames": 4,
+    "fps": 8,
+    "offset": [
+     -8,
+     -8
+    ]
    }
   },
   "gear_shield_kite_3": {
    "path": "res://assets/sprites/actors/gear/shield_kite_3.png",
    "frame_size": [
     16,
-    24
+    16
    ],
    "frames": 4,
    "fps": 5,
@@ -3957,13 +4873,28 @@
    "dir_paths": {
     "down": "res://assets/sprites/actors/gear/shield_kite_3_front.png",
     "up": "res://assets/sprites/actors/gear/shield_kite_3_back.png"
+   },
+   "attack_paths": {
+    "side": "res://assets/sprites/actors/gear/shield_kite_3_attack.png",
+    "down": "res://assets/sprites/actors/gear/shield_kite_3_attack_front.png",
+    "up": "res://assets/sprites/actors/gear/shield_kite_3_attack_back.png",
+    "frame_size": [
+     32,
+     32
+    ],
+    "frames": 4,
+    "fps": 8,
+    "offset": [
+     -8,
+     -8
+    ]
    }
   },
   "gear_shield_heater_3": {
    "path": "res://assets/sprites/actors/gear/shield_heater_3.png",
    "frame_size": [
     16,
-    24
+    16
    ],
    "frames": 4,
    "fps": 5,
@@ -3972,13 +4903,28 @@
    "dir_paths": {
     "down": "res://assets/sprites/actors/gear/shield_heater_3_front.png",
     "up": "res://assets/sprites/actors/gear/shield_heater_3_back.png"
+   },
+   "attack_paths": {
+    "side": "res://assets/sprites/actors/gear/shield_heater_3_attack.png",
+    "down": "res://assets/sprites/actors/gear/shield_heater_3_attack_front.png",
+    "up": "res://assets/sprites/actors/gear/shield_heater_3_attack_back.png",
+    "frame_size": [
+     32,
+     32
+    ],
+    "frames": 4,
+    "fps": 8,
+    "offset": [
+     -8,
+     -8
+    ]
    }
   },
   "gear_shield_tower_3": {
    "path": "res://assets/sprites/actors/gear/shield_tower_3.png",
    "frame_size": [
     16,
-    24
+    16
    ],
    "frames": 4,
    "fps": 5,
@@ -3987,13 +4933,28 @@
    "dir_paths": {
     "down": "res://assets/sprites/actors/gear/shield_tower_3_front.png",
     "up": "res://assets/sprites/actors/gear/shield_tower_3_back.png"
+   },
+   "attack_paths": {
+    "side": "res://assets/sprites/actors/gear/shield_tower_3_attack.png",
+    "down": "res://assets/sprites/actors/gear/shield_tower_3_attack_front.png",
+    "up": "res://assets/sprites/actors/gear/shield_tower_3_attack_back.png",
+    "frame_size": [
+     32,
+     32
+    ],
+    "frames": 4,
+    "fps": 8,
+    "offset": [
+     -8,
+     -8
+    ]
    }
   },
   "gear_weapon_bow_4": {
    "path": "res://assets/sprites/actors/gear/weapon_bow_4.png",
    "frame_size": [
     16,
-    24
+    16
    ],
    "frames": 4,
    "fps": 5,
@@ -4002,13 +4963,28 @@
    "dir_paths": {
     "down": "res://assets/sprites/actors/gear/weapon_bow_4_front.png",
     "up": "res://assets/sprites/actors/gear/weapon_bow_4_back.png"
+   },
+   "shoot_paths": {
+    "side": "res://assets/sprites/actors/gear/weapon_bow_4_shoot.png",
+    "down": "res://assets/sprites/actors/gear/weapon_bow_4_shoot_front.png",
+    "up": "res://assets/sprites/actors/gear/weapon_bow_4_shoot_back.png",
+    "frame_size": [
+     32,
+     32
+    ],
+    "frames": 4,
+    "fps": 8,
+    "offset": [
+     -8,
+     -8
+    ]
    }
   },
   "gear_shield_buckler_4": {
    "path": "res://assets/sprites/actors/gear/shield_buckler_4.png",
    "frame_size": [
     16,
-    24
+    16
    ],
    "frames": 4,
    "fps": 5,
@@ -4017,13 +4993,28 @@
    "dir_paths": {
     "down": "res://assets/sprites/actors/gear/shield_buckler_4_front.png",
     "up": "res://assets/sprites/actors/gear/shield_buckler_4_back.png"
+   },
+   "attack_paths": {
+    "side": "res://assets/sprites/actors/gear/shield_buckler_4_attack.png",
+    "down": "res://assets/sprites/actors/gear/shield_buckler_4_attack_front.png",
+    "up": "res://assets/sprites/actors/gear/shield_buckler_4_attack_back.png",
+    "frame_size": [
+     32,
+     32
+    ],
+    "frames": 4,
+    "fps": 8,
+    "offset": [
+     -8,
+     -8
+    ]
    }
   },
   "gear_shield_kite_4": {
    "path": "res://assets/sprites/actors/gear/shield_kite_4.png",
    "frame_size": [
     16,
-    24
+    16
    ],
    "frames": 4,
    "fps": 5,
@@ -4032,13 +5023,28 @@
    "dir_paths": {
     "down": "res://assets/sprites/actors/gear/shield_kite_4_front.png",
     "up": "res://assets/sprites/actors/gear/shield_kite_4_back.png"
+   },
+   "attack_paths": {
+    "side": "res://assets/sprites/actors/gear/shield_kite_4_attack.png",
+    "down": "res://assets/sprites/actors/gear/shield_kite_4_attack_front.png",
+    "up": "res://assets/sprites/actors/gear/shield_kite_4_attack_back.png",
+    "frame_size": [
+     32,
+     32
+    ],
+    "frames": 4,
+    "fps": 8,
+    "offset": [
+     -8,
+     -8
+    ]
    }
   },
   "gear_shield_heater_4": {
    "path": "res://assets/sprites/actors/gear/shield_heater_4.png",
    "frame_size": [
     16,
-    24
+    16
    ],
    "frames": 4,
    "fps": 5,
@@ -4047,13 +5053,28 @@
    "dir_paths": {
     "down": "res://assets/sprites/actors/gear/shield_heater_4_front.png",
     "up": "res://assets/sprites/actors/gear/shield_heater_4_back.png"
+   },
+   "attack_paths": {
+    "side": "res://assets/sprites/actors/gear/shield_heater_4_attack.png",
+    "down": "res://assets/sprites/actors/gear/shield_heater_4_attack_front.png",
+    "up": "res://assets/sprites/actors/gear/shield_heater_4_attack_back.png",
+    "frame_size": [
+     32,
+     32
+    ],
+    "frames": 4,
+    "fps": 8,
+    "offset": [
+     -8,
+     -8
+    ]
    }
   },
   "gear_shield_tower_4": {
    "path": "res://assets/sprites/actors/gear/shield_tower_4.png",
    "frame_size": [
     16,
-    24
+    16
    ],
    "frames": 4,
    "fps": 5,
@@ -4062,13 +5083,28 @@
    "dir_paths": {
     "down": "res://assets/sprites/actors/gear/shield_tower_4_front.png",
     "up": "res://assets/sprites/actors/gear/shield_tower_4_back.png"
+   },
+   "attack_paths": {
+    "side": "res://assets/sprites/actors/gear/shield_tower_4_attack.png",
+    "down": "res://assets/sprites/actors/gear/shield_tower_4_attack_front.png",
+    "up": "res://assets/sprites/actors/gear/shield_tower_4_attack_back.png",
+    "frame_size": [
+     32,
+     32
+    ],
+    "frames": 4,
+    "fps": 8,
+    "offset": [
+     -8,
+     -8
+    ]
    }
   },
   "player": {
    "path": "res://assets/sprites/actors/player.png",
    "frame_size": [
     16,
-    24
+    16
    ],
    "frames": 4,
    "fps": 5,
@@ -4077,6 +5113,36 @@
    "dir_paths": {
     "down": "res://assets/sprites/actors/player_front.png",
     "up": "res://assets/sprites/actors/player_back.png"
+   },
+   "attack_paths": {
+    "side": "res://assets/sprites/actors/player_attack.png",
+    "down": "res://assets/sprites/actors/player_attack_front.png",
+    "up": "res://assets/sprites/actors/player_attack_back.png",
+    "frame_size": [
+     32,
+     32
+    ],
+    "frames": 4,
+    "fps": 8,
+    "offset": [
+     -8,
+     -8
+    ]
+   },
+   "shoot_paths": {
+    "side": "res://assets/sprites/actors/player_shoot.png",
+    "down": "res://assets/sprites/actors/player_shoot_front.png",
+    "up": "res://assets/sprites/actors/player_shoot_back.png",
+    "frame_size": [
+     32,
+     32
+    ],
+    "frames": 4,
+    "fps": 8,
+    "offset": [
+     -8,
+     -8
+    ]
    }
   },
   "npc": {
@@ -4093,7 +5159,8 @@
    "dir_paths": {
     "down": "res://assets/sprites/actors/npc_front.png",
     "up": "res://assets/sprites/actors/npc_back.png"
-   }
+   },
+   "body_top": 8
   },
   "giant_rat": {
    "path": "res://assets/sprites/actors/giant_rat.png",
@@ -4123,7 +5190,8 @@
    "dir_paths": {
     "down": "res://assets/sprites/actors/goblin_front.png",
     "up": "res://assets/sprites/actors/goblin_back.png"
-   }
+   },
+   "body_top": 9
   },
   "keeper_general": {
    "path": "res://assets/sprites/actors/keeper_general.png",
@@ -4138,7 +5206,8 @@
    "dir_paths": {
     "down": "res://assets/sprites/actors/keeper_general_front.png",
     "up": "res://assets/sprites/actors/keeper_general_back.png"
-   }
+   },
+   "body_top": 8
   },
   "keeper_helmets": {
    "path": "res://assets/sprites/actors/keeper_helmets.png",
@@ -4153,7 +5222,8 @@
    "dir_paths": {
     "down": "res://assets/sprites/actors/keeper_helmets_front.png",
     "up": "res://assets/sprites/actors/keeper_helmets_back.png"
-   }
+   },
+   "body_top": 6
   },
   "keeper_body": {
    "path": "res://assets/sprites/actors/keeper_body.png",
@@ -4168,7 +5238,8 @@
    "dir_paths": {
     "down": "res://assets/sprites/actors/keeper_body_front.png",
     "up": "res://assets/sprites/actors/keeper_body_back.png"
-   }
+   },
+   "body_top": 8
   },
   "keeper_legs": {
    "path": "res://assets/sprites/actors/keeper_legs.png",
@@ -4183,7 +5254,8 @@
    "dir_paths": {
     "down": "res://assets/sprites/actors/keeper_legs_front.png",
     "up": "res://assets/sprites/actors/keeper_legs_back.png"
-   }
+   },
+   "body_top": 8
   },
   "keeper_shields": {
    "path": "res://assets/sprites/actors/keeper_shields.png",
@@ -4198,7 +5270,8 @@
    "dir_paths": {
     "down": "res://assets/sprites/actors/keeper_shields_front.png",
     "up": "res://assets/sprites/actors/keeper_shields_back.png"
-   }
+   },
+   "body_top": 8
   },
   "keeper_swords": {
    "path": "res://assets/sprites/actors/keeper_swords.png",
@@ -4213,7 +5286,8 @@
    "dir_paths": {
     "down": "res://assets/sprites/actors/keeper_swords_front.png",
     "up": "res://assets/sprites/actors/keeper_swords_back.png"
-   }
+   },
+   "body_top": 8
   },
   "keeper_axes": {
    "path": "res://assets/sprites/actors/keeper_axes.png",
@@ -4228,7 +5302,8 @@
    "dir_paths": {
     "down": "res://assets/sprites/actors/keeper_axes_front.png",
     "up": "res://assets/sprites/actors/keeper_axes_back.png"
-   }
+   },
+   "body_top": 8
   },
   "keeper_maces": {
    "path": "res://assets/sprites/actors/keeper_maces.png",
@@ -4243,7 +5318,8 @@
    "dir_paths": {
     "down": "res://assets/sprites/actors/keeper_maces_front.png",
     "up": "res://assets/sprites/actors/keeper_maces_back.png"
-   }
+   },
+   "body_top": 8
   },
   "keeper_archery": {
    "path": "res://assets/sprites/actors/keeper_archery.png",
@@ -4258,7 +5334,8 @@
    "dir_paths": {
     "down": "res://assets/sprites/actors/keeper_archery_front.png",
     "up": "res://assets/sprites/actors/keeper_archery_back.png"
-   }
+   },
+   "body_top": 7
   },
   "keeper_estate": {
    "path": "res://assets/sprites/actors/keeper_estate.png",
@@ -4273,7 +5350,8 @@
    "dir_paths": {
     "down": "res://assets/sprites/actors/keeper_estate_front.png",
     "up": "res://assets/sprites/actors/keeper_estate_back.png"
-   }
+   },
+   "body_top": 6
   },
   "keeper_player": {
    "path": "res://assets/sprites/actors/keeper_player.png",
@@ -4288,7 +5366,8 @@
    "dir_paths": {
     "down": "res://assets/sprites/actors/keeper_player_front.png",
     "up": "res://assets/sprites/actors/keeper_player_back.png"
-   }
+   },
+   "body_top": 8
   },
   "chicken": {
    "path": "res://assets/sprites/actors/chicken.png",
@@ -4333,7 +5412,8 @@
    "dir_paths": {
     "down": "res://assets/sprites/actors/town_guard_front.png",
     "up": "res://assets/sprites/actors/town_guard_back.png"
-   }
+   },
+   "body_top": 7
   },
   "cinder_brute": {
    "path": "res://assets/sprites/actors/cinder_brute.png",
@@ -4348,7 +5428,8 @@
    "dir_paths": {
     "down": "res://assets/sprites/actors/cinder_brute_front.png",
     "up": "res://assets/sprites/actors/cinder_brute_back.png"
-   }
+   },
+   "body_top": 9
   },
   "citizen": {
    "path": "res://assets/sprites/actors/citizen.png",
@@ -4364,7 +5445,8 @@
    "dir_paths": {
     "down": "res://assets/sprites/actors/citizen_front.png",
     "up": "res://assets/sprites/actors/citizen_back.png"
-   }
+   },
+   "body_top": 9
   },
   "priest": {
    "path": "res://assets/sprites/actors/priest.png",
@@ -4379,7 +5461,8 @@
    "dir_paths": {
     "down": "res://assets/sprites/actors/priest_front.png",
     "up": "res://assets/sprites/actors/priest_back.png"
-   }
+   },
+   "body_top": 8
   },
   "cow": {
    "path": "res://assets/sprites/actors/cow.png",
@@ -4409,7 +5492,8 @@
    "dir_paths": {
     "down": "res://assets/sprites/actors/villager_front.png",
     "up": "res://assets/sprites/actors/villager_back.png"
-   }
+   },
+   "body_top": 8
   },
   "keeper_cook": {
    "path": "res://assets/sprites/actors/keeper_cook.png",
@@ -4422,7 +5506,8 @@
    "dir_paths": {
     "down": "res://assets/sprites/actors/keeper_cook_front.png",
     "up": "res://assets/sprites/actors/keeper_cook_back.png"
-   }
+   },
+   "body_top": 8
   },
   "goblin_warlord": {
    "path": "res://assets/sprites/actors/goblin_warlord.png",
@@ -4437,7 +5522,8 @@
    "dir_paths": {
     "down": "res://assets/sprites/actors/goblin_warlord_front.png",
     "up": "res://assets/sprites/actors/goblin_warlord_back.png"
-   }
+   },
+   "body_top": 7
   },
   "slime": {
    "path": "res://assets/sprites/actors/slime.png",
@@ -4469,7 +5555,8 @@
     "down": "res://assets/sprites/towns/villages/millbrook/npcs/odric_hunter_front.png",
     "up": "res://assets/sprites/towns/villages/millbrook/npcs/odric_hunter_back.png"
    },
-   "note": "0.3.16 sprite bot villages/v1 giver NPC"
+   "note": "0.3.16 sprite bot villages/v1 giver NPC",
+   "body_top": 7
   },
   "quartermaster_hale": {
    "path": "res://assets/sprites/towns/villages/millbrook/npcs/quartermaster_hale.png",
@@ -4485,7 +5572,8 @@
     "down": "res://assets/sprites/towns/villages/millbrook/npcs/quartermaster_hale_front.png",
     "up": "res://assets/sprites/towns/villages/millbrook/npcs/quartermaster_hale_back.png"
    },
-   "note": "0.3.16 sprite bot villages/v1 giver NPC"
+   "note": "0.3.16 sprite bot villages/v1 giver NPC",
+   "body_top": 8
   },
   "rat_mother": {
    "path": "res://assets/sprites/actors/rat_mother.png",
@@ -4588,7 +5676,7 @@
    "path": "res://assets/sprites/v040/gear/head_ranger_leather.png",
    "frame_size": [
     16,
-    24
+    16
    ],
    "frames": 4,
    "fps": 5,
@@ -4598,13 +5686,43 @@
     "down": "res://assets/sprites/v040/gear/head_ranger_leather_front.png",
     "up": "res://assets/sprites/v040/gear/head_ranger_leather_back.png"
    },
-   "note": "0.4.0 sprites_040 ranger armour"
+   "note": "0.4.0 sprites_040 ranger armour",
+   "attack_paths": {
+    "side": "res://assets/sprites/v040/gear/head_ranger_leather_attack.png",
+    "down": "res://assets/sprites/v040/gear/head_ranger_leather_attack_front.png",
+    "up": "res://assets/sprites/v040/gear/head_ranger_leather_attack_back.png",
+    "frame_size": [
+     32,
+     32
+    ],
+    "frames": 4,
+    "fps": 8,
+    "offset": [
+     -8,
+     -8
+    ]
+   },
+   "shoot_paths": {
+    "side": "res://assets/sprites/v040/gear/head_ranger_leather_shoot.png",
+    "down": "res://assets/sprites/v040/gear/head_ranger_leather_shoot_front.png",
+    "up": "res://assets/sprites/v040/gear/head_ranger_leather_shoot_back.png",
+    "frame_size": [
+     32,
+     32
+    ],
+    "frames": 4,
+    "fps": 8,
+    "offset": [
+     -8,
+     -8
+    ]
+   }
   },
   "gear_item_leather_body": {
    "path": "res://assets/sprites/v040/gear/body_ranger_leather.png",
    "frame_size": [
     16,
-    24
+    16
    ],
    "frames": 4,
    "fps": 5,
@@ -4614,13 +5732,43 @@
     "down": "res://assets/sprites/v040/gear/body_ranger_leather_front.png",
     "up": "res://assets/sprites/v040/gear/body_ranger_leather_back.png"
    },
-   "note": "0.4.0 sprites_040 ranger armour"
+   "note": "0.4.0 sprites_040 ranger armour",
+   "attack_paths": {
+    "side": "res://assets/sprites/v040/gear/body_ranger_leather_attack.png",
+    "down": "res://assets/sprites/v040/gear/body_ranger_leather_attack_front.png",
+    "up": "res://assets/sprites/v040/gear/body_ranger_leather_attack_back.png",
+    "frame_size": [
+     32,
+     32
+    ],
+    "frames": 4,
+    "fps": 8,
+    "offset": [
+     -8,
+     -8
+    ]
+   },
+   "shoot_paths": {
+    "side": "res://assets/sprites/v040/gear/body_ranger_leather_shoot.png",
+    "down": "res://assets/sprites/v040/gear/body_ranger_leather_shoot_front.png",
+    "up": "res://assets/sprites/v040/gear/body_ranger_leather_shoot_back.png",
+    "frame_size": [
+     32,
+     32
+    ],
+    "frames": 4,
+    "fps": 8,
+    "offset": [
+     -8,
+     -8
+    ]
+   }
   },
   "gear_item_leather_chaps": {
    "path": "res://assets/sprites/v040/gear/legs_ranger_leather.png",
    "frame_size": [
     16,
-    24
+    16
    ],
    "frames": 4,
    "fps": 5,
@@ -4630,13 +5778,43 @@
     "down": "res://assets/sprites/v040/gear/legs_ranger_leather_front.png",
     "up": "res://assets/sprites/v040/gear/legs_ranger_leather_back.png"
    },
-   "note": "0.4.0 sprites_040 ranger armour"
+   "note": "0.4.0 sprites_040 ranger armour",
+   "attack_paths": {
+    "side": "res://assets/sprites/v040/gear/legs_ranger_leather_attack.png",
+    "down": "res://assets/sprites/v040/gear/legs_ranger_leather_attack_front.png",
+    "up": "res://assets/sprites/v040/gear/legs_ranger_leather_attack_back.png",
+    "frame_size": [
+     32,
+     32
+    ],
+    "frames": 4,
+    "fps": 8,
+    "offset": [
+     -8,
+     -8
+    ]
+   },
+   "shoot_paths": {
+    "side": "res://assets/sprites/v040/gear/legs_ranger_leather_shoot.png",
+    "down": "res://assets/sprites/v040/gear/legs_ranger_leather_shoot_front.png",
+    "up": "res://assets/sprites/v040/gear/legs_ranger_leather_shoot_back.png",
+    "frame_size": [
+     32,
+     32
+    ],
+    "frames": 4,
+    "fps": 8,
+    "offset": [
+     -8,
+     -8
+    ]
+   }
   },
   "gear_item_studded_coif": {
    "path": "res://assets/sprites/v040/gear/head_ranger_studded.png",
    "frame_size": [
     16,
-    24
+    16
    ],
    "frames": 4,
    "fps": 5,
@@ -4646,13 +5824,43 @@
     "down": "res://assets/sprites/v040/gear/head_ranger_studded_front.png",
     "up": "res://assets/sprites/v040/gear/head_ranger_studded_back.png"
    },
-   "note": "0.4.0 sprites_040 ranger armour"
+   "note": "0.4.0 sprites_040 ranger armour",
+   "attack_paths": {
+    "side": "res://assets/sprites/v040/gear/head_ranger_studded_attack.png",
+    "down": "res://assets/sprites/v040/gear/head_ranger_studded_attack_front.png",
+    "up": "res://assets/sprites/v040/gear/head_ranger_studded_attack_back.png",
+    "frame_size": [
+     32,
+     32
+    ],
+    "frames": 4,
+    "fps": 8,
+    "offset": [
+     -8,
+     -8
+    ]
+   },
+   "shoot_paths": {
+    "side": "res://assets/sprites/v040/gear/head_ranger_studded_shoot.png",
+    "down": "res://assets/sprites/v040/gear/head_ranger_studded_shoot_front.png",
+    "up": "res://assets/sprites/v040/gear/head_ranger_studded_shoot_back.png",
+    "frame_size": [
+     32,
+     32
+    ],
+    "frames": 4,
+    "fps": 8,
+    "offset": [
+     -8,
+     -8
+    ]
+   }
   },
   "gear_item_studded_body": {
    "path": "res://assets/sprites/v040/gear/body_ranger_studded.png",
    "frame_size": [
     16,
-    24
+    16
    ],
    "frames": 4,
    "fps": 5,
@@ -4662,13 +5870,43 @@
     "down": "res://assets/sprites/v040/gear/body_ranger_studded_front.png",
     "up": "res://assets/sprites/v040/gear/body_ranger_studded_back.png"
    },
-   "note": "0.4.0 sprites_040 ranger armour"
+   "note": "0.4.0 sprites_040 ranger armour",
+   "attack_paths": {
+    "side": "res://assets/sprites/v040/gear/body_ranger_studded_attack.png",
+    "down": "res://assets/sprites/v040/gear/body_ranger_studded_attack_front.png",
+    "up": "res://assets/sprites/v040/gear/body_ranger_studded_attack_back.png",
+    "frame_size": [
+     32,
+     32
+    ],
+    "frames": 4,
+    "fps": 8,
+    "offset": [
+     -8,
+     -8
+    ]
+   },
+   "shoot_paths": {
+    "side": "res://assets/sprites/v040/gear/body_ranger_studded_shoot.png",
+    "down": "res://assets/sprites/v040/gear/body_ranger_studded_shoot_front.png",
+    "up": "res://assets/sprites/v040/gear/body_ranger_studded_shoot_back.png",
+    "frame_size": [
+     32,
+     32
+    ],
+    "frames": 4,
+    "fps": 8,
+    "offset": [
+     -8,
+     -8
+    ]
+   }
   },
   "gear_item_studded_chaps": {
    "path": "res://assets/sprites/v040/gear/legs_ranger_studded.png",
    "frame_size": [
     16,
-    24
+    16
    ],
    "frames": 4,
    "fps": 5,
@@ -4678,13 +5916,43 @@
     "down": "res://assets/sprites/v040/gear/legs_ranger_studded_front.png",
     "up": "res://assets/sprites/v040/gear/legs_ranger_studded_back.png"
    },
-   "note": "0.4.0 sprites_040 ranger armour"
+   "note": "0.4.0 sprites_040 ranger armour",
+   "attack_paths": {
+    "side": "res://assets/sprites/v040/gear/legs_ranger_studded_attack.png",
+    "down": "res://assets/sprites/v040/gear/legs_ranger_studded_attack_front.png",
+    "up": "res://assets/sprites/v040/gear/legs_ranger_studded_attack_back.png",
+    "frame_size": [
+     32,
+     32
+    ],
+    "frames": 4,
+    "fps": 8,
+    "offset": [
+     -8,
+     -8
+    ]
+   },
+   "shoot_paths": {
+    "side": "res://assets/sprites/v040/gear/legs_ranger_studded_shoot.png",
+    "down": "res://assets/sprites/v040/gear/legs_ranger_studded_shoot_front.png",
+    "up": "res://assets/sprites/v040/gear/legs_ranger_studded_shoot_back.png",
+    "frame_size": [
+     32,
+     32
+    ],
+    "frames": 4,
+    "fps": 8,
+    "offset": [
+     -8,
+     -8
+    ]
+   }
   },
   "gear_item_wolfpelt_coif": {
    "path": "res://assets/sprites/v040/gear/head_ranger_wolf_pelt.png",
    "frame_size": [
     16,
-    24
+    16
    ],
    "frames": 4,
    "fps": 5,
@@ -4694,13 +5962,43 @@
     "down": "res://assets/sprites/v040/gear/head_ranger_wolf_pelt_front.png",
     "up": "res://assets/sprites/v040/gear/head_ranger_wolf_pelt_back.png"
    },
-   "note": "0.4.0 sprites_040 ranger armour"
+   "note": "0.4.0 sprites_040 ranger armour",
+   "attack_paths": {
+    "side": "res://assets/sprites/v040/gear/head_ranger_wolf_pelt_attack.png",
+    "down": "res://assets/sprites/v040/gear/head_ranger_wolf_pelt_attack_front.png",
+    "up": "res://assets/sprites/v040/gear/head_ranger_wolf_pelt_attack_back.png",
+    "frame_size": [
+     32,
+     32
+    ],
+    "frames": 4,
+    "fps": 8,
+    "offset": [
+     -8,
+     -8
+    ]
+   },
+   "shoot_paths": {
+    "side": "res://assets/sprites/v040/gear/head_ranger_wolf_pelt_shoot.png",
+    "down": "res://assets/sprites/v040/gear/head_ranger_wolf_pelt_shoot_front.png",
+    "up": "res://assets/sprites/v040/gear/head_ranger_wolf_pelt_shoot_back.png",
+    "frame_size": [
+     32,
+     32
+    ],
+    "frames": 4,
+    "fps": 8,
+    "offset": [
+     -8,
+     -8
+    ]
+   }
   },
   "gear_item_wolfpelt_body": {
    "path": "res://assets/sprites/v040/gear/body_ranger_wolf_pelt.png",
    "frame_size": [
     16,
-    24
+    16
    ],
    "frames": 4,
    "fps": 5,
@@ -4710,13 +6008,43 @@
     "down": "res://assets/sprites/v040/gear/body_ranger_wolf_pelt_front.png",
     "up": "res://assets/sprites/v040/gear/body_ranger_wolf_pelt_back.png"
    },
-   "note": "0.4.0 sprites_040 ranger armour"
+   "note": "0.4.0 sprites_040 ranger armour",
+   "attack_paths": {
+    "side": "res://assets/sprites/v040/gear/body_ranger_wolf_pelt_attack.png",
+    "down": "res://assets/sprites/v040/gear/body_ranger_wolf_pelt_attack_front.png",
+    "up": "res://assets/sprites/v040/gear/body_ranger_wolf_pelt_attack_back.png",
+    "frame_size": [
+     32,
+     32
+    ],
+    "frames": 4,
+    "fps": 8,
+    "offset": [
+     -8,
+     -8
+    ]
+   },
+   "shoot_paths": {
+    "side": "res://assets/sprites/v040/gear/body_ranger_wolf_pelt_shoot.png",
+    "down": "res://assets/sprites/v040/gear/body_ranger_wolf_pelt_shoot_front.png",
+    "up": "res://assets/sprites/v040/gear/body_ranger_wolf_pelt_shoot_back.png",
+    "frame_size": [
+     32,
+     32
+    ],
+    "frames": 4,
+    "fps": 8,
+    "offset": [
+     -8,
+     -8
+    ]
+   }
   },
   "gear_item_wolfpelt_chaps": {
    "path": "res://assets/sprites/v040/gear/legs_ranger_wolf_pelt.png",
    "frame_size": [
     16,
-    24
+    16
    ],
    "frames": 4,
    "fps": 5,
@@ -4726,13 +6054,43 @@
     "down": "res://assets/sprites/v040/gear/legs_ranger_wolf_pelt_front.png",
     "up": "res://assets/sprites/v040/gear/legs_ranger_wolf_pelt_back.png"
    },
-   "note": "0.4.0 sprites_040 ranger armour"
+   "note": "0.4.0 sprites_040 ranger armour",
+   "attack_paths": {
+    "side": "res://assets/sprites/v040/gear/legs_ranger_wolf_pelt_attack.png",
+    "down": "res://assets/sprites/v040/gear/legs_ranger_wolf_pelt_attack_front.png",
+    "up": "res://assets/sprites/v040/gear/legs_ranger_wolf_pelt_attack_back.png",
+    "frame_size": [
+     32,
+     32
+    ],
+    "frames": 4,
+    "fps": 8,
+    "offset": [
+     -8,
+     -8
+    ]
+   },
+   "shoot_paths": {
+    "side": "res://assets/sprites/v040/gear/legs_ranger_wolf_pelt_shoot.png",
+    "down": "res://assets/sprites/v040/gear/legs_ranger_wolf_pelt_shoot_front.png",
+    "up": "res://assets/sprites/v040/gear/legs_ranger_wolf_pelt_shoot_back.png",
+    "frame_size": [
+     32,
+     32
+    ],
+    "frames": 4,
+    "fps": 8,
+    "offset": [
+     -8,
+     -8
+    ]
+   }
   },
   "gear_item_direpelt_coif": {
    "path": "res://assets/sprites/v040/gear/head_ranger_dire_wolf_pelt.png",
    "frame_size": [
     16,
-    24
+    16
    ],
    "frames": 4,
    "fps": 5,
@@ -4742,13 +6100,43 @@
     "down": "res://assets/sprites/v040/gear/head_ranger_dire_wolf_pelt_front.png",
     "up": "res://assets/sprites/v040/gear/head_ranger_dire_wolf_pelt_back.png"
    },
-   "note": "0.4.0 sprites_040 ranger armour"
+   "note": "0.4.0 sprites_040 ranger armour",
+   "attack_paths": {
+    "side": "res://assets/sprites/v040/gear/head_ranger_dire_wolf_pelt_attack.png",
+    "down": "res://assets/sprites/v040/gear/head_ranger_dire_wolf_pelt_attack_front.png",
+    "up": "res://assets/sprites/v040/gear/head_ranger_dire_wolf_pelt_attack_back.png",
+    "frame_size": [
+     32,
+     32
+    ],
+    "frames": 4,
+    "fps": 8,
+    "offset": [
+     -8,
+     -8
+    ]
+   },
+   "shoot_paths": {
+    "side": "res://assets/sprites/v040/gear/head_ranger_dire_wolf_pelt_shoot.png",
+    "down": "res://assets/sprites/v040/gear/head_ranger_dire_wolf_pelt_shoot_front.png",
+    "up": "res://assets/sprites/v040/gear/head_ranger_dire_wolf_pelt_shoot_back.png",
+    "frame_size": [
+     32,
+     32
+    ],
+    "frames": 4,
+    "fps": 8,
+    "offset": [
+     -8,
+     -8
+    ]
+   }
   },
   "gear_item_direpelt_body": {
    "path": "res://assets/sprites/v040/gear/body_ranger_dire_wolf_pelt.png",
    "frame_size": [
     16,
-    24
+    16
    ],
    "frames": 4,
    "fps": 5,
@@ -4758,13 +6146,43 @@
     "down": "res://assets/sprites/v040/gear/body_ranger_dire_wolf_pelt_front.png",
     "up": "res://assets/sprites/v040/gear/body_ranger_dire_wolf_pelt_back.png"
    },
-   "note": "0.4.0 sprites_040 ranger armour"
+   "note": "0.4.0 sprites_040 ranger armour",
+   "attack_paths": {
+    "side": "res://assets/sprites/v040/gear/body_ranger_dire_wolf_pelt_attack.png",
+    "down": "res://assets/sprites/v040/gear/body_ranger_dire_wolf_pelt_attack_front.png",
+    "up": "res://assets/sprites/v040/gear/body_ranger_dire_wolf_pelt_attack_back.png",
+    "frame_size": [
+     32,
+     32
+    ],
+    "frames": 4,
+    "fps": 8,
+    "offset": [
+     -8,
+     -8
+    ]
+   },
+   "shoot_paths": {
+    "side": "res://assets/sprites/v040/gear/body_ranger_dire_wolf_pelt_shoot.png",
+    "down": "res://assets/sprites/v040/gear/body_ranger_dire_wolf_pelt_shoot_front.png",
+    "up": "res://assets/sprites/v040/gear/body_ranger_dire_wolf_pelt_shoot_back.png",
+    "frame_size": [
+     32,
+     32
+    ],
+    "frames": 4,
+    "fps": 8,
+    "offset": [
+     -8,
+     -8
+    ]
+   }
   },
   "gear_item_direpelt_chaps": {
    "path": "res://assets/sprites/v040/gear/legs_ranger_dire_wolf_pelt.png",
    "frame_size": [
     16,
-    24
+    16
    ],
    "frames": 4,
    "fps": 5,
@@ -4774,7 +6192,37 @@
     "down": "res://assets/sprites/v040/gear/legs_ranger_dire_wolf_pelt_front.png",
     "up": "res://assets/sprites/v040/gear/legs_ranger_dire_wolf_pelt_back.png"
    },
-   "note": "0.4.0 sprites_040 ranger armour"
+   "note": "0.4.0 sprites_040 ranger armour",
+   "attack_paths": {
+    "side": "res://assets/sprites/v040/gear/legs_ranger_dire_wolf_pelt_attack.png",
+    "down": "res://assets/sprites/v040/gear/legs_ranger_dire_wolf_pelt_attack_front.png",
+    "up": "res://assets/sprites/v040/gear/legs_ranger_dire_wolf_pelt_attack_back.png",
+    "frame_size": [
+     32,
+     32
+    ],
+    "frames": 4,
+    "fps": 8,
+    "offset": [
+     -8,
+     -8
+    ]
+   },
+   "shoot_paths": {
+    "side": "res://assets/sprites/v040/gear/legs_ranger_dire_wolf_pelt_shoot.png",
+    "down": "res://assets/sprites/v040/gear/legs_ranger_dire_wolf_pelt_shoot_front.png",
+    "up": "res://assets/sprites/v040/gear/legs_ranger_dire_wolf_pelt_shoot_back.png",
+    "frame_size": [
+     32,
+     32
+    ],
+    "frames": 4,
+    "fps": 8,
+    "offset": [
+     -8,
+     -8
+    ]
+   }
   },
   "warden_pye": {
    "path": "res://assets/sprites/v040/actors/warden_pye.png",
@@ -4790,7 +6238,548 @@
     "down": "res://assets/sprites/v040/actors/warden_pye_front.png",
     "up": "res://assets/sprites/v040/actors/warden_pye_back.png"
    },
-   "note": "0.4.0 sprites_040"
+   "note": "0.4.0 sprites_040",
+   "body_top": 6
+  },
+  "gear_head_chain_1": {
+   "path": "res://assets/sprites/actors/gear/head_chain_1.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 4,
+   "fps": 5,
+   "anchor": "bottom",
+   "flip": true,
+   "dir_paths": {
+    "down": "res://assets/sprites/actors/gear/head_chain_1_front.png",
+    "up": "res://assets/sprites/actors/gear/head_chain_1_back.png"
+   },
+   "attack_paths": {
+    "side": "res://assets/sprites/actors/gear/head_chain_1_attack.png",
+    "down": "res://assets/sprites/actors/gear/head_chain_1_attack_front.png",
+    "up": "res://assets/sprites/actors/gear/head_chain_1_attack_back.png",
+    "frame_size": [
+     32,
+     32
+    ],
+    "frames": 4,
+    "fps": 8,
+    "offset": [
+     -8,
+     -8
+    ]
+   },
+   "shoot_paths": {
+    "side": "res://assets/sprites/actors/gear/head_chain_1_shoot.png",
+    "down": "res://assets/sprites/actors/gear/head_chain_1_shoot_front.png",
+    "up": "res://assets/sprites/actors/gear/head_chain_1_shoot_back.png",
+    "frame_size": [
+     32,
+     32
+    ],
+    "frames": 4,
+    "fps": 8,
+    "offset": [
+     -8,
+     -8
+    ]
+   }
+  },
+  "gear_body_chain_1": {
+   "path": "res://assets/sprites/actors/gear/body_chain_1.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 4,
+   "fps": 5,
+   "anchor": "bottom",
+   "flip": true,
+   "dir_paths": {
+    "down": "res://assets/sprites/actors/gear/body_chain_1_front.png",
+    "up": "res://assets/sprites/actors/gear/body_chain_1_back.png"
+   },
+   "attack_paths": {
+    "side": "res://assets/sprites/actors/gear/body_chain_1_attack.png",
+    "down": "res://assets/sprites/actors/gear/body_chain_1_attack_front.png",
+    "up": "res://assets/sprites/actors/gear/body_chain_1_attack_back.png",
+    "frame_size": [
+     32,
+     32
+    ],
+    "frames": 4,
+    "fps": 8,
+    "offset": [
+     -8,
+     -8
+    ]
+   },
+   "shoot_paths": {
+    "side": "res://assets/sprites/actors/gear/body_chain_1_shoot.png",
+    "down": "res://assets/sprites/actors/gear/body_chain_1_shoot_front.png",
+    "up": "res://assets/sprites/actors/gear/body_chain_1_shoot_back.png",
+    "frame_size": [
+     32,
+     32
+    ],
+    "frames": 4,
+    "fps": 8,
+    "offset": [
+     -8,
+     -8
+    ]
+   }
+  },
+  "gear_legs_chain_1": {
+   "path": "res://assets/sprites/actors/gear/legs_chain_1.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 4,
+   "fps": 5,
+   "anchor": "bottom",
+   "flip": true,
+   "dir_paths": {
+    "down": "res://assets/sprites/actors/gear/legs_chain_1_front.png",
+    "up": "res://assets/sprites/actors/gear/legs_chain_1_back.png"
+   },
+   "attack_paths": {
+    "side": "res://assets/sprites/actors/gear/legs_chain_1_attack.png",
+    "down": "res://assets/sprites/actors/gear/legs_chain_1_attack_front.png",
+    "up": "res://assets/sprites/actors/gear/legs_chain_1_attack_back.png",
+    "frame_size": [
+     32,
+     32
+    ],
+    "frames": 4,
+    "fps": 8,
+    "offset": [
+     -8,
+     -8
+    ]
+   },
+   "shoot_paths": {
+    "side": "res://assets/sprites/actors/gear/legs_chain_1_shoot.png",
+    "down": "res://assets/sprites/actors/gear/legs_chain_1_shoot_front.png",
+    "up": "res://assets/sprites/actors/gear/legs_chain_1_shoot_back.png",
+    "frame_size": [
+     32,
+     32
+    ],
+    "frames": 4,
+    "fps": 8,
+    "offset": [
+     -8,
+     -8
+    ]
+   }
+  },
+  "gear_head_chain_2": {
+   "path": "res://assets/sprites/actors/gear/head_chain_2.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 4,
+   "fps": 5,
+   "anchor": "bottom",
+   "flip": true,
+   "dir_paths": {
+    "down": "res://assets/sprites/actors/gear/head_chain_2_front.png",
+    "up": "res://assets/sprites/actors/gear/head_chain_2_back.png"
+   },
+   "attack_paths": {
+    "side": "res://assets/sprites/actors/gear/head_chain_2_attack.png",
+    "down": "res://assets/sprites/actors/gear/head_chain_2_attack_front.png",
+    "up": "res://assets/sprites/actors/gear/head_chain_2_attack_back.png",
+    "frame_size": [
+     32,
+     32
+    ],
+    "frames": 4,
+    "fps": 8,
+    "offset": [
+     -8,
+     -8
+    ]
+   },
+   "shoot_paths": {
+    "side": "res://assets/sprites/actors/gear/head_chain_2_shoot.png",
+    "down": "res://assets/sprites/actors/gear/head_chain_2_shoot_front.png",
+    "up": "res://assets/sprites/actors/gear/head_chain_2_shoot_back.png",
+    "frame_size": [
+     32,
+     32
+    ],
+    "frames": 4,
+    "fps": 8,
+    "offset": [
+     -8,
+     -8
+    ]
+   }
+  },
+  "gear_body_chain_2": {
+   "path": "res://assets/sprites/actors/gear/body_chain_2.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 4,
+   "fps": 5,
+   "anchor": "bottom",
+   "flip": true,
+   "dir_paths": {
+    "down": "res://assets/sprites/actors/gear/body_chain_2_front.png",
+    "up": "res://assets/sprites/actors/gear/body_chain_2_back.png"
+   },
+   "attack_paths": {
+    "side": "res://assets/sprites/actors/gear/body_chain_2_attack.png",
+    "down": "res://assets/sprites/actors/gear/body_chain_2_attack_front.png",
+    "up": "res://assets/sprites/actors/gear/body_chain_2_attack_back.png",
+    "frame_size": [
+     32,
+     32
+    ],
+    "frames": 4,
+    "fps": 8,
+    "offset": [
+     -8,
+     -8
+    ]
+   },
+   "shoot_paths": {
+    "side": "res://assets/sprites/actors/gear/body_chain_2_shoot.png",
+    "down": "res://assets/sprites/actors/gear/body_chain_2_shoot_front.png",
+    "up": "res://assets/sprites/actors/gear/body_chain_2_shoot_back.png",
+    "frame_size": [
+     32,
+     32
+    ],
+    "frames": 4,
+    "fps": 8,
+    "offset": [
+     -8,
+     -8
+    ]
+   }
+  },
+  "gear_legs_chain_2": {
+   "path": "res://assets/sprites/actors/gear/legs_chain_2.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 4,
+   "fps": 5,
+   "anchor": "bottom",
+   "flip": true,
+   "dir_paths": {
+    "down": "res://assets/sprites/actors/gear/legs_chain_2_front.png",
+    "up": "res://assets/sprites/actors/gear/legs_chain_2_back.png"
+   },
+   "attack_paths": {
+    "side": "res://assets/sprites/actors/gear/legs_chain_2_attack.png",
+    "down": "res://assets/sprites/actors/gear/legs_chain_2_attack_front.png",
+    "up": "res://assets/sprites/actors/gear/legs_chain_2_attack_back.png",
+    "frame_size": [
+     32,
+     32
+    ],
+    "frames": 4,
+    "fps": 8,
+    "offset": [
+     -8,
+     -8
+    ]
+   },
+   "shoot_paths": {
+    "side": "res://assets/sprites/actors/gear/legs_chain_2_shoot.png",
+    "down": "res://assets/sprites/actors/gear/legs_chain_2_shoot_front.png",
+    "up": "res://assets/sprites/actors/gear/legs_chain_2_shoot_back.png",
+    "frame_size": [
+     32,
+     32
+    ],
+    "frames": 4,
+    "fps": 8,
+    "offset": [
+     -8,
+     -8
+    ]
+   }
+  },
+  "gear_head_chain_3": {
+   "path": "res://assets/sprites/actors/gear/head_chain_3.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 4,
+   "fps": 5,
+   "anchor": "bottom",
+   "flip": true,
+   "dir_paths": {
+    "down": "res://assets/sprites/actors/gear/head_chain_3_front.png",
+    "up": "res://assets/sprites/actors/gear/head_chain_3_back.png"
+   },
+   "attack_paths": {
+    "side": "res://assets/sprites/actors/gear/head_chain_3_attack.png",
+    "down": "res://assets/sprites/actors/gear/head_chain_3_attack_front.png",
+    "up": "res://assets/sprites/actors/gear/head_chain_3_attack_back.png",
+    "frame_size": [
+     32,
+     32
+    ],
+    "frames": 4,
+    "fps": 8,
+    "offset": [
+     -8,
+     -8
+    ]
+   },
+   "shoot_paths": {
+    "side": "res://assets/sprites/actors/gear/head_chain_3_shoot.png",
+    "down": "res://assets/sprites/actors/gear/head_chain_3_shoot_front.png",
+    "up": "res://assets/sprites/actors/gear/head_chain_3_shoot_back.png",
+    "frame_size": [
+     32,
+     32
+    ],
+    "frames": 4,
+    "fps": 8,
+    "offset": [
+     -8,
+     -8
+    ]
+   }
+  },
+  "gear_body_chain_3": {
+   "path": "res://assets/sprites/actors/gear/body_chain_3.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 4,
+   "fps": 5,
+   "anchor": "bottom",
+   "flip": true,
+   "dir_paths": {
+    "down": "res://assets/sprites/actors/gear/body_chain_3_front.png",
+    "up": "res://assets/sprites/actors/gear/body_chain_3_back.png"
+   },
+   "attack_paths": {
+    "side": "res://assets/sprites/actors/gear/body_chain_3_attack.png",
+    "down": "res://assets/sprites/actors/gear/body_chain_3_attack_front.png",
+    "up": "res://assets/sprites/actors/gear/body_chain_3_attack_back.png",
+    "frame_size": [
+     32,
+     32
+    ],
+    "frames": 4,
+    "fps": 8,
+    "offset": [
+     -8,
+     -8
+    ]
+   },
+   "shoot_paths": {
+    "side": "res://assets/sprites/actors/gear/body_chain_3_shoot.png",
+    "down": "res://assets/sprites/actors/gear/body_chain_3_shoot_front.png",
+    "up": "res://assets/sprites/actors/gear/body_chain_3_shoot_back.png",
+    "frame_size": [
+     32,
+     32
+    ],
+    "frames": 4,
+    "fps": 8,
+    "offset": [
+     -8,
+     -8
+    ]
+   }
+  },
+  "gear_legs_chain_3": {
+   "path": "res://assets/sprites/actors/gear/legs_chain_3.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 4,
+   "fps": 5,
+   "anchor": "bottom",
+   "flip": true,
+   "dir_paths": {
+    "down": "res://assets/sprites/actors/gear/legs_chain_3_front.png",
+    "up": "res://assets/sprites/actors/gear/legs_chain_3_back.png"
+   },
+   "attack_paths": {
+    "side": "res://assets/sprites/actors/gear/legs_chain_3_attack.png",
+    "down": "res://assets/sprites/actors/gear/legs_chain_3_attack_front.png",
+    "up": "res://assets/sprites/actors/gear/legs_chain_3_attack_back.png",
+    "frame_size": [
+     32,
+     32
+    ],
+    "frames": 4,
+    "fps": 8,
+    "offset": [
+     -8,
+     -8
+    ]
+   },
+   "shoot_paths": {
+    "side": "res://assets/sprites/actors/gear/legs_chain_3_shoot.png",
+    "down": "res://assets/sprites/actors/gear/legs_chain_3_shoot_front.png",
+    "up": "res://assets/sprites/actors/gear/legs_chain_3_shoot_back.png",
+    "frame_size": [
+     32,
+     32
+    ],
+    "frames": 4,
+    "fps": 8,
+    "offset": [
+     -8,
+     -8
+    ]
+   }
+  },
+  "gear_head_chain_4": {
+   "path": "res://assets/sprites/actors/gear/head_chain_4.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 4,
+   "fps": 5,
+   "anchor": "bottom",
+   "flip": true,
+   "dir_paths": {
+    "down": "res://assets/sprites/actors/gear/head_chain_4_front.png",
+    "up": "res://assets/sprites/actors/gear/head_chain_4_back.png"
+   },
+   "attack_paths": {
+    "side": "res://assets/sprites/actors/gear/head_chain_4_attack.png",
+    "down": "res://assets/sprites/actors/gear/head_chain_4_attack_front.png",
+    "up": "res://assets/sprites/actors/gear/head_chain_4_attack_back.png",
+    "frame_size": [
+     32,
+     32
+    ],
+    "frames": 4,
+    "fps": 8,
+    "offset": [
+     -8,
+     -8
+    ]
+   },
+   "shoot_paths": {
+    "side": "res://assets/sprites/actors/gear/head_chain_4_shoot.png",
+    "down": "res://assets/sprites/actors/gear/head_chain_4_shoot_front.png",
+    "up": "res://assets/sprites/actors/gear/head_chain_4_shoot_back.png",
+    "frame_size": [
+     32,
+     32
+    ],
+    "frames": 4,
+    "fps": 8,
+    "offset": [
+     -8,
+     -8
+    ]
+   }
+  },
+  "gear_body_chain_4": {
+   "path": "res://assets/sprites/actors/gear/body_chain_4.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 4,
+   "fps": 5,
+   "anchor": "bottom",
+   "flip": true,
+   "dir_paths": {
+    "down": "res://assets/sprites/actors/gear/body_chain_4_front.png",
+    "up": "res://assets/sprites/actors/gear/body_chain_4_back.png"
+   },
+   "attack_paths": {
+    "side": "res://assets/sprites/actors/gear/body_chain_4_attack.png",
+    "down": "res://assets/sprites/actors/gear/body_chain_4_attack_front.png",
+    "up": "res://assets/sprites/actors/gear/body_chain_4_attack_back.png",
+    "frame_size": [
+     32,
+     32
+    ],
+    "frames": 4,
+    "fps": 8,
+    "offset": [
+     -8,
+     -8
+    ]
+   },
+   "shoot_paths": {
+    "side": "res://assets/sprites/actors/gear/body_chain_4_shoot.png",
+    "down": "res://assets/sprites/actors/gear/body_chain_4_shoot_front.png",
+    "up": "res://assets/sprites/actors/gear/body_chain_4_shoot_back.png",
+    "frame_size": [
+     32,
+     32
+    ],
+    "frames": 4,
+    "fps": 8,
+    "offset": [
+     -8,
+     -8
+    ]
+   }
+  },
+  "gear_legs_chain_4": {
+   "path": "res://assets/sprites/actors/gear/legs_chain_4.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 4,
+   "fps": 5,
+   "anchor": "bottom",
+   "flip": true,
+   "dir_paths": {
+    "down": "res://assets/sprites/actors/gear/legs_chain_4_front.png",
+    "up": "res://assets/sprites/actors/gear/legs_chain_4_back.png"
+   },
+   "attack_paths": {
+    "side": "res://assets/sprites/actors/gear/legs_chain_4_attack.png",
+    "down": "res://assets/sprites/actors/gear/legs_chain_4_attack_front.png",
+    "up": "res://assets/sprites/actors/gear/legs_chain_4_attack_back.png",
+    "frame_size": [
+     32,
+     32
+    ],
+    "frames": 4,
+    "fps": 8,
+    "offset": [
+     -8,
+     -8
+    ]
+   },
+   "shoot_paths": {
+    "side": "res://assets/sprites/actors/gear/legs_chain_4_shoot.png",
+    "down": "res://assets/sprites/actors/gear/legs_chain_4_shoot_front.png",
+    "up": "res://assets/sprites/actors/gear/legs_chain_4_shoot_back.png",
+    "frame_size": [
+     32,
+     32
+    ],
+    "frames": 4,
+    "fps": 8,
+    "offset": [
+     -8,
+     -8
+    ]
+   }
   }
  },
  "items": {
@@ -5847,6 +7836,13 @@
     16
    ],
    "frames": 1
+  },
+  "guard_steel_bundle": {
+   "path": "res://assets/sprites/items/steel_bar.png",
+   "frame_size": [
+    16,
+    16
+   ]
   }
  },
  "ui": {
@@ -6620,6 +8616,141 @@
    ],
    "frames": 1,
    "note": "0.3.11 designer cliff tile (cinder)"
+  },
+  "boardwalk16": {
+   "path": "res://assets/sprites/autotile/boardwalk16.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 16,
+   "note": "restyle batch 02: boardwalk deck by NESW neighbour mask (bit0..3)"
+  },
+  "boardwalk_piling16": {
+   "path": "res://assets/sprites/autotile/boardwalk_piling16.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 1,
+   "note": "restyle batch 02: pilings drawn in the water cell south of a boardwalk"
+  },
+  "water_shore": {
+   "path": "res://assets/sprites/autotile/water_shore.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 256,
+   "cols": 16
+  },
+  "water_shore_ash": {
+   "path": "res://assets/sprites/autotile/water_shore_ash.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 256,
+   "cols": 16
+  },
+  "water_shore_cobble": {
+   "path": "res://assets/sprites/autotile/water_shore_cobble.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 256,
+   "cols": 16
+  },
+  "water_shore_dirt": {
+   "path": "res://assets/sprites/autotile/water_shore_dirt.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 256,
+   "cols": 16
+  },
+  "water_shore_grass": {
+   "path": "res://assets/sprites/autotile/water_shore_grass.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 256,
+   "cols": 16
+  },
+  "water_shore_grass_boreal": {
+   "path": "res://assets/sprites/autotile/water_shore_grass_boreal.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 256,
+   "cols": 16
+  },
+  "water_shore_grass_lush": {
+   "path": "res://assets/sprites/autotile/water_shore_grass_lush.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 256,
+   "cols": 16
+  },
+  "water_shore_grass_tropic": {
+   "path": "res://assets/sprites/autotile/water_shore_grass_tropic.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 256,
+   "cols": 16
+  },
+  "water_shore_marsh": {
+   "path": "res://assets/sprites/autotile/water_shore_marsh.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 256,
+   "cols": 16
+  },
+  "water_shore_path": {
+   "path": "res://assets/sprites/autotile/water_shore_path.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 256,
+   "cols": 16
+  },
+  "water_shore_road_stone": {
+   "path": "res://assets/sprites/autotile/water_shore_road_stone.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 256,
+   "cols": 16
+  },
+  "water_shore_rocky": {
+   "path": "res://assets/sprites/autotile/water_shore_rocky.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 256,
+   "cols": 16
+  },
+  "water_shore_sand": {
+   "path": "res://assets/sprites/autotile/water_shore_sand.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 256,
+   "cols": 16
   }
  },
  "transitions": {

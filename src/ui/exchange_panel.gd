@@ -165,6 +165,7 @@ func _build_ticket() -> void:
 	var ql := UIKit.label(" %d " % qty, 10)
 	ql.custom_minimum_size = Vector2(30, 0)
 	ql.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	ql.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	row2.add_child(ql)
 	for d in [1, 10]:
 		row2.add_child(UIKit.button("+%d" % d, func(): _set_qty(qty + d), 26))
@@ -177,6 +178,7 @@ func _build_ticket() -> void:
 	var pl := UIKit.label(" %d " % price, 10, UIStyle.ACCENT)
 	pl.custom_minimum_size = Vector2(30, 0)
 	pl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	pl.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	row3.add_child(pl)
 	row3.add_child(UIKit.button("+", func(): _set_price(price + 1), 22))
 	row3.add_child(UIKit.button("Ref", func(): _set_price(_m().reference_price(selected)), 30))

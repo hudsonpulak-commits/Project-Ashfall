@@ -288,6 +288,7 @@ func _start_view() -> void:
 	hud.minimap_tapped.connect(func(t): player.handle_tap(world, t))
 
 	Events.hitsplat.connect(_spawn_hitsplat)
+	Events.splat.connect(func(tg, tl, amt, kind): hit_bubbles.show_hit(tg, tl, amt, kind))
 	Events.projectile.connect(_spawn_projectile)
 	if not Tick.ticked.is_connected(_on_tick):
 		Tick.ticked.connect(_on_tick)

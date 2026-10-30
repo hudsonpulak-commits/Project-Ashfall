@@ -190,13 +190,14 @@ func _load_village(v: Dictionary) -> void:
 			var ch := row[x]
 			var p := origin + Vector2i(x, y)
 			if tmap.has(ch):
-				_town_tiles[p] = TILE_NAMES.find(tmap[ch])
+				_town_tiles[p] = _floor_or_biome(str(tmap[ch]), p)
 			elif omap.has(ch):
-				_town_tiles[p] = TILE_NAMES.find(omap[ch]["ground"])
+				_town_tiles[p] = _floor_or_biome(str(omap[ch]["ground"]), p)
 				_town_objects[p] = omap[ch]["object"]
 			elif clear.find(ch) < 0:
 				_town_tiles[p] = region_grass(p)
 	_load_buildings(v, origin)
+	_blend_footprint_edge(rect)
 	for f in v.get("farms", []):
 		var fr := _fenced(origin, f, TILE_NAMES.find(str(f.get("ground", "dirt"))), str(f.get("crop", "wheat")))
 		farms.append({"id": str(f["id"]), "village": v["id"], "rect": fr, "crop": str(f.get("crop", "wheat")),
@@ -239,10 +240,10 @@ func _fenced(origin: Vector2i, d: Dictionary, ground: int, crop: String) -> Rect
 				_town_tiles[p] = region_grass(p)
 				_town_objects[p] = "fence_v"
 			elif d.has("divider") and x == origin.x + int(d["divider"]["x"]) and y <= origin.y + int(d["divider"]["to_y"]):
-				_town_tiles[p] = ground
+				_town_tiles[p] = region_grass(p) if ground == TileType.GRASS else ground
 				_town_objects[p] = "fence_v"   # 0.3.9 paddock divider
 			else:
-				_town_tiles[p] = ground
+				_town_tiles[p] = region_grass(p) if ground == TileType.GRASS else ground
 				if crop != "":
 					_town_objects[p] = crop
 	return r
@@ -370,15 +371,266 @@ func _load_town(town: Dictionary) -> void:
 			var ch := row[x]
 			var p := origin + Vector2i(x, y)
 			if tmap.has(ch):
-				_town_tiles[p] = TILE_NAMES.find(tmap[ch])
+				_town_tiles[p] = _floor_or_biome(str(tmap[ch]), p)
 			elif omap.has(ch):
-				_town_tiles[p] = TILE_NAMES.find(omap[ch]["ground"])
+				_town_tiles[p] = _floor_or_biome(str(omap[ch]["ground"]), p)
 				_town_objects[p] = omap[ch]["object"]
 			else:
 				_town_tiles[p] = region_grass(p)
+	_thin_town_walls(rows, tmap, origin, omap)
+	for c in town.get("wall_towers", []):
+		_wall_towers[origin + Vector2i(int(c[0]), int(c[1]))] = true
 	_load_buildings(town, origin)
+	_blend_footprint_edge(rect)
 	_ensure_gate_approaches(town, origin)
 	_place_quest_givers(town, origin)
+
+
+## restyle r5 thin walls: wall families (and gates, which count as wall) are thinned
+## once per town to a 1-cell centreline (Zhang-Suen, batch_02 src/walls_thin.py thin());
+## every cell within 1 of the thinned line gets [material, 25-bit 5x5 key] for the atlas
+## LUT. Wall cells draw the surrounding floor underneath. Collision keeps the data tiles.
+const THIN_WALL_MAT := {"palisade": "palisade", "basalt_wall": "basalt", "stone_wall": "stone", "sandstone_wall": "sandstone", "capital_wall": "capital"}
+const THIN_GATES := ["gate_wood", "gate_basalt", "gate_sand", "gate_capital"]
+var _wall_towers: Dictionary = {}   # restyle r6: thin-wall cell -> true (tower drawn there)
+var _wall_keys: Dictionary = {}     # Vector2i -> [mat, key]
+var _wall_ground: Dictionary = {}   # wall cell -> floor tile type drawn under it
+
+
+static func thin(occ: Array, w: int, h: int) -> Array:
+	var o: Array = []
+	for y in h + 2:
+		var r := PackedByteArray()
+		r.resize(w + 2)
+		o.append(r)
+	for y in h:
+		for x in w:
+			o[y + 1][x + 1] = 1 if occ[y][x] else 0
+	var nd := [Vector2i(0, -1), Vector2i(1, -1), Vector2i(1, 0), Vector2i(1, 1), Vector2i(0, 1), Vector2i(-1, 1), Vector2i(-1, 0), Vector2i(-1, -1)]
+	var ch := true
+	while ch:
+		ch = false
+		for step in 2:
+			var rm: Array = []
+			for y in range(1, h + 1):
+				for x in range(1, w + 1):
+					if o[y][x] == 0:
+						continue
+					var P: Array = []
+					for d in nd:
+						P.append(int(o[y + d.y][x + d.x]))
+					var B: int = 0
+					var A: int = 0
+					for i in 8:
+						B += P[i]
+						if P[i] == 0 and P[(i + 1) % 8] == 1:
+							A += 1
+					var c1: bool = (P[0] * P[2] * P[4] == 0) if step == 0 else (P[0] * P[2] * P[6] == 0)
+					var c2: bool = (P[2] * P[4] * P[6] == 0) if step == 0 else (P[0] * P[4] * P[6] == 0)
+					if B >= 2 and B <= 6 and A == 1 and c1 and c2:
+						rm.append(Vector2i(x, y))
+			for q in rm:
+				o[q.y][q.x] = 0
+			if not rm.is_empty():
+				ch = true
+	var out: Array = []
+	for y in h:
+		var r2: Array = []
+		for x in w:
+			r2.append(o[y + 1][x + 1] == 1)
+		out.append(r2)
+	return out
+
+
+func _thin_town_walls(rows: Array, tmap: Dictionary, origin: Vector2i, omap: Dictionary = {}) -> void:
+	var h := rows.size()
+	var w := 0
+	for r in rows:
+		w = maxi(w, str(r).length())
+	var nmg := func(x: int, y: int) -> String:
+		if y < 0 or y >= h or x < 0 or x >= str(rows[y]).length():
+			return ""
+		var ch := str(rows[y])[x]
+		if tmap.has(ch):
+			return str(tmap[ch])
+		return str(omap[ch].get("ground", "")) if omap.has(ch) else ""   # r6: wall-tower props stand on wall
+	var occ: Array = []
+	var any := false
+	for y in h:
+		var r: Array = []
+		for x in w:
+			var n: String = nmg.call(x, y)
+			var isw := THIN_WALL_MAT.has(n) or n in THIN_GATES
+			any = any or isw
+			r.append(isw)
+		occ.append(r)
+	if not any:
+		return
+	var th := thin(occ, w, h)
+	# material per thinned cell (gates take a neighbour's)
+	var mat: Dictionary = {}
+	for y in h:
+		for x in w:
+			if th[y][x]:
+				var n: String = nmg.call(x, y)
+				mat[Vector2i(x, y)] = str(THIN_WALL_MAT.get(n, ""))
+	for q in mat.keys():
+		if mat[q] == "":
+			for rr in range(1, 4):
+				for dy in range(-rr, rr + 1):
+					for dx in range(-rr, rr + 1):
+						var m2: String = str(THIN_WALL_MAT.get(nmg.call(q.x + dx, q.y + dy), ""))
+						if mat[q] == "" and m2 != "":
+							mat[q] = m2
+	for y in range(-1, h + 1):
+		for x in range(-1, w + 1):
+			var near := ""
+			for dy in range(-1, 2):
+				for dx in range(-1, 2):
+					var q := Vector2i(x + dx, y + dy)
+					if near == "" and mat.has(q) and mat[q] != "":
+						near = mat[q]
+			var own := Vector2i(x, y)
+			if mat.has(own) and mat[own] != "":
+				near = mat[own]
+			if near == "":
+				continue
+			var k := 0
+			var i := 0
+			for dy in range(-2, 3):
+				for dx in range(-2, 3):
+					if mat.has(Vector2i(x + dx, y + dy)):
+						k |= 1 << i
+					i += 1
+			_wall_keys[origin + own] = [near, k]
+	# floor under every data wall cell: the most common non-wall floor around it
+	for y in h:
+		for x in w:
+			var n: String = nmg.call(x, y)
+			if not THIN_WALL_MAT.has(n):
+				continue
+			var cnt: Dictionary = {}
+			for rr in range(1, 4):
+				for dy in range(-rr, rr + 1):
+					for dx in range(-rr, rr + 1):
+						var m: String = nmg.call(x + dx, y + dy)
+						if m != "" and not THIN_WALL_MAT.has(m) and not m in THIN_GATES and not m.ends_with("_wall") and m != "water" and m != "moat":
+							cnt[m] = int(cnt.get(m, 0)) + 1
+				if not cnt.is_empty():
+					break
+			var best := ""
+			var bn := 0
+			for m3 in cnt:
+				if int(cnt[m3]) > bn:
+					bn = int(cnt[m3])
+					best = m3
+			var p := origin + Vector2i(x, y)
+			_wall_ground[p] = TILE_NAMES.find(best) if best != "" else region_grass(p)
+
+
+## gfx audit: towns / villages no longer read as a rectangle dropped on the map. In a
+## band of EDGE_BAND tiles inside the footprint, plain floor cells (no object, wall,
+## building, gate, water) give way to the surrounding biome along a noise outline:
+## loose floors (dirt, cobble, plain grass) become the terrain floor, stone roads fade
+## to dirt road then path. Walls, gates, buildings, objects and collision are untouched.
+const EDGE_BAND := 5
+const EDGE_SOFT := ["dirt", "cobble", "grass", "grass_lush", "grass_boreal", "grass_tropic", "sand", "rocky"]
+
+
+## gfx audit: data "grass" in a town / village plan means the local biome grass
+## (plain grass cells inside a lush / boreal / tropic region read as light boxes).
+func _floor_or_biome(n: String, p: Vector2i) -> int:
+	if n != "grass":
+		return TILE_NAMES.find(n)
+	# one grass per settlement (the region at its centre): a settlement on a region
+	# border otherwise gets boxy plain/lush patches outlined by the transition frames
+	var best := p
+	var bd := 1 << 30
+	for d: Dictionary in [towns, villages]:
+		for id in d.keys():
+			var c: Vector2i = d[id].get("center", p)
+			var dd := (c - p).length_squared()
+			if dd < bd:
+				bd = dd
+				best = c
+	var rid := region_map.ground_region(best, 0.5)
+	match str(region_map.def(rid).get("grass", "grass")):
+		"grass_lush": return TileType.GRASS_LUSH
+		"grass_boreal": return TileType.GRASS_BOREAL
+		"grass_tropic": return TileType.GRASS_TROPIC
+	return TileType.GRASS
+
+
+func _blend_footprint_edge(rect: Rect2i) -> void:
+	var bt: Dictionary = {}
+	for b in buildings.values():
+		var br: Rect2i = b["rect"]
+		if rect.intersects(br):
+			for y in range(br.position.y - 1, br.end.y + 1):
+				for x in range(br.position.x - 1, br.end.x + 1):
+					bt[Vector2i(x, y)] = true
+	for y in range(rect.position.y, rect.end.y):
+		for x in range(rect.position.x, rect.end.x):
+			var p := Vector2i(x, y)
+			var d := mini(mini(x - rect.position.x, rect.end.x - 1 - x), mini(y - rect.position.y, rect.end.y - 1 - y))
+			if d >= EDGE_BAND or not _town_tiles.has(p) or _town_objects.has(p) or bt.has(p) or _wall_ground.has(p):
+				continue
+			var n: String = TILE_NAMES[int(_town_tiles[p])]
+			# outline: 0 at the rim .. 1 deep inside, pushed in/out by noise
+			var depth := (float(d) + 0.5) / float(EDGE_BAND) + _detail.get_noise_2d(x * 1.7 + 311, y * 1.7 - 97) * 0.55 + (hash01(x, y, 53) - 0.5) * 0.25
+			if n == "road_stone":
+				if depth < 0.35:
+					_town_tiles[p] = TileType.PATH
+				elif depth < 0.7:
+					_town_tiles[p] = TILE_NAMES.find("road_dirt")
+				continue
+			if not n in EDGE_SOFT or depth >= 0.6:
+				continue
+			var t := _terrain_at(x, y)
+			var tn: String = TILE_NAMES[t]
+			if t in BLOCKING_TILES or tn.contains("cliff") or tn == "water" or tn == "marsh":
+				continue
+			_town_tiles[p] = t
+	# break dead-straight soft-floor edges (plaza / yard / field rims): an edge cell takes
+	# its neighbour's floor where the noise says so -> jogged, organic outlines
+	var flips: Dictionary = {}
+	for y in range(rect.position.y + 1, rect.end.y - 1):
+		for x in range(rect.position.x + 1, rect.end.x - 1):
+			var p := Vector2i(x, y)
+			if _town_objects.has(p) or bt.has(p) or _wall_ground.has(p) or not _town_tiles.has(p):
+				continue
+			var a: String = TILE_NAMES[int(_town_tiles[p])]
+			if not a in EDGE_SOFT:
+				continue
+			for dv in [Vector2i(0, -1), Vector2i(1, 0), Vector2i(0, 1), Vector2i(-1, 0)]:
+				var q: Vector2i = p + dv
+				if not _town_tiles.has(q) or _town_objects.has(q) or bt.has(q):
+					continue
+				var b: String = TILE_NAMES[int(_town_tiles[q])]
+				if b == a or not b in EDGE_SOFT:
+					continue
+				if _detail.get_noise_2d(x * 2.9 - 50, y * 2.9 + 820) + (hash01(x, y, 59) - 0.5) * 0.6 > 0.18:
+					flips[p] = _town_tiles[q]
+				break
+	for p in flips:
+		_town_tiles[p] = flips[p]
+
+
+func wall_tower_cells() -> Array:
+	return _wall_towers.keys()
+
+
+func wall_key(p: Vector2i) -> Array:
+	return _wall_keys.get(p, [])
+
+
+func is_thin_wall_cell(p: Vector2i) -> bool:
+	return _wall_ground.has(p)
+
+
+## Drawing only: a wall cell shows the floor under the thin wall atlas.
+func wall_ground_tile(p: Vector2i, t: int) -> int:
+	return int(_wall_ground.get(p, t))
 
 
 ## 0.3.15 quest givers from data/quests.json "givers" with "town" + "near" (town-local
@@ -625,6 +877,11 @@ static func art_plan(art: String, flip: bool) -> Array:
 ## 0.3.11 a building drawn from layered art: the footprint follows the design's
 ## plan (# wall, o floor, D door, . not the building), so round, L-shaped and
 ## towered buildings keep their real shape; the bottom row is the facade.
+## restyle batch 03: one town_art.json building entry.
+func art_def(art: String) -> Dictionary:
+	return town_art().get("buildings", {}).get(art, {})
+
+
 func _load_art_building(town: Dictionary, bd: Dictionary, v: Callable, shops: Dictionary) -> void:
 	var art := str(bd["art"])
 	var flip := bool(bd.get("flip", false))
@@ -646,7 +903,7 @@ func _load_art_building(town: Dictionary, bd: Dictionary, v: Callable, shops: Di
 		"id": str(bd["id"]), "town": str(town["id"]), "kind": str(bd.get("kind", "shop")), "shop": shop,
 		"name": str(bd.get("name", sd.get("name", ""))), "keeper": str(bd.get("keeper", sd.get("keeper", "Shopkeeper"))),
 		"keeper_sprite": str(bd.get("keeper_sprite", sd.get("keeper_sprite", "keeper_general"))), "sign_sprite": str(bd.get("sign_sprite", sd.get("sign", "sign_general"))),
-		"rect": rect, "doors": [] if closed else doors, "facade_y": rect.end.y - 1, "keeper_at": v.call(bd["keeper_at"]), "stand": v.call(bd["stand"]),
+		"rect": rect, "doors": [] if closed else doors, "facade_y": rect.position.y if str(art_def(art).get("door_side", "S")) == "N" else rect.end.y - 1, "keeper_at": v.call(bd["keeper_at"]), "stand": v.call(bd["stand"]),
 		"sign": v.call(bd["sign"]), "counter": [], "displays": [], "roof": str(bd.get("roof", sd.get("roof", town.get("roof", "#8a6a4a")))),
 		"style": "art", "art": art, "flip": flip, "greet": bd.get("greet", []), "no_keeper": bool(bd.get("no_keeper", false)) or closed,
 	}
@@ -1803,7 +2060,11 @@ func _analyse_cell(c: Vector2i) -> Dictionary:
 
 ## Region-coloured open ground for a dithered region pick.
 func region_grass(p: Vector2i) -> int:
-	var rid := region_map.ground_region(p, hash01(p.x, p.y, 31))
+	# gfx audit: the region-border dither is a low-frequency noise blob field with a
+	# little per-tile jitter (was pure per-tile hash: single-tile lush/plain specks
+	# that the transition frames outlined as dark boxes)
+	var hd := clampf(0.5 + _detail.get_noise_2d(p.x * 0.7 + 1700, p.y * 0.7 - 400) * 0.45 + (hash01(p.x, p.y, 31) - 0.5) * 0.04, 0.0, 1.0)
+	var rid := region_map.ground_region(p, hd)
 	match str(region_map.def(rid).get("grass", "grass")):
 		"grass_lush": return TileType.GRASS_LUSH
 		"grass_boreal": return TileType.GRASS_BOREAL
