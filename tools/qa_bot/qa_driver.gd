@@ -356,6 +356,8 @@ func _run() -> void:
 			await _frames0320()
 		"frames040":
 			await _frames040()
+		"framesrestyle":
+			await _frames_restyle()
 		_:
 			push_error("unknown QA scenario " + scenario)
 			await _finish(false)
@@ -3897,3 +3899,82 @@ func _frames040() -> void:
 		await frames(40)
 		await _snap("040_elijah_tomb_night")
 		DayNight.debug_set_phase("day")
+
+
+
+## restyle: player tiers, attack + bow poses, every town and village by day and night.
+func _frames_restyle() -> void:
+	var p: Player = main.player
+	var w: World = main.world
+	var g = w.gen
+	DayNight.debug_set_phase("day")
+	var sets := {
+		"t1_bronze_plate": ["bronze_cap", "bronze_scale_vest", "bronze_greaves", "bronze_sword"],
+		"t2_iron_chain": ["iron_chain_coif", "iron_chain_hauberk", "iron_chain_legs", "iron_chain_kite", "iron_sword"],
+		"t3_steel_plate": ["steel_helm", "steel_brigandine", "steel_legplates", "steel_heater_shield", "steel_sword"],
+		"t4_dusk_plate": ["dusk_helm", "dusk_cuirass", "dusk_tassets", "dusk_tower_shield", "dusk_sword"],
+		"ranger_direpelt": ["direpelt_coif", "direpelt_body", "direpelt_chaps", "alder_longbow"],
+	}
+	for sk in ["attack", "strength", "defence", "archery", "ranged"]:
+		p.skills.set_level(sk, 60)
+	var spot := w.find_free_tile_near(g.town_spawn("highfen") + Vector2i(2, 2), 6)
+	main.camera.zoom = Vector2(6, 6)
+	for nm in sets.keys():
+		for sl in ["head", "body", "legs", "shield", "weapon"]:
+			p.equipment.erase(sl)
+		p.inventory.clear()
+		for id in sets[nm]:
+			p.inventory.add(id)
+		for k in sets[nm].size():
+			p.equip_slot(0)
+		p.place_at(spot)
+		w.set_focus(p.tile, true)
+		for d in ["side", "down", "up"]:
+			p.facing.dir = d
+			await frames(20)
+			await _snap("restyle_player_%s_%s" % [nm, d])
+		if nm == "t4_dusk_plate" or nm == "t2_iron_chain":
+			for d in ["side", "down"]:
+				p.facing.dir = d
+				p.start_pose("attack")
+				await frames(9)
+				await _snap("restyle_attack_%s_%s" % [nm, d])
+				await frames(40)
+		if nm == "ranger_direpelt":
+			for d in ["side", "down"]:
+				p.facing.dir = d
+				p.start_pose("shoot")
+				await frames(14)
+				await _snap("restyle_bowshot_%s" % d)
+				await frames(40)
+	main.camera.zoom = Vector2(3, 3)
+	p.facing.dir = "down"
+	for t in ["highfen", "fenhollow", "cinderholt", "saltmere", "millbrook", "barrowby", "oxley"]:
+		var c: Vector2i = g.town_center(t)
+		p.place_at(w.find_free_tile_near(c, 6))
+		w.set_focus(p.tile, true)
+		DayNight.debug_set_phase("day")
+		await frames(90)
+		await _snap("restyle_town_%s_day" % t)
+		DayNight.debug_set_phase("night")
+		await frames(50)
+		await _snap("restyle_town_%s_night" % t)
+	DayNight.debug_set_phase("day")
+	# mixed sizes: the 16x16 player beside old 16x24 NPCs / keepers
+	main.camera.zoom = Vector2(5, 5)
+	for b in g.building_order:
+		var bd: Dictionary = g.buildings[b]
+		if str(bd.get("town", "")) == "highfen" and bd.has("stand") and not bool(bd.get("no_keeper", false)):
+			p.place_at(bd["stand"])
+			w.set_focus(p.tile, true)
+			await frames(60)
+			await _snap("restyle_mix_keeper_highfen")
+			break
+	for ac in get_tree().get_nodes_in_group("actors"):
+		if ac != p and ac is Actor and ac.visible:
+			p.place_at(w.find_free_tile_near((ac as Actor).tile + Vector2i(1, 0), 2))
+			w.set_focus(p.tile, true)
+			await frames(40)
+			await _snap("restyle_mix_ai_player")
+			break
+	main.camera.zoom = Vector2(3, 3)
