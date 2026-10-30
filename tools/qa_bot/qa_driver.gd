@@ -358,6 +358,8 @@ func _run() -> void:
 			await _frames040()
 		"framesrestyle":
 			await _frames_restyle()
+		"gfxaudit":
+			await _gfx_audit()
 		_:
 			push_error("unknown QA scenario " + scenario)
 			await _finish(false)
@@ -4102,4 +4104,213 @@ func _frames_restyle() -> void:
 				w.set_focus(p.tile, true)
 				await frames(40)
 				await _snap("restyle_npc_%s" % sid)
+	main.camera.zoom = Vector2(3, 3)
+
+
+# ------------------------------------------------------------------ gfx audit --
+## gfx audit: snaps across towns/villages (centre, edges zoomed out, road ends and
+## junctions, actor in front of / behind signs, towers, trees, rocks), day and night,
+## each with a scene dump (visible cells + overlays, z-order checks) for
+## tools/qa_bot/gfx_audit.py.
+func _gfx_effz(n: Node) -> int:
+	var z := 0
+	var c: Node = n
+	while c != null and c is CanvasItem:
+		z += (c as CanvasItem).z_index
+		if not (c as CanvasItem).z_as_relative:
+			break
+		c = c.get_parent()
+	return z
+
+
+func _gfx_vis(n: CanvasItem) -> float:
+	var a := 1.0
+	var c: Node = n
+	while c != null and c is CanvasItem:
+		if not (c as CanvasItem).visible:
+			return 0.0
+		a *= (c as CanvasItem).modulate.a * (c as CanvasItem).self_modulate.a
+		c = c.get_parent()
+	return a
+
+
+var _gfx_img_cache: Dictionary = {}
+
+
+## opaque texels of a sprite inside a world rect (stride 2)
+func _gfx_opaque_px(sp: Sprite2D, wr: Rect2) -> int:
+	var tex: Texture2D = sp.texture
+	var key := tex.get_rid()
+	if not _gfx_img_cache.has(key):
+		_gfx_img_cache[key] = tex.get_image()
+	var img: Image = _gfx_img_cache[key]
+	if img == null:
+		return 99
+	var inv := (sp.get_global_transform()).affine_inverse()
+	var rr: Rect2 = sp.get_rect()
+	var n := 0
+	var y := wr.position.y
+	while y < wr.end.y:
+		var x := wr.position.x
+		while x < wr.end.x:
+			var l: Vector2 = inv * Vector2(x, y) - rr.position
+			if sp.flip_h:
+				l.x = rr.size.x - l.x
+			var src := Vector2i(int(l.x), int(l.y))
+			if src.x >= 0 and src.y >= 0 and src.x < img.get_width() and src.y < img.get_height() and img.get_pixelv(src).a > 0.5:
+				n += 1
+			x += 2.0
+		y += 2.0
+	return n
+
+
+func _gfx_dump(name: String, actors: Array) -> void:
+	var w: World = main.world
+	var g = w.gen
+	var vt: Transform2D = get_viewport().get_canvas_transform()
+	var vs: Vector2 = get_viewport().get_visible_rect().size
+	var inv := vt.affine_inverse()
+	var a0: Vector2 = inv * Vector2.ZERO
+	var a1: Vector2 = inv * vs
+	var tp: int = w.tile_px
+	var t0 := Vector2i(floori(a0.x / tp), floori(a0.y / tp))
+	var t1 := Vector2i(floori(a1.x / tp), floori(a1.y / tp))
+	var nm := func(q: Vector2i) -> String: return WorldGen.TILE_NAMES[g.tile_at(q.x, q.y)]
+	var cells := []
+	for y in range(t0.y, t1.y + 1):
+		for x in range(t0.x, t1.x + 1):
+			var q := Vector2i(x, y)
+			var ov := []
+			for c in w.overlay_cells(q, nm):
+				ov.append([c[0], c[1], c[2].x])
+			var o = g._town_objects.get(q, "")
+			cells.append([x, y, nm.call(q), ov, str(o), g.road_tiles.has(q)])
+	# z-order: props drawn after an actor whose foot is above (north of) the actor's foot
+	var props := []
+	for root in [w.entity_layer, main.world.buildings_view]:
+		for n in root.find_children("*", "Sprite2D", true, false):
+			props.append(n)
+	var viol := []
+	for ac in actors:
+		if ac == null or not is_instance_valid(ac):
+			continue
+		var af: Vector2 = (ac as Node2D).global_position
+		var body := Rect2(af + Vector2(-5, -22), Vector2(10, 20))
+		var az := _gfx_effz(ac)
+		for n in props:
+			var sp := n as Sprite2D
+			if sp == ac or ac.is_ancestor_of(sp) or sp.texture == null:
+				continue
+			if _gfx_vis(sp) < 0.15:
+				continue
+			var r: Rect2 = sp.get_global_transform() * sp.get_rect()
+			if not r.intersects(body):
+				continue
+			var pz := _gfx_effz(sp)
+			var foot: float = sp.global_position.y
+			var ysorted: bool = sp.get_parent() == w.entity_layer
+			if not ysorted:
+				foot = r.end.y
+			var after: bool = pz > az or (pz == az and ysorted and foot > af.y)
+			if after and foot < af.y - 2.0 and _gfx_opaque_px(sp, body.intersection(r)) >= 6:
+				viol.append({"actor": str(ac.name), "prop": str(sp.get_path()).get_file(), "tex": sp.texture.resource_path.get_file() if sp.texture.resource_path != "" else str(sp.texture), "prop_z": pz, "actor_z": az, "prop_foot": foot, "actor_foot": af.y, "rect": [r.position.x, r.position.y, r.size.x, r.size.y]})
+	var d := {"name": name, "xform": [vt.x.x, vt.y.y, vt.origin.x, vt.origin.y], "tile_px": tp, "t0": [t0.x, t0.y], "cells": cells, "zviol": viol, "phase": DayNight.phase_name() if DayNight.has_method("phase_name") else ""}
+	DirAccess.make_dir_recursive_absolute(out_dir + "/gfx")
+	var f := FileAccess.open("%s/gfx/%s.json" % [out_dir, name], FileAccess.WRITE)
+	f.store_string(JSON.stringify(d))
+	f.close()
+
+
+func _gfx_shot(name: String, at: Vector2i, zoom: float = 3.0) -> void:
+	var p: Player = main.player
+	var w: World = main.world
+	p.place_at(at)
+	main.camera.zoom = Vector2(zoom, zoom)
+	w.set_focus(p.tile, true)
+	await frames(45)
+	await _snap(name)
+	var acts: Array = [p]
+	for n in w.entity_layer.find_children("*", "Actor", true, false):
+		if n != p and (n as Node2D).is_visible_in_tree() and ((n as Node2D).global_position - p.global_position).length() < 200.0:
+			acts.append(n)
+	await _gfx_dump(name, acts)
+
+
+func _gfx_audit() -> void:
+	var p: Player = main.player
+	var w: World = main.world
+	var g = w.gen
+	var only := OS.get_environment("GFX_ONLY")
+	var ids: Array = g.town_order + g.village_order
+	for tid in ids:
+		if only != "" and not tid in only.split(","):
+			continue
+		var rect: Rect2i = g._town_rects[tid] if g._town_rects.has(tid) else g._village_rects.get(tid, Rect2i())
+		if rect.size == Vector2i.ZERO:
+			continue
+		DayNight.debug_set_phase("day")
+		var c := rect.get_center()
+		await _gfx_shot("%s_center_day" % tid, w.find_free_tile_near(c, 8))
+		# zoomed-out footprint views (town edge vs biome)
+		await _gfx_shot("%s_zoomout_day" % tid, w.find_free_tile_near(c, 8), 1.0)
+		for e in [["n", Vector2i(c.x, rect.position.y - 1)], ["s", Vector2i(c.x, rect.end.y)], ["w", Vector2i(rect.position.x - 1, c.y)], ["e", Vector2i(rect.end.x, c.y)]]:
+			await _gfx_shot("%s_edge_%s" % [tid, e[0]], w.find_free_tile_near(e[1], 6), 2.0)
+		# road ends / junctions inside the footprint (+4)
+		var rr := rect.grow(4)
+		var picks := []
+		var isroad := func(q: Vector2i) -> bool:
+			var tn: String = WorldGen.TILE_NAMES[g.tile_at(q.x, q.y)]
+			return tn.begins_with("road") or tn == "path" or tn == "cobble"
+		for y in range(rr.position.y, rr.end.y):
+			for x in range(rr.position.x, rr.end.x):
+				var q := Vector2i(x, y)
+				if not isroad.call(q):
+					continue
+				var n := 0
+				for d in [Vector2i(0, -1), Vector2i(1, 0), Vector2i(0, 1), Vector2i(-1, 0)]:
+					if isroad.call(q + d):
+						n += 1
+				if n == 1 or n == 2 and (isroad.call(q + Vector2i(1, 0)) != isroad.call(q + Vector2i(-1, 0))):
+					picks.append(q)
+		var taken := []
+		for q in picks:
+			var far := true
+			for t in taken:
+				if (q - t).length() < 14:
+					far = false
+			if far:
+				taken.append(q)
+			if taken.size() >= 4:
+				break
+		for i in taken.size():
+			await _gfx_shot("%s_road_%d" % [tid, i], w.find_free_tile_near(taken[i], 3))
+		# signs: in front of (south) and behind (north of the sign row)
+		var ns := 0
+		for bid in g.building_order:
+			var b: Dictionary = g.buildings[bid]
+			if str(b.get("town", "")) != tid or not b.has("sign") or ns >= 2:
+				continue
+			ns += 1
+			var sg: Vector2i = b["sign"]
+			await _gfx_shot("%s_sign_%s_front" % [tid, bid], w.find_free_tile_near(sg + Vector2i(0, 1), 2))
+		# towers: south and north side
+		var nt := 0
+		for q in g.wall_tower_cells():
+			if not rect.grow(2).has_point(q) or nt >= 2:
+				continue
+			nt += 1
+			await _gfx_shot("%s_tower%d_s" % [tid, nt], w.find_free_tile_near(q + Vector2i(0, 2), 3))
+			await _gfx_shot("%s_tower%d_n" % [tid, nt], w.find_free_tile_near(q + Vector2i(0, -2), 3))
+		# blocking props (trees / rocks / stalls / fences) near the centre: actor just south
+		var no := 0
+		for q in g._town_objects.keys():
+			if no >= 3 or not rect.has_point(q):
+				continue
+			if (q.x * 31 + q.y * 17) % 23 != 0:
+				continue
+			no += 1
+			await _gfx_shot("%s_prop_%s_%d" % [tid, str(g._town_objects[q]), no], w.find_free_tile_near(q + Vector2i(0, 1), 2))
+		DayNight.debug_set_phase("night")
+		await _gfx_shot("%s_center_night" % tid, w.find_free_tile_near(c, 8))
+	DayNight.debug_set_phase("day")
 	main.camera.zoom = Vector2(3, 3)
