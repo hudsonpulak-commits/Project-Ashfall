@@ -1311,34 +1311,51 @@ func from_save(d: Dictionary, now_tick: int) -> void:
 			_refresh_object_view(o)
 
 
-## restyle r6: wall towers are wall-atlas junction frames on thin-wall cells (y-sorted)
+## restyle r7: wall towers are wall-atlas junction frames on thin-wall cells (y-sorted).
+## 48x96 frames painted by the wall heightfield painter; the frame stores only the pixels
+## that differ from the walls-only render for that exact 25-bit wall key.
 const TOWER_FW := 48
-const TOWER_FH := 72
-const TOWER_FOOT := 58
-const TOWER_CELL := Vector2(16, 38)
+const TOWER_FH := 96
+const TOWER_FOOT := 76                 # ground under the drum centre (cell top 56 + 8 + drop 12)
+const TOWER_CELL := Vector2(16, 56)    # wall cell top-left inside the frame
 const TOWER_NB := [Vector2i(0, -1), Vector2i(1, -1), Vector2i(1, 0), Vector2i(1, 1), Vector2i(0, 1), Vector2i(-1, 1), Vector2i(-1, 0), Vector2i(-1, -1)]
 static var _tower_lut: Dictionary = {}
+static var _tower_mask_lut: Dictionary = {}
+
+
+static func _load_int_lut(path: String, into: Dictionary) -> void:
+	var f := FileAccess.open(path, FileAccess.READ)
+	if f == null:
+		return
+	var d = JSON.parse_string(f.get_as_text())
+	if d is Dictionary:
+		for k in d:
+			into[int(k)] = int(d[k])
+
+
+## Frame index for a tower on wall cell key `key` (exact key, then 8-neighbour mask).
+static func tower_frame(key: int) -> int:
+	if _tower_lut.is_empty():
+		_load_int_lut("res://assets/sprites/tiles/walls_diag/tower_atlas_lut.json", _tower_lut)
+		_load_int_lut("res://assets/sprites/tiles/walls_diag/tower_mask_lut.json", _tower_mask_lut)
+	if _tower_lut.has(key):
+		return int(_tower_lut[key])
+	var m := 0
+	for i in 8:
+		var d2: Vector2i = TOWER_NB[i]
+		if key & (1 << ((d2.y + 2) * 5 + d2.x + 2)):
+			m |= 1 << i
+	return int(_tower_mask_lut.get(m, -1))
 
 
 func _build_wall_towers() -> void:
-	if _tower_lut.is_empty():
-		var f := FileAccess.open("res://assets/sprites/tiles/walls_diag/tower_atlas_lut.json", FileAccess.READ)
-		if f != null:
-			var d = JSON.parse_string(f.get_as_text())
-			if d is Dictionary:
-				for k in d:
-					_tower_lut[int(k)] = int(d[k])
 	for p in gen.wall_tower_cells():
 		var wk: Array = gen.wall_key(p)
 		if wk.is_empty():
 			continue
-		var key := int(wk[1])
-		var m := 0
-		for i in 8:
-			var d2: Vector2i = TOWER_NB[i]
-			if key & (1 << ((d2.y + 2) * 5 + d2.x + 2)):
-				m |= 1 << i
-		var fi := int(_tower_lut.get(m, _tower_lut.get(0, 0)))
+		var fi := tower_frame(int(wk[1]))
+		if fi < 0:
+			continue
 		var tex: Texture2D = load("res://assets/sprites/tiles/walls_diag/%s_tower_atlas.png" % str(wk[0]))
 		if tex == null:
 			continue
