@@ -692,8 +692,8 @@ func _recipe_button(item_name: String, btn: String) -> Button:
 		if (l as Label).text.begins_with(item_name + " "):
 			var row: Node = l.get_parent()
 			for c in row.get_children():
-				if c is Button and (c as Button).text == btn:
-					return c
+				if c is Button and ((c as Button).text == btn or (btn == "Make 1" and (c as Button).text == "1")):
+					return c   # 0.4.0 quantity row: 1 / 5 / 10 / All
 	return null
 
 

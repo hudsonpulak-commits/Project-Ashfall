@@ -436,8 +436,14 @@ func _loot_tick(t: int, world) -> bool:
 
 
 func _go_bank(world) -> bool:
-	var chest: WorldObject = world.find_nearest_object(tile, ["bank_chest"], 80)
-	return chest != null and interact(world, chest)
+	# 0.4.0 perf: only look in loaded chunks (radius 80 used to generate up to
+	# ~36 chunks synchronously = 460 ms spike); far off, walk home in legs.
+	var chest: WorldObject = world.find_nearest_object(tile, ["bank_chest"], 80, false, true)
+	if chest != null:
+		return interact(world, chest)
+	if agent.home_town != "":
+		return _walk_leg(world, world.gen.town_center(agent.home_town))
+	return false
 
 
 ## Travelling traders follow the road tile by tile (no pathfinding needed).
@@ -486,12 +492,16 @@ func _think(t: int, world) -> void:
 		"craft":
 			var r := Interactions.recipe_by_id(a.get("recipe", ""))
 			if not r.is_empty():
+				if inventory.has_all(r["in"]) and Interactions.PACK_STATIONS.has(str(r["station"])):
+					# 0.4.0 knife / needle recipes are made from the pack, no station
+					if start_pack_recipe(str(r["station"]), r["id"], -1):
+						return
 				if inventory.has_all(r["in"]):
 					var ids := []
 					for oid in GameData.objects.keys():
 						if GameData.objects[oid].get("station", "") == r["station"]:
 							ids.append(oid)
-					var st: WorldObject = world.find_nearest_object(tile, ids, 80)
+					var st: WorldObject = world.find_nearest_object(tile, ids, 80, false, true) if not ids.is_empty() else null
 					if st and start_recipe(world, st, r["id"], -1):
 						return
 					if st == null:   # 0.3.1 village querns: walk out to the nearest one

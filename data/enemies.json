@@ -296,9 +296,12 @@
    "xp": 90,
    "chase_steps": 2,
    "drops": "greymaw",
-   "scale": 1.0,
+   "scale": 1.4,
    "rotates": true,
-   "note": "0.4.0 Night of 1000 Howls part 2. Named dire wolf: no aggro until attacked, leash 16 from her farm, spawns only once step 5 is active, then every 10 min (1000 ticks) at a random farm (Millbrook / Barrowby / Oxley). Sprite swappable in data/sprites.json actors.greymaw."
+   "note": "0.4.0 Night of 1000 Howls part 2. Named dire wolf: no aggro until attacked, leash 16 from her farm, spawns only once step 5 is active, then every 10 min (1000 ticks) at a random farm (Millbrook / Barrowby / Oxley). Sprite swappable in data/sprites.json actors.greymaw.",
+   "tints": [
+    "#ffd6d0"
+   ]
   },
   "dire_wolf": {
    "name": "Dire wolf",
