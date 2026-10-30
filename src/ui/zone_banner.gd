@@ -82,7 +82,7 @@ func attach_row(info: Container) -> void:
 	row.add_child(ic)
 	label = Label.new()
 	label.add_theme_constant_override("outline_size", 3)
-	label.add_theme_font_size_override("font_size", 9)
+	label.add_theme_font_size_override("font_size", 10)
 	label.add_theme_color_override("font_color", Color("#ff8a5a"))
 	label.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	row.add_child(label)

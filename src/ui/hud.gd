@@ -164,16 +164,16 @@ func _build() -> void:
 	clock_row.add_child(_ignore(clock_icon))
 	clock_label = Label.new()
 	clock_label.add_theme_constant_override("outline_size", 3)
-	clock_label.add_theme_font_size_override("font_size", 9)
+	clock_label.add_theme_font_size_override("font_size", 10)
 	clock_row.add_child(_ignore(clock_label))
 	info.add_child(clock_row)
 	coords_label = Label.new()
 	coords_label.add_theme_constant_override("outline_size", 3)
-	coords_label.add_theme_font_size_override("font_size", 9)
+	coords_label.add_theme_font_size_override("font_size", 10)
 	info.add_child(_ignore(coords_label))
 	hp_label = Label.new()
 	hp_label.add_theme_constant_override("outline_size", 3)
-	hp_label.add_theme_font_size_override("font_size", 9)
+	hp_label.add_theme_font_size_override("font_size", 10)
 	info.add_child(_ignore(hp_label))
 	prayer_row = HBoxContainer.new()
 	_ignore(prayer_row)
@@ -183,7 +183,7 @@ func _build() -> void:
 	prayer_row.add_child(_ignore(prayer_icon))
 	prayer_label = Label.new()
 	prayer_label.add_theme_constant_override("outline_size", 3)
-	prayer_label.add_theme_font_size_override("font_size", 9)
+	prayer_label.add_theme_font_size_override("font_size", 10)
 	prayer_row.add_child(_ignore(prayer_label))
 	prayer_row.visible = false
 	info.add_child(prayer_row)
@@ -197,8 +197,8 @@ func _build() -> void:
 	multi_row.add_child(_ignore(mi))
 	multi_label = Label.new()
 	multi_label.add_theme_constant_override("outline_size", 3)
-	multi_label.add_theme_font_size_override("font_size", 9)
-	multi_label.add_theme_color_override("font_color", Color("#f0a090"))
+	multi_label.add_theme_font_size_override("font_size", 10)
+	multi_label.add_theme_color_override("font_color", Color("#e8843a"))
 	multi_row.add_child(_ignore(multi_label))
 	multi_row.visible = false
 	info.add_child(multi_row)
@@ -212,15 +212,15 @@ func _build() -> void:
 	top.add_child(bars)
 	hp_bar = StatBar.new()
 	hp_bar.label = "HP"
-	hp_bar.fill = Color("#c83a3a")
+	hp_bar.fill_tex = "hp"
 	bars.add_child(hp_bar)
 	prayer_bar = StatBar.new()
 	prayer_bar.label = "Prayer"
-	prayer_bar.fill = Color("#3a6ac8")
+	prayer_bar.fill_tex = "prayer"
 	bars.add_child(prayer_bar)
 	energy_bar = StatBar.new()
 	energy_bar.label = "Energy"
-	energy_bar.fill = Color("#8ab83a")
+	energy_bar.fill_tex = "energy"
 	energy_bar.custom_minimum_size = Vector2(84, 30)   # the sprint toggle: a bigger touch target
 	energy_bar.mouse_filter = Control.MOUSE_FILTER_STOP
 	energy_bar.tapped.connect(func():
@@ -652,7 +652,7 @@ func _build_menu_panel() -> Control:
 	var about := Label.new()
 	about.text = "AshFall %s — an original game.\nTap the ground to walk; tap trees, rocks, pools,\nthe dummy, stations, shops, the Exchange board or\na bank chest. Map: see the continent, walk the roads." % ProjectSettings.get_setting("application/config/version", "")
 	about.add_theme_color_override("font_color", UIStyle.TEXT_DIM)
-	about.add_theme_font_size_override("font_size", 9)
+	about.add_theme_font_size_override("font_size", 10)
 	v.add_child(about)
 	return v
 

@@ -242,7 +242,7 @@ func _build() -> void:
 	message = Label.new()
 	message.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	message.custom_minimum_size = Vector2(230, 0)
-	message.add_theme_font_size_override("font_size", 9)
+	message.add_theme_font_size_override("font_size", 10)
 	message.visible = false
 	stack.add_child(message)
 	# main page
@@ -380,7 +380,7 @@ func _open_slots(mode: String) -> void:
 		var b := Button.new()
 		b.custom_minimum_size = Vector2(230, 44)
 		b.alignment = HORIZONTAL_ALIGNMENT_LEFT
-		b.add_theme_font_size_override("font_size", 9)
+		b.add_theme_font_size_override("font_size", 10)
 		b.text = slot_text(info)
 		b.name = "Slot%d" % n
 		buttons["Slot%d" % n] = b
