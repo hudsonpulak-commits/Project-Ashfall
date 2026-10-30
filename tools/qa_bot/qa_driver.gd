@@ -3995,7 +3995,7 @@ func _frames_restyle() -> void:
 			for xx in range(-10, 11):
 				var q: Vector2i = cand + Vector2i(xx, yy)
 				var tn: String = WorldGen.TILE_NAMES[g.tile_at(q.x, q.y)]
-				if not tn in ["grass", "dirt", "marsh", "sand", "path"] or g._town_objects.has(q) or g.in_town(q):
+				if not tn in ["grass", "grass_lush", "grass_boreal", "grass_tropic", "dirt"] or g._town_objects.has(q) or g.in_town(q):
 					okc = false
 		if okc:
 			mo = cand
