@@ -3972,6 +3972,12 @@ func _frames_restyle() -> void:
 				var d: Vector2i = wp - c
 				if absi(d.x) > 70 or absi(d.y) > 70:
 					continue
+				var own := true  # only this town's walls (barrowby_sw used to pick Highfen's)
+				for o in ["highfen", "cinderholt", "fenhollow", "barrowby", "saltmere"]:
+					if o != t and (wp - g.town_center(o)).length_squared() < d.length_squared():
+						own = false
+				if not own:
+					continue
 				var sc: int = d.x * corner.x + d.y * corner.y
 				if sc > bs:
 					bs = sc
