@@ -14,6 +14,11 @@ var fill_tex := ""   # restyle batch 07: kit/bar_fill_<hp|prayer|energy>
 var highlight := false
 var highlight_color := Color("#f0e060")
 var prefix := ""
+const FILL_BANDS := {
+	"hp": [Color8(200, 86, 42), Color8(122, 42, 42)],
+	"prayer": [Color8(122, 138, 152), Color8(67, 80, 96)],
+	"energy": [Color8(138, 148, 96), Color8(108, 122, 72)],
+}
 
 
 func _init() -> void:
@@ -44,11 +49,11 @@ func _draw() -> void:
 	draw_style_box(UIStyle.tex("bar_frame", 3, 0), r)
 	var inner := r.grow(-3)
 	var w := inner.size.x * clampf(cur / maxf(1.0, max_v), 0.0, 1.0)
-	var fp := "res://assets/ui/kit/bar_fill_%s.png" % fill_tex
-	if fill_tex != "" and ResourceLoader.exists(fp):
-		draw_texture_rect(load(fp), Rect2(inner.position, Vector2(w, inner.size.y)), false)
-	else:
-		draw_rect(Rect2(inner.position, Vector2(w, inner.size.y)), fill)
+	# batch 07 kit fill drawn as colour bands (texture draw rendered white on device)
+	var bands: Array = FILL_BANDS.get(fill_tex, [fill, fill.darkened(0.4)])
+	var hh := inner.size.y
+	draw_rect(Rect2(inner.position, Vector2(w, hh)), bands[1])
+	draw_rect(Rect2(inner.position, Vector2(w, ceilf(hh * 0.5))), bands[0])
 	if highlight:
 		draw_rect(r.grow(-0.5), UIStyle.EMBER, false, 2.0)
 	var font := get_theme_default_font()
@@ -56,7 +61,7 @@ func _draw() -> void:
 	var t := text()
 	var tw := font.get_string_size(t, HORIZONTAL_ALIGNMENT_LEFT, -1, fs).x
 	var pos := Vector2(maxf(3.0, (size.x - tw) / 2.0), (size.y + fs) / 2.0 - 1)
-	draw_string_outline(font, pos, t, HORIZONTAL_ALIGNMENT_LEFT, -1, fs, 3, Color.BLACK)
+	draw_string_outline(font, pos, t, HORIZONTAL_ALIGNMENT_LEFT, -1, fs, 2, Color.BLACK)
 	draw_string(font, pos, t, HORIZONTAL_ALIGNMENT_LEFT, -1, fs, Color.WHITE)
 
 
