@@ -1997,7 +1997,7 @@ func _archery() -> void:
 	label = "skills"
 	main.hud.show_panel("skills")
 	await frames(20)
-	res["skills_panel_archery"] = _has_text(main.hud.panels["skills"], "Archery") or _has_text(main.hud.panels["skills"], "ARC")
+	res["skills_panel_archery"] = _has_text(main.hud.panels["skills"], "Archery") or _has_text(main.hud.panels["skills"], "ARC") or _has_text(main.hud.panels["skills"], "Ranged") or _has_text(main.hud.panels["skills"], "RNG")
 	await _snap("skills_panel_archery")
 	main.hud.toggle_panel("skills")
 	label = ""
