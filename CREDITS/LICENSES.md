@@ -54,3 +54,9 @@ All batch 05 art is procedural (src/*.py). No third-party packs were used. The s
 
 ## Batch 06 (items)
 No third-party art. These are recolours of the repo's own icons, done by code (src/icons.py). No packs, no purchases, no uploads.
+
+## Batch 07 (UI)
+# Credits / licences
+- All UI sprites and kit pieces are procedural (src/kit.py) or recolours of the repo's own ui sprites. No third-party art.
+- fonts/PixelifySans.ttf: Pixelify Sans by Stefie Justprince, SIL Open Font License 1.1 (https://openfontlicense.org; source: Google Fonts). It is free to use, embed and redistribute. Keep the licence and do not sell the font on its own. Taken from the box's installed fonts, not downloaded or bought.
+- No purchases, no uploads. The r5 walls are not included.
