@@ -1001,7 +1001,7 @@ static func _village_tests(world: World, p: Player) -> void:
 			break
 	check(respawned and (pz0["rect"] as Rect2i).has_point(cow.tile), "cows respawn in their pasture")
 	var cbf := Interactions.recipe_by_id("cook_beef")
-	check(int(cbf.get("level", 0)) == 5 and int(GameData.item("cooked_beef").get("heals", 0)) == 8, "raw beef cooks at Cooking 5 and heals 8 (0.3.6 tiered heals)")
+	check(int(cbf.get("level", 0)) == 5 and int(GameData.item("cooked_beef").get("heals", 0)) == 11, "raw beef cooks at Cooking 5 and heals 11 (restyle food rebalance)")
 	check(Market.town("fenhollow").npc_buy_price("cowhide") > 0 and GameData.item_value("cowhide") >= 10, "cowhide sells (general store buys at %d)" % Market.town("fenhollow").npc_buy_price("cowhide"))
 	check((Market.shop_cfg.get("general_store", {}).get("stock", []) as Array).has("bread"), "the general store stocks bread")
 	# ---- AI: a farmer in every town; fighters weigh up the cows; AIs find the fields

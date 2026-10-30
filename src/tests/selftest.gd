@@ -524,7 +524,18 @@ static func _combat_tests(world: World, p: Player) -> void:
 	p.hp = 2
 	p.inventory.add("cooked_rat_meat")
 	var healed := p.eat_slot(p.inventory.find("cooked_rat_meat"), tt)
-	check(healed == 4 and p.hp == 6, "eating food heals (rat meat 4)")
+	check(healed == 5 and p.hp == 7, "eating food heals (rat meat 5)")
+	# restyle food rebalance: rat meat stays 5; heals rise along each chain
+	var chains := {"meat": ["cooked_rat_meat", "cooked_chicken", "cooked_beef"], "fish": ["cooked_carp", "cooked_eel"], "steps": ["cooked_chicken", "bread"]}
+	var mono := int(GameData.item("cooked_rat_meat").get("heals", 0)) == 5
+	for cn in chains:
+		var hs: Array = chains[cn].map(func(f): return int(GameData.item(f).get("heals", 0)))
+		for k in range(1, hs.size()):
+			mono = mono and hs[k] > hs[k - 1]
+	var mid_hp := 10 + 40
+	for f in ["cooked_rat_meat", "cooked_chicken", "cooked_carp", "bread", "cooked_beef", "cooked_eel"]:
+		mono = mono and int(GameData.item(f).get("heals", 0)) < mid_hp / 2
+	check(mono, "food: rat meat heals exactly 5, heals rise monotonically within each chain, no food heals half a mid-level (Vitality 40) player")
 	p.inventory.add("bronze_cap")
 	var def0 := p.combat_def()
 	check(p.equip_slot(p.inventory.find("bronze_cap")) == "" and p.combat_def() > def0, "equipping a helmet raises defence")
