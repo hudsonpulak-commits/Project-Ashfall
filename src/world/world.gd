@@ -84,10 +84,15 @@ func _build_tileset() -> TileSet:
 		var tex := GameData.texture("tiles", WorldGen.TILE_NAMES[i])
 		var src := TileSetAtlasSource.new()
 		src.texture = tex
-		src.texture_region_size = Vector2i(tile_px, tile_px)
+		# restyle (batch 02): 16x24 wall fronts / gates -- one tall tile whose
+		# top 8 px overhang the wall-top cell to the north (bottom anchored)
+		var tall := tex.get_height() > tile_px
+		src.texture_region_size = Vector2i(tile_px, tex.get_height() if tall else tile_px)
 		var cols := maxi(1, tex.get_width() / tile_px)
 		for v in cols:
 			src.create_tile(Vector2i(v, 0))
+			if tall:
+				src.get_tile_data(Vector2i(v, 0), 0).texture_origin = Vector2i(0, (tex.get_height() - tile_px) / 2)
 		ts.add_source(src, i)
 	# 0.3.9 autotile + transition overlay sheets (sources 100+ / 200+)
 	_overlay_src.clear()
@@ -125,6 +130,9 @@ func _build_tileset() -> TileSet:
 const MOAT_CORNERS := [[0, 1, 5], [1, 2, 6], [2, 3, 7], [3, 0, 4]]
 
 
+const BOARDWALK_JOINS := ["boardwalk", "planks", "bridge"]
+
+
 func overlay_cells(p: Vector2i, nm: Callable) -> Array:
 	var out: Array = []
 	var here: String = nm.call(p)
@@ -142,6 +150,20 @@ func overlay_cells(p: Vector2i, nm: Callable) -> Array:
 		if not s.is_empty():
 			var f := Autotile.piece_at(p, func(q): var t: String = nm.call(q); return t == here or t in Autotile.WALL_JOIN_ALSO)
 			out.append([2, s[0], Vector2i(f, 0)])
+	elif here == "boardwalk":
+		# restyle (batch 02): boardwalk deck autotile by the N1|E2|S4|W8 mask
+		var sb: Array = _overlay_src.get("autotile/boardwalk16", [])
+		if not sb.is_empty():
+			var bm := 0
+			for k in 4:
+				if nb[k] in BOARDWALK_JOINS:
+					bm |= 1 << k
+			out.append([2, sb[0], Vector2i(bm, 0)])
+	elif here == "water" and nb[0] == "boardwalk":
+		# pilings under the deck edge, in the water cell south of a boardwalk
+		var sp: Array = _overlay_src.get("autotile/boardwalk_piling16", [])
+		if not sp.is_empty():
+			out.append([3, sp[0], Vector2i(0, 0)])
 	elif here == "moat":
 		var s: Array = _overlay_src.get("autotile/moat_border", [])
 		if not s.is_empty():

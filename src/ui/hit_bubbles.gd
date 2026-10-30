@@ -66,7 +66,11 @@ func _place(b: Dictionary) -> void:
 	if t != null and is_instance_valid(t):
 		b["anchor"] = t.position
 	var off: Array = cfg().get("offset", [-4, -20])
-	(b["label"] as Label).position = (b["anchor"] + Vector2(float(off[0]), float(off[1]))).round()
+	# restyle: 16x16 humanoids (player / AI players) sit 8 px lower than the old 16x24 art
+	var dy := 0.0
+	if t != null and is_instance_valid(t) and t is Actor:
+		dy = float(t.body_height_delta())
+	(b["label"] as Label).position = (b["anchor"] + Vector2(float(off[0]), float(off[1]) + dy)).round()
 
 
 func _process(delta: float) -> void:

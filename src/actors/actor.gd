@@ -39,6 +39,9 @@ var _layers: Dictionary = {}          # 0.3.1 visible gear: slot -> Sprite2D ove
 var _layer_key := ""
 var _world_ref = null
 var _anim_t := 0.0
+var _pose := ""          # restyle: "attack" / "shoot" while a one-shot pose plays
+var _pose_t := 0.0
+var _pose_shown := ""
 var facing := Facing.new()            # 0.3.0: immediate facing from this tick's movement
 var _tick_now := 0
 var _last_move_t := -100000           # last tick we moved (anim grace)
@@ -325,6 +328,7 @@ func _shoot(e, t: int, world) -> bool:
 	if arrow == "":
 		return false
 	use_ammo(arrow)
+	start_pose("shoot")
 	if self is Player:
 		Events.inventory_changed.emit()
 	var w := weapon_id()
@@ -508,6 +512,7 @@ func _fight_tick(t: int, world) -> void:
 			next_attack = t + Combat.weapon_ticks(w)
 			last_combat_tick = t
 			combat_foe = e
+			start_pose("attack")
 			var acc := 0.0
 			if e is Actor:
 				# 0.3.1 PvP (PK zones only): skull bookkeeping, then the PvP accuracy formula
@@ -650,12 +655,26 @@ func _process(delta: float) -> void:
 	if _sprite:
 		_anim_t += delta   # continuous clock: the cycle never restarts per tick
 		var kneel := bool(action.get("kneel", false)) and path.is_empty()
-		if _sprite.hframes > 1:
+		if _pose != "":
+			_pose_t += delta
+			var pd := pose_def(sprite_id, _pose)
+			var nf := maxi(1, int(pd.get("frames", 4)))
+			if _pose_t * float(pd.get("fps", 8)) >= float(nf):
+				_pose = ""
+		if _pose != _pose_shown:
+			_pose_shown = _pose
+			_apply_pose_look(_sprite, sprite_id)
+			_shown_dir = facing.dir
+			_layer_key = ""
+		if _pose != "":
+			var pd2 := pose_def(sprite_id, _pose)
+			_sprite.frame = mini(_sprite.hframes - 1, int(_pose_t * float(pd2.get("fps", 8))))
+		elif _sprite.hframes > 1:
 			_sprite.frame = 0 if kneel else (Facing.anim_frame(_anim_t, anim_fps(), _sprite.hframes) if is_animating() else 0)
 		_sprite.scale.y = 0.8 if kneel else 1.0   # 0.3.1 kneeling at an altar (scales toward the feet)
 		if facing.dir != _shown_dir:
 			_shown_dir = facing.dir
-			_sprite.texture = GameData.actor_texture(sprite_id, facing.dir)
+			_apply_pose_look(_sprite, sprite_id)
 			_layer_key = ""   # gear layers follow the facing too
 		var fl: bool = facing.left and can_flip() and facing.dir == "side"
 		if fl != _sprite.flip_h:
@@ -663,6 +682,58 @@ func _process(delta: float) -> void:
 		_sprite.flip_h = fl
 		_refresh_gear_visual()
 		_sync_gear_layers()
+
+
+## restyle: how much lower (px) the overhead UI sits than on the old 16x24 body.
+func body_height_delta() -> int:
+	return maxi(0, 24 - GameData.frame_size("actors", sprite_id).y)
+
+
+## restyle (batch 01): one-shot attack / shoot poses (32x32 frames, offset -8,-8
+## from the 16x16 walk frame). "" when no pose plays now.
+func start_pose(kind: String) -> void:
+	var key := kind + "_paths"
+	if not GameData.sprite_def("actors", sprite_id).has(key):
+		return
+	_pose = kind
+	_pose_t = 0.0
+
+
+func current_pose() -> String:
+	return _pose
+
+
+static func pose_def(sid: String, kind: String) -> Dictionary:
+	if kind == "":
+		return {}
+	return GameData.sprite_def("actors", sid).get(kind + "_paths", {})
+
+
+## Texture, hframes and offset for a sprite id in the current pose (or walk).
+func _apply_pose_look(spr: Sprite2D, sid: String) -> void:
+	var pd := pose_def(sid, _pose)
+	if pd.is_empty():
+		spr.texture = GameData.actor_texture(sid, facing.dir)
+		var fs := GameData.frame_size("actors", sid)
+		spr.hframes = maxi(1, GameData.frame_count("actors", sid))
+		spr.offset = Vector2(-fs.x / 2.0, -fs.y)
+		return
+	var wf := GameData.frame_size("actors", sid)
+	var pf: Array = pd.get("frame_size", [32, 32])
+	var po: Array = pd.get("offset", [-8, -8])
+	var tex: Texture2D = load(str(pd.get(facing.dir, pd.get("side", ""))))
+	spr.texture = tex
+	spr.hframes = maxi(1, int(pd.get("frames", 4)))
+	spr.offset = Vector2(-wf.x / 2.0 + float(po[0]), -wf.y + float(po[1]))
+	if tex == null or int(pf[0]) <= 0:
+		_apply_pose_look_walk(spr, sid)
+
+
+func _apply_pose_look_walk(spr: Sprite2D, sid: String) -> void:
+	var fs := GameData.frame_size("actors", sid)
+	spr.texture = GameData.actor_texture(sid, facing.dir)
+	spr.hframes = maxi(1, GameData.frame_count("actors", sid))
+	spr.offset = Vector2(-fs.x / 2.0, -fs.y)
 
 
 ## Walk cycle speed from data/sprites.json "fps".
@@ -686,10 +757,10 @@ func _draw() -> void:
 	if is_skulled(_tick_now if _tick_now > 0 else Tick.tick_count):
 		var sk := GameData.texture("ui", "skull")
 		if sk:
-			draw_texture_rect(sk, Rect2(-4, -38, 8, 8), false)
+			draw_texture_rect(sk, Rect2(-4, -38 + body_height_delta(), 8, 8), false)
 	if hp >= max_hp():
 		return
-	var top := -27.0
+	var top := -27.0 + float(body_height_delta())   # restyle: 8 px lower on 16x16 bodies
 	draw_rect(Rect2(-6, top, 12, 2), Color("#a8281e"))
 	draw_rect(Rect2(-6, top, 12.0 * clampf(float(hp) / max_hp(), 0.0, 1.0), 2), Color("#3ac83a"))
 
@@ -782,6 +853,7 @@ func _refresh_gear_visual() -> void:
 			continue
 		want[slot] = sid
 		key += sid + ";"
+	key += _pose + facing.dir
 	if key == _layer_key:
 		return
 	_layer_key = key
@@ -798,10 +870,7 @@ func _refresh_gear_visual() -> void:
 			add_child(spr)
 			_layers[slot] = spr
 		var sid: String = want[slot]
-		spr.texture = GameData.actor_texture(sid, facing.dir)
-		var fs := GameData.frame_size("actors", sid)
-		spr.hframes = maxi(1, GameData.frame_count("actors", sid))
-		spr.offset = Vector2(-fs.x / 2.0, -fs.y)
+		_apply_pose_look(spr, sid)
 		spr.set_meta("sprite_id", sid)
 		spr.visible = true
 	_order_gear_layers()

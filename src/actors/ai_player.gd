@@ -18,7 +18,7 @@ func bind(a: AIAgent, world) -> void:
 	agent = a
 	actor_id = a.id
 	display_name = a.name
-	sprite_id = "npc"
+	sprite_id = "player"   # restyle: AI players share the 16x16 gear rig (the old 16x24 "npc" body no longer fits the gear layers)
 	tint = Color(a.tint if a.tint != "" else str(a.persona.get("tint", "#ffffff")))
 	skills = a.skills            # shared object: XP earned here is the record's XP
 	rng.seed = a.rng.randi()
@@ -93,7 +93,7 @@ func _ready() -> void:
 	var trader: bool = agent != null and str(agent.persona.get("id", "")) == "trader"
 	_label = Overhead.make(Color(0.7, 0.9, 1.0) if trader else Color(1, 1, 0.75))
 	_label.text = Overhead.ai_text(display_name, skills) + (" (trader)" if trader else "")
-	Overhead.place(_label, 24.0)
+	Overhead.place(_label, float(GameData.frame_size("actors", sprite_id).y))
 	Overhead.attach(_label, self)
 	_bubble = Label.new()
 	_bubble.add_theme_font_size_override("font_size", 8)
