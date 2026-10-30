@@ -46,7 +46,7 @@ func text() -> String:
 
 func _draw() -> void:
 	var r := Rect2(Vector2.ZERO, size)
-	draw_style_box(UIStyle.tex("bar_frame", 3, 0), r)
+	draw_style_box(UIStyle.tex("bar_frame", 3), r)
 	var inner := r.grow(-3)
 	var w := inner.size.x * clampf(cur / maxf(1.0, max_v), 0.0, 1.0)
 	# batch 07 kit fill drawn as colour bands (texture draw rendered white on device)

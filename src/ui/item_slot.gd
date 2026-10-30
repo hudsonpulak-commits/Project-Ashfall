@@ -14,9 +14,9 @@ var selected := false
 func _init() -> void:
 	custom_minimum_size = Vector2(SIZE, SIZE)
 	focus_mode = Control.FOCUS_NONE
-	add_theme_stylebox_override("normal", UIStyle.tex("slot", 3, 0))
-	add_theme_stylebox_override("hover", UIStyle.tex("slot_selected", 3, 0))
-	add_theme_stylebox_override("pressed", UIStyle.tex("slot_selected", 3, 0))
+	add_theme_stylebox_override("normal", UIStyle.tex("slot", 3))
+	add_theme_stylebox_override("hover", UIStyle.tex("slot_selected", 3))
+	add_theme_stylebox_override("pressed", UIStyle.tex("slot_selected", 3))
 	icon_rect = TextureRect.new()
 	icon_rect.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 	icon_rect.stretch_mode = TextureRect.STRETCH_KEEP
@@ -47,7 +47,7 @@ func set_selected(on: bool) -> void:
 	if on == selected:
 		return
 	selected = on
-	add_theme_stylebox_override("normal", UIStyle.tex("slot_selected" if on else "slot", 3, 0))
+	add_theme_stylebox_override("normal", UIStyle.tex("slot_selected" if on else "slot", 3))
 
 
 func set_item(slot) -> void:

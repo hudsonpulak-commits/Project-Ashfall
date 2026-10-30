@@ -65,6 +65,7 @@ func _ready() -> void:
 	region_label.add_theme_color_override("font_color", Color("#f0e6c8"))
 	region_label.add_theme_constant_override("outline_size", 4)
 	region_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	region_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	region_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	region_label.visible = false
 	add_child(region_label)

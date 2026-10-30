@@ -18,7 +18,7 @@ const FONT_SIZE := 12
 
 ## restyle batch 07: 9-slice from assets/ui/kit (nearest-filtered by the theme owner).
 static var _tex_cache: Dictionary = {}
-static func tex(name: String, m: int, pad: int = 3) -> StyleBox:
+static func tex(name: String, m: int, pad: int = -1) -> StyleBox:   # r2: content margin = texture margin
 	var key := "%s/%d/%d" % [name, m, pad]
 	if _tex_cache.has(key):
 		return _tex_cache[key]
@@ -31,7 +31,7 @@ static func tex(name: String, m: int, pad: int = 3) -> StyleBox:
 	s.texture_margin_top = m
 	s.texture_margin_right = m
 	s.texture_margin_bottom = m
-	s.set_content_margin_all(pad)
+	s.set_content_margin_all(m if pad < 0 else pad)
 	_tex_cache[key] = s
 	return s
 
@@ -70,6 +70,6 @@ static func make_theme() -> Theme:
 	t.set_color("font_color", "Button", TEXT)
 	t.set_color("font_hover_color", "Button", ACCENT)
 	t.set_color("font_pressed_color", "Button", ACCENT)
-	t.set_stylebox("panel", "PanelContainer", tex("panel", 6, 6))
-	t.set_stylebox("panel", "Panel", tex("panel", 6, 6))
+	t.set_stylebox("panel", "PanelContainer", tex("panel", 6))
+	t.set_stylebox("panel", "Panel", tex("panel", 6))
 	return t

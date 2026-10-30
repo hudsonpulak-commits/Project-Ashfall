@@ -356,6 +356,7 @@ func _build_pack_panel() -> Control:
 	v.add_child(worn_row)
 	set_label = UIKit.label("", 8, UIStyle.TEXT_DIM)
 	set_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	set_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	v.add_child(set_label)
 	return v
 
@@ -471,6 +472,7 @@ func _build_skills_panel() -> Control:
 	v.add_child(sr)
 	style_hint = UIKit.label("", 8, UIStyle.TEXT_DIM)
 	style_hint.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	style_hint.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	v.add_child(style_hint)
 	var g := GridContainer.new()
 	g.columns = 2

@@ -91,7 +91,7 @@ func _draw() -> void:
 	draw_rect(Rect2(center.floor(), Vector2(SCALE, SCALE)), Color.WHITE)
 	if markers_btn:
 		markers_btn.modulate = Color.WHITE if MapPrefs.markers_shown() else Color(1, 1, 1, 0.45)
-	draw_style_box(UIStyle.tex("minimap_frame", 4, 0), Rect2(-2, -2, size.x + 4, size.y + 4))
+	draw_style_box(UIStyle.tex("minimap_frame", 4), Rect2(-2, -2, size.x + 4, size.y + 4))
 
 
 func _gui_input(ev: InputEvent) -> void:
