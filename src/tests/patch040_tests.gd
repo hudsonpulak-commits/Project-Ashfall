@@ -43,11 +43,11 @@ static func _skills_and_save() -> void:
 static func _fletching(world: World, p: Player) -> void:
 	var counts := []
 	for lg in ["ash", "alder", "spruce", "blackthorn", "mahogany"]:
-		var r := Interactions.recipe_by_id("fletch_shafts_%s" % lg)
+		var r := Interactions.recipe_by_id("fletch_shafts_%s_log" % lg)
 		counts.append(int(r.get("out", {}).get("arrow_shaft", 0)))
-	var rising := counts[0] > 0
+	var rising: bool = int(counts[0]) > 0
 	for i in range(1, counts.size()):
-		rising = rising and counts[i] > counts[i - 1]
+		rising = rising and int(counts[i]) > int(counts[i - 1])
 	check(rising, "higher-tier logs give more shafts %s" % str(counts))
 	var ok_chain := not Interactions.recipe_by_id("fletch_headless").is_empty() and not Interactions.recipe_by_id("fletch_dusk_arrows").is_empty() and not Interactions.recipe_by_id("forge_dusk_arrowheads").is_empty()
 	ok_chain = ok_chain and str(Interactions.recipe_by_id("forge_iron_arrowheads").get("station", "")) == "anvil"
@@ -65,10 +65,10 @@ static func _fletching(world: World, p: Player) -> void:
 	var saved_xp: Dictionary = p.skills.xp.duplicate()
 	p.inventory.from_save([])
 	p.inventory.add("ash_log", 2)
-	var r0 := Interactions.recipe_by_id("fletch_shafts_ash")
+	var r0 := Interactions.recipe_by_id("fletch_shafts_ash_log")
 	check(not Interactions.can_make(p, r0), "no knife in the pack: the log can't be fletched")
 	p.inventory.add("knife", 1)
-	check(Interactions.can_make(p, r0) and p.start_pack_recipe("knife", "fletch_shafts_ash", 2), "knife + log opens a pack recipe (no workbench)")
+	check(Interactions.can_make(p, r0) and p.start_pack_recipe("knife", "fletch_shafts_ash_log", 2), "knife + log opens a pack recipe (no workbench)")
 	for i in 40:
 		if p.action.is_empty():
 			break
@@ -81,13 +81,13 @@ static func _fletching(world: World, p: Player) -> void:
 
 
 static func _crafting() -> void:
-	var tiers := {"leather": [1, "bronze_bar", "leather"], "studded": [10, "iron_bar", ""], "wolfpelt": [20, "steel_bar", "tanned_wolf_pelt"], "direpelt": [30, "dusk_bar", "tanned_dire_pelt"]}
+	var tiers := {"leather": [1, "bronze_bar", "leather"], "studded": [10, "iron_bar", ""], "wolfpelt": [20, "steel_bar", "tanned_wolf_pelt"], "direpelt": [30, "dusk_steel_bar", "tanned_dire_pelt"]}
 	var ok := true
 	var dusk_only_dire := true
 	for r in GameData.recipes:
 		if str(r.get("station", "")) == "needle":
 			ok = ok and r["in"].has("thread") and (r.get("tools", []) as Array).has("needle") and str(r["skill"]) == "crafting"
-			if r["in"].has("dusk_bar"):
+			if r["in"].has("dusk_steel_bar"):
 				dusk_only_dire = dusk_only_dire and str(r["id"]).contains("direpelt")
 	check(ok, "every ranger piece is sewn with needle + thread (Crafting)")
 	check(dusk_only_dire, "dusk bars only go into dire wolf pelt armour")

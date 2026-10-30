@@ -2078,7 +2078,7 @@
   },
   "tanning_vat": {
    "name": "Tanning vat",
-   "sprite": "tanning_rack",
+   "sprite": "tanning_vat",
    "blocks": true,
    "type": "station",
    "station": "tanning",
@@ -2088,7 +2088,8 @@
   "elijah_path": {
    "name": "Path",
    "type": "prop",
-   "blocks": false
+   "blocks": false,
+   "sprite": "elijah_path"
   }
  }
 }

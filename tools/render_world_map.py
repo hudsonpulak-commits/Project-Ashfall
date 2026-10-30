@@ -18,7 +18,17 @@ PX = 3                       # pixels per tile
 GRID = 50                    # grid step in tiles
 X0, X1, Y0, Y1 = -200, 525, -400, 325     # framed tile window (covers all land + margin)
 ML, MT, MR, MB = 64, 120, 64, 64          # page margins (px)
-VERSION = "v0.3.1"
+def _project_version():
+    """0.4.0 the title version is read from project.godot (was hard-coded v0.3.1)."""
+    import re as _re
+    pg = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "project.godot")
+    try:
+        m = _re.search(r'config/version="([^"]+)"', open(pg).read())
+        return "v" + m.group(1) if m else "v?"
+    except OSError:
+        return "v?"
+
+VERSION = _project_version()
 
 d = json.load(open(os.path.join(OUT, "world_dump.json")))
 meta = d["meta"]
@@ -193,8 +203,19 @@ def villages(dr, labels=True):
             cx = a + w * PX / 2
             fy = min([tp(f["rect"][0], f["rect"][1])[1] for f in d.get("farms", []) if f["village"] == v["id"]] + [b])
             ly = min(b, fy) - 30
-            dr.rectangle([cx - tw / 2, ly, cx + tw / 2, ly + 26], fill=(255, 250, 230, 235), outline=(70, 50, 20), width=2)
-            dr.text((cx - tw / 2 + 6, ly + 2), s, font=fn, fill=(40, 25, 5))
+            # 0.4.0 collision-aware: try above, below, right, left of the village box
+            # so no city box (Highfen) or other label covers it (Oxley)
+            bot = b + h * PX + 4
+            cands = [(cx - tw / 2, ly), (cx - tw / 2, bot), (a + w * PX + 8, b), (a - tw - 8, b),
+                     (cx - tw / 2, ly - 30), (cx - tw / 2, bot + 30)]
+            lx, ly2 = cands[0]
+            for qx, qy in cands:
+                if not any(qx - 4 < x1 and qx + tw + 4 > x0 and qy - 2 < y1 and qy + 28 > y0 for x0, y0, x1, y1 in PLACED):
+                    lx, ly2 = qx, qy
+                    break
+            PLACED.append((lx, ly2, lx + tw, ly2 + 26))
+            dr.rectangle([lx, ly2, lx + tw, ly2 + 26], fill=(255, 250, 230, 235), outline=(70, 50, 20), width=2)
+            dr.text((lx + 6, ly2 + 2), s, font=fn, fill=(40, 25, 5))
 
 def buildings(dr):
     """0.3.0 walk-in building footprints: dark outline, door marked."""

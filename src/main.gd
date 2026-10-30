@@ -210,6 +210,8 @@ func _start_player(data: Dictionary) -> void:
 	player.world_ref = world
 	player.rng.seed = int(data.get("world", {}).get("seed", DEFAULT_SEED)) ^ 0x0A11F11   # 0.3.19 deterministic combat/gather rolls
 	QuestSystem.sync(player)      # 0.3.16 repaired farm props, Clip Clop at home
+	if QuestSystem.state(player, "wolf_pelts") == QuestSystem.COMPLETED and QuestSystem.state(player, "dire_wolf") == QuestSystem.NOT_STARTED:
+		Events.say("Word from the farms: a magic-infused dire wolf is drawing the packs onto the village fields. Warden Pye in Fenhollow is asking for help.", "level")   # 0.4.0 old saves get part 2 offered
 	if not Events.quests_changed.is_connected(world.refresh_repair_views):
 		Events.quests_changed.connect(world.refresh_repair_views)
 	if bool(data.get("relayout_cities", false)):

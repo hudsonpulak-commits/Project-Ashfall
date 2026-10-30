@@ -2016,6 +2016,8 @@ func object_at(x: int, y: int, tile: int) -> String:
 			return pre + ["prop_rocks", "prop_pebbles", "prop_grass_tuft"][int(r2 * 3.0) % 3]
 		if tile != TileType.ROCKY and r < float(rd.get("mushrooms", 0.0)) and _moist.get_noise_2d(x, y) > 0.0:
 			return "magic_mushroom"
+		if tile != TileType.ROCKY and r > 0.5 and r < 0.5035 and dist > 10 and not _beside_stairs(p):
+			return "flax_plant"   # 0.4.0 Foraging 10: flax for superior string
 		return ""
 	match tile:
 		TileType.MARSH:
