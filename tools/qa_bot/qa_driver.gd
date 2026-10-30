@@ -3983,16 +3983,22 @@ func _frames_restyle() -> void:
 	# moat shore (no town ships a moat since 0.3.11b): a synthetic 2-wide moat ring with a
 	# bridge, stamped on unvisited open ground, drawn by the live shore pass
 	var mo := Vector2i(1 << 29, 0)
-	for cand in [Vector2i(330, 40), Vector2i(-120, 60), Vector2i(200, 120), Vector2i(60, -120)]:
+	var cands: Array = []
+	for cy in range(-300, 301, 40):
+		for cx in range(-300, 401, 40):
+			cands.append(Vector2i(cx, cy))
+	for cand in cands:
+		if mo.x != 1 << 29:
+			break
 		var okc := true
 		for yy in range(-8, 9):
 			for xx in range(-10, 11):
-				var tn: String = WorldGen.TILE_NAMES[g.tile_at(cand.x + xx, cand.y + yy)]
-				if not tn.begins_with("grass") and tn != "dirt":
+				var q: Vector2i = cand + Vector2i(xx, yy)
+				var tn: String = WorldGen.TILE_NAMES[g.tile_at(q.x, q.y)]
+				if not tn in ["grass", "dirt", "marsh", "sand", "path"] or g._town_objects.has(q) or g.in_town(q):
 					okc = false
 		if okc:
 			mo = cand
-			break
 	if mo.x != 1 << 29:
 		for yy in range(-6, 7):
 			for xx in range(-8, 9):
