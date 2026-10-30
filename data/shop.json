@@ -106,13 +106,21 @@
    "blackthorn_warbow",
    "bronze_arrows",
    "iron_arrows",
-   "steel_arrows"
+   "steel_arrows",
+   "dusk_arrows"
   ],
   "cook": [
    "cooked_carp",
    "cooked_eel",
    "cooked_rat_meat",
    "cooked_chicken"
+  ],
+  "crafting": [
+   "knife",
+   "needle",
+   "thread",
+   "feather",
+   "simple_string"
   ]
  },
  "line_names": {
@@ -123,8 +131,9 @@
   "swords": "Swords & daggers",
   "axes": "Battle axes",
   "maces": "Maces & warhammers",
-  "archery": "Archery",
-  "cook": "Cooked food"
+  "archery": "Ranged",
+  "cook": "Cooked food",
+  "crafting": "Crafting supplies"
  },
  "cookhouse": {
   "note": "0.3.1 Cook House: finite stock of cooked food at ~80% of general-store price (sell_factor 1.28 ≈ 0.8 × 1.6). Restocks slowly so it is not an infinite cheap-food tap.",

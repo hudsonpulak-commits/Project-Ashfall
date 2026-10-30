@@ -388,6 +388,63 @@
      }
     ]
    }
+  },
+  "dire_wolf": {
+   "always": [
+    {
+     "item": "wolf_bone",
+     "qty": 1
+    },
+    {
+     "item": "wolf_meat",
+     "qty": 1
+    }
+   ],
+   "common": {
+    "chance": 0.25,
+    "entries": [
+     {
+      "item": "wolf_pelt",
+      "qty": 1,
+      "weight": 1
+     }
+    ]
+   },
+   "rare": {
+    "chance": 0.15,
+    "entries": [
+     {
+      "item": "dire_wolf_pelt",
+      "qty": 1,
+      "weight": 2
+     },
+     {
+      "item": "coal",
+      "qty": 1,
+      "weight": 1
+     }
+    ]
+   }
+  },
+  "greymaw": {
+   "always": [
+    {
+     "item": "marks",
+     "qty": 350
+    },
+    {
+     "item": "wolf_meat",
+     "qty": 2
+    }
+   ],
+   "common": {
+    "chance": 0.0,
+    "entries": []
+   },
+   "rare": {
+    "chance": 0.0,
+    "entries": []
+   }
   }
  },
  "ground": {

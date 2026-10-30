@@ -3157,6 +3157,43 @@
    "frames": 1,
    "anchor": "bottom",
    "note": "0.3.16 sprite bot underground v1.1 den entrance (transparent-edge version)"
+  },
+  "spinning_wheel": {
+   "path": "res://assets/sprites/objects/quern.png",
+   "frame_size": [
+    16,
+    24
+   ],
+   "frames": 1,
+   "anchor": "bottom"
+  },
+  "tanning_rack": {
+   "path": "res://assets/sprites/objects/workbench.png",
+   "frame_size": [
+    16,
+    24
+   ],
+   "frames": 1,
+   "anchor": "bottom"
+  },
+  "flax_plant": {
+   "path": "res://assets/sprites/objects/reed_bed.png",
+   "frame_size": [
+    16,
+    24
+   ],
+   "frames": 1,
+   "anchor": "bottom"
+  },
+  "tomb_headstone": {
+   "path": "res://assets/sprites/objects/candle_stand.png",
+   "frame_size": [
+    16,
+    24
+   ],
+   "frames": 1,
+   "fps": 3,
+   "anchor": "bottom"
   }
  },
  "actors": {
@@ -4445,6 +4482,36 @@
    "bite_frames": 2,
    "bite_fps": 6,
    "note": "0.3.16 sprite bot underground v1.1 Rat Mother (walk, 4 facings; fungal glow layer composited in). Bite strips exported as rat_mother_<dir>_bite.png for later."
+  },
+  "greymaw": {
+   "path": "res://assets/sprites/actors/wolf.png",
+   "frame_size": [
+    24,
+    16
+   ],
+   "frames": 2,
+   "fps": 6,
+   "anchor": "bottom",
+   "flip": true,
+   "dir_paths": {
+    "down": "res://assets/sprites/actors/wolf_front.png",
+    "up": "res://assets/sprites/actors/wolf_back.png"
+   }
+  },
+  "dire_wolf": {
+   "path": "res://assets/sprites/actors/wolf.png",
+   "frame_size": [
+    24,
+    16
+   ],
+   "frames": 2,
+   "fps": 6,
+   "anchor": "bottom",
+   "flip": true,
+   "dir_paths": {
+    "down": "res://assets/sprites/actors/wolf_front.png",
+    "up": "res://assets/sprites/actors/wolf_back.png"
+   }
   }
  },
  "items": {
@@ -5195,6 +5262,281 @@
   },
   "dusk_chain_tower": {
    "path": "res://assets/sprites/items/dusk_tower_shield.png",
+   "frame_size": [
+    16,
+    16
+   ]
+  },
+  "knife": {
+   "path": "res://assets/sprites/items/flint.png",
+   "frame_size": [
+    16,
+    16
+   ]
+  },
+  "needle": {
+   "path": "res://assets/sprites/items/flint.png",
+   "frame_size": [
+    16,
+    16
+   ]
+  },
+  "thread": {
+   "path": "res://assets/sprites/items/reed_fibre.png",
+   "frame_size": [
+    16,
+    16
+   ]
+  },
+  "simple_string": {
+   "path": "res://assets/sprites/items/reed_fibre.png",
+   "frame_size": [
+    16,
+    16
+   ]
+  },
+  "superior_string": {
+   "path": "res://assets/sprites/items/reed_fibre.png",
+   "frame_size": [
+    16,
+    16
+   ]
+  },
+  "flax": {
+   "path": "res://assets/sprites/items/reed_fibre.png",
+   "frame_size": [
+    16,
+    16
+   ]
+  },
+  "arrow_shaft": {
+   "path": "res://assets/sprites/items/reed_rod.png",
+   "frame_size": [
+    16,
+    16
+   ]
+  },
+  "headless_arrows": {
+   "path": "res://assets/sprites/items/bronze_arrows.png",
+   "frame_size": [
+    16,
+    16
+   ]
+  },
+  "bronze_arrowheads": {
+   "path": "res://assets/sprites/items/bronze_bar.png",
+   "frame_size": [
+    16,
+    16
+   ]
+  },
+  "iron_arrowheads": {
+   "path": "res://assets/sprites/items/iron_bar.png",
+   "frame_size": [
+    16,
+    16
+   ]
+  },
+  "steel_arrowheads": {
+   "path": "res://assets/sprites/items/steel_bar.png",
+   "frame_size": [
+    16,
+    16
+   ]
+  },
+  "dusk_arrowheads": {
+   "path": "res://assets/sprites/items/dusk_steel_bar.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "note": "0.3.10 PLACEHOLDER recolour - designer redraw (docs/ART_TODO_0.3.10.md)"
+  },
+  "dusk_arrows": {
+   "path": "res://assets/sprites/items/steel_arrows.png",
+   "frame_size": [
+    16,
+    16
+   ]
+  },
+  "ash_shortbow_u": {
+   "path": "res://assets/sprites/items/ash_shortbow.png",
+   "frame_size": [
+    16,
+    16
+   ]
+  },
+  "alder_longbow_u": {
+   "path": "res://assets/sprites/items/alder_longbow.png",
+   "frame_size": [
+    16,
+    16
+   ]
+  },
+  "blackthorn_warbow_u": {
+   "path": "res://assets/sprites/items/blackthorn_warbow.png",
+   "frame_size": [
+    16,
+    16
+   ]
+  },
+  "leather": {
+   "path": "res://assets/sprites/items/cowhide.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 1
+  },
+  "tanned_wolf_pelt": {
+   "path": "res://assets/sprites/items/wolf_pelt.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 1
+  },
+  "dire_wolf_pelt": {
+   "path": "res://assets/sprites/items/wolf_pelt.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 1
+  },
+  "tanned_dire_pelt": {
+   "path": "res://assets/sprites/items/wolf_pelt.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 1
+  },
+  "wolf_meat": {
+   "path": "res://assets/sprites/items/raw_beef.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 1
+  },
+  "wolf_bone": {
+   "path": "res://assets/sprites/items/bones.png",
+   "frame_size": [
+    16,
+    16
+   ]
+  },
+  "greymaw_hide": {
+   "path": "res://assets/sprites/items/wolf_pelt.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 1
+  },
+  "farmers_account": {
+   "path": "res://assets/sprites/items/cowhide.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 1
+  },
+  "hide_tally": {
+   "path": "res://assets/sprites/items/cowhide.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 1
+  },
+  "pier_token": {
+   "path": "res://assets/sprites/items/flint.png",
+   "frame_size": [
+    16,
+    16
+   ]
+  },
+  "leather_coif": {
+   "path": "res://assets/sprites/items/bronze_cap.png",
+   "frame_size": [
+    16,
+    16
+   ]
+  },
+  "leather_body": {
+   "path": "res://assets/sprites/items/bronze_scale_vest.png",
+   "frame_size": [
+    16,
+    16
+   ]
+  },
+  "leather_chaps": {
+   "path": "res://assets/sprites/items/bronze_greaves.png",
+   "frame_size": [
+    16,
+    16
+   ]
+  },
+  "studded_coif": {
+   "path": "res://assets/sprites/items/bronze_cap.png",
+   "frame_size": [
+    16,
+    16
+   ]
+  },
+  "studded_body": {
+   "path": "res://assets/sprites/items/bronze_scale_vest.png",
+   "frame_size": [
+    16,
+    16
+   ]
+  },
+  "studded_chaps": {
+   "path": "res://assets/sprites/items/bronze_greaves.png",
+   "frame_size": [
+    16,
+    16
+   ]
+  },
+  "wolfpelt_coif": {
+   "path": "res://assets/sprites/items/bronze_cap.png",
+   "frame_size": [
+    16,
+    16
+   ]
+  },
+  "wolfpelt_body": {
+   "path": "res://assets/sprites/items/bronze_scale_vest.png",
+   "frame_size": [
+    16,
+    16
+   ]
+  },
+  "wolfpelt_chaps": {
+   "path": "res://assets/sprites/items/bronze_greaves.png",
+   "frame_size": [
+    16,
+    16
+   ]
+  },
+  "direpelt_coif": {
+   "path": "res://assets/sprites/items/bronze_cap.png",
+   "frame_size": [
+    16,
+    16
+   ]
+  },
+  "direpelt_body": {
+   "path": "res://assets/sprites/items/bronze_scale_vest.png",
+   "frame_size": [
+    16,
+    16
+   ]
+  },
+  "direpelt_chaps": {
+   "path": "res://assets/sprites/items/bronze_greaves.png",
    "frame_size": [
     16,
     16

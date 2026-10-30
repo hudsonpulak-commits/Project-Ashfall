@@ -1983,6 +1983,98 @@
    "blocks": true,
    "type": "prop",
    "alias_of": "well"
+  },
+  "spinning_wheel": {
+   "name": "Spinning wheel",
+   "sprite": "spinning_wheel",
+   "blocks": true,
+   "type": "station",
+   "station": "spinning",
+   "verb": "Spin at",
+   "note": "0.4.0 Crafting Supply: reed fibre -> bow string, flax -> superior string"
+  },
+  "tanning_rack": {
+   "name": "Tanning rack",
+   "sprite": "tanning_rack",
+   "blocks": true,
+   "type": "station",
+   "station": "tanning",
+   "verb": "Tan at",
+   "note": "0.4.0 Crafting Supply: cowhide -> leather, wolf pelt -> tanned pelt. Quest hides do not tan."
+  },
+  "flax_plant": {
+   "name": "Flax",
+   "sprite": "flax_plant",
+   "depleted_sprite": "",
+   "blocks": false,
+   "type": "gather",
+   "skill": "foraging",
+   "level": 10,
+   "xp": 18,
+   "yield": "flax",
+   "chance": 0.45,
+   "deplete": 0.3,
+   "respawn": 30,
+   "verb": "Pick",
+   "doing": "picking",
+   "attempt_ticks": 2
+  },
+  "tomb_headstone": {
+   "name": "Elijah's headstone",
+   "sprite": "tomb_headstone",
+   "blocks": true,
+   "type": "scenery",
+   "note": "0.4.0 larger headstone so the tomb reads from a distance"
+  },
+  "quest_giver_warden_pye": {
+   "name": "Warden Pye",
+   "sprite": "quest_giver",
+   "actor_sprite": "odric_hunter",
+   "blocks": true,
+   "type": "quest",
+   "giver": "warden_pye",
+   "verb": "Talk-to",
+   "note": "0.4.0 Night of 1000 Howls part 2"
+  },
+  "quest_giver_farmer_millbrook": {
+   "name": "Farmer Hobb",
+   "sprite": "quest_giver",
+   "actor_sprite": "villager",
+   "blocks": true,
+   "type": "quest",
+   "giver": "farmer_millbrook",
+   "verb": "Talk-to",
+   "note": "0.4.0 Night of 1000 Howls part 2"
+  },
+  "quest_giver_farmer_barrowby": {
+   "name": "Farmer Tull",
+   "sprite": "quest_giver",
+   "actor_sprite": "villager",
+   "blocks": true,
+   "type": "quest",
+   "giver": "farmer_barrowby",
+   "verb": "Talk-to",
+   "note": "0.4.0 Night of 1000 Howls part 2"
+  },
+  "quest_giver_harbourmaster_quill": {
+   "name": "Harbourmaster Quill",
+   "sprite": "quest_giver",
+   "actor_sprite": "keeper_general",
+   "blocks": true,
+   "type": "quest",
+   "giver": "harbourmaster_quill",
+   "verb": "Talk-to",
+   "note": "0.4.0 Night of 1000 Howls part 2"
+  },
+  "quest_giver_smith_venn": {
+   "name": "Smith Venn",
+   "sprite": "quest_giver",
+   "actor_sprite": "keeper_general",
+   "blocks": true,
+   "type": "quest",
+   "giver": "smith_venn",
+   "verb": "Talk-to",
+   "note": "0.4.0 Night of 1000 Howls part 2"
   }
  }
 }

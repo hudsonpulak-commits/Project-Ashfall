@@ -1329,7 +1329,7 @@
    "value": 2,
    "stackable": true,
    "category": "resource",
-   "note": "0.3.1 chicken drop (fletching later)"
+   "note": "0.3.1 chicken drop; Fletching: shafts + feathers -> headless arrows"
   },
   "raw_chicken": {
    "name": "Raw chicken",
@@ -1399,7 +1399,7 @@
    "value": 12,
    "stackable": false,
    "category": "resource",
-   "note": "0.3.1 cow drop (always); sells now, leather Crafting later"
+   "note": "0.3.1 cow drop; tan at a tanning rack into leather"
   },
   "flint": {
    "name": "Flint",
@@ -1454,6 +1454,446 @@
    "stackable": false,
    "category": "quest",
    "note": "0.3.16 We Need Steel!: Brannoc's finished goods for the Northern Guard camp"
+  },
+  "knife": {
+   "name": "Knife",
+   "value": 8,
+   "stackable": false,
+   "category": "tool",
+   "note": "0.4.0 use on a log to open the Fletching window"
+  },
+  "needle": {
+   "name": "Needle",
+   "value": 6,
+   "stackable": false,
+   "category": "tool",
+   "note": "0.4.0 with thread in the pack: open the Crafting window to sew"
+  },
+  "thread": {
+   "name": "Thread",
+   "value": 1,
+   "stackable": true,
+   "category": "material",
+   "note": "0.4.0 one per sewn piece"
+  },
+  "simple_string": {
+   "name": "Bow string",
+   "value": 6,
+   "stackable": true,
+   "category": "material",
+   "note": "0.4.0 reed fibre at a spinning wheel; strings most bows"
+  },
+  "superior_string": {
+   "name": "Superior bow string",
+   "value": 20,
+   "stackable": true,
+   "category": "material",
+   "note": "0.4.0 flax at a spinning wheel; for higher-level bows"
+  },
+  "flax": {
+   "name": "Flax",
+   "value": 5,
+   "stackable": true,
+   "category": "resource",
+   "note": "0.4.0 Foraging 10 crop; spin into superior string"
+  },
+  "arrow_shaft": {
+   "name": "Arrow shafts",
+   "value": 1,
+   "stackable": true,
+   "category": "material"
+  },
+  "headless_arrows": {
+   "name": "Headless arrows",
+   "value": 2,
+   "stackable": true,
+   "category": "material"
+  },
+  "bronze_arrowheads": {
+   "name": "Bronze arrowheads",
+   "value": 1,
+   "stackable": true,
+   "category": "material",
+   "note": "0.4.0 smithed at an anvil, 15 per bar"
+  },
+  "iron_arrowheads": {
+   "name": "Iron arrowheads",
+   "value": 3,
+   "stackable": true,
+   "category": "material",
+   "note": "0.4.0 smithed at an anvil, 15 per bar"
+  },
+  "steel_arrowheads": {
+   "name": "Steel arrowheads",
+   "value": 5,
+   "stackable": true,
+   "category": "material",
+   "note": "0.4.0 smithed at an anvil, 15 per bar"
+  },
+  "dusk_arrowheads": {
+   "name": "Dusk arrowheads",
+   "value": 9,
+   "stackable": true,
+   "category": "material",
+   "note": "0.4.0 smithed at an anvil, 15 per bar"
+  },
+  "dusk_arrows": {
+   "name": "Dusk arrows",
+   "value": 18,
+   "stackable": true,
+   "category": "gear",
+   "gear": {
+    "slot": "ammo",
+    "line": "archery",
+    "tier": 4,
+    "atk": 0,
+    "str": 4,
+    "level": 30
+   }
+  },
+  "ash_shortbow_u": {
+   "name": "Unstrung ash shortbow",
+   "value": 20,
+   "stackable": false,
+   "category": "material"
+  },
+  "alder_longbow_u": {
+   "name": "Unstrung alder longbow",
+   "value": 70,
+   "stackable": false,
+   "category": "material"
+  },
+  "blackthorn_warbow_u": {
+   "name": "Unstrung blackthorn warbow",
+   "value": 220,
+   "stackable": false,
+   "category": "material"
+  },
+  "leather": {
+   "name": "Leather",
+   "value": 20,
+   "stackable": false,
+   "category": "material",
+   "note": "0.4.0 tanned cowhide"
+  },
+  "tanned_wolf_pelt": {
+   "name": "Tanned wolf pelt",
+   "value": 30,
+   "stackable": false,
+   "category": "material"
+  },
+  "dire_wolf_pelt": {
+   "name": "Dire wolf pelt",
+   "value": 90,
+   "stackable": false,
+   "category": "resource",
+   "note": "0.4.0 Greymaw (timer kills, 1 in 8) and Scorch dire wolves (1 in 10)"
+  },
+  "tanned_dire_pelt": {
+   "name": "Tanned dire pelt",
+   "value": 120,
+   "stackable": false,
+   "category": "material"
+  },
+  "wolf_meat": {
+   "name": "Wolf meat",
+   "value": 3,
+   "stackable": false,
+   "category": "resource"
+  },
+  "wolf_bone": {
+   "name": "Wolf bone",
+   "value": 6,
+   "stackable": false,
+   "category": "bones",
+   "bury_xp": 8,
+   "prayer_restore": 0.2
+  },
+  "greymaw_hide": {
+   "name": "Greymaw's hide",
+   "value": 0,
+   "stackable": false,
+   "category": "quest",
+   "quest": true,
+   "no_sell": true,
+   "keep_on_death": true,
+   "note": "0.4.0 quest item for Warden Pye; does not tan"
+  },
+  "farmers_account": {
+   "name": "Farmer's account",
+   "value": 0,
+   "stackable": false,
+   "category": "quest",
+   "quest": true,
+   "no_sell": true
+  },
+  "hide_tally": {
+   "name": "Pye's hide tally",
+   "value": 0,
+   "stackable": false,
+   "category": "quest",
+   "quest": true,
+   "no_sell": true
+  },
+  "pier_token": {
+   "name": "Pier token",
+   "value": 0,
+   "stackable": false,
+   "category": "quest",
+   "quest": true,
+   "no_sell": true
+  },
+  "leather_coif": {
+   "name": "Leather coif",
+   "value": 40,
+   "stackable": false,
+   "category": "gear",
+   "gear": {
+    "slot": "head",
+    "line": "ranger",
+    "tier": 1,
+    "atk": 0,
+    "str": 0,
+    "def": 1,
+    "rng": 1,
+    "level": 1,
+    "skill": "archery",
+    "hit_xp": 0.5,
+    "durability": 300,
+    "fit": "ranger"
+   },
+   "note": "0.4.0 ranger armour: boosts Ranged accuracy and max hit (rng), not melee. Crafted from 1 hide + 1 bar."
+  },
+  "leather_body": {
+   "name": "Leather body",
+   "value": 80,
+   "stackable": false,
+   "category": "gear",
+   "gear": {
+    "slot": "body",
+    "line": "ranger",
+    "tier": 1,
+    "atk": 0,
+    "str": 0,
+    "def": 3,
+    "rng": 2,
+    "level": 1,
+    "skill": "archery",
+    "hit_xp": 0.5,
+    "durability": 300,
+    "fit": "ranger"
+   },
+   "note": "0.4.0 ranger armour: boosts Ranged accuracy and max hit (rng), not melee. Crafted from 1 hide + 1 bar."
+  },
+  "leather_chaps": {
+   "name": "Leather chaps",
+   "value": 40,
+   "stackable": false,
+   "category": "gear",
+   "gear": {
+    "slot": "legs",
+    "line": "ranger",
+    "tier": 1,
+    "atk": 0,
+    "str": 0,
+    "def": 2,
+    "rng": 1,
+    "level": 1,
+    "skill": "archery",
+    "hit_xp": 0.5,
+    "durability": 300,
+    "fit": "ranger"
+   },
+   "note": "0.4.0 ranger armour: boosts Ranged accuracy and max hit (rng), not melee. Crafted from 1 hide + 1 bar."
+  },
+  "studded_coif": {
+   "name": "Studded leather coif",
+   "value": 110,
+   "stackable": false,
+   "category": "gear",
+   "gear": {
+    "slot": "head",
+    "line": "ranger",
+    "tier": 2,
+    "atk": 0,
+    "str": 0,
+    "def": 2,
+    "rng": 2,
+    "level": 10,
+    "skill": "archery",
+    "hit_xp": 0.5,
+    "durability": 600,
+    "fit": "ranger"
+   },
+   "note": "0.4.0 ranger armour: boosts Ranged accuracy and max hit (rng), not melee. Crafted from 1 hide + 1 bar."
+  },
+  "studded_body": {
+   "name": "Studded leather body",
+   "value": 220,
+   "stackable": false,
+   "category": "gear",
+   "gear": {
+    "slot": "body",
+    "line": "ranger",
+    "tier": 2,
+    "atk": 0,
+    "str": 0,
+    "def": 6,
+    "rng": 4,
+    "level": 10,
+    "skill": "archery",
+    "hit_xp": 0.5,
+    "durability": 600,
+    "fit": "ranger"
+   },
+   "note": "0.4.0 ranger armour: boosts Ranged accuracy and max hit (rng), not melee. Crafted from 1 hide + 1 bar."
+  },
+  "studded_chaps": {
+   "name": "Studded leather chaps",
+   "value": 110,
+   "stackable": false,
+   "category": "gear",
+   "gear": {
+    "slot": "legs",
+    "line": "ranger",
+    "tier": 2,
+    "atk": 0,
+    "str": 0,
+    "def": 4,
+    "rng": 2,
+    "level": 10,
+    "skill": "archery",
+    "hit_xp": 0.5,
+    "durability": 600,
+    "fit": "ranger"
+   },
+   "note": "0.4.0 ranger armour: boosts Ranged accuracy and max hit (rng), not melee. Crafted from 1 hide + 1 bar."
+  },
+  "wolfpelt_coif": {
+   "name": "Wolf pelt coif",
+   "value": 260,
+   "stackable": false,
+   "category": "gear",
+   "gear": {
+    "slot": "head",
+    "line": "ranger",
+    "tier": 3,
+    "atk": 0,
+    "str": 0,
+    "def": 3,
+    "rng": 3,
+    "level": 20,
+    "skill": "archery",
+    "hit_xp": 0.5,
+    "durability": 900,
+    "fit": "ranger"
+   },
+   "note": "0.4.0 ranger armour: boosts Ranged accuracy and max hit (rng), not melee. Crafted from 1 hide + 1 bar."
+  },
+  "wolfpelt_body": {
+   "name": "Wolf pelt body",
+   "value": 520,
+   "stackable": false,
+   "category": "gear",
+   "gear": {
+    "slot": "body",
+    "line": "ranger",
+    "tier": 3,
+    "atk": 0,
+    "str": 0,
+    "def": 9,
+    "rng": 6,
+    "level": 20,
+    "skill": "archery",
+    "hit_xp": 0.5,
+    "durability": 900,
+    "fit": "ranger"
+   },
+   "note": "0.4.0 ranger armour: boosts Ranged accuracy and max hit (rng), not melee. Crafted from 1 hide + 1 bar."
+  },
+  "wolfpelt_chaps": {
+   "name": "Wolf pelt chaps",
+   "value": 260,
+   "stackable": false,
+   "category": "gear",
+   "gear": {
+    "slot": "legs",
+    "line": "ranger",
+    "tier": 3,
+    "atk": 0,
+    "str": 0,
+    "def": 6,
+    "rng": 3,
+    "level": 20,
+    "skill": "archery",
+    "hit_xp": 0.5,
+    "durability": 900,
+    "fit": "ranger"
+   },
+   "note": "0.4.0 ranger armour: boosts Ranged accuracy and max hit (rng), not melee. Crafted from 1 hide + 1 bar."
+  },
+  "direpelt_coif": {
+   "name": "Dire pelt coif",
+   "value": 600,
+   "stackable": false,
+   "category": "gear",
+   "gear": {
+    "slot": "head",
+    "line": "ranger",
+    "tier": 4,
+    "atk": 0,
+    "str": 0,
+    "def": 4,
+    "rng": 4,
+    "level": 30,
+    "skill": "archery",
+    "hit_xp": 1.0,
+    "durability": 1200,
+    "fit": "ranger"
+   },
+   "note": "0.4.0 ranger armour: boosts Ranged accuracy and max hit (rng), not melee. Crafted from 1 hide + 1 bar."
+  },
+  "direpelt_body": {
+   "name": "Dire pelt body",
+   "value": 1200,
+   "stackable": false,
+   "category": "gear",
+   "gear": {
+    "slot": "body",
+    "line": "ranger",
+    "tier": 4,
+    "atk": 0,
+    "str": 0,
+    "def": 12,
+    "rng": 8,
+    "level": 30,
+    "skill": "archery",
+    "hit_xp": 1.0,
+    "durability": 1200,
+    "fit": "ranger"
+   },
+   "note": "0.4.0 ranger armour: boosts Ranged accuracy and max hit (rng), not melee. Crafted from 1 hide + 1 bar."
+  },
+  "direpelt_chaps": {
+   "name": "Dire pelt chaps",
+   "value": 600,
+   "stackable": false,
+   "category": "gear",
+   "gear": {
+    "slot": "legs",
+    "line": "ranger",
+    "tier": 4,
+    "atk": 0,
+    "str": 0,
+    "def": 8,
+    "rng": 4,
+    "level": 30,
+    "skill": "archery",
+    "hit_xp": 1.0,
+    "durability": 1200,
+    "fit": "ranger"
+   },
+   "note": "0.4.0 ranger armour: boosts Ranged accuracy and max hit (rng), not melee. Crafted from 1 hide + 1 bar."
   }
  }
 }

@@ -74,6 +74,57 @@
     42
    ],
    "note": "village giver by the rat barn (Millbrook v1 layout); moving her = edit town/near only"
+  },
+  "warden_pye": {
+   "name": "Warden Pye",
+   "town": "fenhollow",
+   "object": "quest_giver_warden_pye",
+   "near": [
+    96,
+    60
+   ],
+   "note": "0.4.0 Fenhollow east boardwalk; Night of 1000 Howls part 2",
+   "idle": "Keep to the roads after dark. The packs are bolder than they were."
+  },
+  "farmer_millbrook": {
+   "name": "Farmer Hobb",
+   "town": "millbrook",
+   "object": "quest_giver_farmer_millbrook",
+   "near": [
+    42,
+    42
+   ],
+   "idle": "Two cows gone and the fence flat. I'll not sleep till that wolf's dealt with."
+  },
+  "farmer_barrowby": {
+   "name": "Farmer Tull",
+   "town": "barrowby",
+   "object": "quest_giver_farmer_barrowby",
+   "near": [
+    17,
+    13
+   ],
+   "idle": "Two nights I've sat up with a lantern. You get used to the howling. Nearly."
+  },
+  "harbourmaster_quill": {
+   "name": "Harbourmaster Quill",
+   "town": "saltmere",
+   "object": "quest_giver_harbourmaster_quill",
+   "near": [
+    37,
+    32
+   ],
+   "idle": "Ships in, ships out. Hides, though... not a one this week."
+  },
+  "smith_venn": {
+   "name": "Smith Venn",
+   "town": "cinderholt",
+   "object": "quest_giver_smith_venn",
+   "near": [
+    22,
+    84
+   ],
+   "idle": "Ore's thin since Cindervill fell. Thinner still when the carts don't come."
   }
  },
  "quests": [
@@ -248,7 +299,8 @@
       }
      ]
     }
-   }
+   },
+   "complete_notice": "Odric: Word from the farms. Something bigger than a wolf is drawing the packs onto the village fields. Warden Pye on the east boardwalk is asking for help."
   },
   {
    "id": "chicken_slayer",
@@ -467,7 +519,7 @@
     "influence": 5,
     "marks": 150,
     "xp": {
-     "joinery": 700
+     "crafting": 700
     }
    },
    "dialog": {
@@ -697,6 +749,292 @@
       2
      ],
      "plane": "surface"
+    }
+   }
+  },
+  {
+   "id": "dire_wolf",
+   "name": "Night of 1000 Howls: Part 2",
+   "giver": "warden_pye",
+   "requires": [
+    "wolf_pelts"
+   ],
+   "desc": "A magic-infused dire wolf is drawing the packs onto the farms by Millbrook, Barrowby and Oxley. Warden Pye wants it stopped.",
+   "stages": [
+    {
+     "type": "talk",
+     "npc": "farmer_millbrook",
+     "text": "Talk to the farmer at the Millbrook pasture and inspect the broken fence",
+     "give": {
+      "farmers_account": 1
+     }
+    },
+    {
+     "type": "gather",
+     "items": {
+      "farmers_account": 1
+     },
+     "labels": {
+      "farmers_account": "Farmer's account"
+     },
+     "text": "Bring the farmer's account to Warden Pye",
+     "give": {
+      "marks": 150,
+      "cooked_beef": 15,
+      "leather_coif": 1,
+      "hide_tally": 1
+     },
+     "influence": 2
+    },
+    {
+     "type": "gather",
+     "npc": "harbourmaster_quill",
+     "items": {
+      "hide_tally": 1
+     },
+     "labels": {
+      "hide_tally": "Hide tally"
+     },
+     "text": "Take Pye's hide tally to Harbourmaster Quill at the Saltmere piers",
+     "give": {
+      "pier_token": 1
+     }
+    },
+    {
+     "type": "gather",
+     "items": {
+      "pier_token": 1
+     },
+     "labels": {
+      "pier_token": "Pier token"
+     },
+     "text": "Return the pier token to Warden Pye",
+     "give": {
+      "marks": 200,
+      "knife": 1
+     },
+     "influence": 2
+    },
+    {
+     "type": "gather",
+     "npc": "smith_venn",
+     "items": {
+      "iron_ore": 10
+     },
+     "alt_items": {
+      "marks": 200
+     },
+     "labels": {
+      "iron_ore": "Iron ore"
+     },
+     "text": "Help Smith Venn at the Cinderholt furnace: 10 iron ore, or 200 marks"
+    },
+    {
+     "type": "talk",
+     "text": "Return to Warden Pye",
+     "give": {
+      "marks": 200,
+      "studded_body": 1
+     },
+     "influence": 2
+    },
+    {
+     "type": "kill",
+     "enemy": "wolf",
+     "count": 8,
+     "near_towns": [
+      "barrowby",
+      "oxley"
+     ],
+     "radius": 26,
+     "label": "Farm wolves",
+     "text": "Kill 8 wolves on the Barrowby and Oxley fields"
+    },
+    {
+     "type": "talk",
+     "npc": "farmer_barrowby",
+     "text": "Talk to the Barrowby farmer again"
+    },
+    {
+     "type": "talk",
+     "text": "Report to Warden Pye",
+     "give": {
+      "marks": 250,
+      "wolf_pelt": 8
+     },
+     "influence": 2
+    },
+    {
+     "type": "kill",
+     "enemy": "greymaw",
+     "count": 1,
+     "label": "Greymaw",
+     "text": "Kill Greymaw at the marked farm"
+    },
+    {
+     "type": "gather",
+     "items": {
+      "greymaw_hide": 1
+     },
+     "labels": {
+      "greymaw_hide": "Greymaw's hide"
+     },
+     "text": "Bring Greymaw's hide to Warden Pye"
+    }
+   ],
+   "rewards": {
+    "influence": 2,
+    "marks": 400,
+    "items": {
+     "wolfpelt_body": 1
+    }
+   },
+   "dialog": {
+    "offer": {
+     "text": "Odric sent you? Good. The farms are losing stock: Millbrook, Barrowby, Oxley. Not the cities, the farms. Something is drawing the packs in. Will you look into it?",
+     "choices": [
+      {
+       "label": "Accept",
+       "action": "accept",
+       "reply": "Start at Millbrook. Hobb at the pasture had a runner out to me."
+      },
+      {
+       "label": "Decline",
+       "action": "decline",
+       "reply": "The wolves won't wait for you to make up your mind."
+      }
+     ]
+    },
+    "in_progress": {
+     "text": "{progress}.",
+     "choices": [
+      {
+       "label": "I'm on it",
+       "action": "close"
+      }
+     ]
+    },
+    "stage_1": {
+     "text": "Hobb's account... a wolf that doesn't run. Here, for your trouble, and a coif. Take this tally of hides to the Saltmere harbour for me.",
+     "choices": [
+      {
+       "label": "Hand it over",
+       "action": "advance"
+      },
+      {
+       "label": "Not yet",
+       "action": "close"
+      }
+     ]
+    },
+    "stage_3": {
+     "text": "No hides for three days, and the Cinderholt carts late. That's no coincidence. Take this knife, you'll want it. Smith Venn at the Cinderholt furnace lost a cart.",
+     "choices": [
+      {
+       "label": "Hand it over",
+       "action": "advance"
+      },
+      {
+       "label": "Not yet",
+       "action": "close"
+      }
+     ]
+    },
+    "stage_5": {
+     "text": "Venn's sure it was hit on the farm road between Oxley and Barrowby. Take this studded body. Then go to Barrowby, the farmer there has sat up two nights.",
+     "choices": [
+      {
+       "label": "Thank you",
+       "action": "advance"
+      }
+     ]
+    },
+    "stage_8": {
+     "text": "Pale across the muzzle, and she doesn't run. Greymaw. The hunters have whispered that name for a season. Here are pelts from the watch store. When you're ready, I'll mark her farm.",
+     "choices": [
+      {
+       "label": "Mark the farm",
+       "action": "advance",
+       "reply": "She's on the farm marked on your map. She won't come at you first. Pick your moment."
+      }
+     ]
+    },
+    "stage_10": {
+     "text": "That's her hide. I'll keep it for the bounty, it isn't for tanning. The villages owe you, and so do I. Take this wolf pelt body.",
+     "choices": [
+      {
+       "label": "Hand it over",
+       "action": "advance"
+      },
+      {
+       "label": "Not yet",
+       "action": "close"
+      }
+     ]
+    },
+    "completed": {
+     "text": "She'll be back, mind. Magic like that doesn't stay dead. Keep your bow strung.",
+     "choices": [
+      {
+       "label": "Goodbye",
+       "action": "close"
+      }
+     ]
+    }
+   },
+   "dialog_npc": {
+    "farmer_millbrook": {
+     "stage_0": {
+      "text": "Two cows gone and the fence is down. Look at it. That's not a wolf's work, it's pushed flat. Here, take my account back to Pye.",
+      "choices": [
+       {
+        "label": "Inspect the fence",
+        "action": "advance",
+        "reply": "Snapped posts, deep tracks. Something big."
+       }
+      ]
+     }
+    },
+    "harbourmaster_quill": {
+     "stage_2": {
+      "text": "Pye's tally? Not a wolf hide has come in for three days, and the carts from Cinderholt are late too. Take this token back to him.",
+      "choices": [
+       {
+        "label": "Hand it over",
+        "action": "advance"
+       }
+      ]
+     }
+    },
+    "smith_venn": {
+     "stage_4": {
+      "text": "A cart of iron ore never arrived. Hit on the farm road, I'd wager. Ten iron ore would keep my furnace going, or 200 marks and I'll buy it in.",
+      "choices": [
+       {
+        "label": "Give 10 iron ore",
+        "action": "advance"
+       },
+       {
+        "label": "Pay 200 marks",
+        "action": "advance_alt"
+       },
+       {
+        "label": "Not yet",
+        "action": "close"
+       }
+      ]
+     }
+    },
+    "farmer_barrowby": {
+     "stage_7": {
+      "text": "I've seen her. A wolf that doesn't run, pale across the muzzle. Stood at the fence and looked at me. Tell Pye.",
+      "choices": [
+       {
+        "label": "I'll tell him",
+        "action": "advance"
+       }
+      ]
+     }
     }
    }
   }
