@@ -3988,6 +3988,15 @@ func _frames_restyle() -> void:
 			await frames(40)
 			await _snap("restyle_mix_ai_player")
 			break
+	# restyle batch 06: inventory with the new item icons (incl. guard_steel_bundle)
+	for it in ["guard_steel_bundle", "steel_bar", "iron_hatchet", "bronze_arrows", "copper_ore", "tin_ore", "iron_ore", "coal", "bronze_bar", "iron_bar", "logs", "raw_shrimp", "cooked_shrimp", "bread", "bones", "flax", "knife", "needle", "dusk_arrows", "greymaw_hide", "coins"]:
+		if GameData.items.has(it):
+			p.inventory.add(it, 5 if GameData.items[it].get("stackable", false) else 1)
+	main.hud.show_panel("pack")
+	await frames(20)
+	await _snap("restyle_inventory")
+	main.hud.show_panel("")
+	await frames(5)
 	# restyle batch 05: canines (Greymaw dies on camera) and chibi NPCs
 	main.camera.zoom = Vector2(6, 6)
 	DayNight.debug_set_phase("day")
