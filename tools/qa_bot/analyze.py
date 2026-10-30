@@ -54,13 +54,24 @@ def sprite_path(sid):
     return os.path.join(ROOT, _SPRITE_DEFS[sid]["path"].replace("res://", ""))
 
 
+def _player_fs():
+    try:
+        fs = json.load(open(os.path.join(ROOT, "data/sprites.json")))["actors"]["player"]["frame_size"]
+        return int(fs[0]), int(fs[1])
+    except Exception:
+        return 16, 24
+
+
+PLAYER_FS = _player_fs()   # restyle: 16x16 (was 16x24)
+
+
 class Sprites:
     """Player sheet templates (each frame, plain + mirrored) at screen scale.
     `layers` = the gear layer sprite ids the game reports as worn (draw order):
     each template is the body frame with the same frame of every layer
     composited on top, exactly as the game draws it (0.3.1 visible gear)."""
     def __init__(self, zoom, layers=()):
-        fw, fh = 16, 24
+        fw, fh = PLAYER_FS
         z = int(round(zoom))
         self.w, self.h = fw * z, fh * z
         self.t = []          # (facing, frame, rgb float array, mask)
@@ -134,7 +145,7 @@ def occluded(r):
     overlaps the player's sprite box: image checks can't judge that frame."""
     if "others" not in r:
         return r.get("near", 9999) < NEAR_SKIP
-    px0, px1, py0, py1 = -8, 8, -24, 0
+    px0, px1, py0, py1 = -8, 8, -PLAYER_FS[1], 0
     for dx, dy in r["others"]:
         for bx0, bx1, by0, by1 in ((dx - 8, dx + 8, dy - 24, dy), (dx - 36, dx + 36, dy - 42, dy - 24)):
             if bx0 < px1 and bx1 > px0 and by0 < py1 and by1 > py0:
@@ -604,7 +615,7 @@ def check_pk(ctx):
     return out
 
 
-SKULL_OFF = (-4, -38)
+SKULL_OFF = (-4, -38 + (24 - PLAYER_FS[1]))   # restyle: 8 px lower on the 16x16 body
 
 
 def _skull_box(run, row):
