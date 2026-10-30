@@ -48,3 +48,9 @@ original, project-owned, no third-party pack used. Palette = project 38-colour r
 - Gridwright Medieval Village (paid): not bought (no purchases).
 - PEkinczyk Top-Down Medieval Town (free, no resale): not CC0/CC-BY; not used.
 No new packs were downloaded for batch 04.
+
+## Batch 05 (monsters and NPCs)
+All batch 05 art is procedural (src/*.py). No third-party packs were used. The style follows the Ninja Adventure 16px chibi (CC0) and the project's 38-colour palette. No purchases and no uploads.
+
+## Batch 06 (items)
+No third-party art. These are recolours of the repo's own icons, done by code (src/icons.py). No packs, no purchases, no uploads.

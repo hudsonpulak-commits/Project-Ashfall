@@ -7836,6 +7836,13 @@
     16
    ],
    "frames": 1
+  },
+  "guard_steel_bundle": {
+   "path": "res://assets/sprites/items/steel_bar.png",
+   "frame_size": [
+    16,
+    16
+   ]
   }
  },
  "ui": {
