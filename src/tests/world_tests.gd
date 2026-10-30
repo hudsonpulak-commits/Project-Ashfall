@@ -1155,6 +1155,15 @@ static func _walled_city_tests(world: World, p: Player) -> void:
 static func _cookhouse_tests(world: World, p: Player) -> void:
 	print("  -- 0.3.1 cookhouse")
 	var gen := world.gen
+	# restyle r6 wall towers: every tower sits on a thinned wall cell, is drawn once, not on a road
+	var tw: Array = gen.wall_tower_cells()
+	check(tw.size() == 24, "r6: 24 wall towers (highfen 12, cinderholt 8, fenhollow 4): %d" % tw.size())
+	var twbad := 0
+	for q in tw:
+		var nm: String = WorldGen.TILE_NAMES[gen.tile_at(q.x, q.y)]
+		if gen.wall_key(q).is_empty() or world.entity_layer.get_node_or_null("WallTower_%d_%d" % [q.x, q.y]) == null or nm.contains("road") or nm == "cobble":
+			twbad += 1
+	check(twbad == 0, "r6: towers on thin-wall cells with a sprite, none on a road (%d bad)" % twbad)
 	for tid in gen.town_order:
 		var b: Dictionary = gen.building_for_shop(tid, "cook")
 		check(not b.is_empty() and b["kind"] == "cookhouse", "%s has a cookhouse building" % tid)

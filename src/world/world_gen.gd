@@ -376,7 +376,9 @@ func _load_town(town: Dictionary) -> void:
 				_town_objects[p] = omap[ch]["object"]
 			else:
 				_town_tiles[p] = region_grass(p)
-	_thin_town_walls(rows, tmap, origin)
+	_thin_town_walls(rows, tmap, origin, omap)
+	for c in town.get("wall_towers", []):
+		_wall_towers[origin + Vector2i(int(c[0]), int(c[1]))] = true
 	_load_buildings(town, origin)
 	_ensure_gate_approaches(town, origin)
 	_place_quest_givers(town, origin)
@@ -388,6 +390,7 @@ func _load_town(town: Dictionary) -> void:
 ## LUT. Wall cells draw the surrounding floor underneath. Collision keeps the data tiles.
 const THIN_WALL_MAT := {"palisade": "palisade", "basalt_wall": "basalt", "stone_wall": "stone", "sandstone_wall": "sandstone", "capital_wall": "capital"}
 const THIN_GATES := ["gate_wood", "gate_basalt", "gate_sand", "gate_capital"]
+var _wall_towers: Dictionary = {}   # restyle r6: thin-wall cell -> true (tower drawn there)
 var _wall_keys: Dictionary = {}     # Vector2i -> [mat, key]
 var _wall_ground: Dictionary = {}   # wall cell -> floor tile type drawn under it
 
@@ -437,7 +440,7 @@ static func thin(occ: Array, w: int, h: int) -> Array:
 	return out
 
 
-func _thin_town_walls(rows: Array, tmap: Dictionary, origin: Vector2i) -> void:
+func _thin_town_walls(rows: Array, tmap: Dictionary, origin: Vector2i, omap: Dictionary = {}) -> void:
 	var h := rows.size()
 	var w := 0
 	for r in rows:
@@ -445,7 +448,10 @@ func _thin_town_walls(rows: Array, tmap: Dictionary, origin: Vector2i) -> void:
 	var nmg := func(x: int, y: int) -> String:
 		if y < 0 or y >= h or x < 0 or x >= str(rows[y]).length():
 			return ""
-		return str(tmap.get(str(rows[y])[x], ""))
+		var ch := str(rows[y])[x]
+		if tmap.has(ch):
+			return str(tmap[ch])
+		return str(omap[ch].get("ground", "")) if omap.has(ch) else ""   # r6: wall-tower props stand on wall
 	var occ: Array = []
 	var any := false
 	for y in h:
@@ -518,6 +524,10 @@ func _thin_town_walls(rows: Array, tmap: Dictionary, origin: Vector2i) -> void:
 					best = m3
 			var p := origin + Vector2i(x, y)
 			_wall_ground[p] = TILE_NAMES.find(best) if best != "" else region_grass(p)
+
+
+func wall_tower_cells() -> Array:
+	return _wall_towers.keys()
 
 
 func wall_key(p: Vector2i) -> Array:

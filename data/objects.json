@@ -846,7 +846,7 @@
   },
   "hf_wall_tower": {
    "name": "Wall tower",
-   "sprite": "hf_wall_tower",
+   "sprite": "",
    "blocks": true,
    "type": "prop"
   },

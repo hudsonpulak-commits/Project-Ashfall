@@ -70,6 +70,7 @@ func setup(world_seed: int) -> void:
 	buildings_view.name = "Buildings"
 	add_child(buildings_view)
 	buildings_view.setup(self)
+	_build_wall_towers()
 	ambient = AMBIENT.new()
 	ambient.name = "AmbientLife"
 	add_child(ambient)
@@ -1308,3 +1309,47 @@ func from_save(d: Dictionary, now_tick: int) -> void:
 		for o in ch.objects.values():
 			o.depleted_until = int(depleted.get(o.pos, 0))
 			_refresh_object_view(o)
+
+
+## restyle r6: wall towers are wall-atlas junction frames on thin-wall cells (y-sorted)
+const TOWER_FW := 48
+const TOWER_FH := 72
+const TOWER_FOOT := 58
+const TOWER_CELL := Vector2(16, 38)
+const TOWER_NB := [Vector2i(0, -1), Vector2i(1, -1), Vector2i(1, 0), Vector2i(1, 1), Vector2i(0, 1), Vector2i(-1, 1), Vector2i(-1, 0), Vector2i(-1, -1)]
+static var _tower_lut: Dictionary = {}
+
+
+func _build_wall_towers() -> void:
+	if _tower_lut.is_empty():
+		var f := FileAccess.open("res://assets/sprites/tiles/walls_diag/tower_atlas_lut.json", FileAccess.READ)
+		if f != null:
+			var d = JSON.parse_string(f.get_as_text())
+			if d is Dictionary:
+				for k in d:
+					_tower_lut[int(k)] = int(d[k])
+	for p in gen.wall_tower_cells():
+		var wk: Array = gen.wall_key(p)
+		if wk.is_empty():
+			continue
+		var key := int(wk[1])
+		var m := 0
+		for i in 8:
+			var d2: Vector2i = TOWER_NB[i]
+			if key & (1 << ((d2.y + 2) * 5 + d2.x + 2)):
+				m |= 1 << i
+		var fi := int(_tower_lut.get(m, _tower_lut.get(0, 0)))
+		var tex: Texture2D = load("res://assets/sprites/tiles/walls_diag/%s_tower_atlas.png" % str(wk[0]))
+		if tex == null:
+			continue
+		var at := AtlasTexture.new()
+		at.atlas = tex
+		var cols := tex.get_width() / TOWER_FW
+		at.region = Rect2((fi % cols) * TOWER_FW, (fi / cols) * TOWER_FH, TOWER_FW, TOWER_FH)
+		var s := Sprite2D.new()
+		s.name = "WallTower_%d_%d" % [p.x, p.y]
+		s.centered = false
+		s.texture = at
+		s.position = Vector2(p * tile_px) - TOWER_CELL + Vector2(0, TOWER_FOOT)
+		s.offset = Vector2(0, -TOWER_FOOT)
+		entity_layer.add_child(s)
