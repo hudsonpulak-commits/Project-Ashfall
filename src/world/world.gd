@@ -138,6 +138,8 @@ func _build_tileset() -> TileSet:
 	return ts
 
 
+## restyle r3 diagonal walls: on hold (being redrawn thinner with seamless joins).
+const DIAG_ENABLED := false
 const DIAG_MATS := ["palisade", "basalt", "capital", "stone", "sandstone"]
 const DIAG_PIECES := ["front_ul", "front_ur", "back_ll", "back_lr", "join_in_l", "join_in_r", "join_out_l", "join_out_r"]
 const DIAG_WALL_MAT := {"palisade": "palisade", "palisade_front": "palisade", "basalt_wall": "basalt", "basalt_front": "basalt",
@@ -149,6 +151,8 @@ var _diag_src: Dictionary = {}
 ## restyle r3: the 45-degree piece on a NON-wall cell from its 4 cardinal
 ## neighbours (gates count as walls but stop diagonals: no material) -> "mat/piece" or "".
 static func diag_piece(here: String, nb4: Array) -> String:
+	if not DIAG_ENABLED:
+		return ""
 	var isw := func(t: String) -> bool: return DIAG_WALL_MAT.has(t) or t in DIAG_GATES or t == "capital_wall" or t == "capital_front"
 	if isw.call(here) or here == "":
 		return ""
