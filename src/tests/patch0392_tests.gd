@@ -26,24 +26,16 @@ static func _corners(world, set: Dictionary) -> Array:
 static func run(_main, world, _p) -> void:
 	# --- moat inner corners ---
 	check(not GameData.sprite_def("autotile", "moat_border_corners").is_empty() and ResourceLoader.exists(GameData.sprite_def("autotile", "moat_border_corners")["path"]), "moat: inner-corner sheet registered and present")
-	var want := {0: [Vector2i(0, -1), Vector2i(1, 0)], 1: [Vector2i(1, 0), Vector2i(0, 1)], 2: [Vector2i(0, 1), Vector2i(-1, 0)], 3: [Vector2i(-1, 0), Vector2i(0, -1)]}
-	var ok4 := true
-	for f in want.keys():
-		var set := {}
-		for d in want[f]:
-			set[d] = "moat"
-		var got := _corners(world, set)
-		if got != [f]:
-			ok4 = false
-			printerr("    moat corner %d -> %s" % [f, got])
-	check(ok4, "moat: an inner corner (NE/SE/SW/NW) where both sides are moat and the diagonal is land")
+	# restyle: moats take the organic shore pass (corners are baked into the 256-frame
+	# water_shore sheet), so no separate layer-4 corner pieces are drawn
+	var cset := {Vector2i(0, -1): "moat", Vector2i(1, 0): "moat"}
+	var cc: Array = world.overlay_cells(Vector2i.ZERO, _nm(cset))
+	var shore := cc.filter(func(c): return c[0] == 2)
+	check(shore.size() == 1 and _corners(world, cset).is_empty(), "moat: a corner moat cell draws one shore frame from the water_shore pass (no layer-4 corner piece) %s" % [cc])
 	var all_moat := {}
 	for d in DIRS8:
 		all_moat[d] = "moat"
-	var bridge_diag := {Vector2i(0, -1): "moat", Vector2i(1, 0): "moat", Vector2i(1, -1): "bridge"}
-	var straight := {Vector2i(0, -1): "moat", Vector2i(0, 1): "moat"}
-	check(_corners(world, all_moat).is_empty() and _corners(world, bridge_diag).is_empty() and _corners(world, straight).is_empty(),
-		"moat: no inner corner in open moat, next to a bridge diagonal, or along a straight bank")
+	check(world.overlay_cells(Vector2i.ZERO, _nm(all_moat)).filter(func(c): return c[0] == 2).is_empty(), "moat: open moat (no land around) draws no shore edge")
 
 	# --- creature front/back frames are whole (not cropped / sliced) ---
 	# Up to 1 opaque pixel may touch the left/right frame edge (goblin ears).

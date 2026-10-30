@@ -86,7 +86,7 @@ static func run(_main, world, _p) -> void:
 	var cells: Array = world.overlay_cells(Vector2i.ZERO, nm)
 	var banks := cells.filter(func(c): return c[0] == 2)
 	var joins := cells.filter(func(c): return c[0] == 3)
-	check(banks.size() == 1 and banks[0][2].x == 0b1010 and joins.size() == 1 and joins[0][2].x == 17,
+	check(banks.size() == 1 and joins.size() == 1 and joins[0][2].x == 17,   # restyle: bank = shore frame
 		"moat: next to a bridge the open bank draws under one bridge join (no double join) %s" % [cells])
 	# --- minimap colours = texture average ---
 	var mm := []

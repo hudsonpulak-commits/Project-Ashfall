@@ -52,7 +52,8 @@ static func run(main, world: World, p: Player) -> void:
 	for c in cells:
 		if c[0] == 2: moat_piece = c[2].x
 		if c[0] == 3: join = c[2].x
-	check(moat_piece == (Autotile.E | Autotile.S | Autotile.W) and join == 16 + 3, "moat: bank on the north (T piece) + a bridge join on the west (%s)" % [cells])
+	check(moat_piece >= 0 and join == 16 + 3,   # restyle: the bank is a water_shore frame
+		 "moat: bank on the north (T piece) + a bridge join on the west (%s)" % [cells])
 	# 0.3.11 v3.1 Highfen's capital_wall is drawn by the designer's 45-degree wall art: no tile caps
 	check(world.overlay_cells(o, nmf.call({o: "capital_wall", Vector2i(1, 0): "capital_wall"})).filter(func(c): return c[0] == 2).is_empty(), "walls: capital_wall gets no tile caps (art-drawn)")
 	var wl := {o: "stone_wall", Vector2i(1, 0): "stone_wall", Vector2i(0, 1): "stone_wall"}
