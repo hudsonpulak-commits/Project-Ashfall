@@ -2151,6 +2151,27 @@
    "blocks": false,
    "type": "prop",
    "note": "0.4.2 rat den floor clutter"
+  },
+  "den_sludge": {
+   "name": "Sludge",
+   "sprite": "den_sludge",
+   "blocks": false,
+   "type": "prop",
+   "note": "0.4.2 rat den clutter (batch_09)"
+  },
+  "den_roots": {
+   "name": "Roots",
+   "sprite": "den_roots",
+   "blocks": false,
+   "type": "prop",
+   "note": "0.4.2 rat den clutter (batch_09)"
+  },
+  "den_roots_wall": {
+   "name": "Hanging roots",
+   "sprite": "den_roots_wall",
+   "blocks": false,
+   "type": "prop",
+   "note": "0.4.2 rat den clutter (batch_09)"
   }
  }
 }

@@ -165,7 +165,7 @@ func ensure_lights(world) -> void:
 	# 0.4.2 den torches ('T' cells of data/underworld.json rows)
 	for did in world.gen.dens.keys():
 		for tt in world.gen.dens[did].get("markers", {}).get("T", []):
-			_add_light(world, tt, "torch", torch_col, glow_scale)
+			_add_light(world, tt, "den_torch", torch_col, glow_scale)
 	# Lit windows on each building facade
 	var n_win := int(lc.get("windows_per_building", 2))
 	var glass_col := Color(str(lc.get("stained_glass_color", "#ffb8d0")))
@@ -230,6 +230,10 @@ func _add_light(world, tile: Vector2i, kind: String, col: Color, glow_scale: flo
 		spr.hframes = 2
 		spr.modulate = Color.WHITE
 		spr.position = Vector2(0, -12)
+		n.set_meta("anim", 2)
+	elif kind == "den_torch":   # 0.4.2 batch_09 2-frame wall torch flicker
+		spr.hframes = 2
+		spr.modulate = Color.WHITE
 		n.set_meta("anim", 2)
 	n.add_child(spr)
 	var glow := Sprite2D.new()
@@ -317,6 +321,9 @@ func _apply_lights() -> void:
 		if str(n.get_meta("kind", "")) == "torch" and e > 0.05:
 			var flicker := 0.92 + 0.08 * sin(Time.get_ticks_msec() * 0.012 + n.get_instance_id() * 0.01)
 			n.modulate.a = e * flicker
+		elif e > 0.05 and str(n.get_meta("kind", "")) == "den_torch":
+			var sp0 := n.get_child(0) as Sprite2D
+			sp0.frame = int((Time.get_ticks_msec() + n.get_instance_id() % 997) / 170) % 2
 
 
 func _process(_dt: float) -> void:

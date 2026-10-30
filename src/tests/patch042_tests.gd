@@ -94,7 +94,35 @@ static func run(main, world: World, p: Player) -> void:
 	check(not DayNight.in_den(), "daylight again on the surface")
 	p.place_at(keep)
 	world.set_focus(p.tile, true)
+	_batch09(world)
 	_polish(world)
+
+
+## 0.4.2 batch_09 den art: diagonals, 2-frame torch, mud/sludge floors, new clutter.
+static func _batch09(world: World) -> void:
+	var gen := world.gen
+	var inner: Rect2i = gen.dens["rat_den"]["inner"]
+	var mud := 0
+	var sludge := 0
+	var diag := 0
+	for y in range(inner.position.y, inner.end.y):
+		for x in range(inner.position.x, inner.end.x):
+			var t := gen.tile_at(x, y)
+			mud += int(t == WorldGen.TileType.DEN_MUD)
+			sludge += int(t == WorldGen.TileType.DEN_SLUDGE)
+			if t == WorldGen.TileType.DEN_WALL:
+				var nb: Array = []
+				for d in [Vector2i(0, -1), Vector2i(1, 0), Vector2i(0, 1), Vector2i(-1, 0), Vector2i(-1, -1), Vector2i(1, -1), Vector2i(1, 1), Vector2i(-1, 1)]:
+					nb.append(WorldGen.TILE_NAMES[gen.tile_at(x + d.x, y + d.y)])
+				diag += int(World._den_col(nb) >= 20)
+	check(mud > 20 and sludge > 5 and not (WorldGen.TileType.DEN_MUD in WorldGen.BLOCKING_TILES), "mud (%d) and sludge (%d) floors in the den, walkable" % [mud, sludge])
+	check(diag > 0, "45-degree diagonal wall pieces are used (%d cells)" % diag)
+	check(GameData.texture("ui", "light_den_torch") != null and GameData.texture("ui", "light_den_torch").get_width() == 32, "the 2-frame den torch is registered")
+	var kinds := {}
+	for o in gen._town_objects.keys():
+		if inner.has_point(o):
+			kinds[gen._town_objects[o]] = true
+	check(kinds.has("den_sludge") and kinds.has("den_roots") and kinds.has("den_roots_wall"), "sludge and root clutter placed from the legend")
 
 
 ## 0.4.2 B: graphics polish leftovers (road jogs, prop rows, town-edge scatter).

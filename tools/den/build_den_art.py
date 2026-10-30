@@ -8,11 +8,15 @@ for i in range(4):
 fl.save("assets/sprites/tiles/variants/den_floor_x4.png")
 m15 = Image.open(U + "den_wall_m15.png").convert("RGBA")
 m15.crop((0, 0, 16, 16)).save("assets/sprites/tiles/den_wall.png")
-at = Image.new("RGBA", (20 * 16, 32))
+at = Image.new("RGBA", (24 * 16, 32))
 for m in range(16):
     p = Image.open(U + "den_wall_m%02d.png" % m).convert("RGBA")
     at.paste(p.crop((0, 0, 16, 16)), (m * 16, 0)); at.paste(p.crop((0, 16, 16, 32)), (m * 16, 16))
 for i, k in enumerate(["ne", "se", "sw", "nw"]):
     p = Image.open(U + "den_wall_inner_%s.png" % k).convert("RGBA")
     at.paste(p.crop((0, 0, 16, 16)), ((16 + i) * 16, 0)); at.paste(p.crop((0, 16, 16, 32)), ((16 + i) * 16, 16))
+# 0.4.2 batch_09: 45-degree diagonals, cols 20-23 = ne, nw (front, with face), se, sw (back rim)
+for i, k in enumerate(["ne", "nw", "se", "sw"]):
+    p = Image.open(U + "den_wall_diag_%s.png" % k).convert("RGBA")
+    at.paste(p.crop((0, 0, 16, 16)), ((20 + i) * 16, 0)); at.paste(p.crop((0, 16, 16, 32)), ((20 + i) * 16, 16))
 at.save("assets/sprites/autotile/den_wall16.png")

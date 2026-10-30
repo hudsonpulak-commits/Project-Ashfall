@@ -542,7 +542,7 @@
    ],
    "minimap_color": "#4a3a2c",
    "_order": 56,
-   "note": "0.4.2 rat den floor (sprite bot underground v1.1 den_floor_0..3)"
+   "note": "0.4.2 rat den floor (batch_09 restyle)"
   },
   "den_wall": {
    "path": "res://assets/sprites/tiles/den_wall.png",
@@ -552,7 +552,27 @@
    ],
    "minimap_color": "#120e0c",
    "_order": 57,
-   "note": "0.4.2 rat den wall cap (den_wall_m15 top); faces come from autotile/den_wall16"
+   "note": "0.4.2 rat den wall cap (batch_09 restyle)"
+  },
+  "den_mud": {
+   "path": "res://assets/sprites/tiles/den_mud.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "minimap_color": "#3e3024",
+   "_order": 58,
+   "note": "0.4.2 batch_09 den mud floor"
+  },
+  "den_sludge": {
+   "path": "res://assets/sprites/tiles/den_sludge.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "minimap_color": "#3a4026",
+   "_order": 59,
+   "note": "0.4.2 batch_09 den sludge floor"
   }
  },
  "objects": {
@@ -3266,7 +3286,7 @@
    ],
    "frames": 1,
    "anchor": "bottom",
-   "note": "0.4.2 rat den (sprite bot underground v1.1, pre-restyle stand-in)"
+   "note": "0.4.2 rat den (batch_09 restyle)"
   },
   "den_bones": {
    "path": "res://assets/sprites/underground/den/den_bones_0.png",
@@ -3276,7 +3296,7 @@
    ],
    "frames": 1,
    "anchor": "bottom",
-   "note": "0.4.2 rat den (sprite bot underground v1.1, pre-restyle stand-in)"
+   "note": "0.4.2 rat den (batch_09 restyle)"
   },
   "den_skull": {
    "path": "res://assets/sprites/underground/den/den_skull_0.png",
@@ -3286,7 +3306,7 @@
    ],
    "frames": 1,
    "anchor": "bottom",
-   "note": "0.4.2 rat den (sprite bot underground v1.1, pre-restyle stand-in)"
+   "note": "0.4.2 rat den (batch_09 restyle)"
   },
   "den_nest": {
    "path": "res://assets/sprites/underground/den/den_nest_0.png",
@@ -3296,7 +3316,7 @@
    ],
    "frames": 1,
    "anchor": "bottom",
-   "note": "0.4.2 rat den (sprite bot underground v1.1, pre-restyle stand-in)"
+   "note": "0.4.2 rat den (batch_09 restyle)"
   },
   "den_straw": {
    "path": "res://assets/sprites/underground/den/den_straw_0.png",
@@ -3306,7 +3326,7 @@
    ],
    "frames": 1,
    "anchor": "bottom",
-   "note": "0.4.2 rat den (sprite bot underground v1.1, pre-restyle stand-in)"
+   "note": "0.4.2 rat den (batch_09 restyle)"
   },
   "den_droppings": {
    "path": "res://assets/sprites/underground/den/den_droppings_0.png",
@@ -3316,7 +3336,7 @@
    ],
    "frames": 1,
    "anchor": "bottom",
-   "note": "0.4.2 rat den (sprite bot underground v1.1, pre-restyle stand-in)"
+   "note": "0.4.2 rat den (batch_09 restyle)"
   },
   "den_gnawed": {
    "path": "res://assets/sprites/underground/den/den_gnawed_0.png",
@@ -3326,7 +3346,7 @@
    ],
    "frames": 1,
    "anchor": "bottom",
-   "note": "0.4.2 rat den (sprite bot underground v1.1, pre-restyle stand-in)"
+   "note": "0.4.2 rat den (batch_09 restyle)"
   },
   "den_puddle": {
    "path": "res://assets/sprites/underground/den/den_puddle_1.png",
@@ -3336,7 +3356,37 @@
    ],
    "frames": 1,
    "anchor": "bottom",
-   "note": "0.4.2 rat den (sprite bot underground v1.1, pre-restyle stand-in)"
+   "note": "0.4.2 rat den (batch_09 restyle)"
+  },
+  "den_sludge": {
+   "path": "res://assets/sprites/underground/den/den_sludge_0.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.4.2 batch_09 sludge pool clutter"
+  },
+  "den_roots": {
+   "path": "res://assets/sprites/underground/den/den_roots_1.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.4.2 batch_09 floor root tangle"
+  },
+  "den_roots_wall": {
+   "path": "res://assets/sprites/underground/den/den_roots_0.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.4.2 batch_09 roots hanging from a wall face"
   }
  },
  "actors": {
@@ -8057,6 +8107,15 @@
     16
    ]
   },
+  "light_den_torch": {
+   "path": "res://assets/sprites/underground/den/den_torch.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 2,
+   "note": "0.4.2 batch_09 den wall torch, 2-frame flicker"
+  },
   "light_torch": {
    "path": "res://assets/sprites/ui/light_torch.png",
    "frame_size": [
@@ -8858,9 +8917,9 @@
     16,
     16
    ],
-   "frames": 20,
+   "frames": 24,
    "rows": 2,
-   "note": "0.4.2 den walls: cols 0-15 = N1|E2|S4|W8 wall-neighbour mask, 16-19 inner ne/se/sw/nw; row 0 = cap on the wall cell, row 1 = face hanging into the open cell south (tools/den/build_den_art.py)"
+   "note": "0.4.2 den walls: cols 0-15 = N1|E2|S4|W8 wall-neighbour mask, 16-19 inner ne/se/sw/nw, 20-23 diagonals ne/nw (front) se/sw (back); row 0 = cap on the wall cell, row 1 = face hanging into the open cell south (tools/den/build_den_art.py)"
   }
  },
  "transitions": {
@@ -8886,7 +8945,10 @@
     "grass_boreal": 23,
     "rocky": 35,
     "cliff_shadow": 15,
-    "cliff_stairs": 36
+    "cliff_stairs": 36,
+    "den_mud": 12,
+    "den_sludge": 14,
+    "den_floor": 5
    },
    "doc": "0.3.9 a tile is overlaid by up to 2 higher-priority neighbouring floors; frame = edges(N1 E2 S4 W8) | corners(NW1 NE2 SE4 SW8)<<4 (corners only where both sides are not that floor). Water, walls and the moat never blend. 0.3.10 priorities x10 so the region grasses (21-23) and rocky ground (35) blend softly into each other."
   },
@@ -9064,6 +9126,24 @@
    "frames": 256,
    "cols": 16,
    "note": "0.3.10 PLACEHOLDER recolour - designer redraw (docs/ART_TODO_0.3.10.md)"
+  },
+  "den_mud": {
+   "path": "res://assets/sprites/transitions/den_mud.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 256,
+   "cols": 16
+  },
+  "den_sludge": {
+   "path": "res://assets/sprites/transitions/den_sludge.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 256,
+   "cols": 16
   }
  }
 }

@@ -277,26 +277,19 @@ func overlay_cells(p: Vector2i, nm: Callable) -> Array:
 		if not s.is_empty():
 			var f := Autotile.piece_at(p, func(q): var t: String = nm.call(q); return t == here or t in Autotile.WALL_JOIN_ALSO)
 			out.append([2, s[0], Vector2i(f, 0)])
-	elif here == "den_wall" or (here == "den_floor" and nb[0] == "den_wall"):
+	elif here == "den_wall" or (here in DEN_FLOORS and nb[0] == "den_wall"):
 		# 0.4.2 rat den walls: cap on the wall cell by the wall-neighbour mask (inner
 		# corners by the open diagonal), face hanging into the open cell below
 		var sd: Array = _overlay_src.get("autotile/den_wall16", [])
 		if not sd.is_empty():
 			if here == "den_wall":
-				var dm := _den_mask(nb)
-				var col := dm
-				if dm == 15:
-					for k in [[5, 16], [6, 17], [7, 18], [4, 19]]:
-						if nb[k[0]] != "den_wall":
-							col = k[1]
-							break
-				out.append([2, sd[0], Vector2i(col, 0)])
+				out.append([2, sd[0], Vector2i(_den_col(nb), 0)])
 			else:
 				var up := p + Vector2i(0, -1)
 				var unb: Array = []
-				for d2 in [Vector2i(0, -1), Vector2i(1, 0), Vector2i(0, 1), Vector2i(-1, 0)]:
+				for d2 in [Vector2i(0, -1), Vector2i(1, 0), Vector2i(0, 1), Vector2i(-1, 0), Vector2i(-1, -1), Vector2i(1, -1), Vector2i(1, 1), Vector2i(-1, 1)]:
 					unb.append(nm.call(up + d2))
-				out.append([2, sd[0], Vector2i(_den_mask(unb), 1)])
+				out.append([2, sd[0], Vector2i(_den_col(unb), 1)])
 	elif here == "boardwalk":
 		# restyle (batch 02): boardwalk deck autotile by the N1|E2|S4|W8 mask
 		var sb: Array = _overlay_src.get("autotile/boardwalk16", [])
@@ -339,6 +332,32 @@ func overlay_cells(p: Vector2i, nm: Callable) -> Array:
 ## corners and stairs are 16x32 (frame 1 hangs into the cell below), the shadow
 ## lies 2 rows below. The Cinder region uses the cinder set.
 const CLIFF_NAMES := ["cliff_face", "cliff_lip", "cliff_shadow", "cliff_stairs", "cliff_foot"]
+
+
+## 0.4.2 den wall sheet column: 0-15 mask, 16-19 inner corners (mask 15 with an
+## open diagonal), 20-23 45-degree diagonals: N+E / N+W outer corners with the
+## opposite diagonal open (front, face below), E+S / S+W (back rim).
+const DEN_FLOORS := ["den_floor", "den_mud", "den_sludge"]
+
+
+static func _den_col(nb: Array) -> int:
+	var dm := _den_mask(nb)
+	if dm == 15:
+		for k in [[5, 16], [6, 17], [7, 18], [4, 19]]:
+			if nb[k[0]] != "den_wall":
+				return k[1]
+		return 15
+	if nb.size() >= 8:
+		match dm:
+			3:
+				if nb[7] != "den_wall": return 20
+			9:
+				if nb[6] != "den_wall": return 21
+			6:
+				if nb[4] != "den_wall": return 22
+			12:
+				if nb[5] != "den_wall": return 23
+	return dm
 
 
 static func _den_mask(nb: Array) -> int:

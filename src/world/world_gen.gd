@@ -11,7 +11,7 @@ enum TileType { GRASS, PATH, WATER, SAND, DIRT, COBBLE, PLANKS, MARSH, WALL, WAL
 	ROAD_STONE, ROAD_DIRT, MOAT, MOAT_EDGE, CAPITAL_WALL, CAPITAL_FRONT, GATE_CAPITAL,
 	CAPITAL_BLDG_WALL, CAPITAL_BLDG_FRONT, HOUSE_WALL, HOUSE_FRONT,
 	GRASS_LUSH, GRASS_BOREAL, GRASS_TROPIC, ROCKY, CLIFF_FACE, CLIFF_LIP, CLIFF_SHADOW, CLIFF_STAIRS,
-	CITY_RING, ART_WALL, ART_FLOOR, CLIFF_FOOT, DEN_FLOOR, DEN_WALL }
+	CITY_RING, ART_WALL, ART_FLOOR, CLIFF_FOOT, DEN_FLOOR, DEN_WALL, DEN_MUD, DEN_SLUDGE }
 const TILE_NAMES := ["grass", "path", "water", "sand", "dirt", "cobble", "planks", "marsh", "wall", "wall_front", "floor", "doorway",
 	"ash", "ash_edge", "bridge", "stone_wall", "stone_front", "stone_floor",
 	"palisade", "palisade_front", "basalt_wall", "basalt_front", "sandstone_wall", "sandstone_front",
@@ -19,7 +19,7 @@ const TILE_NAMES := ["grass", "path", "water", "sand", "dirt", "cobble", "planks
 	"road_stone", "road_dirt", "moat", "moat_edge", "capital_wall", "capital_front", "gate_capital",
 	"capital_bldg_wall", "capital_bldg_front", "house_wall", "house_front",
 	"grass_lush", "grass_boreal", "grass_tropic", "rocky", "cliff_face", "cliff_lip", "cliff_shadow", "cliff_stairs",
-	"city_ring", "art_wall", "art_floor", "cliff_foot", "den_floor", "den_wall"]
+	"city_ring", "art_wall", "art_floor", "cliff_foot", "den_floor", "den_wall", "den_mud", "den_sludge"]
 const BLOCKING_TILES := [TileType.WATER, TileType.WALL, TileType.WALL_FRONT, TileType.STONE_WALL, TileType.STONE_FRONT,
 	TileType.PALISADE, TileType.PALISADE_FRONT, TileType.BASALT_WALL, TileType.BASALT_FRONT,
 	TileType.SANDSTONE_WALL, TileType.SANDSTONE_FRONT, TileType.PLASTER_WALL, TileType.PLASTER_FRONT,
@@ -712,6 +712,7 @@ func _load_dens() -> void:
 			for x in range(full.position.x, full.end.x):
 				_town_tiles[Vector2i(x, y)] = TileType.DEN_WALL
 		var legend: Dictionary = dd.get("legend", {})
+		var fchars: Dictionary = dd.get("floor_chars", {})   # 0.4.2 batch_09 mud / sludge floors
 		var markers: Dictionary = {}
 		for y in rows.size():
 			var row: String = rows[y]
@@ -721,9 +722,13 @@ func _load_dens() -> void:
 					continue
 				var p := origin + Vector2i(x, y)
 				_town_tiles[p] = TileType.DEN_FLOOR
+				if fchars.has(ch):
+					var fi := TILE_NAMES.find(str(fchars[ch]))
+					if fi >= 0:
+						_town_tiles[p] = fi
 				if legend.has(ch) and str(legend[ch]) != "":
 					_town_objects[p] = str(legend[ch])
-				if ch != ".":
+				if ch != "." and (not fchars.has(ch) or legend.has(ch)):
 					var ma: Array = markers.get(ch, [])
 					ma.append(p)
 					markers[ch] = ma
