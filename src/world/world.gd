@@ -29,7 +29,8 @@ var _tileset: TileSet
 ## ground than the art). With that fixed, the ground and its transition layers are dimmed
 ## together here (sprites, walls, roofs keep their painted values) to keep the old mood.
 const GROUND_MOOD := Color(0.74, 0.73, 0.70)
-var _overlay_src: Dictionary = {}    # "autotile/<id>" / "transitions/<id>" -> [source id, cols]
+var _overlay_src: Dictionary = {}
+var _trans_var: Dictionary = {}       # transition id -> [[source, cols] v1, v2] (batch_08 wobble variants)    # "autotile/<id>" / "transitions/<id>" -> [source id, cols]
 var _build_queue: Array = []
 var _focus_chunk := Vector2i(999999, 999999)
 var _animated: Array = []            # [Sprite2D, frames, fps]
@@ -124,6 +125,7 @@ func _build_tileset() -> TileSet:
 			_overlay_src[cat + "/" + id] = [sid, cols]
 			sid += 1
 	# batch_08_polish: 2 extra wobble variants per transition sheet (sources 400+), same frame layout
+	_trans_var.clear()
 	var vid := 400
 	for id in GameData.sprites.get("transitions", {}).keys():
 		if not _overlay_src.has("transitions/" + str(id)):
@@ -142,6 +144,9 @@ func _build_tileset() -> TileSet:
 					vsrc.create_tile(Vector2i(cx, r))
 			ts.add_source(vsrc, vid)
 			_overlay_src["transitions/%s#%d" % [id, v]] = [vid, vc]
+			var tva: Array = _trans_var.get(str(id), [])
+			tva.append([vid, vc])
+			_trans_var[str(id)] = tva
 			vid += 1
 	# restyle r5: thin unified walls -- one 16x28 atlas per material (16 top + 12 face drop,
 	# drawn at the cell's top-left), frame picked by the 5x5 occupancy key via the shared LUT
@@ -256,12 +261,13 @@ func overlay_cells(p: Vector2i, nm: Callable) -> Array:
 	# restyle batch 04: ash_edge blends as ash (same art) -- the Scorch border is no longer a straight line
 	var nbt: Array = nb.map(func(n): return TRANS_ALIAS.get(n, n))
 	var ov := Autotile.overlays_for(TRANS_ALIAS.get(here, here), nbt)
+	var tv := int(gen.hash01(p.x, p.y, 13) * 3) if gen != null and not ov.is_empty() else 0
 	for i in ov.size():
 		var s: Array = _overlay_src.get("transitions/" + str(ov[i]), [])
-		if gen != null:
-			var tv := int(gen.hash01(p.x, p.y, 13) * 3)
-			if tv > 0:
-				s = _overlay_src.get("transitions/%s#%d" % [ov[i], tv], s)
+		if tv > 0:
+			var va: Array = _trans_var.get(ov[i], [])
+			if va.size() >= tv:
+				s = va[tv - 1]
 		if not s.is_empty():
 			var f := Autotile.transition_frame(ov[i], nbt)
 			out.append([i, s[0], Vector2i(f % int(s[1]), f / int(s[1]))])
