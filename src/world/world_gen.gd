@@ -625,6 +625,11 @@ static func art_plan(art: String, flip: bool) -> Array:
 ## 0.3.11 a building drawn from layered art: the footprint follows the design's
 ## plan (# wall, o floor, D door, . not the building), so round, L-shaped and
 ## towered buildings keep their real shape; the bottom row is the facade.
+## restyle batch 03: one town_art.json building entry.
+func art_def(art: String) -> Dictionary:
+	return town_art().get("buildings", {}).get(art, {})
+
+
 func _load_art_building(town: Dictionary, bd: Dictionary, v: Callable, shops: Dictionary) -> void:
 	var art := str(bd["art"])
 	var flip := bool(bd.get("flip", false))
@@ -646,7 +651,7 @@ func _load_art_building(town: Dictionary, bd: Dictionary, v: Callable, shops: Di
 		"id": str(bd["id"]), "town": str(town["id"]), "kind": str(bd.get("kind", "shop")), "shop": shop,
 		"name": str(bd.get("name", sd.get("name", ""))), "keeper": str(bd.get("keeper", sd.get("keeper", "Shopkeeper"))),
 		"keeper_sprite": str(bd.get("keeper_sprite", sd.get("keeper_sprite", "keeper_general"))), "sign_sprite": str(bd.get("sign_sprite", sd.get("sign", "sign_general"))),
-		"rect": rect, "doors": [] if closed else doors, "facade_y": rect.end.y - 1, "keeper_at": v.call(bd["keeper_at"]), "stand": v.call(bd["stand"]),
+		"rect": rect, "doors": [] if closed else doors, "facade_y": rect.position.y if str(art_def(art).get("door_side", "S")) == "N" else rect.end.y - 1, "keeper_at": v.call(bd["keeper_at"]), "stand": v.call(bd["stand"]),
 		"sign": v.call(bd["sign"]), "counter": [], "displays": [], "roof": str(bd.get("roof", sd.get("roof", town.get("roof", "#8a6a4a")))),
 		"style": "art", "art": art, "flip": flip, "greet": bd.get("greet", []), "no_keeper": bool(bd.get("no_keeper", false)) or closed,
 	}

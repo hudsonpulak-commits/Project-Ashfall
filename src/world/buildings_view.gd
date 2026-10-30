@@ -177,6 +177,23 @@ func _setup_art_building(w, b: Dictionary) -> Node2D:
 		s.position = canvas
 		fg.add_child(s)
 	fg.show_label = not bool(b.get("no_keeper", false))
+	# restyle batch 03: windmill sails -- their own layer, never fade, turn around the hub
+	var sp_: String = str(d.get("sails", ""))
+	if sp_ != "" and ResourceLoader.exists(sp_):
+		var sl := _Sails.new()
+		sl.name = "Sails_%s" % b["id"]
+		sl.centered = false
+		sl.texture = load(sp_)
+		var hub: Array = d.get("sails_hub", [0, 0])
+		var hv := Vector2(float(hub[0]), float(hub[1]))
+		if flip:
+			hv.x = float(sl.texture.get_width()) - hv.x
+		sl.flip_h = flip
+		sl.offset = -hv
+		sl.position = canvas + hv
+		sl.z_index = 1
+		sl.add_to_group("art_sails")
+		add_child(sl)
 	return fg
 
 
@@ -524,3 +541,10 @@ class _ArtRoof extends Node2D:
 ## 0.3.13 tests: the y the building's wall sprite sorts at right now (or NAN).
 func walls_sort_y(id: String) -> float:
 	return float((_walls[id][0] as Sprite2D).position.y) if _walls.has(id) else NAN
+
+
+## restyle batch 03: mill sails, slowly turning (never part of a roof fade group).
+class _Sails extends Sprite2D:
+	var speed := 0.35   # rad/s
+	func _process(delta: float) -> void:
+		rotation = fposmod(rotation + speed * delta, TAU)

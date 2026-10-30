@@ -4361,7 +4361,12 @@
     "###ooo###",
     "####D####"
    ],
-   "note": "0.3.16 Millbrook v1 (villages/v1)"
+   "note": "0.3.16 Millbrook v1 (villages/v1)",
+   "sails": "res://assets/sprites/towns/villages/millbrook/buildings/mb_mill_sails.png",
+   "sails_hub": [
+    72,
+    30
+   ]
   },
   "mb_rat_barn": {
    "tiles": [
@@ -4716,6 +4721,192 @@
     "###D###"
    ],
    "roof": "slate"
+  },
+  "bw_house_1": {
+   "tiles": [
+    7,
+    5
+   ],
+   "px": [
+    112,
+    94
+   ],
+   "origin_y": 14,
+   "storeys": 1,
+   "door_tile": [
+    3,
+    0
+   ],
+   "door_side": "N",
+   "walls": "res://assets/sprites/towns/villages/barrowby/buildings/bw_house_1_walls.png",
+   "fade": [
+    "res://assets/sprites/towns/villages/barrowby/buildings/bw_house_1_roof.png"
+   ],
+   "night": "res://assets/sprites/towns/villages/barrowby/buildings/bw_house_1_night.png",
+   "floor": "res://assets/sprites/towns/villages/barrowby/buildings/bw_house_1_floor.png",
+   "plan": [
+    "###D###",
+    "#ooooo#",
+    "#ooooo#",
+    "#ooooo#",
+    "#######"
+   ],
+   "inset_x": 0
+  },
+  "bw_house_2": {
+   "tiles": [
+    7,
+    5
+   ],
+   "px": [
+    112,
+    94
+   ],
+   "origin_y": 14,
+   "storeys": 1,
+   "door_tile": [
+    3,
+    0
+   ],
+   "door_side": "N",
+   "walls": "res://assets/sprites/towns/villages/barrowby/buildings/bw_house_2_walls.png",
+   "fade": [
+    "res://assets/sprites/towns/villages/barrowby/buildings/bw_house_2_roof.png"
+   ],
+   "night": "res://assets/sprites/towns/villages/barrowby/buildings/bw_house_2_night.png",
+   "floor": "res://assets/sprites/towns/villages/barrowby/buildings/bw_house_2_floor.png",
+   "plan": [
+    "###D###",
+    "#ooooo#",
+    "#ooooo#",
+    "#ooooo#",
+    "#######"
+   ],
+   "inset_x": 0
+  },
+  "bw_house_3": {
+   "tiles": [
+    7,
+    5
+   ],
+   "px": [
+    112,
+    94
+   ],
+   "origin_y": 14,
+   "storeys": 1,
+   "door_tile": [
+    3,
+    4
+   ],
+   "door_side": "S",
+   "walls": "res://assets/sprites/towns/villages/barrowby/buildings/bw_house_3_walls.png",
+   "fade": [
+    "res://assets/sprites/towns/villages/barrowby/buildings/bw_house_3_roof.png"
+   ],
+   "night": "res://assets/sprites/towns/villages/barrowby/buildings/bw_house_3_night.png",
+   "floor": "res://assets/sprites/towns/villages/barrowby/buildings/bw_house_3_floor.png",
+   "plan": [
+    "#######",
+    "#ooooo#",
+    "#ooooo#",
+    "#ooooo#",
+    "###D###"
+   ],
+   "inset_x": 0
+  },
+  "ox_house_1": {
+   "tiles": [
+    7,
+    5
+   ],
+   "px": [
+    112,
+    94
+   ],
+   "origin_y": 14,
+   "storeys": 1,
+   "door_tile": [
+    3,
+    4
+   ],
+   "door_side": "S",
+   "walls": "res://assets/sprites/towns/villages/oxley/buildings/ox_house_1_walls.png",
+   "fade": [
+    "res://assets/sprites/towns/villages/oxley/buildings/ox_house_1_roof.png"
+   ],
+   "night": "res://assets/sprites/towns/villages/oxley/buildings/ox_house_1_night.png",
+   "floor": "res://assets/sprites/towns/villages/oxley/buildings/ox_house_1_floor.png",
+   "plan": [
+    "#######",
+    "#ooooo#",
+    "#ooooo#",
+    "#ooooo#",
+    "###D###"
+   ],
+   "inset_x": 0
+  },
+  "ox_house_2": {
+   "tiles": [
+    7,
+    5
+   ],
+   "px": [
+    112,
+    94
+   ],
+   "origin_y": 14,
+   "storeys": 1,
+   "door_tile": [
+    3,
+    4
+   ],
+   "door_side": "S",
+   "walls": "res://assets/sprites/towns/villages/oxley/buildings/ox_house_2_walls.png",
+   "fade": [
+    "res://assets/sprites/towns/villages/oxley/buildings/ox_house_2_roof.png"
+   ],
+   "night": "res://assets/sprites/towns/villages/oxley/buildings/ox_house_2_night.png",
+   "floor": "res://assets/sprites/towns/villages/oxley/buildings/ox_house_2_floor.png",
+   "plan": [
+    "#######",
+    "#ooooo#",
+    "#ooooo#",
+    "#ooooo#",
+    "###D###"
+   ],
+   "inset_x": 0
+  },
+  "ox_house_3": {
+   "tiles": [
+    7,
+    5
+   ],
+   "px": [
+    112,
+    94
+   ],
+   "origin_y": 14,
+   "storeys": 1,
+   "door_tile": [
+    3,
+    0
+   ],
+   "door_side": "N",
+   "walls": "res://assets/sprites/towns/villages/oxley/buildings/ox_house_3_walls.png",
+   "fade": [
+    "res://assets/sprites/towns/villages/oxley/buildings/ox_house_3_roof.png"
+   ],
+   "night": "res://assets/sprites/towns/villages/oxley/buildings/ox_house_3_night.png",
+   "floor": "res://assets/sprites/towns/villages/oxley/buildings/ox_house_3_floor.png",
+   "plan": [
+    "###D###",
+    "#ooooo#",
+    "#ooooo#",
+    "#ooooo#",
+    "#######"
+   ],
+   "inset_x": 0
   }
  }
 }
