@@ -376,9 +376,161 @@ func _load_town(town: Dictionary) -> void:
 				_town_objects[p] = omap[ch]["object"]
 			else:
 				_town_tiles[p] = region_grass(p)
+	_thin_town_walls(rows, tmap, origin)
 	_load_buildings(town, origin)
 	_ensure_gate_approaches(town, origin)
 	_place_quest_givers(town, origin)
+
+
+## restyle r5 thin walls: wall families (and gates, which count as wall) are thinned
+## once per town to a 1-cell centreline (Zhang-Suen, batch_02 src/walls_thin.py thin());
+## every cell within 1 of the thinned line gets [material, 25-bit 5x5 key] for the atlas
+## LUT. Wall cells draw the surrounding floor underneath. Collision keeps the data tiles.
+const THIN_WALL_MAT := {"palisade": "palisade", "basalt_wall": "basalt", "stone_wall": "stone", "sandstone_wall": "sandstone"}
+const THIN_GATES := ["gate_wood", "gate_basalt", "gate_sand"]
+var _wall_keys: Dictionary = {}     # Vector2i -> [mat, key]
+var _wall_ground: Dictionary = {}   # wall cell -> floor tile type drawn under it
+
+
+static func thin(occ: Array, w: int, h: int) -> Array:
+	var o: Array = []
+	for y in h + 2:
+		var r := PackedByteArray()
+		r.resize(w + 2)
+		o.append(r)
+	for y in h:
+		for x in w:
+			o[y + 1][x + 1] = 1 if occ[y][x] else 0
+	var nd := [Vector2i(0, -1), Vector2i(1, -1), Vector2i(1, 0), Vector2i(1, 1), Vector2i(0, 1), Vector2i(-1, 1), Vector2i(-1, 0), Vector2i(-1, -1)]
+	var ch := true
+	while ch:
+		ch = false
+		for step in 2:
+			var rm: Array = []
+			for y in range(1, h + 1):
+				for x in range(1, w + 1):
+					if o[y][x] == 0:
+						continue
+					var P: Array = []
+					for d in nd:
+						P.append(int(o[y + d.y][x + d.x]))
+					var B: int = 0
+					var A: int = 0
+					for i in 8:
+						B += P[i]
+						if P[i] == 0 and P[(i + 1) % 8] == 1:
+							A += 1
+					var c1: bool = (P[0] * P[2] * P[4] == 0) if step == 0 else (P[0] * P[2] * P[6] == 0)
+					var c2: bool = (P[2] * P[4] * P[6] == 0) if step == 0 else (P[0] * P[4] * P[6] == 0)
+					if B >= 2 and B <= 6 and A == 1 and c1 and c2:
+						rm.append(Vector2i(x, y))
+			for q in rm:
+				o[q.y][q.x] = 0
+			if not rm.is_empty():
+				ch = true
+	var out: Array = []
+	for y in h:
+		var r2: Array = []
+		for x in w:
+			r2.append(o[y + 1][x + 1] == 1)
+		out.append(r2)
+	return out
+
+
+func _thin_town_walls(rows: Array, tmap: Dictionary, origin: Vector2i) -> void:
+	var h := rows.size()
+	var w := 0
+	for r in rows:
+		w = maxi(w, str(r).length())
+	var nmg := func(x: int, y: int) -> String:
+		if y < 0 or y >= h or x < 0 or x >= str(rows[y]).length():
+			return ""
+		return str(tmap.get(str(rows[y])[x], ""))
+	var occ: Array = []
+	var any := false
+	for y in h:
+		var r: Array = []
+		for x in w:
+			var n: String = nmg.call(x, y)
+			var isw := THIN_WALL_MAT.has(n) or n in THIN_GATES
+			any = any or isw
+			r.append(isw)
+		occ.append(r)
+	if not any:
+		return
+	var th := thin(occ, w, h)
+	# material per thinned cell (gates take a neighbour's)
+	var mat: Dictionary = {}
+	for y in h:
+		for x in w:
+			if th[y][x]:
+				var n: String = nmg.call(x, y)
+				mat[Vector2i(x, y)] = str(THIN_WALL_MAT.get(n, ""))
+	for q in mat.keys():
+		if mat[q] == "":
+			for rr in range(1, 4):
+				for dy in range(-rr, rr + 1):
+					for dx in range(-rr, rr + 1):
+						var m2: String = str(THIN_WALL_MAT.get(nmg.call(q.x + dx, q.y + dy), ""))
+						if mat[q] == "" and m2 != "":
+							mat[q] = m2
+	for y in range(-1, h + 1):
+		for x in range(-1, w + 1):
+			var near := ""
+			for dy in range(-1, 2):
+				for dx in range(-1, 2):
+					var q := Vector2i(x + dx, y + dy)
+					if near == "" and mat.has(q) and mat[q] != "":
+						near = mat[q]
+			var own := Vector2i(x, y)
+			if mat.has(own) and mat[own] != "":
+				near = mat[own]
+			if near == "":
+				continue
+			var k := 0
+			var i := 0
+			for dy in range(-2, 3):
+				for dx in range(-2, 3):
+					if mat.has(Vector2i(x + dx, y + dy)):
+						k |= 1 << i
+					i += 1
+			_wall_keys[origin + own] = [near, k]
+	# floor under every data wall cell: the most common non-wall floor around it
+	for y in h:
+		for x in w:
+			var n: String = nmg.call(x, y)
+			if not THIN_WALL_MAT.has(n):
+				continue
+			var cnt: Dictionary = {}
+			for rr in range(1, 4):
+				for dy in range(-rr, rr + 1):
+					for dx in range(-rr, rr + 1):
+						var m: String = nmg.call(x + dx, y + dy)
+						if m != "" and not THIN_WALL_MAT.has(m) and not m in THIN_GATES and not m.ends_with("_wall") and m != "water" and m != "moat":
+							cnt[m] = int(cnt.get(m, 0)) + 1
+				if not cnt.is_empty():
+					break
+			var best := ""
+			var bn := 0
+			for m3 in cnt:
+				if int(cnt[m3]) > bn:
+					bn = int(cnt[m3])
+					best = m3
+			var p := origin + Vector2i(x, y)
+			_wall_ground[p] = TILE_NAMES.find(best) if best != "" else region_grass(p)
+
+
+func wall_key(p: Vector2i) -> Array:
+	return _wall_keys.get(p, [])
+
+
+func is_thin_wall_cell(p: Vector2i) -> bool:
+	return _wall_ground.has(p)
+
+
+## Drawing only: a wall cell shows the floor under the thin wall atlas.
+func wall_ground_tile(p: Vector2i, t: int) -> int:
+	return int(_wall_ground.get(p, t))
 
 
 ## 0.3.15 quest givers from data/quests.json "givers" with "town" + "near" (town-local

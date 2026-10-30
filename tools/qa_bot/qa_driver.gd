@@ -3959,6 +3959,27 @@ func _frames_restyle() -> void:
 		DayNight.debug_set_phase("night")
 		await frames(50)
 		await _snap("restyle_town_%s_night" % t)
+	# r5 thin walls: corner close-ups (45-degree joins, no square gaps)
+	DayNight.debug_set_phase("day")
+	for t in ["cinderholt", "fenhollow", "barrowby", "saltmere"]:
+		var c: Vector2i = g.town_center(t)
+		for corner: Vector2i in [Vector2i(1, -1), Vector2i(-1, 1)]:
+			var best := Vector2i(1 << 29, 0)
+			var bs := -999999
+			for wp in g._wall_keys.keys():
+				var d: Vector2i = wp - c
+				if absi(d.x) > 70 or absi(d.y) > 70:
+					continue
+				var sc: int = d.x * corner.x + d.y * corner.y
+				if sc > bs:
+					bs = sc
+					best = wp
+			if bs == -999999:
+				continue
+			p.place_at(w.find_free_tile_near(best - corner * 2, 4))
+			w.set_focus(p.tile, true)
+			await frames(60)
+			await _snap("restyle_wall_%s_%s" % [t, "ne" if corner.x > 0 else "sw"])
 	# restyle batch 04: wilderness (designer's preview spots, world tile coords)
 	var wild := {"shore_tropic": Vector2i(288, 242), "scorch_dead": Vector2i(102, -268), "fen_marsh": Vector2i(402, -46), "boreal_rocky": Vector2i(-42, -178), "meadow_roads": Vector2i(270, -34)}
 	for wn in wild:

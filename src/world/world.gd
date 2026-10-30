@@ -118,61 +118,45 @@ func _build_tileset() -> TileSet:
 			ts.add_source(src, sid)
 			_overlay_src[cat + "/" + id] = [sid, cols]
 			sid += 1
-	# restyle r3: 45-degree wall pieces (16x28, top-left anchored, faces hang 12 px below)
-	_diag_src.clear()
-	var did := 300
-	for mat in DIAG_MATS:
-		for pc in DIAG_PIECES:
-			var dp := "res://assets/sprites/tiles/walls_diag/%s_diag_%s.png" % [mat, pc]
-			if not ResourceLoader.exists(dp):
-				continue
-			var dt: Texture2D = load(dp)
-			var dsrc := TileSetAtlasSource.new()
-			dsrc.texture = dt
-			dsrc.texture_region_size = Vector2i(tile_px, dt.get_height())
-			dsrc.create_tile(Vector2i.ZERO)
-			dsrc.get_tile_data(Vector2i.ZERO, 0).texture_origin = Vector2i(0, -(dt.get_height() - tile_px) / 2)
-			ts.add_source(dsrc, did)
-			_diag_src[mat + "/" + pc] = did
-			did += 1
+	# restyle r5: thin unified walls -- one 16x28 atlas per material (16 top + 12 face drop,
+	# drawn at the cell's top-left), frame picked by the 5x5 occupancy key via the shared LUT
+	_wall_src.clear()
+	var wid := 300
+	for mat in WALL_ATLAS_MATS:
+		var ap := "res://assets/sprites/tiles/walls_diag/%s_wall_atlas.png" % mat
+		if not ResourceLoader.exists(ap):
+			continue
+		var at: Texture2D = load(ap)
+		var asrc := TileSetAtlasSource.new()
+		asrc.texture = at
+		asrc.texture_region_size = Vector2i(tile_px, WALL_FRAME_H)
+		var acols := at.get_width() / tile_px
+		for r in at.get_height() / WALL_FRAME_H:
+			for cx in acols:
+				asrc.create_tile(Vector2i(cx, r))
+				asrc.get_tile_data(Vector2i(cx, r), 0).texture_origin = Vector2i(0, -(WALL_FRAME_H - tile_px) / 2)
+		ts.add_source(asrc, wid)
+		_wall_src[mat] = [wid, acols]
+		wid += 1
 	return ts
 
 
-## restyle r3 diagonal walls: on hold (being redrawn thinner with seamless joins).
-const DIAG_ENABLED := false
-const DIAG_MATS := ["palisade", "basalt", "capital", "stone", "sandstone"]
-const DIAG_PIECES := ["front_ul", "front_ur", "back_ll", "back_lr", "join_in_l", "join_in_r", "join_out_l", "join_out_r"]
-const DIAG_WALL_MAT := {"palisade": "palisade", "palisade_front": "palisade", "basalt_wall": "basalt", "basalt_front": "basalt",
-	"stone_wall": "stone", "stone_front": "stone", "sandstone_wall": "sandstone", "sandstone_front": "sandstone"}
-const DIAG_GATES := ["gate_wood", "gate_basalt", "gate_sand", "gate_capital"]
-var _diag_src: Dictionary = {}
+## restyle r5 thin walls (batch_02 tiles/walls_diag, manifest r5).
+const WALL_ATLAS_MATS := ["palisade", "basalt", "capital", "stone", "sandstone"]
+const WALL_FRAME_H := 28
+var _wall_src: Dictionary = {}     # mat -> [source id, cols]
+static var _wall_lut: Dictionary = {}
 
 
-## restyle r3: the 45-degree piece on a NON-wall cell from its 4 cardinal
-## neighbours (gates count as walls but stop diagonals: no material) -> "mat/piece" or "".
-static func diag_piece(here: String, nb4: Array) -> String:
-	if not DIAG_ENABLED:
-		return ""
-	var isw := func(t: String) -> bool: return DIAG_WALL_MAT.has(t) or t in DIAG_GATES or t == "capital_wall" or t == "capital_front"
-	if isw.call(here) or here == "":
-		return ""
-	var n: bool = isw.call(str(nb4[0]))
-	var e: bool = isw.call(str(nb4[1]))
-	var so: bool = isw.call(str(nb4[2]))
-	var w: bool = isw.call(str(nb4[3]))
-	var pc := ""
-	var src := ""
-	if n and w and not e and not so:
-		pc = "front_ul"; src = str(nb4[0])
-	elif n and e and not w and not so:
-		pc = "front_ur"; src = str(nb4[0])
-	elif so and w and not n and not e:
-		pc = "back_ll"; src = str(nb4[2])
-	elif so and e and not n and not w:
-		pc = "back_lr"; src = str(nb4[2])
-	if pc == "" or not DIAG_WALL_MAT.has(src):
-		return ""
-	return DIAG_WALL_MAT[src] + "/" + pc
+static func wall_lut() -> Dictionary:
+	if _wall_lut.is_empty():
+		var f := FileAccess.open("res://assets/sprites/tiles/walls_diag/wall_atlas_lut.json", FileAccess.READ)
+		if f != null:
+			var d = JSON.parse_string(f.get_as_text())
+			if d is Dictionary:
+				for k in d:
+					_wall_lut[int(k)] = int(d[k])
+	return _wall_lut
 
 
 ## 0.3.9 overlay cells for one tile: [[layer, source id, atlas coords], ...].
@@ -236,9 +220,14 @@ func overlay_cells(p: Vector2i, nm: Callable) -> Array:
 	var nb: Array = []
 	for d in [Vector2i(0, -1), Vector2i(1, 0), Vector2i(0, 1), Vector2i(-1, 0), Vector2i(-1, -1), Vector2i(1, -1), Vector2i(1, 1), Vector2i(-1, 1)]:
 		nb.append(nm.call(p + d))
-	var dgp := diag_piece(here, nb.slice(0, 4))
-	if dgp != "" and _diag_src.has(dgp):
-		out.append([3 if dgp.contains("/back") else 4, _diag_src[dgp], Vector2i.ZERO])
+	# restyle r5: thin wall frame on every wall cell and every cell next to one (gates draw their own sprite)
+	if gen != null and not here.begins_with("gate_"):
+		var wk: Array = gen.wall_key(p)
+		if not wk.is_empty() and _wall_src.has(wk[0]):
+			var fi: int = int(wall_lut().get(int(wk[1]), -1))
+			if fi >= 0:
+				var ws: Array = _wall_src[wk[0]]
+				out.append([5, ws[0], Vector2i(fi % int(ws[1]), fi / int(ws[1]))])
 	# restyle batch 04: ash_edge blends as ash (same art) -- the Scorch border is no longer a straight line
 	var nbt: Array = nb.map(func(n): return TRANS_ALIAS.get(n, n))
 	var ov := Autotile.overlays_for(TRANS_ALIAS.get(here, here), nbt)
@@ -247,7 +236,7 @@ func overlay_cells(p: Vector2i, nm: Callable) -> Array:
 		if not s.is_empty():
 			var f := Autotile.transition_frame(ov[i], nbt)
 			out.append([i, s[0], Vector2i(f % int(s[1]), f / int(s[1]))])
-	if Autotile.WALL_FAMILIES.has(here) and not Autotile.ART_WALLS.has(here):
+	if Autotile.WALL_FAMILIES.has(here) and not Autotile.ART_WALLS.has(here) and not (gen != null and gen.is_thin_wall_cell(p)):
 		var s: Array = _overlay_src.get("autotile/" + str(Autotile.WALL_FAMILIES[here]), [])
 		if not s.is_empty():
 			var f := Autotile.piece_at(p, func(q): var t: String = nm.call(q); return t == here or t in Autotile.WALL_JOIN_ALSO)
@@ -380,23 +369,6 @@ func _inner_corner(p: Vector2i) -> String:
 func cliff_base_tile(p: Vector2i, t: int) -> int:
 	if t in [WorldGen.TileType.CLIFF_FACE, WorldGen.TileType.CLIFF_SHADOW, WorldGen.TileType.CLIFF_LIP, WorldGen.TileType.CLIFF_STAIRS, WorldGen.TileType.CLIFF_FOOT]:
 		return gen.region_grass(p)
-	return t
-
-
-## restyle r3: a wall front whose south neighbour gets a front_* diagonal
-## skips its own face (the diagonal face replaces it): draw the wall top.
-func _diag_front_skip(x: int, y: int, t: int) -> int:
-	var nm: String = WorldGen.TILE_NAMES[t]
-	if not nm.ends_with("_front") or not DIAG_WALL_MAT.has(nm):
-		return t
-	var q := Vector2i(x, y + 1)
-	var nb4 := []
-	for d in [Vector2i(0, -1), Vector2i(1, 0), Vector2i(0, 1), Vector2i(-1, 0)]:
-		nb4.append(WorldGen.TILE_NAMES[_rim_tile(q.x + d.x, q.y + d.y)])
-	if diag_piece(WorldGen.TILE_NAMES[_rim_tile(q.x, q.y)], nb4).contains("/front"):
-		var top := nm.replace("_front", "_wall") if nm != "palisade_front" else "palisade"
-		var ti := WorldGen.TILE_NAMES.find(top)
-		return ti if ti >= 0 else t
 	return t
 
 
@@ -908,7 +880,7 @@ func _job_stage(j: Dictionary, c: Vector2i, ch: ChunkData, base: Vector2i) -> vo
 					var wx := base.x + lx
 					var wy := base.y + ly
 					t = cliff_base_tile(Vector2i(wx, wy), t)
-					t = _diag_front_skip(wx, wy, t)
+					t = gen.wall_ground_tile(Vector2i(wx, wy), t)
 					var nv := variants_for(t)
 					var v := 0 if nv <= 1 else int(gen.hash01(wx, wy, 7) * nv) % nv
 					layer.set_cell(Vector2i(lx, ly), t, Vector2i(v, 0))
@@ -928,11 +900,11 @@ func _job_stage(j: Dictionary, c: Vector2i, ch: ChunkData, base: Vector2i) -> vo
 					j["stage"] = 2
 					j["row"] = 0
 					var ovl: Array = j["ovl"]
-					for i in 5:
+					for i in 6:
 						var l := TileMapLayer.new()
 						l.tile_set = _tileset
 						l.position = (j["layer"] as TileMapLayer).position
-						l.name = ["trans0", "trans1", "autotile", "joins", "corners"][i]
+						l.name = ["trans0", "trans1", "autotile", "joins", "corners", "walls"][i]
 						(j["root"] as Node2D).add_child(l)
 						ovl.append(l)
 			2:   # overlays, one row per step
