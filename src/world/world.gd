@@ -259,26 +259,15 @@ func overlay_cells(p: Vector2i, nm: Callable) -> Array:
 	elif here == "water":
 		_add_shore(out, nb)
 	elif here == "moat":
+		# restyle: moats get the same organic shore pass as natural water (replaces the
+		# moat_border bank + inner-corner pieces); bridge joins stay on layer 3.
+		_add_shore(out, nb)
 		var s: Array = _overlay_src.get("autotile/moat_border", [])
 		if not s.is_empty():
-			var m := 0
-			for k in 4:
-				if nb[k] in ["moat", "bridge"]:
-					m |= 1 << k
-			out.append([2, s[0], Vector2i(m, 0)])
 			for k in 4:
 				if nb[k] == "bridge":
 					out.append([3, s[0], Vector2i(16 + k, 0)])
 					break
-		# 0.3.9.2 inner corners: both side neighbours are moat and the diagonal
-		# between them is land (not moat, bridge or water) -> layer 4, NE SE SW NW.
-		var cs: Array = _overlay_src.get("autotile/moat_border_corners", [])
-		if not cs.is_empty():
-			for i in 4:
-				var sides: Array = MOAT_CORNERS[i]
-				var dg: String = nb[sides[2]]
-				if nb[sides[0]] == "moat" and nb[sides[1]] == "moat" and not dg in ["moat", "bridge", "water", ""]:
-					out.append([4, cs[0], Vector2i(i, 0)])
 	if gen != null and (here in CLIFF_NAMES or (nb.size() >= 4 and (str(nb[0]) in CLIFF_NAMES or str(nb[1]) in CLIFF_NAMES or str(nb[2]) in CLIFF_NAMES or str(nb[3]) in CLIFF_NAMES))):
 		for pc in cliff_pieces(p, here, nb):
 			var cs2: Array = _overlay_src.get("autotile/" + cliff_palette(p) + str(pc[0]), [])
