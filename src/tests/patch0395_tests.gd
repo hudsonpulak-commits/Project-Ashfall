@@ -81,7 +81,7 @@ static func run(_main, _world, _p) -> void:
 							var sx: int = (fs.x - 1 - x) if left else x
 							if helm.get_pixel(ho + sx, y).a8 < 255 and skinish(body.get_pixel(bo + sx, y)):
 								bad += 1
-					if bad > 0 and hid != "gear_head_1":   # restyle: the bronze cap is open-faced by design (batch 01)
+					if bad > 0 and fs.y >= 24:   # restyle: 16x16 chibi helms show the face by design (bronze open cap, iron nasal); full-face rule is for the legacy 16x24 helms
 						skin.append("%s+%s %s f%d: %d px" % [hid, bid, facing, f, bad])
 					var solid := func(x: int, y: int) -> bool: return px.call(x, y).a8 > 0
 					var enc := Patch0394Tests.enclosed(fs.x, fs.y, solid).filter(func(c): return c.y < HEAD_ROWS)
