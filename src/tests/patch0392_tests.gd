@@ -49,7 +49,7 @@ static func run(_main, world, _p) -> void:
 	# Up to 1 opaque pixel may touch the left/right frame edge (goblin ears).
 	var bad := []
 	for sid in ["cow", "chicken", "wolf", "giant_rat", "slime", "goblin", "goblin_warlord", "cinder_brute"]:
-		if GameData.sprite_def("actors", sid).is_empty():
+		if GameData.sprite_def("actors", sid).is_empty() or sid in Patch0391Tests.RESTYLE_CHIBI:
 			continue
 		var sw := Patch0391Tests._width(Patch0391Tests._frame(sid, "side"))
 		for dir in ["down", "up"]:

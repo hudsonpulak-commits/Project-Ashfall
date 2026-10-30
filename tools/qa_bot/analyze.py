@@ -831,7 +831,7 @@ def check_church(ctx):
         box = _rect_px(run, r["prayer_bar_rect"], r["vp"], f0)
         def blue(im):
             a = np.asarray(im.crop(box)).astype(int)
-            m = (np.abs(a - np.array([58, 106, 200])).sum(axis=2) < 70)
+            m = (np.abs(a - np.array([122, 138, 152])).sum(axis=2) < 40)   # restyle batch 07 slate Prayer fill
             cols = m.any(axis=0)
             return float(cols.mean())
         b0, b1 = blue(f0), blue(f1)
@@ -847,7 +847,7 @@ def check_church(ctx):
             for (x, y) in cn["window_screen"]:
                 box2 = (int((x - 8) * k), int((y - 8) * k), int((x + 8) * k), int((y + 8) * k))
                 a2 = np.asarray(fn.crop(box2)).astype(float)
-                warm.append(int(((a2[..., 0] > 180) & (a2[..., 1] > 110) & (a2[..., 2] < a2[..., 0] * 0.8)).sum()))
+                warm.append(int(((a2[..., 0] > 180) & (a2[..., 1] > g_min) & (a2[..., 2] < a2[..., 0] * 0.8)).sum()))
             p2 = os.path.join(ctx.out, "evidence", "church_night.png"); fn.save(p2)
             out.append(Result("C13 church", "at night the church windows are lit (not the door)", cn.get("phase") == "night" and all(w_ > 6 for w_ in warm) and len(warm) >= 2,
                               "windows %s, warm px %s" % (cn.get("windows"), warm), [p2]))
@@ -909,7 +909,7 @@ def check_farm(ctx):
         warm = []
         for (x, y) in ws:
             a2 = np.asarray(fn.convert("RGB").crop((int((x - 8) * k), int((y - 8) * k), int((x + 8) * k), int((y + 8) * k)))).astype(float)
-            warm.append(int(((a2[..., 0] > 180) & (a2[..., 1] > 110) & (a2[..., 2] < a2[..., 0] * 0.8)).sum()))
+            warm.append(int(((a2[..., 0] > 180) & (a2[..., 1] > g_min) & (a2[..., 2] < a2[..., 0] * 0.8)).sum()))
         p2 = os.path.join(ctx.out, "evidence", "village_night.png"); fn.save(p2)
         out.append(Result("C15 farm", "at night the cottage windows are lit", len(warm) >= 2 and all(x > 6 for x in warm), "%s warm px %s" % (f.get("night", {}).get("house"), warm), [p2]))
     rows = run.labelled("harvest")
@@ -921,7 +921,7 @@ def check_farm(ctx):
     return out
 
 
-def _warm(run, label, pts):
+def _warm(run, label, pts, g_min=110):
     rows = run.labelled(label)
     if not rows or not pts:
         return None, []
@@ -931,7 +931,7 @@ def _warm(run, label, pts):
     warm = []
     for (x, y) in pts:
         a2 = a[max(0, int((y - 8) * k)):int((y + 8) * k), max(0, int((x - 8) * k)):int((x + 8) * k)]
-        warm.append(int(((a2[..., 0] > 180) & (a2[..., 1] > 110) & (a2[..., 2] < a2[..., 0] * 0.8)).sum()))
+        warm.append(int(((a2[..., 0] > 180) & (a2[..., 1] > g_min) & (a2[..., 2] < a2[..., 0] * 0.8)).sum()))
     return fn, warm
 
 
@@ -987,7 +987,7 @@ def check_city(ctx):
     out.append(Result("C16 city", "the wall blocks: a tap just outside it walks round through a gate", dt.get("from_in_town") and not dt.get("spot_in_town") and dt.get("reached") and via and blocked == 0,
                       "from %s to %s: reached %s via a gate %s, blocked frames %d, %d steps" % (dt.get("from"), dt.get("spot"), dt.get("reached"), via, blocked, len(set(tiles))), [ev2]))
     gn = c.get("gate_night", {})
-    fn, warm = _warm(run, "gate_night", gn.get("torch_screen", []))
+    fn, warm = _warm(run, "gate_night", gn.get("torch_screen", []), g_min=90)   # restyle ember torch flame (204,103,30)
     p = None
     if fn is not None:
         p = os.path.join(ctx.out, "evidence", "v031_city_gate_night.png"); fn.save(p)

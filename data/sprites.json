@@ -54,7 +54,7 @@
     16,
     16
    ],
-   "minimap_color": "#444349",
+   "minimap_color": "#3d3c43",
    "_order": 5
   },
   "planks": {
@@ -275,7 +275,7 @@
     16,
     16
    ],
-   "minimap_color": "#333539",
+   "minimap_color": "#2f3236",
    "_order": 28
   },
   "plaster": {
@@ -311,7 +311,7 @@
     16,
     16
    ],
-   "minimap_color": "#59575e",
+   "minimap_color": "#6c6a6f",
    "_order": 32,
    "note": "0.3.8 placeholder"
   },
