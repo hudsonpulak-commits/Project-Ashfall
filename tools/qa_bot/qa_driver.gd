@@ -3995,6 +3995,15 @@ func _frames_restyle() -> void:
 	main.hud.show_panel("pack")
 	await frames(20)
 	await _snap("restyle_inventory")
+	# restyle batch 07: UI frames (text centred on every tab / button / entry)
+	for pk in ["skills", "menu", "quests"]:
+		main.hud.show_panel(pk)
+		await frames(15)
+		await _snap("restyle_ui_%s" % pk)
+	main.hud.show_panel("")
+	Events.shop_opened.emit("general")
+	await frames(20)
+	await _snap("restyle_ui_shop")
 	main.hud.show_panel("")
 	await frames(5)
 	# restyle batch 05: canines (Greymaw dies on camera) and chibi NPCs
