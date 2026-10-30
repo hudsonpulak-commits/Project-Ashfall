@@ -3996,13 +3996,16 @@ func _frames_restyle() -> void:
 	await frames(20)
 	await _snap("restyle_inventory")
 	# restyle batch 07: UI frames (text centred on every tab / button / entry)
-	for pk in ["skills", "menu", "quests"]:
+	for pk in ["skills", "menu", "quests", "pack"]:
 		main.hud.show_panel(pk)
 		await frames(15)
 		await _snap("restyle_ui_%s" % pk)
 	main.hud.show_panel("")
-	Events.shop_opened.emit("general")
+	main.hud.store_panel.shop = "general"
+	main.hud.show_panel("store")
+	main.hud.panel_anchor = main.player.tile
 	await frames(20)
+	main.hud.panel_anchor = main.player.tile
 	await _snap("restyle_ui_shop")
 	main.hud.show_panel("")
 	await frames(5)
