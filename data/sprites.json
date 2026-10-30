@@ -5159,7 +5159,8 @@
    "dir_paths": {
     "down": "res://assets/sprites/actors/npc_front.png",
     "up": "res://assets/sprites/actors/npc_back.png"
-   }
+   },
+   "body_top": 8
   },
   "giant_rat": {
    "path": "res://assets/sprites/actors/giant_rat.png",
@@ -5189,7 +5190,8 @@
    "dir_paths": {
     "down": "res://assets/sprites/actors/goblin_front.png",
     "up": "res://assets/sprites/actors/goblin_back.png"
-   }
+   },
+   "body_top": 9
   },
   "keeper_general": {
    "path": "res://assets/sprites/actors/keeper_general.png",
@@ -5204,7 +5206,8 @@
    "dir_paths": {
     "down": "res://assets/sprites/actors/keeper_general_front.png",
     "up": "res://assets/sprites/actors/keeper_general_back.png"
-   }
+   },
+   "body_top": 8
   },
   "keeper_helmets": {
    "path": "res://assets/sprites/actors/keeper_helmets.png",
@@ -5219,7 +5222,8 @@
    "dir_paths": {
     "down": "res://assets/sprites/actors/keeper_helmets_front.png",
     "up": "res://assets/sprites/actors/keeper_helmets_back.png"
-   }
+   },
+   "body_top": 6
   },
   "keeper_body": {
    "path": "res://assets/sprites/actors/keeper_body.png",
@@ -5234,7 +5238,8 @@
    "dir_paths": {
     "down": "res://assets/sprites/actors/keeper_body_front.png",
     "up": "res://assets/sprites/actors/keeper_body_back.png"
-   }
+   },
+   "body_top": 8
   },
   "keeper_legs": {
    "path": "res://assets/sprites/actors/keeper_legs.png",
@@ -5249,7 +5254,8 @@
    "dir_paths": {
     "down": "res://assets/sprites/actors/keeper_legs_front.png",
     "up": "res://assets/sprites/actors/keeper_legs_back.png"
-   }
+   },
+   "body_top": 8
   },
   "keeper_shields": {
    "path": "res://assets/sprites/actors/keeper_shields.png",
@@ -5264,7 +5270,8 @@
    "dir_paths": {
     "down": "res://assets/sprites/actors/keeper_shields_front.png",
     "up": "res://assets/sprites/actors/keeper_shields_back.png"
-   }
+   },
+   "body_top": 8
   },
   "keeper_swords": {
    "path": "res://assets/sprites/actors/keeper_swords.png",
@@ -5279,7 +5286,8 @@
    "dir_paths": {
     "down": "res://assets/sprites/actors/keeper_swords_front.png",
     "up": "res://assets/sprites/actors/keeper_swords_back.png"
-   }
+   },
+   "body_top": 8
   },
   "keeper_axes": {
    "path": "res://assets/sprites/actors/keeper_axes.png",
@@ -5294,7 +5302,8 @@
    "dir_paths": {
     "down": "res://assets/sprites/actors/keeper_axes_front.png",
     "up": "res://assets/sprites/actors/keeper_axes_back.png"
-   }
+   },
+   "body_top": 8
   },
   "keeper_maces": {
    "path": "res://assets/sprites/actors/keeper_maces.png",
@@ -5309,7 +5318,8 @@
    "dir_paths": {
     "down": "res://assets/sprites/actors/keeper_maces_front.png",
     "up": "res://assets/sprites/actors/keeper_maces_back.png"
-   }
+   },
+   "body_top": 8
   },
   "keeper_archery": {
    "path": "res://assets/sprites/actors/keeper_archery.png",
@@ -5324,7 +5334,8 @@
    "dir_paths": {
     "down": "res://assets/sprites/actors/keeper_archery_front.png",
     "up": "res://assets/sprites/actors/keeper_archery_back.png"
-   }
+   },
+   "body_top": 7
   },
   "keeper_estate": {
    "path": "res://assets/sprites/actors/keeper_estate.png",
@@ -5339,7 +5350,8 @@
    "dir_paths": {
     "down": "res://assets/sprites/actors/keeper_estate_front.png",
     "up": "res://assets/sprites/actors/keeper_estate_back.png"
-   }
+   },
+   "body_top": 6
   },
   "keeper_player": {
    "path": "res://assets/sprites/actors/keeper_player.png",
@@ -5354,7 +5366,8 @@
    "dir_paths": {
     "down": "res://assets/sprites/actors/keeper_player_front.png",
     "up": "res://assets/sprites/actors/keeper_player_back.png"
-   }
+   },
+   "body_top": 8
   },
   "chicken": {
    "path": "res://assets/sprites/actors/chicken.png",
@@ -5399,7 +5412,8 @@
    "dir_paths": {
     "down": "res://assets/sprites/actors/town_guard_front.png",
     "up": "res://assets/sprites/actors/town_guard_back.png"
-   }
+   },
+   "body_top": 7
   },
   "cinder_brute": {
    "path": "res://assets/sprites/actors/cinder_brute.png",
@@ -5414,7 +5428,8 @@
    "dir_paths": {
     "down": "res://assets/sprites/actors/cinder_brute_front.png",
     "up": "res://assets/sprites/actors/cinder_brute_back.png"
-   }
+   },
+   "body_top": 9
   },
   "citizen": {
    "path": "res://assets/sprites/actors/citizen.png",
@@ -5430,7 +5445,8 @@
    "dir_paths": {
     "down": "res://assets/sprites/actors/citizen_front.png",
     "up": "res://assets/sprites/actors/citizen_back.png"
-   }
+   },
+   "body_top": 9
   },
   "priest": {
    "path": "res://assets/sprites/actors/priest.png",
@@ -5445,7 +5461,8 @@
    "dir_paths": {
     "down": "res://assets/sprites/actors/priest_front.png",
     "up": "res://assets/sprites/actors/priest_back.png"
-   }
+   },
+   "body_top": 8
   },
   "cow": {
    "path": "res://assets/sprites/actors/cow.png",
@@ -5475,7 +5492,8 @@
    "dir_paths": {
     "down": "res://assets/sprites/actors/villager_front.png",
     "up": "res://assets/sprites/actors/villager_back.png"
-   }
+   },
+   "body_top": 8
   },
   "keeper_cook": {
    "path": "res://assets/sprites/actors/keeper_cook.png",
@@ -5488,7 +5506,8 @@
    "dir_paths": {
     "down": "res://assets/sprites/actors/keeper_cook_front.png",
     "up": "res://assets/sprites/actors/keeper_cook_back.png"
-   }
+   },
+   "body_top": 8
   },
   "goblin_warlord": {
    "path": "res://assets/sprites/actors/goblin_warlord.png",
@@ -5503,7 +5522,8 @@
    "dir_paths": {
     "down": "res://assets/sprites/actors/goblin_warlord_front.png",
     "up": "res://assets/sprites/actors/goblin_warlord_back.png"
-   }
+   },
+   "body_top": 7
   },
   "slime": {
    "path": "res://assets/sprites/actors/slime.png",
@@ -5535,7 +5555,8 @@
     "down": "res://assets/sprites/towns/villages/millbrook/npcs/odric_hunter_front.png",
     "up": "res://assets/sprites/towns/villages/millbrook/npcs/odric_hunter_back.png"
    },
-   "note": "0.3.16 sprite bot villages/v1 giver NPC"
+   "note": "0.3.16 sprite bot villages/v1 giver NPC",
+   "body_top": 7
   },
   "quartermaster_hale": {
    "path": "res://assets/sprites/towns/villages/millbrook/npcs/quartermaster_hale.png",
@@ -5551,7 +5572,8 @@
     "down": "res://assets/sprites/towns/villages/millbrook/npcs/quartermaster_hale_front.png",
     "up": "res://assets/sprites/towns/villages/millbrook/npcs/quartermaster_hale_back.png"
    },
-   "note": "0.3.16 sprite bot villages/v1 giver NPC"
+   "note": "0.3.16 sprite bot villages/v1 giver NPC",
+   "body_top": 8
   },
   "rat_mother": {
    "path": "res://assets/sprites/actors/rat_mother.png",
@@ -6216,7 +6238,8 @@
     "down": "res://assets/sprites/v040/actors/warden_pye_front.png",
     "up": "res://assets/sprites/v040/actors/warden_pye_back.png"
    },
-   "note": "0.4.0 sprites_040"
+   "note": "0.4.0 sprites_040",
+   "body_top": 6
   },
   "gear_head_chain_1": {
    "path": "res://assets/sprites/actors/gear/head_chain_1.png",

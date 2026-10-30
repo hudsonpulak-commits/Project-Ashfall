@@ -691,7 +691,13 @@ func _process(delta: float) -> void:
 
 ## restyle: how much lower (px) the overhead UI sits than on the old 16x24 body.
 func body_height_delta() -> int:
-	return maxi(0, 24 - GameData.frame_size("actors", sprite_id).y)
+	return maxi(0, 24 - GameData.frame_size("actors", sprite_id).y) + head_drop(sprite_id)
+
+
+## restyle batch 05: chibi bodies stand at the bottom of their 16x24 frames; sprites.json
+## "body_top" = first opaque row. Overhead tags / bars drop by body_top - 2 (old heads were ~2 px down).
+static func head_drop(sid: String) -> int:
+	return maxi(0, int(GameData.sprite_def("actors", sid).get("body_top", 0)) - 2)
 
 
 ## restyle (batch 01): one-shot attack / shoot poses (32x32 frames, offset -8,-8
