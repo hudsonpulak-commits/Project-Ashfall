@@ -721,7 +721,11 @@ func _refresh_bars() -> void:
 
 func _refresh_title() -> void:
 	var t: String = world.gen.place_at(player.tile, 8)
-	title_label.text = "AshFall · %s" % (world.gen.town_name(t) if t != "" else "the wilds")
+	var did: String = world.den_at(player.tile) if world.has_method("den_at") else ""
+	if did != "":
+		title_label.text = "AshFall · %s" % str(GameData.underworld.get("dens", {}).get(did, {}).get("name", "the den"))
+	else:
+		title_label.text = "AshFall · %s" % (world.gen.town_name(t) if t != "" else "the wilds")
 
 
 func _bank_in_reach() -> bool:

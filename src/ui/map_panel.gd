@@ -558,7 +558,32 @@ func _draw_map() -> void:
 		_draw_marker_at(ghost, off, font, true)
 	if int(_blink * 3.0) % 2 == 0:
 		_view.draw_rect(Rect2((pp + off - Vector2(1, 1)).floor(), Vector2(4, 4)), Color.WHITE)
+	var did: String = world.den_at(player.tile)
+	if did != "":
+		_draw_den_inset(did, font)
 	_view.draw_rect(Rect2(Vector2.ZERO, vs), UIStyle.BORDER_HI, false, 1.0)
+
+
+## 0.4.2 underground: the den's own layout in an inset (top right), you + the ladder up.
+func _draw_den_inset(did: String, font: Font) -> void:
+	var tex: ImageTexture = world.den_map_texture(did)
+	var inner: Rect2i = world.gen.dens[did]["inner"]
+	var vs := _view.size
+	var k := maxf(1.0, floorf(minf(vs.x * 0.5 / float(inner.size.x), (vs.y - 24.0) / float(inner.size.y))))
+	var sz := Vector2(inner.size) * k
+	var o := Vector2(vs.x - sz.x - 6.0, 18.0).floor()
+	_view.draw_rect(Rect2(o - Vector2(3, 15), sz + Vector2(6, 18)), Color(0, 0, 0, 0.85))
+	_view.draw_texture_rect(tex, Rect2(o, sz), false)
+	var title := "%s (underground)" % str(world.gen.dens[did].get("name", "Den"))
+	var tw := font.get_string_size(title, HORIZONTAL_ALIGNMENT_LEFT, -1, 9).x
+	_view.draw_string(font, (o + Vector2((sz.x - tw) / 2.0, -4)).floor(), title, HORIZONTAL_ALIGNMENT_LEFT, -1, 9, UIStyle.ACCENT)
+	var lad: Vector2i = world.gen.den_marker(did, "U")
+	if lad.x > -99999:
+		var lq := o + Vector2(lad - inner.position) * k
+		_view.draw_rect(Rect2(lq - Vector2(1, 1), Vector2(k + 2, k + 2)), Color("#e0c080"))
+	var me := o + Vector2(player.tile - inner.position) * k
+	if int(_blink * 3.0) % 2 == 0:
+		_view.draw_rect(Rect2(me - Vector2(1, 1), Vector2(k + 2, k + 2)), Color.WHITE)
 
 
 func _draw_marker_at(m: Dictionary, off: Vector2, font: Font, selected: bool) -> void:

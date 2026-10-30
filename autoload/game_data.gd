@@ -28,6 +28,7 @@ var combat: Dictionary = {}       # data/combat.json (weapon classes, styles, de
 var player_cfg: Dictionary = {}   # data/player.json (energy / sprint)
 var buildings_cfg: Dictionary = {}  # data/buildings.json (0.3.0 shop look + talk)
 var player_shop_cfg: Dictionary = {}  # data/player_shop.json (0.3.0 player-owned shops)
+var underworld: Dictionary = {}    # 0.4.2 data/underworld.json (dens below the map)
 var music_zones: Dictionary = {}   # 0.3.10 data/music_zones.json
 var regions_cfg: Dictionary = {}   # 0.3.10 data/regions.json (lore regions, biomes, cliffs)
 var mines: Dictionary = {}        # data/mines.json (0.3.1 named mine clusters, travel factor)
@@ -74,6 +75,8 @@ func reload() -> void:
 	var en: Dictionary = _load_json("enemies.json")
 	enemies = en.get("enemies", {})
 	camps = en.get("camps", [])
+	underworld = _load_json("underworld.json")
+	_add_den_camps()
 	_apply_quest_encounters()
 	var dr: Dictionary = _load_json("drops.json")
 	drop_tables = dr.get("tables", {})
@@ -266,10 +269,54 @@ func _apply_quest_encounters() -> void:
 		var enc: Dictionary = q.get("encounter", {})
 		for kind in enc.keys():
 			var e: Dictionary = enc[kind]
-			if str(e.get("plane", "surface")) != "surface" or not sites.has(e.get("site", "")):
-				continue      # only the surface exists in 0.3.16
-			var o: Array = sites[e["site"]]["origin"]
-			var a: Array = e.get("at", [0, 0])
+			var plane := str(e.get("plane", "surface"))
+			var to := Vector2i.ZERO
+			if plane != "surface":
+				# 0.4.2 underworld plane = a den id; "marker" names a char in its rows
+				var dp := den_marker_tile(plane, str(e.get("marker", "M")))
+				if dp.x <= -99999:
+					continue
+				to = dp
+			elif sites.has(e.get("site", "")):
+				var o: Array = sites[e["site"]]["origin"]
+				var a: Array = e.get("at", [0, 0])
+				to = Vector2i(int(o[0]) + int(a[0]), int(o[1]) + int(a[1]))
+			else:
+				continue
 			for c in camps:
 				if str(c.get("enemy", "")) == kind:
-					c["at"] = [int(o[0]) + int(a[0]), int(o[1]) + int(a[1])]
+					c["at"] = [to.x, to.y]
+					if plane != "surface":
+						c["den"] = plane
+
+
+## 0.4.2 world tile of the i-th `ch` cell in a den's rows (no WorldGen needed).
+func den_marker_tile(did: String, ch: String, i: int = 0) -> Vector2i:
+	var dd: Dictionary = underworld.get("dens", {}).get(did, {})
+	if dd.is_empty():
+		return Vector2i(-99999, -99999)
+	var rows: Array = dd.get("rows", [])
+	var n := 0
+	for y in rows.size():
+		var row: String = rows[y]
+		for x in row.length():
+			if row[x] == ch:
+				if n == i:
+					return Vector2i(int(dd["origin"][0]) + x, int(dd["origin"][1]) + y)
+				n += 1
+	return Vector2i(-99999, -99999)
+
+
+## 0.4.2 den "camps" ({marker, enemy, count, spread}): one camp per marker cell.
+func _add_den_camps() -> void:
+	var dens: Dictionary = underworld.get("dens", {})
+	for did in dens.keys():
+		for dc in dens[did].get("camps", []):
+			var i := 0
+			while true:
+				var t := den_marker_tile(did, str(dc.get("marker", "R")), i)
+				if t.x <= -99999:
+					break
+				camps.append({"enemy": str(dc["enemy"]), "at": [t.x, t.y], "count": int(dc.get("count", 3)),
+					"spread": int(dc.get("spread", 1)), "den": did, "note": "0.4.2 underworld den camp"})
+				i += 1

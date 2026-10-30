@@ -55,6 +55,10 @@ static func perform(actor: Actor, world, t: int) -> void:
 			actor.on_display(world, obj)
 		"altar":
 			_altar(actor, obj)
+		"travel":   # 0.4.2 rat hole <-> den ladder
+			actor.stop()
+			if actor is Player:
+				world.travel(actor, obj, d)
 		"prop":
 			actor.stop()
 		_:

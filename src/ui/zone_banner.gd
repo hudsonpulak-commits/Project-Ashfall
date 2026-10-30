@@ -133,7 +133,7 @@ func _process(dt: float) -> void:
 ## 0.3.10 lore regions: chat line + a fading title on entry.
 func _update_region(dt: float) -> void:
 	var rm: WorldRegions = world.gen.region_map
-	if rm != null:
+	if rm != null and world.den_at(player.tile) == "":
 		var b := rm.blend_at(player.tile)
 		var rid := str(b[0])
 		if rid != _region and (float(b[2]) >= REGION_CONFIDENCE or _region == ""):

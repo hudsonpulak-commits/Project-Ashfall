@@ -222,6 +222,7 @@ func _start_player(data: Dictionary) -> void:
 	DayNight.setup_world(world)
 	DayNight.from_save(data.get("daynight", {}))
 	DayNight.ensure_lights(world)
+	DayNight.set_den(world.den_at(player.tile))   # 0.4.2 a save made underground loads dark
 	world.set_focus(player.tile, true)
 	world.from_save(wdata, Tick.tick_count)
 	if bool(data.get("relayout_cities", false)):
@@ -336,6 +337,7 @@ func _on_tick(t: int) -> void:
 	# 0.3.4 music: combat cuts in at once; area = the town you're in, else ambient
 	Music.set_combat(not player.dead and (player.in_combat(t) or player.action.get("kind", "") == "fight"))
 	world.perf_log.append(["t:Music_set_combat", (Time.get_ticks_usec() - _tick_t0) / 1000.0])
+	DayNight.set_den(world.den_at(player.tile))   # 0.4.2 underground mood
 	Music.set_area(music_area(player.tile), DayNight.is_night())
 	world.perf_log.append(["t:Music_set_area", (Time.get_ticks_usec() - _tick_t0) / 1000.0])
 	AIDirector.on_tick(t, world, player.tile)
@@ -467,6 +469,8 @@ func _reset() -> void:
 ## whose id has "guild") > town > the Scorch > near a goblin camp > ruins /
 ## temple zones (data/music_zones.json) > "" (wilds: ambient day/night).
 func music_area(t: Vector2i) -> String:
+	if world.den_at(t) != "":
+		return "ruins"   # 0.4.2 underground dens share the ruins track
 	var b: Dictionary = world.gen.building_at(t)
 	if not b.is_empty() and "guild" in str(b.get("id", "")):
 		return "guild"

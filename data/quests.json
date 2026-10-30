@@ -670,7 +670,7 @@
      "enemy": "rat_mother",
      "count": 1,
      "label": "Rat Mother",
-     "text": "Kill the Rat Mother at the nest"
+     "text": "Climb down the rat hole south of Millbrook and kill the Rat Mother in her den"
     },
     {
      "type": "talk",
@@ -722,7 +722,7 @@
      ]
     },
     "stage_1": {
-     "text": "Six! How lovely. Though I did see a much bigger one waddling about. Ever so big. Probably their mother. Would you see to her too?",
+     "text": "Six! How lovely. Though I did see a much bigger one waddling about. Ever so big. Probably their mother. She went down that hole by the mushrooms. Would you see to her too?",
      "choices": [
       {
        "label": "I'll see to her",
@@ -743,12 +743,9 @@
    },
    "encounter": {
     "rat_mother": {
-     "site": "rat_den",
-     "at": [
-      2,
-      2
-     ],
-     "plane": "surface"
+     "plane": "rat_den",
+     "marker": "M",
+     "note": "0.4.2 the Rat Mother lives in the underworld rat den (data/underworld.json, 'M' cell)"
     }
    }
   },
@@ -1131,7 +1128,7 @@
     "....",
     "...."
    ],
-   "note": "0.3.16: the Rat Mother waits on the surface by this entrance. Placement is data: quest a_dead_rat 'encounter' names site + point; 0.3.17 moves it underground by a data edit."
+   "note": "0.4.2: the rat hole (D) is the way down into the underworld rat den (data/underworld.json); the Rat Mother waits below. The player comes back up on the cell south of the hole."
   }
  }
 }

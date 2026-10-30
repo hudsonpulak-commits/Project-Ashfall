@@ -1742,8 +1742,10 @@
    "name": "Rat hole",
    "sprite": "rat_den_entrance",
    "blocks": true,
-   "type": "prop",
-   "note": "0.3.16 A Dead Rat is a Good Rat: surface den entrance; the Rat Mother waits beside it. 0.3.17 turns this into the way down to the underworld rat den."
+   "type": "travel",
+   "note": "0.4.2 the way down into the underworld rat den (data/underworld.json); the Rat Mother waits below.",
+   "den": "rat_den",
+   "verb": "Climb down"
   },
   "mb_bounty_board": {
    "name": "Bounty board",
@@ -2090,6 +2092,86 @@
    "type": "prop",
    "blocks": false,
    "sprite": "elijah_path"
+  },
+  "den_ladder_up": {
+   "name": "Ladder up",
+   "sprite": "den_ladder_up",
+   "blocks": true,
+   "type": "travel",
+   "den": "rat_den",
+   "up": true,
+   "verb": "Climb up",
+   "note": "0.4.2 rat den exit back to the rat hole"
+  },
+  "den_bones": {
+   "name": "Gnawed bones",
+   "sprite": "den_bones",
+   "blocks": false,
+   "type": "prop",
+   "note": "0.4.2 rat den floor clutter"
+  },
+  "den_skull": {
+   "name": "Skull",
+   "sprite": "den_skull",
+   "blocks": false,
+   "type": "prop",
+   "note": "0.4.2 rat den floor clutter"
+  },
+  "den_nest": {
+   "name": "Rat nest",
+   "sprite": "den_nest",
+   "blocks": false,
+   "type": "prop",
+   "note": "0.4.2 rat den floor clutter"
+  },
+  "den_straw": {
+   "name": "Wet straw",
+   "sprite": "den_straw",
+   "blocks": false,
+   "type": "prop",
+   "note": "0.4.2 rat den floor clutter"
+  },
+  "den_droppings": {
+   "name": "Droppings",
+   "sprite": "den_droppings",
+   "blocks": false,
+   "type": "prop",
+   "note": "0.4.2 rat den floor clutter"
+  },
+  "den_gnawed": {
+   "name": "Gnawed scraps",
+   "sprite": "den_gnawed",
+   "blocks": false,
+   "type": "prop",
+   "note": "0.4.2 rat den floor clutter"
+  },
+  "den_puddle": {
+   "name": "Puddle",
+   "sprite": "den_puddle",
+   "blocks": false,
+   "type": "prop",
+   "note": "0.4.2 rat den floor clutter"
+  },
+  "den_sludge": {
+   "name": "Sludge",
+   "sprite": "den_sludge",
+   "blocks": false,
+   "type": "prop",
+   "note": "0.4.2 rat den clutter (batch_09)"
+  },
+  "den_roots": {
+   "name": "Roots",
+   "sprite": "den_roots",
+   "blocks": false,
+   "type": "prop",
+   "note": "0.4.2 rat den clutter (batch_09)"
+  },
+  "den_roots_wall": {
+   "name": "Hanging roots",
+   "sprite": "den_roots_wall",
+   "blocks": false,
+   "type": "prop",
+   "note": "0.4.2 rat den clutter (batch_09)"
   }
  }
 }

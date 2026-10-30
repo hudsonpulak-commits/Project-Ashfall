@@ -189,22 +189,23 @@ static func _rats(world, p) -> void:
 		if q.get("id", "") == id:
 			rq = q
 	var enc: Dictionary = rq.get("encounter", {}).get("rat_mother", {})
-	var so: Array = QuestSystem.cfg().get("sites", {}).get(str(enc.get("site", "")), {}).get("origin", [0, 0])
-	var want_at: Array = [int(so[0]) + int(enc.get("at", [0, 0])[0]), int(so[1]) + int(enc.get("at", [0, 0])[1])]
+	# 0.4.2 the Rat Mother lives in the underworld den: her camp is the den's 'M' cell
+	var wm := GameData.den_marker_tile(str(enc.get("plane", "")), str(enc.get("marker", "M")))
+	var want_at: Array = [wm.x, wm.y]
 	check(world.gen.village_at(nest, 0) == "" and world.gen.village_at(nest, 12) == "millbrook", "the rat nest sits just outside Millbrook (%s)" % nest)
 	check(_kill(world, p, "giant_rat", 6, nest) == 6 and int(p.quests[id]["stage"]) == 1, "6 giant rats: back to Mabel")
 	check(QuestSystem.giver_marker(p, "old_mabel") == "!" and _talk(world, p, "old_mabel")["node"] == "stage_1", "Mabel asks about the big one")
 	QuestSystem.choose(p, id, "advance")
-	var mom = world.enemies.nearest(nest, ["rat_mother"], 40)
-	var hole = world.find_nearest_object(mom.tile if mom else nest, ["rat_den_entrance"], 6)
+	var mom = world.enemies.nearest(wm, ["rat_mother"], 40)
+	var hole = world.find_nearest_object(world.gen.den_entrance("rat_den"), ["rat_den_entrance"], 2)
 	var camp_at: Array = []
 	for c in GameData.camps:
 		if c.get("enemy", "") == "rat_mother":
 			camp_at = c["at"]
-	check(hole != null and camp_at == want_at, "Rat Mother waits by the rat-den entrance; her spot comes from the quest's encounter data (%s)" % str(camp_at))
+	check(hole != null and camp_at == want_at and world.den_at(mom.tile if mom else Vector2i.ZERO) == "rat_den", "Rat Mother waits down the rat hole in her den; her spot comes from the quest's encounter data (%s)" % str(camp_at))
 	check(mom != null and str(mom.def.get("sprite", "")) == "rat_mother" and float(mom.def.get("scale", 1)) == 1.0 and mom.max_hp > 30, "the Rat Mother wears her own 48x48 sprite (no scaled rat) and is tough")
 	check(QuestSystem.objective(p, world).get("kind", "") in ["enemy", "area"], "guidance points at the Rat Mother")
-	check(_kill(world, p, "rat_mother", 1, nest) == 1 and QuestSystem.state(p, id) == QuestSystem.READY, "Rat Mother slain: back to Mabel")
+	check(_kill(world, p, "rat_mother", 1, wm) == 1 and QuestSystem.state(p, id) == QuestSystem.READY, "Rat Mother slain: back to Mabel")
 	var m0: int = p.inventory.count(GameData.currency)
 	_talk(world, p, "old_mabel")
 	QuestSystem.choose(p, id, "advance")

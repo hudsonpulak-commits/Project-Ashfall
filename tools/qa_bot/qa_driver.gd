@@ -3316,16 +3316,60 @@ func _sidequests0316() -> void:
 	r["mark_mid"] = _glabel("old_mabel")
 	r["dialog_mid"] = await _dialog_pick(gt, "Mabel", "I'll see to her", "sq2_rat_mother_ask")
 	await until(func(): return int(p.quests[id].get("stage", 0)) == 2, 10.0)
-	var mom: Enemy = w.enemies.nearest(nest, ["rat_mother"], 4000)
-	mom.reset_far()
-	r["mother_sprite"] = str(mom.def.get("sprite", ""))
-	p.place_at(w.find_free_tile_near(mom.tile + Vector2i(2, 1), 2, true))
+	# 0.4.2 down the rat hole: tap it, walk the den to the Rat Mother, kill her, climb back up
+	var hole_t: Vector2i = w.gen.den_entrance("rat_den")
+	p.place_at(w.find_free_tile_near(hole_t + Vector2i(1, 3), 2, true))
 	w.set_focus(p.tile, true)
+	p.stop()
+	_clear_foes(p, w)
 	await frames(20)
-	await _snap("sq2_rat_mother")
-	r["mother_killed"] = await _kill(p, w, mom, "rat_mother")
+	await _snap("sq2_den_hole")
+	label = "sq2_den_down"
+	await tap_tile(hole_t, "rat hole")
+	await until(func(): return w.den_at(p.tile) == "rat_den", 20.0)
+	r["den_entered"] = w.den_at(p.tile) == "rat_den"
+	await frames(45)
+	r["den_dark"] = DayNight.in_den() and DayNight.tint().v < 0.7
+	await _snap("sq2_den_inside")
+	var mom: Enemy = w.enemies.nearest(p.tile, ["rat_mother"], 120)
+	r["mother_in_den"] = mom != null and w.den_at(mom.tile) == "rat_den"
+	r["mother_sprite"] = str(mom.def.get("sprite", "")) if mom else ""
+	for e3 in w.enemies.enemies:
+		if e3.kind == "giant_rat" and w.den_at(e3.tile) == "rat_den":
+			e3.reset_far()
+	if mom:
+		mom.reset_far()
+		# walk (real taps) through the tunnels towards her chamber
+		var dlegs := 0
+		while p._cheb(p.tile, mom.tile) > 5 and dlegs < 8:
+			var pth := Pathfinder.find_path(w, p.tile, Pathfinder.interaction_tiles(mom.tile), mom.tile, 20000)
+			if pth.is_empty():
+				break
+			var step: Vector2i = pth[mini(pth.size() - 1, 9)]
+			await walk_leg("sq2_den_walk", step, 12.0)
+			_clear_foes(p, w)
+			dlegs += 1
+		r["den_walk_legs"] = dlegs
+		await _snap("sq2_rat_mother")
+	r["mother_killed"] = await _kill(p, w, mom, "rat_mother") if mom else false
 	_clear_foes(p, w)
 	r["state_ready"] = QuestSystem.state(p, id)
+	await _snap("sq2_rat_mother_dead")
+	var lad: Vector2i = w.gen.den_marker("rat_den", "U")
+	await walk_leg("sq2_den_back", lad + Vector2i(0, 1), 25.0)
+	if p._cheb(p.tile, lad) > 2:
+		p.place_at(w.find_free_tile_near(lad + Vector2i(0, 1), 2))
+		w.set_focus(p.tile, true)
+		await frames(10)
+	label = "sq2_den_up"
+	await tap_tile(lad, "ladder up")
+	await until(func(): return w.den_at(p.tile) == "", 20.0)
+	await frames(45)
+	r["den_exited"] = w.den_at(p.tile) == "" and p._cheb(p.tile, hole_t) <= 3
+	r["den_light_back"] = not DayNight.in_den()
+	r["exit_tile"] = [p.tile.x, p.tile.y]
+	await _snap("sq2_den_out")
+	label = ""
 	await _sq_goto(gt)
 	r["mark_ready"] = _glabel("old_mabel")
 	m0 = p.inventory.count(GameData.currency)
@@ -3441,23 +3485,34 @@ func _millbrook0316() -> void:
 	DayNight.debug_set_phase("day")
 	await frames(10)
 	# the Rat Mother and the den entrance
-	var mom: Enemy = w.enemies.nearest(o + Vector2i(26, 66), ["rat_mother"], 60)
+	# 0.4.2 the rat hole on the surface; the Rat Mother lives in the den below it
+	var hole_t: Vector2i = w.gen.den_entrance("rat_den")
+	var hole = w.object_at(hole_t)
+	var mom: Enemy = w.enemies.nearest(GameData.den_marker_tile("rat_den", "M"), ["rat_mother"], 60)
 	res["mother"] = {}
+	p.place_at(w.find_free_tile_near(hole_t + Vector2i(-2, 2), 2, true))
+	p.stop()
+	w.set_focus(p.tile, true)
+	label = "den_entrance"
+	await frames(50)
+	await _snap("den_entrance")
 	if mom != null:
 		mom.reset_far()
-		var hole = w.find_nearest_object(mom.home, ["rat_den_entrance"], 6)
-		p.place_at(mom.home + Vector2i(-3, -2))
+		var fs := GameData.frame_size("actors", str(mom.def.get("sprite", "")))
+		res["mother"] = {"sprite": str(mom.def.get("sprite", "")), "frame": [fs.x, fs.y], "scale": mom._sprite.scale.x,
+			"home": [mom.home.x, mom.home.y], "hole": hole != null and hole.def_id == "rat_den_entrance", "village": w.gen.village_at(hole_t, 0),
+			"den": w.den_at(mom.home), "hole_sprite": GameData.sprite_def("objects", "rat_den_entrance").get("path", "")}
+		p.place_at(w.gen.den_arrival("rat_den"))
+		w.set_focus(p.tile, true)
+		label = "den_interior"
+		await frames(60)
+		await _snap("den_interior")
+		p.place_at(w.find_free_tile_near(mom.home + Vector2i(-3, 2), 2))
 		p.stop()
 		w.set_focus(p.tile, true)
 		label = "rat_mother"
 		await frames(50)
-		var fs := GameData.frame_size("actors", str(mom.def.get("sprite", "")))
-		res["mother"] = {"sprite": str(mom.def.get("sprite", "")), "frame": [fs.x, fs.y], "scale": mom._sprite.scale.x,
-			"home": [mom.home.x, mom.home.y], "hole": hole != null, "village": w.gen.village_at(mom.home, 0),
-			"hole_sprite": GameData.sprite_def("objects", "rat_den_entrance").get("path", "")}
 		await _snap("rat_mother")
-		label = "den_entrance"
-		await _snap("den_entrance")
 		label = "rat_mother_close"
 		var cam = get_viewport().get_camera_2d()
 		if cam:
@@ -3466,6 +3521,9 @@ func _millbrook0316() -> void:
 			await frames(20)
 			await _snap("rat_mother_close")
 			cam.zoom = z0
+		p.place_at(w.gen.den_exit_tile("rat_den"))
+		w.set_focus(p.tile, true)
+		await frames(20)
 	label = ""
 	_notes["millbrook"] = res
 
