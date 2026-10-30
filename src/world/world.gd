@@ -8,6 +8,7 @@ extends Node2D
 ## runtime from data/sprites.json (so swapping a tile PNG needs no code).
 
 signal object_changed(obj: WorldObject)
+signal travelled(den_id: String, down: bool)   # 0.4.2 rat hole / den ladder
 
 const CHUNK := WorldGen.CHUNK
 const VIEW_RADIUS := 2          # chunks rendered around focus (5x5)
@@ -276,6 +277,26 @@ func overlay_cells(p: Vector2i, nm: Callable) -> Array:
 		if not s.is_empty():
 			var f := Autotile.piece_at(p, func(q): var t: String = nm.call(q); return t == here or t in Autotile.WALL_JOIN_ALSO)
 			out.append([2, s[0], Vector2i(f, 0)])
+	elif here == "den_wall" or (here == "den_floor" and nb[0] == "den_wall"):
+		# 0.4.2 rat den walls: cap on the wall cell by the wall-neighbour mask (inner
+		# corners by the open diagonal), face hanging into the open cell below
+		var sd: Array = _overlay_src.get("autotile/den_wall16", [])
+		if not sd.is_empty():
+			if here == "den_wall":
+				var dm := _den_mask(nb)
+				var col := dm
+				if dm == 15:
+					for k in [[5, 16], [6, 17], [7, 18], [4, 19]]:
+						if nb[k[0]] != "den_wall":
+							col = k[1]
+							break
+				out.append([2, sd[0], Vector2i(col, 0)])
+			else:
+				var up := p + Vector2i(0, -1)
+				var unb: Array = []
+				for d2 in [Vector2i(0, -1), Vector2i(1, 0), Vector2i(0, 1), Vector2i(-1, 0)]:
+					unb.append(nm.call(up + d2))
+				out.append([2, sd[0], Vector2i(_den_mask(unb), 1)])
 	elif here == "boardwalk":
 		# restyle (batch 02): boardwalk deck autotile by the N1|E2|S4|W8 mask
 		var sb: Array = _overlay_src.get("autotile/boardwalk16", [])
@@ -318,6 +339,14 @@ func overlay_cells(p: Vector2i, nm: Callable) -> Array:
 ## corners and stairs are 16x32 (frame 1 hangs into the cell below), the shadow
 ## lies 2 rows below. The Cinder region uses the cinder set.
 const CLIFF_NAMES := ["cliff_face", "cliff_lip", "cliff_shadow", "cliff_stairs", "cliff_foot"]
+
+
+static func _den_mask(nb: Array) -> int:
+	var m := 0
+	for k in 4:
+		if nb[k] == "den_wall":
+			m |= 1 << k
+	return m
 
 
 func cliff_palette(p: Vector2i) -> String:
@@ -661,6 +690,54 @@ func nearest_altar(from: Vector2i, town: String = "") -> Dictionary:
 			var step := Vector2i(0, 1) if door.y > a.y else Vector2i(0, -1)
 			best = {"pos": a, "approach": a + step, "building": id, "town": b["town"], "door": door}
 	return best
+
+
+## 0.4.2 travel objects: the surface rat hole drops the player into its den
+## (arrival cell under the ladder); the den ladder brings them back up in front
+## of the hole. Chunks at the far end load at once.
+func travel(actor, obj: WorldObject, d: Dictionary) -> bool:
+	var did := str(d.get("den", ""))
+	if not gen.dens.has(did):
+		return false
+	var dd: Dictionary = gen.dens[did]
+	var to: Vector2i
+	var text := ""
+	if bool(d.get("up", false)):
+		to = gen.den_exit_tile(did)
+		text = str(dd.get("leave_text", "You climb back up."))
+	else:
+		to = gen.den_arrival(did)
+		text = str(dd.get("enter_text", "You climb down."))
+	if to.x <= -99999:
+		return false
+	to = find_free_tile_near(to, 4)
+	actor.place_at(to)
+	actor.action = {}
+	set_focus(to)   # views stream in nearest-first under the fade (no sync build: frame budget)
+	_travel_fade()
+	Events.say(text)
+	travelled.emit(did, not bool(d.get("up", false)))
+	return true
+
+
+func _travel_fade() -> void:
+	var layer := CanvasLayer.new()
+	layer.layer = 20
+	var r := ColorRect.new()
+	r.color = Color(0, 0, 0, 1)
+	r.set_anchors_preset(Control.PRESET_FULL_RECT)
+	r.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	layer.add_child(r)
+	add_child(layer)
+	var tw := create_tween()
+	tw.tween_interval(0.15)
+	tw.tween_property(r, "color:a", 0.0, 0.5)
+	tw.tween_callback(layer.queue_free)
+
+
+## 0.4.2 the den the tile lies in ("" = surface).
+func den_at(p: Vector2i) -> String:
+	return gen.den_at(p) if gen != null else ""
 
 
 func is_pk(p: Vector2i) -> bool:
@@ -1323,7 +1400,31 @@ func world_map_texture() -> ImageTexture:
 
 
 func map_pixel(p: Vector2i) -> Vector2:
+	var did := den_at(p)
+	if did != "":
+		p = gen.den_entrance(did)   # 0.4.2 below ground: shown at the rat hole on the surface map
 	return Vector2(p - gen.bounds().position) / MAP_STEP
+
+
+## 0.4.2 den layout map (1 px = 1 tile of the authored rows), for the map panel inset.
+var _den_tex: Dictionary = {}
+
+
+func den_map_texture(did: String) -> ImageTexture:
+	if _den_tex.has(did):
+		return _den_tex[did]
+	var dd: Dictionary = gen.dens.get(did, {})
+	var inner: Rect2i = dd.get("inner", Rect2i())
+	var img := Image.create(maxi(1, inner.size.x), maxi(1, inner.size.y), false, Image.FORMAT_RGBA8)
+	var wall := GameData.tile_color(WorldGen.TileType.DEN_WALL)
+	var flo := GameData.tile_color(WorldGen.TileType.DEN_FLOOR).lightened(0.25)
+	for y in inner.size.y:
+		for x in inner.size.x:
+			var t := gen.tile_at(inner.position.x + x, inner.position.y + y)
+			img.set_pixel(x, y, wall if t == WorldGen.TileType.DEN_WALL else flo)
+	var tex := ImageTexture.create_from_image(img)
+	_den_tex[did] = tex
+	return tex
 
 
 # ------------------------------------------------------------------- save --

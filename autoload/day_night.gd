@@ -86,6 +86,20 @@ func is_day() -> bool:
 var _zone := ""
 
 
+## 0.4.2 underground: inside a den the sky never reaches; fixed den tint, torches lit.
+var _den := ""
+
+
+func set_den(den_id: String) -> void:
+	if den_id != _den:
+		_den = den_id
+		refresh()
+
+
+func in_den() -> bool:
+	return _den != ""
+
+
 func set_zone(zone_id: String) -> void:
 	if zone_id != _zone:
 		_zone = zone_id
@@ -148,6 +162,10 @@ func ensure_lights(world) -> void:
 	var hs: Vector2i = world.gen.story_marks.get("elijah_headstone", Vector2i(-99999, 0))
 	if hs.x > -90000:
 		_add_light(world, hs, "tomb", Color("#d0be91"), glow_scale)
+	# 0.4.2 den torches ('T' cells of data/underworld.json rows)
+	for did in world.gen.dens.keys():
+		for tt in world.gen.dens[did].get("markers", {}).get("T", []):
+			_add_light(world, tt, "torch", torch_col, glow_scale)
 	# Lit windows on each building facade
 	var n_win := int(lc.get("windows_per_building", 2))
 	var glass_col := Color(str(lc.get("stained_glass_color", "#ffb8d0")))
@@ -268,6 +286,10 @@ func refresh() -> void:
 		var zf: Array = cfg().get("zone_night_floor", {}).get(_zone, [])
 		if zf.size() == 3:
 			tint = Color(maxf(tint.r, float(zf[0])), maxf(tint.g, float(zf[1])), maxf(tint.b, float(zf[2])))
+	if _den != "":
+		var dt2: Array = GameData.underworld.get("dens", {}).get(_den, {}).get("tint", [0.6, 0.55, 0.58])
+		tint = Color(float(dt2[0]), float(dt2[1]), float(dt2[2]))
+		lights = 1.0
 	_tint = tint
 	_lights_energy = lights
 	if new_phase != _phase:

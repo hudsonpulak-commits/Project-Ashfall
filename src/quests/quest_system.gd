@@ -358,6 +358,9 @@ static func spawn_area(kind: String, from: Vector2i) -> Variant:
 		if str(c.get("enemy", "")) != kind:
 			continue
 		var t := Vector2i(int(c["at"][0]), int(c["at"][1]))
+		var cd := str(c.get("den", ""))
+		if cd != "" and den_of(from) != cd:
+			t = den_hole(cd)   # 0.4.2 a den camp seen from outside: point at its way down
 		var d: int = maxi(absi(t.x - from.x), absi(t.y - from.y))
 		if d < bd:
 			bd = d
@@ -369,11 +372,33 @@ static var _camp_cache: Array = []
 
 
 static func _camps() -> Array:
-	if _camp_cache.is_empty():
-		var f := FileAccess.open("res://data/enemies.json", FileAccess.READ)
-		var d = JSON.parse_string(f.get_as_text()) if f else {}
-		_camp_cache = d.get("camps", []) if d is Dictionary else []
-	return _camp_cache
+	# 0.4.2 GameData.camps: quest encounters already applied, den camps included
+	return GameData.camps
+
+
+## 0.4.2 den id of a tile from data/underworld.json (no WorldGen needed); "" = surface.
+static func den_of(t: Vector2i) -> String:
+	var dens: Dictionary = GameData.underworld.get("dens", {})
+	for did in dens.keys():
+		var dd: Dictionary = dens[did]
+		var rows: Array = dd.get("rows", [])
+		if rows.is_empty():
+			continue
+		var pad := int(dd.get("pad", 16))
+		var r := Rect2i(Vector2i(int(dd["origin"][0]) - pad, int(dd["origin"][1]) - pad), Vector2i(str(rows[0]).length() + pad * 2, rows.size() + pad * 2))
+		if r.has_point(t):
+			return did
+	return ""
+
+
+## 0.4.2 the surface tile of a den's entrance (its quest site origin + entrance_at).
+static func den_hole(did: String) -> Vector2i:
+	var dd: Dictionary = GameData.underworld.get("dens", {}).get(did, {})
+	var sd: Dictionary = cfg().get("sites", {}).get(str(dd.get("surface_site", "")), {})
+	if sd.is_empty():
+		return Vector2i(-99999, -99999)
+	var a: Array = dd.get("entrance_at", [1, 1])
+	return Vector2i(int(sd["origin"][0]) + int(a[0]), int(sd["origin"][1]) + int(a[1]))
 
 
 ## Map / minimap objective area during a kill stage: the target's camp.

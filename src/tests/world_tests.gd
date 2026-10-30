@@ -60,6 +60,7 @@ static func run(main, world: World, p: Player) -> void:
 	Patch0319Tests.run(main, world, p)   # 0.3.19 bank tabs, scene polish
 	preload("res://src/tests/patch0320_tests.gd").run(main, world, p)   # 0.3.20 villages, lore, scene life
 	preload("res://src/tests/patch040_tests.gd").run(main, world, p)   # 0.4.0
+	preload("res://src/tests/patch042_tests.gd").run(main, world, p)   # 0.4.2 rat den
 	Patch0396VideoTests.run(main, world, p)   # 0.3.9.6 title video
 	p.place_at(world.gen.town_spawn("fenhollow"))
 	world.set_focus(p.tile, true)
@@ -156,6 +157,8 @@ static func _band_tests(world: World) -> void:
 	var bands: Dictionary = GameData.enemy_bands.get("bands", {})
 	var bad := []
 	for c in GameData.camps:
+		if c.has("den"):
+			continue   # 0.4.2 underworld den camps live below the map (no surface band)
 		var k := str(c["enemy"])
 		var at := Vector2i(int(c["at"][0]), int(c["at"][1]))
 		var b: Dictionary = bands.get(k, {})
@@ -176,6 +179,8 @@ static func _band_tests(world: World) -> void:
 		"creatures get tougher with distance: chicken <= rat < wolf < goblin < Scorch brute")
 	var mean := {}
 	for c in GameData.camps:
+		if c.has("den"):
+			continue
 		var k := str(c["enemy"])
 		if not mean.has(k):
 			mean[k] = [0.0, 0]

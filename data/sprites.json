@@ -533,6 +533,26 @@
    "note": "0.3.11 designer cliff art; in-game the autotile pieces (autotile/cliff_*) draw the look over region ground",
    "minimap_color": "#3d6736",
    "_order": 50
+  },
+  "den_floor": {
+   "path": "res://assets/sprites/tiles/variants/den_floor_x4.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "minimap_color": "#4a3a2c",
+   "_order": 56,
+   "note": "0.4.2 rat den floor (sprite bot underground v1.1 den_floor_0..3)"
+  },
+  "den_wall": {
+   "path": "res://assets/sprites/tiles/den_wall.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "minimap_color": "#120e0c",
+   "_order": 57,
+   "note": "0.4.2 rat den wall cap (den_wall_m15 top); faces come from autotile/den_wall16"
   }
  },
  "objects": {
@@ -3237,6 +3257,86 @@
    ],
    "frames": 1,
    "anchor": "bottom"
+  },
+  "den_ladder_up": {
+   "path": "res://assets/sprites/underground/tiles/cave_ladder_up.png",
+   "frame_size": [
+    16,
+    32
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.4.2 rat den (sprite bot underground v1.1, pre-restyle stand-in)"
+  },
+  "den_bones": {
+   "path": "res://assets/sprites/underground/den/den_bones_0.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.4.2 rat den (sprite bot underground v1.1, pre-restyle stand-in)"
+  },
+  "den_skull": {
+   "path": "res://assets/sprites/underground/den/den_skull_0.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.4.2 rat den (sprite bot underground v1.1, pre-restyle stand-in)"
+  },
+  "den_nest": {
+   "path": "res://assets/sprites/underground/den/den_nest_0.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.4.2 rat den (sprite bot underground v1.1, pre-restyle stand-in)"
+  },
+  "den_straw": {
+   "path": "res://assets/sprites/underground/den/den_straw_0.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.4.2 rat den (sprite bot underground v1.1, pre-restyle stand-in)"
+  },
+  "den_droppings": {
+   "path": "res://assets/sprites/underground/den/den_droppings_0.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.4.2 rat den (sprite bot underground v1.1, pre-restyle stand-in)"
+  },
+  "den_gnawed": {
+   "path": "res://assets/sprites/underground/den/den_gnawed_0.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.4.2 rat den (sprite bot underground v1.1, pre-restyle stand-in)"
+  },
+  "den_puddle": {
+   "path": "res://assets/sprites/underground/den/den_puddle_1.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 1,
+   "anchor": "bottom",
+   "note": "0.4.2 rat den (sprite bot underground v1.1, pre-restyle stand-in)"
   }
  },
  "actors": {
@@ -8751,6 +8851,16 @@
    ],
    "frames": 256,
    "cols": 16
+  },
+  "den_wall16": {
+   "path": "res://assets/sprites/autotile/den_wall16.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 20,
+   "rows": 2,
+   "note": "0.4.2 den walls: cols 0-15 = N1|E2|S4|W8 wall-neighbour mask, 16-19 inner ne/se/sw/nw; row 0 = cap on the wall cell, row 1 = face hanging into the open cell south (tools/den/build_den_art.py)"
   }
  },
  "transitions": {
