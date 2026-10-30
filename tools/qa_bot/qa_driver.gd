@@ -3961,7 +3961,7 @@ func _frames_restyle() -> void:
 		await _snap("restyle_town_%s_night" % t)
 	# r5 thin walls: corner close-ups (45-degree joins, no square gaps)
 	DayNight.debug_set_phase("day")
-	for t in ["cinderholt", "fenhollow", "barrowby", "saltmere"]:
+	for t in ["highfen", "cinderholt", "fenhollow", "barrowby", "saltmere"]:
 		var c: Vector2i = g.town_center(t)
 		for corner: Vector2i in [Vector2i(1, -1), Vector2i(-1, 1)]:
 			var best := Vector2i(1 << 29, 0)
@@ -3980,6 +3980,31 @@ func _frames_restyle() -> void:
 			w.set_focus(p.tile, true)
 			await frames(60)
 			await _snap("restyle_wall_%s_%s" % [t, "ne" if corner.x > 0 else "sw"])
+	# moat shore (no town ships a moat since 0.3.11b): a synthetic 2-wide moat ring with a
+	# bridge, stamped on unvisited open ground, drawn by the live shore pass
+	var mo := Vector2i(1 << 29, 0)
+	for cand in [Vector2i(330, 40), Vector2i(-120, 60), Vector2i(200, 120), Vector2i(60, -120)]:
+		var okc := true
+		for yy in range(-8, 9):
+			for xx in range(-10, 11):
+				var tn: String = WorldGen.TILE_NAMES[g.tile_at(cand.x + xx, cand.y + yy)]
+				if not tn.begins_with("grass") and tn != "dirt":
+					okc = false
+		if okc:
+			mo = cand
+			break
+	if mo.x != 1 << 29:
+		for yy in range(-6, 7):
+			for xx in range(-8, 9):
+				var ring: bool = (absi(xx) >= 5 and absi(xx) <= 6 and absi(yy) <= 4) or (absi(yy) >= 3 and absi(yy) <= 4 and absi(xx) <= 6)
+				if ring:
+					g._town_tiles[mo + Vector2i(xx, yy)] = WorldGen.TileType.MOAT
+		g._town_tiles[mo + Vector2i(0, 3)] = WorldGen.TileType.BRIDGE
+		g._town_tiles[mo + Vector2i(0, 4)] = WorldGen.TileType.BRIDGE
+		p.place_at(mo + Vector2i(0, 6))
+		w.set_focus(p.tile, true)
+		await frames(60)
+		await _snap("restyle_moat_shore")
 	# restyle batch 04: wilderness (designer's preview spots, world tile coords)
 	var wild := {"shore_tropic": Vector2i(288, 242), "scorch_dead": Vector2i(102, -268), "fen_marsh": Vector2i(402, -46), "boreal_rocky": Vector2i(-42, -178), "meadow_roads": Vector2i(270, -34)}
 	for wn in wild:
