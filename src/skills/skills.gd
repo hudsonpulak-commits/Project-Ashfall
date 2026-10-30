@@ -68,3 +68,6 @@ func from_save(d: Dictionary) -> void:
 		for s in ["attack", "strength", "defence"]:
 			if not d.has(s):
 				xp[s] = int(d["melee"])
+	# 0.4.0 Joinery became Fletching
+	if d.has("joinery") and not d.has("fletching"):
+		xp["fletching"] = int(d["joinery"])

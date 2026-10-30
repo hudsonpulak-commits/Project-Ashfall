@@ -60,7 +60,13 @@
  "defence_level_acc": 0.005,
  "damage_mult": 0.5,
  "note_damage_mult": "0.3.18 every landed hit (player, enemies, NPCs, AI, PvP) is scaled at the final step; a hit never drops below 1",
- "armour_hit_xp": {"1": 0.5, "2": 1.0, "3": 2.0, "4": 3.0, "step": 1.0},
+ "armour_hit_xp": {
+  "1": 0.5,
+  "2": 1.0,
+  "3": 2.0,
+  "4": 3.0,
+  "step": 1.0
+ },
  "note_armour_hit_xp": "0.3.18 bonus Defence XP per worn armour piece each time the player is hit, by gear tier (1 bronze/leather, 2 iron, 3 steel, 4 dusk; higher tiers +step each). 0.3.19 plate and chain of the same tier grant the same bonus.",
  "note_armour_fit": "0.3.19 melee metal armour is plate or chain. Power = atk + def and matches the other fit of that piece. Plate keeps the old defence and adds a smaller attack bonus (max(1, old def / 4)). Chain swaps those two numbers. Each atk point is +1% hit chance; each def point is +1% block (enemy accuracy). Leather and wolf-pelt ranger armour is not part of this split. The alder buckler stays a wooden shield.",
  "defence_xp": {
@@ -91,8 +97,8 @@
  "aggro_level_gap": 10,
  "note_combat_level": "0.3.3 combat level (Combat.combat_level) = floor((Attack + Strength + Defence + Vitality + Archery) / 5 + Prayer / 8), min 1; a new character is Combat 2. Enemies never START a fight with anyone aggro_level_gap+ combat levels above the enemy's level.",
  "ranged": {
-  "note": "0.3.3 Archery. Bows shoot from up to range tiles (Chebyshev) with line of sight: wall/building tiles block, plants, rocks and fences don't. Each shot uses one *_arrows item (best usable tier); none = 'Out of arrows!' and the attack stops. Accuracy = 0.55 + (Archery + gear atk) x 1% - enemy def x 2%. Max hit = 1 + Archery/6 + bow power + gear str/4 + arrow tier x arrow_tier_power. arrow_drop_chance = arrows that land under the target (pick them up again). XP: damage_xp per damage to Archery + vitality_xp to Vitality.",
-  "range": 10,
+  "note": "0.3.3 Archery. Bows shoot from up to range tiles (Chebyshev) with line of sight: wall/building tiles block, plants, rocks and fences don't. Each shot uses one *_arrows item (best usable tier); none = 'Out of arrows!' and the attack stops. Accuracy = 0.55 + (Archery + gear atk) x 1% - enemy def x 2%. Max hit = 1 + Archery/6 + bow power + gear str/4 + arrow tier x arrow_tier_power. arrow_drop_chance = arrows that land under the target (pick them up again). XP: damage_xp per damage to Archery + vitality_xp to Vitality. 0.4.0: no range limit (range 99 = anything on screen); line of sight still required. Ranger armour 'rng' adds +1% accuracy and +rng/2 max hit-str per point; melee armour atk/str no longer help bows.",
+  "range": 99,
   "arrow_drop_chance": 0.5,
   "arrow_tier_power": 1,
   "projectile_sprite": "arrow",

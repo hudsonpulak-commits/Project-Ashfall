@@ -33,8 +33,25 @@ func spawn_all(parent: Node2D, w) -> void:
 			parent.add_child(e)
 			enemies.append(e)
 		ci += 1
+	_spawn_greymaw(parent)
 	_spawn_town_folk(parent)
 	_spawn_pastures(parent)
+
+
+## 0.4.0 Greymaw: one dormant enemy; DireWolf.manage wakes and rotates her.
+func _spawn_greymaw(parent: Node2D) -> void:
+	if not GameData.enemies.has("greymaw"):
+		return
+	var farms: Array = DireWolf.farm_tiles(world)
+	var e := Enemy.new()
+	e.setup("greymaw", farms[0] if not farms.is_empty() else Vector2i.ZERO, hash(["greymaw", world.gen.world_seed]))
+	e.manager = self
+	e.name = "greymaw"
+	parent.add_child(e)
+	e.dead = true
+	e.visible = false
+	e.respawn_at = 1 << 40
+	enemies.append(e)
 
 
 ## 0.3.1 village pastures: cows (or whatever "enemy") inside the fence.
@@ -110,6 +127,8 @@ func on_tick(t: int, actors: Array, focus: Vector2i) -> void:
 		if not e.dead:
 			_occ[e.tile] = e
 	for e in enemies:
+		if e.def.get("rotates", false) and not DireWolf.manage(e, t, world, actors):
+			continue
 		if e.cheb(e.home, focus) > ACTIVE_RADIUS:
 			if e.tile != e.home or e.hp < e.max_hp:
 				e.reset_far()
@@ -153,9 +172,13 @@ func nearest(from: Vector2i, kinds: Array, radius: int, ok: Callable = Callable(
 
 func on_killed(e: Enemy, killer: Actor, t: int) -> void:
 	kills[e.kind] = int(kills.get(e.kind, 0)) + 1
+	var extra: Array = []
+	if e.kind == "greymaw":
+		var ph: String = DireWolf.phase(killer) if killer is Player else "off"
+		extra = DireWolf.extra_drops(ph == "hunt", ph == "free", e.rng)
 	if killer is Player:    # 0.3.7 only the quest holder's own kills count
 		QuestSystem.on_kill(killer, e.kind, e.tile)
-	var drops := DropTable.roll(str(e.def.get("drops", e.kind)), e.rng)
+	var drops := DropTable.roll(str(e.def.get("drops", e.kind)), e.rng) + extra
 	for d in drops:
 		var id: String = d[0]
 		var q: int = d[1]

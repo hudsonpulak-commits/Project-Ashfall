@@ -197,6 +197,16 @@ func start_recipe(world, obj, recipe_id: String, count: int = -1) -> bool:
 	return true
 
 
+## 0.4.0 Fletching (knife) / Crafting (needle) worked from the pack, in place.
+func start_pack_recipe(station: String, recipe_id: String, count: int = -1) -> bool:
+	var r := Interactions.recipe_by_id(recipe_id)
+	if r.is_empty() or str(r.get("station", "")) != station:
+		return false
+	path.clear()
+	action = {"kind": "pack_craft", "station": station, "recipe": recipe_id, "count": count, "progress": 0, "cooldown": 0}
+	return true
+
+
 func on_hitsplat(_obj, _dmg: int) -> void:
 	pass
 
@@ -257,6 +267,16 @@ func combat_def() -> int:
 	return 0
 
 
+## 0.4.0 Ranged uses the bow plus ranger gear ("rng"); melee armour atk/str
+## don't help a bow. AI keeps its abstract gear stats.
+func ranged_atk() -> int:
+	return combat_atk()
+
+
+func ranged_str() -> int:
+	return combat_str()
+
+
 ## The weapon this actor fights with: the strongest melee weapon in the pack
 ## it has the level to use ("" = bare hands). Player overrides (worn weapon).
 func weapon_id() -> String:
@@ -313,8 +333,8 @@ func _shoot(e, t: int, world) -> bool:
 		PkRules.on_pvp_swing(self, e, t)
 		acc = PkRules.accuracy(PkRules.actor_stats(self), PkRules.actor_stats(e))
 	else:
-		acc = minf(0.95, Combat.actor_accuracy(skills.level("archery"), combat_atk(), int(e.def.get("defence", 0)), Combat.armour_break(w)) * Prayer.mult(prayer, "acc"))
-	var mh := Combat.actor_max_hit(skills.level("archery"), weapon_power(), combat_str()) + Combat.arrow_power(arrow)
+		acc = minf(0.95, Combat.actor_accuracy(skills.level("archery"), ranged_atk(), int(e.def.get("defence", 0)), Combat.armour_break(w)) * Prayer.mult(prayer, "acc"))
+	var mh := Combat.actor_max_hit(skills.level("archery"), weapon_power(), ranged_str()) + Combat.arrow_power(arrow)
 	var dmg := Combat.swing(acc, mh, rng)
 	dmg = Combat.final_damage(Prayer.scale_damage(dmg, Prayer.mult(prayer, "dmg"), rng))   # 0.3.18 x0.5
 	Events.projectile.emit(self, e, str(Combat.rcfg().get("projectile_sprite", "arrow")))

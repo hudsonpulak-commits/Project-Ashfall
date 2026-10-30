@@ -42,7 +42,7 @@ static func state(p, id: String) -> String:
 		"talk":
 			return READY
 		"gather":      # 0.3.15 ready to hand in once the pack holds every item
-			return READY if has_items(p, st) else IN_PROGRESS
+			return READY if has_items(p, st) or has_alt_items(p, st) else IN_PROGRESS
 		"escort":      # 0.3.16 ready once the follower stands near the npc
 			return READY if escort_arrived(p, id, st) else IN_PROGRESS
 	return IN_PROGRESS
@@ -87,6 +87,24 @@ static func sync(p) -> void:
 static func has_items(p, st: Dictionary) -> bool:
 	for it in st.get("items", {}).keys():
 		if p.inventory.count(it) < int(st["items"][it]):
+			return false
+	return true
+
+
+## 0.4.0 a gather stage may take "alt_items" instead (Smith Venn: ore or marks).
+static func has_alt_items(p, st: Dictionary) -> bool:
+	if not st.has("alt_items"):
+		return false
+	for it in st["alt_items"].keys():
+		if p.inventory.count(it) < int(st["alt_items"][it]):
+			return false
+	return true
+
+
+## 0.4.0 quests with "requires" are offered only once those quests are done.
+static func available(p, id: String) -> bool:
+	for r in quest(id).get("requires", []):
+		if state(p, str(r)) != COMPLETED:
 			return false
 	return true
 
@@ -172,7 +190,7 @@ static func giver_marker(p, gid: String) -> String:
 		var s := state(p, q["id"])
 		if s == READY and stage_npc(q["id"], current_stage(p, q["id"])) == gid:
 			return "!"
-		if str(q.get("giver", "")) == gid and s == NOT_STARTED:
+		if str(q.get("giver", "")) == gid and s == NOT_STARTED and available(p, q["id"]):
 			mark = "?"
 	return mark
 
@@ -203,15 +221,19 @@ static func talk(p, obj) -> void:
 		Events.quest_dialog.emit(gid)
 
 
-static func _advance(p, id: String) -> void:
+static func _advance(p, id: String, alt: bool = false) -> void:
 	var s: Dictionary = p.quests[id]
 	var cur := stage(id, int(s["stage"]))
 	if str(cur.get("type", "")) == "gather":
-		if not has_items(p, cur):
+		var use: Dictionary = cur.get("alt_items", {}) if alt else cur.get("items", {})
+		if (alt and not has_alt_items(p, cur)) or (not alt and not has_items(p, cur)):
 			return
-		for it in cur.get("items", {}).keys():
-			p.inventory.remove(it, int(cur["items"][it]))
+		for it in use.keys():
+			p.inventory.remove(it, int(use[it]))
 		Events.inventory_changed.emit()
+	if int(cur.get("influence", 0)) > 0:      # 0.4.0 per-step influence (Pye's line)
+		p.influence += int(cur["influence"])
+		Events.say("+%d Influence" % int(cur["influence"]))
 	for it in cur.get("give", {}).keys():      # 0.3.16 e.g. the smith's finished goods
 		var n := int(cur["give"][it])
 		if p.inventory.room_for(it) >= n:
@@ -231,6 +253,8 @@ static func _advance(p, id: String) -> void:
 static func _reward(p, id: String) -> void:
 	var r: Dictionary = quest(id).get("rewards", {})
 	done_ids[id] = true
+	if quest(id).has("complete_notice"):     # 0.4.0 e.g. Odric points at Warden Pye
+		Events.say(str(quest(id)["complete_notice"]), "level")
 	var inf := int(r.get("influence", 0))
 	p.influence += inf
 	var bits := ["+%d Influence" % inf]
@@ -270,6 +294,15 @@ static func on_kill(p, kind: String, at: Vector2i = Vector2i(1 << 20, 0)) -> voi
 
 ## 0.3.17 a kill stage with "near" (object id) + "radius" only counts kills close to it.
 static func kill_in_area(p, st: Dictionary, at: Vector2i) -> bool:
+	if st.has("near_towns"):     # 0.4.0 kills on / around these villages' fields
+		var w0 = p.get("world_ref") if p != null else null
+		if w0 == null or at.x >= (1 << 20):
+			return false
+		for tid in st["near_towns"]:
+			var c: Vector2i = w0.gen.town_center(str(tid))
+			if maxi(absi(c.x - at.x), absi(c.y - at.y)) <= int(st.get("radius", 20)):
+				return true
+		return false
 	if not st.has("near"):
 		return true
 	var w = p.get("world_ref") if p != null else null
@@ -385,6 +418,8 @@ static func dialog(p, gid: String) -> Dictionary:
 		if str(q.get("giver", "")) != gid:
 			continue
 		var id: String = q["id"]
+		if state(p, id) == NOT_STARTED and not available(p, id):
+			continue
 		var dl: Dictionary = q.get("dialog", {})
 		var key := ""
 		match state(p, id):
@@ -432,7 +467,7 @@ static func choose(p, quest_id: String, action: String) -> String:
 				reply = str(c["reply"])
 	match action:
 		"accept":
-			if state(p, quest_id) == NOT_STARTED:
+			if state(p, quest_id) == NOT_STARTED and available(p, quest_id):
 				p.quests[quest_id] = {"stage": 0, "count": 0, "done": false}
 				Events.say("Quest started: %s" % q["name"], "level")
 				_changed()
@@ -441,6 +476,9 @@ static func choose(p, quest_id: String, action: String) -> String:
 				_advance(p, quest_id)
 			else:
 				reply = ""
+		"advance_alt":     # 0.4.0 the alternative payment (Venn: 200 marks)
+			if state(p, quest_id) == READY and has_alt_items(p, current_stage(p, quest_id)):
+				_advance(p, quest_id, true)
 		_:
 			pass
 	if reply != "":

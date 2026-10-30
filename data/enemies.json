@@ -776,6 +776,26 @@
    "count": 2,
    "spread": 2,
    "note": "0.4.0 low Scorch dire wolf pack"
+  },
+  {
+   "enemy": "wolf",
+   "at": [
+    236,
+    92
+   ],
+   "count": 3,
+   "spread": 2,
+   "note": "0.4.0 Barrowby fields"
+  },
+  {
+   "enemy": "wolf",
+   "at": [
+    318,
+    -26
+   ],
+   "count": 3,
+   "spread": 2,
+   "note": "0.4.0 Oxley fields"
   }
  ],
  "note_show_level": "0.3.3: combat enemies (aggro, or retaliate with max_hit > 0) show 'Name (level)' overhead; show_level overrides (false for citizens and chickens).",

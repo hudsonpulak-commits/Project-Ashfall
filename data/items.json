@@ -1657,10 +1657,10 @@
     "def": 1,
     "rng": 1,
     "level": 1,
-    "skill": "archery",
     "hit_xp": 0.5,
     "durability": 300,
-    "fit": "ranger"
+    "fit": "ranger",
+    "wear_skill": "archery"
    },
    "note": "0.4.0 ranger armour: boosts Ranged accuracy and max hit (rng), not melee. Crafted from 1 hide + 1 bar."
   },
@@ -1678,10 +1678,10 @@
     "def": 3,
     "rng": 2,
     "level": 1,
-    "skill": "archery",
     "hit_xp": 0.5,
     "durability": 300,
-    "fit": "ranger"
+    "fit": "ranger",
+    "wear_skill": "archery"
    },
    "note": "0.4.0 ranger armour: boosts Ranged accuracy and max hit (rng), not melee. Crafted from 1 hide + 1 bar."
   },
@@ -1699,10 +1699,10 @@
     "def": 2,
     "rng": 1,
     "level": 1,
-    "skill": "archery",
     "hit_xp": 0.5,
     "durability": 300,
-    "fit": "ranger"
+    "fit": "ranger",
+    "wear_skill": "archery"
    },
    "note": "0.4.0 ranger armour: boosts Ranged accuracy and max hit (rng), not melee. Crafted from 1 hide + 1 bar."
   },
@@ -1720,10 +1720,10 @@
     "def": 2,
     "rng": 2,
     "level": 10,
-    "skill": "archery",
     "hit_xp": 0.5,
     "durability": 600,
-    "fit": "ranger"
+    "fit": "ranger",
+    "wear_skill": "archery"
    },
    "note": "0.4.0 ranger armour: boosts Ranged accuracy and max hit (rng), not melee. Crafted from 1 hide + 1 bar."
   },
@@ -1741,10 +1741,10 @@
     "def": 6,
     "rng": 4,
     "level": 10,
-    "skill": "archery",
     "hit_xp": 0.5,
     "durability": 600,
-    "fit": "ranger"
+    "fit": "ranger",
+    "wear_skill": "archery"
    },
    "note": "0.4.0 ranger armour: boosts Ranged accuracy and max hit (rng), not melee. Crafted from 1 hide + 1 bar."
   },
@@ -1762,10 +1762,10 @@
     "def": 4,
     "rng": 2,
     "level": 10,
-    "skill": "archery",
     "hit_xp": 0.5,
     "durability": 600,
-    "fit": "ranger"
+    "fit": "ranger",
+    "wear_skill": "archery"
    },
    "note": "0.4.0 ranger armour: boosts Ranged accuracy and max hit (rng), not melee. Crafted from 1 hide + 1 bar."
   },
@@ -1783,10 +1783,10 @@
     "def": 3,
     "rng": 3,
     "level": 20,
-    "skill": "archery",
     "hit_xp": 0.5,
     "durability": 900,
-    "fit": "ranger"
+    "fit": "ranger",
+    "wear_skill": "archery"
    },
    "note": "0.4.0 ranger armour: boosts Ranged accuracy and max hit (rng), not melee. Crafted from 1 hide + 1 bar."
   },
@@ -1804,10 +1804,10 @@
     "def": 9,
     "rng": 6,
     "level": 20,
-    "skill": "archery",
     "hit_xp": 0.5,
     "durability": 900,
-    "fit": "ranger"
+    "fit": "ranger",
+    "wear_skill": "archery"
    },
    "note": "0.4.0 ranger armour: boosts Ranged accuracy and max hit (rng), not melee. Crafted from 1 hide + 1 bar."
   },
@@ -1825,10 +1825,10 @@
     "def": 6,
     "rng": 3,
     "level": 20,
-    "skill": "archery",
     "hit_xp": 0.5,
     "durability": 900,
-    "fit": "ranger"
+    "fit": "ranger",
+    "wear_skill": "archery"
    },
    "note": "0.4.0 ranger armour: boosts Ranged accuracy and max hit (rng), not melee. Crafted from 1 hide + 1 bar."
   },
@@ -1846,10 +1846,10 @@
     "def": 4,
     "rng": 4,
     "level": 30,
-    "skill": "archery",
     "hit_xp": 1.0,
     "durability": 1200,
-    "fit": "ranger"
+    "fit": "ranger",
+    "wear_skill": "archery"
    },
    "note": "0.4.0 ranger armour: boosts Ranged accuracy and max hit (rng), not melee. Crafted from 1 hide + 1 bar."
   },
@@ -1867,10 +1867,10 @@
     "def": 12,
     "rng": 8,
     "level": 30,
-    "skill": "archery",
     "hit_xp": 1.0,
     "durability": 1200,
-    "fit": "ranger"
+    "fit": "ranger",
+    "wear_skill": "archery"
    },
    "note": "0.4.0 ranger armour: boosts Ranged accuracy and max hit (rng), not melee. Crafted from 1 hide + 1 bar."
   },
@@ -1888,10 +1888,10 @@
     "def": 8,
     "rng": 4,
     "level": 30,
-    "skill": "archery",
     "hit_xp": 1.0,
     "durability": 1200,
-    "fit": "ranger"
+    "fit": "ranger",
+    "wear_skill": "archery"
    },
    "note": "0.4.0 ranger armour: boosts Ranged accuracy and max hit (rng), not melee. Crafted from 1 hide + 1 bar."
   }
