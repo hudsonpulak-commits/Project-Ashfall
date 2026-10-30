@@ -25,6 +25,10 @@ var tick: int = 0
 var ground_layer: Node2D
 var entity_layer: Node2D             # y-sorted: objects + actors
 var _tileset: TileSet
+## batch_08_polish mood: the ground shader used to square every base tile (much darker
+## ground than the art). With that fixed, the ground and its transition layers are dimmed
+## together here (sprites, walls, roofs keep their painted values) to keep the old mood.
+const GROUND_MOOD := Color(0.74, 0.73, 0.70)
 var _overlay_src: Dictionary = {}    # "autotile/<id>" / "transitions/<id>" -> [source id, cols]
 var _build_queue: Array = []
 var _focus_chunk := Vector2i(999999, 999999)
@@ -859,6 +863,7 @@ func _job_new(c: Vector2i) -> Dictionary:
 	root.visible = false
 	root.add_child(layer)
 	layer.material = _ground_material(c, ch)
+	layer.modulate = GROUND_MOOD
 	ground_layer.add_child(root)
 	return {"c": c, "ch": ch, "root": root, "layer": layer, "stage": 0, "row": 0, "names": {}, "ovl": [],
 		"base": Vector2i(c.x * CHUNK, c.y * CHUNK), "objs": [], "oi": 0, "ol": []}
@@ -919,6 +924,8 @@ func _job_stage(j: Dictionary, c: Vector2i, ch: ChunkData, base: Vector2i) -> vo
 						l.tile_set = _tileset
 						l.position = (j["layer"] as TileMapLayer).position
 						l.name = ["trans0", "trans1", "autotile", "joins", "corners", "walls"][i]
+						if i < 2:
+							l.modulate = GROUND_MOOD   # transition rims match the base tiles they blend
 						(j["root"] as Node2D).add_child(l)
 						ovl.append(l)
 			2:   # overlays, one row per step
