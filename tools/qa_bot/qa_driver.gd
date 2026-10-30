@@ -3959,6 +3959,17 @@ func _frames_restyle() -> void:
 		DayNight.debug_set_phase("night")
 		await frames(50)
 		await _snap("restyle_town_%s_night" % t)
+	# restyle batch 04: wilderness (designer's preview spots, world tile coords)
+	var wild := {"shore_tropic": Vector2i(288, 242), "scorch_dead": Vector2i(102, -268), "fen_marsh": Vector2i(402, -46), "boreal_rocky": Vector2i(-42, -178), "meadow_roads": Vector2i(270, -34)}
+	for wn in wild:
+		p.place_at(w.find_free_tile_near(wild[wn], 8))
+		w.set_focus(p.tile, true)
+		DayNight.debug_set_phase("day")
+		await frames(90)
+		await _snap("restyle_wild_%s_day" % wn)
+		DayNight.debug_set_phase("night")
+		await frames(50)
+		await _snap("restyle_wild_%s_night" % wn)
 	DayNight.debug_set_phase("day")
 	# mixed sizes: the 16x16 player beside old 16x24 NPCs / keepers
 	main.camera.zoom = Vector2(5, 5)
