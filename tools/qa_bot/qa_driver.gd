@@ -3995,10 +3995,11 @@ func _frames_restyle() -> void:
 			for xx in range(-10, 11):
 				var q: Vector2i = cand + Vector2i(xx, yy)
 				var tn: String = WorldGen.TILE_NAMES[g.tile_at(q.x, q.y)]
-				if not tn in ["grass", "grass_lush", "grass_boreal", "grass_tropic", "dirt"] or g._town_objects.has(q) or g.in_town(q):
+				if tn.contains("water") or tn.contains("cliff") or tn.contains("moat") or tn.contains("wall") or tn.contains("tree") or tn.contains("rock") or g.tile_at(q.x, q.y) == WorldGen.TileType.WATER or g._town_objects.has(q) or g.in_town(q):
 					okc = false
 		if okc:
 			mo = cand
+	print("QA moat site ", mo)
 	if mo.x != 1 << 29:
 		for yy in range(-6, 7):
 			for xx in range(-8, 9):
