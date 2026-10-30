@@ -94,3 +94,62 @@ static func run(main, world: World, p: Player) -> void:
 	check(not DayNight.in_den(), "daylight again on the surface")
 	p.place_at(keep)
 	world.set_focus(p.tile, true)
+	_polish(world)
+
+
+## 0.4.2 B: graphics polish leftovers (road jogs, prop rows, town-edge scatter).
+static func _polish(world: World) -> void:
+	print("  -- 0.4.2 polish")
+	var gen := world.gen
+	check(gen.road_jog_fills > 0, "road jogs smoothed (%d notch / inner-corner cells filled)" % gen.road_jog_fills)
+	# no road cell left with a non-road notch flanked on 3 sides
+	var notches := 0
+	var n := 0
+	for p in gen.road_tiles.keys():
+		n += 1
+		if n > 20000:
+			break
+		for d in [Vector2i(1, 0), Vector2i(-1, 0), Vector2i(0, 1), Vector2i(0, -1)]:
+			var q: Vector2i = p + d
+			if gen.road_tiles.has(q) or gen._blocked_for_road(q) or gen._terrain_at(q.x, q.y) == WorldGen.TileType.WATER:
+				continue
+			var k := 0
+			for e in [Vector2i(1, 0), Vector2i(-1, 0), Vector2i(0, 1), Vector2i(0, -1)]:
+				var t: int = gen.road_tiles.get(q + e, -1)
+				k += int(t != -1 and t != WorldGen.TileType.BRIDGE)
+			notches += int(k >= 3)
+	check(notches == 0, "no one-tile notches left in road edges (%d)" % notches)
+	# rows: count runs of >= 4 identical breakable props on one line, spacing 1
+	var runs := 0
+	for p in gen._town_objects.keys():
+		var id: String = gen._town_objects[p]
+		if not gen._row_breakable(p, id):
+			continue
+		for ax in [Vector2i(1, 0), Vector2i(0, 1)]:
+			if gen._town_objects.get(p - ax, "") == id:
+				continue
+			var L := 1
+			while gen._town_objects.get(p + ax * L, "") == id:
+				L += 1
+			runs += int(L >= 4)
+	check(gen.prop_row_breaks > 0 and runs <= 6, "aligned rows of identical props broken up (%d nudged, %d straight runs of 4+ left)" % [gen.prop_row_breaks, runs])
+	# organic town edges: scatter in the band outside Millbrook and Oxley, none on roads
+	var sc := 0
+	var on_road := 0
+	for vid in ["millbrook", "oxley"]:
+		if not gen._village_rects.has(vid):
+			continue
+		var r: Rect2i = (gen._village_rects[vid] as Rect2i).grow(8)
+		for y in range(r.position.y, r.end.y):
+			for x in range(r.position.x, r.end.x):
+				var q := Vector2i(x, y)
+				if gen.village_at(q, 0) != "":
+					continue
+				var t := gen.tile_at(x, y)
+				if not (t in WorldGen.GRASS_TILES):
+					continue
+				var e := gen._edge_scatter(q)
+				if e != "" and gen.object_at(x, y, t) == e:
+					sc += 1
+					on_road += int(gen.road_tiles.has(q))
+	check(sc > 20 and on_road == 0, "village edges get organic clumps of tufts/flowers/pebbles (%d props, %d on roads)" % [sc, on_road])

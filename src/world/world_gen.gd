@@ -154,6 +154,7 @@ func _init(p_seed: int, town: Dictionary = {}, world_cfg: Dictionary = {}) -> vo
 		for pair in cfg.get("village_roads", []):
 			if GameData.villages.has(pair[0]) and towns.has(pair[1]):
 				_build_village_road(str(pair[0]), str(pair[1]))
+		_smooth_road_jogs()
 		_place_road_decor()
 		_road_cache[key] = {"roads": roads.duplicate(), "road_tiles": road_tiles.duplicate(), "bridges": bridges.duplicate(true),
 			"village_roads": village_roads.duplicate(true), "decor": road_decor.duplicate()}
@@ -167,6 +168,7 @@ func _init(p_seed: int, town: Dictionary = {}, world_cfg: Dictionary = {}) -> vo
 	_place_lore_0320()
 	_prune_short_fences(int(_road_cfg.get("decor", {}).get("fence_min_run", 3)))
 	_ensure_fence_tee()
+	_break_prop_rows()
 	_cells_ready = true
 
 
@@ -2343,6 +2345,10 @@ func object_at(x: int, y: int, tile: int) -> String:
 		return ""
 	if _near_road(p):
 		return ""   # 0.3.17 no scatter on or beside a road
+	if tile in GRASS_TILES:
+		var es := _edge_scatter(p)
+		if es != "":
+			return es
 	var r := hash01(x, y, 1)
 	var r2 := hash01(x, y, 2)
 	if tile != TileType.WATER:
@@ -2711,3 +2717,145 @@ func _place_settlement_clutter() -> void:
 					cap += 1
 					n += 1
 	story_marks["clutter"] = n
+
+
+# ---------------------------------------------------------------- 0.4.2 polish --
+var road_jog_fills := 0
+var prop_row_breaks := 0
+
+## 0.4.2 road jogs: a cell with road on three orthogonal sides (the notch
+## left where a 2-3 wide brush steps sideways) is filled, and so is the
+## inner corner of every bend, so the road edge runs smooth instead of
+## stair-stepping. Two passes; never into anything _blocked_for_road refuses.
+func _smooth_road_jogs() -> void:
+	road_jog_fills = 0
+	for _pass in 8:
+		var add := {}
+		for p in road_tiles.keys():
+			for d in [Vector2i(1, 0), Vector2i(-1, 0), Vector2i(0, 1), Vector2i(0, -1)]:
+				var q: Vector2i = p + d
+				if road_tiles.has(q) or add.has(q) or _blocked_for_road(q):
+					continue
+				if _terrain_at(q.x, q.y) == TileType.WATER:
+					continue
+				var n4 := 0
+				var surf := -1
+				for e in [Vector2i(1, 0), Vector2i(-1, 0), Vector2i(0, 1), Vector2i(0, -1)]:
+					var t: int = road_tiles.get(q + e, -1)
+					if t != -1 and t != TileType.BRIDGE:
+						n4 += 1
+						surf = t
+				var n8 := n4
+				for e in [Vector2i(1, 1), Vector2i(-1, 1), Vector2i(1, -1), Vector2i(-1, -1)]:
+					n8 += int(road_tiles.has(q + e))
+				if surf != -1 and (n4 >= 3 or (n4 == 2 and n8 >= 5)):
+					add[q] = surf
+		for q in add.keys():
+			road_tiles[q] = add[q]
+		road_jog_fills += add.size()
+		if add.is_empty():
+			break
+
+
+## 0.4.2 organic town edges: clumps (detail noise) of tufts, flowers, pebbles
+## and the odd bush in a ragged band just outside every town and village.
+func _edge_scatter(p: Vector2i) -> String:
+	var near := 0
+	if village_at(p, 3) != "" or town_at(p, 3) != "":
+		near = 2
+	elif village_at(p, 8) != "" or town_at(p, 9) != "":
+		near = 1
+	if near == 0 or _in_field(p) or _beside_stairs(p) or not mine_at(p, 2).is_empty():
+		return ""
+	var clump := _detail.get_noise_2d(p.x * 1.3 + 77.0, p.y * 1.3 - 31.0)
+	if clump < 0.05:
+		return ""
+	var r := hash01(p.x, p.y, 57)
+	if r > (0.05 if near == 1 else 0.11) + clump * 0.18:
+		return ""
+	var cin := region_map != null and region_map.ground_region(p, hash01(p.x, p.y, 33)) == "cinder"
+	var r2 := hash01(p.x, p.y, 58)
+	if cin:
+		return ["cinder_prop_grass_tuft", "cinder_prop_grass_tuft", "cinder_prop_pebbles", "cinder_prop_rocks"][int(r2 * 4.0) % 4]
+	var pool: Array = ["prop_grass_tuft", "prop_grass_tuft", "prop_grass_tuft", "vl_bush_flowers", "decor_flowers", "prop_pebbles", "prop_rocks"]
+	if near == 1 and r2 > 0.9:
+		return "vl_bush" if r2 < 0.96 else "bush"
+	return str(pool[int(r2 * pool.size()) % pool.size()])
+
+
+## 0.4.2 rows: three or more identical props/trees lined up on one row or
+## column (spacing <= 2) read as stamped. Every other member is nudged one
+## tile off the line (alternating sides) when the target cell is open, so the
+## run zigzags. Autotiled pieces (fences, walls), crops, shop/meta objects and
+## anything gatherable stay where they are.
+func _break_prop_rows() -> void:
+	prop_row_breaks = 0
+	var seen := {}
+	var moved := {}
+	for p in _town_objects.keys():
+		if not _town_objects.has(p) or moved.has(p):
+			continue
+		var id: String = _town_objects[p]
+		if not _row_breakable(p, id):
+			continue
+		for ax in [Vector2i(1, 0), Vector2i(0, 1)]:
+			if seen.has([p, ax]):
+				continue
+			# start of a run only
+			var back := false
+			for k in [1, 2]:
+				if _town_objects.get(p - ax * k, "") == id:
+					back = true
+			if back:
+				continue
+			var run: Array = [p]
+			var c: Vector2i = p
+			while true:
+				var nxt := Vector2i(1 << 30, 0)
+				for k in [1, 2]:
+					if _town_objects.get(c + ax * k, "") == id and _row_breakable(c + ax * k, id):
+						nxt = c + ax * k
+						break
+				if nxt.x == 1 << 30:
+					break
+				run.append(nxt)
+				c = nxt
+			for q in run:
+				seen[[q, ax]] = true
+			if run.size() < 3:
+				continue
+			var perp := Vector2i(ax.y, ax.x)
+			for i in range(1, run.size(), 2):
+				var q: Vector2i = run[i]
+				var sgn := 1 if (i / 2) % 2 == 0 else -1
+				for s2 in [sgn, -sgn]:
+					var t: Vector2i = q + perp * s2
+					if _nudge_ok(t):
+						_town_objects.erase(q)
+						_town_objects[t] = id
+						moved[t] = true
+						prop_row_breaks += 1
+						break
+
+
+func _row_breakable(p: Vector2i, id: String) -> bool:
+	if _town_meta.has(p) or autotile_group_at(p) != "" or _in_field(p):
+		return false
+	var d: Dictionary = GameData.objects.get(id, {})
+	var ty := str(d.get("type", ""))
+	return ty in ["prop", "scenery"] or (is_tree_id(id) and ty in ["tree", "gather", "prop", "scenery"]) or ty == "tree"
+
+
+func _nudge_ok(t: Vector2i) -> bool:
+	if _town_objects.has(t) or road_decor.has(t) or road_tiles.has(t) or _building_tiles.has(t) or _lore_doors.has(t):
+		return false
+	if _town_tiles.get(t, -1) in ROAD_SURFACES or _near_road(t) or _in_field(t):
+		return false
+	var tt := tile_at(t.x, t.y)
+	if tt in BLOCKING_TILES or tt == TileType.WATER or is_cliff(t.x, t.y):
+		return false
+	# do not plug a doorway approach
+	for d in [Vector2i(0, 1), Vector2i(0, -1), Vector2i(1, 0), Vector2i(-1, 0)]:
+		if _lore_doors.has(t + d):
+			return false
+	return true
