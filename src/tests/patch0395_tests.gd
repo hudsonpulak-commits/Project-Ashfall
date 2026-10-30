@@ -60,6 +60,8 @@ static func run(_main, _world, _p) -> void:
 			for bid in ["player", "npc"]:
 				var body := _img(bid, d)
 				var bfs := GameData.frame_size("actors", bid)
+				if bfs != fs:
+					continue   # restyle: the 16x16 gear rig only goes on 16x16 bodies (AI players use "player" now)
 				var nb := GameData.frame_count("actors", bid)
 				for f in GameData.frame_count("actors", hid):
 					n += 1
@@ -157,7 +159,7 @@ static func _tier_colours() -> void:
 					fb_pal.merge(_palette(img))
 			var c0: Color = doms[0]
 			for c in doms.slice(1):
-				var grey: bool = c0.s < 0.15 and c.s < 0.15
+				var grey: bool = c0.s < 0.25 and c.s < 0.25   # restyle: steel greys are slightly blue on the dark palette
 				var dh: float = absf(c0.h - c.h) * 360.0
 				dh = minf(dh, 360.0 - dh)
 				if not grey and (c0.s < 0.15 or c.s < 0.15 or dh > 25.0):

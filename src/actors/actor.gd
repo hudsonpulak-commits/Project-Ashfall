@@ -41,6 +41,7 @@ var _world_ref = null
 var _anim_t := 0.0
 var _pose := ""          # restyle: "attack" / "shoot" while a one-shot pose plays
 var _pose_t := 0.0
+var _pose_ms := 0
 var _pose_shown := ""
 var facing := Facing.new()            # 0.3.0: immediate facing from this tick's movement
 var _tick_now := 0
@@ -157,6 +158,7 @@ func stop() -> void:
 	path.clear()
 	path_line.clear()
 	action = {}
+	_pose = ""
 	set_status("")
 
 
@@ -656,7 +658,10 @@ func _process(delta: float) -> void:
 		_anim_t += delta   # continuous clock: the cycle never restarts per tick
 		var kneel := bool(action.get("kneel", false)) and path.is_empty()
 		if _pose != "":
-			_pose_t += delta
+			# game clock or wall clock, whichever is further (a one-shot never sticks)
+			_pose_t = maxf(_pose_t + delta, (Time.get_ticks_msec() - _pose_ms) / 1000.0)
+			if not path.is_empty():
+				_pose = ""
 			var pd := pose_def(sprite_id, _pose)
 			var nf := maxi(1, int(pd.get("frames", 4)))
 			if _pose_t * float(pd.get("fps", 8)) >= float(nf):
@@ -697,6 +702,7 @@ func start_pose(kind: String) -> void:
 		return
 	_pose = kind
 	_pose_t = 0.0
+	_pose_ms = Time.get_ticks_msec()
 
 
 func current_pose() -> String:

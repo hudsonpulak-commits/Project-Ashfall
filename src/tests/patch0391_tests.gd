@@ -66,7 +66,8 @@ static func run(main, world: World, p: Player) -> void:
 			if _same_as_mirrored_half(front, side, true) or _same_as_mirrored_half(back, side, false):
 				bad.append(sid)
 		var fs := GameData.frame_size("actors", sid)
-		if fs.x > 16 or fs.y <= 16:   # quadrupeds / small creatures: head-on is narrower than the side
+		# restyle: 16x16 humanoids (the gear rig, attack_paths) are not small creatures
+		if (fs.x > 16 or fs.y <= 16) and not GameData.sprite_def("actors", sid).has("attack_paths"):   # quadrupeds / small creatures: head-on is narrower than the side
 			var blob := front.get_data() == side.get_data() and back.get_data() == side.get_data()   # symmetric blob keeps one view
 			if not sym and not blob and (_width(front) >= _width(side) or _width(back) >= _width(side)):
 				narrow_bad.append("%s %d/%d/%d" % [sid, _width(side), _width(front), _width(back)])

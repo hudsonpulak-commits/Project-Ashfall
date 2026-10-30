@@ -9,7 +9,7 @@
     16,
     16
    ],
-   "minimap_color": "#55883f",
+   "minimap_color": "#4e5c38",
    "_order": 0
   },
   "path": {
@@ -18,7 +18,7 @@
     16,
     16
    ],
-   "minimap_color": "#a8885a",
+   "minimap_color": "#836344",
    "_order": 1
   },
   "water": {
@@ -27,7 +27,7 @@
     16,
     16
    ],
-   "minimap_color": "#3378a0",
+   "minimap_color": "#2e313e",
    "_order": 2
   },
   "sand": {
@@ -36,7 +36,7 @@
     16,
     16
    ],
-   "minimap_color": "#d8c486",
+   "minimap_color": "#a2835a",
    "_order": 3
   },
   "dirt": {
@@ -45,7 +45,7 @@
     16,
     16
    ],
-   "minimap_color": "#7a5c3c",
+   "minimap_color": "#654a34",
    "_order": 4
   },
   "cobble": {
@@ -54,7 +54,7 @@
     16,
     16
    ],
-   "minimap_color": "#605952",
+   "minimap_color": "#444349",
    "_order": 5
   },
   "planks": {
@@ -63,7 +63,7 @@
     16,
     16
    ],
-   "minimap_color": "#966e40",
+   "minimap_color": "#5b4431",
    "_order": 6
   },
   "marsh": {
@@ -72,7 +72,7 @@
     16,
     16
    ],
-   "minimap_color": "#466a40",
+   "minimap_color": "#36422c",
    "_order": 7
   },
   "wall": {
@@ -81,7 +81,7 @@
     16,
     16
    ],
-   "minimap_color": "#5a5048",
+   "minimap_color": "#805631",
    "_order": 8
   },
   "wall_front": {
@@ -90,7 +90,7 @@
     16,
     16
    ],
-   "minimap_color": "#6e5e50",
+   "minimap_color": "#744d2c",
    "_order": 9
   },
   "floor": {
@@ -99,7 +99,7 @@
     16,
     16
    ],
-   "minimap_color": "#a07a4c",
+   "minimap_color": "#493628",
    "_order": 10
   },
   "doorway": {
@@ -108,7 +108,7 @@
     16,
     16
    ],
-   "minimap_color": "#b08a58",
+   "minimap_color": "#5b4431",
    "_order": 11
   },
   "ash": {
@@ -117,7 +117,7 @@
     16,
     16
    ],
-   "minimap_color": "#3a3430",
+   "minimap_color": "#4d4346",
    "_order": 12
   },
   "ash_edge": {
@@ -126,7 +126,7 @@
     16,
     16
    ],
-   "minimap_color": "#6a2a18",
+   "minimap_color": "#494c3f",
    "_order": 13
   },
   "bridge": {
@@ -135,7 +135,7 @@
     16,
     16
    ],
-   "minimap_color": "#8a6438",
+   "minimap_color": "#613d23",
    "_order": 14
   },
   "stone_wall": {
@@ -144,7 +144,7 @@
     16,
     16
    ],
-   "minimap_color": "#7e7e84",
+   "minimap_color": "#615f66",
    "_order": 15
   },
   "stone_front": {
@@ -153,7 +153,7 @@
     16,
     24
    ],
-   "minimap_color": "#8e8e94",
+   "minimap_color": "#4e4d53",
    "_order": 16,
    "anchor": "bottom",
    "note": "restyle: 16x24 wall front, top 8px overhangs the wall-top cell to the north"
@@ -164,7 +164,7 @@
     16,
     16
    ],
-   "minimap_color": "#aaa8a4",
+   "minimap_color": "#4c4b51",
    "_order": 17
   },
   "palisade": {
@@ -173,7 +173,7 @@
     16,
     16
    ],
-   "minimap_color": "#6a3a18",
+   "minimap_color": "#72563c",
    "_order": 18
   },
   "palisade_front": {
@@ -182,7 +182,7 @@
     16,
     24
    ],
-   "minimap_color": "#7a4a22",
+   "minimap_color": "#5c4532",
    "_order": 19,
    "anchor": "bottom",
    "note": "restyle: 16x24 wall front, top 8px overhangs the wall-top cell to the north"
@@ -193,7 +193,7 @@
     16,
     16
    ],
-   "minimap_color": "#2e2e36",
+   "minimap_color": "#494850",
    "_order": 20
   },
   "basalt_front": {
@@ -202,7 +202,7 @@
     16,
     24
    ],
-   "minimap_color": "#3a3a44",
+   "minimap_color": "#3f4145",
    "_order": 21,
    "anchor": "bottom",
    "note": "restyle: 16x24 wall front, top 8px overhangs the wall-top cell to the north"
@@ -213,7 +213,7 @@
     16,
     16
    ],
-   "minimap_color": "#c8a878",
+   "minimap_color": "#b29265",
    "_order": 22
   },
   "sandstone_front": {
@@ -222,7 +222,7 @@
     16,
     24
    ],
-   "minimap_color": "#d2b888",
+   "minimap_color": "#947c5e",
    "_order": 23,
    "anchor": "bottom",
    "note": "restyle: 16x24 wall front, top 8px overhangs the wall-top cell to the north"
@@ -233,7 +233,7 @@
     16,
     24
    ],
-   "minimap_color": "#a8885a",
+   "minimap_color": "#4f3d2f",
    "_order": 24,
    "anchor": "bottom",
    "note": "restyle: 16x24 wall front, top 8px overhangs the wall-top cell to the north"
@@ -244,7 +244,7 @@
     16,
     24
    ],
-   "minimap_color": "#5a5a66",
+   "minimap_color": "#463e3b",
    "_order": 25,
    "anchor": "bottom",
    "note": "restyle: 16x24 wall front, top 8px overhangs the wall-top cell to the north"
@@ -255,7 +255,7 @@
     16,
     24
    ],
-   "minimap_color": "#d2c090",
+   "minimap_color": "#705d48",
    "_order": 26,
    "anchor": "bottom",
    "note": "restyle: 16x24 wall front, top 8px overhangs the wall-top cell to the north"
@@ -266,7 +266,7 @@
     16,
     16
    ],
-   "minimap_color": "#8a6838",
+   "minimap_color": "#5b4431",
    "_order": 27
   },
   "cobble_dark": {
@@ -275,7 +275,7 @@
     16,
     16
    ],
-   "minimap_color": "#3e3834",
+   "minimap_color": "#333539",
    "_order": 28
   },
   "plaster": {
@@ -284,7 +284,7 @@
     16,
     16
    ],
-   "minimap_color": "#e8e8f0",
+   "minimap_color": "#c7bdb2",
    "_order": 29
   },
   "plaster_wall": {
@@ -293,7 +293,7 @@
     16,
     16
    ],
-   "minimap_color": "#e8e0d0",
+   "minimap_color": "#b09c8a",
    "_order": 30
   },
   "plaster_front": {
@@ -302,7 +302,7 @@
     16,
     16
    ],
-   "minimap_color": "#f0e8d8",
+   "minimap_color": "#c6b6a3",
    "_order": 31
   },
   "road_stone": {
@@ -311,7 +311,7 @@
     16,
     16
    ],
-   "minimap_color": "#676057",
+   "minimap_color": "#59575e",
    "_order": 32,
    "note": "0.3.8 placeholder"
   },
@@ -321,7 +321,7 @@
     16,
     16
    ],
-   "minimap_color": "#9a7a4c",
+   "minimap_color": "#5c4330",
    "_order": 33,
    "note": "0.3.8 placeholder"
   },
@@ -341,7 +341,7 @@
     16,
     16
    ],
-   "minimap_color": "#9c9a92",
+   "minimap_color": "#4a6c36",
    "_order": 35,
    "note": "0.3.8 placeholder"
   },
@@ -351,7 +351,7 @@
     16,
     16
    ],
-   "minimap_color": "#c9c2b0",
+   "minimap_color": "#7b797d",
    "_order": 36,
    "note": "0.3.8 placeholder"
   },
@@ -361,7 +361,7 @@
     16,
     24
    ],
-   "minimap_color": "#bdb5a2",
+   "minimap_color": "#656468",
    "_order": 37,
    "note": "restyle: 16x24 wall front, top 8px overhangs the wall-top cell to the north",
    "anchor": "bottom"
@@ -372,7 +372,7 @@
     16,
     24
    ],
-   "minimap_color": "#8f8c84",
+   "minimap_color": "#5d5550",
    "_order": 38,
    "note": "restyle: 16x24 wall front, top 8px overhangs the wall-top cell to the north",
    "anchor": "bottom"
@@ -383,7 +383,7 @@
     16,
     16
    ],
-   "minimap_color": "#e2dccb",
+   "minimap_color": "#897f80",
    "_order": 39,
    "note": "0.3.8 placeholder"
   },
@@ -393,7 +393,7 @@
     16,
     16
    ],
-   "minimap_color": "#d6cfbb",
+   "minimap_color": "#8b8180",
    "_order": 40,
    "note": "0.3.8 placeholder"
   },
@@ -403,7 +403,7 @@
     16,
     16
    ],
-   "minimap_color": "#b88a5a",
+   "minimap_color": "#805631",
    "_order": 41,
    "note": "0.3.8 placeholder"
   },
@@ -413,7 +413,7 @@
     16,
     16
    ],
-   "minimap_color": "#a87a4c",
+   "minimap_color": "#83552f",
    "_order": 42,
    "note": "0.3.8 placeholder"
   },
@@ -423,7 +423,7 @@
     16,
     16
    ],
-   "minimap_color": "#4f8a3a",
+   "minimap_color": "#4d5b37",
    "_order": 43,
    "note": "0.3.10 PLACEHOLDER recolour - designer redraw (docs/ART_TODO_0.3.10.md)"
   },
@@ -433,7 +433,7 @@
     16,
     16
    ],
-   "minimap_color": "#5f7a5c",
+   "minimap_color": "#405b41",
    "_order": 44,
    "note": "0.3.10 PLACEHOLDER recolour - designer redraw (docs/ART_TODO_0.3.10.md)"
   },
@@ -443,7 +443,7 @@
     16,
     16
    ],
-   "minimap_color": "#7a9a34",
+   "minimap_color": "#6b7848",
    "_order": 45,
    "note": "0.3.10 PLACEHOLDER recolour - designer redraw (docs/ART_TODO_0.3.10.md)"
   },
@@ -453,7 +453,7 @@
     16,
     16
    ],
-   "minimap_color": "#8a8278",
+   "minimap_color": "#776c63",
    "_order": 46,
    "note": "0.3.10 PLACEHOLDER recolour - designer redraw (docs/ART_TODO_0.3.10.md)"
   },
@@ -463,7 +463,7 @@
     16,
     16
    ],
-   "minimap_color": "#4a3f38",
+   "minimap_color": "#3d6736",
    "_order": 47,
    "note": "0.3.11 designer cliff art; in-game the autotile pieces (autotile/cliff_*) draw the look over region ground"
   },
@@ -473,7 +473,7 @@
     16,
     16
    ],
-   "minimap_color": "#9a9088",
+   "minimap_color": "#3d6736",
    "_order": 48,
    "note": "0.3.11 designer cliff art; in-game the autotile pieces (autotile/cliff_*) draw the look over region ground"
   },
@@ -483,7 +483,7 @@
     16,
     16
    ],
-   "minimap_color": "#2f4a2a",
+   "minimap_color": "#3d6736",
    "_order": 49,
    "note": "0.3.11 designer cliff art; in-game the autotile pieces (autotile/cliff_*) draw the look over region ground"
   },
@@ -493,7 +493,7 @@
     16,
     16
    ],
-   "minimap_color": "#a89a88",
+   "minimap_color": "#4f4b45",
    "_order": 50,
    "note": "0.3.11 designer cliff art; in-game the autotile pieces (autotile/cliff_*) draw the look over region ground"
   },
@@ -503,7 +503,7 @@
     16,
     16
    ],
-   "minimap_color": "#5a5450",
+   "minimap_color": "#496c35",
    "note": "0.3.11 under the Highfen city wall art (blocking); the designer art draws over it"
   },
   "art_wall": {
@@ -512,7 +512,7 @@
     16,
     16
    ],
-   "minimap_color": "#6a5a4a",
+   "minimap_color": "#496c35",
    "note": "0.3.11 under layered-art building walls (blocking); the designer art draws over it"
   },
   "art_floor": {
@@ -521,7 +521,7 @@
     16,
     16
    ],
-   "minimap_color": "#8a7a64",
+   "minimap_color": "#6d6264",
    "note": "0.3.11 under layered-art building floors; the designer art draws over it"
   },
   "cliff_foot": {
@@ -531,7 +531,7 @@
     16
    ],
    "note": "0.3.11 designer cliff art; in-game the autotile pieces (autotile/cliff_*) draw the look over region ground",
-   "minimap_color": "#4a3f38",
+   "minimap_color": "#3d6736",
    "_order": 50
   }
  },
