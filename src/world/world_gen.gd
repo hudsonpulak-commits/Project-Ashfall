@@ -386,8 +386,8 @@ func _load_town(town: Dictionary) -> void:
 ## once per town to a 1-cell centreline (Zhang-Suen, batch_02 src/walls_thin.py thin());
 ## every cell within 1 of the thinned line gets [material, 25-bit 5x5 key] for the atlas
 ## LUT. Wall cells draw the surrounding floor underneath. Collision keeps the data tiles.
-const THIN_WALL_MAT := {"palisade": "palisade", "basalt_wall": "basalt", "stone_wall": "stone", "sandstone_wall": "sandstone"}
-const THIN_GATES := ["gate_wood", "gate_basalt", "gate_sand"]
+const THIN_WALL_MAT := {"palisade": "palisade", "basalt_wall": "basalt", "stone_wall": "stone", "sandstone_wall": "sandstone", "capital_wall": "capital"}
+const THIN_GATES := ["gate_wood", "gate_basalt", "gate_sand", "gate_capital"]
 var _wall_keys: Dictionary = {}     # Vector2i -> [mat, key]
 var _wall_ground: Dictionary = {}   # wall cell -> floor tile type drawn under it
 
