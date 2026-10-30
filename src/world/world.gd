@@ -193,9 +193,9 @@ func overlay_cells(p: Vector2i, nm: Callable) -> Array:
 	var nb: Array = []
 	for d in [Vector2i(0, -1), Vector2i(1, 0), Vector2i(0, 1), Vector2i(-1, 0), Vector2i(-1, -1), Vector2i(1, -1), Vector2i(1, 1), Vector2i(-1, 1)]:
 		nb.append(nm.call(p + d))
-	var dg := diag_piece(here, nb.slice(0, 4))
-	if dg != "" and _diag_src.has(dg):
-		out.append([3 if dg.contains("/back") else 4, _diag_src[dg], Vector2i.ZERO])
+	var dgp := diag_piece(here, nb.slice(0, 4))
+	if dgp != "" and _diag_src.has(dgp):
+		out.append([3 if dgp.contains("/back") else 4, _diag_src[dgp], Vector2i.ZERO])
 	var ov := Autotile.overlays_for(here, nb)
 	for i in ov.size():
 		var s: Array = _overlay_src.get("transitions/" + str(ov[i]), [])
