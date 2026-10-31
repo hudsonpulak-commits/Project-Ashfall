@@ -43,7 +43,7 @@ static func run(main, world: World, p: Player) -> void:
 				if ch is TileMapLayer:
 					if (ch as TileMapLayer).modulate != Color.WHITE:
 						mods[(ch as TileMapLayer).modulate] = true
-					elif String(ch.name) in ["trans0", "trans1", "g_autotile", "g_joins"]:
+					elif String(ch.name) in ["trans0", "trans1", "g_autotile", "g_joins", "g_shore2", "g_shore3"]:
 						lone += 1
 		check(mods.size() == 1 and mods.has(World.GROUND_MOOD) and lone == 0, "all ground layers (base, sand/shore/water edges, transitions) at %s share GROUND_MOOD (%s, %d untinted)" % [sp, str(mods.keys()), lone])
 	# dirt road art: no row band darker than the tile mean by a wide margin

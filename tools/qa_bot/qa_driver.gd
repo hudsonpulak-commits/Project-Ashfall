@@ -4434,5 +4434,44 @@ func _tint_spot() -> void:
 			await _snap("dirt_road_close")
 			cam.zoom = z0
 		res["dirt_road"] = [rd.x, rd.y]
+	# batch_10/11 edge frames: an ocean beach, a grass-path edge and a dirt road edge
+	var g = w.gen
+	var b: Rect2i = g.bounds()
+	var beach := Vector2i(1 << 30, 0)
+	for yy in range(-100, b.end.y, 7):
+		for xx in range(b.position.x, b.position.x + 200):
+			if g.tile_at(xx, yy) == WorldGen.TileType.SAND and g.tile_at(xx - 1, yy) == WorldGen.TileType.WATER and g.tile_at(xx + 3, yy) == WorldGen.TileType.SAND:
+				beach = Vector2i(xx + 2, yy)
+				break
+		if beach.x != 1 << 30:
+			break
+	var edges := {"beach": beach, "path_edge": Vector2i(1 << 30, 0), "road_edge": Vector2i(1 << 30, 0)}
+	var rt: Dictionary = g.road_tiles.duplicate()
+	rt.merge(g._town_tiles)
+	for q in rt.keys():
+		var tq: int = rt[q]
+		var key := "path_edge" if tq == WorldGen.TileType.PATH else ("road_edge" if tq == WorldGen.TileType.ROAD_DIRT else "")
+		if key == "" or (edges[key] as Vector2i).x != 1 << 30 or (q as Vector2i).length() < 60:
+			continue
+		if g.tile_at(q.x, q.y - 1) in WorldGen.GRASS_TILES and g.tile_at(q.x, q.y - 2) in WorldGen.GRASS_TILES:
+			edges[key] = q
+	for key in edges:
+		var e: Vector2i = edges[key]
+		if e.x == 1 << 30:
+			continue
+		p.place_at(w.find_free_tile_near(e, 3))
+		p.stop()
+		w.set_focus(p.tile, true)
+		label = key
+		await frames(60)
+		var cam2 = get_viewport().get_camera_2d()
+		var zz: Vector2 = cam2.zoom if cam2 else Vector2.ONE
+		if cam2 and key != "beach":
+			cam2.zoom = zz * 2.0
+		await frames(20)
+		await _snap(key)
+		if cam2:
+			cam2.zoom = zz
+		res[key] = [e.x, e.y]
 	label = ""
 	_notes["tintspot"] = res

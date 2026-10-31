@@ -33,11 +33,16 @@ const GROUND_MOOD := Color(0.74, 0.73, 0.70)
 ## 0.4.3 overlay layers. Ground pieces (transitions, cliffs, shores, boardwalk,
 ## pilings, moat bank) go to the GROUND_OVL layers, which all take GROUND_MOOD
 ## like the base tiles; walls and building pieces keep their painted colours.
-const OVL_NAMES := ["trans0", "trans1", "autotile", "joins", "corners", "walls", "g_autotile", "g_joins"]
+const OVL_NAMES := ["trans0", "trans1", "autotile", "joins", "corners", "walls", "g_autotile", "g_joins", "g_shore2", "g_shore3"]
 const G_AUTOTILE := 6
 const G_JOINS := 7
-const GROUND_OVL := [0, 1, 6, 7]
-const OVL_DRAW_ORDER := [0, 1, 6, 7, 2, 3, 4, 5]
+## batch_10: one shore piece per land type round a water cell (up to 3 layers)
+const G_SHORES := [6, 8, 9]
+const GROUND_OVL := [0, 1, 6, 7, 8, 9]
+const OVL_DRAW_ORDER := [0, 1, 6, 8, 9, 7, 2, 3, 4, 5]
+## 0.4.3 sand reads ~1.5x brighter than grass under GROUND_MOOD: sand tiles, sand
+## transitions and sand shore banks take this extra factor (TileData modulate)
+const SAND_TINT := Color(0.8, 0.8, 0.8)
 var _overlay_src: Dictionary = {}
 var _trans_var: Dictionary = {}       # transition id -> [[source, cols] v1, v2] (batch_08 wobble variants)    # "autotile/<id>" / "transitions/<id>" -> [source id, cols]
 var _build_queue: Array = []
@@ -106,6 +111,8 @@ func _build_tileset() -> TileSet:
 		var cols := maxi(1, tex.get_width() / tile_px)
 		for v in cols:
 			src.create_tile(Vector2i(v, 0))
+			if i == WorldGen.TileType.SAND:
+				src.get_tile_data(Vector2i(v, 0), 0).modulate = SAND_TINT
 			if tall:
 				src.get_tile_data(Vector2i(v, 0), 0).texture_origin = Vector2i(0, (tex.get_height() - tile_px) / 2)
 		ts.add_source(src, i)
@@ -127,9 +134,12 @@ func _build_tileset() -> TileSet:
 			src.texture_region_size = Vector2i(tile_px, tile_px)
 			var cols := maxi(1, tex.get_width() / tile_px)
 			var rows := maxi(1, tex.get_height() / tile_px)
+			var sandy := str(id) == "sand" or str(id) == "water_shore_sand"
 			for r in rows:
 				for cx in cols:
 					src.create_tile(Vector2i(cx, r))
+					if sandy:
+						src.get_tile_data(Vector2i(cx, r), 0).modulate = SAND_TINT
 			ts.add_source(src, sid)
 			_overlay_src[cat + "/" + id] = [sid, cols]
 			sid += 1
@@ -151,12 +161,36 @@ func _build_tileset() -> TileSet:
 			for r in maxi(1, vt.get_height() / tile_px):
 				for cx in vc:
 					vsrc.create_tile(Vector2i(cx, r))
+					if str(id) == "sand":
+						vsrc.get_tile_data(Vector2i(cx, r), 0).modulate = SAND_TINT
 			ts.add_source(vsrc, vid)
 			_overlay_src["transitions/%s#%d" % [id, v]] = [vid, vc]
 			var tva: Array = _trans_var.get(str(id), [])
 			tva.append([vid, vc])
 			_trans_var[str(id)] = tva
 			vid += 1
+	# batch_10_shores: 2 variants per shore sheet (sources 700+), picked by hash salt 17
+	var shid := 700
+	for id in GameData.sprites.get("autotile", {}).keys():
+		if not str(id).begins_with("water_shore") or not _overlay_src.has("autotile/" + str(id)):
+			continue
+		for v in [1, 2]:
+			var sp := "res://assets/sprites/autotile/variants/%s_v%d.png" % [id, v]
+			if not ResourceLoader.exists(sp):
+				continue
+			var st: Texture2D = load(sp)
+			var ssrc := TileSetAtlasSource.new()
+			ssrc.texture = st
+			ssrc.texture_region_size = Vector2i(tile_px, tile_px)
+			var sc := maxi(1, st.get_width() / tile_px)
+			for r in maxi(1, st.get_height() / tile_px):
+				for cx in sc:
+					ssrc.create_tile(Vector2i(cx, r))
+					if str(id) == "water_shore_sand":
+						ssrc.get_tile_data(Vector2i(cx, r), 0).modulate = SAND_TINT
+			ts.add_source(ssrc, shid)
+			_overlay_src["autotile/%s#%d" % [id, v]] = [shid, sc]
+			shid += 1
 	# restyle r5: thin unified walls -- one 16x28 atlas per material (16 top + 12 face drop,
 	# drawn at the cell's top-left), frame picked by the 5x5 occupancy key via the shared LUT
 	_wall_src.clear()
@@ -214,43 +248,64 @@ const SHORE_NOT_LAND := ["water", "moat", "bridge", "boardwalk", "planks", ""]
 const SHORE_ALIAS := {"ash_edge": "ash", "road_dirt": "path"}
 
 
-## restyle batch 04: on a water cell, a bank frame from autotile/water_shore_<land> (same
-## edge/corner bit rule as the floor transitions, bits where a neighbour is LAND),
-## <land> = the most common land floor around it, else the generic water_shore. Layer 2.
-func _add_shore(out: Array, nb: Array) -> void:
+## batch_10_shores: on a water cell, one bank piece per distinct land type around it
+## (autotile/water_shore_<land>, else the generic water_shore). Land L draws its own
+## edge bits plus only the corner bits the all-land frame keeps (so a corner piece
+## never rings foam over a neighbouring edge piece). Variant by hash salt 17.
+func _add_shore(out: Array, nb: Array, p: Vector2i) -> void:
 	var e := 0
-	var cnt := {}
+	var keys: Array = []
 	for k in 8:
 		var n: String = str(nb[k])
 		if n in SHORE_NOT_LAND:
+			keys.append("")
 			continue
 		if k < 4:
 			e |= 1 << k
 		var key: String = SHORE_ALIAS.get(n, n)
-		cnt[key] = int(cnt.get(key, 0)) + 1
-	if cnt.is_empty():
-		return
+		if not _overlay_src.has("autotile/water_shore_" + key):
+			key = "_"
+		keys.append(key)
 	var c := 0
-	var land := func(k): return not (str(nb[k]) in SHORE_NOT_LAND)
-	if land.call(4) and not (e & 9): c |= 1
-	if land.call(5) and not (e & 3): c |= 2
-	if land.call(6) and not (e & 6): c |= 4
-	if land.call(7) and not (e & 12): c |= 8
-	var f := e | (c << 4)
-	if f == 0:
+	if keys[4] != "" and not (e & 9): c |= 1
+	if keys[5] != "" and not (e & 3): c |= 2
+	if keys[6] != "" and not (e & 6): c |= 4
+	if keys[7] != "" and not (e & 12): c |= 8
+	if (e | (c << 4)) == 0:
 		return
-	var best := ""
-	var bn := 0
-	for k2 in cnt:
-		if int(cnt[k2]) > bn or (int(cnt[k2]) == bn and str(k2) < best):
-			best = k2
-			bn = int(cnt[k2])
-	var s: Array = _overlay_src.get("autotile/water_shore_" + best, [])
-	if s.is_empty():
-		s = _overlay_src.get("autotile/water_shore", [])
-	if s.is_empty():
-		return
-	out.append([G_AUTOTILE, s[0], Vector2i(f % int(s[1]), f / int(s[1]))])
+	var masks := {}
+	var cnt := {}
+	for k in 4:
+		if keys[k] != "":
+			masks[keys[k]] = int(masks.get(keys[k], 0)) | (1 << k)
+			cnt[keys[k]] = int(cnt.get(keys[k], 0)) + 1
+	for k in range(4, 8):
+		var bit := 1 << (k - 4)
+		if keys[k] != "" and (c & bit):
+			masks[keys[k]] = int(masks.get(keys[k], 0)) | (bit << 4)
+			cnt[keys[k]] = int(cnt.get(keys[k], 0)) + 1
+	var lands: Array = masks.keys()
+	lands.sort()
+	if lands.size() > G_SHORES.size():
+		# more lands than shore layers: fold the rarest into the most common one
+		var by_n: Array = lands.duplicate()
+		by_n.sort_custom(func(a, b): return int(cnt[a]) > int(cnt[b]) or (int(cnt[a]) == int(cnt[b]) and str(a) < str(b)))
+		for extra in by_n.slice(G_SHORES.size()):
+			masks[by_n[0]] = int(masks[by_n[0]]) | int(masks[extra])
+			masks.erase(extra)
+		lands = masks.keys()
+		lands.sort()
+	var v := int(gen.hash01(p.x, p.y, 17) * 3) if gen != null else 0
+	for i in lands.size():
+		var L: String = lands[i]
+		var base_id := "autotile/water_shore" if L == "_" else "autotile/water_shore_" + L
+		var s: Array = _overlay_src.get(base_id + ("#%d" % v if v > 0 else ""), _overlay_src.get(base_id, []))
+		if s.is_empty():
+			s = _overlay_src.get("autotile/water_shore", [])
+		if s.is_empty():
+			continue
+		var f: int = masks[L]
+		out.append([G_SHORES[i], s[0], Vector2i(f % int(s[1]), f / int(s[1]))])
 
 
 func overlay_cells(p: Vector2i, nm: Callable) -> Array:
@@ -308,17 +363,17 @@ func overlay_cells(p: Vector2i, nm: Callable) -> Array:
 					bm |= 1 << k
 			out.append([G_AUTOTILE, sb[0], Vector2i(bm, 0)])
 	elif here == "water" and nb[0] == "boardwalk":
-		_add_shore(out, nb)
+		_add_shore(out, nb, p)
 		# pilings under the deck edge, in the water cell south of a boardwalk
 		var sp: Array = _overlay_src.get("autotile/boardwalk_piling16", [])
 		if not sp.is_empty():
 			out.append([G_JOINS, sp[0], Vector2i(0, 0)])
 	elif here == "water":
-		_add_shore(out, nb)
+		_add_shore(out, nb, p)
 	elif here == "moat":
 		# restyle: moats get the same organic shore pass as natural water (replaces the
 		# moat_border bank + inner-corner pieces); bridge joins stay on layer 3.
-		_add_shore(out, nb)
+		_add_shore(out, nb, p)
 		var s: Array = _overlay_src.get("autotile/moat_border", [])
 		if not s.is_empty():
 			for k in 4:
