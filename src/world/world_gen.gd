@@ -368,6 +368,7 @@ func _load_town(town: Dictionary) -> void:
 	_town_rects[town["id"]] = rect
 	var tmap: Dictionary = town["tiles"]
 	var omap: Dictionary = town["objects"]
+	var gpat := float(town.get("grass_patches", 0.0))   # 0.4.4 organic grass patches on a town's dirt
 	for y in rows.size():
 		var row: String = rows[y]
 		for x in row.length():
@@ -375,6 +376,8 @@ func _load_town(town: Dictionary) -> void:
 			var p := origin + Vector2i(x, y)
 			if tmap.has(ch):
 				_town_tiles[p] = _floor_or_biome(str(tmap[ch]), p)
+				if gpat > 0.0 and str(tmap[ch]) == "dirt" and _grass_patch(p, gpat):
+					_town_tiles[p] = region_grass(p)
 			elif omap.has(ch):
 				_town_tiles[p] = _floor_or_biome(str(omap[ch]["ground"]), p)
 				_town_objects[p] = omap[ch]["object"]
@@ -387,6 +390,13 @@ func _load_town(town: Dictionary) -> void:
 	_blend_footprint_edge(rect)
 	_ensure_gate_approaches(town, origin)
 	_place_quest_givers(town, origin)
+
+
+## 0.4.4 organic grass patch test: coarse detail noise plus a little per-tile dither
+## so patch borders read ragged, not stamped. amount ~ share of dirt turned to grass.
+func _grass_patch(p: Vector2i, amount: float) -> bool:
+	var n := _detail.get_noise_2d(p.x * 0.45 + 311.0, p.y * 0.45 - 97.0) + (hash01(p.x, p.y, 61) - 0.5) * 0.22
+	return n > 0.5 - amount * 1.4
 
 
 ## restyle r5 thin walls: wall families (and gates, which count as wall) are thinned

@@ -8292,6 +8292,13 @@
     16
    ]
   },
+  "sign_camp": {
+   "path": "res://assets/sprites/buildings/sign_camp.png",
+   "frame_size": [
+    16,
+    16
+   ]
+  },
   "sign_house": {
    "path": "res://assets/sprites/buildings/sign_house.png",
    "frame_size": [

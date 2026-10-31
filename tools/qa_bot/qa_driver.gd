@@ -362,6 +362,8 @@ func _run() -> void:
 			await _gfx_audit()
 		"tintspot":
 			await _tint_spot()
+		"cinderspot":
+			await _cinder_spot()
 		_:
 			push_error("unknown QA scenario " + scenario)
 			await _finish(false)
@@ -4523,3 +4525,33 @@ func _tint_spot() -> void:
 		p.equipment["shield"] = had_w
 	label = ""
 	_notes["tintspot"] = res
+
+
+## 0.4.4 Cinderholt ground: day frames of the town and the Northern Guard camp.
+func _cinder_spot() -> void:
+	var p: Player = main.player
+	var w: World = main.world
+	DayNight.debug_set_phase("day")
+	for it in [["cinderholt_town", Vector2i(300, -253)], ["cinderholt_camp", Vector2i(318, -234)]]:
+		p.place_at(w.find_free_tile_near(it[1], 4))
+		p.stop()
+		w.set_focus(p.tile, true)
+		label = it[0]
+		await frames(90)
+		await _snap(it[0])
+	DayNight.debug_set_phase("night")
+	await frames(60)
+	await _snap("cinderholt_camp_night")
+	DayNight.debug_set_phase("day")
+	# 0.4.4 round guard posts (batch_15 roofs): player outside, day and night
+	for it in [["round_fenhollow", Vector2i(13, 33)], ["round_cinderholt", Vector2i(340, -153)]]:
+		for ph in ["day", "night"]:
+			DayNight.debug_set_phase(ph)
+			p.place_at(w.find_free_tile_near(it[1], 4))
+			p.stop()
+			w.set_focus(p.tile, true)
+			label = "%s_%s" % [it[0], ph]
+			await frames(90)
+			await _snap(label)
+	DayNight.debug_set_phase("day")
+	label = ""

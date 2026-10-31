@@ -183,6 +183,18 @@ func _setup_art_building(w, b: Dictionary) -> Node2D:
 		s.flip_h = flip
 		s.position = canvas
 		fg.add_child(s)
+	# 0.4.4 batch_15 roof_night: a full replacement roof crossfaded over the day roof at dusk
+	# (normal blend, same art_night_layer fade as the window layer; a child so it fades with the roof)
+	var rn: String = str(d.get("roof_night", ""))
+	if rn != "" and ResourceLoader.exists(rn) and fg.get_child_count() > 0:
+		var rs := Sprite2D.new()
+		rs.name = "RoofNight"
+		rs.centered = false
+		rs.texture = load(rn)
+		rs.flip_h = flip
+		rs.modulate.a = DayNight.lights_energy()
+		rs.add_to_group("art_night_layer")
+		fg.get_child(fg.get_child_count() - 1).add_child(rs)
 	fg.show_label = not bool(b.get("no_keeper", false))
 	# restyle batch 03: windmill sails -- their own layer, never fade, turn around the hub
 	var sp_: String = str(d.get("sails", ""))
