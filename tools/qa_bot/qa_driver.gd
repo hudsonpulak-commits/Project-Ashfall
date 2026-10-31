@@ -360,6 +360,8 @@ func _run() -> void:
 			await _frames_restyle()
 		"gfxaudit":
 			await _gfx_audit()
+		"tintspot":
+			await _tint_spot()
 		_:
 			push_error("unknown QA scenario " + scenario)
 			await _finish(false)
@@ -4378,3 +4380,34 @@ func _gfx_audit() -> void:
 		await _gfx_shot("%s_center_night" % tid, w.find_free_tile_near(c, 8))
 	DayNight.debug_set_phase("day")
 	main.camera.zoom = Vector2(3, 3)
+
+
+## 0.4.3 Hudson's tint-mismatch spot (wilds 169,-94) plus every overlay layer's
+## modulate in the chunks on screen (ground layers must carry GROUND_MOOD).
+func _tint_spot() -> void:
+	var p: Player = main.player
+	var w: World = main.world
+	DayNight.debug_set_phase("day")
+	var res := {"spots": {}}
+	for sp in [Vector2i(169, -94), Vector2i(166, -88)]:
+		p.place_at(w.find_free_tile_near(sp, 3))
+		p.stop()
+		w.set_focus(p.tile, true)
+		label = "tint_%d_%d" % [sp.x, sp.y]
+		await frames(60)
+		var layers := {}
+		for c in w.chunk_views.keys():
+			for l in (w.chunk_views[c] as Node2D).get_children():
+				if l is TileMapLayer and not (l as TileMapLayer).get_used_cells().is_empty():
+					layers[str(l.name)] = [l.modulate.r, l.modulate.g, l.modulate.b]
+		var names := []
+		for dy in range(-8, 14):
+			var row := ""
+			for dx in range(-6, 7):
+				var tn: String = WorldGen.TILE_NAMES[w.gen.tile_at(p.tile.x + dx, p.tile.y + dy)]
+				row += tn.substr(0, 1) if tn != "cliff_lip" and tn != "cliff_face" else ("L" if tn == "cliff_lip" else "F")
+			names.append(row)
+		res["spots"][label] = {"tile": [p.tile.x, p.tile.y], "layers": layers, "names": names}
+		await _snap(label)
+	label = ""
+	_notes["tintspot"] = res

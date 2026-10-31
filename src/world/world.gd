@@ -30,6 +30,14 @@ var _tileset: TileSet
 ## ground than the art). With that fixed, the ground and its transition layers are dimmed
 ## together here (sprites, walls, roofs keep their painted values) to keep the old mood.
 const GROUND_MOOD := Color(0.74, 0.73, 0.70)
+## 0.4.3 overlay layers. Ground pieces (transitions, cliffs, shores, boardwalk,
+## pilings, moat bank) go to the GROUND_OVL layers, which all take GROUND_MOOD
+## like the base tiles; walls and building pieces keep their painted colours.
+const OVL_NAMES := ["trans0", "trans1", "autotile", "joins", "corners", "walls", "g_autotile", "g_joins"]
+const G_AUTOTILE := 6
+const G_JOINS := 7
+const GROUND_OVL := [0, 1, 6, 7]
+const OVL_DRAW_ORDER := [0, 1, 6, 7, 2, 3, 4, 5]
 var _overlay_src: Dictionary = {}
 var _trans_var: Dictionary = {}       # transition id -> [[source, cols] v1, v2] (batch_08 wobble variants)    # "autotile/<id>" / "transitions/<id>" -> [source id, cols]
 var _build_queue: Array = []
@@ -242,7 +250,7 @@ func _add_shore(out: Array, nb: Array) -> void:
 		s = _overlay_src.get("autotile/water_shore", [])
 	if s.is_empty():
 		return
-	out.append([2, s[0], Vector2i(f % int(s[1]), f / int(s[1]))])
+	out.append([G_AUTOTILE, s[0], Vector2i(f % int(s[1]), f / int(s[1]))])
 
 
 func overlay_cells(p: Vector2i, nm: Callable) -> Array:
@@ -298,13 +306,13 @@ func overlay_cells(p: Vector2i, nm: Callable) -> Array:
 			for k in 4:
 				if nb[k] in BOARDWALK_JOINS:
 					bm |= 1 << k
-			out.append([2, sb[0], Vector2i(bm, 0)])
+			out.append([G_AUTOTILE, sb[0], Vector2i(bm, 0)])
 	elif here == "water" and nb[0] == "boardwalk":
 		_add_shore(out, nb)
 		# pilings under the deck edge, in the water cell south of a boardwalk
 		var sp: Array = _overlay_src.get("autotile/boardwalk_piling16", [])
 		if not sp.is_empty():
-			out.append([3, sp[0], Vector2i(0, 0)])
+			out.append([G_JOINS, sp[0], Vector2i(0, 0)])
 	elif here == "water":
 		_add_shore(out, nb)
 	elif here == "moat":
@@ -315,14 +323,14 @@ func overlay_cells(p: Vector2i, nm: Callable) -> Array:
 		if not s.is_empty():
 			for k in 4:
 				if nb[k] == "bridge":
-					out.append([3, s[0], Vector2i(16 + k, 0)])
+					out.append([G_JOINS, s[0], Vector2i(16 + k, 0)])
 					break
 	if gen != null and (here in CLIFF_NAMES or (nb.size() >= 4 and (str(nb[0]) in CLIFF_NAMES or str(nb[1]) in CLIFF_NAMES or str(nb[2]) in CLIFF_NAMES or str(nb[3]) in CLIFF_NAMES))):
 		for pc in cliff_pieces(p, here, nb):
 			var cs2: Array = _overlay_src.get("autotile/" + cliff_palette(p) + str(pc[0]), [])
 			if not cs2.is_empty():
 				var f2 := int(pc[1])
-				out.append([3 if str(pc[0]) == "cliff_shadow" else 2, cs2[0], Vector2i(f2 % int(cs2[1]), f2 / int(cs2[1]))])
+				out.append([G_JOINS if str(pc[0]) == "cliff_shadow" else G_AUTOTILE, cs2[0], Vector2i(f2 % int(cs2[1]), f2 / int(cs2[1]))])
 	return out
 
 
@@ -1021,15 +1029,16 @@ func _job_stage(j: Dictionary, c: Vector2i, ch: ChunkData, base: Vector2i) -> vo
 					j["stage"] = 2
 					j["row"] = 0
 					var ovl: Array = j["ovl"]
-					for i in 6:
+					for i in OVL_NAMES.size():
 						var l := TileMapLayer.new()
 						l.tile_set = _tileset
 						l.position = (j["layer"] as TileMapLayer).position
-						l.name = ["trans0", "trans1", "autotile", "joins", "corners", "walls"][i]
-						if i < 2:
-							l.modulate = GROUND_MOOD   # transition rims match the base tiles they blend
-						(j["root"] as Node2D).add_child(l)
+						l.name = OVL_NAMES[i]
+						if i in GROUND_OVL:
+							l.modulate = GROUND_MOOD   # 0.4.3 every ground layer takes the same mood tint
 						ovl.append(l)
+					for i in OVL_DRAW_ORDER:
+						(j["root"] as Node2D).add_child(ovl[i])
 			2:   # overlays, one row per step
 				var ly3: int = j["row"]
 				var names2: Dictionary = j["names"]
