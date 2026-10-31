@@ -437,7 +437,7 @@ static func _den_mask(nb: Array) -> int:
 ## normal), so a run crossing the Cinder border never switches set mid-line.
 ## Non-cliff cells (overhang / diagonal corner pieces) take a neighbouring run's set.
 var _run_pal: Dictionary = {}
-const CLIFF_RUN_MAX := 200
+const CLIFF_RUN_MAX := 120
 
 
 func cliff_palette(p: Vector2i) -> String:
@@ -479,8 +479,11 @@ func _run_palette(p: Vector2i) -> String:
 		cin += int(gen.region_map.region_at(c) == "cinder")
 		for d in WorldGen._DIRS8:
 			var q: Vector2i = c + d
-			if not seen.has(q) and _run_edge(q):
-				seen[q] = true
+			if seen.has(q):
+				continue
+			var e := _run_edge(q)
+			seen[q] = e   # negatives cached too (each cell is tested once)
+			if e:
 				todo.append(q)
 	var res := "cinder_" if cin * 2 > i else ""
 	for q in todo:
