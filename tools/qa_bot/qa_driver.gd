@@ -4409,5 +4409,30 @@ func _tint_spot() -> void:
 			names.append(row)
 		res["spots"][label] = {"tile": [p.tile.x, p.tile.y], "layers": layers, "names": names}
 		await _snap(label)
+	# 0.4.3 dirt road close-up (banding check): the middle of the first village road on dirt
+	var rd := Vector2i(1 << 30, 0)
+	for vid in w.gen.village_roads.keys():
+		var tl: Array = w.gen.village_roads[vid]
+		for i in range(tl.size() / 3, tl.size()):
+			var q: Vector2i = tl[i]
+			if w.gen.tile_at(q.x, q.y) == WorldGen.TileType.ROAD_DIRT and w.gen.tile_at(q.x + 1, q.y + 1) == WorldGen.TileType.ROAD_DIRT:
+				rd = q
+				break
+		if rd.x != 1 << 30:
+			break
+	if rd.x != 1 << 30:
+		p.place_at(w.find_free_tile_near(rd + Vector2i(2, 0), 3))
+		p.stop()
+		w.set_focus(p.tile, true)
+		label = "dirt_road_close"
+		await frames(60)
+		var cam = get_viewport().get_camera_2d()
+		if cam:
+			var z0: Vector2 = cam.zoom
+			cam.zoom = z0 * 2.0
+			await frames(20)
+			await _snap("dirt_road_close")
+			cam.zoom = z0
+		res["dirt_road"] = [rd.x, rd.y]
 	label = ""
 	_notes["tintspot"] = res

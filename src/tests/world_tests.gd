@@ -61,6 +61,7 @@ static func run(main, world: World, p: Player) -> void:
 	preload("res://src/tests/patch0320_tests.gd").run(main, world, p)   # 0.3.20 villages, lore, scene life
 	preload("res://src/tests/patch040_tests.gd").run(main, world, p)   # 0.4.0
 	preload("res://src/tests/patch042_tests.gd").run(main, world, p)   # 0.4.2 rat den
+	preload("res://src/tests/patch043_tests.gd").run(main, world, p)   # 0.4.3 ground tint, road bands
 	Patch0396VideoTests.run(main, world, p)   # 0.3.9.6 title video
 	p.place_at(world.gen.town_spawn("fenhollow"))
 	world.set_focus(p.tile, true)
