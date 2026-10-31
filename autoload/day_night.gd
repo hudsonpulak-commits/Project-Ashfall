@@ -327,12 +327,6 @@ func _apply_lights() -> void:
 
 
 func _process(_dt: float) -> void:
-	var _pt0 := Time.get_ticks_usec()
-	_process_timed(_dt)
-	World.pmark("daynight", _pt0)
-
-
-func _process_timed(_dt: float) -> void:
 	refresh()
 
 

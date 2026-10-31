@@ -34,12 +34,6 @@ func _init() -> void:
 
 
 func _process(_dt: float) -> void:
-	var _pt0 := Time.get_ticks_usec()
-	_process_timed(_dt)
-	World.pmark("minimap", _pt0)
-
-
-func _process_timed(_dt: float) -> void:
 	if player and player.tile != _last_tile:
 		_last_tile = player.tile
 	queue_redraw()   # cheap; also animates AI dots

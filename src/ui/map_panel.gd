@@ -156,12 +156,6 @@ func _refresh_toggles() -> void:
 
 
 func _process(dt: float) -> void:
-	var _pt0 := Time.get_ticks_usec()
-	_process_timed(dt)
-	World.pmark("map_panel", _pt0)
-
-
-func _process_timed(dt: float) -> void:
 	if not visible:
 		return
 	_blink += dt

@@ -1061,12 +1061,6 @@ func _set_focus_inner(c: Vector2i, immediate: bool) -> void:
 
 
 func _process(delta: float) -> void:
-	var _pt0 := Time.get_ticks_usec()
-	_process_timed(delta)
-	World.pmark("world", _pt0)
-
-
-func _process_timed(delta: float) -> void:
 	var d := (1.0 / 60.0) if Tick.fixed_step else delta   # 0.3.19 QA: one frame is one fixed slice
 	if _pf_thread == null and _focus_chunk.x != 999999 and Tick.running:
 		_pf_start()   # once the game is running, never during loading
@@ -1102,27 +1096,6 @@ func _process_timed(delta: float) -> void:
 
 
 var perf_on := false   # set by the QA perf scenario
-static var perf_inst = null   # 0.4.3 the world whose perf_log other nodes' _process timings go to
-static var _pacc: Dictionary = {}
-static var _pacc_frame := -1
-
-
-## 0.4.3 perf: time a node's _process into perf_log ("p:<name>"); per-frame sums for
-## nodes with many instances (actors, enemies).
-static func pmark(what: String, t0: int, sum: bool = false) -> void:
-	if perf_inst == null or not is_instance_valid(perf_inst) or not perf_inst.perf_on:
-		return
-	var ms := (Time.get_ticks_usec() - t0) / 1000.0
-	if not sum:
-		perf_inst.perf_log.append(["p:" + what, ms])
-		return
-	var fr := Engine.get_process_frames()
-	if fr != _pacc_frame:
-		for k in _pacc:
-			perf_inst.perf_log.append(["p:" + k, _pacc[k]])
-		_pacc.clear()
-		_pacc_frame = fr
-	_pacc[what] = float(_pacc.get(what, 0.0)) + ms
 var perf_log: Array = []   # 0.3.16 [what, ms] for the QA perf scenario
 const BUILD_BUDGET_MS := 4.0   # 0.3.16 chunk views are built in slices within this per-frame budget
 var _job: Dictionary = {}      # the chunk view being built (time-sliced)

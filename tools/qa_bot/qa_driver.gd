@@ -3568,7 +3568,6 @@ func _perf0316() -> void:
 	p.stop()
 	w.set_focus(p.tile, true)
 	w.perf_on = true
-	World.perf_inst = w
 	await frames(150)   # 0.3.16 let the spawn town's AI views settle (a teleport, not a walk)
 	w.perf_log.clear()
 	var ft: Array = []
@@ -3604,7 +3603,7 @@ func _perf0316() -> void:
 		if f_ms > 33.0 or g_ms > 33.0:
 			var tags: Array = []
 			for e in w.perf_log.slice(pl_prev):
-				if e[1] > 4.0:
+				if e[1] > 5.0:
 					tags.append("%s=%.0f" % [e[0], e[1]])
 			spikes.append([snappedf(f_ms, 0.1), p.tile.x, p.tile.y, ft.size(), ",".join(tags)])
 		pl_prev = w.perf_log.size()

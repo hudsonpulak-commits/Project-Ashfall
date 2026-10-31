@@ -790,12 +790,6 @@ func _idle_think(t: int, world, a: Dictionary) -> bool:
 ## Keep a showing bubble on screen when its speaker stands near an edge.
 ## Runs only while a bubble is visible (on-screen agents only).
 func _process(delta: float) -> void:
-	var _pt0 := Time.get_ticks_usec()
-	_process_timed(delta)
-	World.pmark("ai_player", _pt0, true)
-
-
-func _process_timed(delta: float) -> void:
 	super._process(delta)
 	Overhead.clamp_on_screen(_label, self)
 	if _bubble == null or not _bubble.visible:

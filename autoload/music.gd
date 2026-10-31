@@ -136,12 +136,6 @@ func set_volume(v: float) -> void:
 
 
 func _process(delta: float) -> void:
-	var _pt0 := Time.get_ticks_usec()
-	_process_timed(delta)
-	World.pmark("music", _pt0)
-
-
-func _process_timed(delta: float) -> void:
 	step(delta)
 
 

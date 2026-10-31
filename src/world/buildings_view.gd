@@ -354,12 +354,6 @@ func step(dt: float) -> void:
 
 
 func _process(delta: float) -> void:
-	var _pt0 := Time.get_ticks_usec()
-	_process_timed(delta)
-	World.pmark("buildings", _pt0)
-
-
-func _process_timed(delta: float) -> void:
 	if world == null:
 		return
 	var d := (1.0 / 60.0) if Tick.fixed_step else delta
