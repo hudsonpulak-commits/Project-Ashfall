@@ -1854,18 +1854,39 @@ func _cliff_edge(p: Vector2i) -> int:
 	return res
 
 
-## The cliff tile at p (or -1), with the 0.3.11 diagonal-gap fill: where two
-## blocking cliff tiles touch only at a corner, one of the two open corner cells
-## becomes cliff too (the higher one, unless it sits by stairs / a road / a town).
+## The cliff tile at p (or -1). 0.4.3 batch_12: the 47-blob cliff autotile draws
+## diagonal runs directly, so the old diagonal gap fill and corner-stub drop are gone
+## (a diagonal step between two blocking cliff cells is forbidden by the pathfinder);
+## single-cell stubs (a cliff cell, or a face + its foot, touching no other cliff) go.
 func _cliff_tile(p: Vector2i, t: int) -> int:
 	var r := _cliff_tile_raw(p, t)
-	if r in _CLIFF_BLOCK and _cliff_lone_diag(p):
-		return -1   # 0.3.16 Map Tester: a blocking cliff tile that joins the run only at a corner is dropped
+	if r in _CLIFF_BLOCK and _cliff_stub(p, r):
+		return -1
 	if r == TileType.CLIFF_STAIRS:
 		r = _thin_stair(p)
-	if r >= 0 or t == TileType.WATER or t == TileType.ASH or t == TileType.ASH_EDGE:
-		return r
-	return TileType.CLIFF_LIP if cliff_gap_fill(p) else -1
+	return r
+
+
+const _DIRS8 := [Vector2i(0, -1), Vector2i(1, -1), Vector2i(1, 0), Vector2i(1, 1), Vector2i(0, 1), Vector2i(-1, 1), Vector2i(-1, 0), Vector2i(-1, -1)]
+
+
+## 0.4.3 a lone cliff cell: no other cliff (blocking or stairs) among the 8 neighbours
+## of it and of its face/foot partner.
+func _cliff_stub(p: Vector2i, r: int) -> bool:
+	var cells: Array = [p]
+	if r == TileType.CLIFF_FACE and _raw_at(p + Vector2i(0, 1)) == TileType.CLIFF_FOOT:
+		cells.append(p + Vector2i(0, 1))
+	elif r == TileType.CLIFF_FOOT:
+		cells.append(p + Vector2i(0, -1))
+	for c in cells:
+		for d in _DIRS8:
+			var q: Vector2i = c + d
+			if q in cells:
+				continue
+			var rq := _raw_at(q)
+			if rq in _CLIFF_BLOCK or rq == TileType.CLIFF_STAIRS:   # (a thinned stair still counts: _thin_stair recurses)
+				return false
+	return true
 
 
 ## 0.3.17 stairs come singly: along a cliff line a run of raw stairs keeps one
@@ -2564,14 +2585,15 @@ static func is_tree_id(id: String) -> bool:
 func _lip_stub(n: Vector2i, d: Vector2i) -> bool:
 	var perp := Vector2i(d.y, d.x)
 	for q in [n + d, n + perp, n - perp]:
-		if _raw_at(q) in _CLIFF_BLOCK and not _cliff_lone_diag(q):   # real cliff that stays (not itself a dropped stub)
+		var rq := _raw_at(q)
+		if rq in _CLIFF_BLOCK and not _cliff_stub(q, rq):   # real cliff that stays (not itself a dropped stub)
 			return false
 	var k := 0
 	for dd in [Vector2i(1, 1), Vector2i(-1, 1), Vector2i(1, -1), Vector2i(-1, -1)]:
 		var c: Vector2i = n + dd
 		var rc := _raw_at(c)
-		k += int((rc in _CLIFF_BLOCK and not _cliff_lone_diag(c)) or (rc == -1 and cliff_gap_fill(c)))
-	return k == 1   # touches cliff only by a corner (diagonal gap fills included)
+		k += int(rc in _CLIFF_BLOCK and not _cliff_stub(c, rc))
+	return k == 1   # touches cliff only by a corner
 
 
 ## 0.3.20 lore props and town clutter. Props are scenery (they do not block

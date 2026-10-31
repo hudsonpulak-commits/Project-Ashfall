@@ -380,12 +380,14 @@ func overlay_cells(p: Vector2i, nm: Callable) -> Array:
 				if nb[k] == "bridge":
 					out.append([G_JOINS, s[0], Vector2i(16 + k, 0)])
 					break
-	if gen != null and (here in CLIFF_NAMES or (nb.size() >= 4 and (str(nb[0]) in CLIFF_NAMES or str(nb[1]) in CLIFF_NAMES or str(nb[2]) in CLIFF_NAMES or str(nb[3]) in CLIFF_NAMES))):
-		for pc in cliff_pieces(p, here, nb):
-			var cs2: Array = _overlay_src.get("autotile/" + cliff_palette(p) + str(pc[0]), [])
+	if gen != null and (here in CLIFF_NAMES or nb.any(func(n): return str(n) in CLIFF_NAMES)):
+		var pcs := cliff_pieces(p, here, nb)
+		var pal := cliff_palette(p) if not pcs.is_empty() else ""
+		for pc in pcs:
+			var cs2: Array = _overlay_src.get("autotile/" + pal + str(pc[0]), [])
 			if not cs2.is_empty():
 				var f2 := int(pc[1])
-				out.append([G_JOINS if str(pc[0]) == "cliff_shadow" else G_AUTOTILE, cs2[0], Vector2i(f2 % int(cs2[1]), f2 / int(cs2[1]))])
+				out.append([int(pc[2]), cs2[0], Vector2i(f2 % int(cs2[1]), f2 / int(cs2[1]))])
 	return out
 
 
@@ -431,80 +433,160 @@ static func _den_mask(nb: Array) -> int:
 	return m
 
 
+## 0.4.3 one colour per connected cliff run: the majority region of the run (cinder or
+## normal), so a run crossing the Cinder border never switches set mid-line.
+## Non-cliff cells (overhang / diagonal corner pieces) take a neighbouring run's set.
+var _run_pal: Dictionary = {}
+const CLIFF_RUN_MAX := 900
+
+
 func cliff_palette(p: Vector2i) -> String:
-	return "cinder_" if gen.region_map != null and gen.region_map.region_at(p) == "cinder" else ""
+	if gen.region_map == null:
+		return ""
+	if not _is_cliff_cell(p):
+		for d in WorldGen._DIRS8:
+			if _is_cliff_cell(p + d):
+				return _run_palette(p + d)
+		return "cinder_" if gen.region_map.region_at(p) == "cinder" else ""
+	return _run_palette(p)
 
 
-## The piece drawn on a south edge cell (face variants by cell hash).
-func _south_piece(q: Vector2i) -> String:
-	if gen.tile_at(q.x, q.y) == WorldGen.TileType.CLIFF_STAIRS:
-		return "cliff_stairs"
-	var m: int = gen.cliff_mask(q)
-	if m & 2:
-		return "cliff_corner_outer_se"
-	if m & 8:
-		return "cliff_corner_outer_sw"
-	return ["cliff_face_s_a", "cliff_face_s_b", "cliff_face_s_c", "cliff_face_s_d"][posmod(q.x * 7 + q.y * 3, 4)]
+func _is_cliff_cell(q: Vector2i) -> bool:
+	return gen.tile_at(q.x, q.y) in [WorldGen.TileType.CLIFF_FACE, WorldGen.TileType.CLIFF_LIP, WorldGen.TileType.CLIFF_STAIRS, WorldGen.TileType.CLIFF_FOOT]
 
 
+func _run_palette(p: Vector2i) -> String:
+	if _run_pal.has(p):
+		return _run_pal[p]
+	var seen := {p: true}
+	var todo: Array = [p]
+	var i := 0
+	var cin := 0
+	while i < todo.size() and todo.size() < CLIFF_RUN_MAX:
+		var c: Vector2i = todo[i]
+		i += 1
+		cin += int(gen.region_map.region_at(c) == "cinder")
+		for d in WorldGen._DIRS8:
+			var q: Vector2i = c + d
+			if not seen.has(q) and _is_cliff_cell(q):
+				seen[q] = true
+				todo.append(q)
+	var res := "cinder_" if cin * 2 > i else ""
+	if todo.size() < CLIFF_RUN_MAX:
+		for q in todo:
+			_run_pal[q] = res   # the whole run is known: cache it for every cell
+	else:
+		_run_pal[p] = res
+	if _run_pal.size() > 200000:
+		_run_pal.clear()
+	return res
+
+
+## 0.4.3 batch_12 47-blob cliff autotile (data/cliff_blob_lut.json): lower-neighbour
+## mask N1 NE2 E4 SE8 S16 SW32 W64 NW128 -> column; 3 variant rows of 16x32 frames
+## (top half on the cell, bottom half on the cell below when the drop is south);
+## end caps where the run stops beside same-level non-cliff ground.
+var _blob_lut: Dictionary = {}
+const BLOB_SALT := 19
+
+
+func _lut() -> Dictionary:
+	if _blob_lut.is_empty():
+		var f := FileAccess.open("res://data/cliff_blob_lut.json", FileAccess.READ)
+		if f:
+			_blob_lut = JSON.parse_string(f.get_as_text())
+	return _blob_lut
+
+
+func cliff_blob_mask(p: Vector2i) -> int:
+	var l: int = gen.cliff_level(p)
+	var m := 0
+	for k in 8:
+		var q: Vector2i = p + WorldGen._DIRS8[k]
+		if gen.cliff_level(q) < l and gen._terrain_at(q.x, q.y) != WorldGen.TileType.WATER:
+			m |= 1 << k
+	return m
+
+
+## [sheet, column, cols, canonical mask] for the blob piece at p (sheet "" = none).
+func cliff_blob_frame(p: Vector2i) -> Array:
+	var lut := _lut()
+	var m := cliff_blob_mask(p)
+	if m == 0 or lut.is_empty():
+		return ["", 0, 0, 0]
+	var col := int(lut["mask_to_frame"][str(m)])
+	var c := int(lut["canonical"][col])
+	var caps: Dictionary = lut["caps"]
+	var l: int = gen.cliff_level(p)
+	for side in ["E", "W", "N", "S"]:
+		var key := "%d|%s" % [c, side]
+		if not caps.has(key):
+			continue
+		var n: Vector2i = p + {"E": Vector2i(1, 0), "W": Vector2i(-1, 0), "N": Vector2i(0, -1), "S": Vector2i(0, 1)}[side]
+		if gen.cliff_level(n) == l and not _is_cliff_cell(n) and gen.tile_at(n.x, n.y) != WorldGen.TileType.CLIFF_SHADOW:
+			return ["cliff_blob_caps", int(caps[key]["frame"]), 10, c]
+	return ["cliff_blob", col, 47, c]
+
+
+func _cvar(p: Vector2i) -> int:
+	return int(gen.hash01(p.x, p.y, BLOB_SALT) * 3) % 3
+
+
+func _cvar_sfx(p: Vector2i) -> String:
+	return ["", "_b", "_c"][_cvar(p)]
+
+
+## Pieces for a cell: [sheet name, frame, layer]. Tops on G_AUTOTILE, overhang halves
+## on G_SHORES[1] (never a water cell here), shadows on G_JOINS.
 func cliff_pieces(p: Vector2i, here: String, nb: Array) -> Array:
 	var out: Array = []
 	if here == "cliff_shadow":
-		out.append(["cliff_shadow", 0])
-	if here in ["cliff_face", "cliff_lip", "cliff_stairs"]:
-		var m: int = gen.cliff_mask(p)
-		if m & 4:
-			out.append([_south_piece(p), 0])
-			return out
-		if here == "cliff_stairs":
-			return out   # east / west / north ramps: open ground
-		var v := "_b" if posmod(p.y * 5 + p.x * 3, 3) == 0 else ""
-		if (m & 1) and (m & 2):
-			out.append(["cliff_corner_outer_ne", 0])
-		elif (m & 1) and (m & 8):
-			out.append(["cliff_corner_outer_nw", 0])
-		elif m & 1:
-			out.append(["cliff_rim_n" + v, 0])
-		elif m & 2:
-			out.append(["cliff_rim_e" + v, 0])
-		elif m & 8:
-			out.append(["cliff_rim_w" + v, 0])
-		else:
-			var ic := _inner_corner(p)
-			if ic != "":
-				out.append([ic, 0])
+		out.append(["cliff_shadow" + _cvar_sfx(p), 0, G_JOINS])
+	if here == "cliff_stairs":
+		if gen.cliff_mask(p) & 4:
+			out.append(["cliff_stairs" + _cvar_sfx(p), 0, G_AUTOTILE])
+		return out   # east / west / north ramps: open ground
+	if here in ["cliff_face", "cliff_lip"]:
+		var bf := cliff_blob_frame(p)
+		if bf[0] != "":
+			out.append([bf[0], _cvar(p) * 2 * int(bf[2]) + int(bf[1]), G_AUTOTILE])
 		return out
-	# the cell below a south edge: the overhang half of the 16x32 piece
+	# the cell below a south drop: the bottom half of the 16x32 piece above
 	var up := p + Vector2i(0, -1)
-	if nb.size() > 0 and str(nb[0]) in ["cliff_face", "cliff_stairs", "cliff_lip"] and (gen.cliff_mask(up) & 4):
-		out.append([_south_piece(up), 1])
-		return out
-	# plateau cells whose only lower neighbour is diagonal: inner corner
-	if not (here in CLIFF_NAMES) and gen.cliff_mask(p) == 0:
-		var ic2 := _inner_corner(p)
-		if ic2 != "":
-			out.append([ic2, 0])
+	var nu: String = str(nb[0]) if nb.size() > 0 else WorldGen.TILE_NAMES[gen.tile_at(up.x, up.y)]
+	if nu == "cliff_stairs" and (gen.cliff_mask(up) & 4):
+		out.append(["cliff_stairs" + _cvar_sfx(up), 1, G_SHORES[1]])
+	elif nu in ["cliff_face", "cliff_lip"]:
+		var bu := cliff_blob_frame(up)
+		if bu[0] != "" and (int(bu[3]) & 16):
+			out.append([bu[0], (_cvar(up) * 2 + 1) * int(bu[2]) + int(bu[1]), G_SHORES[1]])
+	# plateau cells whose lower ground is only diagonal: the blob's diagonal frames
+	if not (here in CLIFF_NAMES) and gen.cliff_mask(p) == 0 and not gen.cliff_free(p):
+		var bd := cliff_blob_frame(p)
+		if bd[0] != "":
+			out.append([bd[0], _cvar(p) * 2 * int(bd[2]) + int(bd[1]), G_AUTOTILE])
 	return out
 
 
-func _inner_corner(p: Vector2i) -> String:
-	var l: int = gen.cliff_level(p)
-	if gen.cliff_level(p + Vector2i(1, 1)) < l:
-		return "cliff_corner_inner_se"
-	if gen.cliff_level(p + Vector2i(-1, 1)) < l:
-		return "cliff_corner_inner_sw"
-	if gen.cliff_level(p + Vector2i(1, -1)) < l:
-		return "cliff_corner_inner_ne"
-	if gen.cliff_level(p + Vector2i(-1, -1)) < l:
-		return "cliff_corner_inner_nw"
-	return ""
-
-
-## Cliff cells draw region ground underneath; the pieces above carry the look.
+## Cliff cells draw ground underneath (the batch_12 pieces are see-through): the most
+## common ground among the 8 neighbours, so no square region-colour patch shows.
 func cliff_base_tile(p: Vector2i, t: int) -> int:
-	if t in [WorldGen.TileType.CLIFF_FACE, WorldGen.TileType.CLIFF_SHADOW, WorldGen.TileType.CLIFF_LIP, WorldGen.TileType.CLIFF_STAIRS, WorldGen.TileType.CLIFF_FOOT]:
-		return gen.region_grass(p)
-	return t
+	if not (t in [WorldGen.TileType.CLIFF_FACE, WorldGen.TileType.CLIFF_SHADOW, WorldGen.TileType.CLIFF_LIP, WorldGen.TileType.CLIFF_STAIRS, WorldGen.TileType.CLIFF_FOOT]):
+		return t
+	var cnt := {}
+	var best := -1
+	var bn := 0
+	for d in WorldGen._DIRS8:
+		var q: Vector2i = p + d
+		var tq := gen.tile_at(q.x, q.y)
+		if tq in WorldGen.BLOCKING_TILES or tq in [WorldGen.TileType.CLIFF_SHADOW, WorldGen.TileType.CLIFF_STAIRS, WorldGen.TileType.WATER] or tq in WorldGen.ROAD_SURFACES:
+			continue
+		var k: int = int(cnt.get(tq, 0)) + 1
+		cnt[tq] = k
+		if k > bn or (k == bn and tq < best):
+			bn = k
+			best = tq
+	return best if best >= 0 else gen.region_grass(p)
 
 
 func variants_for(tile_type: int) -> int:

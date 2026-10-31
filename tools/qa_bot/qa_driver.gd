@@ -4447,7 +4447,22 @@ func _tint_spot() -> void:
 				break
 		if beach.x != 1 << 30:
 			break
-	var edges := {"beach": beach, "path_edge": Vector2i(1 << 30, 0), "road_edge": Vector2i(1 << 30, 0)}
+	var edges := {"beach": beach, "path_edge": Vector2i(1 << 30, 0), "road_edge": Vector2i(1 << 30, 0),
+		"cliff_line": Vector2i(1 << 30, 0), "cliff_endcap": Vector2i(1 << 30, 0), "cliff_cinder": Vector2i(1 << 30, 0)}
+	# batch_12 cliff frames: a long south face run, a capped run end, a cinder cliff
+	var F := WorldGen.TileType.CLIFF_FACE
+	for yy in range(-320, 320, 2):
+		for xx in range(-400, 400, 2):
+			if g.tile_at(xx, yy) != F:
+				continue
+			var q := Vector2i(xx, yy)
+			if edges["cliff_line"].x == 1 << 30 and range(-4, 5).all(func(k): return g.tile_at(xx + k, yy) == F):
+				edges["cliff_line"] = q
+			if edges["cliff_endcap"].x == 1 << 30 and str(w.cliff_blob_frame(q)[0]) == "cliff_blob_caps":
+				edges["cliff_endcap"] = q
+			if edges["cliff_cinder"].x == 1 << 30 and w.cliff_palette(q) == "cinder_":
+				edges["cliff_cinder"] = q
+
 	var rt: Dictionary = g.road_tiles.duplicate()
 	rt.merge(g._town_tiles)
 	for q in rt.keys():
@@ -4461,7 +4476,7 @@ func _tint_spot() -> void:
 		var e: Vector2i = edges[key]
 		if e.x == 1 << 30:
 			continue
-		p.place_at(w.find_free_tile_near(e, 3))
+		p.place_at(w.find_free_tile_near(e + (Vector2i(0, 3) if key.begins_with("cliff") else Vector2i.ZERO), 3))
 		p.stop()
 		w.set_focus(p.tile, true)
 		label = key
