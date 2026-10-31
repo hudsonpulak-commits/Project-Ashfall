@@ -4531,18 +4531,48 @@ func _tint_spot() -> void:
 func _cinder_spot() -> void:
 	var p: Player = main.player
 	var w: World = main.world
+	var leg := {}
+	var dump: Array = []
+	for c in [Vector2i(300, -253), Vector2i(330, -233)]:
+		for y in range(c.y - 12, c.y + 12):
+			var row := ""
+			for x in range(c.x - 12, c.x + 12):
+				var n: String = WorldGen.TILE_NAMES[w.gen.tile_at(x, y)]
+				if not leg.has(n):
+					leg[n] = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOP"[leg.size()]
+				row += leg[n]
+			dump.append(row)
+		dump.append("")
+	var ovd := {}
+	var nmf := func(q: Vector2i) -> String: return WorldGen.TILE_NAMES[w.gen.tile_at(q.x, q.y)]
+	for q in [Vector2i(297, -253), Vector2i(298, -252), Vector2i(301, -252), Vector2i(299, -256), Vector2i(299, -250)]:
+		ovd[str(q)] = [nmf.call(q), str(w.overlay_cells(q, nmf))]
+	_notes["cinderspot"] = {"legend": leg, "grid": dump, "ov": ovd}
 	DayNight.debug_set_phase("day")
 	for it in [["cinderholt_town", Vector2i(300, -253)], ["cinderholt_camp", Vector2i(318, -234)]]:
 		p.place_at(w.find_free_tile_near(it[1], 4))
 		p.stop()
 		w.set_focus(p.tile, true)
 		label = it[0]
-		await frames(90)
+		await frames(120)
 		await _snap(it[0])
 	DayNight.debug_set_phase("night")
 	await frames(60)
 	await _snap("cinderholt_camp_night")
 	DayNight.debug_set_phase("day")
+	p.place_at(w.find_free_tile_near(Vector2i(330, -233), 4))
+	p.stop()
+	w.set_focus(p.tile, true)
+	label = "cinderholt_camp_close"
+	await frames(90)
+	var camc = get_viewport().get_camera_2d()
+	var zc: Vector2 = camc.zoom if camc else Vector2.ONE
+	if camc:
+		camc.zoom = zc * 0.6
+	await frames(30)
+	await _snap("cinderholt_camp_close")
+	if camc:
+		camc.zoom = zc
 	# 0.4.4 round guard posts (batch_15 roofs): player outside, day and night
 	for it in [["round_fenhollow", Vector2i(13, 33)], ["round_cinderholt", Vector2i(340, -153)]]:
 		for ph in ["day", "night"]:

@@ -82,6 +82,7 @@ func _setup_town_art(w) -> void:
 			g.texture = tex
 			g.position = org
 			g.z_index = 2
+			g.modulate = World.GROUND_MOOD   # 0.4.4 same mood tint as the ground tiles under it
 			w.ground_layer.add_child(g)
 		# 0.3.11 v3.1: free y-sorted art (wall rows, round towers, gatehouse walls) and
 		# fade sprites (gatehouse roofs) that fade while the player stands in their tiles
@@ -147,6 +148,7 @@ func _setup_art_building(w, b: Dictionary) -> Node2D:
 	fl.position = canvas
 	fl.flip_h = flip
 	fl.z_index = 3
+	fl.modulate = World.GROUND_MOOD   # 0.4.4 floors drawn on the ground take the same mood tint as the tiles
 	w.ground_layer.add_child(fl)
 	var wl := Sprite2D.new()
 	wl.name = "Walls_%s" % b["id"]

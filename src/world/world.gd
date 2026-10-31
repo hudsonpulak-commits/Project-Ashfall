@@ -1171,6 +1171,7 @@ func _job_stage(j: Dictionary, c: Vector2i, ch: ChunkData, base: Vector2i) -> vo
 				for lx in range(-1, CHUNK + 1):
 					var inside := lx >= 0 and ly2 >= 0 and lx < CHUNK and ly2 < CHUNK
 					var tt: int = ch.tile_local(lx, ly2) if inside else _rim_tile(base.x + lx, base.y + ly2)
+					tt = gen.art_ground_tile(base + Vector2i(lx, ly2), tt)
 					names[base + Vector2i(lx, ly2)] = WorldGen.TILE_NAMES[tt]
 				j["row"] = ly2 + 1
 				if j["row"] > CHUNK:

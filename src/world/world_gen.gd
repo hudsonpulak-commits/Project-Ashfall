@@ -395,6 +395,15 @@ func _load_town(town: Dictionary) -> void:
 ## 0.4.4 organic grass patch test: coarse detail noise plus a little per-tile dither
 ## so patch borders read ragged, not stamped. amount ~ share of dirt turned to grass.
 func _grass_patch(p: Vector2i, amount: float) -> bool:
+	# majority of the 3x3 raw test: no single-tile specks or one-tile holes
+	var k := 0
+	for dy in range(-1, 2):
+		for dx in range(-1, 2):
+			k += int(_grass_raw(p + Vector2i(dx, dy), amount))
+	return k >= 5
+
+
+func _grass_raw(p: Vector2i, amount: float) -> bool:
 	var n := _detail.get_noise_2d(p.x * 0.45 + 311.0, p.y * 0.45 - 97.0) + (hash01(p.x, p.y, 61) - 0.5) * 0.22
 	return n > 0.5 - amount * 1.4
 
@@ -643,7 +652,14 @@ func is_thin_wall_cell(p: Vector2i) -> bool:
 
 ## Drawing only: a wall cell shows the floor under the thin wall atlas.
 func wall_ground_tile(p: Vector2i, t: int) -> int:
-	return int(_wall_ground.get(p, t))
+	return int(_wall_ground.get(p, _art_ground.get(p, t)))
+
+
+## 0.4.4 drawing + blending only: camp tent footprints read as the ground they stand on.
+var _art_ground: Dictionary = {}
+
+func art_ground_tile(p: Vector2i, t: int) -> int:
+	return int(_art_ground.get(p, t))
 
 
 ## 0.3.15 quest givers from data/quests.json "givers" with "town" + "near" (town-local
@@ -1018,6 +1034,7 @@ func _load_art_building(town: Dictionary, bd: Dictionary, v: Callable, shops: Di
 	}
 	if bd.has("altar"):
 		b["altar"] = v.call(bd["altar"])
+	var camp_ground := bd.has("camp")
 	for y in plan.size():
 		var row := str(plan[y])
 		for x in row.length():
@@ -1027,6 +1044,13 @@ func _load_art_building(town: Dictionary, bd: Dictionary, v: Callable, shops: Di
 			var p := at + Vector2i(x, y)
 			_building_tiles[p] = b["id"]
 			_town_objects.erase(p)
+			if camp_ground and c != "D":
+				var gt := int(_town_tiles.get(p, TileType.DIRT))
+				if gt in [TileType.ART_WALL, TileType.ART_FLOOR, TileType.DOORWAY]:
+					gt = TileType.DIRT
+					if _grass_patch(p, float(town.get("grass_patches", 0.0))):
+						gt = region_grass(p)
+				_art_ground[p] = gt   # 0.4.4 tents stand on the camp ground, no plot
 			if c == "D" and not closed:
 				_town_tiles[p] = TileType.DOORWAY
 			elif c == "o":
