@@ -650,7 +650,17 @@ func _blend_footprint_edge(rect: Rect2i) -> void:
 const JITTER_SOFT := ["dirt", "grass", "grass_lush", "grass_boreal", "grass_tropic", "sand", "rocky", "marsh"]
 const JITTER_LANE := ["path", "road_dirt", "cobble"]
 
+var organic_rects: Array = []   # 0.4.4 areas whose soft-floor pairs blend both ways (drawing)
+
+func in_organic(p: Vector2i) -> bool:
+	for r in organic_rects:
+		if (r as Rect2i).has_point(p):
+			return true
+	return false
+
+
 func _organic_jitter(rect: Rect2i) -> void:
+	organic_rects.append(rect.grow(6))
 	var bt: Dictionary = {}
 	for b in buildings.values():
 		var br: Rect2i = b["rect"]
@@ -691,6 +701,16 @@ func _organic_jitter(rect: Rect2i) -> void:
 					flips[p] = TILE_NAMES.find(best)
 		for p in flips:
 			_town_tiles[p] = flips[p]
+	# drawing only: the light-tan gate apron / approach paths just outside the ring read
+	# as the camp dirt they cross (no tan rectangle); data stays PATH for the roads
+	for y in range(area.position.y, area.end.y):
+		for x in range(area.position.x, area.end.x):
+			var p := Vector2i(x, y)
+			if rect.has_point(p) or not _biome_zone_at(p).is_empty():
+				continue
+			var n: String = TILE_NAMES[tile_at(x, y)]
+			if n == "path" or n == "road_dirt":
+				_art_ground[p] = TileType.DIRT
 
 
 ## the Scorch stays exactly as it was: no jitter in or right beside a biome zone

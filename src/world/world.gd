@@ -243,6 +243,7 @@ const MOAT_CORNERS := [[0, 1, 5], [1, 2, 6], [2, 3, 7], [3, 0, 4]]
 
 const BOARDWALK_JOINS := ["boardwalk", "planks", "bridge"]
 const TRANS_ALIAS := {"ash_edge": "ash"}
+const TWO_SIDED := ["dirt", "grass", "grass_boreal", "grass_lush", "grass_tropic", "road_dirt", "path", "marsh", "sand", "rocky"]
 ## restyle batch 04: organic water edges. Not land: water, moat, decks over water, out of world.
 const SHORE_NOT_LAND := ["water", "moat", "bridge", "boardwalk", "planks", ""]
 const SHORE_ALIAS := {"ash_edge": "ash", "road_dirt": "path"}
@@ -335,6 +336,26 @@ func overlay_cells(p: Vector2i, nm: Callable) -> Array:
 		if not s.is_empty():
 			var f := Autotile.transition_frame(ov[i], nbt)
 			out.append([i, s[0], Vector2i(f % int(s[1]), f / int(s[1]))])
+	# 0.4.4 two-sided soft blends (Cinderholt): the lower floor also frays back onto the
+	# higher one, so a grass/dirt/lane boundary wobbles on both sides of the tile line
+	if gen != null and ov.size() < 2 and here in TWO_SIDED and gen.in_organic(p):
+		var low := ""
+		var lp := 1 << 20
+		for n in nbt:
+			if n != here and n in TWO_SIDED:
+				var pr := Autotile.priority(n)
+				if pr >= 0 and pr < Autotile.priority(here) and pr < lp:
+					lp = pr
+					low = n
+		if low != "":
+			var s2: Array = _overlay_src.get("transitions/" + low, [])
+			var va2: Array = _trans_var.get(low, [])
+			var tv2 := int(gen.hash01(p.x, p.y, 29) * 3)
+			if tv2 > 0 and va2.size() >= tv2:
+				s2 = va2[tv2 - 1]
+			if not s2.is_empty():
+				var f2 := Autotile.transition_frame(low, nbt)
+				out.append([ov.size(), s2[0], Vector2i(f2 % int(s2[1]), f2 / int(s2[1]))])
 	if Autotile.WALL_FAMILIES.has(here) and not Autotile.ART_WALLS.has(here) and not (gen != null and gen.is_thin_wall_cell(p)):
 		var s: Array = _overlay_src.get("autotile/" + str(Autotile.WALL_FAMILIES[here]), [])
 		if not s.is_empty():
