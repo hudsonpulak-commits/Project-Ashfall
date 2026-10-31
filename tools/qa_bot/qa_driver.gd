@@ -2606,13 +2606,15 @@ func _capital038() -> void:
 		label = "road"
 		await _snap("road_decor")
 		# walking: tap the far side of the log, the path goes round it
-		await tap_tile(lg + ld, "far side of the log")
+		# 0.4.3 tap two tiles past the log (the tile right beside it can pick the log sprite and walk up to it)
+		var far := lg + ld * 2
+		await tap_tile(far, "far side of the log")
 		var stood_on := false
 		var t_end := Tick.now_ms() + 12000
-		while Tick.now_ms() < t_end and p.tile != lg + ld:
+		while Tick.now_ms() < t_end and p.tile != far:
 			stood_on = stood_on or p.tile == lg
 			await frames(2)
-		res["walk_round_log"] = p.tile == lg + ld and not stood_on and w.is_blocked(lg)
+		res["walk_round_log"] = p.tile == far and not stood_on and w.is_blocked(lg)
 		# shooting: bow + arrows on one side, a slime held still on the other
 		var foe := _foe("slime", "", lg)
 		if foe == null:
