@@ -3604,14 +3604,9 @@ func _perf0316() -> void:
 		if f_ms > 33.0 or g_ms > 33.0:
 			var tags: Array = []
 			for e in w.perf_log.slice(pl_prev):
-				if e[1] > 4.0 or (str(e[0]) in ["adopt", "focus"] or str(e[0]).begins_with("build:s")) and e[1] > 0.05:
-					tags.append("%s=%.1f" % [e[0], e[1]])
-			tags.append("prev:" + "|".join(_prev_tags))
+				if e[1] > 4.0:
+					tags.append("%s=%.0f" % [e[0], e[1]])
 			spikes.append([snappedf(f_ms, 0.1), p.tile.x, p.tile.y, ft.size(), ",".join(tags)])
-		_prev_tags = []
-		for e in w.perf_log.slice(pl_prev):
-			if (str(e[0]) in ["adopt", "focus"] or str(e[0]).begins_with("build:s")) and e[1] > 0.05:
-				_prev_tags.append("%s=%.1f" % [e[0], e[1]])
 		pl_prev = w.perf_log.size()
 	label = ""
 	var srt := pt.duplicate()
@@ -3639,9 +3634,6 @@ func _perf0316() -> void:
 		"worst_process_ms": srt[-1] if not srt.is_empty() else 0.0, "p1_low_process_ms": low_p / one,
 		"worst_frame_ms": srf[-1] if not srf.is_empty() else 0.0, "p1_low_frame_ms": low_f / one,
 		"median_frame_ms": srf[n / 2] if not srf.is_empty() else 0.0, "spikes": _top_spikes(spikes), "spike_count": spikes.size()}
-
-
-var _prev_tags: Array = []
 
 
 ## 0.3.17 pack + bank organizing and bank tabs, all through real taps.
