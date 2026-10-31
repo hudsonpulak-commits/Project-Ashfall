@@ -917,6 +917,12 @@ static func _metal_tests(main, world: World, p: Player) -> void:
 		"iron bar recipe = 1 iron ore with a flat 40% fail chance (data value)")
 	check(is_equal_approx(Interactions.fail_chance(ri, 12), 0.4) and is_equal_approx(Interactions.fail_chance(ri, 60), 0.4), "iron fail rate is flat (does not shrink with level)")
 	check(_ins(rs) == {"iron_ore": 1, "coal": 1} and not rs.has("fail"), "steel bar recipe = 1 iron ore + 1 coal, no fail")
+	# 0.4.4 nodes stay down for days now (AIs may have mined the pits): look up spawns, not stock
+	for ch0 in world.chunks.values():
+		for o0 in ch0.objects.values():
+			if o0.def_id == "tin_rock":
+				o0.depleted_until = 0
+				world.depleted.erase(o0.pos)
 	var tin: WorldObject = world.find_gather_node(p.tile, "tin_rock", "fenhollow")   # 0.3.1: in the town's pits
 	check(tin != null and int(GameData.objects["tin_rock"].get("level", 1)) == 1, "tin rocks spawn in the world (Mining 1)")
 	# -- melee requirement ordering: bronze 1 < iron 10 < steel 20 < dusk 30, in every metal shop line
