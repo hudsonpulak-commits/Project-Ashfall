@@ -139,7 +139,7 @@ static func _gather(actor: Actor, world, obj: WorldObject, d: Dictionary, t: int
 		if actor.inventory.wear_tool(ti):
 			actor.say("Your %s breaks!" % GameData.item_name(tool_id).to_lower())
 	if actor.rng.randf() < float(d.get("deplete", 0.0)):
-		world.deplete(obj, int(d.get("respawn", 10)))
+		world.deplete(obj, GameData.respawn_ticks(d))
 		actor.stop()
 	elif actor.inventory.room_for(item_id) <= 0 and actor.inventory.room_for(d["yield"]) <= 0:
 		actor.say("Your pack is full.")

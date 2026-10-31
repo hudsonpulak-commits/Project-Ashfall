@@ -181,8 +181,27 @@ static func run(main) -> int:
 			break
 	check(p.inventory.count("bronze_pick") == 0, "a pick with 1 durability breaks on use (item sink)")
 	check(rock.is_depleted(Tick.tick_count) or p.inventory.count("copper_ore") > 0, "rock depletes after yielding")
-	ticks(int(GameData.object_def("copper_rock")["respawn"]) + 2)
+	ticks(GameData.respawn_ticks(GameData.object_def("copper_rock")) + 2)
 	check(not rock.is_depleted(Tick.tick_count), "rock respawns")
+	# 0.4.4 respawn by tier: tier N = N full day/night cycles; the timer survives save/load
+	var cyc := DayNight.ticks_per_cycle()
+	var tier_ok := true
+	for oid in GameData.objects.keys():
+		var od: Dictionary = GameData.objects[oid]
+		if od.has("tier") and GameData.respawn_ticks(od) != int(od["tier"]) * cyc:
+			tier_ok = false
+	check(tier_ok and cyc == int(round(float(GameData.daynight_cfg.get("cycle_s", 900)) / Tick.TICK_SECONDS))
+		and GameData.respawn_ticks(GameData.object_def("copper_rock")) == cyc
+		and GameData.respawn_ticks(GameData.object_def("iron_rock")) == 2 * cyc
+		and GameData.respawn_ticks(GameData.object_def("wheat")) == cyc
+		and int(GameData.object_def("mahogany_tree").get("tier", 0)) >= 2, "0.4.4 gatherables respawn after tier x day/night cycles")
+	world.deplete(rock, GameData.respawn_ticks(GameData.object_def("iron_rock")))
+	var left := rock.depleted_until - Tick.tick_count
+	var sv := world.to_save()
+	world.from_save(sv, Tick.tick_count)
+	check(left == 2 * cyc and rock.depleted_until - Tick.tick_count == left, "0.4.4 respawn timers survive save/load")
+	world.deplete(rock, 1)
+	ticks(2)
 	p.place_at(tile_before_mine)
 	world.set_focus(p.tile, true)
 

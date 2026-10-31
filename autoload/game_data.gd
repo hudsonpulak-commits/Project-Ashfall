@@ -176,6 +176,16 @@ func object_def(id: String) -> Dictionary:
 	return objects.get(id, {})
 
 
+## 0.4.4 gatherable respawn by tier (data/objects.json "tier"): a tier N node comes
+## back after N full day/night cycles (DayNight.ticks_per_cycle, data/daynight.json
+## cycle_s; 15 min by default). Nodes without a tier keep their "respawn" ticks.
+func respawn_ticks(d: Dictionary) -> int:
+	var tier := int(d.get("tier", 0))
+	if tier > 0:
+		return tier * DayNight.ticks_per_cycle()
+	return int(d.get("respawn", 10))
+
+
 func recipes_for_station(station: String) -> Array:
 	var out: Array = []
 	for r in recipes:

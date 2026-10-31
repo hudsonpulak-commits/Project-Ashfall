@@ -124,6 +124,7 @@ func _init(p_seed: int, town: Dictionary = {}, world_cfg: Dictionary = {}) -> vo
 	var ids: Array = cfg.get("towns", [])
 	if ids.is_empty() and not town.is_empty():
 		ids = [town["id"]]
+	_load_pk_zones()   # 0.4.4 before the towns: their organic jitter keeps out of the Scorch
 	for id in ids:
 		var t: Dictionary = GameData.towns.get(id, town if town.get("id", "") == id else {})
 		if not t.is_empty():
@@ -665,7 +666,7 @@ func _organic_jitter(rect: Rect2i) -> void:
 				var p := Vector2i(x, y)
 				if bt.has(p) or _town_objects.has(p) or _wall_ground.has(p) or _art_ground.has(p):
 					continue
-				if not rect.has_point(p) and (_town_rect_other(p, rect) or not _biome_zone_at(p).is_empty()):
+				if not _biome_zone_at(p).is_empty() or _near_zone(p) or (not rect.has_point(p) and _town_rect_other(p, rect)):
 					continue
 				var a: String = TILE_NAMES[tile_at(x, y)]
 				if not a in JITTER_SOFT:
@@ -690,6 +691,14 @@ func _organic_jitter(rect: Rect2i) -> void:
 					flips[p] = TILE_NAMES.find(best)
 		for p in flips:
 			_town_tiles[p] = flips[p]
+
+
+## the Scorch stays exactly as it was: no jitter in or right beside a biome zone
+func _near_zone(p: Vector2i) -> bool:
+	for dv in [Vector2i(0, -1), Vector2i(1, 0), Vector2i(0, 1), Vector2i(-1, 0)]:
+		if not _biome_zone_at(p + dv).is_empty():
+			return true
+	return false
 
 
 func _town_rect_other(p: Vector2i, own: Rect2i) -> bool:
