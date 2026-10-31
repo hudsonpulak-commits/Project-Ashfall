@@ -167,11 +167,27 @@ func money_supply() -> int:
 const VIEW_TICK_BUDGET_MS := 3.0
 var _view_rot := 0
 var _view_skipped := 0
+## 0.4.3 per-tick budget for AI thinks (path searches); see AIPlayer.on_tick
+const THINK_TICK_BUDGET_MS := 6.0
+var _think_ms := 0.0
+var think_deferred := 0
+
+
+func think_budget_spent() -> bool:
+	if _think_ms >= THINK_TICK_BUDGET_MS:
+		think_deferred += 1
+		return true
+	return false
+
+
+func add_think_ms(ms: float) -> void:
+	_think_ms += ms
 
 
 func on_tick(t: int, world, player_tile: Vector2i) -> void:
 	var _pl: Array = world.perf_log if world != null and "perf_log" in world else []
 	var _t0 := Time.get_ticks_usec()
+	_think_ms = 0.0
 	if t % 10 == 0:
 		_update_tiers(player_tile)
 	_pl.append(["ai:tiers", (Time.get_ticks_usec() - _t0) / 1000.0]); _t0 = Time.get_ticks_usec()

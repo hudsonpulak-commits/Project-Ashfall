@@ -30,12 +30,12 @@ static func run(_main, world, _p) -> void:
 	# water_shore sheet), so no separate layer-4 corner pieces are drawn
 	var cset := {Vector2i(0, -1): "moat", Vector2i(1, 0): "moat"}
 	var cc: Array = world.overlay_cells(Vector2i.ZERO, _nm(cset))
-	var shore := cc.filter(func(c): return c[0] == 2)
+	var shore := cc.filter(func(c): return c[0] == World.G_AUTOTILE)
 	check(shore.size() == 1 and _corners(world, cset).is_empty(), "moat: a corner moat cell draws one shore frame from the water_shore pass (no layer-4 corner piece) %s" % [cc])
 	var all_moat := {}
 	for d in DIRS8:
 		all_moat[d] = "moat"
-	check(world.overlay_cells(Vector2i.ZERO, _nm(all_moat)).filter(func(c): return c[0] == 2).is_empty(), "moat: open moat (no land around) draws no shore edge")
+	check(world.overlay_cells(Vector2i.ZERO, _nm(all_moat)).filter(func(c): return c[0] == World.G_AUTOTILE).is_empty(), "moat: open moat (no land around) draws no shore edge")
 
 	# --- creature front/back frames are whole (not cropped / sliced) ---
 	# Up to 1 opaque pixel may touch the left/right frame edge (goblin ears).

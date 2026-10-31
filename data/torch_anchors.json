@@ -1,0 +1,75 @@
+{
+ "note": "flame base (bottom-centre of torch_flame frame) in 16x16 actor-frame pixels, per facing and walk frame; side is facing right, mirror x as 15-x for left",
+ "flame_base": {
+  "side": [
+   [
+    14,
+    3
+   ],
+   [
+    14,
+    2
+   ],
+   [
+    14,
+    3
+   ],
+   [
+    14,
+    4
+   ]
+  ],
+  "front": [
+   [
+    13,
+    4
+   ],
+   [
+    13,
+    4
+   ],
+   [
+    13,
+    4
+   ],
+   [
+    13,
+    6
+   ]
+  ],
+  "back": [
+   [
+    2,
+    4
+   ],
+   [
+    2,
+    6
+   ],
+   [
+    2,
+    4
+   ],
+   [
+    2,
+    4
+   ]
+  ]
+ },
+ "flame_frame_size": [
+  7,
+  9
+ ],
+ "flame_frames": 4,
+ "flame_fps": 9,
+ "flame_anchor": [
+  3,
+  8
+ ],
+ "glow_frame_size": [
+  48,
+  48
+ ],
+ "glow_frames": 4,
+ "glow_fps": 9
+}

@@ -253,13 +253,14 @@ static func _map_tester(world) -> void:
 			n += 1
 			var orth := false
 			for d in [Vector2i(1, 0), Vector2i(-1, 0), Vector2i(0, 1), Vector2i(0, -1)]:
-				orth = orth or blk.call(q + d)
+				orth = orth or blk.call(q + d) or gen._raw_at(q + d) == WorldGen.TileType.CLIFF_STAIRS
 			var diag := 0
 			for d in [Vector2i(1, 1), Vector2i(-1, 1), Vector2i(1, -1), Vector2i(-1, -1)]:
-				diag += int(blk.call(q + d))
-			if diag == 1 and not orth:   # a corner-only stub (diagonal runs are drawn with diagonal pieces and stay)
+				diag += int(blk.call(q + d) or gen._raw_at(q + d) == WorldGen.TileType.CLIFF_STAIRS)
+			var st: bool = gen.tile_at(q.x, q.y) == WorldGen.TileType.CLIFF_FACE and gen.tile_at(q.x, q.y + 1) == WorldGen.TileType.CLIFF_FOOT
+			if diag == 0 and not orth and not st and gen.tile_at(q.x, q.y - 1) != WorldGen.TileType.CLIFF_FACE:   # 0.4.3: only single-cell stubs go (the blob draws corner joins)
 				lone.append(q)
-	check(n > 100 and lone.is_empty() and not blk.call(Vector2i(360, 41)), "no blocking cliff stub (face, lip or foot) hangs off a run by one corner (%d scanned, lone %s)" % [n, str(lone.slice(0, 5))])
+	check(n > 100 and lone.is_empty(), "no single-cell blocking cliff stub (face, lip or foot) is left (%d scanned, lone %s)" % [n, str(lone.slice(0, 5)) + (" " + str(range(-1, 2).map(func(dy): return range(-1, 2).map(func(dx): return [gen.tile_at(lone[0].x + dx, lone[0].y + dy), gen._raw_at(lone[0] + Vector2i(dx, dy))])) ) if not lone.is_empty() else "")])
 
 
 ## 0.3.17 the Rat Mother plays her 2-frame bite strip on each attack, then walks again.

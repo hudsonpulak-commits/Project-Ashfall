@@ -15,12 +15,23 @@ void vertex() {
 	world_px = (MODEL_MATRIX * vec4(VERTEX, 0.0, 1.0)).xy;
 }
 
+float h21(vec2 p) {
+	return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453);
+}
+
+float vnoise(vec2 p) {
+	vec2 i = floor(p);
+	vec2 f = fract(p);
+	f = f * f * (3.0 - 2.0 * f);
+	return mix(mix(h21(i), h21(i + vec2(1.0, 0.0)), f.x), mix(h21(i + vec2(0.0, 1.0)), h21(i + vec2(1.0, 1.0)), f.x), f.y);
+}
+
 void fragment() {
 	vec4 c = COLOR; // batch_08: COLOR already holds the texel in canvas_item; *COLOR squared every base tile
-	vec2 tile = floor(world_px / tile_px);
-	float n = fract(sin(dot(tile, vec2(127.1, 311.7))) * 43758.5453);
-	float n2 = fract(sin(dot(floor(tile / 3.0) + vec2(19.0, 7.0), vec2(269.5, 183.3))) * 43758.5453);
-	float k = (n * 0.7 + n2 * 0.3 - 0.5) * 0.16;
+	// 0.4.3 smooth world-space value noise (two octaves, ~3 and ~9 tiles) instead of a
+	// per-tile hash: same +-0.08 range, no tile-sized brightness boxes
+	vec2 q = world_px / tile_px;
+	float k = ((vnoise(q / 3.0) * 0.7 + vnoise(q / 9.0 + vec2(19.0, 7.0)) * 0.3) - 0.5) * 0.16;
 	vec2 local = (world_px - chunk_origin) / max(chunk_px, 1.0);
 	vec4 mask = texture(wear_tex, clamp(local, vec2(0.001), vec2(0.999)));
 	// Green marks grass and dirt. Ash, stone and water stay as painted so night

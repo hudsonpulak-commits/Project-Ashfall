@@ -6930,6 +6930,21 @@
      -8
     ]
    }
+  },
+  "gear_item_torch": {
+   "path": "res://assets/sprites/actors/gear/torch_1.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 4,
+   "fps": 5,
+   "anchor": "bottom",
+   "flip": true,
+   "dir_paths": {
+    "down": "res://assets/sprites/actors/gear/torch_1_front.png",
+    "up": "res://assets/sprites/actors/gear/torch_1_back.png"
+   }
   }
  },
  "items": {
@@ -8307,6 +8322,24 @@
     8
    ],
    "note": "0.3.3 arrow projectile, drawn pointing right (rotated in flight)"
+  },
+  "torch_flame": {
+   "path": "res://assets/sprites/fx/torch_flame.png",
+   "frame_size": [
+    7,
+    9
+   ],
+   "frames": 4,
+   "fps": 9
+  },
+  "torch_glow": {
+   "path": "res://assets/sprites/fx/torch_glow.png",
+   "frame_size": [
+    48,
+    48
+   ],
+   "frames": 4,
+   "fps": 9
   }
  },
  "autotile": {
@@ -8920,6 +8953,456 @@
    "frames": 24,
    "rows": 2,
    "note": "0.4.2 den walls: cols 0-15 = N1|E2|S4|W8 wall-neighbour mask, 16-19 inner ne/se/sw/nw, 20-23 diagonals ne/nw (front) se/sw (back); row 0 = cap on the wall cell, row 1 = face hanging into the open cell south (tools/den/build_den_art.py)"
+  },
+  "cliff_blob": {
+   "path": "res://assets/sprites/cliffs/normal/cliff_blob.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 282,
+   "note": "0.4.3 batch_12_cliffs (normal)"
+  },
+  "cliff_blob_caps": {
+   "path": "res://assets/sprites/cliffs/normal/cliff_blob_caps.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 60,
+   "note": "0.4.3 batch_12_cliffs (normal)"
+  },
+  "cliff_corner_inner_ne_b": {
+   "path": "res://assets/sprites/cliffs/normal/cliff_corner_inner_ne_b.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 1,
+   "note": "0.4.3 batch_12_cliffs (normal)"
+  },
+  "cliff_corner_inner_ne_c": {
+   "path": "res://assets/sprites/cliffs/normal/cliff_corner_inner_ne_c.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 1,
+   "note": "0.4.3 batch_12_cliffs (normal)"
+  },
+  "cliff_corner_inner_nw_b": {
+   "path": "res://assets/sprites/cliffs/normal/cliff_corner_inner_nw_b.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 1,
+   "note": "0.4.3 batch_12_cliffs (normal)"
+  },
+  "cliff_corner_inner_nw_c": {
+   "path": "res://assets/sprites/cliffs/normal/cliff_corner_inner_nw_c.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 1,
+   "note": "0.4.3 batch_12_cliffs (normal)"
+  },
+  "cliff_corner_inner_se_b": {
+   "path": "res://assets/sprites/cliffs/normal/cliff_corner_inner_se_b.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 1,
+   "note": "0.4.3 batch_12_cliffs (normal)"
+  },
+  "cliff_corner_inner_se_c": {
+   "path": "res://assets/sprites/cliffs/normal/cliff_corner_inner_se_c.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 1,
+   "note": "0.4.3 batch_12_cliffs (normal)"
+  },
+  "cliff_corner_inner_sw_b": {
+   "path": "res://assets/sprites/cliffs/normal/cliff_corner_inner_sw_b.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 1,
+   "note": "0.4.3 batch_12_cliffs (normal)"
+  },
+  "cliff_corner_inner_sw_c": {
+   "path": "res://assets/sprites/cliffs/normal/cliff_corner_inner_sw_c.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 1,
+   "note": "0.4.3 batch_12_cliffs (normal)"
+  },
+  "cliff_corner_outer_ne_b": {
+   "path": "res://assets/sprites/cliffs/normal/cliff_corner_outer_ne_b.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 1,
+   "note": "0.4.3 batch_12_cliffs (normal)"
+  },
+  "cliff_corner_outer_ne_c": {
+   "path": "res://assets/sprites/cliffs/normal/cliff_corner_outer_ne_c.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 1,
+   "note": "0.4.3 batch_12_cliffs (normal)"
+  },
+  "cliff_corner_outer_nw_b": {
+   "path": "res://assets/sprites/cliffs/normal/cliff_corner_outer_nw_b.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 1,
+   "note": "0.4.3 batch_12_cliffs (normal)"
+  },
+  "cliff_corner_outer_nw_c": {
+   "path": "res://assets/sprites/cliffs/normal/cliff_corner_outer_nw_c.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 1,
+   "note": "0.4.3 batch_12_cliffs (normal)"
+  },
+  "cliff_corner_outer_se_b": {
+   "path": "res://assets/sprites/cliffs/normal/cliff_corner_outer_se_b.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 2,
+   "note": "0.4.3 batch_12_cliffs (normal)"
+  },
+  "cliff_corner_outer_se_c": {
+   "path": "res://assets/sprites/cliffs/normal/cliff_corner_outer_se_c.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 2,
+   "note": "0.4.3 batch_12_cliffs (normal)"
+  },
+  "cliff_corner_outer_sw_b": {
+   "path": "res://assets/sprites/cliffs/normal/cliff_corner_outer_sw_b.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 2,
+   "note": "0.4.3 batch_12_cliffs (normal)"
+  },
+  "cliff_corner_outer_sw_c": {
+   "path": "res://assets/sprites/cliffs/normal/cliff_corner_outer_sw_c.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 2,
+   "note": "0.4.3 batch_12_cliffs (normal)"
+  },
+  "cliff_rim_e_c": {
+   "path": "res://assets/sprites/cliffs/normal/cliff_rim_e_c.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 1,
+   "note": "0.4.3 batch_12_cliffs (normal)"
+  },
+  "cliff_rim_n_c": {
+   "path": "res://assets/sprites/cliffs/normal/cliff_rim_n_c.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 1,
+   "note": "0.4.3 batch_12_cliffs (normal)"
+  },
+  "cliff_rim_w_c": {
+   "path": "res://assets/sprites/cliffs/normal/cliff_rim_w_c.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 1,
+   "note": "0.4.3 batch_12_cliffs (normal)"
+  },
+  "cliff_shadow_b": {
+   "path": "res://assets/sprites/cliffs/normal/cliff_shadow_b.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 1,
+   "note": "0.4.3 batch_12_cliffs (normal)"
+  },
+  "cliff_shadow_c": {
+   "path": "res://assets/sprites/cliffs/normal/cliff_shadow_c.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 1,
+   "note": "0.4.3 batch_12_cliffs (normal)"
+  },
+  "cliff_stairs_b": {
+   "path": "res://assets/sprites/cliffs/normal/cliff_stairs_b.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 2,
+   "note": "0.4.3 batch_12_cliffs (normal)"
+  },
+  "cliff_stairs_c": {
+   "path": "res://assets/sprites/cliffs/normal/cliff_stairs_c.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 2,
+   "note": "0.4.3 batch_12_cliffs (normal)"
+  },
+  "cinder_cliff_blob": {
+   "path": "res://assets/sprites/cliffs/cinder/cliff_blob.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 282,
+   "note": "0.4.3 batch_12_cliffs (cinder)"
+  },
+  "cinder_cliff_blob_caps": {
+   "path": "res://assets/sprites/cliffs/cinder/cliff_blob_caps.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 60,
+   "note": "0.4.3 batch_12_cliffs (cinder)"
+  },
+  "cinder_cliff_corner_inner_ne_b": {
+   "path": "res://assets/sprites/cliffs/cinder/cliff_corner_inner_ne_b.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 1,
+   "note": "0.4.3 batch_12_cliffs (cinder)"
+  },
+  "cinder_cliff_corner_inner_ne_c": {
+   "path": "res://assets/sprites/cliffs/cinder/cliff_corner_inner_ne_c.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 1,
+   "note": "0.4.3 batch_12_cliffs (cinder)"
+  },
+  "cinder_cliff_corner_inner_nw_b": {
+   "path": "res://assets/sprites/cliffs/cinder/cliff_corner_inner_nw_b.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 1,
+   "note": "0.4.3 batch_12_cliffs (cinder)"
+  },
+  "cinder_cliff_corner_inner_nw_c": {
+   "path": "res://assets/sprites/cliffs/cinder/cliff_corner_inner_nw_c.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 1,
+   "note": "0.4.3 batch_12_cliffs (cinder)"
+  },
+  "cinder_cliff_corner_inner_se_b": {
+   "path": "res://assets/sprites/cliffs/cinder/cliff_corner_inner_se_b.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 1,
+   "note": "0.4.3 batch_12_cliffs (cinder)"
+  },
+  "cinder_cliff_corner_inner_se_c": {
+   "path": "res://assets/sprites/cliffs/cinder/cliff_corner_inner_se_c.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 1,
+   "note": "0.4.3 batch_12_cliffs (cinder)"
+  },
+  "cinder_cliff_corner_inner_sw_b": {
+   "path": "res://assets/sprites/cliffs/cinder/cliff_corner_inner_sw_b.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 1,
+   "note": "0.4.3 batch_12_cliffs (cinder)"
+  },
+  "cinder_cliff_corner_inner_sw_c": {
+   "path": "res://assets/sprites/cliffs/cinder/cliff_corner_inner_sw_c.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 1,
+   "note": "0.4.3 batch_12_cliffs (cinder)"
+  },
+  "cinder_cliff_corner_outer_ne_b": {
+   "path": "res://assets/sprites/cliffs/cinder/cliff_corner_outer_ne_b.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 1,
+   "note": "0.4.3 batch_12_cliffs (cinder)"
+  },
+  "cinder_cliff_corner_outer_ne_c": {
+   "path": "res://assets/sprites/cliffs/cinder/cliff_corner_outer_ne_c.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 1,
+   "note": "0.4.3 batch_12_cliffs (cinder)"
+  },
+  "cinder_cliff_corner_outer_nw_b": {
+   "path": "res://assets/sprites/cliffs/cinder/cliff_corner_outer_nw_b.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 1,
+   "note": "0.4.3 batch_12_cliffs (cinder)"
+  },
+  "cinder_cliff_corner_outer_nw_c": {
+   "path": "res://assets/sprites/cliffs/cinder/cliff_corner_outer_nw_c.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 1,
+   "note": "0.4.3 batch_12_cliffs (cinder)"
+  },
+  "cinder_cliff_corner_outer_se_b": {
+   "path": "res://assets/sprites/cliffs/cinder/cliff_corner_outer_se_b.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 2,
+   "note": "0.4.3 batch_12_cliffs (cinder)"
+  },
+  "cinder_cliff_corner_outer_se_c": {
+   "path": "res://assets/sprites/cliffs/cinder/cliff_corner_outer_se_c.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 2,
+   "note": "0.4.3 batch_12_cliffs (cinder)"
+  },
+  "cinder_cliff_corner_outer_sw_b": {
+   "path": "res://assets/sprites/cliffs/cinder/cliff_corner_outer_sw_b.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 2,
+   "note": "0.4.3 batch_12_cliffs (cinder)"
+  },
+  "cinder_cliff_corner_outer_sw_c": {
+   "path": "res://assets/sprites/cliffs/cinder/cliff_corner_outer_sw_c.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 2,
+   "note": "0.4.3 batch_12_cliffs (cinder)"
+  },
+  "cinder_cliff_rim_e_c": {
+   "path": "res://assets/sprites/cliffs/cinder/cliff_rim_e_c.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 1,
+   "note": "0.4.3 batch_12_cliffs (cinder)"
+  },
+  "cinder_cliff_rim_n_c": {
+   "path": "res://assets/sprites/cliffs/cinder/cliff_rim_n_c.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 1,
+   "note": "0.4.3 batch_12_cliffs (cinder)"
+  },
+  "cinder_cliff_rim_w_c": {
+   "path": "res://assets/sprites/cliffs/cinder/cliff_rim_w_c.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 1,
+   "note": "0.4.3 batch_12_cliffs (cinder)"
+  },
+  "cinder_cliff_shadow_b": {
+   "path": "res://assets/sprites/cliffs/cinder/cliff_shadow_b.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 1,
+   "note": "0.4.3 batch_12_cliffs (cinder)"
+  },
+  "cinder_cliff_shadow_c": {
+   "path": "res://assets/sprites/cliffs/cinder/cliff_shadow_c.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 1,
+   "note": "0.4.3 batch_12_cliffs (cinder)"
+  },
+  "cinder_cliff_stairs_b": {
+   "path": "res://assets/sprites/cliffs/cinder/cliff_stairs_b.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 2,
+   "note": "0.4.3 batch_12_cliffs (cinder)"
+  },
+  "cinder_cliff_stairs_c": {
+   "path": "res://assets/sprites/cliffs/cinder/cliff_stairs_c.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 2,
+   "note": "0.4.3 batch_12_cliffs (cinder)"
   }
  },
  "transitions": {

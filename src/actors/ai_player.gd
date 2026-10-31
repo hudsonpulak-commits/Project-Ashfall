@@ -375,6 +375,10 @@ func on_bank(_world, _obj) -> void:
 
 
 func on_tick(t: int, world) -> void:
+	_on_tick_body(t, world)
+
+
+func _on_tick_body(t: int, world) -> void:
 	_world_ref = world
 	super.on_tick(t, world)
 	agent.hp = float(hp)
@@ -401,7 +405,13 @@ func on_tick(t: int, world) -> void:
 	if think_cooldown > 0:
 		think_cooldown -= 1
 		return
+	# 0.4.3 think time-slice: once this tick's thinks (pathing) used the director's
+	# budget, the rest think on the next tick (cooldown untouched, same decisions)
+	if AIDirector.think_budget_spent():
+		return
+	var _u := Time.get_ticks_usec()
 	_think(t, world)
+	AIDirector.add_think_ms((Time.get_ticks_usec() - _u) / 1000.0)
 
 
 ## Leftovers: walk over to public ground piles nearby and take them.

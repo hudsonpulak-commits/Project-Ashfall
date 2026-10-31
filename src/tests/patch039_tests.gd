@@ -50,8 +50,8 @@ static func run(main, world: World, p: Player) -> void:
 	var moat_piece := -1
 	var join := -1
 	for c in cells:
-		if c[0] == 2: moat_piece = c[2].x
-		if c[0] == 3: join = c[2].x
+		if c[0] == World.G_AUTOTILE: moat_piece = c[2].x
+		if c[0] == World.G_JOINS: join = c[2].x
 	check(moat_piece >= 0 and join == 16 + 3,   # restyle: the bank is a water_shore frame
 		 "moat: bank on the north (T piece) + a bridge join on the west (%s)" % [cells])
 	# 0.3.11 v3.1 Highfen's capital_wall is drawn by the designer's 45-degree wall art: no tile caps

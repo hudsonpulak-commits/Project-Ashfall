@@ -30,6 +30,19 @@ var _tileset: TileSet
 ## ground than the art). With that fixed, the ground and its transition layers are dimmed
 ## together here (sprites, walls, roofs keep their painted values) to keep the old mood.
 const GROUND_MOOD := Color(0.74, 0.73, 0.70)
+## 0.4.3 overlay layers. Ground pieces (transitions, cliffs, shores, boardwalk,
+## pilings, moat bank) go to the GROUND_OVL layers, which all take GROUND_MOOD
+## like the base tiles; walls and building pieces keep their painted colours.
+const OVL_NAMES := ["trans0", "trans1", "autotile", "joins", "corners", "walls", "g_autotile", "g_joins", "g_shore2", "g_shore3"]
+const G_AUTOTILE := 6
+const G_JOINS := 7
+## batch_10: one shore piece per land type round a water cell (up to 3 layers)
+const G_SHORES := [6, 8, 9]
+const GROUND_OVL := [0, 1, 6, 7, 8, 9]
+const OVL_DRAW_ORDER := [0, 1, 6, 8, 9, 7, 2, 3, 4, 5]
+## 0.4.3 sand reads ~1.5x brighter than grass under GROUND_MOOD: sand tiles, sand
+## transitions and sand shore banks take this extra factor (TileData modulate)
+const SAND_TINT := Color(0.8, 0.8, 0.8)
 var _overlay_src: Dictionary = {}
 var _trans_var: Dictionary = {}       # transition id -> [[source, cols] v1, v2] (batch_08 wobble variants)    # "autotile/<id>" / "transitions/<id>" -> [source id, cols]
 var _build_queue: Array = []
@@ -98,6 +111,8 @@ func _build_tileset() -> TileSet:
 		var cols := maxi(1, tex.get_width() / tile_px)
 		for v in cols:
 			src.create_tile(Vector2i(v, 0))
+			if i == WorldGen.TileType.SAND:
+				src.get_tile_data(Vector2i(v, 0), 0).modulate = SAND_TINT
 			if tall:
 				src.get_tile_data(Vector2i(v, 0), 0).texture_origin = Vector2i(0, (tex.get_height() - tile_px) / 2)
 		ts.add_source(src, i)
@@ -119,9 +134,12 @@ func _build_tileset() -> TileSet:
 			src.texture_region_size = Vector2i(tile_px, tile_px)
 			var cols := maxi(1, tex.get_width() / tile_px)
 			var rows := maxi(1, tex.get_height() / tile_px)
+			var sandy := str(id) == "sand" or str(id) == "water_shore_sand"
 			for r in rows:
 				for cx in cols:
 					src.create_tile(Vector2i(cx, r))
+					if sandy:
+						src.get_tile_data(Vector2i(cx, r), 0).modulate = SAND_TINT
 			ts.add_source(src, sid)
 			_overlay_src[cat + "/" + id] = [sid, cols]
 			sid += 1
@@ -143,12 +161,36 @@ func _build_tileset() -> TileSet:
 			for r in maxi(1, vt.get_height() / tile_px):
 				for cx in vc:
 					vsrc.create_tile(Vector2i(cx, r))
+					if str(id) == "sand":
+						vsrc.get_tile_data(Vector2i(cx, r), 0).modulate = SAND_TINT
 			ts.add_source(vsrc, vid)
 			_overlay_src["transitions/%s#%d" % [id, v]] = [vid, vc]
 			var tva: Array = _trans_var.get(str(id), [])
 			tva.append([vid, vc])
 			_trans_var[str(id)] = tva
 			vid += 1
+	# batch_10_shores: 2 variants per shore sheet (sources 700+), picked by hash salt 17
+	var shid := 700
+	for id in GameData.sprites.get("autotile", {}).keys():
+		if not str(id).begins_with("water_shore") or not _overlay_src.has("autotile/" + str(id)):
+			continue
+		for v in [1, 2]:
+			var sp := "res://assets/sprites/autotile/variants/%s_v%d.png" % [id, v]
+			if not ResourceLoader.exists(sp):
+				continue
+			var st: Texture2D = load(sp)
+			var ssrc := TileSetAtlasSource.new()
+			ssrc.texture = st
+			ssrc.texture_region_size = Vector2i(tile_px, tile_px)
+			var sc := maxi(1, st.get_width() / tile_px)
+			for r in maxi(1, st.get_height() / tile_px):
+				for cx in sc:
+					ssrc.create_tile(Vector2i(cx, r))
+					if str(id) == "water_shore_sand":
+						ssrc.get_tile_data(Vector2i(cx, r), 0).modulate = SAND_TINT
+			ts.add_source(ssrc, shid)
+			_overlay_src["autotile/%s#%d" % [id, v]] = [shid, sc]
+			shid += 1
 	# restyle r5: thin unified walls -- one 16x28 atlas per material (16 top + 12 face drop,
 	# drawn at the cell's top-left), frame picked by the 5x5 occupancy key via the shared LUT
 	_wall_src.clear()
@@ -206,43 +248,64 @@ const SHORE_NOT_LAND := ["water", "moat", "bridge", "boardwalk", "planks", ""]
 const SHORE_ALIAS := {"ash_edge": "ash", "road_dirt": "path"}
 
 
-## restyle batch 04: on a water cell, a bank frame from autotile/water_shore_<land> (same
-## edge/corner bit rule as the floor transitions, bits where a neighbour is LAND),
-## <land> = the most common land floor around it, else the generic water_shore. Layer 2.
-func _add_shore(out: Array, nb: Array) -> void:
+## batch_10_shores: on a water cell, one bank piece per distinct land type around it
+## (autotile/water_shore_<land>, else the generic water_shore). Land L draws its own
+## edge bits plus only the corner bits the all-land frame keeps (so a corner piece
+## never rings foam over a neighbouring edge piece). Variant by hash salt 17.
+func _add_shore(out: Array, nb: Array, p: Vector2i) -> void:
 	var e := 0
-	var cnt := {}
+	var keys: Array = []
 	for k in 8:
 		var n: String = str(nb[k])
 		if n in SHORE_NOT_LAND:
+			keys.append("")
 			continue
 		if k < 4:
 			e |= 1 << k
 		var key: String = SHORE_ALIAS.get(n, n)
-		cnt[key] = int(cnt.get(key, 0)) + 1
-	if cnt.is_empty():
-		return
+		if not _overlay_src.has("autotile/water_shore_" + key):
+			key = "_"
+		keys.append(key)
 	var c := 0
-	var land := func(k): return not (str(nb[k]) in SHORE_NOT_LAND)
-	if land.call(4) and not (e & 9): c |= 1
-	if land.call(5) and not (e & 3): c |= 2
-	if land.call(6) and not (e & 6): c |= 4
-	if land.call(7) and not (e & 12): c |= 8
-	var f := e | (c << 4)
-	if f == 0:
+	if keys[4] != "" and not (e & 9): c |= 1
+	if keys[5] != "" and not (e & 3): c |= 2
+	if keys[6] != "" and not (e & 6): c |= 4
+	if keys[7] != "" and not (e & 12): c |= 8
+	if (e | (c << 4)) == 0:
 		return
-	var best := ""
-	var bn := 0
-	for k2 in cnt:
-		if int(cnt[k2]) > bn or (int(cnt[k2]) == bn and str(k2) < best):
-			best = k2
-			bn = int(cnt[k2])
-	var s: Array = _overlay_src.get("autotile/water_shore_" + best, [])
-	if s.is_empty():
-		s = _overlay_src.get("autotile/water_shore", [])
-	if s.is_empty():
-		return
-	out.append([2, s[0], Vector2i(f % int(s[1]), f / int(s[1]))])
+	var masks := {}
+	var cnt := {}
+	for k in 4:
+		if keys[k] != "":
+			masks[keys[k]] = int(masks.get(keys[k], 0)) | (1 << k)
+			cnt[keys[k]] = int(cnt.get(keys[k], 0)) + 1
+	for k in range(4, 8):
+		var bit := 1 << (k - 4)
+		if keys[k] != "" and (c & bit):
+			masks[keys[k]] = int(masks.get(keys[k], 0)) | (bit << 4)
+			cnt[keys[k]] = int(cnt.get(keys[k], 0)) + 1
+	var lands: Array = masks.keys()
+	lands.sort()
+	if lands.size() > G_SHORES.size():
+		# more lands than shore layers: fold the rarest into the most common one
+		var by_n: Array = lands.duplicate()
+		by_n.sort_custom(func(a, b): return int(cnt[a]) > int(cnt[b]) or (int(cnt[a]) == int(cnt[b]) and str(a) < str(b)))
+		for extra in by_n.slice(G_SHORES.size()):
+			masks[by_n[0]] = int(masks[by_n[0]]) | int(masks[extra])
+			masks.erase(extra)
+		lands = masks.keys()
+		lands.sort()
+	var v := int(gen.hash01(p.x, p.y, 17) * 3) if gen != null else 0
+	for i in lands.size():
+		var L: String = lands[i]
+		var base_id := "autotile/water_shore" if L == "_" else "autotile/water_shore_" + L
+		var s: Array = _overlay_src.get(base_id + ("#%d" % v if v > 0 else ""), _overlay_src.get(base_id, []))
+		if s.is_empty():
+			s = _overlay_src.get("autotile/water_shore", [])
+		if s.is_empty():
+			continue
+		var f: int = masks[L]
+		out.append([G_SHORES[i], s[0], Vector2i(f % int(s[1]), f / int(s[1]))])
 
 
 func overlay_cells(p: Vector2i, nm: Callable) -> Array:
@@ -298,31 +361,33 @@ func overlay_cells(p: Vector2i, nm: Callable) -> Array:
 			for k in 4:
 				if nb[k] in BOARDWALK_JOINS:
 					bm |= 1 << k
-			out.append([2, sb[0], Vector2i(bm, 0)])
+			out.append([G_AUTOTILE, sb[0], Vector2i(bm, 0)])
 	elif here == "water" and nb[0] == "boardwalk":
-		_add_shore(out, nb)
+		_add_shore(out, nb, p)
 		# pilings under the deck edge, in the water cell south of a boardwalk
 		var sp: Array = _overlay_src.get("autotile/boardwalk_piling16", [])
 		if not sp.is_empty():
-			out.append([3, sp[0], Vector2i(0, 0)])
+			out.append([G_JOINS, sp[0], Vector2i(0, 0)])
 	elif here == "water":
-		_add_shore(out, nb)
+		_add_shore(out, nb, p)
 	elif here == "moat":
 		# restyle: moats get the same organic shore pass as natural water (replaces the
 		# moat_border bank + inner-corner pieces); bridge joins stay on layer 3.
-		_add_shore(out, nb)
+		_add_shore(out, nb, p)
 		var s: Array = _overlay_src.get("autotile/moat_border", [])
 		if not s.is_empty():
 			for k in 4:
 				if nb[k] == "bridge":
-					out.append([3, s[0], Vector2i(16 + k, 0)])
+					out.append([G_JOINS, s[0], Vector2i(16 + k, 0)])
 					break
-	if gen != null and (here in CLIFF_NAMES or (nb.size() >= 4 and (str(nb[0]) in CLIFF_NAMES or str(nb[1]) in CLIFF_NAMES or str(nb[2]) in CLIFF_NAMES or str(nb[3]) in CLIFF_NAMES))):
-		for pc in cliff_pieces(p, here, nb):
-			var cs2: Array = _overlay_src.get("autotile/" + cliff_palette(p) + str(pc[0]), [])
+	if gen != null and (here in CLIFF_NAMES or nb.any(func(n): return str(n) in CLIFF_NAMES)):
+		var pcs := cliff_pieces(p, here, nb)
+		var pal := cliff_palette(p) if not pcs.is_empty() else ""
+		for pc in pcs:
+			var cs2: Array = _overlay_src.get("autotile/" + pal + str(pc[0]), [])
 			if not cs2.is_empty():
 				var f2 := int(pc[1])
-				out.append([3 if str(pc[0]) == "cliff_shadow" else 2, cs2[0], Vector2i(f2 % int(cs2[1]), f2 / int(cs2[1]))])
+				out.append([int(pc[2]), cs2[0], Vector2i(f2 % int(cs2[1]), f2 / int(cs2[1]))])
 	return out
 
 
@@ -368,80 +433,171 @@ static func _den_mask(nb: Array) -> int:
 	return m
 
 
+## 0.4.3 one colour per connected cliff run: the majority region of the run (cinder or
+## normal), so a run crossing the Cinder border never switches set mid-line.
+## Non-cliff cells (overhang / diagonal corner pieces) take a neighbouring run's set.
+var _run_pal: Dictionary = {}
+const CLIFF_RUN_MAX := 120
+
+
 func cliff_palette(p: Vector2i) -> String:
-	return "cinder_" if gen.region_map != null and gen.region_map.region_at(p) == "cinder" else ""
+	if gen.region_map == null:
+		return ""
+	if not _is_cliff_cell(p):
+		for d in WorldGen._DIRS8:
+			if _is_cliff_cell(p + d):
+				return _run_palette(p + d)
+		return "cinder_" if gen.region_map.region_at(p) == "cinder" else ""
+	return _run_palette(p)
 
 
-## The piece drawn on a south edge cell (face variants by cell hash).
-func _south_piece(q: Vector2i) -> String:
-	if gen.tile_at(q.x, q.y) == WorldGen.TileType.CLIFF_STAIRS:
-		return "cliff_stairs"
-	var m: int = gen.cliff_mask(q)
-	if m & 2:
-		return "cliff_corner_outer_se"
-	if m & 8:
-		return "cliff_corner_outer_sw"
-	return ["cliff_face_s_a", "cliff_face_s_b", "cliff_face_s_c", "cliff_face_s_d"][posmod(q.x * 7 + q.y * 3, 4)]
+## 0.4.3 perf: the run flood follows terrace edges by region level only (cached
+## noise), never tile_at: the flood used to generate terrain for hundreds of cells
+## outside loaded chunks (one overlay cell took 8.7 s in the perf sprint).
+func _run_edge(q: Vector2i) -> bool:
+	var l: int = gen.region_map.level(q)
+	for d in [Vector2i(1, 0), Vector2i(-1, 0), Vector2i(0, 1), Vector2i(0, -1)]:
+		if gen.region_map.level(q + d) != l:
+			return true
+	return false
 
 
+func _is_cliff_cell(q: Vector2i) -> bool:
+	return gen.tile_at(q.x, q.y) in [WorldGen.TileType.CLIFF_FACE, WorldGen.TileType.CLIFF_LIP, WorldGen.TileType.CLIFF_STAIRS, WorldGen.TileType.CLIFF_FOOT]
+
+
+func _run_palette(p: Vector2i) -> String:
+	if _run_pal.has(p):
+		return _run_pal[p]
+	var seen := {p: true}
+	var todo: Array = [p]
+	var i := 0
+	var cin := 0
+	while i < todo.size() and todo.size() < CLIFF_RUN_MAX:
+		var c: Vector2i = todo[i]
+		i += 1
+		cin += int(gen.region_map.region_at(c) == "cinder")
+		for d in WorldGen._DIRS8:
+			var q: Vector2i = c + d
+			if seen.has(q):
+				continue
+			var e := _run_edge(q)
+			seen[q] = e   # negatives cached too (each cell is tested once)
+			if e:
+				todo.append(q)
+	var res := "cinder_" if cin * 2 > i else ""
+	for q in todo:
+		_run_pal[q] = res   # cache for every cell reached (a huge run: its first 600 cells decide)
+	if _run_pal.size() > 200000:
+		_run_pal.clear()
+	return res
+
+
+## 0.4.3 batch_12 47-blob cliff autotile (data/cliff_blob_lut.json): lower-neighbour
+## mask N1 NE2 E4 SE8 S16 SW32 W64 NW128 -> column; 3 variant rows of 16x32 frames
+## (top half on the cell, bottom half on the cell below when the drop is south);
+## end caps where the run stops beside same-level non-cliff ground.
+var _blob_lut: Dictionary = {}
+const BLOB_SALT := 19
+
+
+func _lut() -> Dictionary:
+	if _blob_lut.is_empty():
+		var f := FileAccess.open("res://data/cliff_blob_lut.json", FileAccess.READ)
+		if f:
+			_blob_lut = JSON.parse_string(f.get_as_text())
+	return _blob_lut
+
+
+func cliff_blob_mask(p: Vector2i) -> int:
+	var l: int = gen.cliff_level(p)
+	var m := 0
+	for k in 8:
+		var q: Vector2i = p + WorldGen._DIRS8[k]
+		if gen.cliff_level(q) < l and gen._terrain_at(q.x, q.y) != WorldGen.TileType.WATER:
+			m |= 1 << k
+	return m
+
+
+## [sheet, column, cols, canonical mask] for the blob piece at p (sheet "" = none).
+func cliff_blob_frame(p: Vector2i) -> Array:
+	var lut := _lut()
+	var m := cliff_blob_mask(p)
+	if m == 0 or lut.is_empty():
+		return ["", 0, 0, 0]
+	var col := int(lut["mask_to_frame"][str(m)])
+	var c := int(lut["canonical"][col])
+	var caps: Dictionary = lut["caps"]
+	var l: int = gen.cliff_level(p)
+	for side in ["E", "W", "N", "S"]:
+		var key := "%d|%s" % [c, side]
+		if not caps.has(key):
+			continue
+		var n: Vector2i = p + {"E": Vector2i(1, 0), "W": Vector2i(-1, 0), "N": Vector2i(0, -1), "S": Vector2i(0, 1)}[side]
+		if gen.cliff_level(n) == l and not _is_cliff_cell(n) and gen.tile_at(n.x, n.y) != WorldGen.TileType.CLIFF_SHADOW:
+			return ["cliff_blob_caps", int(caps[key]["frame"]), 10, c]
+	return ["cliff_blob", col, 47, c]
+
+
+func _cvar(p: Vector2i) -> int:
+	return int(gen.hash01(p.x, p.y, BLOB_SALT) * 3) % 3
+
+
+func _cvar_sfx(p: Vector2i) -> String:
+	return ["", "_b", "_c"][_cvar(p)]
+
+
+## Pieces for a cell: [sheet name, frame, layer]. Tops on G_AUTOTILE, overhang halves
+## on G_SHORES[1] (never a water cell here), shadows on G_JOINS.
 func cliff_pieces(p: Vector2i, here: String, nb: Array) -> Array:
 	var out: Array = []
 	if here == "cliff_shadow":
-		out.append(["cliff_shadow", 0])
-	if here in ["cliff_face", "cliff_lip", "cliff_stairs"]:
-		var m: int = gen.cliff_mask(p)
-		if m & 4:
-			out.append([_south_piece(p), 0])
-			return out
-		if here == "cliff_stairs":
-			return out   # east / west / north ramps: open ground
-		var v := "_b" if posmod(p.y * 5 + p.x * 3, 3) == 0 else ""
-		if (m & 1) and (m & 2):
-			out.append(["cliff_corner_outer_ne", 0])
-		elif (m & 1) and (m & 8):
-			out.append(["cliff_corner_outer_nw", 0])
-		elif m & 1:
-			out.append(["cliff_rim_n" + v, 0])
-		elif m & 2:
-			out.append(["cliff_rim_e" + v, 0])
-		elif m & 8:
-			out.append(["cliff_rim_w" + v, 0])
-		else:
-			var ic := _inner_corner(p)
-			if ic != "":
-				out.append([ic, 0])
+		out.append(["cliff_shadow" + _cvar_sfx(p), 0, G_JOINS])
+	if here == "cliff_stairs":
+		if gen.cliff_mask(p) & 4:
+			out.append(["cliff_stairs" + _cvar_sfx(p), 0, G_AUTOTILE])
+		return out   # east / west / north ramps: open ground
+	if here in ["cliff_face", "cliff_lip"]:
+		var bf := cliff_blob_frame(p)
+		if bf[0] != "":
+			out.append([bf[0], _cvar(p) * 2 * int(bf[2]) + int(bf[1]), G_AUTOTILE])
 		return out
-	# the cell below a south edge: the overhang half of the 16x32 piece
+	# the cell below a south drop: the bottom half of the 16x32 piece above
 	var up := p + Vector2i(0, -1)
-	if nb.size() > 0 and str(nb[0]) in ["cliff_face", "cliff_stairs", "cliff_lip"] and (gen.cliff_mask(up) & 4):
-		out.append([_south_piece(up), 1])
-		return out
-	# plateau cells whose only lower neighbour is diagonal: inner corner
-	if not (here in CLIFF_NAMES) and gen.cliff_mask(p) == 0:
-		var ic2 := _inner_corner(p)
-		if ic2 != "":
-			out.append([ic2, 0])
+	var nu: String = str(nb[0]) if nb.size() > 0 else WorldGen.TILE_NAMES[gen.tile_at(up.x, up.y)]
+	if nu == "cliff_stairs" and (gen.cliff_mask(up) & 4):
+		out.append(["cliff_stairs" + _cvar_sfx(up), 1, G_SHORES[1]])
+	elif nu in ["cliff_face", "cliff_lip"]:
+		var bu := cliff_blob_frame(up)
+		if bu[0] != "" and (int(bu[3]) & 16):
+			out.append([bu[0], (_cvar(up) * 2 + 1) * int(bu[2]) + int(bu[1]), G_SHORES[1]])
+	# plateau cells whose lower ground is only diagonal: the blob's diagonal frames
+	if not (here in CLIFF_NAMES) and gen.cliff_mask(p) == 0 and not gen.cliff_free(p):
+		var bd := cliff_blob_frame(p)
+		if bd[0] != "":
+			out.append([bd[0], _cvar(p) * 2 * int(bd[2]) + int(bd[1]), G_AUTOTILE])
 	return out
 
 
-func _inner_corner(p: Vector2i) -> String:
-	var l: int = gen.cliff_level(p)
-	if gen.cliff_level(p + Vector2i(1, 1)) < l:
-		return "cliff_corner_inner_se"
-	if gen.cliff_level(p + Vector2i(-1, 1)) < l:
-		return "cliff_corner_inner_sw"
-	if gen.cliff_level(p + Vector2i(1, -1)) < l:
-		return "cliff_corner_inner_ne"
-	if gen.cliff_level(p + Vector2i(-1, -1)) < l:
-		return "cliff_corner_inner_nw"
-	return ""
-
-
-## Cliff cells draw region ground underneath; the pieces above carry the look.
+## Cliff cells draw ground underneath (the batch_12 pieces are see-through): the most
+## common ground among the 8 neighbours, so no square region-colour patch shows.
 func cliff_base_tile(p: Vector2i, t: int) -> int:
-	if t in [WorldGen.TileType.CLIFF_FACE, WorldGen.TileType.CLIFF_SHADOW, WorldGen.TileType.CLIFF_LIP, WorldGen.TileType.CLIFF_STAIRS, WorldGen.TileType.CLIFF_FOOT]:
-		return gen.region_grass(p)
-	return t
+	if not (t in [WorldGen.TileType.CLIFF_FACE, WorldGen.TileType.CLIFF_SHADOW, WorldGen.TileType.CLIFF_LIP, WorldGen.TileType.CLIFF_STAIRS, WorldGen.TileType.CLIFF_FOOT]):
+		return t
+	var cnt := {}
+	var best := -1
+	var bn := 0
+	for d in [Vector2i(0, -1), Vector2i(1, 0), Vector2i(0, 1), Vector2i(-1, 0)]:   # orthogonal only (perf: build s0)
+		var q: Vector2i = p + d
+		var tq := gen.tile_at(q.x, q.y)
+		if tq in WorldGen.BLOCKING_TILES or tq in [WorldGen.TileType.CLIFF_SHADOW, WorldGen.TileType.CLIFF_STAIRS, WorldGen.TileType.WATER] or tq in WorldGen.ROAD_SURFACES:
+			continue
+		var k: int = int(cnt.get(tq, 0)) + 1
+		cnt[tq] = k
+		if k > bn or (k == bn and tq < best):
+			bn = k
+			best = tq
+	return best if best >= 0 else gen.region_grass(p)
 
 
 func variants_for(tile_type: int) -> int:
@@ -1021,15 +1177,16 @@ func _job_stage(j: Dictionary, c: Vector2i, ch: ChunkData, base: Vector2i) -> vo
 					j["stage"] = 2
 					j["row"] = 0
 					var ovl: Array = j["ovl"]
-					for i in 6:
+					for i in OVL_NAMES.size():
 						var l := TileMapLayer.new()
 						l.tile_set = _tileset
 						l.position = (j["layer"] as TileMapLayer).position
-						l.name = ["trans0", "trans1", "autotile", "joins", "corners", "walls"][i]
-						if i < 2:
-							l.modulate = GROUND_MOOD   # transition rims match the base tiles they blend
-						(j["root"] as Node2D).add_child(l)
+						l.name = OVL_NAMES[i]
+						if i in GROUND_OVL:
+							l.modulate = GROUND_MOOD   # 0.4.3 every ground layer takes the same mood tint
 						ovl.append(l)
+					for i in OVL_DRAW_ORDER:
+						(j["root"] as Node2D).add_child(ovl[i])
 			2:   # overlays, one row per step
 				var ly3: int = j["row"]
 				var names2: Dictionary = j["names"]

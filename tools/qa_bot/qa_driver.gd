@@ -360,6 +360,8 @@ func _run() -> void:
 			await _frames_restyle()
 		"gfxaudit":
 			await _gfx_audit()
+		"tintspot":
+			await _tint_spot()
 		_:
 			push_error("unknown QA scenario " + scenario)
 			await _finish(false)
@@ -2604,13 +2606,15 @@ func _capital038() -> void:
 		label = "road"
 		await _snap("road_decor")
 		# walking: tap the far side of the log, the path goes round it
-		await tap_tile(lg + ld, "far side of the log")
+		# 0.4.3 tap two tiles past the log (the tile right beside it can pick the log sprite and walk up to it)
+		var far := lg + ld * 2
+		await tap_tile(far, "far side of the log")
 		var stood_on := false
 		var t_end := Tick.now_ms() + 12000
-		while Tick.now_ms() < t_end and p.tile != lg + ld:
+		while Tick.now_ms() < t_end and p.tile != far:
 			stood_on = stood_on or p.tile == lg
 			await frames(2)
-		res["walk_round_log"] = p.tile == lg + ld and not stood_on and w.is_blocked(lg)
+		res["walk_round_log"] = p.tile == far and not stood_on and w.is_blocked(lg)
 		# shooting: bow + arrows on one side, a slime held still on the other
 		var foe := _foe("slime", "", lg)
 		if foe == null:
@@ -4378,3 +4382,144 @@ func _gfx_audit() -> void:
 		await _gfx_shot("%s_center_night" % tid, w.find_free_tile_near(c, 8))
 	DayNight.debug_set_phase("day")
 	main.camera.zoom = Vector2(3, 3)
+
+
+## 0.4.3 Hudson's tint-mismatch spot (wilds 169,-94) plus every overlay layer's
+## modulate in the chunks on screen (ground layers must carry GROUND_MOOD).
+func _tint_spot() -> void:
+	var p: Player = main.player
+	var w: World = main.world
+	DayNight.debug_set_phase("day")
+	var res := {"spots": {}}
+	for sp in [Vector2i(169, -94), Vector2i(166, -88), Vector2i(136, -113)]:
+		p.place_at(w.find_free_tile_near(sp, 3))
+		p.stop()
+		w.set_focus(p.tile, true)
+		label = "tint_%d_%d" % [sp.x, sp.y]
+		await frames(60)
+		var layers := {}
+		for c in w.chunk_views.keys():
+			for l in (w.chunk_views[c] as Node2D).get_children():
+				if l is TileMapLayer and not (l as TileMapLayer).get_used_cells().is_empty():
+					layers[str(l.name)] = [l.modulate.r, l.modulate.g, l.modulate.b]
+		var names := []
+		for dy in range(-8, 14):
+			var row := ""
+			for dx in range(-6, 7):
+				var tn: String = WorldGen.TILE_NAMES[w.gen.tile_at(p.tile.x + dx, p.tile.y + dy)]
+				row += tn.substr(0, 1) if tn != "cliff_lip" and tn != "cliff_face" else ("L" if tn == "cliff_lip" else "F")
+			names.append(row)
+		res["spots"][label] = {"tile": [p.tile.x, p.tile.y], "layers": layers, "names": names}
+		await _snap(label)
+	# 0.4.3 dirt road close-up (banding check): the middle of the first village road on dirt
+	var rd := Vector2i(1 << 30, 0)
+	for vid in w.gen.village_roads.keys():
+		var tl: Array = w.gen.village_roads[vid]
+		for i in range(tl.size() / 3, tl.size()):
+			var q: Vector2i = tl[i]
+			if w.gen.tile_at(q.x, q.y) == WorldGen.TileType.ROAD_DIRT and w.gen.tile_at(q.x + 1, q.y + 1) == WorldGen.TileType.ROAD_DIRT:
+				rd = q
+				break
+		if rd.x != 1 << 30:
+			break
+	if rd.x != 1 << 30:
+		p.place_at(w.find_free_tile_near(rd + Vector2i(2, 0), 3))
+		p.stop()
+		w.set_focus(p.tile, true)
+		label = "dirt_road_close"
+		await frames(60)
+		var cam = get_viewport().get_camera_2d()
+		if cam:
+			var z0: Vector2 = cam.zoom
+			cam.zoom = z0 * 2.0
+			await frames(20)
+			await _snap("dirt_road_close")
+			cam.zoom = z0
+		res["dirt_road"] = [rd.x, rd.y]
+	# batch_10/11 edge frames: an ocean beach, a grass-path edge and a dirt road edge
+	var g = w.gen
+	var b: Rect2i = g.bounds()
+	var beach := Vector2i(1 << 30, 0)
+	for yy in range(-100, b.end.y, 7):
+		for xx in range(b.position.x, b.position.x + 200):
+			if g.tile_at(xx, yy) == WorldGen.TileType.SAND and g.tile_at(xx - 1, yy) == WorldGen.TileType.WATER and g.tile_at(xx + 3, yy) == WorldGen.TileType.SAND:
+				beach = Vector2i(xx + 2, yy)
+				break
+		if beach.x != 1 << 30:
+			break
+	var edges := {"beach": beach, "path_edge": Vector2i(1 << 30, 0), "road_edge": Vector2i(1 << 30, 0),
+		"cliff_line": Vector2i(1 << 30, 0), "cliff_endcap": Vector2i(1 << 30, 0), "cliff_cinder": Vector2i(1 << 30, 0)}
+	# batch_12 cliff frames: a long south face run, a capped run end, a cinder cliff
+	var F := WorldGen.TileType.CLIFF_FACE
+	for yy in range(-320, 320, 2):
+		for xx in range(-400, 400, 2):
+			if g.tile_at(xx, yy) != F:
+				continue
+			var q := Vector2i(xx, yy)
+			if edges["cliff_line"].x == 1 << 30 and w.cliff_palette(q) == "" and range(-4, 5).all(func(k): return g.tile_at(xx + k, yy) == F):
+				edges["cliff_line"] = q
+			if edges["cliff_endcap"].x == 1 << 30 and w.cliff_palette(q) == "" and str(w.cliff_blob_frame(q)[0]) == "cliff_blob_caps":
+				edges["cliff_endcap"] = q
+			if edges["cliff_cinder"].x == 1 << 30 and w.cliff_palette(q) == "cinder_":
+				edges["cliff_cinder"] = q
+
+	var rt: Dictionary = g.road_tiles.duplicate()
+	rt.merge(g._town_tiles)
+	for q in rt.keys():
+		var tq: int = rt[q]
+		var key := "path_edge" if tq == WorldGen.TileType.PATH else ("road_edge" if tq == WorldGen.TileType.ROAD_DIRT else "")
+		if key == "" or (edges[key] as Vector2i).x != 1 << 30 or (q as Vector2i).length() < 60:
+			continue
+		if g.tile_at(q.x, q.y - 1) in WorldGen.GRASS_TILES and g.tile_at(q.x, q.y - 2) in WorldGen.GRASS_TILES:
+			edges[key] = q
+	for key in edges:
+		var e: Vector2i = edges[key]
+		if e.x == 1 << 30:
+			continue
+		p.place_at(w.find_free_tile_near(e + (Vector2i(0, 3) if key.begins_with("cliff") else Vector2i.ZERO), 3))
+		p.stop()
+		w.set_focus(p.tile, true)
+		label = key
+		await frames(60)
+		var cam2 = get_viewport().get_camera_2d()
+		var zz: Vector2 = cam2.zoom if cam2 else Vector2.ONE
+		if cam2 and key != "beach":
+			cam2.zoom = zz * 2.0
+		await frames(20)
+		await _snap(key)
+		if cam2:
+			cam2.zoom = zz
+		res[key] = [e.x, e.y]
+	# 0.4.3 night torches: the player holds a lit torch at night, combat swaps the weapon back
+	p.place_at(w.find_free_tile_near(w.gen.town_center("millbrook") + Vector2i(4, 6), 4))
+	p.stop()
+	w.set_focus(p.tile, true)
+	var had_w = p.equipment.get("shield")
+	p.equipment["shield"] = "iron_kite_shield"   # so the combat frame shows the shield swapped back
+	DayNight.debug_set_phase("night")
+	label = "night_torch"
+	await frames(60)
+	var camt = get_viewport().get_camera_2d()
+	var zt: Vector2 = camt.zoom if camt else Vector2.ONE
+	if camt:
+		camt.zoom = zt * 2.0
+	await frames(20)
+	res["torch_night"] = [p.torch_on, p._torch_light != null and p._torch_light.enabled, p.gear_layer_ids()]
+	await _snap("night_torch")
+	p.last_combat_tick = p._tick_now
+	label = "night_torch_combat"
+	await frames(40)
+	res["torch_combat"] = [p.torch_on, p._torch_light != null and p._torch_light.enabled, p.gear_layer_ids()]
+	await _snap("night_torch_combat")
+	p.last_combat_tick = -100000
+	await frames(40)
+	res["torch_after"] = [p.torch_on]
+	if camt:
+		camt.zoom = zt
+	DayNight.debug_set_phase("day")
+	if had_w == null:
+		p.equipment.erase("shield")
+	else:
+		p.equipment["shield"] = had_w
+	label = ""
+	_notes["tintspot"] = res
