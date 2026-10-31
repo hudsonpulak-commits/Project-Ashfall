@@ -10,9 +10,9 @@ static func check(cond: bool, what: String) -> void:
 
 static func run(main, world: World, p: Player) -> void:
 	print("  -- 0.4.0 ranged, fletching, crafting, dire wolf")
-	check(str(ProjectSettings.get_setting("application/config/version")) in ["0.4.0", "0.4.1", "0.4.2"], "version is 0.4.0 or later (0.4.2)")
+	check(str(ProjectSettings.get_setting("application/config/version")) in ["0.4.0", "0.4.1", "0.4.2", "0.4.3"], "version is 0.4.0 or later (0.4.3)")
 	var preset := FileAccess.get_file_as_string("res://export_presets.cfg")
-	check(preset.contains("version/code=40") and preset.contains("version/name=\"0.4.2\""), "Android versionCode 40 / 0.4.2")
+	check(preset.contains("version/code=41") and preset.contains("version/name=\"0.4.3\""), "Android versionCode 41 / 0.4.3")
 	_skills_and_save()
 	_fletching(world, p)
 	_crafting()
