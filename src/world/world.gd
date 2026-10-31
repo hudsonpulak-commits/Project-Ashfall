@@ -1393,13 +1393,17 @@ func wear_amount(p: Vector2i, tile_type: int = -1) -> float:
 func _ground_material(c: Vector2i, ch: ChunkData) -> ShaderMaterial:
 	var mat := ShaderMaterial.new()
 	mat.shader = GROUND_SHADER
-	var img := Image.create(CHUNK, CHUNK, false, Image.FORMAT_RGBA8)
+	# 0.4.4 one-tile apron so the shader's filtered, warped lookup is seamless across chunks
+	var img := Image.create(CHUNK + 2, CHUNK + 2, false, Image.FORMAT_RGBA8)
 	var base := c * CHUNK
-	for y in CHUNK:
-		for x in CHUNK:
-			var t := ch.tile_local(x, y)
+	for y in CHUNK + 2:
+		for x in CHUNK + 2:
+			var lx := x - 1
+			var ly := y - 1
+			var inside := lx >= 0 and ly >= 0 and lx < CHUNK and ly < CHUNK
+			var t: int = ch.tile_local(lx, ly) if inside else _rim_tile(base.x + lx, base.y + ly)
 			var vary := 1.0 if (t in WorldGen.GRASS_TILES or t == WorldGen.TileType.DIRT) else 0.0
-			img.set_pixel(x, y, Color(wear_amount(base + Vector2i(x, y), t), vary, 0, 1))
+			img.set_pixel(x, y, Color(wear_amount(base + Vector2i(lx, ly), t), vary, 0, 1))
 	mat.set_shader_parameter("wear_tex", ImageTexture.create_from_image(img))
 	mat.set_shader_parameter("chunk_origin", Vector2(base) * float(tile_px))
 	mat.set_shader_parameter("chunk_px", float(CHUNK * tile_px))

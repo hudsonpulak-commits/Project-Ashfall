@@ -389,6 +389,8 @@ func _load_town(town: Dictionary) -> void:
 	_load_buildings(town, origin)
 	_blend_footprint_edge(rect)
 	_ensure_gate_approaches(town, origin)
+	if gpat > 0.0:
+		_organic_jitter(rect)
 	_place_quest_givers(town, origin)
 
 
@@ -636,6 +638,65 @@ func _blend_footprint_edge(rect: Rect2i) -> void:
 				break
 	for p in flips:
 		_town_tiles[p] = flips[p]
+
+
+## 0.4.4 organic outlines in and round a town (Cinderholt): the tile-level shapes of
+## soft floors were tile-aligned blocks (gate apron, lanes, wilderness marsh/sand/rocky
+## next to grass), which the 6 px transition fringe cannot hide. Two noise passes
+## jog every soft/soft boundary by a tile here and there. Lanes and paths only grow
+## (never lose a cell), so roads stay connected; the Scorch, water, cliffs, walls,
+## buildings and objects are never touched.
+const JITTER_SOFT := ["dirt", "grass", "grass_lush", "grass_boreal", "grass_tropic", "sand", "rocky", "marsh"]
+const JITTER_LANE := ["path", "road_dirt", "cobble"]
+
+func _organic_jitter(rect: Rect2i) -> void:
+	var bt: Dictionary = {}
+	for b in buildings.values():
+		var br: Rect2i = b["rect"]
+		if rect.grow(8).intersects(br):
+			for y in range(br.position.y - 1, br.end.y + 1):
+				for x in range(br.position.x - 1, br.end.x + 1):
+					bt[Vector2i(x, y)] = true
+	var area := rect.grow(6)
+	for pass_i in 2:
+		var flips: Dictionary = {}
+		for y in range(area.position.y, area.end.y):
+			for x in range(area.position.x, area.end.x):
+				var p := Vector2i(x, y)
+				if bt.has(p) or _town_objects.has(p) or _wall_ground.has(p) or _art_ground.has(p):
+					continue
+				if not rect.has_point(p) and (_town_rect_other(p, rect) or not _biome_zone_at(p).is_empty()):
+					continue
+				var a: String = TILE_NAMES[tile_at(x, y)]
+				if not a in JITTER_SOFT:
+					continue
+				var best := ""
+				var bp := -1
+				for dv in [Vector2i(0, -1), Vector2i(1, 0), Vector2i(0, 1), Vector2i(-1, 0)]:
+					var q: Vector2i = p + dv
+					if bt.has(q) or _town_objects.has(q):
+						continue
+					var b: String = TILE_NAMES[tile_at(q.x, q.y)]
+					if b == a or not (b in JITTER_SOFT or b in JITTER_LANE):
+						continue
+					var pr := Autotile.priority(b)
+					if pr > bp:
+						bp = pr
+						best = b
+				if best == "":
+					continue
+				var nz := _detail.get_noise_2d(x * 2.3 + 140.0 * pass_i, y * 2.3 - 60.0) + (hash01(x, y, 71 + pass_i) - 0.5) * 0.7
+				if nz > (0.12 if best in JITTER_LANE else 0.2):
+					flips[p] = TILE_NAMES.find(best)
+		for p in flips:
+			_town_tiles[p] = flips[p]
+
+
+func _town_rect_other(p: Vector2i, own: Rect2i) -> bool:
+	for r in _town_rects.values():
+		if r != own and (r as Rect2i).has_point(p):
+			return true
+	return false
 
 
 func wall_tower_cells() -> Array:
