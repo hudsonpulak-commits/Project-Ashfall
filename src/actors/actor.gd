@@ -667,6 +667,7 @@ func sprint_steps() -> int:
 # ---------------------------------------------------------------- visuals --
 func _process(delta: float) -> void:
 	_update_visual_position()
+	_update_torch(delta)
 	if _sprite:
 		_anim_t += delta   # continuous clock: the cycle never restarts per tick
 		var kneel := bool(action.get("kneel", false)) and path.is_empty()
@@ -871,14 +872,14 @@ func _refresh_gear_visual() -> void:
 	var key := ""
 	var want := {}
 	for slot in GEAR_DRAW_ORDER:
-		if not worn.has(slot):
+		if not worn.has(slot) or (slot == "weapon" and torch_on):   # 0.4.3 the torch replaces the weapon
 			continue
 		var sid := gear_sprite_for(str(worn[slot]), slot)
 		if sid == "":
 			continue
 		want[slot] = sid
 		key += sid + ";"
-	key += _pose + facing.dir
+	key += _pose + facing.dir + ("T" if torch_on else "")
 	if key == _layer_key:
 		return
 	_layer_key = key
@@ -965,3 +966,132 @@ func gear_layer_ids() -> Array:
 		if _layers.has(slot) and _layers[slot].visible:
 			ids.append(str(_layers[slot].get_meta("sprite_id", "")))
 	return ids
+
+
+# --------------------------------------------------------------- 0.4.3 torch --
+## At night actors hold a torch (stand-in sprite + a soft warm PointLight2D) instead
+## of their weapon; combat swaps the weapon back and the light goes out, and the torch
+## comes back out after combat while it is still night. Lights are capped
+## (TORCH_MAX_LIGHTS, nearest the camera first, the player always lit) for frame time.
+const TORCH_MAX_LIGHTS := 6
+const TORCH_CHECK_S := 0.25
+static var _torch_tex: Texture2D
+static var _torch_light_tex: Texture2D
+static var _torch_lit: Dictionary = {}   # actor instance id -> true
+var torch_on := false
+var _torch: Node2D
+var _torch_light: PointLight2D
+var _torch_t := 0.0
+
+
+func torch_wanted() -> bool:
+	return (self is Player or self is AIPlayer) and DayNight.is_night() and not in_combat(_tick_now) and visible and hp > 0
+
+
+func _update_torch(delta: float) -> void:
+	_torch_t -= delta
+	if _torch_t > 0.0:
+		if torch_on and _torch:
+			_place_torch()
+		return
+	_torch_t = TORCH_CHECK_S
+	var want := torch_wanted()
+	if want != torch_on:
+		torch_on = want
+		_layer_key = ""   # re-pick gear layers (weapon hidden / shown)
+	if torch_on:
+		if _torch == null:
+			_make_torch()
+		_torch.visible = true
+		_place_torch()
+		_torch_light.enabled = _torch_light_slot()
+	elif _torch:
+		_torch.visible = false
+		_torch_light.enabled = false
+		_torch_lit.erase(get_instance_id())
+
+
+func _torch_light_slot() -> bool:
+	var id := get_instance_id()
+	if self is Player:
+		_torch_lit[id] = true
+		return true
+	var cam := get_viewport().get_camera_2d() if is_inside_tree() else null
+	var near := cam == null or global_position.distance_to(cam.get_screen_center_position()) < 220.0
+	if not near:
+		_torch_lit.erase(id)
+		return false
+	if _torch_lit.has(id):
+		return true
+	for k in _torch_lit.keys():   # drop freed / unlit actors
+		var o = instance_from_id(k)
+		if o == null or not is_instance_valid(o) or not o.torch_on:
+			_torch_lit.erase(k)
+	if _torch_lit.size() >= TORCH_MAX_LIGHTS:
+		return false
+	_torch_lit[id] = true
+	return true
+
+
+func _make_torch() -> void:
+	if _torch_tex == null:
+		var img := Image.create(4, 9, false, Image.FORMAT_RGBA8)
+		for y in 9:
+			for x in 4:
+				var c := Color(0, 0, 0, 0)
+				if y >= 3 and x >= 1 and x <= 2:
+					c = Color8(110, 72, 40) if x == 1 else Color8(84, 54, 30)   # handle
+				elif y < 3 and (x >= 1 and x <= 2 or y == 2):
+					c = Color8(255, 214, 120) if y == 0 or x == 1 else Color8(240, 140, 50)   # flame
+				img.set_pixel(x, y, c)
+		_torch_tex = ImageTexture.create_from_image(img)
+		var g := Gradient.new()
+		g.set_color(0, Color(1, 1, 1, 1))
+		g.set_color(1, Color(1, 1, 1, 0))
+		var gt := GradientTexture2D.new()
+		gt.gradient = g
+		gt.fill = GradientTexture2D.FILL_RADIAL
+		gt.fill_from = Vector2(0.5, 0.5)
+		gt.fill_to = Vector2(1.0, 0.5)
+		gt.width = 128
+		gt.height = 128
+		_torch_light_tex = gt
+	_torch = Node2D.new()
+	_torch.name = "torch"
+	var spr := Sprite2D.new()
+	spr.texture = _torch_tex
+	spr.centered = true
+	_torch.add_child(spr)
+	var fl := Sprite2D.new()   # the flame is lit itself (not darkened by the night tint)
+	fl.texture = _torch_tex
+	fl.region_enabled = true
+	fl.region_rect = Rect2(0, 0, 4, 3)
+	fl.position = Vector2(0, -3)
+	fl.centered = true
+	var mat := CanvasItemMaterial.new()
+	mat.light_mode = CanvasItemMaterial.LIGHT_MODE_UNSHADED
+	fl.material = mat
+	_torch.add_child(fl)
+	_torch_light = PointLight2D.new()
+	_torch_light.texture = _torch_light_tex
+	_torch_light.texture_scale = 1.1
+	_torch_light.color = Color(1.0, 0.86, 0.66)   # warm but pale: no orange window glow
+	_torch_light.energy = 0.75
+	_torch_light.position = Vector2(0, -3)
+	_torch.add_child(_torch_light)
+	add_child(_torch)
+
+
+func _place_torch() -> void:
+	if _sprite == null:
+		return
+	var sz := _sprite.get_rect().size
+	var side := -1.0 if _sprite.flip_h else 1.0
+	var x := sz.x * (0.5 + 0.28 * side) if facing.dir == "side" else sz.x * 0.78
+	_torch.position = _sprite.position + _sprite.offset + Vector2(x, sz.y * 0.7)
+	_torch.z_index = -1 if facing.dir == "up" else 0
+	_torch_light.texture_scale = 1.1 + 0.04 * sin(Time.get_ticks_msec() * 0.006 + float(get_instance_id() % 7))
+
+
+func _exit_tree() -> void:
+	_torch_lit.erase(get_instance_id())

@@ -4456,9 +4456,9 @@ func _tint_spot() -> void:
 			if g.tile_at(xx, yy) != F:
 				continue
 			var q := Vector2i(xx, yy)
-			if edges["cliff_line"].x == 1 << 30 and range(-4, 5).all(func(k): return g.tile_at(xx + k, yy) == F):
+			if edges["cliff_line"].x == 1 << 30 and w.cliff_palette(q) == "" and range(-4, 5).all(func(k): return g.tile_at(xx + k, yy) == F):
 				edges["cliff_line"] = q
-			if edges["cliff_endcap"].x == 1 << 30 and str(w.cliff_blob_frame(q)[0]) == "cliff_blob_caps":
+			if edges["cliff_endcap"].x == 1 << 30 and w.cliff_palette(q) == "" and str(w.cliff_blob_frame(q)[0]) == "cliff_blob_caps":
 				edges["cliff_endcap"] = q
 			if edges["cliff_cinder"].x == 1 << 30 and w.cliff_palette(q) == "cinder_":
 				edges["cliff_cinder"] = q
@@ -4490,5 +4490,36 @@ func _tint_spot() -> void:
 		if cam2:
 			cam2.zoom = zz
 		res[key] = [e.x, e.y]
+	# 0.4.3 night torches: the player holds a lit torch at night, combat swaps the weapon back
+	p.place_at(w.find_free_tile_near(w.gen.town_center("millbrook") + Vector2i(4, 6), 4))
+	p.stop()
+	w.set_focus(p.tile, true)
+	var had_w = p.equipment.get("weapon")
+	p.equipment["weapon"] = "bronze_hatchet"   # so the combat frame shows the weapon swapped back
+	DayNight.debug_set_phase("night")
+	label = "night_torch"
+	await frames(60)
+	var camt = get_viewport().get_camera_2d()
+	var zt: Vector2 = camt.zoom if camt else Vector2.ONE
+	if camt:
+		camt.zoom = zt * 2.0
+	await frames(20)
+	res["torch_night"] = [p.torch_on, p._torch_light != null and p._torch_light.enabled, p.gear_layer_ids()]
+	await _snap("night_torch")
+	p.last_combat_tick = p._tick_now
+	label = "night_torch_combat"
+	await frames(40)
+	res["torch_combat"] = [p.torch_on, p._torch_light != null and p._torch_light.enabled, p.gear_layer_ids()]
+	await _snap("night_torch_combat")
+	p.last_combat_tick = -100000
+	await frames(40)
+	res["torch_after"] = [p.torch_on]
+	if camt:
+		camt.zoom = zt
+	DayNight.debug_set_phase("day")
+	if had_w == null:
+		p.equipment.erase("weapon")
+	else:
+		p.equipment["weapon"] = had_w
 	label = ""
 	_notes["tintspot"] = res
