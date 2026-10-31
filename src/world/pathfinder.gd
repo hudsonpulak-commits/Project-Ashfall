@@ -36,16 +36,20 @@ static func _find_path(world, start: Vector2i, goals: Array, aim: Vector2i, max_
 		return []
 	if goal_set.has(start):
 		return []
-	var open_heap: Array = []   # [f, counter, Vector2i]
+	# 0.4.3 packed heap (f, counter, tile) in parallel packed arrays: same pop order
+	# as the old [f, counter, tile] Array heap, without one new Array per push
+	var hf := PackedFloat64Array()
+	var hc := PackedInt32Array()
+	var ht: Array[Vector2i] = []
 	var g_cost := {start: 0.0}
 	var came := {}
 	var closed := {}
 	var counter := 0
 	var bc := {}   # 0.3.16 per-search is_blocked memo (diagonal checks revisit the same tiles)
-	_push(open_heap, [_h(start, aim), counter, start])
+	_hpush(hf, hc, ht, _h(start, aim), counter, start)
 	var expanded := 0
-	while not open_heap.is_empty() and expanded < max_nodes:
-		var cur: Vector2i = _pop(open_heap)[2]
+	while not hf.is_empty() and expanded < max_nodes:
+		var cur: Vector2i = _hpop(hf, hc, ht)
 		if closed.has(cur):
 			continue
 		if goal_set.has(cur):
@@ -69,7 +73,7 @@ static func _find_path(world, start: Vector2i, goals: Array, aim: Vector2i, max_
 				g_cost[n] = cost
 				came[n] = cur
 				counter += 1
-				_push(open_heap, [cost + _h(n, aim), counter, n])
+				_hpush(hf, hc, ht, cost + _h(n, aim), counter, n)
 	return []
 
 
@@ -203,4 +207,44 @@ static func _pop(heap: Array) -> Array:
 			heap[i] = heap[m]
 			heap[m] = t
 			i = m
+	return top
+
+
+static func _hpush(hf: PackedFloat64Array, hc: PackedInt32Array, ht: Array[Vector2i], f: float, c: int, t: Vector2i) -> void:
+	var i := hf.size()
+	hf.append(f); hc.append(c); ht.append(t)
+	while i > 0:
+		var p := (i - 1) >> 1
+		if f < hf[p] or (f == hf[p] and c < hc[p]):
+			hf[i] = hf[p]; hc[i] = hc[p]; ht[i] = ht[p]
+			i = p
+		else:
+			break
+	hf[i] = f; hc[i] = c; ht[i] = t
+
+
+static func _hpop(hf: PackedFloat64Array, hc: PackedInt32Array, ht: Array[Vector2i]) -> Vector2i:
+	var top: Vector2i = ht[0]
+	var n := hf.size() - 1
+	var f: float = hf[n]
+	var c: int = hc[n]
+	var t: Vector2i = ht[n]
+	hf.resize(n); hc.resize(n); ht.resize(n)
+	if n == 0:
+		return top
+	var i := 0
+	while true:
+		var l := i * 2 + 1
+		if l >= n:
+			break
+		var m := l
+		var r := l + 1
+		if r < n and (hf[r] < hf[l] or (hf[r] == hf[l] and hc[r] < hc[l])):
+			m = r
+		if hf[m] < f or (hf[m] == f and hc[m] < c):
+			hf[i] = hf[m]; hc[i] = hc[m]; ht[i] = ht[m]
+			i = m
+		else:
+			break
+	hf[i] = f; hc[i] = c; ht[i] = t
 	return top
