@@ -12,7 +12,7 @@ static func run(main, world: World, p: Player) -> void:
 	var gen := world.gen
 	var bad := 0
 	var seen := 0
-	var spots := [Vector2i(169, -94), Vector2i(166, -88)]
+	var spots := [Vector2i(169, -94), Vector2i(166, -88), Vector2i(136, -113)]
 	for vd in gen.villages.values():
 		if (vd as Dictionary).has("center"):
 			spots.append(vd["center"])
@@ -33,14 +33,19 @@ static func run(main, world: World, p: Player) -> void:
 	check(seen > 0, "the tint audit sampled overlay cells (%d)" % seen)
 	check(bad == 0, "no cliff / shore / boardwalk overlay piece lands on an untinted layer (%d found)" % bad)
 	# rendered layers: every tinted chunk layer uses exactly GROUND_MOOD (adjacent layers same brightness)
-	world.set_focus(Vector2i(169, -94), true)
-	var root = world.chunk_views.get(World.chunk_of(Vector2i(169, -94)))
-	var mods := {}
-	if root:
-		for ch in root.get_children():
-			if ch is TileMapLayer and (ch as TileMapLayer).modulate != Color.WHITE:
-				mods[(ch as TileMapLayer).modulate] = true
-	check(mods.size() == 1 and mods.has(World.GROUND_MOOD), "all tinted ground layers at 169,-94 share GROUND_MOOD (%s)" % str(mods.keys()))
+	for sp in [Vector2i(169, -94), Vector2i(136, -113)]:
+		world.set_focus(sp, true)
+		var root = world.chunk_views.get(World.chunk_of(sp))
+		var mods := {}
+		var lone := 0
+		if root:
+			for ch in root.get_children():
+				if ch is TileMapLayer:
+					if (ch as TileMapLayer).modulate != Color.WHITE:
+						mods[(ch as TileMapLayer).modulate] = true
+					elif String(ch.name) in ["trans0", "trans1", "g_autotile", "g_joins"]:
+						lone += 1
+		check(mods.size() == 1 and mods.has(World.GROUND_MOOD) and lone == 0, "all ground layers (base, sand/shore/water edges, transitions) at %s share GROUND_MOOD (%s, %d untinted)" % [sp, str(mods.keys()), lone])
 	# dirt road art: no row band darker than the tile mean by a wide margin
 	var img := (load("res://assets/sprites/tiles/variants/road_dirt_x4.png") as Texture2D).get_image()
 	var rows := []

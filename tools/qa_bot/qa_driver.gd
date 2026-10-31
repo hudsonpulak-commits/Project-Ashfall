@@ -4389,7 +4389,7 @@ func _tint_spot() -> void:
 	var w: World = main.world
 	DayNight.debug_set_phase("day")
 	var res := {"spots": {}}
-	for sp in [Vector2i(169, -94), Vector2i(166, -88)]:
+	for sp in [Vector2i(169, -94), Vector2i(166, -88), Vector2i(136, -113)]:
 		p.place_at(w.find_free_tile_near(sp, 3))
 		p.stop()
 		w.set_focus(p.tile, true)
