@@ -101,6 +101,12 @@ func _place(b: Dictionary) -> void:
 
 
 func _process(delta: float) -> void:
+	var _pt0 := Time.get_ticks_usec()
+	_process_timed(delta)
+	World.pmark("hit_bubbles", _pt0)
+
+
+func _process_timed(delta: float) -> void:
 	var life := lifetime()
 	var fade := float(cfg().get("fade_s", 0.2))
 	for k in bubbles.keys():

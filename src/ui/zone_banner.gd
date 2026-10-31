@@ -96,6 +96,12 @@ func banner_showing() -> bool:
 
 
 func _process(dt: float) -> void:
+	var _pt0 := Time.get_ticks_usec()
+	_process_timed(dt)
+	World.pmark("zone_banner", _pt0)
+
+
+func _process_timed(dt: float) -> void:
 	if player == null or world == null:
 		return
 	var z := world.pk_zone_at(player.tile)

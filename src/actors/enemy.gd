@@ -457,6 +457,12 @@ func reset_far() -> void:
 
 # ---------------------------------------------------------------- visuals --
 func _process(delta: float) -> void:
+	var _pt0 := Time.get_ticks_usec()
+	_process_timed(delta)
+	World.pmark("enemy", _pt0, true)
+
+
+func _process_timed(delta: float) -> void:
 	_update_pos()
 	if _lvl_label:
 		Overhead.clamp_on_screen(_lvl_label, self)

@@ -112,6 +112,12 @@ func npc_hit(humanoid: bool) -> bool:
 
 
 func _process(dt: float) -> void:
+	var _pt0 := Time.get_ticks_usec()
+	_process_timed(dt)
+	World.pmark("sfx", _pt0)
+
+
+func _process_timed(dt: float) -> void:
 	if _furnace_left > 0.0:
 		_furnace_left -= dt
 		if _furnace_left <= 0.0:

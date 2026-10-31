@@ -357,6 +357,12 @@ func _on_tick(t: int) -> void:
 
 
 func _process(_dt: float) -> void:
+	var _pt0 := Time.get_ticks_usec()
+	_process_timed(_dt)
+	World.pmark("main", _pt0)
+
+
+func _process_timed(_dt: float) -> void:
 	if camera and player:
 		# 0.3.0 blur fix: main runs BEFORE its child actors each frame, so the camera
 		# used last frame's player position: the avatar jittered 1 world px (3 screen

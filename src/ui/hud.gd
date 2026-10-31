@@ -752,6 +752,12 @@ func _sync_bank_tab_name() -> void:
 
 
 func _process(_dt: float) -> void:
+	var _pt0 := Time.get_ticks_usec()
+	_process_timed(_dt)
+	World.pmark("hud", _pt0)
+
+
+func _process_timed(_dt: float) -> void:
 	_sync_bank_tab_name()
 	if log_box and log_box.get_child_count() > 0:   # 0.3.7.1 no overhead labels over the chat log
 		var lr := log_box.get_global_rect()

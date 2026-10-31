@@ -25,6 +25,12 @@ func giver_label(gid: String) -> Label:
 
 
 func _process(_d: float) -> void:
+	var _pt0 := Time.get_ticks_usec()
+	_process_timed(_d)
+	World.pmark("quest_ui", _pt0)
+
+
+func _process_timed(_d: float) -> void:
 	if player == null or world == null:
 		return
 	for gid in QuestSystem.cfg().get("givers", {}).keys():
