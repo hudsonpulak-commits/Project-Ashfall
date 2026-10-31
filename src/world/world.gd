@@ -437,7 +437,7 @@ static func _den_mask(nb: Array) -> int:
 ## normal), so a run crossing the Cinder border never switches set mid-line.
 ## Non-cliff cells (overhang / diagonal corner pieces) take a neighbouring run's set.
 var _run_pal: Dictionary = {}
-const CLIFF_RUN_MAX := 600
+const CLIFF_RUN_MAX := 200
 
 
 func cliff_palette(p: Vector2i) -> String:
@@ -449,6 +449,17 @@ func cliff_palette(p: Vector2i) -> String:
 				return _run_palette(p + d)
 		return "cinder_" if gen.region_map.region_at(p) == "cinder" else ""
 	return _run_palette(p)
+
+
+## 0.4.3 perf: the run flood follows terrace edges by region level only (cached
+## noise), never tile_at: the flood used to generate terrain for hundreds of cells
+## outside loaded chunks (one overlay cell took 8.7 s in the perf sprint).
+func _run_edge(q: Vector2i) -> bool:
+	var l: int = gen.region_map.level(q)
+	for d in [Vector2i(1, 0), Vector2i(-1, 0), Vector2i(0, 1), Vector2i(0, -1)]:
+		if gen.region_map.level(q + d) != l:
+			return true
+	return false
 
 
 func _is_cliff_cell(q: Vector2i) -> bool:
@@ -468,7 +479,7 @@ func _run_palette(p: Vector2i) -> String:
 		cin += int(gen.region_map.region_at(c) == "cinder")
 		for d in WorldGen._DIRS8:
 			var q: Vector2i = c + d
-			if not seen.has(q) and _is_cliff_cell(q):
+			if not seen.has(q) and _run_edge(q):
 				seen[q] = true
 				todo.append(q)
 	var res := "cinder_" if cin * 2 > i else ""
