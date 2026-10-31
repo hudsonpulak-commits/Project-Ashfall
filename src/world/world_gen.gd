@@ -2172,7 +2172,78 @@ func region_grass(p: Vector2i) -> int:
 
 
 ## The generated terrain alone (no towns, roads, Scorch or mine ground).
+## 0.4.3 despeckled: a single land tile whose four neighbours are all another
+## terrain family (a grass speck in a sand shore, a sand dot in grass) takes the
+## neighbours' terrain, so no lone grass / grass-shore piece sits inside a beach.
 func _terrain_at(x: int, y: int) -> int:
+	var p := Vector2i(x, y)
+	_terr_mx.lock()
+	var c: Variant = _terr_cache.get(p)
+	_terr_mx.unlock()
+	if c != null:
+		return c
+	var t := _despeck(x, y, 3)
+	_terr_mx.lock()
+	_terr_cache[p] = t
+	_terr_mx.unlock()
+	return t
+
+
+## the chunk prefetch thread shares these caches with the main thread
+var _terr_mx := Mutex.new()
+var _terr_cache := {}
+var _lvl_caches := [{}, {}, {}]
+
+
+func _terr_lvl(x: int, y: int, lvl: int) -> int:
+	var p := Vector2i(x, y)
+	var cache: Dictionary = _lvl_caches[lvl]
+	_terr_mx.lock()
+	var c: Variant = cache.get(p)
+	_terr_mx.unlock()
+	if c == null:
+		c = _terrain_raw(x, y) if lvl <= 0 else _despeck(x, y, lvl)
+		_terr_mx.lock()
+		cache[p] = c
+		_terr_mx.unlock()
+	return c
+
+
+## Three passes: a lone tile among the previous pass's neighbours takes their terrain.
+func _despeck(x: int, y: int, lvl: int) -> int:
+	var t := _terr_lvl(x, y, lvl - 1)
+	if t == TileType.WATER:
+		return t
+	var f := _terrain_family(t)
+	var cnt := {}
+	var best := -1
+	var best_n := 0
+	for d in [Vector2i(1, 0), Vector2i(-1, 0), Vector2i(0, 1), Vector2i(0, -1)]:
+		var n := _terr_lvl(x + d.x, y + d.y, lvl - 1)
+		var nf := _terrain_family(n)
+		if nf == f:
+			return t
+		var k: int = int(cnt.get(nf, 0)) + 1
+		cnt[nf] = k
+		if k > best_n:
+			best_n = k
+			best = n
+	if best == TileType.WATER:
+		return TileType.SAND if f != TileType.SAND else t
+	return best
+
+
+## Grass of any region colour counts as one terrain for the despeckle.
+func _terrain_family(t: int) -> int:
+	return TileType.GRASS if t in GRASS_TILES else t
+
+
+## True when the raw generator put a lone tile here that _terrain_at cleans up.
+func is_terrain_speck(x: int, y: int) -> bool:
+	return _terrain_at(x, y) != _terrain_raw(x, y)
+
+
+func _terrain_raw(x: int, y: int) -> int:
 	var p := Vector2i(x, y)
 	var v := land_value(x, y)
 	if v < OCEAN_LEVEL:

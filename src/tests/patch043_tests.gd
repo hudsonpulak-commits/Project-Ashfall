@@ -62,3 +62,35 @@ static func run(main, world: World, p: Player) -> void:
 	for r in rows:
 		worst = maxf(worst, mean - r)
 	check(worst < 0.06, "road_dirt rows have no dark rut band (worst row %.3f below mean)" % worst)
+	_specks(gen)
+
+
+## 0.4.3 whole-map audit: no lone tile of one terrain inside another (grass specks
+## in sand shores, sand dots in grass), counted against the raw generator.
+static func _specks(gen: WorldGen) -> void:
+	var b: Rect2i = gen.bounds()
+	var t0 := Time.get_ticks_msec()
+	var removed := 0
+	var left := 0
+	var grass_in_sand := 0
+	for y in range(b.position.y + 1, b.end.y - 1):
+		for x in range(b.position.x + 1, b.end.x - 1):
+			var t := gen._terrain_at(x, y)
+			if t == WorldGen.TileType.WATER:
+				continue
+			if t != gen._terr_lvl(x, y, 0):
+				removed += 1
+			var f := gen._terrain_family(t)
+			var lone := true
+			var sand_n := 0
+			for d in [Vector2i(1, 0), Vector2i(-1, 0), Vector2i(0, 1), Vector2i(0, -1)]:
+				var n := gen._terrain_at(x + d.x, y + d.y)
+				sand_n += int(n == WorldGen.TileType.SAND)
+				if gen._terrain_family(n) == f or n == WorldGen.TileType.WATER:
+					lone = false
+			left += int(lone)
+			grass_in_sand += int(f == WorldGen.TileType.GRASS and sand_n == 4)
+	print("    speck audit: %d lone tiles cleaned, %d left, %d grass-in-sand (%d ms)" % [removed, left, grass_in_sand, Time.get_ticks_msec() - t0])
+	check(removed > 0, "the despeckle cleaned lone terrain tiles across the map (%d)" % removed)
+	check(left == 0, "no lone single land tile of one terrain inside another anywhere on the map (thin beach strips against water allowed) (%d)" % left)
+	check(grass_in_sand == 0, "no grass tile sits alone inside a sand shore (%d)" % grass_in_sand)
