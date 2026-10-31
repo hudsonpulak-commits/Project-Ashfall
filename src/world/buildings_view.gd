@@ -82,6 +82,7 @@ func _setup_town_art(w) -> void:
 			g.texture = tex
 			g.position = org
 			g.z_index = 2
+			g.modulate = World.GROUND_MOOD   # 0.4.4 same mood tint as the ground tiles under it
 			w.ground_layer.add_child(g)
 		# 0.3.11 v3.1: free y-sorted art (wall rows, round towers, gatehouse walls) and
 		# fade sprites (gatehouse roofs) that fade while the player stands in their tiles
@@ -147,6 +148,7 @@ func _setup_art_building(w, b: Dictionary) -> Node2D:
 	fl.position = canvas
 	fl.flip_h = flip
 	fl.z_index = 3
+	fl.modulate = World.GROUND_MOOD   # 0.4.4 floors drawn on the ground take the same mood tint as the tiles
 	w.ground_layer.add_child(fl)
 	var wl := Sprite2D.new()
 	wl.name = "Walls_%s" % b["id"]
@@ -183,6 +185,18 @@ func _setup_art_building(w, b: Dictionary) -> Node2D:
 		s.flip_h = flip
 		s.position = canvas
 		fg.add_child(s)
+	# 0.4.4 batch_15 roof_night: a full replacement roof crossfaded over the day roof at dusk
+	# (normal blend, same art_night_layer fade as the window layer; a child so it fades with the roof)
+	var rn: String = str(d.get("roof_night", ""))
+	if rn != "" and ResourceLoader.exists(rn) and fg.get_child_count() > 0:
+		var rs := Sprite2D.new()
+		rs.name = "RoofNight"
+		rs.centered = false
+		rs.texture = load(rn)
+		rs.flip_h = flip
+		rs.modulate.a = DayNight.lights_energy()
+		rs.add_to_group("art_night_layer")
+		fg.get_child(fg.get_child_count() - 1).add_child(rs)
 	fg.show_label = not bool(b.get("no_keeper", false))
 	# restyle batch 03: windmill sails -- their own layer, never fade, turn around the hub
 	var sp_: String = str(d.get("sails", ""))

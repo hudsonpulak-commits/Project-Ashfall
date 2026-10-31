@@ -928,12 +928,12 @@ static func _village_tests(world: World, p: Player) -> void:
 	var _fxp: int = p.skills.xp.get("foraging", 0)
 	check(got and wobj.is_depleted(Tick.tick_count), "harvest wheat (Foraging 1): a sheaf, the stalk is cut to stubble")
 	var back := false
-	for i in int(GameData.object_def("wheat")["respawn"]) + 5:
+	for i in GameData.respawn_ticks(GameData.object_def("wheat")) + 5:
 		Tick.step()
 		if not wobj.is_depleted(Tick.tick_count):
 			back = true
 			break
-	check(back, "wheat regrows (%d ticks)" % int(GameData.object_def("wheat")["respawn"]))
+	check(back, "wheat regrows (%d ticks)" % GameData.respawn_ticks(GameData.object_def("wheat")))
 	var vid0: String = f0["village"]
 	var qpos := Vector2i.ZERO
 	for q in gen.station_sites("quern"):

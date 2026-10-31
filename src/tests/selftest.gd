@@ -181,8 +181,27 @@ static func run(main) -> int:
 			break
 	check(p.inventory.count("bronze_pick") == 0, "a pick with 1 durability breaks on use (item sink)")
 	check(rock.is_depleted(Tick.tick_count) or p.inventory.count("copper_ore") > 0, "rock depletes after yielding")
-	ticks(int(GameData.object_def("copper_rock")["respawn"]) + 2)
+	ticks(GameData.respawn_ticks(GameData.object_def("copper_rock")) + 2)
 	check(not rock.is_depleted(Tick.tick_count), "rock respawns")
+	# 0.4.4 respawn by tier: tier N = N full day/night cycles; the timer survives save/load
+	var cyc := DayNight.ticks_per_cycle()
+	var tier_ok := true
+	for oid in GameData.objects.keys():
+		var od: Dictionary = GameData.objects[oid]
+		if od.has("tier") and GameData.respawn_ticks(od) != int(od["tier"]) * cyc:
+			tier_ok = false
+	check(tier_ok and cyc == int(round(float(GameData.daynight_cfg.get("cycle_s", 900)) / Tick.TICK_SECONDS))
+		and GameData.respawn_ticks(GameData.object_def("copper_rock")) == cyc
+		and GameData.respawn_ticks(GameData.object_def("iron_rock")) == 2 * cyc
+		and GameData.respawn_ticks(GameData.object_def("wheat")) == cyc
+		and int(GameData.object_def("mahogany_tree").get("tier", 0)) >= 2, "0.4.4 gatherables respawn after tier x day/night cycles")
+	world.deplete(rock, GameData.respawn_ticks(GameData.object_def("iron_rock")))
+	var left := rock.depleted_until - Tick.tick_count
+	var sv := world.to_save()
+	world.from_save(sv, Tick.tick_count)
+	check(left == 2 * cyc and rock.depleted_until - Tick.tick_count == left, "0.4.4 respawn timers survive save/load")
+	world.deplete(rock, 1)
+	ticks(2)
 	p.place_at(tile_before_mine)
 	world.set_focus(p.tile, true)
 
@@ -898,6 +917,12 @@ static func _metal_tests(main, world: World, p: Player) -> void:
 		"iron bar recipe = 1 iron ore with a flat 40% fail chance (data value)")
 	check(is_equal_approx(Interactions.fail_chance(ri, 12), 0.4) and is_equal_approx(Interactions.fail_chance(ri, 60), 0.4), "iron fail rate is flat (does not shrink with level)")
 	check(_ins(rs) == {"iron_ore": 1, "coal": 1} and not rs.has("fail"), "steel bar recipe = 1 iron ore + 1 coal, no fail")
+	# 0.4.4 nodes stay down for days now (AIs may have mined the pits): look up spawns, not stock
+	for ch0 in world.chunks.values():
+		for o0 in ch0.objects.values():
+			if o0.def_id == "tin_rock":
+				o0.depleted_until = 0
+				world.depleted.erase(o0.pos)
 	var tin: WorldObject = world.find_gather_node(p.tile, "tin_rock", "fenhollow")   # 0.3.1: in the town's pits
 	check(tin != null and int(GameData.objects["tin_rock"].get("level", 1)) == 1, "tin rocks spawn in the world (Mining 1)")
 	# -- melee requirement ordering: bronze 1 < iron 10 < steel 20 < dusk 30, in every metal shop line

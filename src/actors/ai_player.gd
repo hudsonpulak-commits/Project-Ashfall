@@ -494,7 +494,7 @@ func _think(t: int, world) -> void:
 					return
 			var node: WorldObject = world.find_gather_node(tile, a["node"], agent.home_town)   # 0.3.1: walks to the named mine
 			if node == null:
-				node = world.find_nearest_object(agent.home, [a["node"]], 40)
+				node = world.find_nearest_object(agent.home, [a["node"]], 40, false, true)   # 0.4.4 day-long respawns: never sync-gen chunks to look
 			if node and not node.is_depleted(t) and interact(world, node):
 				return
 			if node and _walk_leg(world, node.pos):

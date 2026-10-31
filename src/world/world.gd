@@ -243,6 +243,7 @@ const MOAT_CORNERS := [[0, 1, 5], [1, 2, 6], [2, 3, 7], [3, 0, 4]]
 
 const BOARDWALK_JOINS := ["boardwalk", "planks", "bridge"]
 const TRANS_ALIAS := {"ash_edge": "ash"}
+const TWO_SIDED := ["dirt", "grass", "grass_boreal", "grass_lush", "grass_tropic", "road_dirt", "path", "marsh", "sand", "rocky"]
 ## restyle batch 04: organic water edges. Not land: water, moat, decks over water, out of world.
 const SHORE_NOT_LAND := ["water", "moat", "bridge", "boardwalk", "planks", ""]
 const SHORE_ALIAS := {"ash_edge": "ash", "road_dirt": "path"}
@@ -335,6 +336,26 @@ func overlay_cells(p: Vector2i, nm: Callable) -> Array:
 		if not s.is_empty():
 			var f := Autotile.transition_frame(ov[i], nbt)
 			out.append([i, s[0], Vector2i(f % int(s[1]), f / int(s[1]))])
+	# 0.4.4 two-sided soft blends (Cinderholt): the lower floor also frays back onto the
+	# higher one, so a grass/dirt/lane boundary wobbles on both sides of the tile line
+	if gen != null and ov.size() < 2 and here in TWO_SIDED and gen.in_organic(p):
+		var low := ""
+		var lp := 1 << 20
+		for n in nbt:
+			if n != here and n in TWO_SIDED:
+				var pr := Autotile.priority(n)
+				if pr >= 0 and pr < Autotile.priority(here) and pr < lp:
+					lp = pr
+					low = n
+		if low != "":
+			var s2: Array = _overlay_src.get("transitions/" + low, [])
+			var va2: Array = _trans_var.get(low, [])
+			var tv2 := int(gen.hash01(p.x, p.y, 29) * 3)
+			if tv2 > 0 and va2.size() >= tv2:
+				s2 = va2[tv2 - 1]
+			if not s2.is_empty():
+				var f2 := Autotile.transition_frame(low, nbt)
+				out.append([ov.size(), s2[0], Vector2i(f2 % int(s2[1]), f2 / int(s2[1]))])
 	if Autotile.WALL_FAMILIES.has(here) and not Autotile.ART_WALLS.has(here) and not (gen != null and gen.is_thin_wall_cell(p)):
 		var s: Array = _overlay_src.get("autotile/" + str(Autotile.WALL_FAMILIES[here]), [])
 		if not s.is_empty():
@@ -1171,6 +1192,7 @@ func _job_stage(j: Dictionary, c: Vector2i, ch: ChunkData, base: Vector2i) -> vo
 				for lx in range(-1, CHUNK + 1):
 					var inside := lx >= 0 and ly2 >= 0 and lx < CHUNK and ly2 < CHUNK
 					var tt: int = ch.tile_local(lx, ly2) if inside else _rim_tile(base.x + lx, base.y + ly2)
+					tt = gen.art_ground_tile(base + Vector2i(lx, ly2), tt)
 					names[base + Vector2i(lx, ly2)] = WorldGen.TILE_NAMES[tt]
 				j["row"] = ly2 + 1
 				if j["row"] > CHUNK:
@@ -1392,13 +1414,17 @@ func wear_amount(p: Vector2i, tile_type: int = -1) -> float:
 func _ground_material(c: Vector2i, ch: ChunkData) -> ShaderMaterial:
 	var mat := ShaderMaterial.new()
 	mat.shader = GROUND_SHADER
-	var img := Image.create(CHUNK, CHUNK, false, Image.FORMAT_RGBA8)
+	# 0.4.4 one-tile apron so the shader's filtered, warped lookup is seamless across chunks
+	var img := Image.create(CHUNK + 2, CHUNK + 2, false, Image.FORMAT_RGBA8)
 	var base := c * CHUNK
-	for y in CHUNK:
-		for x in CHUNK:
-			var t := ch.tile_local(x, y)
+	for y in CHUNK + 2:
+		for x in CHUNK + 2:
+			var lx := x - 1
+			var ly := y - 1
+			var inside := lx >= 0 and ly >= 0 and lx < CHUNK and ly < CHUNK
+			var t: int = ch.tile_local(lx, ly) if inside else _rim_tile(base.x + lx, base.y + ly)
 			var vary := 1.0 if (t in WorldGen.GRASS_TILES or t == WorldGen.TileType.DIRT) else 0.0
-			img.set_pixel(x, y, Color(wear_amount(base + Vector2i(x, y), t), vary, 0, 1))
+			img.set_pixel(x, y, Color(wear_amount(base + Vector2i(lx, ly), t), vary, 0, 1))
 	mat.set_shader_parameter("wear_tex", ImageTexture.create_from_image(img))
 	mat.set_shader_parameter("chunk_origin", Vector2(base) * float(tile_px))
 	mat.set_shader_parameter("chunk_px", float(CHUNK * tile_px))

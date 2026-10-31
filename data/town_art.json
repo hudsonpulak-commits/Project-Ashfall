@@ -1723,6 +1723,7 @@
     "res://assets/sprites/towns/fenhollow/buildings/fh_guard_post_upper1.png",
     "res://assets/sprites/towns/fenhollow/buildings/fh_guard_post_roof.png"
    ],
+   "roof_night": "res://assets/sprites/towns/fenhollow/buildings/fh_guard_post_roof_night.png",
    "night": "res://assets/sprites/towns/fenhollow/buildings/fh_guard_post_night.png",
    "plan": [
     "######",
@@ -2346,6 +2347,7 @@
     "res://assets/sprites/towns/cinderholt/buildings/ch_guard_post_upper1.png",
     "res://assets/sprites/towns/cinderholt/buildings/ch_guard_post_roof.png"
    ],
+   "roof_night": "res://assets/sprites/towns/cinderholt/buildings/ch_guard_post_roof_night.png",
    "night": "res://assets/sprites/towns/cinderholt/buildings/ch_guard_post_night.png",
    "plan": [
     "######",

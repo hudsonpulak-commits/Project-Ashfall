@@ -124,6 +124,7 @@ func _init(p_seed: int, town: Dictionary = {}, world_cfg: Dictionary = {}) -> vo
 	var ids: Array = cfg.get("towns", [])
 	if ids.is_empty() and not town.is_empty():
 		ids = [town["id"]]
+	_load_pk_zones()   # 0.4.4 before the towns: their organic jitter keeps out of the Scorch
 	for id in ids:
 		var t: Dictionary = GameData.towns.get(id, town if town.get("id", "") == id else {})
 		if not t.is_empty():
@@ -368,6 +369,7 @@ func _load_town(town: Dictionary) -> void:
 	_town_rects[town["id"]] = rect
 	var tmap: Dictionary = town["tiles"]
 	var omap: Dictionary = town["objects"]
+	var gpat := float(town.get("grass_patches", 0.0))   # 0.4.4 organic grass patches on a town's dirt
 	for y in rows.size():
 		var row: String = rows[y]
 		for x in row.length():
@@ -375,6 +377,8 @@ func _load_town(town: Dictionary) -> void:
 			var p := origin + Vector2i(x, y)
 			if tmap.has(ch):
 				_town_tiles[p] = _floor_or_biome(str(tmap[ch]), p)
+				if gpat > 0.0 and str(tmap[ch]) == "dirt" and _grass_patch(p, gpat):
+					_town_tiles[p] = region_grass(p)
 			elif omap.has(ch):
 				_town_tiles[p] = _floor_or_biome(str(omap[ch]["ground"]), p)
 				_town_objects[p] = omap[ch]["object"]
@@ -386,7 +390,25 @@ func _load_town(town: Dictionary) -> void:
 	_load_buildings(town, origin)
 	_blend_footprint_edge(rect)
 	_ensure_gate_approaches(town, origin)
+	if gpat > 0.0:
+		_organic_jitter(rect)
 	_place_quest_givers(town, origin)
+
+
+## 0.4.4 organic grass patch test: coarse detail noise plus a little per-tile dither
+## so patch borders read ragged, not stamped. amount ~ share of dirt turned to grass.
+func _grass_patch(p: Vector2i, amount: float) -> bool:
+	# majority of the 3x3 raw test: no single-tile specks or one-tile holes
+	var k := 0
+	for dy in range(-1, 2):
+		for dx in range(-1, 2):
+			k += int(_grass_raw(p + Vector2i(dx, dy), amount))
+	return k >= 5
+
+
+func _grass_raw(p: Vector2i, amount: float) -> bool:
+	var n := _detail.get_noise_2d(p.x * 0.45 + 311.0, p.y * 0.45 - 97.0) + (hash01(p.x, p.y, 61) - 0.5) * 0.22
+	return n > 0.5 - amount * 1.4
 
 
 ## restyle r5 thin walls: wall families (and gates, which count as wall) are thinned
@@ -619,6 +641,93 @@ func _blend_footprint_edge(rect: Rect2i) -> void:
 		_town_tiles[p] = flips[p]
 
 
+## 0.4.4 organic outlines in and round a town (Cinderholt): the tile-level shapes of
+## soft floors were tile-aligned blocks (gate apron, lanes, wilderness marsh/sand/rocky
+## next to grass), which the 6 px transition fringe cannot hide. Two noise passes
+## jog every soft/soft boundary by a tile here and there. Lanes and paths only grow
+## (never lose a cell), so roads stay connected; the Scorch, water, cliffs, walls,
+## buildings and objects are never touched.
+const JITTER_SOFT := ["dirt", "grass", "grass_lush", "grass_boreal", "grass_tropic", "sand", "rocky", "marsh"]
+const JITTER_LANE := ["path", "road_dirt", "cobble"]
+
+var organic_rects: Array = []   # 0.4.4 areas whose soft-floor pairs blend both ways (drawing)
+
+func in_organic(p: Vector2i) -> bool:
+	for r in organic_rects:
+		if (r as Rect2i).has_point(p):
+			return true
+	return false
+
+
+func _organic_jitter(rect: Rect2i) -> void:
+	organic_rects.append(rect.grow(6))
+	var bt: Dictionary = {}
+	for b in buildings.values():
+		var br: Rect2i = b["rect"]
+		if rect.grow(8).intersects(br):
+			for y in range(br.position.y - 1, br.end.y + 1):
+				for x in range(br.position.x - 1, br.end.x + 1):
+					bt[Vector2i(x, y)] = true
+	var area := rect.grow(6)
+	for pass_i in 2:
+		var flips: Dictionary = {}
+		for y in range(area.position.y, area.end.y):
+			for x in range(area.position.x, area.end.x):
+				var p := Vector2i(x, y)
+				if bt.has(p) or _town_objects.has(p) or _wall_ground.has(p) or _art_ground.has(p):
+					continue
+				if not _biome_zone_at(p).is_empty() or _near_zone(p) or (not rect.has_point(p) and _town_rect_other(p, rect)):
+					continue
+				var a: String = TILE_NAMES[tile_at(x, y)]
+				if not a in JITTER_SOFT:
+					continue
+				var best := ""
+				var bp := -1
+				for dv in [Vector2i(0, -1), Vector2i(1, 0), Vector2i(0, 1), Vector2i(-1, 0)]:
+					var q: Vector2i = p + dv
+					if bt.has(q) or _town_objects.has(q):
+						continue
+					var b: String = TILE_NAMES[tile_at(q.x, q.y)]
+					if b == a or not (b in JITTER_SOFT or b in JITTER_LANE):
+						continue
+					var pr := Autotile.priority(b)
+					if pr > bp:
+						bp = pr
+						best = b
+				if best == "":
+					continue
+				var nz := _detail.get_noise_2d(x * 2.3 + 140.0 * pass_i, y * 2.3 - 60.0) + (hash01(x, y, 71 + pass_i) - 0.5) * 0.7
+				if nz > (0.12 if best in JITTER_LANE else 0.2):
+					flips[p] = TILE_NAMES.find(best)
+		for p in flips:
+			_town_tiles[p] = flips[p]
+	# drawing only: the light-tan gate apron / approach paths just outside the ring read
+	# as the camp dirt they cross (no tan rectangle); data stays PATH for the roads
+	for y in range(area.position.y, area.end.y):
+		for x in range(area.position.x, area.end.x):
+			var p := Vector2i(x, y)
+			if rect.has_point(p) or not _biome_zone_at(p).is_empty():
+				continue
+			var n: String = TILE_NAMES[tile_at(x, y)]
+			if n == "path" or n == "road_dirt":
+				_art_ground[p] = TileType.DIRT
+
+
+## the Scorch stays exactly as it was: no jitter in or right beside a biome zone
+func _near_zone(p: Vector2i) -> bool:
+	for dv in [Vector2i(0, -1), Vector2i(1, 0), Vector2i(0, 1), Vector2i(-1, 0)]:
+		if not _biome_zone_at(p + dv).is_empty():
+			return true
+	return false
+
+
+func _town_rect_other(p: Vector2i, own: Rect2i) -> bool:
+	for r in _town_rects.values():
+		if r != own and (r as Rect2i).has_point(p):
+			return true
+	return false
+
+
 func wall_tower_cells() -> Array:
 	return _wall_towers.keys()
 
@@ -633,7 +742,14 @@ func is_thin_wall_cell(p: Vector2i) -> bool:
 
 ## Drawing only: a wall cell shows the floor under the thin wall atlas.
 func wall_ground_tile(p: Vector2i, t: int) -> int:
-	return int(_wall_ground.get(p, t))
+	return int(_wall_ground.get(p, _art_ground.get(p, t)))
+
+
+## 0.4.4 drawing + blending only: camp tent footprints read as the ground they stand on.
+var _art_ground: Dictionary = {}
+
+func art_ground_tile(p: Vector2i, t: int) -> int:
+	return int(_art_ground.get(p, t))
 
 
 ## 0.3.15 quest givers from data/quests.json "givers" with "town" + "near" (town-local
@@ -1008,6 +1124,7 @@ func _load_art_building(town: Dictionary, bd: Dictionary, v: Callable, shops: Di
 	}
 	if bd.has("altar"):
 		b["altar"] = v.call(bd["altar"])
+	var camp_ground := bd.has("camp")
 	for y in plan.size():
 		var row := str(plan[y])
 		for x in row.length():
@@ -1017,6 +1134,13 @@ func _load_art_building(town: Dictionary, bd: Dictionary, v: Callable, shops: Di
 			var p := at + Vector2i(x, y)
 			_building_tiles[p] = b["id"]
 			_town_objects.erase(p)
+			if camp_ground and c != "D":
+				var gt := int(_town_tiles.get(p, TileType.DIRT))
+				if gt in [TileType.ART_WALL, TileType.ART_FLOOR, TileType.DOORWAY]:
+					gt = TileType.DIRT
+					if _grass_patch(p, float(town.get("grass_patches", 0.0))):
+						gt = region_grass(p)
+				_art_ground[p] = gt   # 0.4.4 tents stand on the camp ground, no plot
 			if c == "D" and not closed:
 				_town_tiles[p] = TileType.DOORWAY
 			elif c == "o":
