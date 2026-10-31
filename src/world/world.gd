@@ -437,7 +437,7 @@ static func _den_mask(nb: Array) -> int:
 ## normal), so a run crossing the Cinder border never switches set mid-line.
 ## Non-cliff cells (overhang / diagonal corner pieces) take a neighbouring run's set.
 var _run_pal: Dictionary = {}
-const CLIFF_RUN_MAX := 900
+const CLIFF_RUN_MAX := 600
 
 
 func cliff_palette(p: Vector2i) -> String:
@@ -472,11 +472,8 @@ func _run_palette(p: Vector2i) -> String:
 				seen[q] = true
 				todo.append(q)
 	var res := "cinder_" if cin * 2 > i else ""
-	if todo.size() < CLIFF_RUN_MAX:
-		for q in todo:
-			_run_pal[q] = res   # the whole run is known: cache it for every cell
-	else:
-		_run_pal[p] = res
+	for q in todo:
+		_run_pal[q] = res   # cache for every cell reached (a huge run: its first 600 cells decide)
 	if _run_pal.size() > 200000:
 		_run_pal.clear()
 	return res

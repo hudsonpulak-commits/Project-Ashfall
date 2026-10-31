@@ -4494,8 +4494,8 @@ func _tint_spot() -> void:
 	p.place_at(w.find_free_tile_near(w.gen.town_center("millbrook") + Vector2i(4, 6), 4))
 	p.stop()
 	w.set_focus(p.tile, true)
-	var had_w = p.equipment.get("weapon")
-	p.equipment["weapon"] = "bronze_hatchet"   # so the combat frame shows the weapon swapped back
+	var had_w = p.equipment.get("shield")
+	p.equipment["shield"] = "iron_kite_shield"   # so the combat frame shows the shield swapped back
 	DayNight.debug_set_phase("night")
 	label = "night_torch"
 	await frames(60)
@@ -4518,8 +4518,8 @@ func _tint_spot() -> void:
 		camt.zoom = zt
 	DayNight.debug_set_phase("day")
 	if had_w == null:
-		p.equipment.erase("weapon")
+		p.equipment.erase("shield")
 	else:
-		p.equipment["weapon"] = had_w
+		p.equipment["shield"] = had_w
 	label = ""
 	_notes["tintspot"] = res

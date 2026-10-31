@@ -6930,6 +6930,21 @@
      -8
     ]
    }
+  },
+  "gear_item_torch": {
+   "path": "res://assets/sprites/actors/gear/torch_1.png",
+   "frame_size": [
+    16,
+    16
+   ],
+   "frames": 4,
+   "fps": 5,
+   "anchor": "bottom",
+   "flip": true,
+   "dir_paths": {
+    "down": "res://assets/sprites/actors/gear/torch_1_front.png",
+    "up": "res://assets/sprites/actors/gear/torch_1_back.png"
+   }
   }
  },
  "items": {
@@ -8307,6 +8322,24 @@
     8
    ],
    "note": "0.3.3 arrow projectile, drawn pointing right (rotated in flight)"
+  },
+  "torch_flame": {
+   "path": "res://assets/sprites/fx/torch_flame.png",
+   "frame_size": [
+    7,
+    9
+   ],
+   "frames": 4,
+   "fps": 9
+  },
+  "torch_glow": {
+   "path": "res://assets/sprites/fx/torch_glow.png",
+   "frame_size": [
+    48,
+    48
+   ],
+   "frames": 4,
+   "fps": 9
   }
  },
  "autotile": {
