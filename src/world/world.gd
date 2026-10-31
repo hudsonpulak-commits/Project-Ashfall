@@ -587,7 +587,7 @@ func cliff_base_tile(p: Vector2i, t: int) -> int:
 	var cnt := {}
 	var best := -1
 	var bn := 0
-	for d in WorldGen._DIRS8:
+	for d in [Vector2i(0, -1), Vector2i(1, 0), Vector2i(0, 1), Vector2i(-1, 0)]:   # orthogonal only (perf: build s0)
 		var q: Vector2i = p + d
 		var tq := gen.tile_at(q.x, q.y)
 		if tq in WorldGen.BLOCKING_TILES or tq in [WorldGen.TileType.CLIFF_SHADOW, WorldGen.TileType.CLIFF_STAIRS, WorldGen.TileType.WATER] or tq in WorldGen.ROAD_SURFACES:
